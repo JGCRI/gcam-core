@@ -128,17 +128,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.48328E-12</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.85513E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>20</gdp-mid-control>
                         <gdp-control-range>15</gdp-control-range>
-                        <final-emiss-coef>1.39331E-12</final-emiss-coef>
+                        <final-emiss-coef>2.74205E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.66667E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.27924E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>20</gdp-mid-control>
                         <gdp-control-range>15</gdp-control-range>
-                        <final-emiss-coef>6.66667E-12</final-emiss-coef>
+                        <final-emiss-coef>1.3117E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -571,17 +571,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.27026E-12</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>4.4679E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>20</gdp-mid-control>
                         <gdp-control-range>15</gdp-control-range>
-                        <final-emiss-coef>9.08103E-13</final-emiss-coef>
+                        <final-emiss-coef>1.78716E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.08627E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.13727E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>20</gdp-mid-control>
                         <gdp-control-range>15</gdp-control-range>
-                        <final-emiss-coef>4.34506E-12</final-emiss-coef>
+                        <final-emiss-coef>8.5491E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -986,17 +986,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.63528E-14</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.21826E-14</uncontrolled-emiss-coef>
                         <gdp-mid-control>20</gdp-mid-control>
                         <gdp-control-range>15</gdp-control-range>
-                        <final-emiss-coef>6.54113E-15</final-emiss-coef>
+                        <final-emiss-coef>1.2873E-14</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.82444E-14</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.53949E-13</uncontrolled-emiss-coef>
                         <gdp-mid-control>20</gdp-mid-control>
                         <gdp-control-range>15</gdp-control-range>
-                        <final-emiss-coef>3.12978E-14</final-emiss-coef>
+                        <final-emiss-coef>6.15797E-14</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -1408,17 +1408,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.1306E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.22503E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>20</gdp-mid-control>
                         <gdp-control-range>15</gdp-control-range>
-                        <final-emiss-coef>4.52238E-12</final-emiss-coef>
+                        <final-emiss-coef>8.90011E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>5.40964E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.06437E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>20</gdp-mid-control>
                         <gdp-control-range>15</gdp-control-range>
-                        <final-emiss-coef>2.16385E-11</final-emiss-coef>
+                        <final-emiss-coef>4.25748E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -1830,17 +1830,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.17201E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.30654E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>20</gdp-mid-control>
                         <gdp-control-range>15</gdp-control-range>
-                        <final-emiss-coef>4.68805E-12</final-emiss-coef>
+                        <final-emiss-coef>9.22615E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>5.60781E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.10336E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>20</gdp-mid-control>
                         <gdp-control-range>15</gdp-control-range>
-                        <final-emiss-coef>2.24313E-11</final-emiss-coef>
+                        <final-emiss-coef>4.41345E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -2252,17 +2252,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.57333E-12</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.06435E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>20</gdp-mid-control>
                         <gdp-control-range>15</gdp-control-range>
-                        <final-emiss-coef>1.02933E-12</final-emiss-coef>
+                        <final-emiss-coef>2.02574E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.23128E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.42259E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>20</gdp-mid-control>
                         <gdp-control-range>15</gdp-control-range>
-                        <final-emiss-coef>4.92512E-12</final-emiss-coef>
+                        <final-emiss-coef>9.69038E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -2674,17 +2674,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.72375E-12</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.36038E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>20</gdp-mid-control>
                         <gdp-control-range>15</gdp-control-range>
-                        <final-emiss-coef>1.0895E-12</final-emiss-coef>
+                        <final-emiss-coef>2.14415E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.30325E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.5642E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>20</gdp-mid-control>
                         <gdp-control-range>15</gdp-control-range>
-                        <final-emiss-coef>5.21301E-12</final-emiss-coef>
+                        <final-emiss-coef>1.02568E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -3096,17 +3096,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>4.34714E-12</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>8.55524E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>20</gdp-mid-control>
                         <gdp-control-range>15</gdp-control-range>
-                        <final-emiss-coef>1.73886E-12</final-emiss-coef>
+                        <final-emiss-coef>3.42209E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.08001E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>4.0925E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>20</gdp-mid-control>
                         <gdp-control-range>15</gdp-control-range>
-                        <final-emiss-coef>8.32003E-12</final-emiss-coef>
+                        <final-emiss-coef>1.637E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -3518,17 +3518,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.65377E-12</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>7.19067E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>20</gdp-mid-control>
                         <gdp-control-range>15</gdp-control-range>
-                        <final-emiss-coef>1.46151E-12</final-emiss-coef>
+                        <final-emiss-coef>2.87627E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.74824E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.43975E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>20</gdp-mid-control>
                         <gdp-control-range>15</gdp-control-range>
-                        <final-emiss-coef>6.99298E-12</final-emiss-coef>
+                        <final-emiss-coef>1.3759E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -3839,7 +3839,7 @@
                   <period year="1990">
                      <generic-ghg name="N2O_AGR">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.02938E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>0.024586346</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.217001498</reduction>
                            <reduction tax="15">0.25893145</reduction>
@@ -4437,17 +4437,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>8.06003E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.09057E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>3.22401E-11</final-emiss-coef>
+                        <final-emiss-coef>4.36228E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.85434E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.22244E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.54173E-10</final-emiss-coef>
+                        <final-emiss-coef>2.08897E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -5267,17 +5267,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>5.86809E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>7.93989E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.34724E-11</final-emiss-coef>
+                        <final-emiss-coef>3.17596E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.80615E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.80219E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.12246E-10</final-emiss-coef>
+                        <final-emiss-coef>1.52088E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -5682,17 +5682,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.64782E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.2296E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>6.59128E-11</final-emiss-coef>
+                        <final-emiss-coef>8.91841E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.87995E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.06769E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>3.15198E-10</final-emiss-coef>
+                        <final-emiss-coef>4.27078E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -6097,17 +6097,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.13095E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.53024E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>4.52379E-11</final-emiss-coef>
+                        <final-emiss-coef>6.12097E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>5.40824E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>7.3279E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.1633E-10</final-emiss-coef>
+                        <final-emiss-coef>2.93116E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -6512,17 +6512,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.02064E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.38099E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>4.08258E-11</final-emiss-coef>
+                        <final-emiss-coef>5.52397E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>4.88076E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.61319E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.9523E-10</final-emiss-coef>
+                        <final-emiss-coef>2.64528E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -6927,17 +6927,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.73724E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.70366E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.0949E-10</final-emiss-coef>
+                        <final-emiss-coef>1.48146E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.30896E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.77358E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>5.23584E-10</final-emiss-coef>
+                        <final-emiss-coef>7.09431E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -7342,17 +7342,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.29719E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.75517E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>5.18875E-11</final-emiss-coef>
+                        <final-emiss-coef>7.02069E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.2032E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>8.40503E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.48128E-10</final-emiss-coef>
+                        <final-emiss-coef>3.36201E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -7663,7 +7663,7 @@
                   <period year="1990">
                      <generic-ghg name="N2O_AGR">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.20715E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>0.02883226</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2005">
@@ -7832,17 +7832,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.25122E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.61422E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>5.00489E-12</final-emiss-coef>
+                        <final-emiss-coef>2.24569E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>5.98649E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.6835E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.39459E-11</final-emiss-coef>
+                        <final-emiss-coef>1.0734E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -8275,17 +8275,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>8.15495E-12</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.65912E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>3.26198E-12</final-emiss-coef>
+                        <final-emiss-coef>1.46365E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.90175E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.749E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.5607E-11</final-emiss-coef>
+                        <final-emiss-coef>6.996E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -8690,17 +8690,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>5.87407E-14</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.63569E-14</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.34963E-14</final-emiss-coef>
+                        <final-emiss-coef>1.05428E-14</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.81046E-13</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.25982E-13</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.12418E-13</final-emiss-coef>
+                        <final-emiss-coef>5.03926E-14</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -9112,17 +9112,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.20484E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.40612E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>4.81937E-12</final-emiss-coef>
+                        <final-emiss-coef>2.16245E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>5.76459E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.58404E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.30584E-11</final-emiss-coef>
+                        <final-emiss-coef>1.03361E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -9534,17 +9534,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>4.19273E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.88127E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.67709E-11</final-emiss-coef>
+                        <final-emiss-coef>7.5251E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.00602E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>8.99218E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>8.02407E-11</final-emiss-coef>
+                        <final-emiss-coef>3.59687E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -9956,17 +9956,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.18736E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.32768E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>4.74945E-12</final-emiss-coef>
+                        <final-emiss-coef>2.13107E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>5.68095E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.54654E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.27238E-11</final-emiss-coef>
+                        <final-emiss-coef>1.01862E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -10378,17 +10378,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.05848E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>4.74941E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>4.23394E-12</final-emiss-coef>
+                        <final-emiss-coef>1.89976E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>5.06434E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.27014E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.02573E-11</final-emiss-coef>
+                        <final-emiss-coef>9.08056E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -10800,17 +10800,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.76665E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.24139E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.10666E-11</final-emiss-coef>
+                        <final-emiss-coef>4.96557E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.32371E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.93366E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>5.29483E-11</final-emiss-coef>
+                        <final-emiss-coef>2.37346E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -11222,17 +11222,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.31246E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.88902E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>5.24986E-12</final-emiss-coef>
+                        <final-emiss-coef>2.35561E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.27951E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.81485E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.5118E-11</final-emiss-coef>
+                        <final-emiss-coef>1.12594E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -11543,7 +11543,7 @@
                   <period year="1990">
                      <generic-ghg name="N2O_AGR">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>9.19009E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>0.021950147</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.118988208</reduction>
                            <reduction tax="15">0.126768432</reduction>
@@ -11719,17 +11719,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.48539E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.18587E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.39416E-11</final-emiss-coef>
+                        <final-emiss-coef>1.27435E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.66373E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.52214E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>6.65492E-11</final-emiss-coef>
+                        <final-emiss-coef>6.08854E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -12162,17 +12162,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.27164E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.07642E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>9.08655E-12</final-emiss-coef>
+                        <final-emiss-coef>8.30567E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.08435E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>9.92066E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>4.33741E-11</final-emiss-coef>
+                        <final-emiss-coef>3.96827E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -12999,17 +12999,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.08264E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>9.89596E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>4.33054E-12</final-emiss-coef>
+                        <final-emiss-coef>3.95838E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>5.16789E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>4.72807E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.06716E-11</final-emiss-coef>
+                        <final-emiss-coef>1.89123E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -13421,17 +13421,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.25831E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.15017E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>5.03322E-11</final-emiss-coef>
+                        <final-emiss-coef>4.60068E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.00644E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.49525E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.40258E-10</final-emiss-coef>
+                        <final-emiss-coef>2.1981E-10</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -13843,17 +13843,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.64452E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.41725E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.05781E-11</final-emiss-coef>
+                        <final-emiss-coef>9.66901E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.26234E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.15491E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>5.04937E-11</final-emiss-coef>
+                        <final-emiss-coef>4.61964E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -14265,17 +14265,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.95261E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.69887E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.18105E-11</final-emiss-coef>
+                        <final-emiss-coef>1.07955E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.40941E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.28946E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>5.63765E-11</final-emiss-coef>
+                        <final-emiss-coef>5.15785E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -14687,17 +14687,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>5.5726E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.0937E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.22904E-11</final-emiss-coef>
+                        <final-emiss-coef>2.03748E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.66004E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.43366E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.06402E-10</final-emiss-coef>
+                        <final-emiss-coef>9.73463E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -15109,17 +15109,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.65599E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.3418E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.4624E-11</final-emiss-coef>
+                        <final-emiss-coef>1.33672E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.74516E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.59664E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>6.98066E-11</final-emiss-coef>
+                        <final-emiss-coef>6.38656E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -15430,7 +15430,7 @@
                   <period year="1990">
                      <generic-ghg name="N2O_AGR">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.93075E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>0.016553808</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.118250744</reduction>
                            <reduction tax="15">0.118250744</reduction>
@@ -15606,17 +15606,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.51205E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.08062E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>15</gdp-mid-control>
                         <gdp-control-range>11.25</gdp-control-range>
-                        <final-emiss-coef>6.04819E-11</final-emiss-coef>
+                        <final-emiss-coef>1.23225E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.23153E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.47302E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>15</gdp-mid-control>
                         <gdp-control-range>11.25</gdp-control-range>
-                        <final-emiss-coef>2.89261E-10</final-emiss-coef>
+                        <final-emiss-coef>5.89206E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -16049,17 +16049,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>9.85492E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.00782E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>15</gdp-mid-control>
                         <gdp-control-range>11.25</gdp-control-range>
-                        <final-emiss-coef>3.94197E-11</final-emiss-coef>
+                        <final-emiss-coef>8.03129E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>4.71322E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>9.60052E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>15</gdp-mid-control>
                         <gdp-control-range>11.25</gdp-control-range>
-                        <final-emiss-coef>1.88529E-10</final-emiss-coef>
+                        <final-emiss-coef>3.84021E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -16464,17 +16464,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.09856E-13</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.44625E-13</uncontrolled-emiss-coef>
                         <gdp-mid-control>15</gdp-mid-control>
                         <gdp-control-range>11.25</gdp-control-range>
-                        <final-emiss-coef>2.83942E-13</final-emiss-coef>
+                        <final-emiss-coef>5.78499E-14</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.39496E-12</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.91532E-13</uncontrolled-emiss-coef>
                         <gdp-mid-control>15</gdp-mid-control>
                         <gdp-control-range>11.25</gdp-control-range>
-                        <final-emiss-coef>1.35799E-12</final-emiss-coef>
+                        <final-emiss-coef>2.76613E-13</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -16886,17 +16886,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.47177E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.31855E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>15</gdp-mid-control>
                         <gdp-control-range>11.25</gdp-control-range>
-                        <final-emiss-coef>2.58871E-11</final-emiss-coef>
+                        <final-emiss-coef>5.27419E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.09519E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.3047E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>15</gdp-mid-control>
                         <gdp-control-range>11.25</gdp-control-range>
-                        <final-emiss-coef>1.23808E-10</final-emiss-coef>
+                        <final-emiss-coef>2.52188E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -17308,17 +17308,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.07258E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.26002E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>15</gdp-mid-control>
                         <gdp-control-range>11.25</gdp-control-range>
-                        <final-emiss-coef>1.22903E-10</final-emiss-coef>
+                        <final-emiss-coef>2.50401E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.4695E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.99326E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>15</gdp-mid-control>
                         <gdp-control-range>11.25</gdp-control-range>
-                        <final-emiss-coef>5.87798E-10</final-emiss-coef>
+                        <final-emiss-coef>1.19731E-10</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -17730,17 +17730,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.184E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.41226E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>15</gdp-mid-control>
                         <gdp-control-range>11.25</gdp-control-range>
-                        <final-emiss-coef>4.736E-11</final-emiss-coef>
+                        <final-emiss-coef>9.64904E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>5.66261E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.15344E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>15</gdp-mid-control>
                         <gdp-control-range>11.25</gdp-control-range>
-                        <final-emiss-coef>2.26504E-10</final-emiss-coef>
+                        <final-emiss-coef>4.61374E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -18152,17 +18152,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.22311E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.49193E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>15</gdp-mid-control>
                         <gdp-control-range>11.25</gdp-control-range>
-                        <final-emiss-coef>4.89243E-11</final-emiss-coef>
+                        <final-emiss-coef>9.96774E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>5.84964E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.19153E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>15</gdp-mid-control>
                         <gdp-control-range>11.25</gdp-control-range>
-                        <final-emiss-coef>2.33986E-10</final-emiss-coef>
+                        <final-emiss-coef>4.76613E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -18574,17 +18574,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.3187E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.6867E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>15</gdp-mid-control>
                         <gdp-control-range>11.25</gdp-control-range>
-                        <final-emiss-coef>5.2748E-11</final-emiss-coef>
+                        <final-emiss-coef>1.07468E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.30683E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.28466E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>15</gdp-mid-control>
                         <gdp-control-range>11.25</gdp-control-range>
-                        <final-emiss-coef>2.52273E-10</final-emiss-coef>
+                        <final-emiss-coef>5.13863E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -18996,17 +18996,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.58606E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.23141E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>15</gdp-mid-control>
                         <gdp-control-range>11.25</gdp-control-range>
-                        <final-emiss-coef>6.34423E-11</final-emiss-coef>
+                        <final-emiss-coef>1.29256E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.5855E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.54511E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>15</gdp-mid-control>
                         <gdp-control-range>11.25</gdp-control-range>
-                        <final-emiss-coef>3.0342E-10</final-emiss-coef>
+                        <final-emiss-coef>6.18046E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -19317,7 +19317,7 @@
                   <period year="1990">
                      <generic-ghg name="N2O_AGR">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.13154E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>0.050910863</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.211773403</reduction>
                            <reduction tax="15">0.211773403</reduction>
@@ -19486,17 +19486,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.39574E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.21282E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>5.58296E-12</final-emiss-coef>
+                        <final-emiss-coef>4.85129E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.67509E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.79805E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.67004E-11</final-emiss-coef>
+                        <final-emiss-coef>2.31922E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_4_AWB">
                         <output-driver/>
@@ -19929,17 +19929,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>9.09686E-12</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>7.90468E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>3.63875E-12</final-emiss-coef>
+                        <final-emiss-coef>3.16187E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>4.35055E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.77893E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.74022E-11</final-emiss-coef>
+                        <final-emiss-coef>1.51157E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_4_AWB">
                         <output-driver/>
@@ -20344,17 +20344,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.55253E-14</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.6938E-14</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.62101E-14</final-emiss-coef>
+                        <final-emiss-coef>2.27752E-14</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.13373E-13</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.72199E-13</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.25349E-13</final-emiss-coef>
+                        <final-emiss-coef>1.0888E-13</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_4_AWB">
                         <output-driver/>
@@ -20766,17 +20766,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.92771E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.67508E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>7.71086E-12</final-emiss-coef>
+                        <final-emiss-coef>6.70032E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>9.21925E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>8.00793E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>3.6877E-11</final-emiss-coef>
+                        <final-emiss-coef>3.20317E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_4_AWB">
                         <output-driver/>
@@ -21188,17 +21188,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>4.38854E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.81341E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.75542E-11</final-emiss-coef>
+                        <final-emiss-coef>1.52536E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.09881E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.82305E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>8.39524E-11</final-emiss-coef>
+                        <final-emiss-coef>7.29219E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_4_AWB">
                         <output-driver/>
@@ -21610,17 +21610,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.41048E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.22563E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>5.64193E-12</final-emiss-coef>
+                        <final-emiss-coef>4.90254E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.7456E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.8593E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.69824E-11</final-emiss-coef>
+                        <final-emiss-coef>2.34372E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_4_AWB">
                         <output-driver/>
@@ -22032,17 +22032,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.22387E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.06348E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>4.89549E-12</final-emiss-coef>
+                        <final-emiss-coef>4.25392E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>5.85314E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.0841E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.34126E-11</final-emiss-coef>
+                        <final-emiss-coef>2.03364E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_4_AWB">
                         <output-driver/>
@@ -22454,17 +22454,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.08936E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.68449E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.23574E-11</final-emiss-coef>
+                        <final-emiss-coef>1.07379E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.47748E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.28335E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>5.90991E-11</final-emiss-coef>
+                        <final-emiss-coef>5.13341E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_4_AWB">
                         <output-driver/>
@@ -22876,17 +22876,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.46406E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.27219E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>5.85623E-12</final-emiss-coef>
+                        <final-emiss-coef>5.08875E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.00182E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.08185E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.80073E-11</final-emiss-coef>
+                        <final-emiss-coef>2.43274E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_4_AWB">
                         <output-driver/>
@@ -23197,7 +23197,7 @@
                   <period year="1990">
                      <generic-ghg name="N2O_AGR">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>4.40087E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>0.010511292</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.106580761</reduction>
                            <reduction tax="15">0.118523971</reduction>
@@ -23373,17 +23373,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.69404E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.60938E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.07762E-11</final-emiss-coef>
+                        <final-emiss-coef>6.43751E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.28843E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>7.68699E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>5.15373E-11</final-emiss-coef>
+                        <final-emiss-coef>3.07479E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -23816,17 +23816,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.75587E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.04893E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>7.02347E-12</final-emiss-coef>
+                        <final-emiss-coef>4.19571E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>8.39748E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.01007E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>3.35899E-11</final-emiss-coef>
+                        <final-emiss-coef>2.00403E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -24231,17 +24231,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.26476E-13</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>7.5555E-14</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>5.05905E-14</final-emiss-coef>
+                        <final-emiss-coef>3.0222E-14</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.04876E-13</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.60878E-13</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.4195E-13</final-emiss-coef>
+                        <final-emiss-coef>1.44351E-13</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -24653,17 +24653,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.37018E-15</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>8.18524E-16</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>5.48072E-16</final-emiss-coef>
+                        <final-emiss-coef>3.2741E-16</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.55292E-15</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.90957E-15</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.62117E-15</final-emiss-coef>
+                        <final-emiss-coef>1.56383E-15</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -25075,17 +25075,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>8.56174E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.11465E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>3.42469E-11</final-emiss-coef>
+                        <final-emiss-coef>2.04586E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>4.09467E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.44294E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.63787E-10</final-emiss-coef>
+                        <final-emiss-coef>9.77178E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -25497,17 +25497,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.37232E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.41719E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>9.48928E-12</final-emiss-coef>
+                        <final-emiss-coef>5.66875E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.13457E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.76901E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>4.53827E-11</final-emiss-coef>
+                        <final-emiss-coef>2.7076E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -25919,17 +25919,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.29732E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.37239E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>9.1893E-12</final-emiss-coef>
+                        <final-emiss-coef>5.48954E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.0987E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.55502E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>4.39481E-11</final-emiss-coef>
+                        <final-emiss-coef>2.62201E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -26341,17 +26341,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.48674E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.48554E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>9.94695E-12</final-emiss-coef>
+                        <final-emiss-coef>5.94215E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.18929E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>7.09548E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>4.75715E-11</final-emiss-coef>
+                        <final-emiss-coef>2.83819E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -26763,17 +26763,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.82591E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.68815E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.13036E-11</final-emiss-coef>
+                        <final-emiss-coef>6.75261E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.3515E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>8.06324E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>5.40599E-11</final-emiss-coef>
+                        <final-emiss-coef>3.2253E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -27084,7 +27084,7 @@
                   <period year="1990">
                      <generic-ghg name="N2O_AGR">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.08597E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>0.016924554</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.064086753</reduction>
                            <reduction tax="15">0.064086753</reduction>
@@ -27260,17 +27260,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.21021E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.44853E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>4.84086E-12</final-emiss-coef>
+                        <final-emiss-coef>9.79412E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>5.78582E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.17271E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.31433E-11</final-emiss-coef>
+                        <final-emiss-coef>4.69083E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -27703,17 +27703,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.88769E-12</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.59585E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>3.15508E-12</final-emiss-coef>
+                        <final-emiss-coef>6.38341E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.77096E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>7.64323E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.50839E-11</final-emiss-coef>
+                        <final-emiss-coef>3.05729E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -28118,17 +28118,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>5.68156E-14</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.1495E-13</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.27262E-14</final-emiss-coef>
+                        <final-emiss-coef>4.59801E-14</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.71625E-13</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.50547E-13</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.0865E-13</final-emiss-coef>
+                        <final-emiss-coef>2.20219E-13</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -28540,17 +28540,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.4937E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.02208E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>5.97479E-12</final-emiss-coef>
+                        <final-emiss-coef>1.20883E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.14111E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.4474E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.85644E-11</final-emiss-coef>
+                        <final-emiss-coef>5.78962E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -28962,17 +28962,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.81416E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>7.71689E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.52567E-11</final-emiss-coef>
+                        <final-emiss-coef>3.08675E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.82348E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.69595E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>7.29393E-11</final-emiss-coef>
+                        <final-emiss-coef>1.47838E-10</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -29384,17 +29384,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.15804E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.34297E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>4.63215E-12</final-emiss-coef>
+                        <final-emiss-coef>9.37186E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>5.53638E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.12215E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.21455E-11</final-emiss-coef>
+                        <final-emiss-coef>4.48859E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -29806,17 +29806,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.0127E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.04892E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>4.0508E-12</final-emiss-coef>
+                        <final-emiss-coef>8.19567E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>4.84154E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>9.81314E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.93662E-11</final-emiss-coef>
+                        <final-emiss-coef>3.92526E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -30228,17 +30228,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.55601E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.14816E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>6.22405E-12</final-emiss-coef>
+                        <final-emiss-coef>1.25926E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.43902E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.50779E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.97561E-11</final-emiss-coef>
+                        <final-emiss-coef>6.03115E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -30650,17 +30650,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.26945E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.56838E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>5.0778E-12</final-emiss-coef>
+                        <final-emiss-coef>1.02735E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.06902E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.23011E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.42761E-11</final-emiss-coef>
+                        <final-emiss-coef>4.92043E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -30971,7 +30971,7 @@
                   <period year="1990">
                      <generic-ghg name="N2O_AGR">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.49721E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>0.035760158</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.05100527</reduction>
                            <reduction tax="15">0.052693844</reduction>
@@ -31147,17 +31147,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.55386E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.16685E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.42154E-11</final-emiss-coef>
+                        <final-emiss-coef>4.66741E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.70004E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.58406E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>6.80015E-11</final-emiss-coef>
+                        <final-emiss-coef>2.23362E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -31590,17 +31590,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.31626E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>7.60508E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>9.26504E-12</final-emiss-coef>
+                        <final-emiss-coef>3.04203E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.10802E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.63946E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>4.43206E-11</final-emiss-coef>
+                        <final-emiss-coef>1.45578E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -32005,17 +32005,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.66842E-13</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.47799E-14</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>6.67367E-14</final-emiss-coef>
+                        <final-emiss-coef>2.1912E-14</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.98111E-13</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.62153E-13</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>3.19244E-13</final-emiss-coef>
+                        <final-emiss-coef>1.04861E-13</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -32427,17 +32427,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.42334E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>7.95666E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>9.69337E-12</final-emiss-coef>
+                        <final-emiss-coef>3.18266E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.15924E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.80772E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>4.63696E-11</final-emiss-coef>
+                        <final-emiss-coef>1.52309E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -32849,17 +32849,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.28882E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.39317E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.91553E-11</final-emiss-coef>
+                        <final-emiss-coef>9.57268E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.48671E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.14527E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.39468E-10</final-emiss-coef>
+                        <final-emiss-coef>4.58107E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -33271,17 +33271,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>4.40398E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.44598E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.76159E-11</final-emiss-coef>
+                        <final-emiss-coef>5.78391E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.1067E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.91982E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>8.42682E-11</final-emiss-coef>
+                        <final-emiss-coef>2.76793E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -33693,17 +33693,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.95496E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>9.70216E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.18199E-11</final-emiss-coef>
+                        <final-emiss-coef>3.88086E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.41355E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>4.64304E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>5.65419E-11</final-emiss-coef>
+                        <final-emiss-coef>1.85721E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -34115,17 +34115,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.22887E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.06015E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.29155E-11</final-emiss-coef>
+                        <final-emiss-coef>4.2406E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.54458E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.07342E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>6.1783E-11</final-emiss-coef>
+                        <final-emiss-coef>2.02937E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -34537,17 +34537,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.72781E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.22397E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.49112E-11</final-emiss-coef>
+                        <final-emiss-coef>4.89587E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.78325E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.85738E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>7.133E-11</final-emiss-coef>
+                        <final-emiss-coef>2.34295E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -34858,7 +34858,7 @@
                   <period year="1990">
                      <generic-ghg name="N2O_AGR">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.21707E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>0.017237677</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.110985196</reduction>
                            <reduction tax="15">0.127933251</reduction>
@@ -35034,17 +35034,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.60139E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.02159E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>6.40557E-12</final-emiss-coef>
+                        <final-emiss-coef>4.08636E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.65916E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>4.89351E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>3.06366E-11</final-emiss-coef>
+                        <final-emiss-coef>1.9574E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -35477,17 +35477,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.04372E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.6583E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>4.17489E-12</final-emiss-coef>
+                        <final-emiss-coef>2.66332E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>4.99193E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.18939E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.99677E-11</final-emiss-coef>
+                        <final-emiss-coef>1.27576E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -35892,17 +35892,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.518E-14</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>4.79602E-14</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>3.0072E-14</final-emiss-coef>
+                        <final-emiss-coef>1.91841E-14</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.59572E-13</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.29734E-13</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.43829E-13</final-emiss-coef>
+                        <final-emiss-coef>9.18935E-14</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -36314,17 +36314,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>4.20958E-12</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.68545E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.68383E-12</final-emiss-coef>
+                        <final-emiss-coef>1.07418E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.01336E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.28636E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>8.05346E-12</final-emiss-coef>
+                        <final-emiss-coef>5.14543E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -36736,17 +36736,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>4.47245E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.85315E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.78898E-11</final-emiss-coef>
+                        <final-emiss-coef>1.14126E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.13909E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.36668E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>8.55635E-11</final-emiss-coef>
+                        <final-emiss-coef>5.46673E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -37158,17 +37158,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.28498E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>8.1974E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>5.13993E-12</final-emiss-coef>
+                        <final-emiss-coef>3.27896E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.14584E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.92663E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.45833E-11</final-emiss-coef>
+                        <final-emiss-coef>1.57065E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -37580,17 +37580,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.24173E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>7.92145E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>4.96691E-12</final-emiss-coef>
+                        <final-emiss-coef>3.16858E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>5.93895E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.79445E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.37558E-11</final-emiss-coef>
+                        <final-emiss-coef>1.51778E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -38002,17 +38002,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.4005E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>8.93433E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>5.602E-12</final-emiss-coef>
+                        <final-emiss-coef>3.57373E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.69833E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>4.27963E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.67933E-11</final-emiss-coef>
+                        <final-emiss-coef>1.71185E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -38424,17 +38424,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.67978E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.07159E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>6.7191E-12</final-emiss-coef>
+                        <final-emiss-coef>4.28637E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>8.03405E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.13303E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>3.21362E-11</final-emiss-coef>
+                        <final-emiss-coef>2.05321E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3_AWB">
                         <output-driver/>
@@ -38745,7 +38745,7 @@
                   <period year="1990">
                      <generic-ghg name="N2O_AGR">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.35759E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>0.017573299</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.151368694</reduction>
                            <reduction tax="15">0.162648893</reduction>
@@ -38921,17 +38921,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.41456E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.05248E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>9.65824E-12</final-emiss-coef>
+                        <final-emiss-coef>4.20992E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.15461E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.04151E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>4.61843E-11</final-emiss-coef>
+                        <final-emiss-coef>2.01661E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -39364,17 +39364,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.57371E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.85964E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>6.29485E-12</final-emiss-coef>
+                        <final-emiss-coef>2.74386E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.52527E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.28585E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>3.01011E-11</final-emiss-coef>
+                        <final-emiss-coef>1.31434E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -39779,17 +39779,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.13356E-13</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>4.94104E-14</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>4.53422E-14</final-emiss-coef>
+                        <final-emiss-coef>1.97642E-14</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>5.4205E-13</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.36682E-13</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.1682E-13</final-emiss-coef>
+                        <final-emiss-coef>9.46729E-14</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -40623,17 +40623,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>5.68329E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.47728E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.27332E-11</final-emiss-coef>
+                        <final-emiss-coef>9.90913E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.71767E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.18665E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.08707E-10</final-emiss-coef>
+                        <final-emiss-coef>4.7466E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -41045,17 +41045,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.2185E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.40291E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.2874E-11</final-emiss-coef>
+                        <final-emiss-coef>5.61163E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.53904E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.72011E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>6.15616E-11</final-emiss-coef>
+                        <final-emiss-coef>2.68804E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -41467,17 +41467,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.03592E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>8.87433E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>8.14366E-12</final-emiss-coef>
+                        <final-emiss-coef>3.54973E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>9.73546E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>4.25092E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>3.89419E-11</final-emiss-coef>
+                        <final-emiss-coef>1.70037E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -41889,17 +41889,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.1072E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>9.18505E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>8.4288E-12</final-emiss-coef>
+                        <final-emiss-coef>3.67402E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.00763E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>4.39976E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>4.03053E-11</final-emiss-coef>
+                        <final-emiss-coef>1.7599E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -42311,17 +42311,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.53274E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.104E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.0131E-11</final-emiss-coef>
+                        <final-emiss-coef>4.41598E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.21112E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.28828E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>4.84449E-11</final-emiss-coef>
+                        <final-emiss-coef>2.11531E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -42632,7 +42632,7 @@
                   <period year="1990">
                      <generic-ghg name="N2O_AGR">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.22279E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>0.00769751</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.08140847</reduction>
                            <reduction tax="15">0.083343151</reduction>
@@ -42808,17 +42808,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>8.18558E-12</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.8459E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>3.27423E-12</final-emiss-coef>
+                        <final-emiss-coef>1.53836E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.91131E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.83905E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.56452E-11</final-emiss-coef>
+                        <final-emiss-coef>7.35621E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -43251,17 +43251,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>5.33503E-12</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.5066E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.13401E-12</final-emiss-coef>
+                        <final-emiss-coef>1.00264E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.54923E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.19862E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.01969E-11</final-emiss-coef>
+                        <final-emiss-coef>4.79448E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -43666,17 +43666,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.84286E-14</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.80552E-14</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.53714E-14</final-emiss-coef>
+                        <final-emiss-coef>7.22208E-15</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.83623E-13</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>8.63373E-14</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>7.34491E-14</final-emiss-coef>
+                        <final-emiss-coef>3.45349E-14</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -44088,17 +44088,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.04312E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>4.90098E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>4.17248E-12</final-emiss-coef>
+                        <final-emiss-coef>1.96039E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>4.98434E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.34358E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.99373E-11</final-emiss-coef>
+                        <final-emiss-coef>9.37431E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -44510,17 +44510,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.40401E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.1295E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>9.61603E-12</final-emiss-coef>
+                        <final-emiss-coef>4.51798E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.1487E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.40108E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>4.59482E-11</final-emiss-coef>
+                        <final-emiss-coef>2.16043E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -44932,17 +44932,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>8.50441E-12</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.9957E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>3.40176E-12</final-emiss-coef>
+                        <final-emiss-coef>1.59828E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>4.06365E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.91068E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.62546E-11</final-emiss-coef>
+                        <final-emiss-coef>7.64273E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -45354,17 +45354,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.46184E-12</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.50586E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.98473E-12</final-emiss-coef>
+                        <final-emiss-coef>1.40234E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.56548E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.67645E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.42619E-11</final-emiss-coef>
+                        <final-emiss-coef>6.7058E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -45776,17 +45776,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.81181E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>8.51259E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>7.24725E-12</final-emiss-coef>
+                        <final-emiss-coef>3.40504E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>8.65737E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>4.0706E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>3.46295E-11</final-emiss-coef>
+                        <final-emiss-coef>1.62824E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -46198,17 +46198,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>8.58624E-12</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>4.03414E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>3.43449E-12</final-emiss-coef>
+                        <final-emiss-coef>1.61366E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>4.10275E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.92907E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.6411E-11</final-emiss-coef>
+                        <final-emiss-coef>7.71627E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1_AWB">
                         <output-driver/>
@@ -46519,7 +46519,7 @@
                   <period year="1990">
                      <generic-ghg name="N2O_AGR">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>5.54007E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>0.01323222</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.145587713</reduction>
                            <reduction tax="15">0.188417697</reduction>
@@ -46695,17 +46695,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>5.79057E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>8.83908E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.31623E-11</final-emiss-coef>
+                        <final-emiss-coef>3.53563E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.78143E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>4.23265E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.11257E-10</final-emiss-coef>
+                        <final-emiss-coef>1.69306E-10</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -47138,17 +47138,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.77406E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.76096E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.50962E-11</final-emiss-coef>
+                        <final-emiss-coef>2.30438E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.81282E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.75867E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>7.25129E-11</final-emiss-coef>
+                        <final-emiss-coef>1.10347E-10</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -47553,17 +47553,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.71848E-13</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>4.14965E-13</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.08739E-13</final-emiss-coef>
+                        <final-emiss-coef>1.65986E-13</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.30579E-12</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.98709E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>5.22315E-13</final-emiss-coef>
+                        <final-emiss-coef>7.94835E-13</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -48397,17 +48397,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.18716E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.33861E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>8.74863E-11</final-emiss-coef>
+                        <final-emiss-coef>1.33544E-10</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.05057E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.59871E-09</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>4.20229E-10</final-emiss-coef>
+                        <final-emiss-coef>6.39486E-10</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -48819,17 +48819,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>4.52252E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.90345E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.80901E-11</final-emiss-coef>
+                        <final-emiss-coef>2.76138E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.17234E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.30576E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>8.68934E-11</final-emiss-coef>
+                        <final-emiss-coef>1.3223E-10</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -49241,17 +49241,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>4.8918E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>7.46714E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.95672E-11</final-emiss-coef>
+                        <final-emiss-coef>2.98685E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.34971E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.57568E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>9.39885E-11</final-emiss-coef>
+                        <final-emiss-coef>1.43027E-10</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -50085,17 +50085,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.074E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>9.27173E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>2.4296E-11</final-emiss-coef>
+                        <final-emiss-coef>3.70869E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.91757E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>4.43982E-10</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.16703E-10</final-emiss-coef>
+                        <final-emiss-coef>1.77593E-10</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -50406,7 +50406,7 @@
                   <period year="1990">
                      <generic-ghg name="N2O_AGR">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.68654E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>0.040282374</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.138580549</reduction>
                            <reduction tax="15">0.16138384</reduction>
@@ -50582,17 +50582,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.78012E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.78008E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.51205E-11</final-emiss-coef>
+                        <final-emiss-coef>1.11203E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.80787E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.33084E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>7.23148E-11</final-emiss-coef>
+                        <final-emiss-coef>5.32334E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -51025,17 +51025,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.46373E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.81194E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>9.85491E-12</final-emiss-coef>
+                        <final-emiss-coef>7.24777E-13</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.1783E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>8.67384E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>4.71318E-11</final-emiss-coef>
+                        <final-emiss-coef>3.46954E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -51440,17 +51440,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.77464E-13</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.30515E-14</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>7.09856E-14</final-emiss-coef>
+                        <final-emiss-coef>5.22062E-15</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>8.48734E-13</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.24783E-14</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>3.39494E-13</final-emiss-coef>
+                        <final-emiss-coef>2.49913E-14</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -52284,17 +52284,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>8.82319E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.48899E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>3.52928E-11</final-emiss-coef>
+                        <final-emiss-coef>2.5956E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>4.21975E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.10631E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.6879E-10</final-emiss-coef>
+                        <final-emiss-coef>1.24252E-11</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -52706,17 +52706,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.54799E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.60936E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.4192E-11</final-emiss-coef>
+                        <final-emiss-coef>1.04374E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.69685E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.24911E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>6.78741E-11</final-emiss-coef>
+                        <final-emiss-coef>4.99645E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -53128,17 +53128,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.12265E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.29655E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.24906E-11</final-emiss-coef>
+                        <final-emiss-coef>9.18619E-13</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.49343E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.09937E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>5.97373E-11</final-emiss-coef>
+                        <final-emiss-coef>4.39747E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -53550,17 +53550,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.29675E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.42458E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.3187E-11</final-emiss-coef>
+                        <final-emiss-coef>9.69834E-13</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.57669E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.16066E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>6.30678E-11</final-emiss-coef>
+                        <final-emiss-coef>4.64264E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -53972,17 +53972,17 @@
                      </generic-ghg>
                      <generic-ghg name="BC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.96514E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.91615E-12</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>1.58606E-11</final-emiss-coef>
+                        <final-emiss-coef>1.16646E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC_AWB">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.89636E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.39598E-11</uncontrolled-emiss-coef>
                         <gdp-mid-control>10</gdp-mid-control>
                         <gdp-control-range>7.5</gdp-control-range>
-                        <final-emiss-coef>7.58543E-11</final-emiss-coef>
+                        <final-emiss-coef>5.5839E-12</final-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2_AWB">
                         <output-driver/>
@@ -54293,7 +54293,7 @@
                   <period year="1990">
                      <generic-ghg name="N2O_AGR">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>8.64642E-11</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>0.020651613</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.061763054</reduction>
                            <reduction tax="15">0.113737363</reduction>
