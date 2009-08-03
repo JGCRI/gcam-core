@@ -948,18 +948,16 @@ Variable ID,,,,,,
 region,supplysector,tranSubsector,tranTechnology,period,generic-ghg,output-driver
 ALL,trn_freight,air,air,ALL,HFC134a,
 ALL,trn_freight,road,truck ICE,ALL,HFC134a,
-ALL,trn_freight,road,truck fuel cell,ALL,HFC134a,
 ALL,trn_passenger,air,air,ALL,HFC134a,
 ALL,trn_passenger,high speed rail,high speed rail,ALL,HFC134a,
 ALL,trn_passenger,rail,rail ICE,ALL,HFC134a,
 ALL,trn_passenger,rail,rail electric,ALL,HFC134a,
-ALL,trn_passenger,rail,rail fuel cell,ALL,HFC134a,
 ALL,trn_pass_road,LDV,LDV ICE,ALL,HFC134a,
 ALL,trn_pass_road,LDV,LDV electric,ALL,HFC134a,
 ALL,trn_pass_road,LDV,LDV gas,ALL,HFC134a,
 ALL,trn_pass_road,LDV,LDV fuel cell,ALL,HFC134a,
-ALL,trn_pass_road,bus,bus ICE,ALL,HFC134a,,,,,,,,
-ALL,trn_pass_road,bus,bus electric,ALL,HFC134a,,,,,,,,
+ALL,trn_pass_road,bus,bus ICE,ALL,HFC134a,
+ALL,trn_pass_road,bus,bus electric,ALL,HFC134a,
 ALL,trn_pass_road,bus,bus gas,ALL,HFC134a,,,,,,,,
 ALL,trn_pass_road,bus,bus fuel cell,ALL,HFC134a,,,,,,,,
 
@@ -971,130 +969,112 @@ Variable ID,,,,,,,,,,,,,
 region,supplysector,tranSubsector,tranTechnology,generic-ghg,1975,1990,2005,2020,2035,2050,2065,2080,2095
 ALL,trn_freight,air,air,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
 ALL,trn_freight,road,truck ICE,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
-ALL,trn_freight,road,truck fuel cell,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
 ALL,trn_passenger,air,air,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
 ALL,trn_passenger,high speed rail,high speed rail,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
 ALL,trn_passenger,rail,rail ICE,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
 ALL,trn_passenger,rail,rail electric,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
-ALL,trn_passenger,rail,rail fuel cell,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
 ALL,trn_pass_road,LDV,LDV ICE,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
-ALL,trn_pass_road,LDV,LDV electric,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
-ALL,trn_pass_road,LDV,LDV gas,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
-ALL,trn_pass_road,LDV,LDV fuel cell,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
-ALL,trn_pass_road,bus,bus ICE,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
-ALL,trn_pass_road,bus,bus electric,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
-ALL,trn_pass_road,bus,bus gas,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
-ALL,trn_pass_road,bus,bus fuel cell,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
+ALL,trn_pass_road,LDV,LDV electric,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,,,,,
+ALL,trn_pass_road,LDV,LDV gas,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,,,,,
+ALL,trn_pass_road,LDV,LDV fuel cell,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,,,,,
+ALL,trn_pass_road,bus,bus ICE,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,,,,,
+ALL,trn_pass_road,bus,bus electric,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,,,,,
+ALL,trn_pass_road,bus,bus gas,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,,,,,
+ALL,trn_pass_road,bus,bus fuel cell,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,,,,,
 
-Uncontrolled emissions coefficient,,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,
-13015,,,,,,,,,,,,,
+Uncontrolled emissions coefficient,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+13015,,,,,,,,,,,,,,,,,,
 ,,,,,uncontrolled-emiss-coef,,,,,,,,,,,,,
 supplysector,tranSubsector,tranTechnology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
-trn_freight,air,air,2005,HFC134a,2.60878E-08,1.44772E-08,2.67275E-08,2.74139E-08,1.84291E-08,1.09172E-08,4.76662E-08,2.7436E-09,8.34042E-09,2.73626E-08,2.45678E-09,3.35566E-09,5.49788E-09,7.47601E-10
-trn_freight,road,truck ICE,2005,HFC134a,7.51978E-07,4.17304E-07,7.70416E-07,7.902E-07,5.31216E-07,3.14687E-07,1.37397E-06,7.90839E-08,2.40411E-07,7.88723E-07,7.08163E-08,9.67263E-08,1.58476E-07,2.15495E-08
-trn_freight,road,truck fuel cell,2005,HFC134a,7.51978E-07,4.17304E-07,7.70416E-07,7.902E-07,5.31216E-07,3.14687E-07,1.37397E-06,7.90839E-08,2.40411E-07,7.88723E-07,7.08163E-08,9.67263E-08,1.58476E-07,2.15495E-08
-trn_passenger,air,air,2005,HFC134a,5.8236E-09,3.23176E-09,5.96639E-09,6.11961E-09,4.11394E-09,2.43706E-09,1.06406E-08,6.12456E-10,1.86184E-09,6.10818E-09,5.48428E-10,7.49086E-10,1.2273E-09,1.66887E-10
-trn_passenger,high speed rail,high speed rail,2005,HFC134a,5.06929E-09,5.06929E-09,5.06929E-09,5.19948E-09,5.06929E-09,5.06929E-09,5.06929E-09,5.06929E-09,5.06929E-09,5.06929E-09,5.06929E-09,5.06929E-09,1.04276E-09,5.06929E-09
-trn_passenger,rail,rail ICE,2005,HFC134a,1.95181E-07,1.08314E-07,1.99966E-07,2.05102E-07,1.37881E-07,8.16791E-08,3.56623E-07,1.95181E-07,6.24003E-08,2.04718E-07,1.83808E-08,2.51059E-08,4.11333E-08,5.5933E-09
-trn_passenger,rail,rail electric,2005,HFC134a,1.95181E-07,1.08314E-07,1.99966E-07,2.05102E-07,1.37881E-07,8.16791E-08,3.56623E-07,1.95181E-07,6.24003E-08,2.04718E-07,1.83808E-08,2.51059E-08,4.11333E-08,5.5933E-09
-trn_passenger,rail,rail fuel cell,2005,HFC134a,1.95181E-07,1.08314E-07,1.99966E-07,2.05102E-07,1.37881E-07,8.16791E-08,3.56623E-07,1.95181E-07,6.24003E-08,2.04718E-07,1.83808E-08,2.51059E-08,4.11333E-08,5.5933E-09
-trn_pass_road,LDV,LDV ICE,2005,HFC134a,3.53461E-06,1.9615E-06,3.62127E-06,3.71427E-06,2.49694E-06,1.47916E-06,4.78783E-06,3.71727E-07,8.37753E-07,2.74844E-06,2.46771E-07,4.54654E-07,7.44901E-07,7.50927E-08
-trn_pass_road,LDV,LDV electric,2005,HFC134a,3.53461E-06,1.9615E-06,3.62127E-06,3.71427E-06,2.49694E-06,1.47916E-06,4.78783E-06,3.71727E-07,8.37753E-07,2.74844E-06,2.46771E-07,4.54654E-07,7.44901E-07,7.50927E-08
-trn_pass_road,LDV,LDV gas,2005,HFC134a,3.53461E-06,1.9615E-06,3.62127E-06,3.71427E-06,2.49694E-06,1.47916E-06,4.78783E-06,3.71727E-07,8.37753E-07,2.74844E-06,2.46771E-07,4.54654E-07,7.44901E-07,7.50927E-08
-trn_pass_road,LDV,LDV fuel cell,2005,HFC134a,3.53461E-06,1.9615E-06,3.62127E-06,3.71427E-06,2.49694E-06,1.47916E-06,4.78783E-06,3.71727E-07,8.37753E-07,2.74844E-06,2.46771E-07,4.54654E-07,7.44901E-07,7.50927E-08
-trn_pass_road,bus,bus ICE,2005,HFC134a,3.66764E-07,2.03533E-07,3.75757E-07,3.85407E-07,2.59092E-07,1.53483E-07,1.01119E-06,3.85718E-08,8.84667E-08,2.90235E-07,5.21181E-08,4.71766E-08,7.72937E-08,1.58596E-08
-trn_pass_road,bus,bus electric,2005,HFC134a,3.66764E-07,2.03533E-07,3.75757E-07,3.85407E-07,2.59092E-07,1.53483E-07,1.01119E-06,3.85718E-08,8.84667E-08,2.90235E-07,5.21181E-08,4.71766E-08,7.72937E-08,1.58596E-08
-trn_pass_road,bus,bus gas,2005,HFC134a,3.66764E-07,2.03533E-07,3.75757E-07,3.85407E-07,2.59092E-07,1.53483E-07,1.01119E-06,3.85718E-08,8.84667E-08,2.90235E-07,5.21181E-08,4.71766E-08,7.72937E-08,1.58596E-08
-trn_pass_road,bus,bus fuel cell,2005,HFC134a,3.66764E-07,2.03533E-07,3.75757E-07,3.85407E-07,2.59092E-07,1.53483E-07,1.01119E-06,3.85718E-08,8.84667E-08,2.90235E-07,5.21181E-08,4.71766E-08,7.72937E-08,1.58596E-08
+trn_freight,air,air,2005,HFC134a,2.60878E-08,1.44772E-08,2.67275E-08,2.74139E-08,1.84291E-08,1.09172E-08,5.03768E-08,3.63806E-09,1.06995E-08,3.43667E-08,6.56259E-09,6.76263E-09,1.2349E-08,2.76584E-09
+trn_freight,road,truck ICE,2005,HFC134a,7.51978E-07,4.17304E-07,7.70416E-07,7.902E-07,5.31216E-07,3.14687E-07,1.4521E-06,1.04866E-07,3.08412E-07,9.90614E-07,1.89166E-07,1.94932E-07,3.55957E-07,7.97249E-08
+trn_passenger,air,air,2005,HFC134a,5.8236E-09,3.23176E-09,5.96639E-09,6.11961E-09,4.11394E-09,2.43706E-09,1.12456E-08,8.12126E-10,2.38846E-09,7.6717E-09,1.46497E-09,1.50963E-09,2.75666E-09,6.1742E-10
+trn_passenger,high speed rail,high speed rail,2005,HFC134a,5.06929E-09,5.06929E-09,5.06929E-09,5.19948E-09,5.06929E-09,5.06929E-09,5.06929E-09,5.06929E-09,5.06929E-09,5.06929E-09,5.06929E-09,5.06929E-09,2.34218E-09,5.06929E-09
+trn_passenger,rail,rail ICE,2005,HFC134a,1.95181E-07,1.08314E-07,1.99966E-07,2.05102E-07,1.37881E-07,8.16791E-08,3.76903E-07,1.95181E-07,8.00503E-08,2.5712E-07,4.90992E-08,5.05958E-08,9.23908E-08,2.06931E-08
+trn_passenger,rail,rail electric,2005,HFC134a,1.95181E-07,1.08314E-07,1.99966E-07,2.05102E-07,1.37881E-07,8.16791E-08,3.76903E-07,1.95181E-07,8.00503E-08,2.5712E-07,4.90992E-08,5.05958E-08,9.23908E-08,2.06931E-08
+trn_pass_road,LDV,LDV ICE,2005,HFC134a,3.53461E-06,1.9615E-06,3.62127E-06,3.71427E-06,2.49694E-06,1.47916E-06,5.0601E-06,4.92916E-07,1.07471E-06,3.45196E-06,6.59179E-07,9.16259E-07,1.67314E-06,2.77815E-07
+trn_pass_road,LDV,LDV electric,2005,HFC134a,3.53461E-06,1.9615E-06,3.62127E-06,3.71427E-06,2.49694E-06,1.47916E-06,5.0601E-06,4.92916E-07,1.07471E-06,3.45196E-06,6.59179E-07,9.16259E-07,1.67314E-06,2.77815E-07
+trn_pass_road,LDV,LDV gas,2005,HFC134a,3.53461E-06,1.9615E-06,3.62127E-06,3.71427E-06,2.49694E-06,1.47916E-06,5.0601E-06,4.92916E-07,1.07471E-06,3.45196E-06,6.59179E-07,9.16259E-07,1.67314E-06,2.77815E-07
+trn_pass_road,LDV,LDV fuel cell,2005,HFC134a,3.53461E-06,1.9615E-06,3.62127E-06,3.71427E-06,2.49694E-06,1.47916E-06,5.0601E-06,4.92916E-07,1.07471E-06,3.45196E-06,6.59179E-07,9.16259E-07,1.67314E-06,2.77815E-07
+trn_pass_road,bus,bus ICE,2005,HFC134a,3.66764E-07,2.03533E-07,3.75757E-07,3.85407E-07,2.59092E-07,1.53483E-07,5.34346E-07,5.11468E-08,1.1349E-07,3.64527E-07,6.96093E-08,9.50746E-08,1.73612E-07,2.93372E-08
+trn_pass_road,bus,bus electric,2005,HFC134a,3.66764E-07,2.03533E-07,3.75757E-07,3.85407E-07,2.59092E-07,1.53483E-07,5.34346E-07,5.11468E-08,1.1349E-07,3.64527E-07,6.96093E-08,9.50746E-08,1.73612E-07,2.93372E-08
+trn_pass_road,bus,bus gas,2005,HFC134a,3.66764E-07,2.03533E-07,3.75757E-07,3.85407E-07,2.59092E-07,1.53483E-07,5.34346E-07,5.11468E-08,1.1349E-07,3.64527E-07,6.96093E-08,9.50746E-08,1.73612E-07,2.93372E-08
+trn_pass_road,bus,bus fuel cell,2005,HFC134a,3.66764E-07,2.03533E-07,3.75757E-07,3.85407E-07,2.59092E-07,1.53483E-07,5.34346E-07,5.11468E-08,1.1349E-07,3.64527E-07,6.96093E-08,9.50746E-08,1.73612E-07,2.93372E-08
 
 Marginal abatement cost curves (apply to road techs only),,,,,,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,,,,,,
-13070,,,,,,,,,,,,,,,,,,
+13070,,,,,,,,,,,
 
-region,supplysector,subsector,technology,period,gas,0,10,20,50,100,200,,,,,,,
-USA,trn_freight,road,truck ICE,2005,HFC134a,0.126,0.168,0.416,0.416,0.677,0.677,,,,,,,
-USA,trn_freight,road,truck fuel cell,2005,HFC134a,0.126,0.168,0.416,0.416,0.677,0.677,,,,,,,
-USA,trn_pass_road,LDV,LDV ICE,2005,HFC134a,0.126,0.168,0.416,0.416,0.677,0.677,,,,,,,
-USA,trn_pass_road,LDV,LDV electric,2005,HFC134a,0.126,0.168,0.416,0.416,0.677,0.677,,,,,,,
-USA,trn_pass_road,LDV,LDV gas,2005,HFC134a,0.126,0.168,0.416,0.416,0.677,0.677,,,,,,,
-USA,trn_pass_road,LDV,LDV fuel cell,2005,HFC134a,0.126,0.168,0.416,0.416,0.677,0.677,,,,,,,
-Canada,trn_freight,road,truck ICE,2005,HFC134a,0.168,0.21,0.458,0.458,0.721,0.721,,,,,,,
-Canada,trn_freight,road,truck fuel cell,2005,HFC134a,0.168,0.21,0.458,0.458,0.721,0.721
+region,supplysector,subsector,technology,period,gas,0,10,20,50,100,200
+USA,trn_freight,road,truck ICE,2005,HFC134a,0.126,0.168,0.416,0.416,0.677,0.677
+USA,trn_pass_road,LDV,LDV ICE,2005,HFC134a,0.126,0.168,0.416,0.416,0.677,0.677
+USA,trn_pass_road,LDV,LDV electric,2005,HFC134a,0.126,0.168,0.416,0.416,0.677,0.677
+USA,trn_pass_road,LDV,LDV gas,2005,HFC134a,0.126,0.168,0.416,0.416,0.677,0.677
+USA,trn_pass_road,LDV,LDV fuel cell,2005,HFC134a,0.126,0.168,0.416,0.416,0.677,0.677
+Canada,trn_freight,road,truck ICE,2005,HFC134a,0.168,0.21,0.458,0.458,0.721,0.721
 Canada,trn_pass_road,LDV,LDV ICE,2005,HFC134a,0.168,0.21,0.458,0.458,0.721,0.721
 Canada,trn_pass_road,LDV,LDV electric,2005,HFC134a,0.168,0.21,0.458,0.458,0.721,0.721
 Canada,trn_pass_road,LDV,LDV gas,2005,HFC134a,0.168,0.21,0.458,0.458,0.721,0.721
 Canada,trn_pass_road,LDV,LDV fuel cell,2005,HFC134a,0.168,0.21,0.458,0.458,0.721,0.721
 Western Europe,trn_freight,road,truck ICE,2005,HFC134a,0.189331663,0.256159355,0.443469174,0.461148731,0.570559614,0.721286248
-Western Europe,trn_freight,road,truck fuel cell,2005,HFC134a,0.189331663,0.256159355,0.443469174,0.461148731,0.570559614,0.721286248
 Western Europe,trn_pass_road,LDV,LDV ICE,2005,HFC134a,0.189331663,0.256159355,0.443469174,0.461148731,0.570559614,0.721286248
 Western Europe,trn_pass_road,LDV,LDV electric,2005,HFC134a,0.189331663,0.256159355,0.443469174,0.461148731,0.570559614,0.721286248
 Western Europe,trn_pass_road,LDV,LDV gas,2005,HFC134a,0.189331663,0.256159355,0.443469174,0.461148731,0.570559614,0.721286248
 Western Europe,trn_pass_road,LDV,LDV fuel cell,2005,HFC134a,0.189331663,0.256159355,0.443469174,0.461148731,0.570559614,0.721286248
 Japan,trn_freight,road,truck ICE,2005,HFC134a,0.168,0.21,0.458,0.458,0.458,0.548
-Japan,trn_freight,road,truck fuel cell,2005,HFC134a,0.168,0.21,0.458,0.458,0.458,0.548
 Japan,trn_pass_road,LDV,LDV ICE,2005,HFC134a,0.168,0.21,0.458,0.458,0.458,0.548
 Japan,trn_pass_road,LDV,LDV electric,2005,HFC134a,0.168,0.21,0.458,0.458,0.458,0.548
 Japan,trn_pass_road,LDV,LDV gas,2005,HFC134a,0.168,0.21,0.458,0.458,0.458,0.548
 Japan,trn_pass_road,LDV,LDV fuel cell,2005,HFC134a,0.168,0.21,0.458,0.458,0.458,0.548
 Australia_NZ,trn_freight,road,truck ICE,2005,HFC134a,0.168,0.21,0.458,0.458,0.721,0.721
-Australia_NZ,trn_freight,road,truck fuel cell,2005,HFC134a,0.168,0.21,0.458,0.458,0.721,0.721
 Australia_NZ,trn_pass_road,LDV,LDV ICE,2005,HFC134a,0.168,0.21,0.458,0.458,0.721,0.721
 Australia_NZ,trn_pass_road,LDV,LDV electric,2005,HFC134a,0.168,0.21,0.458,0.458,0.721,0.721
 Australia_NZ,trn_pass_road,LDV,LDV gas,2005,HFC134a,0.168,0.21,0.458,0.458,0.721,0.721
 Australia_NZ,trn_pass_road,LDV,LDV fuel cell,2005,HFC134a,0.168,0.21,0.458,0.458,0.721,0.721
 Former Soviet Union,trn_freight,road,truck ICE,2005,HFC134a,0.304251875,0.510111966,0.510111966,0.647146164,0.725373032,0.725737451
-Former Soviet Union,trn_freight,road,truck fuel cell,2005,HFC134a,0.304251875,0.510111966,0.510111966,0.647146164,0.725373032,0.725737451
 Former Soviet Union,trn_pass_road,LDV,LDV ICE,2005,HFC134a,0.304251875,0.510111966,0.510111966,0.647146164,0.725373032,0.725737451
 Former Soviet Union,trn_pass_road,LDV,LDV electric,2005,HFC134a,0.304251875,0.510111966,0.510111966,0.647146164,0.725373032,0.725737451
 Former Soviet Union,trn_pass_road,LDV,LDV gas,2005,HFC134a,0.304251875,0.510111966,0.510111966,0.647146164,0.725373032,0.725737451
 Former Soviet Union,trn_pass_road,LDV,LDV fuel cell,2005,HFC134a,0.304251875,0.510111966,0.510111966,0.647146164,0.725373032,0.725737451
 China,trn_freight,road,truck ICE,2005,HFC134a,0.371,0.601,0.601,0.688,0.733,0.734
-China,trn_freight,road,truck fuel cell,2005,HFC134a,0.371,0.601,0.601,0.688,0.733,0.734
 China,trn_pass_road,LDV,LDV ICE,2005,HFC134a,0.371,0.601,0.601,0.688,0.733,0.734
 China,trn_pass_road,LDV,LDV electric,2005,HFC134a,0.371,0.601,0.601,0.688,0.733,0.734
 China,trn_pass_road,LDV,LDV gas,2005,HFC134a,0.371,0.601,0.601,0.688,0.733,0.734
 China,trn_pass_road,LDV,LDV fuel cell,2005,HFC134a,0.371,0.601,0.601,0.688,0.733,0.734
 Middle East,trn_freight,road,truck ICE,2005,HFC134a,0.105,0.23,0.601,0.601,0.733,0.734
-Middle East,trn_freight,road,truck fuel cell,2005,HFC134a,0.105,0.23,0.601,0.601,0.733,0.734
 Middle East,trn_pass_road,LDV,LDV ICE,2005,HFC134a,0.105,0.23,0.601,0.601,0.733,0.734
 Middle East,trn_pass_road,LDV,LDV electric,2005,HFC134a,0.105,0.23,0.601,0.601,0.733,0.734
 Middle East,trn_pass_road,LDV,LDV gas,2005,HFC134a,0.105,0.23,0.601,0.601,0.733,0.734
 Middle East,trn_pass_road,LDV,LDV fuel cell,2005,HFC134a,0.105,0.23,0.601,0.601,0.733,0.734
 Africa,trn_freight,road,truck ICE,2005,HFC134a,0.371,0.601,0.601,0.688,0.733,0.734
-Africa,trn_freight,road,truck fuel cell,2005,HFC134a,0.371,0.601,0.601,0.688,0.733,0.734
 Africa,trn_pass_road,LDV,LDV ICE,2005,HFC134a,0.371,0.601,0.601,0.688,0.733,0.734
 Africa,trn_pass_road,LDV,LDV electric,2005,HFC134a,0.371,0.601,0.601,0.688,0.733,0.734
 Africa,trn_pass_road,LDV,LDV gas,2005,HFC134a,0.371,0.601,0.601,0.688,0.733,0.734
 Africa,trn_pass_road,LDV,LDV fuel cell,2005,HFC134a,0.371,0.601,0.601,0.688,0.733,0.734
 Latin America,trn_freight,road,truck ICE,2005,HFC134a,0.38,0.601,0.601,0.601,0.691,0.734
-Latin America,trn_freight,road,truck fuel cell,2005,HFC134a,0.38,0.601,0.601,0.601,0.691,0.734
 Latin America,trn_pass_road,LDV,LDV ICE,2005,HFC134a,0.38,0.601,0.601,0.601,0.691,0.734
 Latin America,trn_pass_road,LDV,LDV electric,2005,HFC134a,0.38,0.601,0.601,0.601,0.691,0.734
 Latin America,trn_pass_road,LDV,LDV gas,2005,HFC134a,0.38,0.601,0.601,0.601,0.691,0.734
 Latin America,trn_pass_road,LDV,LDV fuel cell,2005,HFC134a,0.38,0.601,0.601,0.601,0.691,0.734
 Southeast Asia,trn_freight,road,truck ICE,2005,HFC134a,0.454,0.601,0.601,0.601,0.722,0.734
-Southeast Asia,trn_freight,road,truck fuel cell,2005,HFC134a,0.454,0.601,0.601,0.601,0.722,0.734
 Southeast Asia,trn_pass_road,LDV,LDV ICE,2005,HFC134a,0.454,0.601,0.601,0.601,0.722,0.734
 Southeast Asia,trn_pass_road,LDV,LDV electric,2005,HFC134a,0.454,0.601,0.601,0.601,0.722,0.734
 Southeast Asia,trn_pass_road,LDV,LDV gas,2005,HFC134a,0.454,0.601,0.601,0.601,0.722,0.734
 Southeast Asia,trn_pass_road,LDV,LDV fuel cell,2005,HFC134a,0.454,0.601,0.601,0.601,0.722,0.734
 Eastern Europe,trn_freight,road,truck ICE,2005,HFC134a,0.396846161,0.458,0.458,0.458,0.721,0.721
-Eastern Europe,trn_freight,road,truck fuel cell,2005,HFC134a,0.396846161,0.458,0.458,0.458,0.721,0.721
 Eastern Europe,trn_pass_road,LDV,LDV ICE,2005,HFC134a,0.396846161,0.458,0.458,0.458,0.721,0.721
 Eastern Europe,trn_pass_road,LDV,LDV electric,2005,HFC134a,0.396846161,0.458,0.458,0.458,0.721,0.721
 Eastern Europe,trn_pass_road,LDV,LDV gas,2005,HFC134a,0.396846161,0.458,0.458,0.458,0.721,0.721
 Eastern Europe,trn_pass_road,LDV,LDV fuel cell,2005,HFC134a,0.396846161,0.458,0.458,0.458,0.721,0.721
 Korea,trn_freight,road,truck ICE,2005,HFC134a,0.105,0.601,0.601,0.601,0.733,0.734
-Korea,trn_freight,road,truck fuel cell,2005,HFC134a,0.105,0.601,0.601,0.601,0.733,0.734
 Korea,trn_pass_road,LDV,LDV ICE,2005,HFC134a,0.105,0.601,0.601,0.601,0.733,0.734
 Korea,trn_pass_road,LDV,LDV electric,2005,HFC134a,0.105,0.601,0.601,0.601,0.733,0.734
 Korea,trn_pass_road,LDV,LDV gas,2005,HFC134a,0.105,0.601,0.601,0.601,0.733,0.734
 Korea,trn_pass_road,LDV,LDV fuel cell,2005,HFC134a,0.105,0.601,0.601,0.601,0.733,0.734
 India,trn_freight,road,truck ICE,2005,HFC134a,0.476,0.601,0.601,0.601,0.643,0.734
-India,trn_freight,road,truck fuel cell,2005,HFC134a,0.476,0.601,0.601,0.601,0.643,0.734
 India,trn_pass_road,LDV,LDV ICE,2005,HFC134a,0.476,0.601,0.601,0.601,0.643,0.734
 India,trn_pass_road,LDV,LDV electric,2005,HFC134a,0.476,0.601,0.601,0.601,0.643,0.734
 India,trn_pass_road,LDV,LDV gas,2005,HFC134a,0.476,0.601,0.601,0.601,0.643,0.734

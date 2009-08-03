@@ -1098,71 +1098,6 @@
                      </generic-ghg>
                   </period>
                </tranTechnology>
-               <tranTechnology name="truck fuel cell" nocreate="1">
-                  <period year="1975">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="1990">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2005">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>7.51978E-07</uncontrolled-emiss-coef>
-                        <MAC>
-                           <reduction tax="0">0.126</reduction>
-                           <reduction tax="10">0.168</reduction>
-                           <reduction tax="20">0.416</reduction>
-                           <reduction tax="50">0.416</reduction>
-                           <reduction tax="100">0.677</reduction>
-                           <reduction tax="200">0.677</reduction>
-                        </MAC>
-                     </generic-ghg>
-                  </period>
-                  <period year="2020">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2035">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2050">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2065">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2080">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2095">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-               </tranTechnology>
             </tranSubsector>
             <tranSubsector name="domestic ship" nocreate="1">
                <tranTechnology name="domestic ship ICE" nocreate="1">
@@ -2222,63 +2157,6 @@
                   </period>
                </tranTechnology>
                <tranTechnology name="rail electric" nocreate="1">
-                  <period year="1975">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="1990">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2005">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>1.95181E-07</uncontrolled-emiss-coef>
-                     </generic-ghg>
-                  </period>
-                  <period year="2020">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2035">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2050">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2065">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2080">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2095">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-               </tranTechnology>
-               <tranTechnology name="rail fuel cell" nocreate="1">
                   <period year="1975">
                      <generic-ghg name="HFC134a">
                         <output-driver/>
@@ -4972,71 +4850,6 @@
                      </generic-ghg>
                   </period>
                </tranTechnology>
-               <tranTechnology name="truck fuel cell" nocreate="1">
-                  <period year="1975">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="1990">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2005">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>4.17304E-07</uncontrolled-emiss-coef>
-                        <MAC>
-                           <reduction tax="0">0.168</reduction>
-                           <reduction tax="10">0.21</reduction>
-                           <reduction tax="20">0.458</reduction>
-                           <reduction tax="50">0.458</reduction>
-                           <reduction tax="100">0.721</reduction>
-                           <reduction tax="200">0.721</reduction>
-                        </MAC>
-                     </generic-ghg>
-                  </period>
-                  <period year="2020">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2035">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2050">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2065">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2080">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2095">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-               </tranTechnology>
             </tranSubsector>
             <tranSubsector name="domestic ship" nocreate="1">
                <tranTechnology name="domestic ship ICE" nocreate="1">
@@ -6096,63 +5909,6 @@
                   </period>
                </tranTechnology>
                <tranTechnology name="rail electric" nocreate="1">
-                  <period year="1975">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="1990">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2005">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>1.08314E-07</uncontrolled-emiss-coef>
-                     </generic-ghg>
-                  </period>
-                  <period year="2020">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2035">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2050">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2065">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2080">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2095">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-               </tranTechnology>
-               <tranTechnology name="rail fuel cell" nocreate="1">
                   <period year="1975">
                      <generic-ghg name="HFC134a">
                         <output-driver/>
@@ -8846,71 +8602,6 @@
                      </generic-ghg>
                   </period>
                </tranTechnology>
-               <tranTechnology name="truck fuel cell" nocreate="1">
-                  <period year="1975">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="1990">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2005">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>7.70416E-07</uncontrolled-emiss-coef>
-                        <MAC>
-                           <reduction tax="0">0.189331663</reduction>
-                           <reduction tax="10">0.256159355</reduction>
-                           <reduction tax="20">0.443469174</reduction>
-                           <reduction tax="50">0.461148731</reduction>
-                           <reduction tax="100">0.570559614</reduction>
-                           <reduction tax="200">0.721286248</reduction>
-                        </MAC>
-                     </generic-ghg>
-                  </period>
-                  <period year="2020">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2035">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2050">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2065">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2080">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2095">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-               </tranTechnology>
             </tranSubsector>
             <tranSubsector name="domestic ship" nocreate="1">
                <tranTechnology name="domestic ship ICE" nocreate="1">
@@ -9970,63 +9661,6 @@
                   </period>
                </tranTechnology>
                <tranTechnology name="rail electric" nocreate="1">
-                  <period year="1975">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="1990">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2005">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>1.99966E-07</uncontrolled-emiss-coef>
-                     </generic-ghg>
-                  </period>
-                  <period year="2020">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2035">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2050">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2065">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2080">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2095">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-               </tranTechnology>
-               <tranTechnology name="rail fuel cell" nocreate="1">
                   <period year="1975">
                      <generic-ghg name="HFC134a">
                         <output-driver/>
@@ -12720,71 +12354,6 @@
                      </generic-ghg>
                   </period>
                </tranTechnology>
-               <tranTechnology name="truck fuel cell" nocreate="1">
-                  <period year="1975">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="1990">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2005">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>7.902E-07</uncontrolled-emiss-coef>
-                        <MAC>
-                           <reduction tax="0">0.168</reduction>
-                           <reduction tax="10">0.21</reduction>
-                           <reduction tax="20">0.458</reduction>
-                           <reduction tax="50">0.458</reduction>
-                           <reduction tax="100">0.458</reduction>
-                           <reduction tax="200">0.548</reduction>
-                        </MAC>
-                     </generic-ghg>
-                  </period>
-                  <period year="2020">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2035">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2050">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2065">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2080">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2095">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-               </tranTechnology>
             </tranSubsector>
             <tranSubsector name="domestic ship" nocreate="1">
                <tranTechnology name="domestic ship ICE" nocreate="1">
@@ -13844,63 +13413,6 @@
                   </period>
                </tranTechnology>
                <tranTechnology name="rail electric" nocreate="1">
-                  <period year="1975">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="1990">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2005">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>2.05102E-07</uncontrolled-emiss-coef>
-                     </generic-ghg>
-                  </period>
-                  <period year="2020">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2035">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2050">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2065">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2080">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2095">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-               </tranTechnology>
-               <tranTechnology name="rail fuel cell" nocreate="1">
                   <period year="1975">
                      <generic-ghg name="HFC134a">
                         <output-driver/>
@@ -16594,71 +16106,6 @@
                      </generic-ghg>
                   </period>
                </tranTechnology>
-               <tranTechnology name="truck fuel cell" nocreate="1">
-                  <period year="1975">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="1990">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2005">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>5.31216E-07</uncontrolled-emiss-coef>
-                        <MAC>
-                           <reduction tax="0">0.168</reduction>
-                           <reduction tax="10">0.21</reduction>
-                           <reduction tax="20">0.458</reduction>
-                           <reduction tax="50">0.458</reduction>
-                           <reduction tax="100">0.721</reduction>
-                           <reduction tax="200">0.721</reduction>
-                        </MAC>
-                     </generic-ghg>
-                  </period>
-                  <period year="2020">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2035">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2050">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2065">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2080">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2095">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-               </tranTechnology>
             </tranSubsector>
             <tranSubsector name="domestic ship" nocreate="1">
                <tranTechnology name="domestic ship ICE" nocreate="1">
@@ -17718,63 +17165,6 @@
                   </period>
                </tranTechnology>
                <tranTechnology name="rail electric" nocreate="1">
-                  <period year="1975">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="1990">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2005">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>1.37881E-07</uncontrolled-emiss-coef>
-                     </generic-ghg>
-                  </period>
-                  <period year="2020">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2035">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2050">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2065">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2080">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2095">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-               </tranTechnology>
-               <tranTechnology name="rail fuel cell" nocreate="1">
                   <period year="1975">
                      <generic-ghg name="HFC134a">
                         <output-driver/>
@@ -20468,71 +19858,6 @@
                      </generic-ghg>
                   </period>
                </tranTechnology>
-               <tranTechnology name="truck fuel cell" nocreate="1">
-                  <period year="1975">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="1990">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2005">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>3.14687E-07</uncontrolled-emiss-coef>
-                        <MAC>
-                           <reduction tax="0">0.304251875</reduction>
-                           <reduction tax="10">0.510111966</reduction>
-                           <reduction tax="20">0.510111966</reduction>
-                           <reduction tax="50">0.647146164</reduction>
-                           <reduction tax="100">0.725373032</reduction>
-                           <reduction tax="200">0.725737451</reduction>
-                        </MAC>
-                     </generic-ghg>
-                  </period>
-                  <period year="2020">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2035">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2050">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2065">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2080">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2095">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-               </tranTechnology>
             </tranSubsector>
             <tranSubsector name="domestic ship" nocreate="1">
                <tranTechnology name="domestic ship ICE" nocreate="1">
@@ -21592,63 +20917,6 @@
                   </period>
                </tranTechnology>
                <tranTechnology name="rail electric" nocreate="1">
-                  <period year="1975">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="1990">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2005">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>8.16791E-08</uncontrolled-emiss-coef>
-                     </generic-ghg>
-                  </period>
-                  <period year="2020">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2035">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2050">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2065">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2080">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2095">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-               </tranTechnology>
-               <tranTechnology name="rail fuel cell" nocreate="1">
                   <period year="1975">
                      <generic-ghg name="HFC134a">
                         <output-driver/>
@@ -23377,7 +22645,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>4.76662E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.03768E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -24132,7 +23400,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>1.37397E-06</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.4521E-06</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.371</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -24336,71 +23604,6 @@
                      <generic-ghg name="SO2_2">
                         <input-driver/>
                      </generic-ghg>
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-               </tranTechnology>
-               <tranTechnology name="truck fuel cell" nocreate="1">
-                  <period year="1975">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="1990">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2005">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>1.37397E-06</uncontrolled-emiss-coef>
-                        <MAC>
-                           <reduction tax="0">0.371</reduction>
-                           <reduction tax="10">0.601</reduction>
-                           <reduction tax="20">0.601</reduction>
-                           <reduction tax="50">0.688</reduction>
-                           <reduction tax="100">0.733</reduction>
-                           <reduction tax="200">0.734</reduction>
-                        </MAC>
-                     </generic-ghg>
-                  </period>
-                  <period year="2020">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2035">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2050">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2065">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2080">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2095">
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
@@ -24818,7 +24021,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>1.06406E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.12456E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -25133,7 +24336,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>3.56623E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.76903E-07</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -25482,64 +24685,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>3.56623E-07</uncontrolled-emiss-coef>
-                     </generic-ghg>
-                  </period>
-                  <period year="2020">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2035">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2050">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2065">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2080">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2095">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-               </tranTechnology>
-               <tranTechnology name="rail fuel cell" nocreate="1">
-                  <period year="1975">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="1990">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2005">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>3.56623E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.76903E-07</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -26065,7 +25211,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>4.78783E-06</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.0601E-06</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.371</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -26320,7 +25466,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>4.78783E-06</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.0601E-06</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.371</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -26421,7 +25567,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>4.78783E-06</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.0601E-06</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.371</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -26486,7 +25632,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>4.78783E-06</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.0601E-06</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.371</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -26679,7 +25825,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>1.01119E-06</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.34346E-07</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -26926,7 +26072,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>1.01119E-06</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.34346E-07</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -27019,7 +26165,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>1.01119E-06</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.34346E-07</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -27076,7 +26222,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>1.01119E-06</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.34346E-07</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -27251,7 +26397,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>2.7436E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.63806E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -28006,7 +27152,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>7.90839E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.04866E-07</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.105</reduction>
                            <reduction tax="10">0.23</reduction>
@@ -28210,71 +27356,6 @@
                      <generic-ghg name="SO2_3">
                         <input-driver/>
                      </generic-ghg>
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-               </tranTechnology>
-               <tranTechnology name="truck fuel cell" nocreate="1">
-                  <period year="1975">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="1990">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2005">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>7.90839E-08</uncontrolled-emiss-coef>
-                        <MAC>
-                           <reduction tax="0">0.105</reduction>
-                           <reduction tax="10">0.23</reduction>
-                           <reduction tax="20">0.601</reduction>
-                           <reduction tax="50">0.601</reduction>
-                           <reduction tax="100">0.733</reduction>
-                           <reduction tax="200">0.734</reduction>
-                        </MAC>
-                     </generic-ghg>
-                  </period>
-                  <period year="2020">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2035">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2050">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2065">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2080">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2095">
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
@@ -28692,7 +27773,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>6.12456E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>8.12126E-10</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -29340,63 +28421,6 @@
                   </period>
                </tranTechnology>
                <tranTechnology name="rail electric" nocreate="1">
-                  <period year="1975">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="1990">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2005">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>1.95181E-07</uncontrolled-emiss-coef>
-                     </generic-ghg>
-                  </period>
-                  <period year="2020">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2035">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2050">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2065">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2080">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2095">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-               </tranTechnology>
-               <tranTechnology name="rail fuel cell" nocreate="1">
                   <period year="1975">
                      <generic-ghg name="HFC134a">
                         <output-driver/>
@@ -29939,7 +28963,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>3.71727E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>4.92916E-07</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.105</reduction>
                            <reduction tax="10">0.23</reduction>
@@ -30194,7 +29218,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>3.71727E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>4.92916E-07</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.105</reduction>
                            <reduction tax="10">0.23</reduction>
@@ -30295,7 +29319,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>3.71727E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>4.92916E-07</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.105</reduction>
                            <reduction tax="10">0.23</reduction>
@@ -30360,7 +29384,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>3.71727E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>4.92916E-07</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.105</reduction>
                            <reduction tax="10">0.23</reduction>
@@ -30553,7 +29577,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>3.85718E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.11468E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -30800,7 +29824,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>3.85718E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.11468E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -30893,7 +29917,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>3.85718E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.11468E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -30950,7 +29974,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>3.85718E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.11468E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -31125,7 +30149,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>8.34042E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.06995E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -31880,7 +30904,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>2.40411E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.08412E-07</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.371</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -32084,71 +31108,6 @@
                      <generic-ghg name="SO2_3">
                         <input-driver/>
                      </generic-ghg>
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-               </tranTechnology>
-               <tranTechnology name="truck fuel cell" nocreate="1">
-                  <period year="1975">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="1990">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2005">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>2.40411E-07</uncontrolled-emiss-coef>
-                        <MAC>
-                           <reduction tax="0">0.371</reduction>
-                           <reduction tax="10">0.601</reduction>
-                           <reduction tax="20">0.601</reduction>
-                           <reduction tax="50">0.688</reduction>
-                           <reduction tax="100">0.733</reduction>
-                           <reduction tax="200">0.734</reduction>
-                        </MAC>
-                     </generic-ghg>
-                  </period>
-                  <period year="2020">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2035">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2050">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2065">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2080">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2095">
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
@@ -32566,7 +31525,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>1.86184E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.38846E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -32881,7 +31840,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>6.24003E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>8.00503E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -33230,64 +32189,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>6.24003E-08</uncontrolled-emiss-coef>
-                     </generic-ghg>
-                  </period>
-                  <period year="2020">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2035">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2050">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2065">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2080">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2095">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-               </tranTechnology>
-               <tranTechnology name="rail fuel cell" nocreate="1">
-                  <period year="1975">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="1990">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2005">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>6.24003E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>8.00503E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -33813,7 +32715,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>8.37753E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.07471E-06</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.371</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -34068,7 +32970,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>8.37753E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.07471E-06</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.371</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -34169,7 +33071,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>8.37753E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.07471E-06</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.371</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -34234,7 +33136,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>8.37753E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.07471E-06</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.371</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -34427,7 +33329,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>8.84667E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.1349E-07</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -34674,7 +33576,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>8.84667E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.1349E-07</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -34767,7 +33669,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>8.84667E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.1349E-07</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -34824,7 +33726,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>8.84667E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.1349E-07</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -34999,7 +33901,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>2.73626E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.43667E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -35754,7 +34656,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>7.88723E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>9.90614E-07</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.38</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -35958,71 +34860,6 @@
                      <generic-ghg name="SO2_3">
                         <input-driver/>
                      </generic-ghg>
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-               </tranTechnology>
-               <tranTechnology name="truck fuel cell" nocreate="1">
-                  <period year="1975">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="1990">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2005">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>7.88723E-07</uncontrolled-emiss-coef>
-                        <MAC>
-                           <reduction tax="0">0.38</reduction>
-                           <reduction tax="10">0.601</reduction>
-                           <reduction tax="20">0.601</reduction>
-                           <reduction tax="50">0.601</reduction>
-                           <reduction tax="100">0.691</reduction>
-                           <reduction tax="200">0.734</reduction>
-                        </MAC>
-                     </generic-ghg>
-                  </period>
-                  <period year="2020">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2035">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2050">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2065">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2080">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2095">
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
@@ -36440,7 +35277,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>6.10818E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>7.6717E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -36755,7 +35592,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>2.04718E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.5712E-07</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -37104,64 +35941,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>2.04718E-07</uncontrolled-emiss-coef>
-                     </generic-ghg>
-                  </period>
-                  <period year="2020">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2035">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2050">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2065">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2080">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2095">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-               </tranTechnology>
-               <tranTechnology name="rail fuel cell" nocreate="1">
-                  <period year="1975">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="1990">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2005">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>2.04718E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.5712E-07</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -37687,7 +36467,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>2.74844E-06</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.45196E-06</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.38</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -37942,7 +36722,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>2.74844E-06</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.45196E-06</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.38</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -38043,7 +36823,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>2.74844E-06</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.45196E-06</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.38</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -38108,7 +36888,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>2.74844E-06</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.45196E-06</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.38</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -38301,7 +37081,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>2.90235E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.64527E-07</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -38548,7 +37328,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>2.90235E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.64527E-07</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -38641,7 +37421,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>2.90235E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.64527E-07</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -38698,7 +37478,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>2.90235E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.64527E-07</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -38873,7 +37653,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>2.45678E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.56259E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -39628,7 +38408,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>7.08163E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.89166E-07</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.454</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -39832,71 +38612,6 @@
                      <generic-ghg name="SO2_2">
                         <input-driver/>
                      </generic-ghg>
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-               </tranTechnology>
-               <tranTechnology name="truck fuel cell" nocreate="1">
-                  <period year="1975">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="1990">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2005">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>7.08163E-08</uncontrolled-emiss-coef>
-                        <MAC>
-                           <reduction tax="0">0.454</reduction>
-                           <reduction tax="10">0.601</reduction>
-                           <reduction tax="20">0.601</reduction>
-                           <reduction tax="50">0.601</reduction>
-                           <reduction tax="100">0.722</reduction>
-                           <reduction tax="200">0.734</reduction>
-                        </MAC>
-                     </generic-ghg>
-                  </period>
-                  <period year="2020">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2035">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2050">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2065">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2080">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2095">
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
@@ -40314,7 +39029,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>5.48428E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.46497E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -40629,7 +39344,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>1.83808E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>4.90992E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -40978,64 +39693,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>1.83808E-08</uncontrolled-emiss-coef>
-                     </generic-ghg>
-                  </period>
-                  <period year="2020">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2035">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2050">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2065">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2080">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2095">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-               </tranTechnology>
-               <tranTechnology name="rail fuel cell" nocreate="1">
-                  <period year="1975">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="1990">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2005">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>1.83808E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>4.90992E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -41561,7 +40219,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>2.46771E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.59179E-07</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.454</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -41816,7 +40474,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>2.46771E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.59179E-07</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.454</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -41917,7 +40575,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>2.46771E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.59179E-07</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.454</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -41982,7 +40640,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>2.46771E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.59179E-07</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.454</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -42175,7 +40833,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>5.21181E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.96093E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -42422,7 +41080,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>5.21181E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.96093E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -42515,7 +41173,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>5.21181E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.96093E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -42572,7 +41230,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>5.21181E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.96093E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -42747,7 +41405,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>3.35566E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.76263E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -43502,7 +42160,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>9.67263E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.94932E-07</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.396846161</reduction>
                            <reduction tax="10">0.458</reduction>
@@ -43706,71 +42364,6 @@
                      <generic-ghg name="SO2_1">
                         <input-driver/>
                      </generic-ghg>
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-               </tranTechnology>
-               <tranTechnology name="truck fuel cell" nocreate="1">
-                  <period year="1975">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="1990">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2005">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>9.67263E-08</uncontrolled-emiss-coef>
-                        <MAC>
-                           <reduction tax="0">0.396846161</reduction>
-                           <reduction tax="10">0.458</reduction>
-                           <reduction tax="20">0.458</reduction>
-                           <reduction tax="50">0.458</reduction>
-                           <reduction tax="100">0.721</reduction>
-                           <reduction tax="200">0.721</reduction>
-                        </MAC>
-                     </generic-ghg>
-                  </period>
-                  <period year="2020">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2035">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2050">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2065">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2080">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2095">
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
@@ -44188,7 +42781,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>7.49086E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.50963E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -44503,7 +43096,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>2.51059E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.05958E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -44852,64 +43445,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>2.51059E-08</uncontrolled-emiss-coef>
-                     </generic-ghg>
-                  </period>
-                  <period year="2020">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2035">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2050">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2065">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2080">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2095">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-               </tranTechnology>
-               <tranTechnology name="rail fuel cell" nocreate="1">
-                  <period year="1975">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="1990">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2005">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>2.51059E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>5.05958E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -45435,7 +43971,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>4.54654E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>9.16259E-07</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.396846161</reduction>
                            <reduction tax="10">0.458</reduction>
@@ -45690,7 +44226,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>4.54654E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>9.16259E-07</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.396846161</reduction>
                            <reduction tax="10">0.458</reduction>
@@ -45791,7 +44327,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>4.54654E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>9.16259E-07</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.396846161</reduction>
                            <reduction tax="10">0.458</reduction>
@@ -45856,7 +44392,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>4.54654E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>9.16259E-07</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.396846161</reduction>
                            <reduction tax="10">0.458</reduction>
@@ -46049,7 +44585,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>4.71766E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>9.50746E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -46296,7 +44832,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>4.71766E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>9.50746E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -46389,7 +44925,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>4.71766E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>9.50746E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -46446,7 +44982,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>4.71766E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>9.50746E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -46621,7 +45157,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>5.49788E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.2349E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -47376,7 +45912,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>1.58476E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>3.55957E-07</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.105</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -47580,71 +46116,6 @@
                      <generic-ghg name="SO2_2">
                         <input-driver/>
                      </generic-ghg>
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-               </tranTechnology>
-               <tranTechnology name="truck fuel cell" nocreate="1">
-                  <period year="1975">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="1990">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2005">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>1.58476E-07</uncontrolled-emiss-coef>
-                        <MAC>
-                           <reduction tax="0">0.105</reduction>
-                           <reduction tax="10">0.601</reduction>
-                           <reduction tax="20">0.601</reduction>
-                           <reduction tax="50">0.601</reduction>
-                           <reduction tax="100">0.733</reduction>
-                           <reduction tax="200">0.734</reduction>
-                        </MAC>
-                     </generic-ghg>
-                  </period>
-                  <period year="2020">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2035">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2050">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2065">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2080">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2095">
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
@@ -48062,7 +46533,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>1.2273E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.75666E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -48377,7 +46848,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>4.11333E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>9.23908E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -48726,64 +47197,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>4.11333E-08</uncontrolled-emiss-coef>
-                     </generic-ghg>
-                  </period>
-                  <period year="2020">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2035">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2050">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2065">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2080">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2095">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-               </tranTechnology>
-               <tranTechnology name="rail fuel cell" nocreate="1">
-                  <period year="1975">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="1990">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2005">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>4.11333E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>9.23908E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -48842,7 +47256,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>1.04276E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.34218E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -49309,7 +47723,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>7.44901E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.67314E-06</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.105</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -49564,7 +47978,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>7.44901E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.67314E-06</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.105</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -49665,7 +48079,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>7.44901E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.67314E-06</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.105</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -49730,7 +48144,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>7.44901E-07</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.67314E-06</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.105</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -49923,7 +48337,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>7.72937E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.73612E-07</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -50170,7 +48584,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>7.72937E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.73612E-07</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -50263,7 +48677,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>7.72937E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.73612E-07</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -50320,7 +48734,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>7.72937E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>1.73612E-07</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -50495,7 +48909,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>7.47601E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.76584E-09</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -51250,7 +49664,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>2.15495E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>7.97249E-08</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.476</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -51454,71 +49868,6 @@
                      <generic-ghg name="SO2_2">
                         <input-driver/>
                      </generic-ghg>
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-               </tranTechnology>
-               <tranTechnology name="truck fuel cell" nocreate="1">
-                  <period year="1975">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="1990">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2005">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>2.15495E-08</uncontrolled-emiss-coef>
-                        <MAC>
-                           <reduction tax="0">0.476</reduction>
-                           <reduction tax="10">0.601</reduction>
-                           <reduction tax="20">0.601</reduction>
-                           <reduction tax="50">0.601</reduction>
-                           <reduction tax="100">0.643</reduction>
-                           <reduction tax="200">0.734</reduction>
-                        </MAC>
-                     </generic-ghg>
-                  </period>
-                  <period year="2020">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2035">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2050">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2065">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2080">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2095">
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
@@ -51936,7 +50285,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>1.66887E-10</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>6.1742E-10</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -52251,7 +50600,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>5.5933E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06931E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -52600,64 +50949,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>5.5933E-09</uncontrolled-emiss-coef>
-                     </generic-ghg>
-                  </period>
-                  <period year="2020">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2035">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2050">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2065">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2080">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2095">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-               </tranTechnology>
-               <tranTechnology name="rail fuel cell" nocreate="1">
-                  <period year="1975">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="1990">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                     </generic-ghg>
-                  </period>
-                  <period year="2005">
-                     <generic-ghg name="HFC134a">
-                        <output-driver/>
-                        <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>5.5933E-09</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.06931E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -53183,7 +51475,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>7.50927E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.77815E-07</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.476</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -53438,7 +51730,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>7.50927E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.77815E-07</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.476</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -53539,7 +51831,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>7.50927E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.77815E-07</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.476</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -53604,7 +51896,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>7.50927E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.77815E-07</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.476</reduction>
                            <reduction tax="10">0.601</reduction>
@@ -53797,7 +52089,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>1.58596E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.93372E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -54044,7 +52336,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>1.58596E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.93372E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -54137,7 +52429,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>1.58596E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.93372E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
@@ -54194,7 +52486,7 @@
                      <generic-ghg name="HFC134a">
                         <output-driver/>
                         <emissions-unit>Gg</emissions-unit>
-                        <uncontrolled-emiss-coef>1.58596E-08</uncontrolled-emiss-coef>
+                        <uncontrolled-emiss-coef>2.93372E-08</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2020">
