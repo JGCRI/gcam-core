@@ -66,15 +66,15 @@ Canada,RiceDemand,1,702162,702162,1565004,0,0
 Western Europe,RiceDemand,1,8401725,8401725,12168752,0,0
 Japan,RiceDemand,1,38876676,38876676,37940003,0,0
 Australia_NZ,RiceDemand,1,1047470,1047470,797690,0,0
-Former Soviet Union,RiceDemand,1,6994534,6994534,5657545,0,-0.05
-China,RiceDemand,1,591757621,591757621,629636557,0,-0.05
-Middle East,RiceDemand,1,18591119,18591119,18596914,0,-0.05
-Africa,RiceDemand,1,44877173,44877173,81114160,0,-0.05
-Latin America,RiceDemand,1,44493485,44493485,77395753,0,-0.05
-Southeast Asia,RiceDemand,1,332654059,332654059,469039578,0,-0.05
-Eastern Europe,RiceDemand,1,1653931,1653931,1647590,0,-0.05
-Korea,RiceDemand,1,22661128,22661128,18168127,0,-0.05
-India,RiceDemand,1,301181476,301181476,362589972,0,-0.05
+Former Soviet Union,RiceDemand,1,6994534,6994534,5657545,0,0
+China,RiceDemand,1,591757621,591757621,629636557,0,0
+Middle East,RiceDemand,1,18591119,18591119,18596914,0,0
+Africa,RiceDemand,1,44877173,44877173,81114160,0,0
+Latin America,RiceDemand,1,44493485,44493485,77395753,0,0
+Southeast Asia,RiceDemand,1,332654059,332654059,469039578,0,0
+Eastern Europe,RiceDemand,1,1653931,1653931,1647590,0,0
+Korea,RiceDemand,1,22661128,22661128,18168127,0,0
+India,RiceDemand,1,301181476,301181476,362589972,0,0
 USA,SugarCropDemand,1,92759574,92759574,111415664,0,0
 Canada,SugarCropDemand,1,13734342,13734342,17824468,0,0
 Western Europe,SugarCropDemand,1,120518861,120518861,116302008,0,0
@@ -94,15 +94,15 @@ Canada,WheatDemand,1,34969991,34969991,28598901,0,0
 Western Europe,WheatDemand,1,247922155,247922155,259004736,0,0
 Japan,WheatDemand,1,21416646,21416646,22333671,0,0
 Australia_NZ,WheatDemand,1,13329257,13329257,31174625,0,0
-Former Soviet Union,WheatDemand,1,174812055,174812055,163211074,0,-0.05
-China,WheatDemand,1,395702683,395702683,367119388,0,-0.05
-Middle East,WheatDemand,1,68315043,68315043,86208588,0,-0.05
-Africa,WheatDemand,1,107478106,107478106,185846122,0,-0.05
-Latin America,WheatDemand,1,80363777,80363777,99853110,0,-0.05
-Southeast Asia,WheatDemand,1,88126844,88126844,130519239,0,-0.05
-Eastern Europe,WheatDemand,1,86024986,86024986,66960708,0,-0.05
-Korea,WheatDemand,1,6753759,6753759,10250568,0,-0.05
-India,WheatDemand,1,171753480,171753480,228968158,0,-0.05
+Former Soviet Union,WheatDemand,1,174812055,174812055,163211074,0,0
+China,WheatDemand,1,395702683,395702683,367119388,0,0
+Middle East,WheatDemand,1,68315043,68315043,86208588,0,0
+Africa,WheatDemand,1,107478106,107478106,185846122,0,0
+Latin America,WheatDemand,1,80363777,80363777,99853110,0,0
+Southeast Asia,WheatDemand,1,88126844,88126844,130519239,0,0
+Eastern Europe,WheatDemand,1,86024986,86024986,66960708,0,0
+Korea,WheatDemand,1,6753759,6753759,10250568,0,0
+India,WheatDemand,1,171753480,171753480,228968158,0,0
 USA,FiberCropDemand,1,3375000000,3375000000,5201000000,0,0
 Canada,FiberCropDemand,1,10,10,10,0,0
 Western Europe,FiberCropDemand,1,1073939000,1073939000,1134270000,0,0
@@ -125,7 +125,7 @@ Food demand supplysectors: unit tags and sector type,,,,,,,
 INPUT_TABLE,,,,,,,
 Variable ID,,,,,,,
 50,,,,,,,
-,,,,,,,
+
 region,supplysector,input-unit,output-unit,price-unit,sectorType
 ALL,CornDemand,Gcal,Gcal,1975$/Gcal,agDemand
 ALL,MiscCropDemand,Gcal,Gcal,1975$/Gcal,agDemand
@@ -142,7 +142,7 @@ Scale Year,,,,,
 INPUT_TABLE,,,,,
 Variable ID,,,,,
 500,,,,,
-,,,
+
 region,supplysector,subsector,scaleYear
 USA,CornDemand,CornDemand,2005
 Canada,CornDemand,CornDemand,2005
@@ -248,7 +248,7 @@ Foodgrain Nonfood Demands Scale Year,,,
 INPUT_TABLE,,,
 Variable ID,,,
 500,,,
-,,,
+
 region,supplysector,subsector,scaleYear
 USA,CornDemand,CornNonFoodDemand,2005
 Canada,CornDemand,CornNonFoodDemand,2005
@@ -354,7 +354,7 @@ Efficiency,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,
 5006,,,,,,,,,,,,,
-,,,,,,,,,,,,,
+
 region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input
 ALL,CornDemand,CornDemand,CornDemand,1,1,1,1,1,1,1,1,1,Corn
 ALL,MiscCropDemand,MiscCropDemand,MiscCropDemand,1,1,1,1,1,1,1,1,1,MiscCrop
@@ -371,7 +371,7 @@ ALL,RiceDemand,RiceNonFoodDemand,RiceNonFoodDemand,1,1,1,1,1,1,1,1,1,Rice
 ALL,SugarCropDemand,SugarCropNonFoodDemand,SugarCropNonFoodDemand,1,1,1,1,1,1,1,1,1,SugarCrop
 ALL,WheatDemand,WheatNonFoodDemand,WheatNonFoodDemand,1,1,1,1,1,1,1,1,1,Wheat
 ALL,FiberCropDemand,FiberCropNonFoodDemand,FiberCropNonFoodDemand,1,1,1,1,1,1,1,1,1,FiberCrop
-,,,,,,,,,,,,,
+
 
 Calibrated demands,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,
@@ -398,38 +398,38 @@ Canada,MiscCropDemand,MiscCropDemand,MiscCropDemand,4288529,6452283,MiscCrop,,Su
 Western Europe,MiscCropDemand,MiscCropDemand,MiscCropDemand,90676228,97219181,MiscCrop,,Wheat,1638658006,1781515007,,1638655024,1781489346
 Japan,MiscCropDemand,MiscCropDemand,MiscCropDemand,15092662,16673510,MiscCrop,,,,,,,
 Australia_NZ,MiscCropDemand,MiscCropDemand,MiscCropDemand,3009354,3405039,MiscCrop,,,check (no need to scale if close to 1),,,,
-Former Soviet Union,MiscCropDemand,MiscCropDemand,MiscCropDemand,35943183,45259122,MiscCrop,,Corn,1990,2005,
-China,MiscCropDemand,MiscCropDemand,MiscCropDemand,130690930,263357805,MiscCrop,,MiscCrop,0.999996367,0.999999954,
-Middle East,MiscCropDemand,MiscCropDemand,MiscCropDemand,15616966,25340323,MiscCrop,,OilCrop,1,1,
-Africa,MiscCropDemand,MiscCropDemand,MiscCropDemand,163913246,244793562,MiscCrop,,OtherGrain,0.999999989,1,
-Latin America,MiscCropDemand,MiscCropDemand,MiscCropDemand,74804163,93812456,MiscCrop,,Rice,1,0.999999977,
-Southeast Asia,MiscCropDemand,MiscCropDemand,MiscCropDemand,61094814,102153328,MiscCrop,,SugarCrop,0.999999986,0.999999977,
-Eastern Europe,MiscCropDemand,MiscCropDemand,MiscCropDemand,17614862,17857672,MiscCrop,,Wheat,0.999999992,0.999999996,
-Korea,MiscCropDemand,MiscCropDemand,MiscCropDemand,5019967,6911513,MiscCrop,,,0.99999818,0.999985596,
-India,MiscCropDemand,MiscCropDemand,MiscCropDemand,90357216,128664749,MiscCrop,,,,,
-USA,OilCropDemand,OilCropDemand,OilCropDemand,76363917,77696965,OilCrop,,,,,
-Canada,OilCropDemand,OilCropDemand,OilCropDemand,4593506,6631972,OilCrop,,,,,
-Western Europe,OilCropDemand,OilCropDemand,OilCropDemand,72186277,97227359,OilCrop,,,,,
-Japan,OilCropDemand,OilCropDemand,OilCropDemand,22714776,30209606,OilCrop,,,,,
-Australia_NZ,OilCropDemand,OilCropDemand,OilCropDemand,4036572,6225679,OilCrop,,,,,
-Former Soviet Union,OilCropDemand,OilCropDemand,OilCropDemand,1823843,29370273,OilCrop,,,,,
-China,OilCropDemand,OilCropDemand,OilCropDemand,122289072,314447024,OilCrop,,,,,
-Middle East,OilCropDemand,OilCropDemand,OilCropDemand,16864250,31956055,OilCrop,,,,,
-Africa,OilCropDemand,OilCropDemand,OilCropDemand,62431288,104100496,OilCrop,,,,,
-Latin America,OilCropDemand,OilCropDemand,OilCropDemand,71632482,93949318,OilCrop,,,,,
-Southeast Asia,OilCropDemand,OilCropDemand,OilCropDemand,75495628,104501147,OilCrop,,,,,
-Eastern Europe,OilCropDemand,OilCropDemand,OilCropDemand,7300024,13604846,OilCrop,,,,,
-Korea,OilCropDemand,OilCropDemand,OilCropDemand,6870051,12653045,OilCrop,,,,,
-India,OilCropDemand,OilCropDemand,OilCropDemand,82501148,153869392,OilCrop,,,,,
-USA,OtherGrainDemand,OtherGrainDemand,OtherGrainDemand,13306038,7514717,OtherGrain,,,,,
-Canada,OtherGrainDemand,OtherGrainDemand,OtherGrainDemand,1028045,1455957,OtherGrain,,,,,
-Western Europe,OtherGrainDemand,OtherGrainDemand,OtherGrainDemand,22742310,20925429,OtherGrain,,,,,
-Japan,OtherGrainDemand,OtherGrainDemand,OtherGrainDemand,3439469,3776200,OtherGrain,,,,,
-Australia_NZ,OtherGrainDemand,OtherGrainDemand,OtherGrainDemand,1404175,961749,OtherGrain,,,,,
-Former Soviet Union,OtherGrainDemand,OtherGrainDemand,OtherGrainDemand,15366832,17117736,OtherGrain,,,,,
-China,OtherGrainDemand,OtherGrainDemand,OtherGrainDemand,30003741,22378772,OtherGrain,,,,,
-Middle East,OtherGrainDemand,OtherGrainDemand,OtherGrainDemand,3296262,6277331,OtherGrain,,,,,
-Africa,OtherGrainDemand,OtherGrainDemand,OtherGrainDemand,77806107,111328493,OtherGrain,,,,,
+Former Soviet Union,MiscCropDemand,MiscCropDemand,MiscCropDemand,35943183,45259122,MiscCrop,,Corn,1990,2005
+China,MiscCropDemand,MiscCropDemand,MiscCropDemand,130690930,263357805,MiscCrop,,MiscCrop,0.999996367,0.999999954
+Middle East,MiscCropDemand,MiscCropDemand,MiscCropDemand,15616966,25340323,MiscCrop,,OilCrop,1,1
+Africa,MiscCropDemand,MiscCropDemand,MiscCropDemand,163913246,244793562,MiscCrop,,OtherGrain,0.999999989,1
+Latin America,MiscCropDemand,MiscCropDemand,MiscCropDemand,74804163,93812456,MiscCrop,,Rice,1,0.999999977
+Southeast Asia,MiscCropDemand,MiscCropDemand,MiscCropDemand,61094814,102153328,MiscCrop,,SugarCrop,0.999999986,0.999999977
+Eastern Europe,MiscCropDemand,MiscCropDemand,MiscCropDemand,17614862,17857672,MiscCrop,,Wheat,0.999999992,0.999999996
+Korea,MiscCropDemand,MiscCropDemand,MiscCropDemand,5019967,6911513,MiscCrop,,,0.99999818,0.999985596
+India,MiscCropDemand,MiscCropDemand,MiscCropDemand,90357216,128664749,MiscCrop,,,,
+USA,OilCropDemand,OilCropDemand,OilCropDemand,76363917,77696965,OilCrop,,,,
+Canada,OilCropDemand,OilCropDemand,OilCropDemand,4593506,6631972,OilCrop,,,,
+Western Europe,OilCropDemand,OilCropDemand,OilCropDemand,72186277,97227359,OilCrop,,,,
+Japan,OilCropDemand,OilCropDemand,OilCropDemand,22714776,30209606,OilCrop,,,,
+Australia_NZ,OilCropDemand,OilCropDemand,OilCropDemand,4036572,6225679,OilCrop,,,,
+Former Soviet Union,OilCropDemand,OilCropDemand,OilCropDemand,1823843,29370273,OilCrop,,,,
+China,OilCropDemand,OilCropDemand,OilCropDemand,122289072,314447024,OilCrop,,,,
+Middle East,OilCropDemand,OilCropDemand,OilCropDemand,16864250,31956055,OilCrop
+Africa,OilCropDemand,OilCropDemand,OilCropDemand,62431288,104100496,OilCrop
+Latin America,OilCropDemand,OilCropDemand,OilCropDemand,71632482,93949318,OilCrop
+Southeast Asia,OilCropDemand,OilCropDemand,OilCropDemand,75495628,104501147,OilCrop
+Eastern Europe,OilCropDemand,OilCropDemand,OilCropDemand,7300024,13604846,OilCrop
+Korea,OilCropDemand,OilCropDemand,OilCropDemand,6870051,12653045,OilCrop
+India,OilCropDemand,OilCropDemand,OilCropDemand,82501148,153869392,OilCrop
+USA,OtherGrainDemand,OtherGrainDemand,OtherGrainDemand,13306038,7514717,OtherGrain
+Canada,OtherGrainDemand,OtherGrainDemand,OtherGrainDemand,1028045,1455957,OtherGrain
+Western Europe,OtherGrainDemand,OtherGrainDemand,OtherGrainDemand,22742310,20925429,OtherGrain
+Japan,OtherGrainDemand,OtherGrainDemand,OtherGrainDemand,3439469,3776200,OtherGrain
+Australia_NZ,OtherGrainDemand,OtherGrainDemand,OtherGrainDemand,1404175,961749,OtherGrain
+Former Soviet Union,OtherGrainDemand,OtherGrainDemand,OtherGrainDemand,15366832,17117736,OtherGrain
+China,OtherGrainDemand,OtherGrainDemand,OtherGrainDemand,30003741,22378772,OtherGrain
+Middle East,OtherGrainDemand,OtherGrainDemand,OtherGrainDemand,3296262,6277331,OtherGrain
+Africa,OtherGrainDemand,OtherGrainDemand,OtherGrainDemand,77806107,111328493,OtherGrain
 Latin America,OtherGrainDemand,OtherGrainDemand,OtherGrainDemand,7916761,12123463,OtherGrain
 Southeast Asia,OtherGrainDemand,OtherGrainDemand,OtherGrainDemand,3961544,4982834,OtherGrain
 Eastern Europe,OtherGrainDemand,OtherGrainDemand,OtherGrainDemand,8051638,9632375,OtherGrain
@@ -477,13 +477,13 @@ Southeast Asia,WheatDemand,WheatDemand,WheatDemand,76383930,103908936,Wheat
 Eastern Europe,WheatDemand,WheatDemand,WheatDemand,55441325,42129491,Wheat
 Korea,WheatDemand,WheatDemand,WheatDemand,6753749,9893915,Wheat
 India,WheatDemand,WheatDemand,WheatDemand,163464142,228968148,Wheat
-,,,,,,
-,,,,,,
+
+
 Calibrated demands: other net use demands,,,,,,
 INPUT_TABLE,,,,,,
 Variable ID,,,,,,
 5000,,,,,,
-,,,,,,
+
 region,supplysector,subsector,technology,1990,2005,minicam-energy-input
 USA,CornDemand,CornNonFoodDemand,CornNonFoodDemand,92220140,211235669,Corn
 Canada,CornDemand,CornNonFoodDemand,CornNonFoodDemand,7511923,11929646,Corn
@@ -583,8 +583,8 @@ Southeast Asia,WheatDemand,WheatNonFoodDemand,WheatNonFoodDemand,11742915,266103
 Eastern Europe,WheatDemand,WheatNonFoodDemand,WheatNonFoodDemand,30583661,24831217,Wheat
 Korea,WheatDemand,WheatNonFoodDemand,WheatNonFoodDemand,10,356653,Wheat
 India,WheatDemand,WheatNonFoodDemand,WheatNonFoodDemand,8289338,10,Wheat
-,,,,,,
-,,,,,,
+
+
 Calibrated demands: other net use demands,,,,,,
 INPUT_TABLE,,,,,,
 Variable ID,,,,,,
@@ -605,11 +605,11 @@ Southeast Asia,FiberCropDemand,FiberCropNonFoodDemand,FiberCropNonFoodDemand,282
 Eastern Europe,FiberCropDemand,FiberCropNonFoodDemand,FiberCropNonFoodDemand,10,10,FiberCrop
 Korea,FiberCropDemand,FiberCropNonFoodDemand,FiberCropNonFoodDemand,10,10,FiberCrop
 India,FiberCropDemand,FiberCropNonFoodDemand,FiberCropNonFoodDemand,3375300000,5283200000,FiberCrop
-,,,,,,
+
 
 Non-energy input cost,,,,,,,,,,,,
 table not necessary,,,,,,,,,,,,
-,,,,,,,,,,,,
+
 5002,,,,,,,,,,,,
 ,,,,input-cost,,,,,,,,
 region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
@@ -628,8 +628,8 @@ ALL,RiceDemand,RiceNonFoodDemand,RiceNonFoodDemand,0,0,0,0,0,0,0,0,0
 ALL,SugarCropDemand,SugarCropNonFoodDemand,SugarCropNonFoodDemand,0,0,0,0,0,0,0,0,0
 ALL,WheatDemand,WheatNonFoodDemand,WheatNonFoodDemand,0,0,0,0,0,0,0,0,0
 ALL,FiberCropDemand,FiberCropNonFoodDemand,FiberCropNonFoodDemand,0,0,0,0,0,0,0,0,0
-,,,,,,,,,,,,
-,,,,,,,,,,,,
+
+
 add CO2 tag,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
