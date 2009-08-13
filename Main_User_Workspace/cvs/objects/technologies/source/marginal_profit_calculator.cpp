@@ -78,12 +78,19 @@ double MarginalProfitCalculator::calcShortTermMarginalProfit( const string& aReg
                                                        aSectorName,
                                                        aPeriod );
     
-    // Variable costs are positive. Renewable technologies could
-    // have zero variable costs.
-    assert( variableCosts >= 0 );
 
-    // Marginal profit is defined here as the percentage that price exceeds
-    // variable costs
-    double marginalProfit = (marginalRevenue - variableCosts) / variableCosts;
+    /* Marginal profit is defined here as the percentage that price exceeds
+    variable costs. Absolute value is used in the denominator since there is at least
+    one situation (i.e., bio+CCS where the carbon credit exceeds the costs of using
+    biomass) where, at least as the model defines it, variable costs can be negative.
+    In this case, marginal profit will always be very positive, so there should be no
+    problem introduced by using the absolute value in the denominator. In the vast
+    majority of situations, variable costs will be positive and using absolute value
+    will have no impact. A Very Small Number is also added to the denominator in case
+	that the variable cost is zero, as it could be with renewables, which should
+	not be shut down based on marginal profit either (MAW 8-6-09) */
+
+    double marginalProfit = ( marginalRevenue - variableCosts ) / 
+		                    ( fabs(variableCosts) + util::getVerySmallNumber() );
     return marginalProfit;
 }
