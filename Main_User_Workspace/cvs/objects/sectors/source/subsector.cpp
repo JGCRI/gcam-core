@@ -772,8 +772,10 @@ void Subsector::initCalc( NationalAccount* aNationalAccount,
             shrwts[ aPeriod ] = 0;
         }
         // Reinitialize share weights to 1 for competing subsector with non-zero read-in share weight
-        // for calibration periods only.
-        else if( shrwts[ aPeriod ] != 0 && aPeriod <= modeltime->getFinalCalibrationPeriod() ){
+        // for calibration periods only, but only if calibration values are read in any of the technologies
+        // in this subsector (as there are cases where you want to fix these shares on a pass-through sector).
+        else if( shrwts[ aPeriod ] != 0 && aPeriod <= modeltime->getFinalCalibrationPeriod() 
+                && getTotalCalOutputs( aPeriod ) > 0.0 ){
             // Reinitialize to 1 to remove bias, calculate new share weights and
             // normalize in postCalc to anchor to dominant subsector.
             shrwts[ aPeriod ] = 1.0;
