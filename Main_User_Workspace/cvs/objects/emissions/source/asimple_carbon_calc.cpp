@@ -122,7 +122,6 @@ void ASimpleCarbonCalc::calc( const int aYear ) {
         // BelowGroundCarbon affects future model periods that are not overwritten
         calcAboveGroundCarbonEmission( aYear, false );
         calcBelowGroundCarbonEmission( aYear, false );
-
     }
     // Otherwise...
     else {
@@ -137,7 +136,7 @@ void ASimpleCarbonCalc::calc( const int aYear ) {
         // If the period was already calculated, remove the previously added
         // emissions or uptake from the totals.
         else {
-            for( int i = startYear; i <= endYear; ++i ){
+            for( int i = aYear; i <= endYear; ++i ){
                 mTotalEmissions[ i ] -= mStoredEmissions[ aPeriod ][ i - startYear ];
 
                 // Clear the current emissions for the year.
@@ -199,6 +198,13 @@ void ASimpleCarbonCalc::calcSigmoidCurve( double carbonDifference, const unsigne
 
     double futureCarbon = 0.0;
     double lastCarbonValue = 0.0;
+
+    // This code removed from the loop below for speed
+    vector<double>* currStoredEmissions = 0;
+    if( aIsCurrentYear ) {
+        const int period = scenario->getModeltime()->getyr_to_per( aYear );
+        currStoredEmissions = &mStoredEmissions[ period ];
+    }    
     for( int currYear = aYear; currYear <= endYear; ++currYear ){
         // Calculate the future emissions for the year defined by the sigmoid function:
         // E(t) = a(1-e^(-10t/b))^b    where a is carbonDifference and b is mMatureAge.
@@ -217,9 +223,8 @@ void ASimpleCarbonCalc::calcSigmoidCurve( double carbonDifference, const unsigne
         // once, unlike current emissions calculations which need to remove the
         // effect of the previous iteration.
         if( aIsCurrentYear ){
-            int period = scenario->getModeltime()->getyr_to_per( aYear );
             mCurrentEmissions[ currYear ] += futureAnnualEmiss;
-            mStoredEmissions[ period ][ currYear - startYear ] += futureAnnualEmiss;
+            (*currStoredEmissions)[ currYear - startYear ] += futureAnnualEmiss;
         }
         
         // Add to the total carbon emission for the year. This will be the sum
@@ -355,6 +360,14 @@ void ASimpleCarbonCalc::calcBelowGroundCarbonEmission( const unsigned int aYear,
     const int endYear = CarbonModelUtils::getEndYear();
     const int startYear = CarbonModelUtils::getStartYear();
     const double emissionRate = 100.0 / CarbonModelUtils::getSoilTimeScale() / 100.0;
+    
+    // This code removed from the loop below for speed
+    vector<double>* currStoredEmissions = 0;
+    if( aIsCurrentYear ){
+        const int period = modeltime->getyr_to_per( aYear );
+        currStoredEmissions = &mStoredEmissions[ period ];
+    }
+
     for( int currYear = aYear; currYear <= endYear; ++currYear ){
         double futureAnnualEmiss = carbonDifference * emissionRate;
         carbonDifference -= futureAnnualEmiss;
@@ -363,9 +376,8 @@ void ASimpleCarbonCalc::calcBelowGroundCarbonEmission( const unsigned int aYear,
         // once, unlike current emissions calculations which need to remove the
         // effect of the previous iteration.
         if( aIsCurrentYear ){
-            int aPeriod = modeltime->getyr_to_per( aYear );
-            mCurrentEmissions[ currYear ] += futureAnnualEmiss;            
-            mStoredEmissions[ aPeriod ][ currYear - startYear ] += futureAnnualEmiss;
+            mCurrentEmissions[ currYear ] += futureAnnualEmiss;  
+           (*currStoredEmissions)[ currYear - startYear ] += futureAnnualEmiss;
         }
 
         // Add to the total carbon emission for the year. This will be the sum
