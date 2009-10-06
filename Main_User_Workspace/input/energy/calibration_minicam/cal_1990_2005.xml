@@ -3,10 +3,10 @@
    <world>
       <region name="Africa">
          <supplysector name="refined liquids enduse">
-            <subsector name="biomass liquids">
+            <subsector name="biomass liquids-ethanol">
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <technology name="biomass liquids">
+               <technology name="biomass liquids-ethanol">
                   <period year="1990">
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
@@ -734,10 +734,10 @@
       </region>
       <region name="Australia_NZ">
          <supplysector name="refined liquids enduse">
-            <subsector name="biomass liquids">
+            <subsector name="biomass liquids-ethanol">
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">1</sharewt>
-               <technology name="biomass liquids">
+               <technology name="biomass liquids-ethanol">
                   <period year="1990">
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
@@ -1451,10 +1451,10 @@
       </region>
       <region name="Canada">
          <supplysector name="refined liquids enduse">
-            <subsector name="biomass liquids">
+            <subsector name="biomass liquids-ethanol">
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">1</sharewt>
-               <technology name="biomass liquids">
+               <technology name="biomass liquids-ethanol">
                   <period year="1990">
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
@@ -2168,10 +2168,10 @@
       </region>
       <region name="China">
          <supplysector name="refined liquids enduse">
-            <subsector name="biomass liquids">
+            <subsector name="biomass liquids-ethanol">
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <technology name="biomass liquids">
+               <technology name="biomass liquids-ethanol">
                   <period year="1990">
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
@@ -2899,10 +2899,10 @@
       </region>
       <region name="Eastern Europe">
          <supplysector name="refined liquids enduse">
-            <subsector name="biomass liquids">
+            <subsector name="biomass liquids-ethanol">
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
-               <technology name="biomass liquids">
+               <technology name="biomass liquids-ethanol">
                   <period year="1990">
                      <CalDataOutput>
                         <calOutputValue>0.000544284</calOutputValue>
@@ -3616,10 +3616,10 @@
       </region>
       <region name="Former Soviet Union">
          <supplysector name="refined liquids enduse">
-            <subsector name="biomass liquids">
+            <subsector name="biomass liquids-ethanol">
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">1</sharewt>
-               <technology name="biomass liquids">
+               <technology name="biomass liquids-ethanol">
                   <period year="1990">
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
@@ -4336,10 +4336,10 @@
       </region>
       <region name="India">
          <supplysector name="refined liquids enduse">
-            <subsector name="biomass liquids">
+            <subsector name="biomass liquids-ethanol">
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">1</sharewt>
-               <technology name="biomass liquids">
+               <technology name="biomass liquids-ethanol">
                   <period year="1990">
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
@@ -5072,10 +5072,10 @@
       </region>
       <region name="Japan">
          <supplysector name="refined liquids enduse">
-            <subsector name="biomass liquids">
+            <subsector name="biomass liquids-ethanol">
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <technology name="biomass liquids">
+               <technology name="biomass liquids-ethanol">
                   <period year="1990">
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
@@ -5789,10 +5789,10 @@
       </region>
       <region name="Korea">
          <supplysector name="refined liquids enduse">
-            <subsector name="biomass liquids">
+            <subsector name="biomass liquids-ethanol">
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">1</sharewt>
-               <technology name="biomass liquids">
+               <technology name="biomass liquids-ethanol">
                   <period year="1990">
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
@@ -6509,10 +6509,10 @@
       </region>
       <region name="Latin America">
          <supplysector name="refined liquids enduse">
-            <subsector name="biomass liquids">
+            <subsector name="biomass liquids-ethanol">
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
-               <technology name="biomass liquids">
+               <technology name="biomass liquids-ethanol">
                   <period year="1990">
                      <CalDataOutput>
                         <calOutputValue>0.251752284</calOutputValue>
@@ -7240,10 +7240,10 @@
       </region>
       <region name="Middle East">
          <supplysector name="refined liquids enduse">
-            <subsector name="biomass liquids">
+            <subsector name="biomass liquids-ethanol">
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <technology name="biomass liquids">
+               <technology name="biomass liquids-ethanol">
                   <period year="1990">
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
@@ -7958,10 +7958,10 @@
       </region>
       <region name="Southeast Asia">
          <supplysector name="refined liquids enduse">
-            <subsector name="biomass liquids">
+            <subsector name="biomass liquids-ethanol">
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <technology name="biomass liquids">
+               <technology name="biomass liquids-ethanol">
                   <period year="1990">
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
@@ -8691,10 +8691,10 @@
       </region>
       <region name="USA">
          <supplysector name="refined liquids enduse">
-            <subsector name="biomass liquids">
+            <subsector name="biomass liquids-ethanol">
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">1</sharewt>
-               <technology name="biomass liquids">
+               <technology name="biomass liquids-ethanol">
                   <period year="1990">
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
@@ -9410,10 +9410,10 @@
       </region>
       <region name="Western Europe">
          <supplysector name="refined liquids enduse">
-            <subsector name="biomass liquids">
+            <subsector name="biomass liquids-ethanol">
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
-               <technology name="biomass liquids">
+               <technology name="biomass liquids-ethanol">
                   <period year="1990">
                      <CalDataOutput>
                         <calOutputValue>0.000083736</calOutputValue>

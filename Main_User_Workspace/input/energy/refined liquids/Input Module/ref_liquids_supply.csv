@@ -1,282 +1,1 @@
-"Delete old shale oil and refining sectors, and set CO2 coefficients for biomass and new sectors",,
-INPUT_TABLE,,
-Variable ID,,
-1,,minicam can't actually delete the primaryfuel CO2 coef as it isn't a node. this sets it to 0 and there will be a warning message
-,delete,delete
-region,depresource,PrimaryFuelCO2Coef
-ALL,shale oil,shale oil
-
-INPUT_TABLE,,
-Variable ID,,
-2,,
-,name,
-region,PrimaryFuelCO2Coef,PrimaryFuelCO2Coef
-ALL,regional biomass,23
-ALL,delivered biomass,23
-ALL,unconventional oil,21.1
-ALL,regional unconventional oil,19.6
-ALL,refined liquids industrial,19.6
-ALL,refined liquids enduse,19.6
-ALL,refined liquids electricity,19.6
-,,
-INPUT_TABLE,,
-Variable ID,,
-11,,
-,,minicam can't actually delete the primaryfuel CO2 coef as it isn't a node. this sets it to 0 and there will be a warning message
-region,supplysector,primaryfuelCO2coef
-ALL,delivered pet prods,delivered pet prods
-ALL,refined oil,refined oil
-ALL,shale oil regional,shale oil regional
-
-
-Refining supplysectors: unit tags,,
-INPUT_TABLE,,,,,
-Variable ID,,,,,
-20,,,,,
-
-region,supplysector,output-unit,input-unit,price-unit,1975 price
-ALL,regional unconventional oil,EJ,EJ,1975$/GJ,0
-ALL,refined liquids enduse,EJ,EJ,1975$/GJ,3.61
-ALL,refined liquids industrial,EJ,EJ,1975$/GJ,2.51
-ALL,refined liquids electricity,EJ,EJ,1975$/GJ,2.46
-
-
-Scale years,,,,,
-INPUT_TABLE,,,,,
-Variable ID,,,,,
-200,,,,,
-
-region,supplysector,subsector,scaleYear
-ALL,refined liquids enduse,crude oil refining,1975
-ALL,refined liquids enduse,biomass liquids,1975
-ALL,refined liquids enduse,unconventional oil refining,1975
-ALL,refined liquids enduse,coal to liquids,1975
-ALL,refined liquids enduse,gas to liquids,1975
-ALL,refined liquids industrial,crude oil refining,1975
-ALL,refined liquids industrial,biomass liquids,1975
-ALL,refined liquids industrial,unconventional oil refining,1975
-ALL,refined liquids industrial,coal to liquids,1975
-ALL,refined liquids industrial,gas to liquids,1975
-
-Subsector shareweight,,,
-"subsector shareweights for enduse biomass liquids are defaulted to 1 in base years here, and re-set to 0 (in regions where applicable) in cal workbook",,,
-"set non-crude subsector shareweights to 0 in base years, increase in future years",,,
-INPUT_TABLE,,,
-Variable ID,,,,,,,,,,,
-201,,,,,,values in years other than scaleyear will be over-written by minicam,,,,,
-,,,sharewt,,,,,,,,
-region,supplysector,subsector,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,regional unconventional oil,regional unconventional oil,0,0,0,1,1,1,1,1,1
-ALL,refined liquids enduse,crude oil refining,1,1,1,1,1,1,1,1,1
-ALL,refined liquids enduse,biomass liquids,0,1,1,1,1,1,1,1,1
-ALL,refined liquids enduse,unconventional oil refining,0,0,0,0.2,0.4,0.6,0.6,0.6,0.6
-ALL,refined liquids enduse,coal to liquids,0,0,0,0.2,0.4,0.6,0.6,0.6,0.6
-ALL,refined liquids enduse,gas to liquids,0,0,0,0.2,0.4,0.6,0.6,0.6,0.6
-ALL,refined liquids industrial,crude oil refining,1,1,1,1,1,1,1,1,1
-ALL,refined liquids industrial,biomass liquids,0,0,0,1,1,1,1,1,1
-ALL,refined liquids industrial,unconventional oil refining,0,0,0,0.2,0.4,0.6,0.6,0.6,0.6
-ALL,refined liquids industrial,coal to liquids,0,0,0,0.2,0.4,0.6,0.6,0.6,0.6
-ALL,refined liquids industrial,gas to liquids,0,0,0,0.2,0.4,0.6,0.6,0.6,0.6
-,,,,,,,,,,,
-Subsector logit exponent,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
-202,,,,,,,,,,,
-,,,logitexp,,,,,,,,
-region,supplysector,subsector,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,refined liquids enduse,crude oil refining,-6,-6,-6,-6,-6,-6,-6,-6,-6
-ALL,refined liquids enduse,biomass liquids,-6,-6,-6,-6,-6,-6,-6,-6,-6
-ALL,refined liquids enduse,unconventional oil refining,-6,-6,-6,-6,-6,-6,-6,-6,-6
-ALL,refined liquids enduse,coal to liquids,-6,-6,-6,-6,-6,-6,-6,-6,-6
-ALL,refined liquids enduse,gas to liquids,-6,-6,-6,-6,-6,-6,-6,-6,-6
-ALL,refined liquids industrial,crude oil refining,-6,-6,-6,-6,-6,-6,-6,-6,-6
-ALL,refined liquids industrial,biomass liquids,-6,-6,-6,-6,-6,-6,-6,-6,-6
-ALL,refined liquids industrial,unconventional oil refining,-6,-6,-6,-6,-6,-6,-6,-6,-6
-ALL,refined liquids industrial,coal to liquids,-6,-6,-6,-6,-6,-6,-6,-6,-6
-ALL,refined liquids industrial,gas to liquids,-6,-6,-6,-6,-6,-6,-6,-6,-6
-,,,,,,,,,,,,
-
-Technology lifetime and profit shutdown decider,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-2000,,,,,,,,,,,,
-,,,,lifetime,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,refined liquids enduse,crude oil refining,crude oil refining,-1,-1,45,45,45,45,45,45,45
-ALL,refined liquids enduse,biomass liquids,biomass liquids,-1,-1,45,45,45,45,45,45,45
-ALL,refined liquids enduse,unconventional oil refining,unconventional oil refining,-1,-1,-1,45,45,45,45,45,45
-ALL,refined liquids enduse,coal to liquids,coal to liquids,-1,-1,-1,45,45,45,45,45,45
-ALL,refined liquids enduse,gas to liquids,gas to liquids,-1,-1,-1,45,45,45,45,45,45
-ALL,refined liquids industrial,crude oil refining,crude oil refining,-1,-1,45,45,45,45,45,45,45
-ALL,refined liquids industrial,biomass liquids,biomass liquids,-1,-1,-1,45,45,45,45,45,45
-ALL,refined liquids industrial,unconventional oil refining,unconventional oil refining,-1,-1,-1,45,45,45,45,45,45
-ALL,refined liquids industrial,coal to liquids,coal to liquids,-1,-1,-1,45,45,45,45,45,45
-ALL,refined liquids industrial,gas to liquids,gas to liquids,-1,-1,-1,45,45,45,45,45,45
-ALL,refined liquids electricity,crude oil refining,crude oil refining,-1,-1,-1,45,45,45,45,45,45
-
-Phased shutdown decider for partial retirement of capital stocks,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-2001,,,,phased-shutdown-decider,,,,,,,,
-,,,,shutdown-rate,,,,,,,,
-region,supplysector,subsector,technology,2005,2020,2035,2050,2065,2080,2095,,
-ALL,refined liquids enduse,crude oil refining,crude oil refining,0.05,0.03,0.03,0.03,0.03,0.03,0.03,,
-ALL,refined liquids enduse,biomass liquids,biomass liquids,0.05,0.03,0.03,0.03,0.03,0.03,0.03,,
-ALL,refined liquids enduse,unconventional oil refining,unconventional oil refining,0.05,0.03,0.03,0.03,0.03,0.03,0.03,,
-ALL,refined liquids enduse,coal to liquids,coal to liquids,0.05,0.03,0.03,0.03,0.03,0.03,0.03,,
-ALL,refined liquids enduse,gas to liquids,gas to liquids,0.05,0.03,0.03,0.03,0.03,0.03,0.03,,
-ALL,refined liquids industrial,crude oil refining,crude oil refining,0.05,0.03,0.03,0.03,0.03,0.03,0.03,,
-ALL,refined liquids industrial,biomass liquids,biomass liquids,0.05,0.03,0.03,0.03,0.03,0.03,0.03,,,
-ALL,refined liquids industrial,unconventional oil refining,unconventional oil refining,0.05,0.03,0.03,0.03,0.03,0.03,0.03,,,
-ALL,refined liquids industrial,coal to liquids,coal to liquids,0.05,0.03,0.03,0.03,0.03,0.03,0.03,,,
-ALL,refined liquids industrial,gas to liquids,gas to liquids,0.05,0.03,0.03,0.03,0.03,0.03,0.03,,,
-ALL,refined liquids electricity,crude oil refining,crude oil refining,0.05,0.03,0.03,0.03,0.03,0.03,0.03,,,
-
-Technology IO coefficients,,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,
-2010,,,,,,,,,,,,,
-,,,,,coefficient,,,,,,,,
-region,supplysector,subsector,technology,minicam-energy-input,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,regional unconventional oil,regional unconventional oil,regional unconventional oil,unconventional oil,1.000,1.000,1.000,1.000,1.000,1.000,1.000,1.000,1.000
-ALL,regional unconventional oil,regional unconventional oil,regional unconventional oil,elect_td_ind,0.080,0.080,0.080,0.080,0.073,0.067,0.061,0.056,0.051
-ALL,regional unconventional oil,regional unconventional oil,regional unconventional oil,regional natural gas,0.106,0.106,0.106,0.106,0.102,0.098,0.095,0.091,0.088
-ALL,refined liquids enduse,crude oil refining,crude oil refining,regional crude oil,1.055,1.055,1.055,1.055,1.047,1.039,1.031,1.024,1.016
-ALL,refined liquids enduse,crude oil refining,crude oil refining,wholesale gas,0.018,0.018,0.018,0.018,0.018,0.018,0.018,0.018,0.018
-ALL,refined liquids enduse,crude oil refining,crude oil refining,elect_td_ind,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005
-ALL,refined liquids enduse,biomass liquids,biomass liquids,regional biomass,2.057,2.057,2.057,2.057,1.997,1.938,1.880,1.825,1.771
-ALL,refined liquids enduse,unconventional oil refining,unconventional oil refining,regional unconventional oil,1.055,1.055,1.055,1.055,1.039,1.024,1.008,0.993,0.979
-ALL,refined liquids enduse,unconventional oil refining,unconventional oil refining,wholesale gas,0.018,0.018,0.018,0.018,0.018,0.018,0.018,0.017,0.017
-ALL,refined liquids enduse,unconventional oil refining,unconventional oil refining,elect_td_ind,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005
-ALL,refined liquids enduse,coal to liquids,coal to liquids,regional coal,2.112,2.112,2.112,2.112,2.080,2.049,2.019,1.989,1.959
-ALL,refined liquids enduse,gas to liquids,gas to liquids,regional natural gas,1.654,1.654,1.654,1.654,1.629,1.605,1.581,1.558,1.534
-ALL,refined liquids industrial,crude oil refining,crude oil refining,regional crude oil,1.055,1.055,1.055,1.055,1.047,1.039,1.031,1.024,1.016
-ALL,refined liquids industrial,crude oil refining,crude oil refining,wholesale gas,0.018,0.018,0.018,0.018,0.018,0.018,0.018,0.018,0.018
-ALL,refined liquids industrial,crude oil refining,crude oil refining,elect_td_ind,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005
-ALL,refined liquids industrial,biomass liquids,biomass liquids,regional biomass,2.057,2.057,2.057,2.057,1.997,1.938,1.880,1.825,1.771
-ALL,refined liquids industrial,unconventional oil refining,unconventional oil refining,regional unconventional oil,1.055,1.055,1.055,1.055,1.039,1.024,1.008,0.993,0.979
-ALL,refined liquids industrial,unconventional oil refining,unconventional oil refining,wholesale gas,0.018,0.018,0.018,0.018,0.018,0.018,0.018,0.017,0.017
-ALL,refined liquids industrial,unconventional oil refining,unconventional oil refining,elect_td_ind,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005
-ALL,refined liquids industrial,coal to liquids,coal to liquids,regional coal,2.112,2.112,2.112,2.112,2.080,2.049,2.019,1.989,1.959
-ALL,refined liquids industrial,gas to liquids,gas to liquids,regional natural gas,1.654,1.654,1.654,1.654,1.629,1.605,1.581,1.558,1.534,,1.38028169,coef where GTL becomes carbon-negative
-ALL,refined liquids electricity,crude oil refining,crude oil refining,regional crude oil,1.055,1.055,1.055,1.055,1.047,1.039,1.031,1.024,1.016,,,
-ALL,refined liquids electricity,crude oil refining,crude oil refining,regional natural gas,0.018,0.018,0.018,0.018,0.018,0.018,0.018,0.018,0.018,,,
-,,,,,,,,,,,,,,,,
-
-Technology secondary outputs,,,,,,,,,,,,,,,,
-Table not read,,,,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,,,,
-2015,,,,,,,,,,,,,,,,
-,,,,,output-ratio,,,,,,,,,,,
-region,supplysector,subsector,technology,secondary-output,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,
-ALL,regional unconventional oil,regional unconventional oil,regional unconventional oil,regional natural gas,0,0,0,0,0,0,0,0,0,,,
-ALL,refined liquids enduse,biomass liquids,biomass liquids,electricity,0,0,0,0,0,0,0,0,0,,,
-ALL,refined liquids industrial,biomass liquids,biomass liquids,electricity,0,0,0,0,0,0,0,0,0,,,
-
-Non-energy costs,,,,,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,
-2020,,,,,,,,,,,,,
-,,,,,input-cost,,,,,,,,
-region,supplysector,subsector,technology,minicam-non-energy-input,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,regional unconventional oil,regional unconventional oil,regional unconventional oil,non-energy,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15
-ALL,refined liquids enduse,crude oil refining,crude oil refining,non-energy,1.94,1.94,1.94,1.94,1.94,1.94,1.94,1.94,1.94
-ALL,refined liquids enduse,biomass liquids,biomass liquids,non-energy,3.23,3.23,3.23,3.23,3.19,3.14,3.09,3.05,3.00
-ALL,refined liquids enduse,unconventional oil refining,unconventional oil refining,non-energy,1.71,1.71,1.71,1.71,1.68,1.66,1.64,1.61,1.59
-ALL,refined liquids enduse,coal to liquids,coal to liquids,non-energy,3.80,3.80,3.80,3.80,3.74,3.69,3.63,3.58,3.53
-ALL,refined liquids enduse,gas to liquids,gas to liquids,non-energy,2.90,2.90,2.90,2.90,2.86,2.81,2.77,2.73,2.69
-ALL,refined liquids industrial,crude oil refining,crude oil refining,non-energy,0.84,0.84,0.84,0.84,0.84,0.84,0.84,0.84,0.84
-ALL,refined liquids industrial,biomass liquids,biomass liquids,non-energy,2.13,2.13,2.13,2.13,2.10,2.07,2.04,2.01,1.98
-ALL,refined liquids industrial,unconventional oil refining,unconventional oil refining,non-energy,0.61,0.61,0.61,0.61,0.60,0.59,0.58,0.57,0.57
-ALL,refined liquids industrial,coal to liquids,coal to liquids,non-energy,2.70,2.70,2.70,2.70,2.66,2.62,2.58,2.54,2.50
-ALL,refined liquids industrial,gas to liquids,gas to liquids,non-energy,1.80,1.80,1.80,1.80,1.77,1.75,1.72,1.70,1.67
-ALL,refined liquids electricity,crude oil refining,crude oil refining,non-energy,0.84,0.84,0.84,0.84,0.84,0.84,0.84,0.84,0.84
-
-Technology logit exponent and CO2 tag,,,,,,,,,,,,,
-only relevant for CCS technology competition,,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,
-2030,,,,,,,,,,,,,
-,,,,logitexp,,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,
-ALL,regional unconventional oil,regional unconventional oil,regional unconventional oil,-6,-6,-6,-6,-6,-6,-6,-6,-6,
-ALL,refined liquids enduse,crude oil refining,crude oil refining,-13,-13,-13,-13,-13,-13,-13,-13,-13,
-ALL,refined liquids enduse,biomass liquids,biomass liquids,-13,-13,-13,-13,-13,-13,-13,-13,-13,
-ALL,refined liquids enduse,unconventional oil refining,unconventional oil refining,-13,-13,-13,-13,-13,-13,-13,-13,-13,
-ALL,refined liquids enduse,coal to liquids,coal to liquids,-13,-13,-13,-13,-13,-13,-13,-13,-13,
-ALL,refined liquids enduse,gas to liquids,gas to liquids,-13,-13,-13,-13,-13,-13,-13,-13,-13,
-ALL,refined liquids industrial,crude oil refining,crude oil refining,-13,-13,-13,-13,-13,-13,-13,-13,-13,
-ALL,refined liquids industrial,biomass liquids,biomass liquids,-13,-13,-13,-13,-13,-13,-13,-13,-13
-ALL,refined liquids industrial,unconventional oil refining,unconventional oil refining,-13,-13,-13,-13,-13,-13,-13,-13,-13
-ALL,refined liquids industrial,coal to liquids,coal to liquids,-13,-13,-13,-13,-13,-13,-13,-13,-13
-ALL,refined liquids industrial,gas to liquids,gas to liquids,-13,-13,-13,-13,-13,-13,-13,-13,-13
-ALL,refined liquids electricity,crude oil refining,crude oil refining,-6,-6,-6,-6,-6,-6,-6,-6,-6
-
-Unconventional oil resource attributes,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-50,,,,,,,,,,,,
-,,,,,1975,,,,,,,
-region,depresource,output-unit,price-unit,market,price,,,,,,,
-ALL,unconventional oil,EJ,1975$/GJ,global,1.8398,,,,,,,
-
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-500,,,,,,,
-,,,1990 fillout,,1990 fillout,1975 fillout,
-region,depresource,subresource,environCost,gdpExpans,severanceTax,techChange,priceElas
-ALL,unconventional oil,unconventional oil,0.25,1,0.17,0,2
-
-INPUT_TABLE,,,,,,,
-Variable ID,,,,,,,
-501,,,,,,,
-
-region,depresource,subresource,minShortTermSLimit,,,,
-Africa,unconventional oil,unconventional oil,1,,,,
-Australia_NZ,unconventional oil,unconventional oil,1,,,,
-Canada,unconventional oil,unconventional oil,1,,,,
-China,unconventional oil,unconventional oil,2,,,,
-Eastern Europe,unconventional oil,unconventional oil,1,,,,
-Former Soviet Union,unconventional oil,unconventional oil,3,,,,
-India,unconventional oil,unconventional oil,1,
-Japan,unconventional oil,unconventional oil,1,
-Korea,unconventional oil,unconventional oil,1,
-Latin America,unconventional oil,unconventional oil,1,
-Middle East,unconventional oil,unconventional oil,1,
-Southeast Asia,unconventional oil,unconventional oil,1,
-USA,unconventional oil,unconventional oil,5,
-Western Europe,unconventional oil,unconventional oil,3,
-
-Subresource cost by grade,,,,
-INPUT_TABLE,,,,
-Variable ID,,,,
-5000,,,,
-
-region,depresource,subresource,grade,extractioncost
-ALL,unconventional oil,unconventional oil,grade 1,1.8
-ALL,unconventional oil,unconventional oil,grade 2,2.1,,
-ALL,unconventional oil,unconventional oil,grade 3,3.6,,
-ALL,unconventional oil,unconventional oil,grade 4,4.7,,
-ALL,unconventional oil,unconventional oil,grade 5,6.0,,
-ALL,unconventional oil,unconventional oil,grade 6,7.0,,
-ALL,unconventional oil,unconventional oil,grade 7,8.0,,
-
-Subresource availability by grade,,,,,,
-INPUT_TABLE,,,,,,
-Variable ID,,,,,,
-5001,,,,,,
-,,,available,,,
-region,depresource,subresource,grade 1,grade 2,grade 3,grade 4
-Africa,unconventional oil,unconventional oil,6009,11745,112937,338813
-Australia_NZ,unconventional oil,unconventional oil,1320,2578,24791,74374
-Canada,unconventional oil,unconventional oil,803,1570,15095,45285
-China,unconventional oil,unconventional oil,2012,3933,37820,113461
-Eastern Europe,unconventional oil,unconventional oil,151,295,2837,8510
-Former Soviet Union,unconventional oil,unconventional oil,3874,7575,72804,218412
-India,unconventional oil,unconventional oil,1509,2950,28366,85096
-Japan,unconventional oil,unconventional oil,146,287,2754,8263
-Latin America,unconventional oil,unconventional oil,3004,5873,56469,169406
-Middle East,unconventional oil,unconventional oil,503,983,9455,28366
-Southeast Asia,unconventional oil,unconventional oil,1509,2950,28366,85096
-USA,unconventional oil,unconventional oil,4397,8594,82637,247909
-Western Europe,unconventional oil,unconventional oil,1204,2355,22643,67928
+"Delete old shale oil and refining sectors, and set CO2 coefficients for biomass and new sectors",,,INPUT_TABLE,,,Variable ID,,,1,,minicam can't actually delete the primaryfuel CO2 coef as it isn't a node. this sets it to 0 and there will be a warning message,,delete,delete,region,depresource,PrimaryFuelCO2Coef,ALL,shale oil,shale oil,INPUT_TABLE,,,Variable ID,,,203,,,"Delete ""biomass liquids"" tech to allow for expanded biomass",,,deleteregion,supplysector,subsector,technologyALL,refined liquids enduse,biomass liquids,biomass liquidsALL,refined liquids industrial,biomass liquids,biomass liquidsINPUT_TABLE,,Variable_ID,,300,,"Delete ""biomass liquids"" subsector will be replaced with ethanol & FT subsectors)",,region,supplysector,subsectorALL,refined liquids enduse,biomass liquidsALL,refined liquids industrial,biomass liquidsINPUT_TABLE,,Variable ID,,2,,,name,region,PrimaryFuelCO2Coef,PrimaryFuelCO2CoefALL,regional biomass,23ALL,delivered biomass,23ALL,unconventional oil,21.1ALL,regional unconventional oil,19.6ALL,refined liquids industrial,19.6ALL,refined liquids enduse,19.6ALL,refined liquids electricity,19.6,,INPUT_TABLE,,Variable ID,,11,,,,minicam can't actually delete the primaryfuel CO2 coef as it isn't a node. this sets it to 0 and there will be a warning messageregion,supplysector,primaryfuelCO2coefALL,delivered pet prods,delivered pet prodsALL,refined oil,refined oilALL,shale oil regional,shale oil regionalRefining supplysectors: unit tags,,INPUT_TABLE,,,,,Variable ID,,,,,20,,,,,region,supplysector,output-unit,input-unit,price-unit,1975 priceALL,regional unconventional oil,EJ,EJ,1975$/GJ,0ALL,refined liquids enduse,EJ,EJ,1975$/GJ,3.61ALL,refined liquids industrial,EJ,EJ,1975$/GJ,2.51ALL,refined liquids electricity,EJ,EJ,1975$/GJ,2.46Scale years,,,,,INPUT_TABLE,,,,,Variable ID,,,,,200,,,,,region,supplysector,subsector,scaleYearALL,refined liquids enduse,crude oil refining,1975ALL,refined liquids enduse,unconventional oil refining,1975ALL,refined liquids enduse,coal to liquids,1975ALL,refined liquids enduse,gas to liquids,1975ALL,refined liquids industrial,crude oil refining,1975ALL,refined liquids industrial,unconventional oil refining,1975ALL,refined liquids industrial,coal to liquids,1975ALL,refined liquids industrial,gas to liquids,1975ALL,refined liquids electricity,crude oil refining,1975ALL,refined liquids enduse,biomass liquids-ethanol,1975ALL,refined liquids enduse,biomass liquids-FT,1976ALL,refined liquids industrial,biomass liquids-ethanol,1977ALL,refined liquids industrial,biomass liquids-FT,1978Subsector shareweight,,,"subsector shareweights for enduse biomass liquids are defaulted to 1 in base years here, and re-set to 0 (in regions where applicable) in cal workbook",,,,,,,,,,,"set non-crude subsector shareweights to 0 in base years, increase in future years",,,,,,,,,,,INPUT_TABLE,,,,,,,,,,,Variable ID,,,,,,,,,,,201,,,,,,values in years other than scaleyear will be over-written by minicam,,,,,,,,sharewt,,,,,,,,region,supplysector,subsector,1975,1990,2005,2020,2035,2050,2065,2080,2095ALL,regional unconventional oil,regional unconventional oil,0,0,0,1,1,1,1,1,1ALL,refined liquids enduse,crude oil refining,1,1,1,1,1,1,1,1,1ALL,refined liquids enduse,unconventional oil refining,0,0,0,0.2,0.4,0.6,0.6,0.6,0.6ALL,refined liquids enduse,coal to liquids,0,0,0,0.2,0.4,0.6,0.6,0.6,0.6ALL,refined liquids enduse,gas to liquids,0,0,0,0.2,0.4,0.6,0.6,0.6,0.6ALL,refined liquids industrial,crude oil refining,1,1,1,1,1,1,1,1,1ALL,refined liquids industrial,unconventional oil refining,0,0,0,0.2,0.4,0.6,0.6,0.6,0.6ALL,refined liquids industrial,coal to liquids,0,0,0,0.2,0.4,0.6,0.6,0.6,0.6ALL,refined liquids industrial,gas to liquids,0,0,0,0.2,0.4,0.6,0.6,0.6,0.6ALL,refined liquids enduse,biomass liquids-ethanol,0,1,1,0.5,0.5,0.5,0.5,0.5,0.5ALL,refined liquids enduse,biomass liquids-FT,0,0,0,0.5,0.5,0.5,0.5,0.5,0.5ALL,refined liquids industrial,biomass liquids-ethanol,0,0,0,0.5,0.5,0.5,0.5,0.5,0.5ALL,refined liquids industrial,biomass liquids-FT,0,0,0,0.5,0.5,0.5,0.5,0.5,0.5,,,,,,,,,,,Subsector logit exponent,,,,,,,,,,,INPUT_TABLE,,,,,,,,,,,Variable ID,,,,,,,,,,,202,,,,,,,,,,,,,,logitexp,,,,,,,,region,supplysector,subsector,1975,1990,2005,2020,2035,2050,2065,2080,2095ALL,refined liquids enduse,crude oil refining,-6,-6,-6,-6,-6,-6,-6,-6,-6ALL,refined liquids enduse,unconventional oil refining,-6,-6,-6,-6,-6,-6,-6,-6,-6ALL,refined liquids enduse,coal to liquids,-6,-6,-6,-6,-6,-6,-6,-6,-6ALL,refined liquids enduse,gas to liquids,-6,-6,-6,-6,-6,-6,-6,-6,-6ALL,refined liquids industrial,crude oil refining,-6,-6,-6,-6,-6,-6,-6,-6,-6ALL,refined liquids industrial,unconventional oil refining,-6,-6,-6,-6,-6,-6,-6,-6,-6,ALL,refined liquids industrial,coal to liquids,-6,-6,-6,-6,-6,-6,-6,-6,-6,ALL,refined liquids industrial,gas to liquids,-6,-6,-6,-6,-6,-6,-6,-6,-6,ALL,refined liquids enduse,biomass liquids-ethanol,-6,-6,-6,-6,-6,-6,-6,-6,-6,ALL,refined liquids enduse,biomass liquids-FT,-6,-6,-6,-6,-6,-6,-6,-6,-6,ALL,refined liquids industrial,biomass liquids-ethanol,-6,-6,-6,-6,-6,-6,-6,-6,-6,ALL,refined liquids industrial,biomass liquids-FT,-6,-6,-6,-6,-6,-6,-6,-6,-6,Technology lifetime and profit shutdown decider,,,,,,,,,,,,INPUT_TABLE,,,,,,,,,,,,Variable ID,,,,,,,,,,,,2000,,,,,,,,,,,,,,,,lifetime,,,,,,,,region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095ALL,refined liquids enduse,crude oil refining,crude oil refining,-1,-1,45,45,45,45,45,45,45ALL,refined liquids enduse,unconventional oil refining,unconventional oil refining,-1,-1,-1,45,45,45,45,45,45ALL,refined liquids enduse,coal to liquids,coal to liquids,-1,-1,-1,45,45,45,45,45,45ALL,refined liquids enduse,gas to liquids,gas to liquids,-1,-1,-1,45,45,45,45,45,45ALL,refined liquids industrial,crude oil refining,crude oil refining,-1,-1,45,45,45,45,45,45,45ALL,refined liquids industrial,unconventional oil refining,unconventional oil refining,-1,-1,-1,45,45,45,45,45,45ALL,refined liquids industrial,coal to liquids,coal to liquids,-1,-1,-1,45,45,45,45,45,45ALL,refined liquids industrial,gas to liquids,gas to liquids,-1,-1,-1,45,45,45,45,45,45ALL,refined liquids enduse,biomass liquids-ethanol,biomass liquids-ethanol,-1,-1,45,45,45,45,45,45,45ALL,refined liquids enduse,biomass liquids-FT,biomass liquids-FT,-1,-1,-1,45,45,45,45,45,45ALL,refined liquids industrial,biomass liquids-ethanol,biomass liquids-ethanol,-1,-1,-1,45,45,45,45,45,45ALL,refined liquids industrial,biomass liquids-FT,biomass liquids-FT,-1,-1,-1,45,45,45,45,45,45Phased shutdown decider for partial retirement of capital stocks,,,,,,,,,,,,INPUT_TABLE,,,,,,,,,,,,Variable ID,,,,,,,,,,,,2001,,,,phased-shutdown-decider,,,,,,,,,,,,shutdown-rate,,,,,,,,region,supplysector,subsector,technology,2005,2020,2035,2050,2065,2080,2095ALL,refined liquids enduse,crude oil refining,crude oil refining,0.05,0.03,0.03,0.03,0.03,0.03,0.03ALL,refined liquids enduse,unconventional oil refining,unconventional oil refining,0.05,0.03,0.03,0.03,0.03,0.03,0.03ALL,refined liquids enduse,coal to liquids,coal to liquids,0.05,0.03,0.03,0.03,0.03,0.03,0.03ALL,refined liquids enduse,gas to liquids,gas to liquids,0.05,0.03,0.03,0.03,0.03,0.03,0.03ALL,refined liquids industrial,crude oil refining,crude oil refining,0.05,0.03,0.03,0.03,0.03,0.03,0.03ALL,refined liquids industrial,unconventional oil refining,unconventional oil refining,0.05,0.03,0.03,0.03,0.03,0.03,0.03ALL,refined liquids industrial,coal to liquids,coal to liquids,0.05,0.03,0.03,0.03,0.03,0.03,0.03ALL,refined liquids industrial,gas to liquids,gas to liquids,0.05,0.03,0.03,0.03,0.03,0.03,0.03ALL,refined liquids electricity,crude oil refining,crude oil refining,0.05,0.03,0.03,0.03,0.03,0.03,0.03ALL,refined liquids enduse,biomass liquids-ethanol,biomass liquids-ethanol,0.05,0.03,0.03,0.03,0.03,0.03,0.03ALL,refined liquids enduse,biomass liquids-FT,biomass liquids-FT,0.05,0.03,0.03,0.03,0.03,0.03,0.03ALL,refined liquids industrial,biomass liquids-ethanol,biomass liquids-ethanol,0.05,0.03,0.03,0.03,0.03,0.03,0.03ALL,refined liquids industrial,biomass liquids-FT,biomass liquids-FT,0.05,0.03,0.03,0.03,0.03,0.03,0.03Technology IO coefficients,,,,,,,,,,INPUT_TABLE,,,,,,,,,,,,,Variable ID,,,,,,,,,,,,,2010,,,,,,,,,,,,,,,,,,coefficient,,,,,,,,region,supplysector,subsector,technology,minicam-energy-input,1975,1990,2005,2020,2035,2050,2065,2080,2095ALL,regional unconventional oil,regional unconventional oil,regional unconventional oil,unconventional oil,1.000,1.000,1.000,1.000,1.000,1.000,1.000,1.000,1.000ALL,regional unconventional oil,regional unconventional oil,regional unconventional oil,elect_td_ind,0.080,0.080,0.080,0.080,0.073,0.067,0.061,0.056,0.051ALL,regional unconventional oil,regional unconventional oil,regional unconventional oil,regional natural gas,0.106,0.106,0.106,0.106,0.102,0.098,0.095,0.091,0.088ALL,refined liquids enduse,crude oil refining,crude oil refining,regional crude oil,1.055,1.055,1.055,1.055,1.047,1.039,1.031,1.024,1.016ALL,refined liquids enduse,crude oil refining,crude oil refining,wholesale gas,0.018,0.018,0.018,0.018,0.018,0.018,0.018,0.018,0.018ALL,refined liquids enduse,crude oil refining,crude oil refining,elect_td_ind,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005ALL,refined liquids enduse,unconventional oil refining,unconventional oil refining,regional unconventional oil,1.055,1.055,1.055,1.055,1.039,1.024,1.008,0.993,0.979ALL,refined liquids enduse,unconventional oil refining,unconventional oil refining,wholesale gas,0.018,0.018,0.018,0.018,0.018,0.018,0.018,0.017,0.017ALL,refined liquids enduse,unconventional oil refining,unconventional oil refining,elect_td_ind,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005ALL,refined liquids enduse,coal to liquids,coal to liquids,regional coal,2.112,2.112,2.112,2.112,2.080,2.049,2.019,1.989,1.959ALL,refined liquids enduse,gas to liquids,gas to liquids,regional natural gas,1.654,1.654,1.654,1.654,1.629,1.605,1.581,1.558,1.534ALL,refined liquids industrial,crude oil refining,crude oil refining,regional crude oil,1.055,1.055,1.055,1.055,1.047,1.039,1.031,1.024,1.016,,,ALL,refined liquids industrial,crude oil refining,crude oil refining,wholesale gas,0.018,0.018,0.018,0.018,0.018,0.018,0.018,0.018,0.018,,,ALL,refined liquids industrial,crude oil refining,crude oil refining,elect_td_ind,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,,,ALL,refined liquids industrial,unconventional oil refining,unconventional oil refining,regional unconventional oil,1.055,1.055,1.055,1.055,1.039,1.024,1.008,0.993,0.979,,,ALL,refined liquids industrial,unconventional oil refining,unconventional oil refining,wholesale gas,0.018,0.018,0.018,0.018,0.018,0.018,0.018,0.017,0.017,,,ALL,refined liquids industrial,unconventional oil refining,unconventional oil refining,elect_td_ind,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,,,ALL,refined liquids industrial,coal to liquids,coal to liquids,regional coal,2.112,2.112,2.112,2.112,2.080,2.049,2.019,1.989,1.959,,,ALL,refined liquids industrial,gas to liquids,gas to liquids,regional natural gas,1.654,1.654,1.654,1.654,1.629,1.605,1.581,1.558,1.534,,1.38028169,coef where GTL becomes carbon-negativeALL,refined liquids electricity,crude oil refining,crude oil refining,regional crude oil,1.055,1.055,1.055,1.055,1.047,1.039,1.031,1.024,1.016,,,ALL,refined liquids electricity,crude oil refining,crude oil refining,regional natural gas,0.018,0.018,0.018,0.018,0.018,0.018,0.018,0.018,0.018,,,ALL,refined liquids enduse,biomass liquids-ethanol,biomass liquids-ethanol,regional biomass,2.057,2.057,2.057,2.057,1.997,1.938,1.880,1.825,1.771,,,ALL,refined liquids enduse,biomass liquids-FT,biomass liquids-FT,regional biomass,1.961,1.961,1.961,1.961,1.903,1.846,1.792,1.739,1.687,,,ALL,refined liquids industrial,biomass liquids-ethanol,biomass liquids-ethanol,regional biomass,2.057,2.057,2.057,2.057,1.997,1.938,1.880,1.825,1.771,,,ALL,refined liquids industrial,biomass liquids-FT,biomass liquids-FT,regional biomass,1.961,1.961,1.961,1.961,1.903,1.846,1.792,1.739,1.687,,,,,,,,,,,,,,,,,,,Technology secondary outputs,,,,,,,,,,,,,Table not read,,,,,,,,,,,,,Variable ID,,,,,,,,,,,,,2015,,,,,,,,,,,,,,,,,,output-ratio,,,,,,,,region,supplysector,subsector,technology,secondary-output,1975,1990,2005,2020,2035,2050,2065,2080,2095ALL,regional unconventional oil,regional unconventional oil,regional unconventional oil,regional natural gas,0,0,0,0,0,0,0,0,0ALL,refined liquids enduse,biomass liquids-ethanol,biomass liquids-ethanol,regional biomass,0,0,0,0,0,0,0,0,0ALL,refined liquids enduse,biomass liquids-FT,biomass liquids-FT,regional biomass,0,0,0,0,0,0,0,0,0ALL,refined liquids industrial,biomass liquids-ethanol,biomass liquids-ethanol,regional biomass,0,0,0,0,0,0,0,0,0ALL,refined liquids industrial,biomass liquids-FT,biomass liquids-FT,regional biomass,0,0,0,0,0,0,0,0,0Non-energy costs,,,,,,,,,,,,,INPUT_TABLE,,,,,,,,,,,,,Variable ID,,,,,,,,,,,,,2020,,,,,,,,,,,,,,,,,,input-cost,,,,,,,,region,supplysector,subsector,technology,minicam-non-energy-input,1975,1990,2005,2020,2035,2050,2065,2080,2095ALL,regional unconventional oil,regional unconventional oil,regional unconventional oil,non-energy,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15,0.15ALL,refined liquids enduse,crude oil refining,crude oil refining,non-energy,1.94,1.94,1.94,1.94,1.94,1.94,1.94,1.94,1.94ALL,refined liquids enduse,unconventional oil refining,unconventional oil refining,non-energy,1.94,1.94,1.94,1.94,1.91,1.88,1.86,1.83,1.80ALL,refined liquids enduse,coal to liquids,coal to liquids,non-energy,3.10,3.10,3.10,3.10,3.05,3.01,2.96,2.92,2.88ALL,refined liquids enduse,gas to liquids,gas to liquids,non-energy,2.70,2.70,2.70,2.70,2.66,2.62,2.58,2.54,2.50ALL,refined liquids industrial,crude oil refining,crude oil refining,non-energy,0.84,0.84,0.84,0.84,0.84,0.84,0.84,0.84,0.84ALL,refined liquids industrial,unconventional oil refining,unconventional oil refining,non-energy,0.84,0.84,0.84,0.84,0.83,0.82,0.80,0.79,0.78ALL,refined liquids industrial,coal to liquids,coal to liquids,non-energy,2.00,2.00,2.00,2.00,1.97,1.94,1.91,1.88,1.86ALL,refined liquids industrial,gas to liquids,gas to liquids,non-energy,1.60,1.60,1.60,1.60,1.58,1.55,1.53,1.51,1.48ALL,refined liquids electricity,crude oil refining,crude oil refining,non-energy,0.84,0.84,0.84,0.84,0.84,0.84,0.84,0.84,0.84ALL,refined liquids enduse,biomass liquids-ethanol,biomass liquids-ethanol,non-energy,3.08,3.08,3.08,3.08,3.03,2.99,2.94,2.90,2.85ALL,refined liquids enduse,biomass liquids-FT,biomass liquids-FT,non-energy,3.86,3.86,3.86,3.86,3.80,3.74,3.69,3.63,3.58ALL,refined liquids industrial,biomass liquids-ethanol,biomass liquids-ethanol,non-energy,1.98,1.98,1.98,1.98,1.95,1.92,1.89,1.86,1.83ALL,refined liquids industrial,biomass liquids-FT,biomass liquids-FT,non-energy,2.76,2.76,2.76,2.76,2.71,2.67,2.63,2.59,2.56Technology logit exponent and CO2 tag,,,,,,,,,,,,only relevant for CCS technology competition,,,,,,,,,,,,INPUT_TABLE,,,,,,,,,,,,Variable ID,,,,,,,,,,,,2030,,,,,,,,,,,,,,,,logitexp,,,,,,,,region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095ALL,regional unconventional oil,regional unconventional oil,regional unconventional oil,-6,-6,-6,-6,-6,-6,-6,-6,-6ALL,refined liquids enduse,crude oil refining,crude oil refining,-13,-13,-13,-13,-13,-13,-13,-13,-13ALL,refined liquids enduse,unconventional oil refining,unconventional oil refining,-13,-13,-13,-13,-13,-13,-13,-13,-13ALL,refined liquids enduse,coal to liquids,coal to liquids,-13,-13,-13,-13,-13,-13,-13,-13,-13ALL,refined liquids enduse,gas to liquids,gas to liquids,-13,-13,-13,-13,-13,-13,-13,-13,-13ALL,refined liquids industrial,crude oil refining,crude oil refining,-13,-13,-13,-13,-13,-13,-13,-13,-13ALL,refined liquids industrial,unconventional oil refining,unconventional oil refining,-13,-13,-13,-13,-13,-13,-13,-13,-13ALL,refined liquids industrial,coal to liquids,coal to liquids,-13,-13,-13,-13,-13,-13,-13,-13,-13ALL,refined liquids industrial,gas to liquids,gas to liquids,-13,-13,-13,-13,-13,-13,-13,-13,-13ALL,refined liquids electricity,crude oil refining,crude oil refining,-6,-6,-6,-6,-6,-6,-6,-6,-6ALL,refined liquids enduse,biomass liquids-ethanol,biomass liquids-ethanol,-13,-13,-13,-13,-13,-13,-13,-13,-13ALL,refined liquids enduse,biomass liquids-FT,biomass liquids-FT,-13,-13,-13,-13,-13,-13,-13,-13,-13ALL,refined liquids industrial,biomass liquids-ethanol,biomass liquids-ethanol,-13,-13,-13,-13,-13,-13,-13,-13,-13ALL,refined liquids industrial,biomass liquids-FT,biomass liquids-FT,-13,-13,-13,-13,-13,-13,-13,-13,-13Unconventional oil resource attributes,,,,,,,,,,,,INPUT_TABLE,,,,,,,,,,,,Variable ID,,,,,,,,,,,,50,,,,,,,,,,,,,,,,,1975,,,,,,,region,depresource,output-unit,price-unit,market,price,,,,,,,ALL,unconventional oil,EJ,1975$/GJ,global,1.8398,,,,,,,INPUT_TABLE,,,,,,,,,,,,Variable ID,,,,,,,500,,,,,,,,,,1990 fillout,,1990 fillout,1975 fillout,region,depresource,subresource,environCost,gdpExpans,severanceTax,techChange,priceElasALL,unconventional oil,unconventional oil,0.25,1,0.17,0,2INPUT_TABLE,,,,,,,Variable ID,,,,,,,501,,,,,,,region,depresource,subresource,minShortTermSLimit,,,,Africa,unconventional oil,unconventional oil,1,,,,Australia_NZ,unconventional oil,unconventional oil,1,,,,Canada,unconventional oil,unconventional oil,1,,,,China,unconventional oil,unconventional oil,2,,,,Eastern Europe,unconventional oil,unconventional oil,1,,,,Former Soviet Union,unconventional oil,unconventional oil,3,India,unconventional oil,unconventional oil,1,Japan,unconventional oil,unconventional oil,1,Korea,unconventional oil,unconventional oil,1,Latin America,unconventional oil,unconventional oil,1,Middle East,unconventional oil,unconventional oil,1,Southeast Asia,unconventional oil,unconventional oil,1,USA,unconventional oil,unconventional oil,5,Western Europe,unconventional oil,unconventional oil,3,Subresource cost by grade,,,,INPUT_TABLE,,,,Variable ID,,,,5000,,,,region,depresource,subresource,grade,extractioncostALL,unconventional oil,unconventional oil,grade 1,1.6,,ALL,unconventional oil,unconventional oil,grade 2,1.9,,ALL,unconventional oil,unconventional oil,grade 3,3.4,,ALL,unconventional oil,unconventional oil,grade 4,4.5,,ALL,unconventional oil,unconventional oil,grade 5,5.8,,ALL,unconventional oil,unconventional oil,grade 6,6.8,,ALL,unconventional oil,unconventional oil,grade 7,7.8,,Subresource availability by grade,,,,,,INPUT_TABLE,,,,,,Variable ID,,,,,,5001,,,,,,,,,available,,,region,depresource,subresource,grade 1,grade 2,grade 3,grade 4Africa,unconventional oil,unconventional oil,6009,11745,112937,338813Australia_NZ,unconventional oil,unconventional oil,1320,2578,24791,74374Canada,unconventional oil,unconventional oil,803,1570,15095,45285China,unconventional oil,unconventional oil,2012,3933,37820,113461Eastern Europe,unconventional oil,unconventional oil,151,295,2837,8510Former Soviet Union,unconventional oil,unconventional oil,3874,7575,72804,218412India,unconventional oil,unconventional oil,1509,2950,28366,85096Japan,unconventional oil,unconventional oil,146,287,2754,8263Latin America,unconventional oil,unconventional oil,3004,5873,56469,169406Middle East,unconventional oil,unconventional oil,503,983,9455,28366Southeast Asia,unconventional oil,unconventional oil,1509,2950,28366,85096USA,unconventional oil,unconventional oil,4397,8594,82637,247909Western Europe,unconventional oil,unconventional oil,1204,2355,22643,67928Non-energy costs,,,,,,INPUT_TABLE,,,,,,,,,,,,,Variable ID,,,,,,,,,,,,,2021,,,,,,,,,,,,,,,,,,input-cost,,,,,,,,region,supplysector,subsector,technology,minicam-non-energy-input,1975,1990,2005,2020,2035,2050,2065,2080,2095Africa,regional biomass,regional biomass,regional biomass,non-energy,0.737,0.737,0.737,0.737,0.737,0.737,0.737,0.737,0.737Australia_NZ,regional biomass,regional biomass,regional biomass,non-energy,0.737,0.737,0.737,0.737,0.737,0.737,0.737,0.737,0.737Canada,regional biomass,regional biomass,regional biomass,non-energy,0.737,0.737,0.737,0.737,0.737,0.737,0.737,0.737,0.737China,regional biomass,regional biomass,regional biomass,non-energy,0.737,0.737,0.737,0.737,0.737,0.737,0.737,0.737,0.737Eastern Europe,regional biomass,regional biomass,regional biomass,non-energy,0.737,0.737,0.737,0.737,0.737,0.737,0.737,0.737,0.737Former Soviet Union,regional biomass,regional biomass,regional biomass,non-energy,0.737,0.737,0.737,0.737,0.737,0.737,0.737,0.737,0.737India,regional biomass,regional biomass,regional biomass,non-energy,0.737,0.737,0.737,0.737,0.737,0.737,0.737,0.737,0.737Japan,regional biomass,regional biomass,regional biomass,non-energy,0.737,0.737,0.737,0.737,0.737,0.737,0.737,0.737,0.737Korea,regional biomass,regional biomass,regional biomass,non-energy,0.737,0.737,0.737,0.737,0.737,0.737,0.737,0.737,0.737Latin America,regional biomass,regional biomass,regional biomass,non-energy,0.737,0.737,0.737,0.737,0.737,0.737,0.737,0.737,0.737Middle East,regional biomass,regional biomass,regional biomass,non-energy,0.737,0.737,0.737,0.737,0.737,0.737,0.737,0.737,0.737Southeast Asia,regional biomass,regional biomass,regional biomass,non-energy,0.737,0.737,0.737,0.737,0.737,0.737,0.737,0.737,0.737USA,regional biomass,regional biomass,regional biomass,non-energy,0.737,0.737,0.737,0.737,0.737,0.737,0.737,0.737,0.737Western Europe,regional biomass,regional biomass,regional biomass,non-energy,0.737,0.737,0.737,0.737,0.737,0.737,0.737,0.737,0.737
