@@ -10020,7 +10020,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional biomass">
-                        <calibrated-value>0.316130043</calibrated-value>
+                        <calibrated-value>0.519578</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -10034,7 +10034,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
-                        <calibrated-value>20.99597182</calibrated-value>
+                        <calibrated-value>21.023572</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -10048,7 +10048,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>6.032936522</calibrated-value>
+                        <calibrated-value>6.0329365</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -10062,7 +10062,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids electricity">
-                        <calibrated-value>1.373582725</calibrated-value>
+                        <calibrated-value>1.374159</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
