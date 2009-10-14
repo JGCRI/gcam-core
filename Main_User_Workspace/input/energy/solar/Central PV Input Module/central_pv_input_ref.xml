@@ -4,15 +4,15 @@
       <region name="Africa">
          <unlimited-resource name="global solar resource">
             <capacity-factor>0.3</capacity-factor>
-            <price year="1975">0</price>
-            <price year="1990">0</price>
-            <price year="2005">0</price>
-            <price year="2020">0</price>
-            <price year="2035">0</price>
-            <price year="2050">0</price>
-            <price year="2065">0</price>
-            <price year="2080">0</price>
-            <price year="2095">0</price>
+            <price year="1975">0.001</price>
+            <price year="1990">0.001</price>
+            <price year="2005">0.001</price>
+            <price year="2020">0.001</price>
+            <price year="2035">0.001</price>
+            <price year="2050">0.001</price>
+            <price year="2065">0.001</price>
+            <price year="2080">0.001</price>
+            <price year="2095">0.001</price>
          </unlimited-resource>
          <intermittent-supplysector name="SolarAndAuxiliary">
             <subsector name="solar">

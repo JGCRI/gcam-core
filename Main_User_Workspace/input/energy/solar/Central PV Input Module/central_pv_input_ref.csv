@@ -3,7 +3,7 @@ Variable ID,,,,,,,,,,,
 10,,,,,,,,,,,
 ,,,price,,,,,,,,
 region,unlimited-resource,capacity-factor,1975,1990,2005,2020,2035,2050,2065,2080,2095
-Africa,global solar resource,0.3,0,0,0,0,0,0,0,0,0
+Africa,global solar resource,0.3,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
 
 
 Reset intermittent supplysector efficiencies to 1,,,,,,,,,,,
