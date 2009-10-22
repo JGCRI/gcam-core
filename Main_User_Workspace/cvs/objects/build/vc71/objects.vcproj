@@ -462,21 +462,63 @@
 					<File
 						RelativePath="..\..\solution\solvers\source\solver_component.cpp">
 					</File>
+					<File
+						RelativePath="..\..\solution\solvers\source\solver_component_factory.cpp">
+					</File>
+					<File
+						RelativePath="..\..\solution\solvers\source\solver_factory.cpp">
+					</File>
+					<File
+						RelativePath="..\..\solution\solvers\source\user_configurable_solver.cpp">
+					</File>
 				</Filter>
 				<Filter
 					Name="util"
 					Filter="">
 					<File
+						RelativePath="..\..\solution\util\source\all_solution_info_filter.cpp">
+					</File>
+					<File
+						RelativePath="..\..\solution\util\source\and_solution_info_filter.cpp">
+					</File>
+					<File
 						RelativePath="..\..\solution\util\source\calc_counter.cpp">
 					</File>
 					<File
-						RelativePath="..\..\solution\util\source\solver_info.cpp">
+						RelativePath="..\..\solution\util\source\market_name_solution_info_filter.cpp">
 					</File>
 					<File
-						RelativePath="..\..\solution\util\source\solver_info_set.cpp">
+						RelativePath="..\..\solution\util\source\market_type_solution_info_filter.cpp">
+					</File>
+					<File
+						RelativePath="..\..\solution\util\source\not_solution_info_filter.cpp">
+					</File>
+					<File
+						RelativePath="..\..\solution\util\source\or_solution_info_filter.cpp">
+					</File>
+					<File
+						RelativePath="..\..\solution\util\source\solution_info.cpp">
+					</File>
+					<File
+						RelativePath="..\..\solution\util\source\solution_info_filter_factory.cpp">
+					</File>
+					<File
+						RelativePath="..\..\solution\util\source\solution_info_param_parser.cpp">
+					</File>
+					<File
+						RelativePath="..\..\solution\util\source\solution_info_set.cpp">
+					</File>
+					<File
+						RelativePath="..\..\solution\util\source\solvable_nr_solution_info_filter.cpp">
+					</File>
+					<File
+						RelativePath="..\..\solution\util\source\solvable_solution_info_filter.cpp">
 					</File>
 					<File
 						RelativePath="..\..\solution\util\source\solver_library.cpp">
+					</File>
+					<File
+						RelativePath="..\..\solution\util\source\unsolved_solution_info_filter.cpp">
 					</File>
 				</Filter>
 			</Filter>
@@ -1364,21 +1406,69 @@
 					<File
 						RelativePath="..\..\solution\solvers\include\solver_component.h">
 					</File>
+					<File
+						RelativePath="..\..\solution\solvers\include\solver_component_factory.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\solvers\include\solver_factory.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\solvers\include\user_configurable_solver.h">
+					</File>
 				</Filter>
 				<Filter
 					Name="util"
 					Filter="">
 					<File
+						RelativePath="..\..\solution\util\include\all_solution_info_filter.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\util\include\and_solution_info_filter.h">
+					</File>
+					<File
 						RelativePath="..\..\solution\util\include\calc_counter.h">
 					</File>
 					<File
-						RelativePath="..\..\solution\util\include\solver_info.h">
+						RelativePath="..\..\solution\util\include\isolution_info_filter.h">
 					</File>
 					<File
-						RelativePath="..\..\solution\util\include\solver_info_set.h">
+						RelativePath="..\..\solution\util\include\market_name_solution_info_filter.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\util\include\market_type_solution_info_filter.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\util\include\not_solution_info_filter.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\util\include\or_solution_info_filter.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\util\include\solution_info.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\util\include\solution_info_filter_factory.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\util\include\solution_info_param_parser.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\util\include\solution_info_set.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\util\include\solvable_nr_solution_info_filter.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\util\include\solvable_solution_info_filter.h">
 					</File>
 					<File
 						RelativePath="..\..\solution\util\include\solver_library.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\util\include\unsolved_solution_info_filter.h">
+					</File>
+					<File
+						RelativePath="..\..\solution\util\include\unsolved_solver_info_filter.h">
 					</File>
 				</Filter>
 			</Filter>
