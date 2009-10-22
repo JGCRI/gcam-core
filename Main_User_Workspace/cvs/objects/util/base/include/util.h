@@ -346,18 +346,6 @@ namespace objects {
     }
 
     /*!
-     * \brief Specialization of isValidNumber for booleans.
-     * \details Booleans are always valid so this overrides isValidNumber to 
-     *          avoid conversion which would not be legal on booleans.
-     * \param aBoolean Boolean to check for validity.
-     * \return Whether the boolean is valid which is always true.
-     */
-    template <>
-    inline bool isValidNumber<bool>( const bool aNumber ){
-        return true;
-    }
-    
-    /*!
      * \brief Specialization of isValidNumber for type not convertible to double.
      * \details Since isValidNumber is used with in template datastructures we
      *          must be able to handle types which are not numbers
