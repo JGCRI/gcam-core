@@ -1,5 +1,5 @@
-#ifndef _SOLVER_INFO_H_
-#define _SOLVER_INFO_H_
+#ifndef _SOLUTION_INFO_H_
+#define _SOLUTION_INFO_H_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -40,9 +40,9 @@
 
 
 /*! 
-* \file solver_info.h
+* \file solution_info.h
 * \ingroup Solution
-* \brief The header file for the SolverInfo class.
+* \brief The header file for the SolutionInfo class.
 * \author Josh Lurz
 */
 
@@ -50,9 +50,12 @@
 #include <iosfwd>
 #include <functional>
 #include "marketplace/include/imarket_type.h"
+// need to include this because you can't forward declare
+// internal classes
+#include "solution/util/include/solution_info_param_parser.h"
 
 class Market;
-class SolverInfoSet;
+class SolutionInfoSet;
 class SupplyDemandCurve;
 namespace objects {
     class Atom;
@@ -63,23 +66,27 @@ namespace objects {
 * \brief A class which contains the solution information for a single market.
 * \author Josh Lurz
 */
-class SolverInfo {
-     friend std::ostream& operator<<( std::ostream& os, const SolverInfo& solverInfo ){
-        solverInfo.print( os );
+class SolutionInfo {
+     friend std::ostream& operator<<( std::ostream& os, const SolutionInfo& SolutionInfo ){
+        SolutionInfo.print( os );
         return os;
     }
 public:
-    SolverInfo( Market* linkedMarket );
-    bool operator==( const SolverInfo& rhs ) const;
-    bool operator!=( const SolverInfo& rhs ) const;
+    SolutionInfo( Market* linkedMarket );
+    bool operator==( const SolutionInfo& rhs ) const;
+    bool operator!=( const SolutionInfo& rhs ) const;
     const std::string& getName() const;
     const IMarketType::Type getType() const;
     std::string getTypeName() const;
-    void init();
+    void init( const double aDefaultSolutionTolerance, const double aDefaultSolutionFloor,
+               const SolutionInfoParamParser::SolutionInfoValues& aSolutionInfoValues );
     bool isBracketed() const;
     void setBracketed();
     double getBracketSize() const;
-    double getBracketInterval() const;
+    double getCurrentBracketInterval() const;
+    double getBracketInterval( const double aDefaultBracketInverval ) const;
+    double getMaxNRPriceJump( const double aDefaultMaxPriceJump ) const;
+    double getDeltaPrice( const double aDefaultDeltaPrice ) const;
     double getPrice() const;
     void setPrice( const double aPrice );
     void setPriceToCenter();
@@ -96,11 +103,11 @@ public:
     void updateFromMarket();
     void adjustBracket();
     void expandBracket( const double aAdjFactor );
-    double getRelativeED( const double ED_SOLUTION_FLOOR ) const;
-    bool isWithinTolerance( const double SOLUTION_TOLERANCE, const double ED_SOLUTION_FLOOR ) const;
+    double getRelativeED() const;
+    bool isWithinTolerance() const;
     bool shouldSolve( const bool isNR ) const;
-    void calcDemandElas( const SolverInfoSet& solvableMarkets );
-    void calcSupplyElas( const SolverInfoSet& solvableMarkets );
+    void calcDemandElas( const SolutionInfoSet& solvableMarkets );
+    void calcSupplyElas( const SolutionInfoSet& solvableMarkets );
     bool checkAndResetBrackets();
     void increaseX( const double multiplier, const double lowerBound );
     void decreaseX( const double multiplier, const double lowerBound );
@@ -108,10 +115,10 @@ public:
     void moveLeftBracketToX();
     void resetBrackets();
     bool isCurrentlyBracketed() const;
-    bool isSolved( const double SOLUTION_TOLERANCE, const double ED_SOLUTION_FLOOR ) const;
+    bool isSolved() const;
     double getDemandElasWithRespectTo( const unsigned int aMarketNumber ) const;
     double getSupplyElasWithRespectTo( const unsigned int aMarketNumber ) const;
-    bool isUnsolvedAndSingular( const double aSolTolerance, const double aSolFloor );
+    bool isUnsolvedAndSingular();
     void setBisectedFlag();
     void unsetBisectedFlag();
     bool hasBisected() const;
@@ -119,19 +126,18 @@ public:
     SupplyDemandCurve createSDCurve();
     void printDerivatives( std::ostream& aOut ) const;
     /*!
-    * \brief Binary function used to order SolverInfo* pointers by decreasing relative excess demand. 
+    * \brief Binary function used to order SolutionInfo* pointers by decreasing relative excess demand. 
     * \author Josh Lurz
     */   
-    struct GreaterRelativeED : public std::binary_function<SolverInfo*, SolverInfo*, bool>
+    struct GreaterRelativeED : public std::binary_function<SolutionInfo*, SolutionInfo*, bool>
     {
-        double mDemandFloor; //!< Store the demand floor to use.
         //! Constructor
-        GreaterRelativeED( const double aDemandFloor ):mDemandFloor( aDemandFloor ){}
+        GreaterRelativeED(){}
 
         //! Operator which performs comparison. 
-        bool operator()( const SolverInfo& aLHS, const SolverInfo& aRHS ) const
+        bool operator()( const SolutionInfo& aLHS, const SolutionInfo& aRHS ) const
         {   
-            return aLHS.getRelativeED( mDemandFloor ) > aRHS.getRelativeED( mDemandFloor );
+            return aLHS.getRelativeED() > aRHS.getRelativeED();
         }
     };
 private:
@@ -150,10 +156,26 @@ private:
     double EDR;     //!< excess demand for right bracket
     std::vector<double> demandElasticities; //!< demand elasticities
     std::vector<double> supplyElasticities; //!< supply elasticities
+    
+    //! Market specific solution tolerance
+    double mSolutionTolerance;
+    
+    //! Market specific solution floor
+    double mSolutionFloor;
+    
+    //! Market specific bracket interval
+    double mBracketInterval;
+    
+    //! Market specific max newton raphson price jump
+    double mMaxNRPriceJump;
+    
+    //! Market specific delta price for derivative calcs
+    double mDeltaPrice;
+    
     void print( std::ostream& out ) const;
     double getLogChangeInRawPrice() const;
     double getLogChangeInRawDemand() const;
     double getLogChangeInRawSupply() const;
 };
 
-#endif // _SOLVER_INFO_H_
+#endif // _SOLUTION_INFO_H_

@@ -45,18 +45,7 @@
 #include <iostream>
 
 #include "solution/solvers/include/solver_component.h"
-#include "solution/solvers/include/log_newton_raphson.h"
-#include "solution/solvers/include/log_newton_raphson_sd.h"
-#include "solution/solvers/include/bisect_all.h"
-#include "solution/solvers/include/bisect_one.h"
-#include "solution/solvers/include/bisect_policy.h"
-#include "util/base/include/configuration.h"
 #include "solution/util/include/calc_counter.h"
-#include "marketplace/include/marketplace.h"
-#include "util/base/include/util.h"
-// Temporarily put Solver factory method here.
-#include "solution/solvers/include/bisection_nr_solver.h"
-#include "solution/solvers/include/bisect_policy_nr_solver.h"
 
 using namespace std;
 
@@ -72,45 +61,6 @@ SolverComponent::SolverComponent( Marketplace* marketplaceIn, World* worldIn, Ca
 
 //! Default Destructor.
 SolverComponent::~SolverComponent(){
-}
-
-/*! \brief Static factory method to generate SolverComponents. 
-* \details This is a static factory method which when passed in the name of a SolverComponent
-* returns an auto_ptr to a new dynamically allocated instance of the appropriate SolverComponent.
-* If there is not a SolverComponent of the given name, the function will report an error to the console
-* and return a null auto_ptr. This function is designed to encapsulate SolverComponents so that there 
-* implementations can be hidden from the Solver, and the Solver does not have to include their header files.
-* \note All new SolverComponent sub-classes should be added here. 
-* \param solverName The name of the SolverComponent, as defined by the static getName function.
-* \param marketplace A pointer to the global marketplace.
-* \param world A pointer to the world. 
-* \param calcCounter A pointer to the calcCounter object used to track calls to World.calc()
-* \return An auto_ptr to the SolverComponent named solverName, null if it does not exist.
-*/
-auto_ptr<SolverComponent> SolverComponent::getSolverComponent( const string& solverName, Marketplace* marketplace,
-                                                               World* world, CalcCounter* calcCounter )
-{
-    // Check the name against possible components. 
-    if( solverName == LogNewtonRaphson::getNameStatic() ){
-        double deltaPrice = Configuration::getInstance()->getDouble( "DeltaPrice", 1e-6 );
-        return auto_ptr<SolverComponent>( new LogNewtonRaphson( marketplace, world, calcCounter, deltaPrice ) );
-    }
-    else if( solverName == BisectAll::getNameStatic() ){
-        return auto_ptr<SolverComponent>( new BisectAll( marketplace, world, calcCounter ) );
-    }
-    else if( solverName == LogNewtonRaphsonSaveDeriv::getNameStatic() ){
-        return auto_ptr<SolverComponent>( new LogNewtonRaphsonSaveDeriv( marketplace, world, calcCounter, 1e-6 ) );
-    }
-    else if( solverName == BisectOne::getNameStatic() ){
-        return auto_ptr<SolverComponent>( new BisectOne( marketplace, world, calcCounter ) );
-    }
-    else if( solverName == BisectPolicy::getNameStatic() ){
-        return auto_ptr<SolverComponent>( new BisectPolicy( marketplace, world, calcCounter ) );
-    }
-    else {
-        cout << "Error: Invalid solver component name: " << solverName << endl;
-        return auto_ptr<SolverComponent>();
-    }
 }
 
 //! Struct constructor
@@ -147,21 +97,7 @@ bool SolverComponent::isImproving( const unsigned int aNumIter ) const {
 
 void SolverComponent::startMethod(){
     // Set the current calculation method.  
-    calcCounter->setCurrentMethod( getName() );
+    calcCounter->setCurrentMethod( getXMLName() );
     // Clear the stack.
     mPastIters.clear();
 }
-
-// Temporarily put solver class definitions here.
-// TODO: Determine if a source file is necessary.
-//! Factory method.
-std::auto_ptr<Solver> Solver::getSolver( const string& aSolverName, Marketplace* aMarketplace, World* aWorld ){
-    if( aSolverName == BisectPolicyNRSolver::getName() ){
-        return std::auto_ptr<Solver>( new BisectPolicyNRSolver( aMarketplace, aWorld ) );
-    }
-    else {
-        return std::auto_ptr<Solver>( new BisectionNRSolver( aMarketplace, aWorld ) );
-    }
-}
-
-

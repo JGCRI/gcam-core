@@ -50,9 +50,11 @@
 #include <memory>
 #include <vector>
 
+#include "util/base/include/iparsable.h"
+
 class CalcCounter; 
 class Marketplace;
-class SolverInfoSet;
+class SolutionInfoSet;
 class World;
 
 /*! \brief An abstract class defining an interface to an independent component
@@ -66,7 +68,7 @@ class World;
 *           method, which attempts to clear the markets.
 * \author Josh Lurz
 */
-class SolverComponent {
+class SolverComponent : public IParsable {
 public:
     //! Return code of the solve method. 
     enum ReturnCode {
@@ -80,14 +82,11 @@ public:
    SolverComponent( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn );
    virtual ~SolverComponent();
    
-   static std::auto_ptr<SolverComponent> getSolverComponent( const std::string& solverName,
-       Marketplace* marketplace, World* world, CalcCounter* calcCounter );
-   
    virtual void init() = 0;
    
-   virtual ReturnCode solve( const double solutionTolerance, const double edSolutionFloor,
-                             const unsigned int maxIterations, SolverInfoSet& solverSet,
-                             const int period ) = 0;
+   virtual ReturnCode solve( SolutionInfoSet& aSolutionSet, const int aPeriod ) = 0;
+
+   virtual const std::string& getXMLName() const = 0;
 
 protected:
    Marketplace* marketplace; //<! The marketplace to solve. 
@@ -108,7 +107,6 @@ protected:
    };
 
    std::vector<IterationInfo> mPastIters;
-   virtual const std::string& getName() const = 0;
    void addIteration( const std::string& aSolName, const double aRED );
    bool isImproving( const unsigned int aNumIter ) const;
    void startMethod();

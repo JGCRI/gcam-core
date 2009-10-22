@@ -1,5 +1,5 @@
-#ifndef _BISECT_POLICY_NR_SOLVER_H_
-#define _BISECT_POLICY_NR_SOLVER_H_
+#ifndef _NOT_SOLUTION_INFO_FILTER_H_
+#define _NOT_SOLUTION_INFO_FILTER_H_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -38,59 +38,49 @@
  * by User.
  */
 
-
-#include <memory>
-#include "solution/solvers/include/solver.h"
-
 /*! 
-* \file bisect_policy_nr_solver.h
-* \ingroup Objects
-* \brief The BisectPolicyNRSolver class header file.
-*
-* \author Josh Lurz
-*/
+ * \file not_solution_info_filter.h  
+ * \ingroup Objects
+ * \brief Header file for the NotSolutionInfoFilter class.
+ * \author Pralit Patel
+ */
+#include <xercesc/dom/DOMNode.hpp>
+#include <string>
 
-class SolverComponent;
-class Marketplace;
-class World;
-class SolutionInfoParamParser;
+#include "solution/util/include/isolution_info_filter.h"
+
+class SolutionInfo;
+
 /*!
-* \ingroup Objects
-* \brief A class which defines an An instance of the Solver class which uses
-*        bisection first and then Newton-Raphson.
-* \author Josh Lurz
-*/
-
-class BisectPolicyNRSolver: public Solver {
+ * \ingroup Objects
+ * \brief A solution info filter which will use the logical not operator on the
+ *        contained filter to determine if the SolutionInfo is accepted.
+ * \details <b>XML specification for NotSolutionInfoFilter</b>
+ *          - XML name: \c not-solution-info-filter
+ *          - Contained by:
+ *          - Parsing inherited from class: None.
+ *          - Elements:
+ *              - \c (any ISolutionInfoFilter) ISolutionInfoFilter* NotSolutionInfoFilter::mWrappedFilter
+ *                      Can be any solution info filter contained in SolutionInfoFilterFactory
+ *
+ * \author Pralit Patel
+ */
+class NotSolutionInfoFilter : public ISolutionInfoFilter {
 public:
-    BisectPolicyNRSolver( Marketplace* marketplaceIn, World* worldIn );
-    virtual ~BisectPolicyNRSolver();
+    NotSolutionInfoFilter();
+    ~NotSolutionInfoFilter();
+    
     static const std::string& getXMLNameStatic();
     
-    // Solver methods
-    virtual void init();
-    virtual bool solve( const int aPeriod, const SolutionInfoParamParser* aSolutionInfoParamParser );
+    // ISolutionInfoFilter methods
+    virtual bool acceptSolutionInfo( const SolutionInfo& aSolutionInfo ) const;
     
     // IParsable methods
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
-
+    
 private:
-    std::auto_ptr<SolverComponent> mLogNewtonRaphson; //!< LogNewtonRaphson solver component.
-    std::auto_ptr<SolverComponent> mBisectAll; //!< BisectAll solver component.
-    std::auto_ptr<SolverComponent> mBisectOne; //!< BisectOne solver component.
-    std::auto_ptr<SolverComponent> mBisectPolicy; //!< BisectPolicy solver component.
-    
-    //! Default solution tolerance, this value may be overridden by at the SolutionInfo level
-    double mDefaultSolutionTolerance;
-    
-    //! Default solution floor, this value may be overridden by at the SolutionInfo level
-    double mDefaultSolutionFloor;
-    
-    //! Calibration tolerance
-    double mCalibrationTolerance;
-    
-    //! Max total solution iterations
-    int mMaxModelCalcs;
+    //! The wrapped filter to be negated
+    ISolutionInfoFilter* mWrappedFilter;
 };
 
-#endif // _BISECT_POLICY_NR_SOLVER_H_
+#endif // _NOT_SOLUTION_INFO_FILTER_H_

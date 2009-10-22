@@ -199,7 +199,8 @@ template<class T>
 T XMLHelper<T>::getValue( const xercesc::DOMNode* node ){
    // make sure we were passed a valid node reference which is an element.
    assert( node );
-   assert( node->getNodeType() == xercesc::DOMNode::ELEMENT_NODE );
+   assert( node->getNodeType() == xercesc::DOMNode::ELEMENT_NODE
+           || node->getNodeType() == xercesc::DOMNode::ATTRIBUTE_NODE );
 
    // get the first child, which should contain the value.
    xercesc::DOMNode* curr = node->getFirstChild();

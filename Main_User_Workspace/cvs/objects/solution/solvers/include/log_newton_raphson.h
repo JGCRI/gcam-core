@@ -1,5 +1,5 @@
-#ifndef _NEWTON_RAPHSON_H_
-#define _NEWTON_RAPHSON_H_
+#ifndef _LOG_NEWTON_RAPHSON_H_
+#define _LOG_NEWTON_RAPHSON_H_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -47,35 +47,61 @@
 * \author Josh Lurz
 */
 #include <string>
-#include <boost/numeric/ublas/matrix.hpp> 
+#include <boost/numeric/ublas/matrix.hpp>
+// include lu for permutation_matrix
+#include <boost/numeric/ublas/lu.hpp>
 
 typedef boost::numeric::ublas::matrix<double> Matrix;
+typedef boost::numeric::ublas::permutation_matrix<std::size_t> PermutationMatrix;
 
 class CalcCounter; 
 class Marketplace;
 class World;
-class SolverInfoSet;
+class SolutionInfoSet;
+class ISolutionInfoFilter;
 
 /*! 
 * \ingroup Objects
-* \brief A SolverComponent based on the Newton-Raphson algorithm using logarithmic values. 
+* \brief A SolverComponent based on the Newton-Raphson algorithm using logarithmic values.
+* \details Newton-Raphson does a better job with markets are very interdependent compared
+*          to bisections.  To capture the interactions between markets it is often a good
+*          idea to include solution infos that are solved.  Newton-Raphson does rely on
+*          calculating derivatives which is very computationally intensive and can also
+*          diverge from the solution when it is not close or has to deal with non continuous
+*          (supply - demand) curves.
 * \author Josh Lurz
 */
-
 class LogNewtonRaphson: public SolverComponent {
 public:
-    LogNewtonRaphson( Marketplace* aMarketplace, World* aWorld, CalcCounter* aCalcCount, double aDeltaPrice );
-    virtual ~LogNewtonRaphson(){};
+    LogNewtonRaphson( Marketplace* aMarketplace, World* aWorld, CalcCounter* aCalcCount );
+    virtual ~LogNewtonRaphson();
+    static const std::string& getXMLNameStatic();
+    
+    // SolverComponent methods
     virtual void init();
-    static const std::string& getNameStatic();
-    ReturnCode solve( const double solutionTolerance, const double edSolutionFloor,
-                      const unsigned int maxIterations, SolverInfoSet& solverSet, const int period );
+    virtual ReturnCode solve( SolutionInfoSet& aSolutionSet, const int aPeriod );
+    virtual const std::string& getXMLName() const;
+    
+    // IParsable methods
+    virtual bool XMLParse( const xercesc::DOMNode* aNode );
     
 protected:
-    virtual const std::string& getName() const;
-    virtual ReturnCode calculateDerivatives( SolverInfoSet& solverSet, Matrix& JFSM, Matrix& JFDM, Matrix& JF, int period );
-
-    double mDeltaPrice; //!< The amount to adjust prices by when calculation derivatives.
+    //! The default amount to adjust prices by when calculation derivatives.
+    double mDefaultDeltaPrice;
+    
+    //! Max iterations for this solver component
+    unsigned int mMaxIterations;
+    
+    //! The default allowed jump in price for newton raphson, this may be overriden by a SolutionInfo
+    double mDefaultMaxPriceChange;
+    
+    //! A filter which will be used to determine which SolutionInfos with solver component
+    //! will work on.
+    std::auto_ptr<ISolutionInfoFilter> mSolutionInfoFilter;
+    
+    virtual ReturnCode calculateDerivatives( SolutionInfoSet& aSolutionSet, Matrix& JF, PermutationMatrix& aPermMatrix, int aPeriod );
+    
+    virtual void resetDerivatives();
 };
 
-#endif // _NEWTON_RAPHSON_H_
+#endif // _LOG_NEWTON_RAPHSON_H_

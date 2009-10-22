@@ -51,7 +51,8 @@
 class CalcCounter; 
 class Marketplace;
 class World;
-class SolverInfoSet;
+class SolutionInfoSet;
+class ISolutionInfoFilter;
 
 /*! 
 * \ingroup Objects
@@ -62,13 +63,29 @@ class SolverInfoSet;
 class BisectPolicy: public SolverComponent {
 public:        
     BisectPolicy( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn );
+    static const std::string& getXMLNameStatic();
+    
+    // SolverComponent methods
     void init();
-    static const std::string& getNameStatic();
-    ReturnCode solve( const double solutionTolerance, const double edSolutionFloor,
-                      const unsigned int maxIterations, SolverInfoSet& solverSet, const int period );
+    ReturnCode solve( SolutionInfoSet& aSolutionSet, const int aPeriod );
+    const std::string& getXMLName() const;
+    
+    // IParsable methods
+    virtual bool XMLParse( const xercesc::DOMNode* aNode );
+
 protected:
-    const std::string& getName() const;
-    static const std::string SOLVER_NAME;
+    //! Max iterations for this solver component
+    unsigned int mMaxIterations;
+    
+    //! Default bracket interval to use for bracketing, could be overridden by a SolutionInfo
+    double mDefaultBracketInterval;
+    
+    //! Max iterations for bracketing
+    unsigned int mMaxBracketIterations;
+    
+    //! A filter which will be used to determine which SolutionInfos this solver component
+    //! will look through to determine the worst off market to work on if no policy is found.
+    std::auto_ptr<ISolutionInfoFilter> mSolutionInfoFilter;
 };
 
 #endif // _BISECT_POLICY_H_

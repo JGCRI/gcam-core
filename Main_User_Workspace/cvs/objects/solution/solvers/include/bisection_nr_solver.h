@@ -42,7 +42,6 @@
 #include <vector>
 #include <memory>
 #include "solution/solvers/include/solver.h"
-#include "solution/util/include/solver_info_set.h"
 
 /*! 
 * \file bisection_nr_solver.h
@@ -54,28 +53,42 @@
 class SolverComponent;
 class Marketplace;
 class World;
+
 /*! 
 * \ingroup Objects
-* \brief A class which defines an An instance of the Solver class which uses bisection first and then Newton-Raphson.
+* \brief A class which defines an instance of the Solver class which uses Newton-Raphson
+*        first and then bisection.
 * \author Josh Lurz
 */
-
 class BisectionNRSolver: public Solver {
 public:
     BisectionNRSolver( Marketplace* aMarketplace, World* aWorld );
     virtual ~BisectionNRSolver();
-    static const std::string& getName();
+    static const std::string& getXMLNameStatic();
+    
+    // Solver methods
     virtual void init();
-    virtual bool solve( const int period );
+    virtual bool solve( const int aPeriod, const SolutionInfoParamParser* aSolutionInfoParamParser );
+    
+    // IParsable methods
+    virtual bool XMLParse( const xercesc::DOMNode* aNode );
+
 private:
     std::auto_ptr<SolverComponent> mLogNewtonRaphson; //!< LogNewtonRaphson solver component.
     std::auto_ptr<SolverComponent> mBisectAll; //!< BisectAll solver component.
-    std::auto_ptr<SolverComponent> mBisectOneWorst; //!< BisectOneWorst solver component.
     std::auto_ptr<SolverComponent> mLogNewtonRaphsonSaveDeriv; //!< LogNewtonRaphsonSaveDerivatives solver component.
-    void NRandSingleBisect( const double solTol, const double edSolFloor, const double maxNRRelED,  
-                            const int maxCalcsNR, const int maxCalcsBisectOne, SolverInfoSet& sol, 
-                            const unsigned int aNumBisectOneCalls, const int period );
+    
+    //! Default solution tolerance, this value may be overridden at the SolutionInfo level
+    double mDefaultSolutionTolerance;
+    
+    //! Default solution floor, this value may be overridden at the SolutionInfo level
+    double mDefaultSolutionFloor;
+    
+    //! Calibration tolerance
+    double mCalibrationTolerance;
+    
+    //! Max total solution iterations
+    int mMaxModelCalcs;
 };
 
 #endif // _BISECTION_NR_SOLVER_
-

@@ -48,10 +48,12 @@
 #include <memory>
 #include <string>
 
-// class CalcCounter; // TODO: Fix this without causing incomplete destructor warnings.
-#include "solution/util/include/calc_counter.h" 
+#include "util/base/include/iparsable.h"
+
+class CalcCounter;
 class Marketplace;
 class World;
+class SolutionInfoParamParser;
 /*!
 * \ingroup objects
 * \brief Solver is an abstract class which defines a very basic interface to an object which solves the 
@@ -60,18 +62,18 @@ class World;
 * \author Josh Lurz
 */
 
-class Solver {
+class Solver : public IParsable {
 public:
     Solver( Marketplace* aMarketplace, World* aWorld ):marketplace( aMarketplace ), world( aWorld ){};
     virtual ~Solver(){};
     virtual void init() = 0;
-    virtual bool solve( const int period ) = 0;
-    static std::auto_ptr<Solver> getSolver( const std::string& aSolverName, Marketplace* aMarketplace,
-                                            World* aWorld );
+    virtual bool solve( const int aPeriod, const SolutionInfoParamParser* aSolutionInfoParamParser ) = 0;
+
 protected:
     Marketplace* marketplace; //<! The marketplace to solve. 
     World* world; //!< The world to call calc on.
-    std::auto_ptr<CalcCounter> mCalcCounter; //<! Tracks the number of calls to world.calc
+    //! Weak pointer to the object which tracks the number of calls to World.calc.
+    CalcCounter* mCalcCounter;
 };
 
 #endif // _SOLVER_H_

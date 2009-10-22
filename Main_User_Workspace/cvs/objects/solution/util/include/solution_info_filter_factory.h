@@ -1,5 +1,5 @@
-#ifndef _BISECT_POLICY_NR_SOLVER_H_
-#define _BISECT_POLICY_NR_SOLVER_H_
+#ifndef _SOLUTION_INFO_FILTER_FACTORY_H_
+#define _SOLUTION_INFO_FILTER_FACTORY_H_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -38,59 +38,44 @@
  * by User.
  */
 
-
-#include <memory>
-#include "solution/solvers/include/solver.h"
-
 /*! 
-* \file bisect_policy_nr_solver.h
-* \ingroup Objects
-* \brief The BisectPolicyNRSolver class header file.
-*
-* \author Josh Lurz
-*/
+ * \file solution_info_filter_factory.h  
+ * \ingroup Objects
+ * \brief Header file for the SolutionInfoFilterFactory class.
+ * \author Pralit Patel
+ */
+#include <xercesc/dom/DOMNode.hpp>
+#include <string>
 
-class SolverComponent;
-class Marketplace;
-class World;
-class SolutionInfoParamParser;
+class ISolutionInfoFilter;
+
 /*!
-* \ingroup Objects
-* \brief A class which defines an An instance of the Solver class which uses
-*        bisection first and then Newton-Raphson.
-* \author Josh Lurz
-*/
-
-class BisectPolicyNRSolver: public Solver {
+ * \ingroup Objects
+ * \brief A factory which can be used to create instances of solution info filters.
+ * \details There are three static methods, one to determine if this factory can create
+ *          a filter with the given xml name, one to create and parse a filter with the
+ *          given xml name and xml tree, and lastly one that can create them from a syntax
+ *          string.  See documentation for createSolutionInfoFilterFromString for more
+ *          details on the syntax string format.
+ *
+ * \author Pralit Patel
+ */
+class SolutionInfoFilterFactory {
 public:
-    BisectPolicyNRSolver( Marketplace* marketplaceIn, World* worldIn );
-    virtual ~BisectPolicyNRSolver();
-    static const std::string& getXMLNameStatic();
+    static bool hasSolutionInfoFilter( const std::string& aXMLName );
     
-    // Solver methods
-    virtual void init();
-    virtual bool solve( const int aPeriod, const SolutionInfoParamParser* aSolutionInfoParamParser );
+    static ISolutionInfoFilter* createAndParseSolutionInfoFilter( const std::string& aXMLName,
+                                                              const xercesc::DOMNode* aNode );
     
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
-
+    static ISolutionInfoFilter* createSolutionInfoFilterFromString( const std::string& aFilterString );
+    
 private:
-    std::auto_ptr<SolverComponent> mLogNewtonRaphson; //!< LogNewtonRaphson solver component.
-    std::auto_ptr<SolverComponent> mBisectAll; //!< BisectAll solver component.
-    std::auto_ptr<SolverComponent> mBisectOne; //!< BisectOne solver component.
-    std::auto_ptr<SolverComponent> mBisectPolicy; //!< BisectPolicy solver component.
+    static xercesc::DOMNode* buildDOMFromFilterString( const std::string& aFilterString,
+                                                       xercesc::DOMDocument* aDocNode );
     
-    //! Default solution tolerance, this value may be overridden by at the SolutionInfo level
-    double mDefaultSolutionTolerance;
-    
-    //! Default solution floor, this value may be overridden by at the SolutionInfo level
-    double mDefaultSolutionFloor;
-    
-    //! Calibration tolerance
-    double mCalibrationTolerance;
-    
-    //! Max total solution iterations
-    int mMaxModelCalcs;
+    static std::string::const_iterator findCloseParentheses( const std::string& aFilterString,
+                                                             const std::string::const_iterator& aOpenParen );
+
 };
 
-#endif // _BISECT_POLICY_NR_SOLVER_H_
+#endif // _SOLUTION_INFO_FILTER_FACTORY_H_

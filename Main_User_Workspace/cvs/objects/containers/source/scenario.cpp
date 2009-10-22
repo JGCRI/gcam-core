@@ -62,9 +62,13 @@
 #include "reporting/include/xml_db_outputter.h"
 #include "containers/include/output_meta_data.h"
 #include "util/base/include/auto_file.h"
+#include "solution/solvers/include/solver_factory.h"
+#include "solution/solvers/include/bisection_nr_solver.h"
+#include "solution/util/include/solution_info_param_parser.h"
 
 using namespace std;
 using namespace xercesc;
+using namespace boost;
 
 extern ofstream outFile;
 time_t gGlobalTime;
@@ -149,6 +153,51 @@ bool Scenario::XMLParse( const DOMNode* node ){
         else if( nodeName == OutputMetaData::getXMLNameStatic() ) {
             parseSingleNode( curr, mOutputMetaData, new OutputMetaData );
         }
+        else if( nodeName == SolutionInfoParamParser::getXMLNameStatic() ) {
+            parseSingleNode( curr, mSolutionInfoParamParser, new SolutionInfoParamParser );
+        }
+        
+        /*!
+         * \warning Parsing of solution algorithms are a special case.  They must be 
+         *          parsed after world and modeltime have been parsed and they will never
+         *          be written out in toInputXML.  They are also not re-parsable for
+         *          example trying to overwrite a parameter in a Solver using an add on
+         *          file will not work, rather it will completely overwrite the entire
+         *          solver for that period with the latest parsed solver.
+         */
+        else if( SolverFactory::hasSolver( nodeName ) ) {
+            /*!
+             * \pre World has already been created.
+             */
+            assert( world.get() );
+            
+            shared_ptr<Solver> retSolver( SolverFactory::createAndParseSolver( nodeName, marketplace.get(),
+                                                                     world.get(), curr ) );
+            
+            // make sure we don't attempt to set an invalid solver
+            if( retSolver.get() ) {
+                /*!
+                 * \pre Modeltime has already been created.
+                 */
+                assert( modeltime.get() );
+                
+                // this must be done here rather than relying on XMLHelper since we require a factory
+                // to create our object
+                const int period = modeltime->getyr_to_per( XMLHelper<int>::getAttr( curr, "year" ) );
+                const bool fillOut = XMLHelper<bool>::getAttr( curr, "fillout" );
+                // we may need to resize the mSolvers which we could do now that we know we have a
+                // modeltime
+                if( mSolvers.size() == 0 ) {
+                    mSolvers.resize( modeltime->getmaxper() );
+                }
+                mSolvers[ period ] = retSolver;
+                
+                // TODO: I think just using the same object rather than copying should suffice here
+                for( int fillOutPeriod = period + 1; fillOut && fillOutPeriod < modeltime->getmaxper(); ++fillOutPeriod ) {
+                    mSolvers[ fillOutPeriod ] = retSolver;
+                }
+            }
+        }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
@@ -173,15 +222,19 @@ void Scenario::completeInit() {
         mainLog << "No scenario name was set, using default." << endl;
         name = "NoScenarioName";
     }
+    
+    // if we didn't parse any solution info parameters we should at least
+    // create an empty one
+    if( !mSolutionInfoParamParser.get() ) {
+        mSolutionInfoParamParser.reset( new SolutionInfoParamParser() );
+    }
 
     // Complete the init of the world object.
     if( world.get() ){
         world->completeInit();
-        // Create the solver and initialize with a pointer to the Marketplace and World.
-        const string solverName = Configuration::getInstance()->getString( "SolverName" );
-        solver = Solver::getSolver( solverName, marketplace.get(), world.get() );
-        // Complete the init of the solution object.
-        solver->init();
+
+        // initialize solvers
+        initSolvers();
     }
     else {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -614,12 +667,12 @@ const map<const string,const Curve*> Scenario::getEmissionsPriceCurves( const st
 
 bool Scenario::solve( const int period ){
     /*! \pre The solver must be instantiated. */
-    assert( solver.get() );
+    assert( mSolvers[ period ].get() );
 
     // Solve the marketplace. If the return code is false than the model did not
     // solve for the period. Add the period to the scenario list of unsolved
     // periods. 
-    if( !solver->solve( period ) ) {
+    if( !mSolvers[ period ]->solve( period, mSolutionInfoParamParser.get() ) ) {
         unsolvedPeriods.push_back( period );
     }
     // TODO: This should be added to the db.
@@ -744,4 +797,40 @@ void Scenario::csvSGMGenFile( ostream& aFile ) const {
     util::printTime( gGlobalTime, aFile );
     aFile << endl;
     world->csvSGMGenFile( aFile );
+}
+
+/*!
+ * \brief A convience method to initialize solvers for all periods.
+ * \details First look into the configuration file to see if the user
+ *          specified a solver-config file.  If so then parse that file
+ *          overwritting any previously created solvers.  Then we check
+ *          each period to make sure we have a solver for that period, if
+ *          not we will set it to the default solver.  The default solver
+ *          is currently BisectionNRSolver.  Finally we call init for
+ *          each solver.
+ */
+void Scenario::initSolvers() {
+    // check the config file for a solver config file
+    const string solverConfigFile = Configuration::getInstance()->getFile( "solver-config", "" );
+    
+    // parse the solver config if the user specified one
+    if( solverConfigFile != "" ) {
+        XMLHelper<void>::parseXML( solverConfigFile, this );
+    }
+    
+    // we may need to resize the mSolvers which we could do now that we know we have a
+    // modeltime
+    if( mSolvers.size() == 0 ) {
+        mSolvers.resize( modeltime->getmaxper() );
+    }
+    
+    // unfortunately we have to access this solver directly
+    shared_ptr<Solver> defaultSolver( new BisectionNRSolver( marketplace.get(), world.get() ) );
+    for(vector<shared_ptr<Solver> >::iterator solverIt = mSolvers.begin(); solverIt != mSolvers.end(); ++solverIt ) {
+        if( !(*solverIt).get() ) {
+            (*solverIt) = defaultSolver;
+        }
+        // Complete the init of the solution object.
+        (*solverIt)->init();
+    }
 }

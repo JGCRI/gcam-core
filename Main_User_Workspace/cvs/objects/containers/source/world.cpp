@@ -84,7 +84,7 @@ extern Scenario* scenario;
 
 //! Default constructor.
 World::World():
-calcCounter( 0 )
+mCalcCounter( new CalcCounter() )
 {
 }
 
@@ -334,7 +334,7 @@ void World::initCalc( const int period ) {
     }
     
     // Reset the calc counter.
-    calcCounter->startNewPeriod();
+    mCalcCounter->startNewPeriod();
 }
 
 /*! \brief Tabulates calibrated supplies and demands and stores them in the
@@ -385,9 +385,7 @@ void World::calc( const int aPeriod, const AtomVector& aRegionsToCalc ) {
     assert( regionNumbersToCalc.size() <= regions.size() );
 
     // Increment the world.calc count based on the number of regions to solve. 
-    if( calcCounter ){
-        calcCounter->incrementCount( static_cast<double>( regionNumbersToCalc.size() ) / static_cast<double>( regions.size() ) );
-    }
+    mCalcCounter->incrementCount( static_cast<double>( regionNumbersToCalc.size() ) / static_cast<double>( regions.size() ) );
     
     // Perform calculation loop on each region to calculate. 
     for ( vector<unsigned int>::const_iterator currIndex = regionNumbersToCalc.begin(); currIndex != regionNumbersToCalc.end(); ++currIndex ) {
@@ -822,11 +820,15 @@ const map<const string,const Curve*> World::getEmissionsPriceCurves( const strin
     return emissionsPCurves;
 }
 
-//! Set a pointer to an object which tracks the number of calls to world.calc that are made.
-void World::setCalcCounter( CalcCounter* calcCounter ){
-    /*! \pre The calcCounter is not null. */
-    assert( calcCounter );
-    this->calcCounter = calcCounter;
+/*!
+ * \brief Gets the reference to the calc counter.
+ * \details The calc counter would be needed by solvers however since there
+ *          could be many solvers the world object will contain it and each
+ *          solver will be able to get it from here.
+ * \return A reference to the Calc Counter
+ */
+CalcCounter* World::getCalcCounter() const {
+    return mCalcCounter.get();
 }
 
 /*! \brief Protected function which takes a listing of region names to calculate

@@ -41,38 +41,93 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
+#include <xercesc/dom/DOMNode.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "solution/solvers/include/solver_component.h"
 #include "solution/solvers/include/bisect_all.h"
 #include "solution/util/include/calc_counter.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/world.h"
-#include "solution/util/include/solver_info.h"
-#include "solution/util/include/solver_info_set.h"
+#include "solution/util/include/solution_info.h"
+#include "solution/util/include/solution_info_set.h"
 #include "solution/util/include/solver_library.h"
 #include "util/base/include/util.h"
 #include "util/logger/include/ilogger.h"
+#include "util/base/include/xml_helper.h"
+#include "solution/util/include/solution_info_filter_factory.h"
+// TODO: this filter is hard coded here since it is the default, is this ok?
+#include "solution/util/include/solvable_solution_info_filter.h"
 
 using namespace std;
-
-const string BisectAll::SOLVER_NAME = "BisectAll";
+using namespace xercesc;
 
 //! Default Constructor. Constructs the base class. 
-BisectAll::BisectAll( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn ):SolverComponent( marketplaceIn, worldIn, calcCounterIn ) {
+BisectAll::BisectAll( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn ):SolverComponent( marketplaceIn, worldIn, calcCounterIn ),
+mMaxIterations( 30 ),
+mDefaultBracketInterval( 0.4 ),
+mMaxBracketIterations( 40 )
+{
 }
 
-//! Init method. Currently does nothing.
+//! Init method.
 void BisectAll::init() {
+    if( !mSolutionInfoFilter.get() ) {
+        // note we are hard coding this as the default
+        mSolutionInfoFilter.reset( new SolvableSolutionInfoFilter() );
+    }
 }
 
 //! Get the name of the SolverComponent
-const string& BisectAll::getNameStatic() {
+const string& BisectAll::getXMLNameStatic() {
+    const static string SOLVER_NAME = "bisect-all-solver-component";
     return SOLVER_NAME;
 }
 
 //! Get the name of the SolverComponent
-const string& BisectAll::getName() const {
-    return SOLVER_NAME;
+const string& BisectAll::getXMLName() const {
+    return getXMLNameStatic();
+}
+
+bool BisectAll::XMLParse( const DOMNode* aNode ) {
+    // assume we were passed a valid node.
+    assert( aNode );
+    
+    // get the children of the node.
+    DOMNodeList* nodeList = aNode->getChildNodes();
+    
+    // loop through the children
+    for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
+        DOMNode* curr = nodeList->item( i );
+        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+        
+        if( nodeName == "#text" ) {
+            continue;
+        }
+        else if( nodeName == "max-iterations" ) {
+            mMaxIterations = XMLHelper<unsigned int>::getValue( curr );
+        }
+        else if( nodeName == "bracket-interval" ) {
+            mDefaultBracketInterval = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "max-bracket-iterations" ) {
+            mMaxBracketIterations = XMLHelper<unsigned int>::getValue( curr );
+        }
+        else if( nodeName == "solution-info-filter" ) {
+            mSolutionInfoFilter.reset(
+                SolutionInfoFilterFactory::createSolutionInfoFilterFromString( XMLHelper<string>::getValue( curr ) ) );
+        }
+        else if( SolutionInfoFilterFactory::hasSolutionInfoFilter( nodeName ) ) {
+            mSolutionInfoFilter.reset( SolutionInfoFilterFactory::createAndParseSolutionInfoFilter( nodeName, curr ) );
+        }
+        else {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
+                << getXMLNameStatic() << "." << endl;
+        }
+    }
+    return true;
 }
 
 /*! \brief Bisection Solution Mechanism (all markets)
@@ -94,29 +149,31 @@ const string& BisectAll::getName() const {
 * \warning Unless stated otherwise, ED values are normalized (i.e., that 10 == 10% difference).
 * \todo need more general way to reset price and demand market types within bisect
 * \todo implement check on price and demand markets within bracket?
-* \param solutionTolerance Target value for maximum relative solution for worst market 
-* \param edSolutionFloor *Absolute value* beneath which market is ignored
-* \param maxIterations Maximum number of iterations the subroutine will periodform. 
-* \param solverSet Object which contains a set of objects with information on each market.
-* \param period Model periodiod
+* \param aSolutionSet Initial set of objects with information on each market which may be filtered.
+* \param aPeriod Model period.
 */
-SolverComponent::ReturnCode BisectAll::solve( const double solutionTolerance, const double edSolutionFloor,
-                                              const unsigned int maxIterations, SolverInfoSet& solverSet,
-                                              const int period )
-{
-    startMethod();
-    ReturnCode code = ORIGINAL_STATE; // code that reports success 1 or failure 0
-    
+SolverComponent::ReturnCode BisectAll::solve( SolutionInfoSet& aSolutionSet, const int aPeriod ) {
     // Setup Logging.
     ILogger& solverLog = ILogger::getLogger( "solver_log" );
     solverLog.setLevel( ILogger::NOTICE );
     ILogger& worstMarketLog = ILogger::getLogger( "worst_market_log" );
     worstMarketLog.setLevel( ILogger::NOTICE );
+    
+    // need to do bracketing first, does this need to be before or after startMethod?
+    aSolutionSet.resetBrackets();
+    solverLog << "Solution set before Bracket: " << endl << aSolutionSet << endl;
+    // Currently attempts to bracket but does not necessarily bracket all markets.
+    SolverLibrary::bracket( marketplace, world, mDefaultBracketInterval, mMaxBracketIterations,
+                            aSolutionSet, calcCounter, mSolutionInfoFilter.get(), aPeriod );
+    
+    startMethod();
+    ReturnCode code = ORIGINAL_STATE; // code that reports success 1 or failure 0
+    
     worstMarketLog << "Policy All, X, XL, XR, ED, EDL, EDR, RED, bracketed, supply, demand" << endl;
     solverLog << "Bisection_all routine starting" << endl; 
 
-    solverSet.updateFromMarkets();
-    solverSet.updateSolvable( false );
+    aSolutionSet.updateFromMarkets();
+    aSolutionSet.updateSolvable( mSolutionInfoFilter.get() );
     
     // Select the worst market.
     ILogger& singleLog = ILogger::getLogger( "single_market_log" );
@@ -127,15 +184,19 @@ SolverComponent::ReturnCode BisectAll::solve( const double solutionTolerance, co
     do {
         solverLog.setLevel( ILogger::NOTICE );
         solverLog << "BisectionAll " << numIterations << endl;
-        solverSet.printMarketInfo( "Bisect All", calcCounter->getPeriodCount(), singleLog );
+        aSolutionSet.printMarketInfo( "Bisect All", calcCounter->getPeriodCount(), singleLog );
 
         // Since bisection is called after bracketing, the current price and ED will be the
         // one of the brackets.
         // Start bisection with mid-point to improve efficiency.
-        for ( unsigned int i = 0; i < solverSet.getNumSolvable(); ++i ) {
-            SolverInfo& currSol = solverSet.getSolvable( i );
+        for ( unsigned int i = 0; i < aSolutionSet.getNumSolvable(); ++i ) {
+            SolutionInfo& currSol = aSolutionSet.getSolvable( i );
+            // Skip markets that were not bracketed
+            if( !currSol.isBracketed() ) {
+                continue;
+            }
             // If not solved.
-            if ( !currSol.isWithinTolerance( solutionTolerance, edSolutionFloor ) ) {
+            if ( !currSol.isWithinTolerance() ) {
                 // Set new trial value to center
                 currSol.setPriceToCenter();
             }   
@@ -147,25 +208,25 @@ SolverComponent::ReturnCode BisectAll::solve( const double solutionTolerance, co
             } 
         }
 
-        solverSet.updateToMarkets();
-        marketplace->nullSuppliesAndDemands( period );
-        world->calc( period );
-        solverSet.updateFromMarkets();
-        solverSet.updateSolvable( false );
+        aSolutionSet.updateToMarkets();
+        marketplace->nullSuppliesAndDemands( aPeriod );
+        world->calc( aPeriod );
+        aSolutionSet.updateFromMarkets();
+        aSolutionSet.updateSolvable( mSolutionInfoFilter.get() );
         // The  price and demand markets are very prone to moving beyond their brackets. 
         // So check and adjust if needed. Lines below check if XL < Demand, or XR > Demand, 
-        // and move brackets if necessary. A more general  bracket check is below, but this
+        // and move brackets if necessary. A more general bracket check is below, but this
         // is needed more often and can be done simply.
-        solverSet.adjustBrackets();
+        aSolutionSet.adjustBrackets();
         // Print solution set information to solver log.
-        solverLog << solverSet << endl;
+        solverLog << aSolutionSet << endl;
 
         // Move brackets, both price and ED, after solving mid-point.  This ensures that
         // both price and ED for each bracket is valid and up to date.
-        for ( unsigned int i = 0; i < solverSet.getNumSolvable(); ++i ) {
-            SolverInfo& currSol = solverSet.getSolvable( i );
+        for ( unsigned int i = 0; i < aSolutionSet.getNumSolvable(); ++i ) {
+            SolutionInfo& currSol = aSolutionSet.getSolvable( i );
             // If not solved.
-            if ( !currSol.isWithinTolerance( solutionTolerance, edSolutionFloor ) ) {
+            if ( !currSol.isWithinTolerance() && currSol.isBracketed() ) {
                 // Move the right price bracket in if Supply > Demand
                 if ( currSol.getED() < 0 ) {
                     currSol.moveRightBracketToX();
@@ -177,23 +238,48 @@ SolverComponent::ReturnCode BisectAll::solve( const double solutionTolerance, co
             }   
         }
 
-        const SolverInfo* maxSol = solverSet.getWorstSolverInfo( edSolutionFloor );
-        addIteration( maxSol->getName(), maxSol->getRelativeED( edSolutionFloor ) );
-        worstMarketLog << "BisectAll-maxRelED: " << *maxSol << endl;
+        if( aSolutionSet.getNumSolvable() > 0 ) {
+            const SolutionInfo* maxSol = aSolutionSet.getWorstSolutionInfo();
+            addIteration( maxSol->getName(), maxSol->getRelativeED() );
+            worstMarketLog << "BisectAll-maxRelED: " << *maxSol << endl;
+        }
     } // end do loop        
-    while ( ++numIterations <= maxIterations 
-            && !solverSet.isAllSolved( solutionTolerance, edSolutionFloor ) );
+    while ( ++numIterations <= mMaxIterations 
+            && !aSolutionSet.isAllSolved() && !areAllBracketsEqual( aSolutionSet ) );
 
     // Set the return code. 
-    code = ( solverSet.getMaxRelativeExcessDemand( edSolutionFloor ) < solutionTolerance ? SUCCESS : FAILURE_ITER_MAX_REACHED ); // report success, or failure
+    code = ( aSolutionSet.isAllSolved() ? SUCCESS : FAILURE_ITER_MAX_REACHED ); // report success, or failure
     
     // Report exit conditions.
     solverLog.setLevel( ILogger::NOTICE );
-    if ( numIterations > maxIterations ){
+    if ( numIterations > mMaxIterations ){
         solverLog << "Exiting BisectionAll due to reaching the maximum number of iterations." << endl;
     }
+	else if( code != SUCCESS ) {
+		solverLog << "Exiting BisectionAll due to reaching the brackets for all markets." << endl;
+	}
     else {
         solverLog << "Exiting BisectionAll with model fully solved." << endl;
     }
     return code;
+}
+
+/*!
+ * \brief Check if all of the solvable solution infos have either left and right brackets
+ *        separated by less than the solution tolerance or are solved.
+ * \details Since we do not attempt to reset to resize brackets this will provide an early
+ *          exit condition.  The left and right brackets be close enough that means
+ *          bisection does not have a chance to make progress on that solution info.
+ * \return True if the current bracket interval or relative excess demand for all solution
+ *         infos are equal with in tolerance otherwise false.
+ */
+bool BisectAll::areAllBracketsEqual( SolutionInfoSet& aSolutionSet ) const {
+	for ( unsigned int i = 0; i < aSolutionSet.getNumSolvable(); ++i ) {
+        // TODO: need a get solution tolerance instead of hard coding the .001
+		if( !util::isEqual( aSolutionSet.getSolvable( i ).getCurrentBracketInterval(), 0.0, .001 ) 
+			&& !aSolutionSet.getSolvable( i ).isWithinTolerance() ) {
+			return false;
+		}
+	}
+	return true;
 }

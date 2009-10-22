@@ -41,65 +41,103 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
+#include <xercesc/dom/DOMNode.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "solution/solvers/include/solver_component.h"
 #include "solution/solvers/include/bisect_one.h"
 #include "solution/util/include/calc_counter.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/world.h"
-#include "solution/util/include/solver_info.h"
-#include "solution/util/include/solver_info_set.h"
+#include "solution/util/include/solution_info.h"
+#include "solution/util/include/solution_info_set.h"
 #include "solution/util/include/solver_library.h"
-#include "util/base/include/util.h"
 #include "util/logger/include/ilogger.h"
-#include "util/base/include/configuration.h"
+#include "util/base/include/xml_helper.h"
+#include "solution/util/include/solution_info_filter_factory.h"
+// TODO: this filter is hard coded here since it is the default, is this ok?
+#include "solution/util/include/solvable_solution_info_filter.h"
 
 using namespace std;
-
-const string BisectOne::SOLVER_NAME = "BisectOne";
+using namespace xercesc;
 
 //! Default Constructor. Constructs the base class. 
-BisectOne::BisectOne( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn ):SolverComponent( marketplaceIn, worldIn, calcCounterIn ) {
-}
-
-//! Init method. Currently does nothing.
-void BisectOne::init() {
-}
-
-//! Get the name of the SolverComponent
-const string& BisectOne::getName() const {
-    return SOLVER_NAME;
-}
-
-//! Get the name of the SolverComponent
-const string& BisectOne::getNameStatic() {
-    return SOLVER_NAME;
-}
-
-/*! \brief Bisection the worst market.
-* \details Bisect the the worst market.
-* \param solutionTolerance Target value for maximum relative solution for worst
-*        market 
-* \param edSolutionFloor *Absolute value* beneath which market is ignored
-* \param maxIterations Maximum number of iterations the subroutine will
-*        periodform. 
-* \param solverSet Object which contains a set of objects with information on
-*        each market.
-* \param period Model periodiod
-*/
-SolverComponent::ReturnCode BisectOne::solve( const double solutionTolerance, const double edSolutionFloor,
-                                              const unsigned int maxIterations, SolverInfoSet& solverSet,
-                                              const int period )
+BisectOne::BisectOne( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn ):SolverComponent( marketplaceIn, worldIn, calcCounterIn ),
+mMaxIterations( 30 ),
+mDefaultBracketInterval( 0.4 ),
+mMaxBracketIterations( 40 )
 {
+}
+
+//! Init method.
+void BisectOne::init() {
+    if( !mSolutionInfoFilter.get() ) {
+        // note we are hard coding this as the default
+        mSolutionInfoFilter.reset( new SolvableSolutionInfoFilter() );
+    }
+}
+
+//! Get the name of the SolverComponent
+const string& BisectOne::getXMLName() const {
+    return getXMLNameStatic();
+}
+
+//! Get the name of the SolverComponent
+const string& BisectOne::getXMLNameStatic() {
+    const static string SOLVER_NAME = "bisect-one-solver-component";
+    return SOLVER_NAME;
+}
+
+bool BisectOne::XMLParse( const DOMNode* aNode ) {
+    // assume we were passed a valid node.
+    assert( aNode );
+    
+    // get the children of the node.
+    DOMNodeList* nodeList = aNode->getChildNodes();
+    
+    // loop through the children
+    for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
+        DOMNode* curr = nodeList->item( i );
+        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+        
+        if( nodeName == "#text" ) {
+            continue;
+        }
+        else if( nodeName == "max-iterations" ) {
+            mMaxIterations = XMLHelper<unsigned int>::getValue( curr );
+        }
+        else if( nodeName == "bracket-interval" ) {
+            mDefaultBracketInterval = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "max-bracket-iterations" ) {
+            mMaxBracketIterations = XMLHelper<unsigned int>::getValue( curr );
+        }
+        else if( nodeName == "solution-info-filter" ) {
+            mSolutionInfoFilter.reset(
+                SolutionInfoFilterFactory::createSolutionInfoFilterFromString( XMLHelper<string>::getValue( curr ) ) );
+        }
+        else if( SolutionInfoFilterFactory::hasSolutionInfoFilter( nodeName ) ) {
+            mSolutionInfoFilter.reset( SolutionInfoFilterFactory::createAndParseSolutionInfoFilter( nodeName, curr ) );
+        }
+        else {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
+                << getXMLNameStatic() << "." << endl;
+        }
+    }
+    return true;
+}
+
+/*! \brief Bisection on the worst market.
+* \details Bisect the worst market which passes our soultion info filters.
+* \param aSolutionSet Object which contains a set of objects with information on
+*        each market.
+* \param aPeriod Model period.
+*/
+SolverComponent::ReturnCode BisectOne::solve( SolutionInfoSet& aSolutionSet, const int aPeriod ) {
     startMethod();
 
-    // Constants.
-     // Maximum number of iterations without improvement.
-    const static unsigned int MAX_ITER_NO_IMPROVEMENT = 8;
-    // Read in the bracket interval until MiniCAM and SGM can consistently solve
-    // with the same one.
-    const Configuration* conf = Configuration::getInstance();
-    static const double BRACKET_INTERVAL = conf->getDouble( "bracket-interval", 0.5 );
     // Setup logging.
     ILogger& solverLog = ILogger::getLogger( "solver_log" );
     solverLog.setLevel( ILogger::NOTICE );
@@ -109,20 +147,19 @@ SolverComponent::ReturnCode BisectOne::solve( const double solutionTolerance, co
     singleLog.setLevel( ILogger::DEBUG );
 
     // Make sure we have all updated information.
-    solverSet.updateFromMarkets();
-    solverSet.updateSolvable( false );
+    aSolutionSet.updateFromMarkets();
+    aSolutionSet.updateSolvable( mSolutionInfoFilter.get() );
 
     // Select the worst market.
-    // SolverInfo& worstSol = solverSet.getWorstSolverInfoReverse( solutionTolerance, 0, true );
-    SolverInfo* worstSol = solverSet.getWorstSolverInfo( edSolutionFloor );
-    // worstSol.setBisectedFlag();
+    SolutionInfo* worstSol = aSolutionSet.getWorstSolutionInfo();
+    // TODO: do we need to resetBrackets?
     solverLog.setLevel( ILogger::NOTICE );
     solverLog << "BisectOne function called on market " << worstSol->getName() << "." << endl;
-    SolverLibrary::bracketOne( marketplace, world, BRACKET_INTERVAL, solutionTolerance,
-                               edSolutionFloor, solverSet, worstSol, calcCounter, period );
+    SolverLibrary::bracketOne( marketplace, world, mDefaultBracketInterval, mMaxBracketIterations,
+                               aSolutionSet, worstSol, calcCounter, mSolutionInfoFilter.get(), aPeriod );
     unsigned int numIterations = 0;
     do {
-        solverSet.printMarketInfo( "Bisect One on " + worstSol->getName(), calcCounter->getPeriodCount(), singleLog );
+        aSolutionSet.printMarketInfo( "Bisect One on " + worstSol->getName(), calcCounter->getPeriodCount(), singleLog );
 
         // Move the right price bracket in if Supply > Demand
         if ( worstSol->getED() < 0 ) {
@@ -135,28 +172,26 @@ SolverComponent::ReturnCode BisectOne::solve( const double solutionTolerance, co
         // Set new trial value to center
         worstSol->setPriceToCenter();
 
-        solverSet.updateToMarkets();
-        marketplace->nullSuppliesAndDemands( period );
+        aSolutionSet.updateToMarkets();
+        marketplace->nullSuppliesAndDemands( aPeriod );
 
-        world->calc( period );
-        solverSet.updateFromMarkets();
-        solverSet.updateSolvable( false );
-        addIteration( worstSol->getName(), worstSol->getRelativeED( edSolutionFloor ) );
+        world->calc( aPeriod );
+        aSolutionSet.updateFromMarkets();
+        // TODO: what is the point in updating
+        aSolutionSet.updateSolvable( mSolutionInfoFilter.get() );
+        addIteration( worstSol->getName(), worstSol->getRelativeED() );
         worstMarketLog << "BisectOne-MaxRelED: "  << *worstSol << endl;
         solverLog << "BisectOneWorst-MaxRelED: " << *worstSol << endl;
     } // end do loop        
-    while ( ( ++numIterations < maxIterations ) &&
-              !worstSol->isSolved( solutionTolerance, edSolutionFloor ) );
+    while ( ( ++numIterations < mMaxIterations ) &&
+              !worstSol->isSolved() );
     // Report results.
     solverLog.setLevel( ILogger::NOTICE );
-    if( numIterations >= maxIterations ){
+    if( numIterations >= mMaxIterations ){
         solverLog << "Exiting BisectOne due to reaching max iterations." << endl;
-    }
-    else if( !isImproving( MAX_ITER_NO_IMPROVEMENT ) ){
-        solverLog << "Exiting BisectOne due to lack of improvement." << endl;
     }
     else {
         solverLog << "Exiting BisectOne because chosen market is solved." << endl;
     }
-    return solverSet.isAllSolved( solutionTolerance, edSolutionFloor ) ? SUCCESS: FAILURE_ITER_MAX_REACHED; // WRONG ERROR CODE
+    return aSolutionSet.isAllSolved() ? SUCCESS: FAILURE_ITER_MAX_REACHED; // WRONG ERROR CODE
 }

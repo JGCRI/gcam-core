@@ -1,5 +1,5 @@
-#ifndef _NEWTON_RAPHSON_SD_H_
-#define _NEWTON_RAPHSON_SD_H_
+#ifndef _LOG_NEWTON_RAPHSON_SD_H_
+#define _LOG_NEWTON_RAPHSON_SD_H_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -51,30 +51,39 @@
 
 /*! 
 * \ingroup Objects
-* \brief A SolverComponent based on the Newton-Raphson algorithm using logarithmic values. 
+* \brief A SolverComponent based on the Newton-Raphson algorithm using logarithmic values
+*        which reuses derivatives.
+* \details This solver component will calculate the derivative once and will continue to
+*          reuse them until either the number of solvables have changed or resetDerivatives
+*          is called.
 * \author Josh Lurz
 */
-
 class LogNewtonRaphsonSaveDeriv: public LogNewtonRaphson {
 public:
-    LogNewtonRaphsonSaveDeriv( Marketplace* aMarketplaceIn, World* aWorld, CalcCounter* aCalcCounter,
-                               double aDeltaPrice );
-    ~LogNewtonRaphsonSaveDeriv();
-    static const std::string& getNameStatic();
+    LogNewtonRaphsonSaveDeriv( Marketplace* aMarketplaceIn, World* aWorld, CalcCounter* aCalcCounter );
+    virtual ~LogNewtonRaphsonSaveDeriv();
+    static const std::string& getXMLNameStatic();
     void init();
+    const std::string& getXMLName() const;
     
 protected:
-    const std::string& getName() const;
-    static const std::string SOLVER_NAME;
+    virtual ReturnCode calculateDerivatives( SolutionInfoSet& aSolutionSet, Matrix& JF, PermutationMatrix& aPermMatrix, int aPeriod );
+    
+    virtual void resetDerivatives();
 
-    virtual ReturnCode calculateDerivatives( SolverInfoSet& solverSet, Matrix& JFSM, Matrix& JFDM, Matrix& JF,
-                                             int period );
-
-    bool derivativesCalculated;
+    //! Flag used to determine if the saved derivatives are suitable for use.
+    bool mDerivativesCalculated;
+    
+    //! The saved lu-factorized derivative from the last time they were calculated.
     Matrix JFSave;
-    Matrix JFDMSave;
-    Matrix JFSMSave;
-    unsigned int savedMatrixSize;
+    
+    //! The saved permutation matrix from the lu-factorization from the last time
+    //! they were calculated.
+    PermutationMatrix mPermSave;
+    
+    //! Keeps track of the JFSave size so that we can detect if the number of solvables
+    //! have changed in which case we could no longer reuse the saved derivative.
+    unsigned int mSavedMatrixSize;
 };
 
-#endif // _NEWTON_RAPHSON_SD_H_
+#endif // _LOG_NEWTON_RAPHSON_SD_H_

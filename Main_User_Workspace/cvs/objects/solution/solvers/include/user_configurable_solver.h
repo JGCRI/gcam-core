@@ -1,5 +1,5 @@
-#ifndef _BISECT_POLICY_NR_SOLVER_H_
-#define _BISECT_POLICY_NR_SOLVER_H_
+#ifndef _USER_CONFIGURABLE_SOLVER_H_
+#define _USER_CONFIGURABLE_SOLVER_H_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -39,32 +39,52 @@
  */
 
 
+#include <vector>
 #include <memory>
 #include "solution/solvers/include/solver.h"
 
 /*! 
-* \file bisect_policy_nr_solver.h
-* \ingroup Objects
-* \brief The BisectPolicyNRSolver class header file.
-*
-* \author Josh Lurz
-*/
+ * \file user_configurable_solver.h
+ * \ingroup Objects
+ * \brief The UserConfigurableSolver class header file. 
+ * \author Pralit Patel
+ */
 
 class SolverComponent;
 class Marketplace;
 class World;
 class SolutionInfoParamParser;
-/*!
-* \ingroup Objects
-* \brief A class which defines an An instance of the Solver class which uses
-*        bisection first and then Newton-Raphson.
-* \author Josh Lurz
-*/
 
-class BisectPolicyNRSolver: public Solver {
+/*!
+ * \ingroup Objects
+ * \brief A class which defines an An instance of the Solver class which will follow
+ *        a solving procedure completely determined by the solver xml config file.
+ * \details The user will be responsible for setting up the solver components to use
+ *          and providing the ordering of operations through parsing of the xml solver
+ *          config file.
+ *          <b>XML specification for UserConfigurableSolver</b>
+ *          - XML name: \c user-configurable-solver
+ *          - Contained by: scenario
+ *          - Parsing inherited from class: None.
+ *          - Elements:
+ *              - \c solution-tolerance double UserConfigurableSolver::mDefaultSolutionTolerance
+ *                      The default solution tolerance to use when solving.
+ *              - \c solution-floor double UserConfigurableSolver::mDefaultSolutionFloor
+ *                      The default solution floor to use when solving.
+ *              - \c calibration-tolerance double UserConfigurableSolver::mCalibrationTolerance
+ *                      The tolerance used for checking calibrated values when calibrating.
+ *              - \c max-model-calcs int UserConfigurableSolver::mMaxModelCalcs
+ *                      The maximum total number of iterations to try to find a solution.
+ *              - \c (any SolverComponent) vector<SolverComponent*> UserConfigurableSolver::mSolverComponents
+ *                      Can be any solver component contained in SolverComponentFactory, each one
+ *                      being added in order to the list of solver components to use.
+ *
+ * \author Pralit Patel
+ */
+class UserConfigurableSolver: public Solver {
 public:
-    BisectPolicyNRSolver( Marketplace* marketplaceIn, World* worldIn );
-    virtual ~BisectPolicyNRSolver();
+    UserConfigurableSolver( Marketplace* aMarketplace, World* aWorld );
+    virtual ~UserConfigurableSolver();
     static const std::string& getXMLNameStatic();
     
     // Solver methods
@@ -73,17 +93,15 @@ public:
     
     // IParsable methods
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
-
-private:
-    std::auto_ptr<SolverComponent> mLogNewtonRaphson; //!< LogNewtonRaphson solver component.
-    std::auto_ptr<SolverComponent> mBisectAll; //!< BisectAll solver component.
-    std::auto_ptr<SolverComponent> mBisectOne; //!< BisectOne solver component.
-    std::auto_ptr<SolverComponent> mBisectPolicy; //!< BisectPolicy solver component.
     
-    //! Default solution tolerance, this value may be overridden by at the SolutionInfo level
+private:
+    //! In order list of solver components to use when trying to solve.
+    std::vector<SolverComponent*> mSolverComponents;
+    
+    //! Default solution tolerance, this value may be overridden at the SolutionInfo level
     double mDefaultSolutionTolerance;
     
-    //! Default solution floor, this value may be overridden by at the SolutionInfo level
+    //! Default solution floor, this value may be overridden at the SolutionInfo level
     double mDefaultSolutionFloor;
     
     //! Calibration tolerance
@@ -93,4 +111,5 @@ private:
     int mMaxModelCalcs;
 };
 
-#endif // _BISECT_POLICY_NR_SOLVER_H_
+#endif // _USER_CONFIGURABLE_SOLVER_H_
+

@@ -1,5 +1,5 @@
-#ifndef _BISECT_POLICY_NR_SOLVER_H_
-#define _BISECT_POLICY_NR_SOLVER_H_
+#ifndef _ISOLUTION_INFO_FILTER_H_
+#define _ISOLUTION_INFO_FILTER_H_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -38,59 +38,39 @@
  * by User.
  */
 
-
-#include <memory>
-#include "solution/solvers/include/solver.h"
-
 /*! 
-* \file bisect_policy_nr_solver.h
-* \ingroup Objects
-* \brief The BisectPolicyNRSolver class header file.
-*
-* \author Josh Lurz
-*/
+ * \file isolution_info_filter.h  
+ * \ingroup Objects
+ * \brief Header file for the ISolutionInfoFilter interface.
+ * \author Pralit Patel
+ */
+#include "util/base/include/iparsable.h"
 
-class SolverComponent;
-class Marketplace;
-class World;
-class SolutionInfoParamParser;
+class SolutionInfo;
+
 /*!
-* \ingroup Objects
-* \brief A class which defines an An instance of the Solver class which uses
-*        bisection first and then Newton-Raphson.
-* \author Josh Lurz
-*/
-
-class BisectPolicyNRSolver: public Solver {
+ * \ingroup Objects
+ * \brief An interface to a class which can be used to filter a SolutionInfoSet.
+ * \details A class which implements this interface can be used to filter a
+ *          SolutionInfoSet set by returning whether each individual SolutionInfo
+ *          should be accepted.
+ * \author Pralit Patel
+ */
+class ISolutionInfoFilter : public IParsable {
 public:
-    BisectPolicyNRSolver( Marketplace* marketplaceIn, World* worldIn );
-    virtual ~BisectPolicyNRSolver();
-    static const std::string& getXMLNameStatic();
+    //! Virtual destructor so that instances of the interface may be deleted
+    //! correctly through a pointer to the interface.
+    inline virtual ~ISolutionInfoFilter();
     
-    // Solver methods
-    virtual void init();
-    virtual bool solve( const int aPeriod, const SolutionInfoParamParser* aSolutionInfoParamParser );
-    
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
-
-private:
-    std::auto_ptr<SolverComponent> mLogNewtonRaphson; //!< LogNewtonRaphson solver component.
-    std::auto_ptr<SolverComponent> mBisectAll; //!< BisectAll solver component.
-    std::auto_ptr<SolverComponent> mBisectOne; //!< BisectOne solver component.
-    std::auto_ptr<SolverComponent> mBisectPolicy; //!< BisectPolicy solver component.
-    
-    //! Default solution tolerance, this value may be overridden by at the SolutionInfo level
-    double mDefaultSolutionTolerance;
-    
-    //! Default solution floor, this value may be overridden by at the SolutionInfo level
-    double mDefaultSolutionFloor;
-    
-    //! Calibration tolerance
-    double mCalibrationTolerance;
-    
-    //! Max total solution iterations
-    int mMaxModelCalcs;
+    /*!
+     * \brief Determine if the given SolutionInfo should be included in the solution set
+     * \param aSolutionInfo The SolutionInfo to test.
+     * \return True if the SolutionInfo should be included, false otherwise.
+     */
+    virtual bool acceptSolutionInfo( const SolutionInfo& aSolutionInfo ) const = 0;
 };
 
-#endif // _BISECT_POLICY_NR_SOLVER_H_
+// Inline function definitions.
+ISolutionInfoFilter::~ISolutionInfoFilter(){
+}
+#endif // _ISOLUTION_INFO_FILTER_H_

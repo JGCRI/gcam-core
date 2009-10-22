@@ -33,11 +33,11 @@
  */
 
 /*! 
-* \file bisection_nr_solver.cpp
-* \ingroup objects
-* \brief BisectionNRSolver class source file.
-* \author Josh Lurz
-*/
+ * \file user_configurable_solver.cpp
+ * \ingroup objects
+ * \brief UserConfigurableSolver class source file.
+ * \author Pralit Patel
+ */
 
 #include "util/base/include/definitions.h"
 #include <iostream>
@@ -45,7 +45,7 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
 
-#include "solution/solvers/include/bisection_nr_solver.h"
+#include "solution/solvers/include/user_configurable_solver.h"
 #include "containers/include/world.h"
 #include "solution/solvers/include/solver_component.h"
 #include "solution/solvers/include/solver_component_factory.h"
@@ -55,44 +55,38 @@
 #include "solution/util/include/calc_counter.h"
 #include "util/base/include/xml_helper.h"
 
-// need to include these so that we can get the xml names
-#include "solution/solvers/include/log_newton_raphson.h"
-#include "solution/solvers/include/bisect_all.h"
-#include "solution/solvers/include/log_newton_raphson_sd.h"
-
 using namespace std;
 using namespace xercesc;
 
+// typedefs
+typedef vector<SolverComponent*>::iterator SolverComponentIterator;
+typedef vector<SolverComponent*>::const_iterator CSolverComponentIterator;
+
 //! Constructor
-BisectionNRSolver::BisectionNRSolver( Marketplace* aMarketplace, World* aWorld ):Solver( aMarketplace, aWorld ),
+UserConfigurableSolver::UserConfigurableSolver( Marketplace* aMarketplace, World* aWorld ):Solver( aMarketplace, aWorld ),
 mDefaultSolutionTolerance( 0.001),
 mDefaultSolutionFloor( 0.0001 ),
 mCalibrationTolerance( 0.01 ),
 mMaxModelCalcs( 2000 )
 {
-    // Construct components.
+    // get the calc counter from the world
     mCalcCounter = world->getCalcCounter();
-    mLogNewtonRaphson.reset( SolverComponentFactory::createAndParseSolverComponent( LogNewtonRaphson::getXMLNameStatic(), aMarketplace,
-                                                                                    aWorld, mCalcCounter, 0 ) );
-    mBisectAll.reset( SolverComponentFactory::createAndParseSolverComponent( BisectAll::getXMLNameStatic(), aMarketplace,
-                                                                             aWorld, mCalcCounter, 0 ) );
-    /* TODO: test if this is useful or not
-    mLogNewtonRaphsonSaveDeriv.reset( SolverComponentFactory::createAndParseSolverComponent( LogNewtonRaphsonSaveDeriv::getXMLNameStatic(), aMarketplace,
-                                                                                             aWorld, mCalcCounter, 0 ) );
-    */
 }
 
 //! Destructor
-BisectionNRSolver::~BisectionNRSolver() {
+UserConfigurableSolver::~UserConfigurableSolver() {
+    for( CSolverComponentIterator it = mSolverComponents.begin(); it != mSolverComponents.end(); ++it ) {
+        delete *it;
+    }
 }
 
 //! Get the solver name.
-const string& BisectionNRSolver::getXMLNameStatic() {
-    const static string SOLVER_NAME = "BisectionNRSolver";
+const string& UserConfigurableSolver::getXMLNameStatic() {
+    const static string SOLVER_NAME = "user-configurable-solver";
     return SOLVER_NAME;
 }
 
-bool BisectionNRSolver::XMLParse( const DOMNode* aNode ) {
+bool UserConfigurableSolver::XMLParse( const DOMNode* aNode ) {
     // assume we were passed a valid node.
     assert( aNode );
     
@@ -119,17 +113,18 @@ bool BisectionNRSolver::XMLParse( const DOMNode* aNode ) {
         else if( nodeName == "max-model-calcs" ) {
             mMaxModelCalcs = XMLHelper<int>::getValue( curr );
         }
-        else if( nodeName == mLogNewtonRaphson->getXMLName() ) {
-            mLogNewtonRaphson->XMLParse( curr );
+        else if( SolverComponentFactory::hasSolverComponent( nodeName ) ) {
+            SolverComponent* tempSolverComponent = SolverComponentFactory::createAndParseSolverComponent( nodeName,
+                                                                                                          marketplace,
+                                                                                                          world,
+                                                                                                          mCalcCounter,
+                                                                                                          curr );
+            
+            // only add valid solver components
+            if( tempSolverComponent ) {
+                mSolverComponents.push_back( tempSolverComponent );
+            }
         }
-        else if( nodeName == mBisectAll->getXMLName() ) {
-            mBisectAll->XMLParse( curr );
-        }
-        /*  TODO: test first
-        else if( nodeName == mLogNewtonRaphsonSaveDeriv->getXMLName() ) {
-            mLogNewtonRaphsonSaveDeriv->XMLParse( curr );
-        }
-        */
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
@@ -141,24 +136,27 @@ bool BisectionNRSolver::XMLParse( const DOMNode* aNode ) {
 }
 
 //! Initialize the solver at the beginning of the model.
-void BisectionNRSolver::init() {
+void UserConfigurableSolver::init() {
+    /*!
+     * \pre The user must have parsed at least one solver component
+     *      to try to solve with.
+     */
+    assert( mSolverComponents.size() > 0 );
 }
 
-/*! \brief Solution method to solve all markets for one period.
-* \details This is the main solution function called from within the scenario. It is called once for
-* each period to clear all markets which should be solved. This solve method first attempts Newton-Raphson
-* on all markets, then uses bracketing and bisection on markets that are not solved by Newton-Raphson.
-* Bracketing and bisection solves the unsolved markets or brings prices closer to solution for the
-* Newton-Raphson to solve in the next attempt.
-* \param aPeriod The period to solve.
-* \param aSolutionInfoParamParser An object that will be used to set solution info specific value
-*                                 when they are initialized.
-* \return Whether the markets are all solved.
-* \author Josh Lurz, Sonny Kim
-*/
-bool BisectionNRSolver::solve( const int aPeriod, const SolutionInfoParamParser* aSolutionInfoParamParser ) {
+/*!
+ * \brief Solution method to solve all markets for one period.
+ * \details This solver will rely on the user to provide which solver components to use and
+ *          in which order to clear all markets.
+ * \param aPeriod The period to solve.
+ * \param aSolutionInfoParamParser An object that will be used to set solution info specific parameters
+ *                                 when they are initialized.
+ * \return Whether the markets are all solved.
+ * \author Pralit Patel
+ */
+bool UserConfigurableSolver::solve( const int aPeriod, const SolutionInfoParamParser* aSolutionInfoParamParser ) {
     const Configuration* conf = Configuration::getInstance();
-
+    
     // Open all log files.
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     ILogger& solverLog = ILogger::getLogger( "solver_log" );
@@ -167,18 +165,18 @@ bool BisectionNRSolver::solve( const int aPeriod, const SolutionInfoParamParser*
     solverLog.setLevel( ILogger::NOTICE );
     singleLog.setLevel( ILogger::DEBUG );
     solverLog << endl << "Solution() Begin. Per " << aPeriod << endl;
-
+    
     // Create and initialize the solution set.
     // This will fetch the markets to solve and update the prices, supplies and demands.
     SolutionInfoSet solution_set( marketplace );
     solution_set.init( aPeriod, mDefaultSolutionTolerance, mDefaultSolutionFloor, aSolutionInfoParamParser ); // determines solvable and unsolvable markets
-
+    
     mainLog << "Starting Solution. Solving for " << solution_set.getNumSolvable()
-            << " markets." << endl;
+        << " markets." << endl;
     solution_set.printMarketInfo( "Begin Solve", mCalcCounter->getPeriodCount(), singleLog );
-
+    
     // If no markets to solve, break out of solution.
-    if ( solution_set.getNumSolvable() == 0 ){
+    if( solution_set.getNumSolvable() == 0 ){
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Model solved with last period's prices." << endl;
         return true;
@@ -187,74 +185,55 @@ bool BisectionNRSolver::solve( const int aPeriod, const SolutionInfoParamParser*
         mainLog.setLevel( ILogger::WARNING );
         mainLog << "Period zero has solvable markets." << endl;
     }
-
+    
+    // we must have at least one solver component otherwise we will never make any progress
+    if( mSolverComponents.size() == 0 ) {
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "No solver components were parsed for use in " << getXMLNameStatic() << '.' << endl;
+        mainLog << "Model could not solve period " << aPeriod << endl;
+        return false;
+    }
+    
     solverLog << "Number of Markets: " << solution_set.getNumSolvable() << endl;
     solverLog << "Solution Information Initialized: Left and Right values are the same." << endl;
     solverLog.setLevel( ILogger::DEBUG );
     solverLog << solution_set << endl;
-
+    
     // Initialize solver components
-    mLogNewtonRaphson->init();
-    mBisectAll->init();
-    if( mLogNewtonRaphsonSaveDeriv.get() ){
-        mLogNewtonRaphsonSaveDeriv->init();
+    for( SolverComponentIterator it = mSolverComponents.begin(); it != mSolverComponents.end(); ++it ) {
+        (*it)->init();
     }
-
+    
     // Loop is done at least once.
     do {
         solverLog.setLevel( ILogger::NOTICE );
         solverLog << "Solution() loop. N: " << mCalcCounter->getPeriodCount() << endl;
         solverLog.setLevel( ILogger::DEBUG );
-
-        // Call Newton Rahpson approach first. Will return right away if all solved.
-        bool useSaveDerivs = mLogNewtonRaphsonSaveDeriv.get();
-        for( int i = 0; i < solution_set.getNumSolvable() && useSaveDerivs; ++i ) {
-            // TODO: this should be a read in threshold
-            if( solution_set.getSolvable( i ).getRelativeED() >= 1 ) {
-                useSaveDerivs = false;
-            }
+        
+        // try each solver component in the order they were read
+        for( SolverComponentIterator it = mSolverComponents.begin(); it != mSolverComponents.end(); ++it ) {
+            // Note we are not checking the return code here since even if a solver component was able to
+            // solve successfully it is not necessarily working on the entire solution set.
+            (*it)->solve( solution_set, aPeriod );
         }
-        if( !useSaveDerivs ) {
-            mLogNewtonRaphson->solve( solution_set, aPeriod );
-        }
-        else {
-            mLogNewtonRaphsonSaveDeriv->solve( solution_set, aPeriod );
-        }
-
-        // If not all solved, then call bracketing and bisection routines.
-        if( !solution_set.isAllSolved() ) {
-            // Get only unsolved solution set from the complete set.
-            SolutionInfoSet unsolved_solution_set( solution_set.getUnsolvedSet() );
-
-            // Attempts bisection on unsolved solution set.
-            mBisectAll->solve( unsolved_solution_set, aPeriod );
-            solverLog << "Solution after bisect all of unsolved set: " << endl << unsolved_solution_set << endl;
-
-            // to merge the unsolved_solution_set with solution_set we have them update to
-            // and from the marketplace repectively
-            unsolved_solution_set.updateToMarkets();  // Update new prices to marketplace.
-            solution_set.updateFromMarkets(); // Update solution set prices from marketplace.
-
-            solverLog << "Solution after bisect all and update: " << endl << solution_set << endl;
-        }
-
+        
         // Determine if the model has solved. 
     } while ( !solution_set.isAllSolved()
-              && mCalcCounter->getPeriodCount() < mMaxModelCalcs );
+             && mCalcCounter->getPeriodCount() < mMaxModelCalcs );
     
-    if ( conf->getBool( "CalibrationActive" )
+    if( conf->getBool( "CalibrationActive" )
             && !world->isAllCalibrated( aPeriod, mCalibrationTolerance, true ) ) {
         mainLog.setLevel( ILogger::WARNING );
         solverLog << "Model did not calibrate successfully in period " << aPeriod << endl;
         mainLog << "Model did not calibrate successfully in period " << aPeriod << endl;
     }
-
-    // Determine whether the model was successful.
+    
+    // Determine whether the solver was successful at solving the model.
     if( solution_set.isAllSolved() ){
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Model solved normally. Iterations period "<< aPeriod << ": "
-                << mCalcCounter->getPeriodCount() << ". Total iterations: "
-                << mCalcCounter->getTotalCount() << endl;
+        << mCalcCounter->getPeriodCount() << ". Total iterations: "
+        << mCalcCounter->getTotalCount() << endl;
         return true;
     }
     
@@ -262,10 +241,10 @@ bool BisectionNRSolver::solve( const int aPeriod, const SolutionInfoParamParser*
     mainLog << "Model did not solve within set iteration " << mCalcCounter->getPeriodCount() << endl;
     solverLog << "Printing solution information after failed attempt to solve." << endl;
     solverLog << solution_set << endl;
-
+    
     // Print unsolved markets.
     solution_set.printUnsolved( mainLog );
-
+    
     if( conf->getBool( "debugFindSD" ) ){
         string logName = conf->getFile( "supplyDemandOutputFileName", "supply_demand_curves" );
         ILogger& sdLog = ILogger::getLogger( logName );

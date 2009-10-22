@@ -1,5 +1,5 @@
-#ifndef _SOLVER_INFO_SET_H_
-#define _SOLVER_INFO_SET_H_
+#ifndef _SOLUTION_INFO_SET_H_
+#define _SOLUTION_INFO_SET_H_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -40,20 +40,21 @@
 
 
 /*! 
-* \file solver_info_set.h
+* \file solution_info_set.h
 * \ingroup Solution
 * \brief A class which contains a set of SolutionInfo objects.
 * \author Josh Lurz, Sonny Kim
 */
-#include <vector>
-#include "solution/util/include/solver_info.h" // Maybe use pointer instead.
+#include "solution/util/include/solution_info.h" // Maybe use pointer instead.
 class Marketplace;
 class ILogger;
 class World;
+class ISolutionInfoFilter;
+class SolutionInfoParamParser;
 
-class SolverInfoSet {
-    friend std::ostream& operator<<( std::ostream& os, const SolverInfoSet& solverInfoSet ){
-        solverInfoSet.print( os );
+class SolutionInfoSet {
+    friend std::ostream& operator<<( std::ostream& os, const SolutionInfoSet& aSolutionInfoSet ){
+        aSolutionInfoSet.print( os );
         return os;
     }
 public:
@@ -64,54 +65,55 @@ public:
         ADDED_AND_REMOVED
     };
 
-    typedef std::vector<SolverInfo>::iterator SetIterator;
-    typedef std::vector<SolverInfo>::const_iterator ConstSetIterator;
-    SolverInfoSet( Marketplace* marketplace );
-    SolverInfoSet( const std::vector<SolverInfo> aSolutionSet );
-    void init( const unsigned int period );
-    void merge( const std::vector<SolverInfo> aSolutionSet );
+    typedef std::vector<SolutionInfo>::iterator SetIterator;
+    typedef std::vector<SolutionInfo>::const_iterator ConstSetIterator;
+    SolutionInfoSet( Marketplace* marketplace );
+    SolutionInfoSet( const std::vector<SolutionInfo> aSolutionSet );
+    void init( const unsigned int aPeriod, const double aDefaultSolutionTolerance, const double aDefaultSolutionFloor,
+               const SolutionInfoParamParser* aSolutionInfoParamParser );
+    void merge( const std::vector<SolutionInfo> aSolutionSet );
     void updateFromMarkets();
     void updateToMarkets();
-    UpdateCode updateSolvable( const bool isNR );
+    UpdateCode updateSolvable( const ISolutionInfoFilter* aSolutionInfoFilter );
     void updateElasticities();
     void adjustBrackets();
     void storeValues();
     void restoreValues();
     void resetBrackets();
     bool checkAndResetBrackets();
-    SolverInfo* getWorstSolverInfo( const double aEDSolutionFloor, const bool aIgnoreBisected = false );
-    SolverInfo* getWorstSolverInfoReverse( const double aTolerance, const double aEDSolutionFloor, const bool aIgnoreBisected = false );
-    SolverInfo* getPolicyOrWorstSolverInfo( const double aTolerance, const double aEDSolutionFloor );
-    SolverInfo* getPolicySolverInfo( const double aTolerance, const double aEDSolutionFloor );
-    double getMaxRelativeExcessDemand( const double ED_SOLUTION_FLOOR ) const;
+    SolutionInfo* getWorstSolutionInfo( const bool aIgnoreBisected = false );
+    SolutionInfo* getWorstSolutionInfoReverse( const bool aIgnoreBisected = false );
+    SolutionInfo* getPolicyOrWorstSolutionInfo();
+    SolutionInfo* getPolicySolutionInfo();
+    double getMaxRelativeExcessDemand() const;
     double getMaxAbsoluteExcessDemand() const;
     bool isAllBracketed() const;
     const std::vector<double> getDemands() const; // move derivatives and make me private!
     const std::vector<double> getSupplies() const;
     unsigned int getNumSolvable() const;
     unsigned int getNumTotal() const;
-    const SolverInfo& getSolvable( unsigned int index ) const;
-    SolverInfo& getUnsolved( unsigned int index, const double aSolutionTolerance, const double aEDSolutionFloor );
-    SolverInfo& getSolvable( unsigned int index );
-    const SolverInfo& getAny( unsigned int index ) const;
-    SolverInfo& getAny( unsigned int index );
-    std::vector<SolverInfo> getSolvableSet() const;
-    std::vector<SolverInfo> getSolvedSet( const double aSolTolerance, const double aEDSolutionFloor ) const;
-    std::vector<SolverInfo> getUnsolvedSet( const double aSolTolerance, const double aEDSolutionFloor ) const;
-    bool isAllSolved( const double SOLUTION_TOLERANCE, const double ED_SOLUTION_FLOOR );
-    bool hasSingularUnsolved( const double aSolTolerance, const double aEDSolutionFloor );
+    const SolutionInfo& getSolvable( unsigned int index ) const;
+    SolutionInfo& getUnsolved( unsigned int index );
+    SolutionInfo& getSolvable( unsigned int index );
+    const SolutionInfo& getAny( unsigned int index ) const;
+    SolutionInfo& getAny( unsigned int index );
+    std::vector<SolutionInfo> getSolvableSet() const;
+    std::vector<SolutionInfo> getSolvedSet() const;
+    std::vector<SolutionInfo> getUnsolvedSet() const;
+    bool isAllSolved();
+    bool hasSingularUnsolved();
     void unsetBisectedFlag();
-    void printUnsolved( const double SOLUTION_TOLERANCE, const double ED_SOLUTION_FLOOR, std::ostream& out );
-    void findAndPrintSD( const double aEDTolerance, const double aDemandFloor, World* aWorld, Marketplace* aMarketplace, const int aPeriod, ILogger& aLogger );
+    void printUnsolved( std::ostream& out );
+    void findAndPrintSD( World* aWorld, Marketplace* aMarketplace, const int aPeriod, ILogger& aLogger );
     void printMarketInfo( const std::string& comment, const double worldCalcCount, std::ostream& out ) const;
     void printDerivatives( std::ostream& aOut ) const;
 private:
     unsigned int period;
     Marketplace* marketplace;
-    std::vector<SolverInfo> solvable;
-    std::vector<SolverInfo> unsolved; // solvable markets that are not currently solved
-    std::vector<SolverInfo> unsolvable;
+    std::vector<SolutionInfo> solvable;
+    std::vector<SolutionInfo> unsolved; // solvable markets that are not currently solved
+    std::vector<SolutionInfo> unsolvable;
     void print( std::ostream& out ) const;
 };
 
-#endif // _SOLVER_INFO_H_
+#endif // _SOLUTION_INFO_SET_H_

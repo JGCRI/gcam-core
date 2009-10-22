@@ -49,6 +49,7 @@
 #include <map>
 #include <memory>
 #include <string>
+#include <boost/shared_ptr.hpp>
 
 #include "util/base/include/iparsable.h"
 #include "util/base/include/ivisitable.h"
@@ -64,6 +65,7 @@ class Solver;
 class GHGPolicy;
 class IClimateModel;
 class OutputMetaData;
+class SolutionInfoParamParser;
 
 /*!
 * \ingroup Objects
@@ -117,14 +119,23 @@ private:
     std::auto_ptr<Modeltime> modeltime; //!< The modeltime for the scenario
     std::auto_ptr<World> world; //!< The world object
     std::auto_ptr<Marketplace> marketplace; //!< The goods and services marketplace.
-    std::auto_ptr<Solver> solver; //!< Pointer to a solution mechanism.
+    
+    //! Pointer to solution mechanisms by period.  Note we can't use a period vector
+    //! since that would rely on modeltime which is not avaiable at creation.  Also
+    //! we are using shared pointers since we are avoiding copying solvers when not
+    //! necessary
+    std::vector<boost::shared_ptr<Solver> > mSolvers;
 
     //! A container of meta-data pertinent to outputting data.
     std::auto_ptr<OutputMetaData> mOutputMetaData;
 
     std::string name; //!< Scenario name.
     std::string scenarioSummary; //!< A summary of the purpose of the Scenario.
-    std::vector<int> unsolvedPeriods; //!< Unsolved periods. 
+    std::vector<int> unsolvedPeriods; //!< Unsolved periods.
+    
+    //! A pass through object used to parse SolutionInfo parameters
+    //! until markets are created
+    std::auto_ptr<SolutionInfoParamParser> mSolutionInfoParamParser;
 
     bool solve( const int period );
 
@@ -164,6 +175,8 @@ private:
     void closeDebuggingFiles( std::ofstream& aXMLDebugFile,
         std::ofstream& aSGMDebugFile,
         Tabs* aTabs ) const;
+    
+    void initSolvers();
 };
 
 #endif // _SCENARIO_H_

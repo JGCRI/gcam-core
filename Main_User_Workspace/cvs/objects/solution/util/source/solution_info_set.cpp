@@ -33,26 +33,29 @@
  */
 
 /*! 
-* \file solver_info_set.cpp
+* \file solution_info_set.cpp
 * \ingroup Solution
-* \brief SolverInfoSet class source file.
+* \brief SolutionInfoSet class source file.
 * \author Josh Lurz, Sonny Kim
 */
 #include "util/base/include/definitions.h"
 #include <cassert>
 #include <algorithm>
 #include "util/base/include/util.h"
-#include "solution/util/include/solver_info_set.h"
-#include "solution/util/include/solver_info.h"
+#include "solution/util/include/solution_info_set.h"
+#include "solution/util/include/solution_info.h"
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/supply_demand_curve.h"
 #include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
+#include "solution/util/include/isolution_info_filter.h"
+#include "marketplace/include/market.h"
+#include "solution/util/include/solution_info_param_parser.h"
 
 using namespace std;
 
 //! Constructor
-SolverInfoSet::SolverInfoSet( Marketplace* aMarketplace ):
+SolutionInfoSet::SolutionInfoSet( Marketplace* aMarketplace ):
 marketplace( aMarketplace ),
 period( 0 )
 {
@@ -61,14 +64,25 @@ period( 0 )
 }
 
 //! Constructor for new solution set
-SolverInfoSet::SolverInfoSet( const vector<SolverInfo> aSolutionSet ): solvable( aSolutionSet )
+SolutionInfoSet::SolutionInfoSet( const vector<SolutionInfo> aSolutionSet ): solvable( aSolutionSet )
 {
 }
 
-//! Initialize the SolverInfoSet and its SolverInfo's.
-void SolverInfoSet::init( const unsigned int period ) {
-    assert( period >= 0 );
-    this->period = period;
+/*!
+ * \brief Initialize the SolutionInfoSet and its SolutionInfo's.
+ * \details Creates a list of markets to solve and wraps them in a SolutionInfo object
+ *          so that we can associate solver specific parameters to them.
+ * \param aPeriod The current period we are initializing for.
+ * \param aDefaultSolutionTolerance The default solution tolerance to use for a SolutionInfo.
+ * \param aDefaultSolutionFloor The default solution floor to use for a solution info.
+ * \param aSolutionInfoParamParser An object which contains any SolutionInfo specific solution parameters
+ *                                 that we should set within them.
+ */
+void SolutionInfoSet::init( const unsigned int aPeriod, const double aDefaultSolutionTolerance,
+                          const double aDefaultSolutionFloor, const SolutionInfoParamParser* aSolutionInfoParamParser )
+{
+    assert( aPeriod >= 0 );
+    this->period = aPeriod;
 
     // Print a debugging log message.
     ILogger& solverLog = ILogger::getLogger( "solver_log" );
@@ -78,11 +92,13 @@ void SolverInfoSet::init( const unsigned int period ) {
     // Request the markets to solve from the marketplace. 
     vector<Market*> marketsToSolve = marketplace->getMarketsToSolve( period );
 
-    // Create and initialize a SolverInfo object for each market.
+    // Create and initialize a SolutionInfo object for each market.
     typedef vector<Market*>::const_iterator ConstMarketIterator;
     for( ConstMarketIterator iter = marketsToSolve.begin(); iter != marketsToSolve.end(); ++iter ){
-        SolverInfo currInfo( *iter );
-        currInfo.init();
+        SolutionInfo currInfo( *iter );
+        currInfo.init( aDefaultSolutionTolerance, aDefaultSolutionFloor,
+                       aSolutionInfoParamParser->getSolutionInfoValuesForMarket( (*iter)->getGoodName(), (*iter)->getRegionName(),
+                                                                                 currInfo.getTypeName(), period ) );
         if( currInfo.shouldSolve( false ) ){
             solvable.push_back( currInfo );
         }
@@ -93,7 +109,7 @@ void SolverInfoSet::init( const unsigned int period ) {
 }
 
 //! Merge two solution sets
-void SolverInfoSet::merge( const vector<SolverInfo> aSolutionSet )
+void SolutionInfoSet::merge( const vector<SolutionInfo> aSolutionSet )
 {
     ILogger& solverLog = ILogger::getLogger( "solver_log" );
     solverLog.setLevel( ILogger::DEBUG );
@@ -123,8 +139,8 @@ void SolverInfoSet::merge( const vector<SolverInfo> aSolutionSet )
 }
 
 //! Update the prices to the marketplace.
-void SolverInfoSet::updateToMarkets() {
-    // Send each SolverInfo's price to its linked market for solvable markets. 
+void SolutionInfoSet::updateToMarkets() {
+    // Send each SolutionInfo's price to its linked market for solvable markets. 
     for( SetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
         iter->updateToMarket();
     }
@@ -135,7 +151,7 @@ void SolverInfoSet::updateToMarkets() {
 }
 
 //! Update information from the marketplace.
-void SolverInfoSet::updateFromMarkets(){
+void SolutionInfoSet::updateFromMarkets(){
     // Retrieve information from the linked market.
     for( SetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
         iter->updateFromMarket();
@@ -147,7 +163,7 @@ void SolverInfoSet::updateFromMarkets(){
 }
 
 //! Update which markets are currently being solved.
-SolverInfoSet::UpdateCode SolverInfoSet::updateSolvable( const bool isNR ) {
+SolutionInfoSet::UpdateCode SolutionInfoSet::updateSolvable( const ISolutionInfoFilter* aSolutionInfoFilter ) {
     /*! \pre The updateFromMarkets has been called. */
     // Code which indicates whether markets were added, removed, both or neither. 
     UpdateCode code( UNCHANGED );
@@ -159,7 +175,7 @@ SolverInfoSet::UpdateCode SolverInfoSet::updateSolvable( const bool isNR ) {
     // Iterate through the solvable markets and determine if any are now unsolvable.
     for( SetIterator iter = solvable.begin(); iter != solvable.end(); ){
         // If it should not be solved for the current method, move it to the unsolvable vector.
-        if( !iter->shouldSolve( isNR ) ){
+        if( !aSolutionInfoFilter->acceptSolutionInfo( *iter ) ){
             unsolvable.push_back( *iter );
 
             // Print a debugging log message.
@@ -181,7 +197,7 @@ SolverInfoSet::UpdateCode SolverInfoSet::updateSolvable( const bool isNR ) {
     // This will double check markets that were just added, slightly inefficient.
     for( SetIterator iter = unsolvable.begin(); iter != unsolvable.end(); ){
         // If it should be solved for the current method, move it to the solvable vector.
-        if( iter->shouldSolve( isNR ) ){
+        if( aSolutionInfoFilter->acceptSolutionInfo( *iter ) ){
             solvable.push_back( *iter );
             // Print a debugging log message.
             solverLog << iter->getName() << " was added to the solvable set." << endl;
@@ -206,21 +222,21 @@ SolverInfoSet::UpdateCode SolverInfoSet::updateSolvable( const bool isNR ) {
 }
 
 //! Update the elasticities for all the markets.
-void SolverInfoSet::updateElasticities() {
+void SolutionInfoSet::updateElasticities() {
     for( SetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
         iter->calcDemandElas( *this );
         iter->calcSupplyElas( *this );
     }
 }
 //! Adjust brackets
-void SolverInfoSet::adjustBrackets() {
+void SolutionInfoSet::adjustBrackets() {
     for( SetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
         iter->adjustBracket();
     }
 }
 
-//! Have all contained SolverInfo's store their current values.
-void SolverInfoSet::storeValues(){
+//! Have all contained SolutionInfo's store their current values.
+void SolutionInfoSet::storeValues(){
     // Store values for solvable.
     for( SetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
         iter->storeValues();
@@ -231,8 +247,8 @@ void SolverInfoSet::storeValues(){
     }
 }
 
-//! Have all contained SolverInfo's restore their previous values.
-void SolverInfoSet::restoreValues(){
+//! Have all contained SolutionInfo's restore their previous values.
+void SolutionInfoSet::restoreValues(){
     // Retore values for solvable.
     for( SetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
         iter->restoreValues();
@@ -246,7 +262,7 @@ void SolverInfoSet::restoreValues(){
 /*! \brief Check if the bracket is empty and reset it if neccessary.
 * \return Whether any brackets were reset. 
 */
-bool SolverInfoSet::checkAndResetBrackets(){
+bool SolutionInfoSet::checkAndResetBrackets(){
     bool didReset = false;
     for( SetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
         didReset |= iter->checkAndResetBrackets();
@@ -257,17 +273,17 @@ bool SolverInfoSet::checkAndResetBrackets(){
 /*! \brief Reset solution set brackets to current prices and excess demands and 
     set bracketed to false.
 */
-void SolverInfoSet::resetBrackets(){
+void SolutionInfoSet::resetBrackets(){
     for( SetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
         iter->resetBrackets();
     }
 }
 
 //! Find the maximum relative excess demand.
-double SolverInfoSet::getMaxRelativeExcessDemand( const double ED_SOLUTION_FLOOR ) const {
+double SolutionInfoSet::getMaxRelativeExcessDemand() const {
     double largest = -1;
     for ( ConstSetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ) {
-        const double relativeED = iter->getRelativeED( ED_SOLUTION_FLOOR );
+        const double relativeED = iter->getRelativeED();
 
         if ( relativeED > largest ) {
             largest = relativeED;
@@ -277,7 +293,7 @@ double SolverInfoSet::getMaxRelativeExcessDemand( const double ED_SOLUTION_FLOOR
 }
 
 //! Find the maximum absolute excess demand.
-double SolverInfoSet::getMaxAbsoluteExcessDemand() const {
+double SolutionInfoSet::getMaxAbsoluteExcessDemand() const {
     double largest = -1;
     for ( ConstSetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ) {
         const double absoluteExcessDemand = fabs( iter->getED() );
@@ -288,14 +304,13 @@ double SolverInfoSet::getMaxAbsoluteExcessDemand() const {
     return largest;
 }
 
-/*! \brief Finds the SolverInfo with the largest relative excess demand.
+/*! \brief Finds the SolutionInfo with the largest relative excess demand.
 * \author Josh Lurz
-* \details This function determines the SolverInfo within the set which has the largest relative excess demand as defined by
-* getRelativeED. 
-* \param ED_SOLUTION_FLOOR Value of ED below which the market should be considered solved. 
-* \return The SolverInfo with the largest relative excess demand. 
+* \details This function determines the SolutionInfo within the set which has the largest relative excess demand as defined by
+* getRelativeED.
+* \return The SolutionInfo with the largest relative excess demand. 
 */
-SolverInfo* SolverInfoSet::getWorstSolverInfo( const double aEDSolutionFloor, const bool aIgnoreBisected ) {
+SolutionInfo* SolutionInfoSet::getWorstSolutionInfo( const bool aIgnoreBisected ) {
 
     SetIterator worstMarket = solvable.begin();
     double largest = -1;
@@ -304,7 +319,7 @@ SolverInfo* SolverInfoSet::getWorstSolverInfo( const double aEDSolutionFloor, co
         if( aIgnoreBisected && iter->hasBisected() ){
             continue;
         }
-        const double relativeED = iter->getRelativeED( aEDSolutionFloor );
+        const double relativeED = iter->getRelativeED();
         
         if ( relativeED > largest ) {
             worstMarket = iter;
@@ -314,29 +329,27 @@ SolverInfo* SolverInfoSet::getWorstSolverInfo( const double aEDSolutionFloor, co
     return &*worstMarket;
 }
 
-/*! \brief Returns the best unsolved solver info. 
+/*! \brief Returns the best unsolved solution info. 
 * \author Josh Lurz
-* \details This function determines the SolverInfo within the set which has the largest relative excess demand as defined by
+* \details This function determines the SolutionInfo within the set which has the largest relative excess demand as defined by
 * getRelativeED. 
-* \param aEDSolutionFloor Value of ED below which the market should be considered solved.
-* \param aIgnoreBisected Whether to ignore already bisected markets.
-* \return The SolverInfo with the smallest unsolved relative excess demand. 
+* \return The SolutionInfo with the smallest unsolved relative excess demand. 
 */
-SolverInfo* SolverInfoSet::getWorstSolverInfoReverse( const double aTolerance, const double aEDSolutionFloor, const bool aIgnoreBisected ) {
+SolutionInfo* SolutionInfoSet::getWorstSolutionInfoReverse( const bool aIgnoreBisected ) {
     
     // Find the worst one. 
-    SolverInfo* worstMarket = getWorstSolverInfo( aEDSolutionFloor, aIgnoreBisected );
-    double smallest = worstMarket->getRelativeED( aEDSolutionFloor );
+    SolutionInfo* worstMarket = getWorstSolutionInfo( aIgnoreBisected );
+    double smallest = worstMarket->getRelativeED();
     SetIterator bestUnsolved = solvable.begin();
 
     for ( SetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ) {
         if( aIgnoreBisected && iter->hasBisected() ){
             continue;
         }
-        if( iter->isWithinTolerance( aTolerance, aEDSolutionFloor ) ){ // not right
+        if( iter->isWithinTolerance() ){ // not right
             continue;
         }
-        const double relativeED = iter->getRelativeED( aEDSolutionFloor );
+        const double relativeED = iter->getRelativeED();
         
         if ( relativeED <= smallest ) {
             bestUnsolved = iter;
@@ -345,17 +358,16 @@ SolverInfo* SolverInfoSet::getWorstSolverInfoReverse( const double aTolerance, c
     }
     return &*bestUnsolved;
 }
-/*! \brief Find the policy solver info, or the worst if there is no policy.
+/*! \brief Find the policy solution info, or the worst if there is no policy.
 * \author Josh Lurz
-* \details This function determines the SolverInfo within the set which has the largest relative excess demand as defined by
-* getRelativeED. 
-* \param aEDSolutionFloor Value of ED below which the market should be considered solved. 
-* \return The SolverInfo for the policy, or the worst one if that does not exist.
+* \details This function determines the SolutionInfo within the set which has the largest relative excess demand as defined by
+* getRelativeED.
+* \return The SolutionInfo for the policy, or the worst one if that does not exist.
 */
-SolverInfo* SolverInfoSet::getPolicyOrWorstSolverInfo( const double aTolerance, const double aEDSolutionFloor) {
+SolutionInfo* SolutionInfoSet::getPolicyOrWorstSolutionInfo() {
     for( SetIterator iter = solvable.begin(); iter != solvable.end(); ++ iter ){
         // TODO: Find a more generic method. 
-        if( iter->getName() == "globalCO2" && !iter->isSolved( aTolerance, aEDSolutionFloor ) ){
+        if( iter->getName() == "globalCO2" && !iter->isSolved() ){
             return &*iter;
         }
     }
@@ -363,7 +375,7 @@ SolverInfo* SolverInfoSet::getPolicyOrWorstSolverInfo( const double aTolerance, 
     double largest = -1;
     SetIterator worstMarket = solvable.begin();
     for ( SetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ) {
-        const double relativeED = iter->getRelativeED( aEDSolutionFloor );
+        const double relativeED = iter->getRelativeED();
 
         if ( relativeED > largest ) {
             worstMarket = iter;
@@ -372,17 +384,16 @@ SolverInfo* SolverInfoSet::getPolicyOrWorstSolverInfo( const double aTolerance, 
     }
     return &*worstMarket;
 }
-/*! \brief Find the policy solver info.
+/*! \brief Find the policy solution info.
 * \author Josh Lurz, Sonny Kim
-* \details This function determines the SolverInfo within the set which has the largest relative excess demand as defined by
+* \details This function determines the SolutionInfo within the set which has the largest relative excess demand as defined by
 * getRelativeED. 
-* \param aEDSolutionFloor Value of ED below which the market should be considered solved. 
-* \return The SolverInfo for the policy.
+* \return The SolutionInfo for the policy.
 */
-SolverInfo* SolverInfoSet::getPolicySolverInfo( const double aTolerance, const double aEDSolutionFloor) {
+SolutionInfo* SolutionInfoSet::getPolicySolutionInfo() {
     for( SetIterator iter = solvable.begin(); iter != solvable.end(); ++ iter ){
         // TODO: Find a more generic method. 
-        if( iter->getName() == "globalCO2" && !iter->isSolved( aTolerance, aEDSolutionFloor ) ){
+        if( iter->getName() == "globalCO2" && !iter->isSolved() ){
             return &*iter;
         }
     }
@@ -390,7 +401,7 @@ SolverInfo* SolverInfoSet::getPolicySolverInfo( const double aTolerance, const d
 }
 
 //! Return whether all currently solvable markets are bracketed.
-bool SolverInfoSet::isAllBracketed() const {
+bool SolutionInfoSet::isAllBracketed() const {
     for( ConstSetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
         if( !iter->isBracketed() ){
             return false;
@@ -399,8 +410,8 @@ bool SolverInfoSet::isAllBracketed() const {
     return true;
 }
 
-//! Return the demands of all SolverInfo's.
-const vector<double> SolverInfoSet::getDemands() const {
+//! Return the demands of all SolutionInfo's.
+const vector<double> SolutionInfoSet::getDemands() const {
     vector<double> demands;
     for( ConstSetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
         demands.push_back( iter->getDemand() );
@@ -411,8 +422,8 @@ const vector<double> SolverInfoSet::getDemands() const {
     return demands;
 }
 
-//! Return the supplies of all SolverInfo's.
-const vector<double> SolverInfoSet::getSupplies() const {
+//! Return the supplies of all SolutionInfo's.
+const vector<double> SolutionInfoSet::getSupplies() const {
     vector<double> supplies;
     for( ConstSetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
         supplies.push_back( iter->getSupply() );
@@ -424,42 +435,41 @@ const vector<double> SolverInfoSet::getSupplies() const {
 }
 
 
-//! Return the number of solvable SolverInfos.
-unsigned int SolverInfoSet::getNumSolvable() const {
+//! Return the number of solvable SolutionInfos.
+unsigned int SolutionInfoSet::getNumSolvable() const {
     return static_cast<unsigned int>( solvable.size() );
 }
 
-//! Return the total number of SolverInfos.
-unsigned int SolverInfoSet::getNumTotal() const {
+//! Return the total number of SolutionInfos.
+unsigned int SolutionInfoSet::getNumTotal() const {
     return static_cast<unsigned int>( solvable.size() + unsolvable.size() );
 }
 
 //! Const getter which references the solvable vector.
-const SolverInfo& SolverInfoSet::getSolvable( unsigned int index ) const {
+const SolutionInfo& SolutionInfoSet::getSolvable( unsigned int index ) const {
     return solvable.at( index );
 }
 
 //! Get the solvable set (may not be solved).
-vector<SolverInfo> SolverInfoSet::getSolvableSet() const{
+vector<SolutionInfo> SolutionInfoSet::getSolvableSet() const{
     return solvable;
 }
 
 //! Non-Const getter which references the solvable vector.
-SolverInfo& SolverInfoSet::getSolvable( unsigned int index ) {
+SolutionInfo& SolutionInfoSet::getSolvable( unsigned int index ) {
     return solvable.at( index );
 }
 
 //! Get the solved set.
-vector<SolverInfo> SolverInfoSet::getSolvedSet( const double aSolutionTolerance,
-                                  const double aEDSolutionFloor ) const{
-    vector<SolverInfo> solvedSet;
+vector<SolutionInfo> SolutionInfoSet::getSolvedSet() const{
+    vector<SolutionInfo> solvedSet;
     for( ConstSetIterator currInfo = solvable.begin(); currInfo != solvable.end(); ++currInfo ){
-        if( currInfo->shouldSolve( false ) && currInfo->isSolved( aSolutionTolerance, aEDSolutionFloor ) ){
+        if( currInfo->shouldSolve( false ) && currInfo->isSolved() ){
             solvedSet.push_back( *currInfo );
         }
     }
     for( ConstSetIterator currInfo = unsolvable.begin(); currInfo != unsolvable.end(); ++currInfo ){
-        if( currInfo->shouldSolve( false ) && currInfo->isSolved( aSolutionTolerance, aEDSolutionFloor ) ){
+        if( currInfo->shouldSolve( false ) && currInfo->isSolved() ){
             solvedSet.push_back( *currInfo );
         }
     }
@@ -467,11 +477,10 @@ vector<SolverInfo> SolverInfoSet::getSolvedSet( const double aSolutionTolerance,
 }
 
 //! Const getter which references the unsolved vector.
-SolverInfo& SolverInfoSet::getUnsolved( unsigned int index, const double aSolutionTolerance,
-                                              const double aEDSolutionFloor  ) {
+SolutionInfo& SolutionInfoSet::getUnsolved( unsigned int index ) {
     unsolved.clear();
     for( SetIterator curr = solvable.begin(); curr != solvable.end(); ++curr ){
-        if( !curr->isSolved( aSolutionTolerance, aEDSolutionFloor ) ){
+        if( !curr->isSolved() ){
             unsolved.push_back( *curr );
         }
     }
@@ -479,16 +488,15 @@ SolverInfo& SolverInfoSet::getUnsolved( unsigned int index, const double aSoluti
 }
  
 //! Get the unsolved set.
-vector<SolverInfo> SolverInfoSet::getUnsolvedSet( const double aSolutionTolerance,
-                                  const double aEDSolutionFloor ) const{
-    vector<SolverInfo> unsolvedSet;
+vector<SolutionInfo> SolutionInfoSet::getUnsolvedSet() const {
+    vector<SolutionInfo> unsolvedSet;
     for( ConstSetIterator currInfo = solvable.begin(); currInfo != solvable.end(); ++currInfo ){
-        if( currInfo->shouldSolve( false ) && !currInfo->isSolved( aSolutionTolerance, aEDSolutionFloor ) ){
+        if( currInfo->shouldSolve( false ) && !currInfo->isSolved() ){
             unsolvedSet.push_back( *currInfo );
         }
     }
     for( ConstSetIterator currInfo = unsolvable.begin(); currInfo != unsolvable.end(); ++currInfo ){
-        if( currInfo->shouldSolve( false ) && !currInfo->isSolved( aSolutionTolerance, aEDSolutionFloor ) ){
+        if( currInfo->shouldSolve( false ) && !currInfo->isSolved() ){
             unsolvedSet.push_back( *currInfo );
         }
     }
@@ -496,7 +504,7 @@ vector<SolverInfo> SolverInfoSet::getUnsolvedSet( const double aSolutionToleranc
 }
 
 //! Const getter which references the solvable and unsolvable vectors.
-const SolverInfo& SolverInfoSet::getAny( unsigned int index ) const {
+const SolutionInfo& SolutionInfoSet::getAny( unsigned int index ) const {
     if( index < solvable.size() ){
         return solvable.at( index );
     }
@@ -504,7 +512,7 @@ const SolverInfo& SolverInfoSet::getAny( unsigned int index ) const {
 }
 
 //! Non-Const getter which references the solvable and unsolvable vectors.
-SolverInfo& SolverInfoSet::getAny( unsigned int index ) {
+SolutionInfo& SolutionInfoSet::getAny( unsigned int index ) {
     if( index < solvable.size() ){
         return solvable.at( index );
     }
@@ -512,34 +520,34 @@ SolverInfo& SolverInfoSet::getAny( unsigned int index ) {
 }
 
 //! Check if there are any unsolved singular markets.
-bool SolverInfoSet::hasSingularUnsolved( const double aSolTolerance, const double aEDSolutionFloor ){
+bool SolutionInfoSet::hasSingularUnsolved(){
     // Check solvable first
     for( SetIterator curr = solvable.begin(); curr != solvable.end(); ++curr ){
-        if( curr->isUnsolvedAndSingular( aSolTolerance, aEDSolutionFloor ) ){
+        if( curr->isUnsolvedAndSingular() ){
             return true;
         }
     }
     
     // Check unsolvable as well, they should have cleared
     for( SetIterator curr = unsolvable.begin(); curr != unsolvable.end(); ++curr ){
-        if( curr->isUnsolvedAndSingular( aSolTolerance, aEDSolutionFloor ) ){
+        if( curr->isUnsolvedAndSingular() ){
             return true;
         }
     }
     return false;
 }
-//! Check if every SolverInfo is solved. Gets information from the markets.
-bool SolverInfoSet::isAllSolved( const double SOLUTION_TOLERANCE, const double ED_SOLUTION_FLOOR ){
+//! Check if every SolutionInfo is solved. Gets information from the markets.
+bool SolutionInfoSet::isAllSolved(){
     // Check solvable first
     for( SetIterator curr = solvable.begin(); curr != solvable.end(); ++curr ){
-        if( !curr->isSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ){
+        if( !curr->isSolved() ){
             return false;
         }
     }
     
     // Check unsolvable as well, they should have cleared
     for( SetIterator curr = unsolvable.begin(); curr != unsolvable.end(); ++curr ){
-        if( !curr->isSolved( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR ) ){
+        if( !curr->isSolved() ){
             return false;
         }
     }
@@ -548,17 +556,11 @@ bool SolverInfoSet::isAllSolved( const double SOLUTION_TOLERANCE, const double E
 
 /*! \brief Print all unsolved markets.
 * \details Searches through the lists of solvable and unsolvable markets and
-*          determines if any are not solved given aSolutionTolerance and
-*          aEDSolutionFloor. For all markets that are unsolved a set of
-*          information is printed.
-* \param aSolutionTolerance Solution tolerance to check against.
-* \param aEDSolutionFloor Excess demand solution floor to check against.
+*          determines if any are not solved For all markets that are unsolved
+*          a set of information is printed.
 * \param aOut Output stream to which to write warnings.
 */
-void SolverInfoSet::printUnsolved( const double aSolutionTolerance,
-                                   const double aEDSolutionFloor,
-                                   ostream& aOut )
-{
+void SolutionInfoSet::printUnsolved( ostream& aOut ) {
     aOut << "Currently Unsolved Markets: " << endl;
 
     // Unsolved Part 1:
@@ -579,7 +581,7 @@ void SolverInfoSet::printUnsolved( const double aSolutionTolerance,
     aOut.setf(ios_base::fmtflags(0),ios_base::floatfield); //reset to default
     // Solvable markets that are not solved.
     for( SetIterator curr = solvable.begin(); curr != solvable.end(); ++curr ){
-        if( !curr->isSolved( aSolutionTolerance, aEDSolutionFloor ) ){
+        if( !curr->isSolved() ){
             aOut << *curr << endl;
         }
     }
@@ -602,14 +604,14 @@ void SolverInfoSet::printUnsolved( const double aSolutionTolerance,
     aOut.setf(ios_base::fmtflags(0),ios_base::floatfield); //reset to default
     // Unsolvable markets that are not cleared.
     for( SetIterator curr = unsolvable.begin(); curr != unsolvable.end(); ++curr ){
-        if( !curr->isSolved( aSolutionTolerance, aEDSolutionFloor ) ){
+        if( !curr->isSolved() ){
             aOut << *curr << endl;
         }
     }
     aOut << endl; // next line
 }
 
-void SolverInfoSet::unsetBisectedFlag(){
+void SolutionInfoSet::unsetBisectedFlag(){
    for( SetIterator curr = solvable.begin(); curr != solvable.end(); ++curr ){
         curr->unsetBisectedFlag();
     }
@@ -621,7 +623,7 @@ void SolverInfoSet::unsetBisectedFlag(){
 }
 
 //! Print out all the SolutionInfo objects' information.
-void SolverInfoSet::print( ostream& out ) const {
+void SolutionInfoSet::print( ostream& out ) const {
     out << endl << "Market, X, XL, XR, ED, EDL, EDR, RED, bracketed, supply, demand, MRK type" << endl;
     for( ConstSetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
         out << *iter << endl;
@@ -638,9 +640,9 @@ void SolverInfoSet::print( ostream& out ) const {
 * \param aCalcCount Iteration count.
 * \param aOut Output stream.
 */
-void SolverInfoSet::printMarketInfo( const string& aLocation,
-                                     const double aCalcCount,
-                                     ostream& aOut ) const
+void SolutionInfoSet::printMarketInfo( const string& aLocation,
+                                       const double aCalcCount,
+                                       ostream& aOut ) const
 {
     // Use statics here to avoid reinitialization.
     const static Configuration* conf = Configuration::getInstance();
@@ -676,25 +678,23 @@ void SolverInfoSet::printMarketInfo( const string& aLocation,
 * supply and demand at a series of prices, and to print the resulting curve.
 *
 * \author Josh Lurz
-* \param aEDTolerance The ED solution tolerance. 
-* \param aDemandFloor The demand floor of the relative ED function.
 * \param aWorld The world to use to calculate new points.
 * \param aMarketplace The marketplace to use to calculate new points.
 * \param aPeriod Period for which to print supply-demand curves.
 * \param aLogger Logger stream to print the curves to.
 */
-void SolverInfoSet::findAndPrintSD( const double aEDTolerance, const double aDemandFloor, World* aWorld, Marketplace* aMarketplace, const int aPeriod, ILogger& aLogger ) {
+void SolutionInfoSet::findAndPrintSD( World* aWorld, Marketplace* aMarketplace, const int aPeriod, ILogger& aLogger ) {
     const Configuration* conf = Configuration::getInstance();
     const int numMarketsToFindSD = conf->getInt( "numMarketsToFindSD", 5 );
     const int numPointsForSD = conf->getInt( "numPointsForSD", 5 );
     
     // Sort the vector so the worst markets are first.
-    sort( solvable.begin(), solvable.end(), SolverInfo::GreaterRelativeED( aDemandFloor ) );
+    sort( solvable.begin(), solvable.end(), SolutionInfo::GreaterRelativeED() );
 
     // Now determine supply and demand curves for each.
     for ( int i = 0; i < numMarketsToFindSD; ++i ) {
         // If its solved, skip it.
-        if( solvable[ i ].isSolved( aEDTolerance, aDemandFloor ) ){
+        if( solvable[ i ].isSolved() ){
             continue;
         }
         SupplyDemandCurve sdCurve = solvable[ i ].createSDCurve();
@@ -704,7 +704,7 @@ void SolverInfoSet::findAndPrintSD( const double aEDTolerance, const double aDem
 }
 
 //! Print the derivatives.
-void SolverInfoSet::printDerivatives( ostream& aOut ) const {
+void SolutionInfoSet::printDerivatives( ostream& aOut ) const {
     aOut << "Market";
     for( ConstSetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
         aOut << "," << iter->getName();

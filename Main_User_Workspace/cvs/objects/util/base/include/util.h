@@ -57,6 +57,8 @@
 #include "util/base/include/definitions.h"
 #include "util/base/include/inamed.h"
 #include <boost/static_assert.hpp>
+#include <boost/utility/enable_if.hpp>
+#include <boost/type_traits/is_convertible.hpp>
 #include <limits>
 #include <fstream>
 #include <iostream>
@@ -333,13 +335,14 @@ namespace objects {
     * \return Returns whether the number is valid.
     */
     template <class T>
-    inline bool isValidNumber( const T aNumber ) {
+    inline typename boost::enable_if<boost::is_convertible<T, double>, bool>::type isValidNumber( const T aNumber ) {
 
         // Need to check whether the type supports not-a-number and infinity.
-        return ( !std::numeric_limits<T>::has_quiet_NaN || aNumber != std::numeric_limits<T>::quiet_NaN() )
-            && ( !std::numeric_limits<T>::has_infinity ||
-            ( aNumber != std::numeric_limits<T>::infinity()
-            && std::negate<double>()( aNumber ) != std::numeric_limits<T>::infinity() ) );
+        const double doubleValue( aNumber );
+        return ( aNumber == aNumber )  // check for NaN, by using the fact that == is always false for NaN
+            && ( !std::numeric_limits<double>::has_infinity ||
+            ( doubleValue != std::numeric_limits<double>::infinity()
+            && std::negate<double>()( doubleValue ) != std::numeric_limits<double>::infinity() ) );
     }
 
     /*!
@@ -351,6 +354,18 @@ namespace objects {
      */
     template <>
     inline bool isValidNumber<bool>( const bool aNumber ){
+        return true;
+    }
+    
+    /*!
+     * \brief Specialization of isValidNumber for type not convertible to double.
+     * \details Since isValidNumber is used with in template datastructures we
+     *          must be able to handle types which are not numbers
+     * \param aType A non-number type to check.
+     * \return true since this wouldn't be a valid check anyway.
+     */
+    template <class T>
+    inline typename boost::disable_if<boost::is_convertible<T, double>, bool>::type isValidNumber( const T aNumber ){
         return true;
     }
 

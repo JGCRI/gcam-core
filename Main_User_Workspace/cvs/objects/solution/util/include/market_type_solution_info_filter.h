@@ -1,5 +1,5 @@
-#ifndef _BISECT_POLICY_NR_SOLVER_H_
-#define _BISECT_POLICY_NR_SOLVER_H_
+#ifndef _MARKET_TYPE_SOLUTION_INFO_FILTER_H_
+#define _MARKET_TYPE_SOLUTION_INFO_FILTER_H_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -38,59 +38,53 @@
  * by User.
  */
 
-
-#include <memory>
-#include "solution/solvers/include/solver.h"
-
 /*! 
-* \file bisect_policy_nr_solver.h
-* \ingroup Objects
-* \brief The BisectPolicyNRSolver class header file.
-*
-* \author Josh Lurz
-*/
+ * \file market_type_solution_info_filter.h  
+ * \ingroup Objects
+ * \brief Header file for the MarketTypeSolutionInfoFilter class.
+ * \author Pralit Patel
+ */
+#include <xercesc/dom/DOMNode.hpp>
+#include <string>
 
-class SolverComponent;
-class Marketplace;
-class World;
-class SolutionInfoParamParser;
+#include "solution/util/include/isolution_info_filter.h"
+#include "marketplace/include/imarket_type.h"
+
+class SolutionInfo;
+
 /*!
-* \ingroup Objects
-* \brief A class which defines an An instance of the Solver class which uses
-*        bisection first and then Newton-Raphson.
-* \author Josh Lurz
-*/
-
-class BisectPolicyNRSolver: public Solver {
+ * \ingroup Objects
+ * \brief A solution info filter which will accept any solution info which
+ *        match the read in market type.
+ * \details <b>XML specification for MarketTypeSolutionInfoFilter</b>
+ *          - XML name: \c market-type-solution-info-filter
+ *          - Contained by:
+ *          - Parsing inherited from class: None.
+ *          - Elements:
+ *              - \c market-type IMarketType::Type MarketTypeSolutionInfoFilter::mAcceptMarketType
+ *                      Will convert the parsed string to IMarketType enum by relying on
+ *                      the method Market::convert_type_to_string.  The default is IMarketType::END.
+ *
+ * \author Pralit Patel
+ */
+class MarketTypeSolutionInfoFilter : public ISolutionInfoFilter {
 public:
-    BisectPolicyNRSolver( Marketplace* marketplaceIn, World* worldIn );
-    virtual ~BisectPolicyNRSolver();
+    MarketTypeSolutionInfoFilter();
+    ~MarketTypeSolutionInfoFilter();
+    
     static const std::string& getXMLNameStatic();
     
-    // Solver methods
-    virtual void init();
-    virtual bool solve( const int aPeriod, const SolutionInfoParamParser* aSolutionInfoParamParser );
+    // ISolutionInfoFilter methods
+    virtual bool acceptSolutionInfo( const SolutionInfo& aSolutionInfo ) const;
     
     // IParsable methods
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
-
+    
 private:
-    std::auto_ptr<SolverComponent> mLogNewtonRaphson; //!< LogNewtonRaphson solver component.
-    std::auto_ptr<SolverComponent> mBisectAll; //!< BisectAll solver component.
-    std::auto_ptr<SolverComponent> mBisectOne; //!< BisectOne solver component.
-    std::auto_ptr<SolverComponent> mBisectPolicy; //!< BisectPolicy solver component.
+    //! The market type which will be accepted
+    IMarketType::Type mAcceptMarketType;
     
-    //! Default solution tolerance, this value may be overridden by at the SolutionInfo level
-    double mDefaultSolutionTolerance;
-    
-    //! Default solution floor, this value may be overridden by at the SolutionInfo level
-    double mDefaultSolutionFloor;
-    
-    //! Calibration tolerance
-    double mCalibrationTolerance;
-    
-    //! Max total solution iterations
-    int mMaxModelCalcs;
+    IMarketType::Type getMarketTypeFromString( const std::string& aMarketType ) const;
 };
 
-#endif // _BISECT_POLICY_NR_SOLVER_H_
+#endif // _MARKET_TYPE_SOLUTION_INFO_FILTER_H_

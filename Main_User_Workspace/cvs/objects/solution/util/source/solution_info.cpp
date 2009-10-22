@@ -33,9 +33,9 @@
  */
 
 /*! 
-* \file solver_info.cpp
+* \file solution_info.cpp
 * \ingroup Solution
-* \brief SolverInfo class source file.
+* \brief SolutionInfo class source file.
 * \author Josh Lurz
 */
 #include "util/base/include/definitions.h"
@@ -43,64 +43,94 @@
 #include <string>
 #include <iostream>
 #include <cassert>
-#include "solution/util/include/solver_info.h"
-#include "solution/util/include/solver_info_set.h"
+#include "solution/util/include/solution_info.h"
+#include "solution/util/include/solution_info_set.h"
 #include "solution/util/include/solver_library.h"
 #include "marketplace/include/market.h"
 #include "util/base/include/supply_demand_curve.h"
 #include "util/logger/include/ilogger.h"
+#include "containers/include/info.h"
 
 using namespace std;
 
 //! Constructor
-SolverInfo::SolverInfo( Market* aLinkedMarket ){
+SolutionInfo::SolutionInfo( Market* aLinkedMarket )
+:linkedMarket( aLinkedMarket ),
+X( 0 ),
+storedX( 0 ),
+demand( 0 ),
+storedDemand( 0 ),
+supply( 0 ),
+storedSupply( 0 ),
+XL( 0 ),
+XR( 0 ),
+EDL( 0 ),
+EDR( 0 ),
+bracketed( false ),
+mBisected( false ),
+mSolutionTolerance( 0 ),
+mSolutionFloor( 0 ),
+mBracketInterval( 0 ),
+mMaxNRPriceJump( 0 )
+{
     assert( aLinkedMarket );
-    // initialize the data members.
-    linkedMarket = aLinkedMarket;
-    X = 0;
-    storedX = 0;
-    demand = 0;
-    storedDemand = 0;
-    supply = 0;
-    storedSupply = 0;
-    XL = 0;
-    XR = 0;
-    EDL = 0;
-    EDR = 0;
-    bracketed = false;
-    mBisected = false;
 }
 
 //! Equals operator based on the equality of the linked market.
-bool SolverInfo::operator==( const SolverInfo& rhs ) const {
+bool SolutionInfo::operator==( const SolutionInfo& rhs ) const {
     return ( linkedMarket == rhs.linkedMarket );
 }
 
 //! Not equals operator based on the equals operator.
-bool SolverInfo::operator!=( const SolverInfo& rhs ) const {
+bool SolutionInfo::operator!=( const SolutionInfo& rhs ) const {
     return !( *this == rhs );
 }
 
-//! Initialize the SolverInfo.
-void SolverInfo::init(){
+/*!
+ * \brief Initialize the SolutionInfo.
+ * \details Initializes X, supply, and demand from the linked market.  We will use the solution info
+ *          values from the parser to set the market specific solution tolerance, solution floor,
+ *          bracket interval, max nr price jump, and delta price if they are set.  If they do not have
+ *          values for the solution tolerance, or floor the passed in defaults will be used.  Note that
+ *          default values for bracket interval, max nr price jump, and delta price can not be checked here
+ *          as those may be SolverComponenet specific and so defaults will be checked when a user
+ *          attempts to get those values.
+ * \param aDefaultSolutionTolerance The default solution tolerance to use if a market specific value
+ *                                  was not provided.
+ * \param aDefaultSolutionFloor The default solution floor to use if a market specific value
+ *                                  was not provided.
+ * \param aSolutionInfoValues The object which will contain any parsed solution parameters for this
+ *                            solution info object.
+ */
+void SolutionInfo::init( const double aDefaultSolutionTolerance, const double aDefaultSolutionFloor,
+                         const SolutionInfoParamParser::SolutionInfoValues& aSolutionInfoValues ) {
     // Update price, supply and demand from the market.
     X = linkedMarket->getRawPrice();
     supply = linkedMarket->getRawSupply();
     demand = linkedMarket->getRawDemand();
     resetBrackets();
+    
+    // Initialize parameters from the solution info values if they are set
+    mSolutionTolerance = aSolutionInfoValues.mSolutionTolerance == 0 ?
+        aDefaultSolutionTolerance : aSolutionInfoValues.mSolutionTolerance;
+    mSolutionFloor = aSolutionInfoValues.mSolutionFloor == 0 ?
+        aDefaultSolutionFloor : aSolutionInfoValues.mSolutionFloor;
+    mBracketInterval = aSolutionInfoValues.mBracketInterval;
+    mMaxNRPriceJump = aSolutionInfoValues.mMaxNRPriceJump;
+    mDeltaPrice = aSolutionInfoValues.mDeltaPrice;
 }
 
-/*! \brief Return whether the SolverInfo has had its bracketed flag set. 
+/*! \brief Return whether the SolutionInfo has had its bracketed flag set. 
 * \note this does not mean it is still within the bracket.
 * \return Whether the bracketed flag has been set.
 */
-bool SolverInfo::isBracketed() const {
+bool SolutionInfo::isBracketed() const {
     return bracketed;
 }
 
-/*! \brief Set the SolverInfos bracketed flag.
+/*! \brief Set the SolutionInfos bracketed flag.
 */
-void SolverInfo::setBracketed(){
+void SolutionInfo::setBracketed(){
     bracketed = true;
     // Fixes policy market erroneously set to true
     // without actual price brackets.
@@ -110,76 +140,112 @@ void SolverInfo::setBracketed(){
 }
 
 //! Return the size of the bracket.
-double SolverInfo::getBracketSize() const {
+double SolutionInfo::getBracketSize() const {
     return fabs( XR - XL );
 }
 
 //! Return dynamically calculated bracket interval.
-double SolverInfo::getBracketInterval() const {
+double SolutionInfo::getCurrentBracketInterval() const {
 
     return fabs( XR - XL );
 }
 
+/*!
+ * \brief Gets the bracket interval which should be used when calculating
+ *        brackets.
+ * \details If a bracket interval has been set for this solution info that will
+ *          be returned otherwise the given default will be used.
+ * \param aDefaultBracketInverval The default bracket interval to use.
+ * \return The correct bracket interval to use when finding brackets.
+ */
+double SolutionInfo::getBracketInterval( const double aDefaultBracketInverval ) const {
+    return mBracketInterval == 0 ? aDefaultBracketInverval : mBracketInterval;
+}
+
+/*!
+ * \brief Gets the max price change which should be used when calculating
+ *        new prices using the newton raphson method.
+ * \details If a max price jump has been set for this solution info that will
+ *          be returned otherwise the given default will be used.
+ * \param aDefaultMaxPriceJump The default max price jump to use.
+ * \return The correct max price jump to use calculating new prices via NR.
+ */
+double SolutionInfo::getMaxNRPriceJump( const double aDefaultMaxPriceJump ) const {
+    return mMaxNRPriceJump == 0 ? aDefaultMaxPriceJump : mMaxNRPriceJump;
+}
+
+/*!
+ * \brief Gets the delta price change which should be used when calculating
+ *        derivatives using the newton raphson method.
+ * \details If a delta price has been set for this solution info that will
+ *          be returned otherwise the given default will be used.
+ * \param aDefaultDeltaPrice The default delta price to use.
+ * \return The correct delta price to use for calculating derivatives in NR.
+ */
+double SolutionInfo::getDeltaPrice( const double aDefaultDeltaPrice ) const {
+    return mDeltaPrice == 0 ? aDefaultDeltaPrice : mDeltaPrice;
+}
+
 /*! \brief Get the price */
-double SolverInfo::getPrice() const {
+double SolutionInfo::getPrice() const {
     return X;
 }
 
 //! Set the price
-void SolverInfo::setPrice( const double aPrice ){
+void SolutionInfo::setPrice( const double aPrice ){
    X = aPrice;
 }
 
 //! Set the price to the median value between the left and right bracket.
-void SolverInfo::setPriceToCenter(){
+void SolutionInfo::setPriceToCenter(){
     X = ( XL + XR ) / 2;
 }
 
 /*! \brief Get Demand */
-double SolverInfo::getDemand() const {
+double SolutionInfo::getDemand() const {
     return demand;
 }
 
 //! Remove a given amount from the raw demand for the linked market.
-void SolverInfo::removeFromRawDemand( const double aDemand ){
+void SolutionInfo::removeFromRawDemand( const double aDemand ){
     linkedMarket->removeFromRawDemand( aDemand );
 }
 
 
 /*! \brief Get the Supply */
-double SolverInfo::getSupply() const {
+double SolutionInfo::getSupply() const {
     return supply;
 }
 
 //! Remove a given amount from the raw supply for the linked market.
-void SolverInfo::removeFromRawSupply( const double aSupply ){
+void SolutionInfo::removeFromRawSupply( const double aSupply ){
     linkedMarket->removeFromRawSupply( aSupply );
 }
 
 //! Get the Excess Demand, calculated dynamically.
-double SolverInfo::getED() const {
+double SolutionInfo::getED() const {
     return demand - supply;
 }
 
 //! Get the ED at the left bracket.
-double SolverInfo::getEDLeft() const {
+double SolutionInfo::getEDLeft() const {
     return EDL;
 }
 
 //! Get the ED at the right bracket.
-double SolverInfo::getEDRight() const {
+double SolutionInfo::getEDRight() const {
     return EDR;
 }
 
 //! Store X, demand and supply so that they can later be used to calculate derivatives.
-void SolverInfo::storeValues() {
+void SolutionInfo::storeValues() {
     storedX = X;
     storedDemand = demand;
     storedSupply = supply;
 }
 
 //! Restore X, demand and supply.
-void SolverInfo::restoreValues() {
+void SolutionInfo::restoreValues() {
     X = storedX;
     demand = storedDemand;
     supply = storedSupply;
@@ -192,7 +258,7 @@ void SolverInfo::restoreValues() {
 * \author Josh Lurz
 * \return The name of the market the SolutionInfo is connected to.
 */
-const string& SolverInfo::getName() const {
+const string& SolutionInfo::getName() const {
     return linkedMarket->getName();
 }
 
@@ -200,7 +266,7 @@ const string& SolverInfo::getName() const {
 * \author Sonny Kim
 * \return The type of the market the SolutionInfo is connected to.
 */
-const IMarketType::Type SolverInfo::getType() const {
+const IMarketType::Type SolutionInfo::getType() const {
     return linkedMarket->getType();
 }
 
@@ -208,24 +274,24 @@ const IMarketType::Type SolverInfo::getType() const {
 * \author Sonny Kim
 * \return The name of market type the SolutionInfo is connected to.
 */
-string SolverInfo::getTypeName() const {
+string SolutionInfo::getTypeName() const {
     return linkedMarket->convert_type_to_string( linkedMarket->getType() );
 }
 
 /*! \brief Sets the price contained in the Solver into its corresponding market.
 * \author Josh Lurz
-* \details This function sets the market prices from the prices in the SolverInfo
+* \details This function sets the market prices from the prices in the SolutionInfo
 */
-void SolverInfo::updateToMarket() {
+void SolutionInfo::updateToMarket() {
     linkedMarket->setRawPrice( X );
 }
 
-/*! \brief Get the demands, supplies, prices and excess demands from the market and set them into their corresponding places in the SolverInfo.
+/*! \brief Get the demands, supplies, prices and excess demands from the market and set them into their corresponding places in the SolutionInfo.
 * \author Josh Lurz
-* \details This function gets the price, supply and demand out the market and sets those values into the SolverInfo
+* \details This function gets the price, supply and demand out the market and sets those values into the SolutionInfo
 * object. This function also updates the ED value to one based on the retrieved supply and demand.
 */
-void SolverInfo::updateFromMarket() {
+void SolutionInfo::updateFromMarket() {
     X = linkedMarket->getRawPrice();
     supply = linkedMarket->getRawSupply();
     demand = linkedMarket->getRawDemand();
@@ -237,7 +303,7 @@ void SolverInfo::updateFromMarket() {
 * \note This was originally a kludge and has never been replaced.
 * \author Josh Lurz
 */
-void SolverInfo::adjustBracket() {
+void SolutionInfo::adjustBracket() {
     // How much to adjust brackets by.
     const static double ADJUSTMENT_FACTOR = 1.5;
 
@@ -257,33 +323,30 @@ void SolverInfo::adjustBracket() {
 }
 
 // Expand the bracket slightly.
-void SolverInfo::expandBracket( const double aAdjFactor ) {
+void SolutionInfo::expandBracket( const double aAdjFactor ) {
     XL *= aAdjFactor;
     XR /= aAdjFactor;
 }
 
-/*! \brief Get the relativeED 
-* \param ED_SOLUTION_FLOOR Absolute value of ED below which the market should be considered solved.
+/*! \brief Get the relativeED
 * \return The relative excess demand. 
 */
-double SolverInfo::getRelativeED( const double ED_SOLUTION_FLOOR ) const {
-    return SolverLibrary::getRelativeED( getED(), demand, ED_SOLUTION_FLOOR );
+double SolutionInfo::getRelativeED() const {
+    return SolverLibrary::getRelativeED( getED(), demand, mSolutionFloor );
 }
 
 /*! \brief Determine whether a market is within the solution tolerance. 
 * \author Josh Lurz
 * \details This function determines if a market is solved to within the solution tolerance. It does this by checking if the 
-* relative excess demand is less than the solution tolerance. 
-* \param SOLUTION_TOLERANCE The relative excess demand below which a market is considered solved. 
-* \param ED_SOLUTION_FLOOR Absolute value of ED below which the market should be considered solved.
+* relative excess demand is less than the solution tolerance.
 * \return Whether the market is within the solution tolerance. 
 */
-bool SolverInfo::isWithinTolerance( const double SOLUTION_TOLERANCE, const double ED_SOLUTION_FLOOR ) const {
-   return ( getRelativeED( ED_SOLUTION_FLOOR ) < SOLUTION_TOLERANCE );
+bool SolutionInfo::isWithinTolerance() const {
+   return ( getRelativeED() < mSolutionTolerance );
 }
 
-//! Determine whether a SolverInfo is solvable for the current method.
-bool SolverInfo::shouldSolve( const bool isNR ) const {
+//! Determine whether a SolutionInfo is solvable for the current method.
+bool SolutionInfo::shouldSolve( const bool isNR ) const {
     return isNR ? linkedMarket->shouldSolveNR() : linkedMarket->shouldSolve();
 }
 
@@ -293,7 +356,7 @@ bool SolverInfo::shouldSolve( const bool isNR ) const {
 * It will return a very small number if either price is zero.
 * \return The change in the logs of the price and stored price.
 */
-double SolverInfo::getLogChangeInRawPrice() const {
+double SolutionInfo::getLogChangeInRawPrice() const {
    double change = 0;
    // Case 1: price or Previous price is zero.
    if( storedX == 0 || X == 0 ) {
@@ -320,7 +383,7 @@ double SolverInfo::getLogChangeInRawPrice() const {
 * It will return a very small number if either demand is zero.
 * \return The change in the logs of the demand and stored demand.
 */
-double SolverInfo::getLogChangeInRawDemand() const {
+double SolutionInfo::getLogChangeInRawDemand() const {
    double change = 0;
 
    // Case 1: Demand or Previous Demand is zero.
@@ -344,7 +407,7 @@ double SolverInfo::getLogChangeInRawDemand() const {
 * It will return a very small number if either supply is zero.
 * \return The change in the logs of the supply and stored supply.
 */
-double SolverInfo::getLogChangeInRawSupply() const {
+double SolutionInfo::getLogChangeInRawSupply() const {
    double change = 0;
 
    // Case 1: supply or Previous supply is zero.
@@ -362,19 +425,18 @@ double SolverInfo::getLogChangeInRawSupply() const {
    return change;
 }
 
-/*! \brief Calculate demand elasticities relative to the current SolverInfo
+/*! \brief Calculate demand elasticities relative to the current SolutionInfo
 * \author Sonny Kim
 * \details Calculate the elasticities of demand for all markets relative to the linked market. 
 * If the price is 0 the cross-elasticity will be set to a very small number.
 * \param solvableMarkets Vector of SolutionInfo objects to use to calculate demand elasticities.
 */
-void SolverInfo::calcDemandElas( const SolverInfoSet& solvableMarkets ) {
+void SolutionInfo::calcDemandElas( const SolutionInfoSet& solvableMarkets ) {
     // TODO: I think a map would make it easier to only update a single cross-derivative. 
     const double dprice = getLogChangeInRawPrice();
     demandElasticities.resize( solvableMarkets.getNumSolvable() );
     
     for ( unsigned int i = 0; i < solvableMarkets.getNumSolvable(); ++i ) {
-        string marketName = solvableMarkets.getSolvable( i ).getName();
         double ddemand = solvableMarkets.getSolvable( i ).getLogChangeInRawDemand();
         demandElasticities[ i ] = ddemand / dprice;
         assert( util::isValidNumber( demandElasticities[ i ] ) );
@@ -383,11 +445,11 @@ void SolverInfo::calcDemandElas( const SolverInfoSet& solvableMarkets ) {
 
 /*! \brief Calculate supply elasticities.
 * \author Sonny Kim
-* \details Calculate the elasticities of supply for all markets relative to the current SolverInfo. 
+* \details Calculate the elasticities of supply for all markets relative to the current SolutionInfo. 
 * If the price is 0 the elasticity will be set to a very small number.
 * \param solvableMarkets Vector of SolutionInfo objects to use to calculate supply elasticities.
 */
-void SolverInfo::calcSupplyElas( const SolverInfoSet& solvableMarkets ) {
+void SolutionInfo::calcSupplyElas( const SolutionInfoSet& solvableMarkets ) {
    const double dprice = getLogChangeInRawPrice();
    supplyElasticities.resize( solvableMarkets.getNumSolvable() );
 
@@ -402,7 +464,7 @@ void SolverInfo::calcSupplyElas( const SolverInfoSet& solvableMarkets ) {
 * and resets the bracket.
 * \return Whether the market was re-bracketed 
 */
-bool SolverInfo::checkAndResetBrackets(){
+bool SolutionInfo::checkAndResetBrackets(){
     // try re-bracketing if the current bracket is empty.
     if( !isCurrentlyBracketed() ){
         resetBrackets();
@@ -412,7 +474,7 @@ bool SolverInfo::checkAndResetBrackets(){
 }
 
 //! Increase price by 1+multiplier, or set it to lowerBound if it is below the lower bound.
-void SolverInfo::increaseX( const double multiplier, const double lowerBound ){
+void SolutionInfo::increaseX( const double multiplier, const double lowerBound ){
     if( X >= lowerBound ) {
         X *= ( 1 + multiplier );
     }
@@ -425,7 +487,7 @@ void SolverInfo::increaseX( const double multiplier, const double lowerBound ){
 }
 
 //! Decrease price by 1/(1+multiplier), or set it to 0 if it is below the lower bound.
-void SolverInfo::decreaseX( const double multiplier, const double lowerBound ){
+void SolutionInfo::decreaseX( const double multiplier, const double lowerBound ){
     if( X >= lowerBound ) {
         X /= ( 1 + multiplier );
     }
@@ -437,26 +499,26 @@ void SolverInfo::decreaseX( const double multiplier, const double lowerBound ){
     }
 }
 //! Set the right bracket to X and right bracket ED to the current value of ED.
-void SolverInfo::moveRightBracketToX(){
+void SolutionInfo::moveRightBracketToX(){
     XR = X;
     EDR = getED();
 }
 
 //! Set the left bracket to X and left bracket ED to the current value of ED.
-void SolverInfo::moveLeftBracketToX(){
+void SolutionInfo::moveLeftBracketToX(){
     XL = X; 
     EDL = getED();
 }
 
 //! Reset left and right bracket to X.
-void SolverInfo::resetBrackets(){
+void SolutionInfo::resetBrackets(){
     bracketed = false;
     moveRightBracketToX();
     moveLeftBracketToX();
 }
 
 //! Dynamic check to see if the brackets span X.
-bool SolverInfo::isCurrentlyBracketed() const {
+bool SolutionInfo::isCurrentlyBracketed() const {
     // Market is bracketed if EDL and EDR have different signs
     // and left and right prices are different
     if ( util::sign( EDR ) != util::sign( EDL ) && XL != XR ) {
@@ -466,85 +528,85 @@ bool SolverInfo::isCurrentlyBracketed() const {
 }
 
 //! Check if the market has correctly solved.
-bool SolverInfo::isSolved( const double SOLUTION_TOLERANCE, const double ED_SOLUTION_FLOOR ) const {
+bool SolutionInfo::isSolved() const {
     // Check if either the market is within tolerance or for a special market
     // type dependent solution condition.
-    return ( isWithinTolerance( SOLUTION_TOLERANCE, ED_SOLUTION_FLOOR )
+    return ( isWithinTolerance()
              || linkedMarket->meetsSpecialSolutionCriteria() );
 }
 
 //! Get the demand elasticity of this market with respect to another market.
 // This should be replaced with a map and market name.
-double SolverInfo::getDemandElasWithRespectTo( const unsigned int aMarketNumber ) const {
+double SolutionInfo::getDemandElasWithRespectTo( const unsigned int aMarketNumber ) const {
     if( aMarketNumber > demandElasticities.size() ){
         ILogger& mainLog = ILogger::getLogger( "solver_log" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Invalid market number in SolverInfo::getDemandElasWithRespectTo of : " << aMarketNumber << endl;
+        mainLog << "Invalid market number in SolutionInfo::getDemandElasWithRespectTo of : " << aMarketNumber << endl;
         return 0;
     }
     return demandElasticities.at( aMarketNumber );
 }
 
-//! Return the list of regions contained in the linked market for this SolverInfo.
+//! Return the list of regions contained in the linked market for this SolutionInfo.
 // Probably too much linkages here, not sure how to fix.
-const vector<const objects::Atom*>& SolverInfo::getContainedRegions() const {
+const vector<const objects::Atom*>& SolutionInfo::getContainedRegions() const {
     return linkedMarket->getContainedRegions();
 }
 
 //! Get the supply elasticity of this market with respect to another market.
 // This should be replaced with a map and market name.
-double SolverInfo::getSupplyElasWithRespectTo( const unsigned int aMarketNumber ) const {
+double SolutionInfo::getSupplyElasWithRespectTo( const unsigned int aMarketNumber ) const {
     if( aMarketNumber > supplyElasticities.size() ){
         ILogger& solverLog = ILogger::getLogger( "solver_log" );
         solverLog.setLevel( ILogger::ERROR );
-        solverLog << "Invalid market number in SolverInfo::getSupplyElasWithRespectTo of : " << aMarketNumber << endl;
+        solverLog << "Invalid market number in SolutionInfo::getSupplyElasWithRespectTo of : " << aMarketNumber << endl;
         return 0;
     }
     return supplyElasticities.at( aMarketNumber );
 }
 
 //! Return whether this market is currently unsolved and has a singularity. 
-bool SolverInfo::isUnsolvedAndSingular( const double aSolTolerance, const double aSolFloor ){
+bool SolutionInfo::isUnsolvedAndSingular(){
     // Check if the market is not solved, is solved under bisection and is not solved under NR.
-    return( !isSolved( aSolTolerance, aSolFloor ) && shouldSolve( false ) && !shouldSolve( true ) );
+    return( !isSolved() && shouldSolve( false ) && !shouldSolve( true ) );
 }
 
-void SolverInfo::setBisectedFlag(){
+void SolutionInfo::setBisectedFlag(){
     mBisected = true;
 }
 
-void SolverInfo::unsetBisectedFlag(){
+void SolutionInfo::unsetBisectedFlag(){
     mBisected = false;
 }
 
-bool SolverInfo::hasBisected() const {
+bool SolutionInfo::hasBisected() const {
     return mBisected;
 }
-//! Print out information from the SolverInfo to an output stream.
-void SolverInfo::print( ostream& aOut ) const {
+//! Print out information from the SolutionInfo to an output stream.
+void SolutionInfo::print( ostream& aOut ) const {
 
     aOut.setf(ios_base::left,ios_base::adjustfield); // left alignment
     aOut.precision(6); // for floating-point
-    aOut.width(36); aOut << getName(); aOut << ", ";
-    aOut.width(10); aOut << X; aOut << ", ";
-    aOut.width(10); aOut << XL; aOut << ", ";
-    aOut.width(10); aOut << XR; aOut << ", ";
-    aOut.width(10); aOut << getED(); aOut << ", ";
-    aOut.width(10); aOut << EDL; aOut << ", ";
-    aOut.width(10); aOut << EDR; aOut << ", ";
-    aOut.width(10); aOut << getRelativeED( 0 ); aOut << ", ";
-    aOut.width(3); aOut << isBracketed(); aOut << ", ";
-    aOut.width(10); aOut << supply; aOut << ", ";
-    aOut.width(10); aOut << demand; aOut << ", ";
-    aOut.width(10); aOut << getTypeName(); aOut << ", ";
+    aOut.width(36); aOut << getName() << ", ";
+    aOut.width(10); aOut << X << ", ";
+    aOut.width(10); aOut << XL << ", ";
+    aOut.width(10); aOut << XR << ", ";
+    aOut.width(10); aOut << getED() << ", ";
+    aOut.width(10); aOut << EDL << ", ";
+    aOut.width(10); aOut << EDR << ", ";
+    aOut.width(10); aOut << getRelativeED() << ", ";
+    aOut.width(3); aOut << isBracketed() << ", ";
+    aOut.width(10); aOut << supply << ", ";
+    aOut.width(10); aOut << demand << ", ";
+    aOut.width(10); aOut << getTypeName() << ", ";
     aOut.setf(ios_base::fmtflags(0),ios_base::floatfield); //reset to default
 }
 
-SupplyDemandCurve SolverInfo::createSDCurve(){
+SupplyDemandCurve SolutionInfo::createSDCurve(){
     return SupplyDemandCurve( linkedMarket );
 }
 
-void SolverInfo::printDerivatives( ostream& aOut ) const {
+void SolutionInfo::printDerivatives( ostream& aOut ) const {
     aOut << getName() << " SupplyDer: ";
     for( unsigned int i = 0; i < supplyElasticities.size(); ++i ){
         aOut << "," << supplyElasticities[ i ];

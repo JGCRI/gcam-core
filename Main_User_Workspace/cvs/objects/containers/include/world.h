@@ -110,7 +110,7 @@ public:
     const IClimateModel* getClimateModel() const;
     const std::map<const std::string, const Curve*> getEmissionsQuantityCurves( const std::string& ghgName ) const;
     const std::map<const std::string, const Curve*> getEmissionsPriceCurves( const std::string& ghgName ) const;
-    void setCalcCounter( CalcCounter* calcCounter );
+    CalcCounter* getCalcCounter() const;
 
 	void accept( IVisitor* aVisitor, const int aPeriod ) const;
     void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
@@ -135,9 +135,9 @@ private:
 
     std::auto_ptr<GlobalTechnologyDatabase> globalTechDB; //!< The Global Technology Database.
 
-    //! Reference to an object which maintains a count of the number of time
+    //! An object which maintains a count of the number of times
     //! calc() has been called.
-    CalcCounter* calcCounter;
+    std::auto_ptr<CalcCounter> mCalcCounter;
 
     void initAgLu(); 
     void clear();

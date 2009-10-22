@@ -1,5 +1,5 @@
-#ifndef _BISECT_POLICY_NR_SOLVER_H_
-#define _BISECT_POLICY_NR_SOLVER_H_
+#ifndef _SOLVER_COMPONENT_FACTORY_H_
+#define _SOLVER_COMPONENT_FACTORY_H_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -38,59 +38,39 @@
  * by User.
  */
 
-
-#include <memory>
-#include "solution/solvers/include/solver.h"
-
 /*! 
-* \file bisect_policy_nr_solver.h
-* \ingroup Objects
-* \brief The BisectPolicyNRSolver class header file.
-*
-* \author Josh Lurz
-*/
+ * \file solver_component_factory.h  
+ * \ingroup Objects
+ * \brief Header file for the SolverComponentFactory class.
+ * \author Pralit Patel
+ */
+#include <xercesc/dom/DOMNode.hpp>
+#include <string>
 
 class SolverComponent;
 class Marketplace;
 class World;
-class SolutionInfoParamParser;
+class CalcCounter;
+
 /*!
-* \ingroup Objects
-* \brief A class which defines an An instance of the Solver class which uses
-*        bisection first and then Newton-Raphson.
-* \author Josh Lurz
-*/
-
-class BisectPolicyNRSolver: public Solver {
+ * \ingroup Objects
+ * \brief A factory which can be used to create instances of a solver component.
+ * \details There are two static methods, one to determine if this factory can create
+ *          a solver component with the given xml name and another to create and parse
+ *          a solver component with the given xml name.
+ *
+ * \author Pralit Patel
+ */
+class SolverComponentFactory {
 public:
-    BisectPolicyNRSolver( Marketplace* marketplaceIn, World* worldIn );
-    virtual ~BisectPolicyNRSolver();
-    static const std::string& getXMLNameStatic();
+    static bool hasSolverComponent( const std::string& aXMLName );
     
-    // Solver methods
-    virtual void init();
-    virtual bool solve( const int aPeriod, const SolutionInfoParamParser* aSolutionInfoParamParser );
+    static SolverComponent* createAndParseSolverComponent( const std::string& aXMLName,
+                                                           Marketplace* aMarketplace,
+                                                           World* aWorld,
+                                                           CalcCounter* aCalcCounter,
+                                                           const xercesc::DOMNode* aNode );
     
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
-
-private:
-    std::auto_ptr<SolverComponent> mLogNewtonRaphson; //!< LogNewtonRaphson solver component.
-    std::auto_ptr<SolverComponent> mBisectAll; //!< BisectAll solver component.
-    std::auto_ptr<SolverComponent> mBisectOne; //!< BisectOne solver component.
-    std::auto_ptr<SolverComponent> mBisectPolicy; //!< BisectPolicy solver component.
-    
-    //! Default solution tolerance, this value may be overridden by at the SolutionInfo level
-    double mDefaultSolutionTolerance;
-    
-    //! Default solution floor, this value may be overridden by at the SolutionInfo level
-    double mDefaultSolutionFloor;
-    
-    //! Calibration tolerance
-    double mCalibrationTolerance;
-    
-    //! Max total solution iterations
-    int mMaxModelCalcs;
 };
 
-#endif // _BISECT_POLICY_NR_SOLVER_H_
+#endif // _SOLVER_COMPONENT_FACTORY_H_

@@ -49,15 +49,19 @@
 #include <map>
 #include <string>
 #include <functional>
-#include <boost/numeric/ublas/matrix.hpp> 
+#include <boost/numeric/ublas/matrix.hpp>
+// include lu for permutation_matrix
+#include <boost/numeric/ublas/lu.hpp>
 
 typedef boost::numeric::ublas::matrix<double> Matrix;
+typedef boost::numeric::ublas::permutation_matrix<std::size_t> PermutationMatrix;
 
 class Marketplace;
 class World;
-class SolverInfo;
-class SolverInfoSet;
+class SolutionInfo;
+class SolutionInfoSet;
 class CalcCounter;
+class ISolutionInfoFilter;
 namespace objects {
     class Atom;
 }
@@ -76,23 +80,23 @@ public:
    static bool isWithinTolerance( const double excessDemand, const double demand, const double solutionTolerance,
        const double excessDemandSolutionFloor );
 
-   static void derivatives( Marketplace* marketplace, World* world, SolverInfoSet& solutionVector,
+   static void derivatives( Marketplace* marketplace, World* world, SolutionInfoSet& solutionVector,
        const double aDeltaPrice, const int per );
 
-   static Matrix invertMatrix( const Matrix& aInputMatrix, bool& aIsSingular );
+   static bool luFactorizeMatrix( Matrix& aInputMatrix, PermutationMatrix& aPermMatrix );
 
-   static bool bracketOne( Marketplace* marketplace, World* world, const double aBracketInterval,
-                           const double aSolutionTolerance, const double aSolutionFloor,
-                           SolverInfoSet& aSolSet, SolverInfo* aSol, CalcCounter* aCalcCounter,
-                           const int period );
+   static bool bracketOne( Marketplace* aMarketplace, World* aWorld, const double aDefaultBracketInterval,
+                           const unsigned int aMaxIterations, SolutionInfoSet& aSolSet, SolutionInfo* aSol,
+                           CalcCounter* aCalcCounter, const ISolutionInfoFilter* aSolutionInfoFilter, const int aPeriod );
 
-   static void updateMatrices( SolverInfoSet& sol, Matrix& JFSM, Matrix& JFDM, Matrix& JF );
+   static void updateMatrices( SolutionInfoSet& sol, Matrix& JFSM, Matrix& JFDM, Matrix& JF );
 
-   static bool calculateNewPricesLogNR( SolverInfoSet& solverSet, Matrix& JFSM, Matrix& JFDM, Matrix& JF );
+   static bool calculateNewPricesLogNR( SolutionInfoSet& aSolutionSet, Matrix& JFLUFactorized,
+                                        PermutationMatrix& aPermMatrix, const double aDefaultMaxPriceJump ); 
 
-   static bool bracket( Marketplace* marketplace, World* world, const double bracketInterval,
-                        const double aSolutionTolerance, const double aSolutionFloor,
-                        SolverInfoSet& sol, CalcCounter* aCalcCounter, const int period );
+   static bool bracket( Marketplace* aMarketplace, World* aWorld, const double aDefaultBracketInterval,
+                        const unsigned int aMaxIterations, SolutionInfoSet& aSolSet, CalcCounter* aCalcCounter,
+                        const ISolutionInfoFilter* aSolutionInfoFilter, const int aPeriod );
 
 private:
     typedef std::map<const objects::Atom*, std::vector<double> > RegionalMarketValues;
@@ -115,13 +119,13 @@ private:
     };
 
     static bool doRegionalValuesSum( const RegionalMarketValues& regionalValues,
-        const std::vector<double>& worldTotals );
+        const std::vector<double>& worldTotals, const SolutionInfoSet& aSolutionSet );
 
     static const RegionalSDDifferences calcRegionalSDDifferences( Marketplace* marketplace, World* world,
-        SolverInfoSet& sol, const int per );
+        SolutionInfoSet& sol, const int per );
 
-    static std::vector<double> storePrices( const SolverInfoSet& aSolverSet );
-    static void restorePrices( SolverInfoSet& aSolverSet, const std::vector<double>& aPrices );
+    static std::vector<double> storePrices( const SolutionInfoSet& aSolutionSet );
+    static void restorePrices( SolutionInfoSet& aSolutionSet, const std::vector<double>& aPrices );
 };
 
 #endif // _SOLVER_LIBRARY_H_

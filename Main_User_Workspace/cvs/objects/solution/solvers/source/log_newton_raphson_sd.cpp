@@ -35,7 +35,7 @@
 /*! 
 * \file log_newton_raphson_sd.cpp
 * \ingroup objects
-* \brief LogNewtonRaphson class source file.
+* \brief LogNewtonRaphsonSaveDeriv class source file.
 * \author Josh Lurz
 */
 
@@ -47,8 +47,8 @@
 #include "solution/util/include/calc_counter.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/world.h"
-#include "solution/util/include/solver_info_set.h"
-#include "solution/util/include/solver_info.h"
+#include "solution/util/include/solution_info_set.h"
+#include "solution/util/include/solution_info.h"
 #include "solution/util/include/solver_library.h"
 #include "util/base/include/configuration.h"
 #include "util/base/include/util.h"
@@ -56,13 +56,13 @@
 
 using namespace std;
 
-const string LogNewtonRaphsonSaveDeriv::SOLVER_NAME = "LogNewtonRaphsonSaveDeriv";
-
 //! Default Constructor. Need to call constructor of class next up in hierarchy. Constructs the base class. 
 LogNewtonRaphsonSaveDeriv::LogNewtonRaphsonSaveDeriv( Marketplace* aMarketplaceIn, World* aWorld,
-                                                      CalcCounter* aCalcCounter, double aDeltaPrice ):
-LogNewtonRaphson( aMarketplaceIn, aWorld, aCalcCounter, aDeltaPrice ),
-savedMatrixSize( 0 )
+                                                      CalcCounter* aCalcCounter ):
+LogNewtonRaphson( aMarketplaceIn, aWorld, aCalcCounter ),
+mSavedMatrixSize( 0 ),
+mPermSave( 0 ),
+mDerivativesCalculated( false )
 {
 }
 
@@ -72,67 +72,80 @@ LogNewtonRaphsonSaveDeriv::~LogNewtonRaphsonSaveDeriv(){
 
 //! Init method.  
 void LogNewtonRaphsonSaveDeriv::init() {
-    derivativesCalculated = false;
+    LogNewtonRaphson::init();
+    mDerivativesCalculated = false;
 }
 
 //! Get the name of the SolverComponent
-const string& LogNewtonRaphsonSaveDeriv::getNameStatic() {
+const string& LogNewtonRaphsonSaveDeriv::getXMLNameStatic() {
+    const static string SOLVER_NAME = "log-newton-raphson-save-deriv-solver-component";
     return SOLVER_NAME;
 }
 
 //! Get the name of the SolverComponent
-const string& LogNewtonRaphsonSaveDeriv::getName() const {
-    return SOLVER_NAME;
+const string& LogNewtonRaphsonSaveDeriv::getXMLName() const {
+    return getXMLNameStatic();
 }
 
-//! Calculate derivatives
-SolverComponent::ReturnCode LogNewtonRaphsonSaveDeriv::calculateDerivatives( SolverInfoSet& solverSet,
-                                                                             Matrix& JFSM, Matrix& JFDM,
-                                                                             Matrix& JF, int period )
+/*!
+ * \brief Calculate derivatives and invert them so that they may be used to calculate new prices.
+ * \details Only calculate the derivative if we don't have one that is still valid otherwise just
+ *          reuse the one we have.  We will check the mDerivativesCalculated flag to determine if
+ *          we have a valid derivative which gets set to false when the number of solvables have
+ *          changed or are done trying to solve regardless if it was successful or not.
+ * \param aSolutionSet The set of solution infos we are solving.
+ * \param JF A factorized derivative matrix which can be used to calculate new prices or garbage
+ *           if the return code is not SUCCESS.
+ * \param aPermMatrix A matrix to keep track of row operations done while factorizing the derivative
+ *                    matrix.  This will be necessary when doing LU back substitution.
+ * \param aPeriod The current model period.
+ * \see LogNewtonRaphson::calculateDerivatives
+ */
+SolverComponent::ReturnCode LogNewtonRaphsonSaveDeriv::calculateDerivatives( SolutionInfoSet& aSolutionSet, Matrix& JF,
+                                                                             PermutationMatrix& aPermMatrix, int aPeriod )
 {
+    SolverComponent::ReturnCode code = SUCCESS;
     // Only calculated once.
-    if ( !derivativesCalculated ) {
-        derivativesCalculated = true;
-
-        // Calculate derivatives.
-        SolverLibrary::derivatives( marketplace, world, solverSet, mDeltaPrice, period ); 
-
-        ILogger& solverLog = ILogger::getLogger( "solver_log" );
-        solverLog.setLevel( ILogger::NOTICE );
-        solverLog << "Derivatives calculated" << endl;
-
-        // Update the JF, JFDM, and JFSM matrices
-        SolverLibrary::updateMatrices( solverSet, JFSM, JFDM, JF );
-        bool isSingular = false;
-        JF = SolverLibrary::invertMatrix( JF, isSingular );
-        if( isSingular ) {
-            solverLog.setLevel( ILogger::ERROR );
-            solverLog << "Matrix came back as singluar, could not invert." << endl;
-            solverLog.setLevel( ILogger::NOTICE );
-            return FAILURE_SINGULAR_MATRIX;
+    if ( !mDerivativesCalculated ) {
+        code = LogNewtonRaphson::calculateDerivatives( aSolutionSet, JF, aPermMatrix, aPeriod );
+        if( code == SUCCESS ) {
+            mDerivativesCalculated = true;
+            // Save matricies
+            mSavedMatrixSize = aSolutionSet.getNumSolvable();
+            JFSave.resize( mSavedMatrixSize, mSavedMatrixSize );
+            mPermSave.resize( mSavedMatrixSize );
+            JFSave.assign( JF );
+            mPermSave.assign( aPermMatrix );
         }
-
-        // Save matricies
-        JFSave.assign( JF );
-        JFDMSave.assign( JFDM );
-        JFSMSave.assign( JFSM );
-        savedMatrixSize = solverSet.getNumSolvable();
-
-        // Otherwise restore from saved values
-    } else {
+    }
+    else {
+        // reuse derivatives
         ILogger& solverLog = ILogger::getLogger( "solver_log" );
         solverLog.setLevel( ILogger::NOTICE );
         solverLog << "Using cached derivatives" << endl;
-        if ( solverSet.getNumSolvable() != savedMatrixSize ) {
-            ILogger& solverLog = ILogger::getLogger( "solver_log" );
+        if ( aSolutionSet.getNumSolvable() != mSavedMatrixSize ) {
             solverLog.setLevel( ILogger::ERROR );
-            solverLog << "Matrix sizes changed " << solverSet.getNumSolvable() << ", "<< savedMatrixSize << endl;
-            return FAILURE_SOLUTION_SIZE_CHANGED;
+            solverLog << "Matrix sizes changed " << aSolutionSet.getNumSolvable() << ", "<< mSavedMatrixSize << endl;
+            
+            // force the derivatives to be recalculated next time
+            mDerivativesCalculated = false;
+            code = FAILURE_SOLUTION_SIZE_CHANGED;
         }
-        JF.assign( JFSave );
-        JFDM.assign( JFDMSave );
-        JFSM.assign( JFSMSave );
+        else {
+            JF.assign( JFSave );
+            aPermMatrix.assign( mPermSave );
+        }
     }
+    
+    return code;
+}
 
-    return SUCCESS;
+/*!
+ * \brief Resets the derivatatives so that the next iteration they will have to be recalculated.
+ * \details Derivatives should be reset usually after both a failed or successful attempt to solve
+ *          since in both cases the next iteration would likely be better off starting with a fresh
+ *          derivative.
+ */
+void LogNewtonRaphsonSaveDeriv::resetDerivatives() {
+    mDerivativesCalculated = false;
 }
