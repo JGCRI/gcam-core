@@ -10,7 +10,6 @@
             <price year="1975">1</price>
             <smooth-renewable-subresource name="hydrothermal">
                <environCost fillout="1" year="1975">0</environCost>
-               <gdpExpans fillout="1" year="1975">1</gdpExpans>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <gdpSupplyElast>0</gdpSupplyElast>
                <subResourceCapacityFactor>1</subResourceCapacityFactor>
@@ -38,7 +37,6 @@
             <price year="1975">1</price>
             <smooth-renewable-subresource name="hydrothermal">
                <environCost fillout="1" year="1975">0</environCost>
-               <gdpExpans fillout="1" year="1975">1</gdpExpans>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <gdpSupplyElast>0</gdpSupplyElast>
                <subResourceCapacityFactor>1</subResourceCapacityFactor>
@@ -67,7 +65,6 @@
             <price year="1975">1</price>
             <smooth-renewable-subresource name="hydrothermal">
                <environCost fillout="1" year="1975">0</environCost>
-               <gdpExpans fillout="1" year="1975">1</gdpExpans>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <gdpSupplyElast>0</gdpSupplyElast>
                <subResourceCapacityFactor>1</subResourceCapacityFactor>
@@ -95,7 +92,6 @@
             <price year="1975">1</price>
             <smooth-renewable-subresource name="hydrothermal">
                <environCost fillout="1" year="1975">0</environCost>
-               <gdpExpans fillout="1" year="1975">1</gdpExpans>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <gdpSupplyElast>0</gdpSupplyElast>
                <subResourceCapacityFactor>1</subResourceCapacityFactor>
@@ -123,7 +119,6 @@
             <price year="1975">1</price>
             <smooth-renewable-subresource name="hydrothermal">
                <environCost fillout="1" year="1975">0</environCost>
-               <gdpExpans fillout="1" year="1975">1</gdpExpans>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <gdpSupplyElast>0</gdpSupplyElast>
                <subResourceCapacityFactor>1</subResourceCapacityFactor>
@@ -151,7 +146,6 @@
             <price year="1975">1</price>
             <smooth-renewable-subresource name="hydrothermal">
                <environCost fillout="1" year="1975">0</environCost>
-               <gdpExpans fillout="1" year="1975">1</gdpExpans>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <gdpSupplyElast>0</gdpSupplyElast>
                <subResourceCapacityFactor>1</subResourceCapacityFactor>
@@ -179,7 +173,6 @@
             <price year="1975">1</price>
             <smooth-renewable-subresource name="hydrothermal">
                <environCost fillout="1" year="1975">0</environCost>
-               <gdpExpans fillout="1" year="1975">1</gdpExpans>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <gdpSupplyElast>0</gdpSupplyElast>
                <subResourceCapacityFactor>1</subResourceCapacityFactor>
@@ -207,7 +200,6 @@
             <price year="1975">1</price>
             <smooth-renewable-subresource name="hydrothermal">
                <environCost fillout="1" year="1975">0</environCost>
-               <gdpExpans fillout="1" year="1975">1</gdpExpans>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <gdpSupplyElast>0</gdpSupplyElast>
                <subResourceCapacityFactor>1</subResourceCapacityFactor>
@@ -236,7 +228,6 @@
             <price year="1975">1</price>
             <smooth-renewable-subresource name="hydrothermal">
                <environCost fillout="1" year="1975">0</environCost>
-               <gdpExpans fillout="1" year="1975">1</gdpExpans>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <gdpSupplyElast>0</gdpSupplyElast>
                <subResourceCapacityFactor>1</subResourceCapacityFactor>
@@ -264,7 +255,6 @@
             <price year="1975">1</price>
             <smooth-renewable-subresource name="hydrothermal">
                <environCost fillout="1" year="1975">0</environCost>
-               <gdpExpans fillout="1" year="1975">1</gdpExpans>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <gdpSupplyElast>0</gdpSupplyElast>
                <subResourceCapacityFactor>1</subResourceCapacityFactor>
@@ -292,7 +282,6 @@
             <price year="1975">1</price>
             <smooth-renewable-subresource name="hydrothermal">
                <environCost fillout="1" year="1975">0</environCost>
-               <gdpExpans fillout="1" year="1975">1</gdpExpans>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <gdpSupplyElast>0</gdpSupplyElast>
                <subResourceCapacityFactor>1</subResourceCapacityFactor>
@@ -320,7 +309,6 @@
             <price year="1975">1</price>
             <smooth-renewable-subresource name="hydrothermal">
                <environCost fillout="1" year="1975">0</environCost>
-               <gdpExpans fillout="1" year="1975">1</gdpExpans>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <gdpSupplyElast>0</gdpSupplyElast>
                <subResourceCapacityFactor>1</subResourceCapacityFactor>
@@ -349,7 +337,6 @@
             <price year="1975">1</price>
             <smooth-renewable-subresource name="hydrothermal">
                <environCost fillout="1" year="1975">0</environCost>
-               <gdpExpans fillout="1" year="1975">1</gdpExpans>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <gdpSupplyElast>0</gdpSupplyElast>
                <subResourceCapacityFactor>1</subResourceCapacityFactor>
@@ -378,7 +365,6 @@
             <price year="1975">1</price>
             <smooth-renewable-subresource name="hydrothermal">
                <environCost fillout="1" year="1975">0</environCost>
-               <gdpExpans fillout="1" year="1975">1</gdpExpans>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <gdpSupplyElast>0</gdpSupplyElast>
                <subResourceCapacityFactor>1</subResourceCapacityFactor>

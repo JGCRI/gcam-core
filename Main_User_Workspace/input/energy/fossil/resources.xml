@@ -1,0 +1,537 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="Africa">
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <cal-production year="1975">10.47</cal-production>
+               <cal-production year="1990">13.62</cal-production>
+               <cal-production year="2005">20.37</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">1.84</price>
+            <price year="1990">1.37</price>
+            <price year="2005">1.64</price>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <cal-production year="1975">0.44</cal-production>
+               <cal-production year="1990">2.48</cal-production>
+               <cal-production year="2005">6.57</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">0.65</price>
+            <price year="1990">0.81</price>
+            <price year="2005">0.98</price>
+         </depresource>
+         <depresource name="coal">
+            <subresource name="coal">
+               <cal-production year="1975">1.78</cal-production>
+               <cal-production year="1990">4.31</cal-production>
+               <cal-production year="2005">5.85</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">0.40</price>
+            <price year="1990">0.43</price>
+            <price year="2005">0.44</price>
+         </depresource>
+      </region>
+      <region name="Australia_NZ">
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <cal-production year="1975">0.89</cal-production>
+               <cal-production year="1990">1.29</cal-production>
+               <cal-production year="2005">1.05</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">1.84</price>
+            <price year="1990">1.37</price>
+            <price year="2005">1.64</price>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <cal-production year="1975">0.19</cal-production>
+               <cal-production year="1990">0.86</cal-production>
+               <cal-production year="2005">1.58</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">0.65</price>
+            <price year="1990">0.81</price>
+            <price year="2005">0.98</price>
+         </depresource>
+         <depresource name="coal">
+            <subresource name="coal">
+               <cal-production year="1975">1.93</cal-production>
+               <cal-production year="1990">4.41</cal-production>
+               <cal-production year="2005">8.55</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">0.40</price>
+            <price year="1990">0.43</price>
+            <price year="2005">0.44</price>
+         </depresource>
+      </region>
+      <region name="Canada">
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <cal-production year="1975">3.56</cal-production>
+               <cal-production year="1990">3.93</cal-production>
+               <cal-production year="2005">6.16</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">1.84</price>
+            <price year="1990">1.37</price>
+            <price year="2005">1.64</price>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <cal-production year="1975">2.54</cal-production>
+               <cal-production year="1990">3.62</cal-production>
+               <cal-production year="2005">6.32</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">0.65</price>
+            <price year="1990">0.81</price>
+            <price year="2005">0.98</price>
+         </depresource>
+         <depresource name="coal">
+            <subresource name="coal">
+               <cal-production year="1975">0.61</cal-production>
+               <cal-production year="1990">1.56</cal-production>
+               <cal-production year="2005">1.31</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">0.40</price>
+            <price year="1990">0.43</price>
+            <price year="2005">0.44</price>
+         </depresource>
+      </region>
+      <region name="China">
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <cal-production year="1975">3.28</cal-production>
+               <cal-production year="1990">5.89</cal-production>
+               <cal-production year="2005">8.39</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">1.84</price>
+            <price year="1990">1.37</price>
+            <price year="2005">1.64</price>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <cal-production year="1975">0.31</cal-production>
+               <cal-production year="1990">0.52</cal-production>
+               <cal-production year="2005">2.00</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">0.65</price>
+            <price year="1990">0.81</price>
+            <price year="2005">0.98</price>
+         </depresource>
+         <depresource name="coal">
+            <subresource name="coal">
+               <cal-production year="1975">10.92</cal-production>
+               <cal-production year="1990">22.79</cal-production>
+               <cal-production year="2005">48.76</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">0.40</price>
+            <price year="1990">0.43</price>
+            <price year="2005">0.44</price>
+         </depresource>
+      </region>
+      <region name="Eastern Europe">
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <cal-production year="1975">0.80</cal-production>
+               <cal-production year="1990">0.65</cal-production>
+               <cal-production year="2005">0.46</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">1.84</price>
+            <price year="1990">1.37</price>
+            <price year="2005">1.64</price>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <cal-production year="1975">1.57</cal-production>
+               <cal-production year="1990">1.31</cal-production>
+               <cal-production year="2005">0.77</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">0.65</price>
+            <price year="1990">0.81</price>
+            <price year="2005">0.98</price>
+         </depresource>
+         <depresource name="coal">
+            <subresource name="coal">
+               <cal-production year="1975">7.01</cal-production>
+               <cal-production year="1990">6.87</cal-production>
+               <cal-production year="2005">4.88</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">0.40</price>
+            <price year="1990">0.43</price>
+            <price year="2005">0.44</price>
+         </depresource>
+      </region>
+      <region name="Former Soviet Union">
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <cal-production year="1975">20.65</cal-production>
+               <cal-production year="1990">24.33</cal-production>
+               <cal-production year="2005">24.05</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">1.84</price>
+            <price year="1990">1.37</price>
+            <price year="2005">1.64</price>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <cal-production year="1975">10.00</cal-production>
+               <cal-production year="1990">26.79</cal-production>
+               <cal-production year="2005">27.06</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">0.65</price>
+            <price year="1990">0.81</price>
+            <price year="2005">0.98</price>
+         </depresource>
+         <depresource name="coal">
+            <subresource name="coal">
+               <cal-production year="1975">14.34</cal-production>
+               <cal-production year="1990">13.64</cal-production>
+               <cal-production year="2005">8.92</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">0.40</price>
+            <price year="1990">0.43</price>
+            <price year="2005">0.44</price>
+         </depresource>
+      </region>
+      <region name="India">
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <cal-production year="1975">0.36</cal-production>
+               <cal-production year="1990">1.48</cal-production>
+               <cal-production year="2005">1.55</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">1.84</price>
+            <price year="1990">1.37</price>
+            <price year="2005">1.64</price>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <cal-production year="1975">0.04</cal-production>
+               <cal-production year="1990">0.40</cal-production>
+               <cal-production year="2005">0.98</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">0.65</price>
+            <price year="1990">0.81</price>
+            <price year="2005">0.98</price>
+         </depresource>
+         <depresource name="coal">
+            <subresource name="coal">
+               <cal-production year="1975">2.00</cal-production>
+               <cal-production year="1990">4.29</cal-production>
+               <cal-production year="2005">7.67</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">0.40</price>
+            <price year="1990">0.43</price>
+            <price year="2005">0.44</price>
+         </depresource>
+      </region>
+      <region name="Japan">
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <cal-production year="1975">0.00</cal-production>
+               <cal-production year="1990">0.00</cal-production>
+               <cal-production year="2005">0.00</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">1.84</price>
+            <price year="1990">1.37</price>
+            <price year="2005">1.64</price>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <cal-production year="1975">0.09</cal-production>
+               <cal-production year="1990">0.08</cal-production>
+               <cal-production year="2005">0.12</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">0.65</price>
+            <price year="1990">0.81</price>
+            <price year="2005">0.98</price>
+         </depresource>
+         <depresource name="coal">
+            <subresource name="coal">
+               <cal-production year="1975">0.56</cal-production>
+               <cal-production year="1990">0.19</cal-production>
+               <cal-production year="2005">0.00</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">0.40</price>
+            <price year="1990">0.43</price>
+            <price year="2005">0.44</price>
+         </depresource>
+      </region>
+      <region name="Korea">
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <cal-production year="1975">0.00</cal-production>
+               <cal-production year="1990">0.00</cal-production>
+               <cal-production year="2005">0.00</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">1.84</price>
+            <price year="1990">1.37</price>
+            <price year="2005">1.64</price>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <cal-production year="1975">0.00</cal-production>
+               <cal-production year="1990">0.00</cal-production>
+               <cal-production year="2005">0.00</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">0.65</price>
+            <price year="1990">0.81</price>
+            <price year="2005">0.98</price>
+         </depresource>
+         <depresource name="coal">
+            <subresource name="coal">
+               <cal-production year="1975">0.35</cal-production>
+               <cal-production year="1990">0.31</cal-production>
+               <cal-production year="2005">0.05</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">0.40</price>
+            <price year="1990">0.43</price>
+            <price year="2005">0.44</price>
+         </depresource>
+      </region>
+      <region name="Latin America">
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <cal-production year="1975">10.04</cal-production>
+               <cal-production year="1990">16.39</cal-production>
+               <cal-production year="2005">23.73</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">1.84</price>
+            <price year="1990">1.37</price>
+            <price year="2005">1.64</price>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <cal-production year="1975">1.42</cal-production>
+               <cal-production year="1990">3.14</cal-production>
+               <cal-production year="2005">6.11</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">0.65</price>
+            <price year="1990">0.81</price>
+            <price year="2005">0.98</price>
+         </depresource>
+         <depresource name="coal">
+            <subresource name="coal">
+               <cal-production year="1975">0.28</cal-production>
+               <cal-production year="1990">0.92</cal-production>
+               <cal-production year="2005">2.13</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">0.40</price>
+            <price year="1990">0.43</price>
+            <price year="2005">0.44</price>
+         </depresource>
+      </region>
+      <region name="Middle East">
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <cal-production year="1975">41.98</cal-production>
+               <cal-production year="1990">35.38</cal-production>
+               <cal-production year="2005">51.85</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">1.84</price>
+            <price year="1990">1.37</price>
+            <price year="2005">1.64</price>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <cal-production year="1975">1.00</cal-production>
+               <cal-production year="1990">3.13</cal-production>
+               <cal-production year="2005">10.30</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">0.65</price>
+            <price year="1990">0.81</price>
+            <price year="2005">0.98</price>
+         </depresource>
+         <depresource name="coal">
+            <subresource name="coal">
+               <cal-production year="1975">0.02</cal-production>
+               <cal-production year="1990">0.02</cal-production>
+               <cal-production year="2005">0.04</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">0.40</price>
+            <price year="1990">0.43</price>
+            <price year="2005">0.44</price>
+         </depresource>
+      </region>
+      <region name="Southeast Asia">
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <cal-production year="1975">3.42</cal-production>
+               <cal-production year="1990">5.26</cal-production>
+               <cal-production year="2005">5.11</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">1.84</price>
+            <price year="1990">1.37</price>
+            <price year="2005">1.64</price>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <cal-production year="1975">0.57</cal-production>
+               <cal-production year="1990">3.56</cal-production>
+               <cal-production year="2005">7.90</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">0.65</price>
+            <price year="1990">0.81</price>
+            <price year="2005">0.98</price>
+         </depresource>
+         <depresource name="coal">
+            <subresource name="coal">
+               <cal-production year="1975">0.12</cal-production>
+               <cal-production year="1990">0.53</cal-production>
+               <cal-production year="2005">4.33</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">0.40</price>
+            <price year="1990">0.43</price>
+            <price year="2005">0.44</price>
+         </depresource>
+      </region>
+      <region name="USA">
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <cal-production year="1975">20.31</cal-production>
+               <cal-production year="1990">18.08</cal-production>
+               <cal-production year="2005">13.48</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">1.84</price>
+            <price year="1990">1.37</price>
+            <price year="2005">1.64</price>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <cal-production year="1975">18.63</cal-production>
+               <cal-production year="1990">17.13</cal-production>
+               <cal-production year="2005">17.39</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">0.65</price>
+            <price year="1990">0.81</price>
+            <price year="2005">0.98</price>
+         </depresource>
+         <depresource name="coal">
+            <subresource name="coal">
+               <cal-production year="1975">15.21</cal-production>
+               <cal-production year="1990">22.12</cal-production>
+               <cal-production year="2005">23.23</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">0.40</price>
+            <price year="1990">0.43</price>
+            <price year="2005">0.44</price>
+         </depresource>
+      </region>
+      <region name="Western Europe">
+         <depresource name="crude oil">
+            <subresource name="crude oil">
+               <cal-production year="1975">1.22</cal-production>
+               <cal-production year="1990">8.75</cal-production>
+               <cal-production year="2005">11.24</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">1.84</price>
+            <price year="1990">1.37</price>
+            <price year="2005">1.64</price>
+         </depresource>
+         <depresource name="natural gas">
+            <subresource name="natural gas">
+               <cal-production year="1975">5.68</cal-production>
+               <cal-production year="1990">6.42</cal-production>
+               <cal-production year="2005">10.19</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">0.65</price>
+            <price year="1990">0.81</price>
+            <price year="2005">0.98</price>
+         </depresource>
+         <depresource name="coal">
+            <subresource name="coal">
+               <cal-production year="1975">10.64</cal-production>
+               <cal-production year="1990">9.06</cal-production>
+               <cal-production year="2005">4.05</cal-production>
+               <severanceTax fillout="1" year="1975">0</severanceTax>
+               <environCost fillout="1" year="1975">0</environCost>
+            </subresource>
+            <price year="1975">0.40</price>
+            <price year="1990">0.43</price>
+            <price year="2005">0.44</price>
+         </depresource>
+      </region>
+   </world>
+</scenario>

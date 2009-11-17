@@ -2364,11 +2364,8 @@
             <price year="1975">1.8398</price>
             <subresource name="unconventional oil">
                <environCost fillout="1" year="1990">0.25</environCost>
-               <gdpExpans fillout="1" year="1975">1</gdpExpans>
                <severanceTax fillout="1" year="1990">0.17</severanceTax>
                <techChange fillout="1" year="1975">0</techChange>
-               <priceElas>2</priceElas>
-               <minShortTermSLimit>5</minShortTermSLimit>
                <grade name="grade 1">
                   <extractioncost>1.8</extractioncost>
                   <available>4397</available>
@@ -4811,11 +4808,8 @@
             <price year="1975">1.8398</price>
             <subresource name="unconventional oil">
                <environCost fillout="1" year="1990">0.25</environCost>
-               <gdpExpans fillout="1" year="1975">1</gdpExpans>
                <severanceTax fillout="1" year="1990">0.17</severanceTax>
                <techChange fillout="1" year="1975">0</techChange>
-               <priceElas>2</priceElas>
-               <minShortTermSLimit>1</minShortTermSLimit>
                <grade name="grade 1">
                   <extractioncost>1.8</extractioncost>
                   <available>803</available>
@@ -7258,11 +7252,8 @@
             <price year="1975">1.8398</price>
             <subresource name="unconventional oil">
                <environCost fillout="1" year="1990">0.25</environCost>
-               <gdpExpans fillout="1" year="1975">1</gdpExpans>
                <severanceTax fillout="1" year="1990">0.17</severanceTax>
                <techChange fillout="1" year="1975">0</techChange>
-               <priceElas>2</priceElas>
-               <minShortTermSLimit>3</minShortTermSLimit>
                <grade name="grade 1">
                   <extractioncost>1.8</extractioncost>
                   <available>1204</available>
@@ -9705,11 +9696,8 @@
             <price year="1975">1.8398</price>
             <subresource name="unconventional oil">
                <environCost fillout="1" year="1990">0.25</environCost>
-               <gdpExpans fillout="1" year="1975">1</gdpExpans>
                <severanceTax fillout="1" year="1990">0.17</severanceTax>
                <techChange fillout="1" year="1975">0</techChange>
-               <priceElas>2</priceElas>
-               <minShortTermSLimit>1</minShortTermSLimit>
                <grade name="grade 1">
                   <extractioncost>1.8</extractioncost>
                   <available>146</available>
@@ -12152,11 +12140,8 @@
             <price year="1975">1.8398</price>
             <subresource name="unconventional oil">
                <environCost fillout="1" year="1990">0.25</environCost>
-               <gdpExpans fillout="1" year="1975">1</gdpExpans>
                <severanceTax fillout="1" year="1990">0.17</severanceTax>
                <techChange fillout="1" year="1975">0</techChange>
-               <priceElas>2</priceElas>
-               <minShortTermSLimit>1</minShortTermSLimit>
                <grade name="grade 1">
                   <extractioncost>1.8</extractioncost>
                   <available>1320</available>
@@ -14599,11 +14584,8 @@
             <price year="1975">1.8398</price>
             <subresource name="unconventional oil">
                <environCost fillout="1" year="1990">0.25</environCost>
-               <gdpExpans fillout="1" year="1975">1</gdpExpans>
                <severanceTax fillout="1" year="1990">0.17</severanceTax>
                <techChange fillout="1" year="1975">0</techChange>
-               <priceElas>2</priceElas>
-               <minShortTermSLimit>3</minShortTermSLimit>
                <grade name="grade 1">
                   <extractioncost>1.8</extractioncost>
                   <available>3874</available>
@@ -17046,11 +17028,8 @@
             <price year="1975">1.8398</price>
             <subresource name="unconventional oil">
                <environCost fillout="1" year="1990">0.25</environCost>
-               <gdpExpans fillout="1" year="1975">1</gdpExpans>
                <severanceTax fillout="1" year="1990">0.17</severanceTax>
                <techChange fillout="1" year="1975">0</techChange>
-               <priceElas>2</priceElas>
-               <minShortTermSLimit>2</minShortTermSLimit>
                <grade name="grade 1">
                   <extractioncost>1.8</extractioncost>
                   <available>2012</available>
@@ -19493,11 +19472,8 @@
             <price year="1975">1.8398</price>
             <subresource name="unconventional oil">
                <environCost fillout="1" year="1990">0.25</environCost>
-               <gdpExpans fillout="1" year="1975">1</gdpExpans>
                <severanceTax fillout="1" year="1990">0.17</severanceTax>
                <techChange fillout="1" year="1975">0</techChange>
-               <priceElas>2</priceElas>
-               <minShortTermSLimit>1</minShortTermSLimit>
                <grade name="grade 1">
                   <extractioncost>1.8</extractioncost>
                   <available>503</available>
@@ -21940,11 +21916,8 @@
             <price year="1975">1.8398</price>
             <subresource name="unconventional oil">
                <environCost fillout="1" year="1990">0.25</environCost>
-               <gdpExpans fillout="1" year="1975">1</gdpExpans>
                <severanceTax fillout="1" year="1990">0.17</severanceTax>
                <techChange fillout="1" year="1975">0</techChange>
-               <priceElas>2</priceElas>
-               <minShortTermSLimit>1</minShortTermSLimit>
                <grade name="grade 1">
                   <extractioncost>1.8</extractioncost>
                   <available>6009</available>
@@ -24387,11 +24360,8 @@
             <price year="1975">1.8398</price>
             <subresource name="unconventional oil">
                <environCost fillout="1" year="1990">0.25</environCost>
-               <gdpExpans fillout="1" year="1975">1</gdpExpans>
                <severanceTax fillout="1" year="1990">0.17</severanceTax>
                <techChange fillout="1" year="1975">0</techChange>
-               <priceElas>2</priceElas>
-               <minShortTermSLimit>1</minShortTermSLimit>
                <grade name="grade 1">
                   <extractioncost>1.8</extractioncost>
                   <available>3004</available>
@@ -26834,11 +26804,8 @@
             <price year="1975">1.8398</price>
             <subresource name="unconventional oil">
                <environCost fillout="1" year="1990">0.25</environCost>
-               <gdpExpans fillout="1" year="1975">1</gdpExpans>
                <severanceTax fillout="1" year="1990">0.17</severanceTax>
                <techChange fillout="1" year="1975">0</techChange>
-               <priceElas>2</priceElas>
-               <minShortTermSLimit>1</minShortTermSLimit>
                <grade name="grade 1">
                   <extractioncost>1.8</extractioncost>
                   <available>1509</available>
@@ -29281,11 +29248,8 @@
             <price year="1975">1.8398</price>
             <subresource name="unconventional oil">
                <environCost fillout="1" year="1990">0.25</environCost>
-               <gdpExpans fillout="1" year="1975">1</gdpExpans>
                <severanceTax fillout="1" year="1990">0.17</severanceTax>
                <techChange fillout="1" year="1975">0</techChange>
-               <priceElas>2</priceElas>
-               <minShortTermSLimit>1</minShortTermSLimit>
                <grade name="grade 1">
                   <extractioncost>1.8</extractioncost>
                   <available>151</available>
@@ -31728,11 +31692,8 @@
             <price year="1975">1.8398</price>
             <subresource name="unconventional oil">
                <environCost fillout="1" year="1990">0.25</environCost>
-               <gdpExpans fillout="1" year="1975">1</gdpExpans>
                <severanceTax fillout="1" year="1990">0.17</severanceTax>
                <techChange fillout="1" year="1975">0</techChange>
-               <priceElas>2</priceElas>
-               <minShortTermSLimit>1</minShortTermSLimit>
                <grade name="grade 1">
                   <extractioncost>1.8</extractioncost>
                </grade>
@@ -34171,11 +34132,8 @@
             <price year="1975">1.8398</price>
             <subresource name="unconventional oil">
                <environCost fillout="1" year="1990">0.25</environCost>
-               <gdpExpans fillout="1" year="1975">1</gdpExpans>
                <severanceTax fillout="1" year="1990">0.17</severanceTax>
                <techChange fillout="1" year="1975">0</techChange>
-               <priceElas>2</priceElas>
-               <minShortTermSLimit>1</minShortTermSLimit>
                <grade name="grade 1">
                   <extractioncost>1.8</extractioncost>
                   <available>1509</available>
