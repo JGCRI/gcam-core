@@ -7,7 +7,7 @@
 		<Value name="bugOutFileName">bugoutfile.csv</Value>
 		<Value name="logOutFileName">logfile.csv</Value>
 		<Value name="climatFileName">gas.emk</Value>
-         <Value name="xmlInputFileName">../cvs/objects/model_data/base/core_model_input_2009-03-13.xml</Value>
+         <Value name="xmlInputFileName">../cvs/objects/model_data/base/core_model_input_2009-11-17.xml</Value>
 		<Value name="xmlOutputFileName">../output/output.xml</Value>
 		<Value name="xmlDebugFileName">debug.xml</Value>
 		<Value name="sdCurveFileName">sdcurve.csv</Value>
@@ -40,6 +40,7 @@
           <Value name="bld_aeei">../input/energy/socioeconomics/agg_building_aeei_ref.xml</Value>
           <Value name="ind_aeei">../input/energy/socioeconomics/agg_industry_aeei_ref.xml</Value>
           <Value name="trn_aeei">../input/energy/socioeconomics/agg_transport_aeei_ref.xml</Value>
+          <Value name="resources">../input/energy/fossil/resources.xml</Value>
           <Value name="liquids1">../input/energy/refined liquids/ref_liquids_demand.xml</Value>
           <Value name="liquids2">../input/energy/refined liquids/ref_liquids_supply.xml</Value>
           <Value name="liquids3">../input/energy/refined liquids/ref_liquids_ccs.xml</Value>
@@ -72,7 +73,7 @@
          <Value name="trn_nonco2">../input/energy/transportation/global_det_trn_nonco2.xml</Value>
          <Value name="nonco2_adj">../input/nonco2/rcp_input_patch.xml</Value>
          <Value name="keywords">../input/keywords/keywords_agg.xml</Value>
-         <Value name="solver_config">../input/solution/solver_config.xml</Value>
+         <Value name="solver_config">../input/solution/cal_solver_config.xml</Value>
 	</ScenarioComponents>
 	<Strings>
 		<Value name="scenarioName">Main</Value>
