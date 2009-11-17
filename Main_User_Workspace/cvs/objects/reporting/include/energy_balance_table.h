@@ -91,6 +91,10 @@ public:
     void startVisitMiniCAMInput( const MiniCAMInput* aInput, const int aPeriod );
     void startVisitOutput( const IOutput* aOutput, const int aPeriod );
     void startVisitEnergyFinalDemand( const EnergyFinalDemand* aEnergyFinalDemand, const int aPeriod );
+    void startVisitResource( const AResource* aResource, const int aPeriod );
+    void endVisitResource( const AResource* aResource, const int aPeriod );
+    void startVisitSubResource( const SubResource* aSubResource, const int aPeriod );
+    void endVisitSubResource( const SubResource* aSubResource, const int aPeriod );
 private:
     //! Table to store our results
     std::auto_ptr<StorageTable> mTable;

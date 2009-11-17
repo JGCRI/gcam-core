@@ -96,14 +96,14 @@ bool SubRenewableResource::XMLDerivedClassParse( const string& nodeName, const D
 Also remove any grades with zero available by resetting the parameter nograde. */
 void SubRenewableResource::completeInit( const IInfo* aSectorInfo ) {   
     double lastAvailable = 0;
-    for( vector<Grade*>::iterator i = grade.begin(); i != grade.end(); ++i ){
-        if( i != grade.begin() && (*i)->getAvail() <= lastAvailable ){
+    for( vector<Grade*>::iterator i = mGrade.begin(); i != mGrade.end(); ++i ){
+        if( i != mGrade.begin() && (*i)->getAvail() <= lastAvailable ){
             // Remove the bad grade.
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Removing invalid grade in subresource " << name << "." << endl;
+            mainLog << "Removing invalid grade in subresource " << mName << "." << endl;
             delete *i;
-            grade.erase( i-- ); 
+            mGrade.erase( i-- ); 
         }
         else {
             lastAvailable = (*i)->getAvail();
@@ -178,8 +178,8 @@ void SubRenewableResource::annualsupply( int period, const GDP* gdp, double pric
     double fractionAvailable = -1;
 
     // Move up the cost curve until a point is found above the current price.
-    for ( unsigned int i = 0; i < grade.size(); ++i ) {
-        if( grade[ i ]->getCost( period ) > price ){
+    for ( unsigned int i = 0; i < mGrade.size(); ++i ) {
+        if( mGrade[ i ]->getCost( period ) > price ){
             // Determine the cost and available for the previous point. If
             // this is the first point in the cost curve the previous grade
             // is the bottom of the curve.
@@ -190,18 +190,18 @@ void SubRenewableResource::annualsupply( int period, const GDP* gdp, double pric
                 prevGradeAvailable = 0;
             }
             else {
-                prevGradeCost = grade[ i - 1 ]->getCost( period );
-                prevGradeAvailable = grade[ i - 1 ]->getAvail();
+                prevGradeCost = mGrade[ i - 1 ]->getCost( period );
+                prevGradeAvailable = mGrade[ i - 1 ]->getAvail();
             }
 
             // This should not be able to happen because the above if
             // statement would fail.
-            assert( grade[ i ]->getCost( period ) > prevGradeCost );
+            assert( mGrade[ i ]->getCost( period ) > prevGradeCost );
             double gradeFraction = ( price - prevGradeCost )
-                / ( grade[ i ]->getCost( period ) - prevGradeCost ); 
+                / ( mGrade[ i ]->getCost( period ) - prevGradeCost ); 
             // compute production as fraction of total possible
             fractionAvailable = prevGradeAvailable + gradeFraction
-                                * ( grade[ i ]->getAvail() - prevGradeAvailable ); 
+                                * ( mGrade[ i ]->getAvail() - prevGradeAvailable ); 
 
             break;
         }
@@ -210,7 +210,7 @@ void SubRenewableResource::annualsupply( int period, const GDP* gdp, double pric
     // If the fraction available has not been set there is not a point with a
     // cost greater than the price. This means the price is above the curve.
     if( fractionAvailable == -1 ){
-        double maxCost = grade[ grade.size() - 1 ]->getCost( period );
+        double maxCost = mGrade[ mGrade.size() - 1 ]->getCost( period );
 
         // Use the function 1-1/(p/pMax) to determine the amount of the
         // additional percent to use.
@@ -222,7 +222,7 @@ void SubRenewableResource::annualsupply( int period, const GDP* gdp, double pric
 
         // Calculate the total fraction of the max subresource to use. Note that
         // the max fraction available can be more than 100 percent.
-        double maxFraction = grade[ grade.size() - 1 ]->getAvail();
+        double maxFraction = mGrade[ mGrade.size() - 1 ]->getAvail();
 
         // Determine the maximum available fraction including the additional
         // increment.
@@ -234,7 +234,7 @@ void SubRenewableResource::annualsupply( int period, const GDP* gdp, double pric
                                       gdpSupplyElasticity );
 
     // now convert to absolute value of production
-    annualprod[ period ] = fractionAvailable * maxSubResource * resourceSupplyIncrease;
+    mAnnualProd[ period ] = fractionAvailable * maxSubResource * resourceSupplyIncrease;
 }
 
 /*! \brief Get the variance.

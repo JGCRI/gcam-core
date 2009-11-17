@@ -98,6 +98,7 @@
 
 #include "containers/include/sector_cycle_breaker.h"
 #include "util/base/include/calibrate_share_weight_visitor.h"
+#include "util/base/include/calibrate_resource_visitor.h"
 
 using namespace std;
 using namespace xercesc;
@@ -723,7 +724,7 @@ void RegionMiniCAM::calcResourceSupply( const int period ){
     if( !ensureGDP() ){
         return;
     }
-
+    
     for( ResourceIterator currResource = resources.begin(); currResource != resources.end(); ++currResource ){
         (*currResource)->calcSupply( name, gdp.get(), period );
     }
@@ -746,6 +747,7 @@ void RegionMiniCAM::calcFinalSupplyPrice( const int period ) {
     // determine if we should calibrate our share weights
     const bool calibrationPeriod = period > 0 && period <= scenario->getModeltime()->getFinalCalibrationPeriod();
     static const bool calibrationActive = Configuration::getInstance()->getBool( "CalibrationActive" );
+
     CalibrateShareWeightVisitor calibrator( name, gdp.get() );
     for( SectorIterator currSupply = supplySector.begin(); currSupply != supplySector.end(); ++currSupply ){
         // if calibration is active and we are in a calibration period we must calibrate our share weights
@@ -754,6 +756,13 @@ void RegionMiniCAM::calcFinalSupplyPrice( const int period ) {
                 (*currSupply)->accept( &calibrator, period );
         }
         (*currSupply)->calcFinalSupplyPrice( gdp.get(), period );
+    }
+
+    if( calibrationActive && calibrationPeriod ) {
+        CalibrateResourceVisitor resourceCalibrator( name );
+        for( ResourceIterator currResource = resources.begin(); currResource != resources.end(); ++currResource ){
+            (*currResource)->accept( &resourceCalibrator, period );
+        }
     }
 
     if ( mLandAllocator.get() ) {

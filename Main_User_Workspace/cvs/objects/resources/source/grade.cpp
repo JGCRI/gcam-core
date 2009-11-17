@@ -61,12 +61,11 @@ extern Scenario* scenario;
 
 
 //! Default constructor
-Grade::Grade() {
-    available = 0;
-    extractCost = 0; 
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    totalCost.resize( maxper );
+Grade::Grade():
+mAvailable( 0.0 ),
+mExtractCost( 0.0 ),
+mTotalCost( scenario->getModeltime()->getmaxper(), 0.0 )
+{
 }
 
 //! Initialize data members from XML.
@@ -75,7 +74,7 @@ void Grade::XMLParse( const DOMNode* tempNode ) {
     assert( tempNode );
 
     // get the name attribute.
-    name = XMLHelper<string>::getAttr( tempNode, "name" );
+    mName = XMLHelper<string>::getAttr( tempNode, "name" );
     DOMNodeList* tempNodeLst = tempNode->getChildNodes();
 
     for( unsigned int i = 0; i < tempNodeLst->getLength(); ++i ) {
@@ -87,10 +86,10 @@ void Grade::XMLParse( const DOMNode* tempNode ) {
         }
 
         else if( tNodeName == "available" ){
-            available = XMLHelper<double>::getValue( tNode );
+            mAvailable = XMLHelper<double>::getValue( tNode );
         }
         else if( tNodeName == "extractioncost" ){
-            extractCost = XMLHelper<double>::getValue( tNode );
+            mExtractCost = XMLHelper<double>::getValue( tNode );
         }
         else {
             cout << "Unrecognized text string: " << tNodeName << " found while parsing grade." << endl;
@@ -106,26 +105,26 @@ void Grade::XMLParse( const DOMNode* tempNode ) {
 * \warning markets are not necessarily set when completeInit is called
 */
 void Grade::completeInit( const IInfo* aSubresourceInfo ) {
-    mGradeInfo.reset( InfoFactory::constructInfo( aSubresourceInfo, name ) ); 
+    mGradeInfo.reset( InfoFactory::constructInfo( aSubresourceInfo, mName ) ); 
 }
 
 
 //! Write data members to data stream in XML format for replicating input file.
 void Grade::toInputXML( ostream& out, Tabs* tabs ) const {
-    XMLWriteOpeningTag( getXMLName(), out, tabs, name );
-    XMLWriteElementCheckDefault( available, "available", out, tabs, 0.0 );
-    XMLWriteElementCheckDefault( extractCost, "extractioncost", out, tabs, 0.0 );
+    XMLWriteOpeningTag( getXMLName(), out, tabs, mName );
+    XMLWriteElementCheckDefault( mAvailable, "available", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( mExtractCost, "extractioncost", out, tabs, 0.0 );
     XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 //! Write data members to debugging data stream in XML format.
 void Grade::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     
-    XMLWriteOpeningTag( getXMLName(), out, tabs, name );
+    XMLWriteOpeningTag( getXMLName(), out, tabs, mName );
     
-    XMLWriteElement( available, "available", out, tabs );
-    XMLWriteElement( extractCost, "extractioncost", out, tabs );
-    XMLWriteElement( totalCost[period], "totalcost", out, tabs );
+    XMLWriteElement( mAvailable, "available", out, tabs );
+    XMLWriteElement( mExtractCost, "extractioncost", out, tabs );
+    XMLWriteElement( mTotalCost[period], "totalcost", out, tabs );
     
     XMLWriteClosingTag( getXMLName(), out, tabs );
 }
@@ -157,28 +156,28 @@ const std::string& Grade::getXMLNameStatic() {
 }
 
 //! Total cost of each grade.
-void Grade::calcCost( const double tax, const double cumTechChange, const double environCost, const int per ) {
-    totalCost[per] = ( extractCost + environCost ) / cumTechChange + tax;
+void Grade::calcCost( const double aTax, const double aCumTechChange, const double aEnvironCost, const int aPeriod ) {
+    mTotalCost[ aPeriod ] = ( mExtractCost + aEnvironCost ) / aCumTechChange + aTax;
 }
 
 //! Return available amount in each Grade.
 double Grade::getAvail() const {
-    return available;
+    return mAvailable;
 }
 
 //! Return the total cost.
-double Grade::getCost(const int per) const {
-    return totalCost[per];
+double Grade::getCost( const int aPeriod ) const {
+    return mTotalCost[ aPeriod ];
 }
 
 //! Return the extraction cost.
 double Grade::getExtCost() const {
-    return extractCost;
+    return mExtractCost;
 }
 
 //! Get the name.
 const string& Grade::getName() const {
-    return name;
+    return mName;
 }
 
 /*! \brief Perform any initializations needed before each period.

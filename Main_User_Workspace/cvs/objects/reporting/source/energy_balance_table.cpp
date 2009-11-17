@@ -50,6 +50,8 @@
 
 #include "sectors/include/sector.h"
 #include "sectors/include/subsector.h"
+#include "resources/include/resource.h"
+#include "resources/include/subresource.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "technologies/include/technology.h"
@@ -332,6 +334,35 @@ void EnergyBalanceTable::startVisitEnergyFinalDemand( const EnergyFinalDemand* a
     mColToTechMap[ key ] = key;
     // TODO: putting base service would not be correct after calibration periods
     mTable->addToType( aEnergyFinalDemand->getName(), key, aEnergyFinalDemand->mBaseService[ aPeriod ] );
+}
+
+void EnergyBalanceTable::startVisitResource( const AResource* aResource, const int aPeriod )
+{
+    mCurrentSector = aResource->getName();
+}
+
+void EnergyBalanceTable::endVisitResource( const AResource* aResource, const int aPeriod )
+{
+    mCurrentSector.clear();
+}
+
+void EnergyBalanceTable::startVisitSubResource( const SubResource* aSubResource, const int aPeriod )
+{
+    mCurrentSubsector = mCurrentTech = aSubResource->getName();
+    const string key = getKey();
+    const double useForNoCalValue = mIncludeNonCalValues ? aSubResource->getAnnualProd( aPeriod ) : 0;
+    mTable->addColumn( key );
+    mColToSectorMap[ key ] = key;
+    mColToSubsectorMap[ key ] = key;
+    mColToTechMap[ key ] = key;
+    mTable->addToType( "Output", key, aSubResource->mCalProduction[ aPeriod ] == -1 
+                                           ? useForNoCalValue : aSubResource->mCalProduction[ aPeriod ] );
+}
+
+void EnergyBalanceTable::endVisitSubResource( const SubResource* aSubResource, const int aPeriod )
+{
+    mCurrentSubsector.clear();
+    mCurrentTech.clear();
 }
 
 /*!

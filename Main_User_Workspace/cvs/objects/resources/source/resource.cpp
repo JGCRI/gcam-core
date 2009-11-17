@@ -84,21 +84,18 @@ typedef vector<AGHG*>::const_iterator CGHGIterator;
 
 //! Default constructor.
 Resource::Resource()
-: mObjectMetaInfo()
+: mObjectMetaInfo(),
+mNumSubResource( 0 ), 
+mAvailable( scenario->getModeltime()->getmaxper(), 0.0 ),
+mAnnualProd( scenario->getModeltime()->getmaxper(), 0.0 ),
+mCumulProd( scenario->getModeltime()->getmaxper(), 0.0 ),
+mResourcePrice( scenario->getModeltime()->getmaxper(), 0.0 )
 {
-    nosubrsrc = 0;
-    // resize vectors not read in
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    available.resize(maxper); // total resource available
-    annualprod.resize(maxper); // annual production rate of resource
-    cummprod.resize(maxper); // cumulative production of resource
-    rscprc.resize( maxper );
 }
 
 //! Destructor.
 Resource::~Resource() {
-    for ( vector<SubResource*>::iterator iter = subResource.begin(); iter != subResource.end(); iter++ ) {
+    for ( vector<SubResource*>::iterator iter = mSubResource.begin(); iter != mSubResource.end(); iter++ ) {
         delete *iter;
     }
 }
@@ -137,7 +134,7 @@ void Resource::XMLParse( const DOMNode* node ){
             mMarket = XMLHelper<string>::getValue( curr ); // only one market element.
         }
         else if( nodeName == "price" ){
-            XMLHelper<double>::insertValueIntoVector( curr, rscprc, modeltime );
+            XMLHelper<double>::insertValueIntoVector( curr, mResourcePrice, modeltime );
         }
         else if( nodeName == "keyword" ){
             DOMNamedNodeMap* keywordAttributes = curr->getAttributes();
@@ -187,9 +184,9 @@ void Resource::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     }
 
     // write out resource prices for base period only
-    XMLWriteVector( rscprc, "price", aOut, aTabs, scenario->getModeltime() );
+    XMLWriteVector( mResourcePrice, "price", aOut, aTabs, scenario->getModeltime() );
     // write out the subresource objects.
-    for( vector<SubResource*>::const_iterator i = subResource.begin(); i != subResource.end(); i++ ){
+    for( vector<SubResource*>::const_iterator i = mSubResource.begin(); i != mSubResource.end(); i++ ){
         ( *i )->toInputXML( aOut, aTabs );
     }
     for( CGHGIterator iter = ghg.begin(); iter != ghg.end(); ++iter ) {
@@ -220,22 +217,22 @@ void Resource::toDebugXML( const int period, ostream& aOut, Tabs* aTabs ) const 
     }
 
     // Write out resource prices for debugging period.
-    XMLWriteElement( rscprc[ period ], "rscprc", aOut, aTabs );
+    XMLWriteElement( mResourcePrice[ period ], "rscprc", aOut, aTabs );
 
     // Write out available resources for debugging period.
-    XMLWriteElement( available[ period ], "available", aOut, aTabs );
+    XMLWriteElement( mAvailable[ period ], "available", aOut, aTabs );
 
     // Write out annualprod for debugging period.
-    XMLWriteElement( annualprod[ period ], "annualprod", aOut, aTabs );
+    XMLWriteElement( mAnnualProd[ period ], "annualprod", aOut, aTabs );
 
     // Write out cumulative prod for debugging period.
-    XMLWriteElement( cummprod[ period ], "cummprod", aOut, aTabs );
+    XMLWriteElement( mCumulProd[ period ], "cummprod", aOut, aTabs );
 
     // Write out the number of sub-resources.
-    XMLWriteElement( nosubrsrc, "nosubrsrc", aOut, aTabs );
+    XMLWriteElement( mNumSubResource, "nosubrsrc", aOut, aTabs );
 
     // Write out the subresource objects.
-    for( vector<SubResource*>::const_iterator i = subResource.begin(); i != subResource.end(); i++ ){
+    for( vector<SubResource*>::const_iterator i = mSubResource.begin(); i != mSubResource.end(); i++ ){
         ( *i )->toDebugXML( period, aOut, aTabs );
     }
     // Write out ghg object, vector is of number of gases
@@ -256,7 +253,7 @@ void Resource::toDebugXML( const int period, ostream& aOut, Tabs* aTabs ) const 
 */
 
 void Resource::completeInit( const string& aRegionName, const IInfo* aRegionInfo ) {
-    nosubrsrc = static_cast<int>( subResource.size() );
+    mNumSubResource = static_cast<int>( mSubResource.size() );
 
     // default unit to EJ
     if ( mOutputUnit.empty() ) {
@@ -281,7 +278,7 @@ void Resource::completeInit( const string& aRegionName, const IInfo* aRegionInfo
             }
     }
 
-    for( vector<SubResource*>::iterator subResIter = subResource.begin(); subResIter != subResource.end(); subResIter++ ) {
+    for( vector<SubResource*>::iterator subResIter = mSubResource.begin(); subResIter != mSubResource.end(); subResIter++ ) {
         ( *subResIter )->completeInit( mResourceInfo.get() );
     }
 
@@ -301,8 +298,8 @@ void Resource::completeInit( const string& aRegionName, const IInfo* aRegionInfo
 */
 void Resource::initCalc( const string& aRegionName, const int aPeriod ) {
     // call subResource initializations
-    for ( unsigned int i = 0; i < subResource.size(); i++ ){
-        subResource[i]->initCalc( aRegionName, mName, aPeriod );
+    for ( unsigned int i = 0; i < mSubResource.size(); i++ ){
+        mSubResource[i]->initCalc( aRegionName, mName, aPeriod );
     }
 
     for( unsigned int i = 0; i < ghg.size(); i++ ) {
@@ -321,11 +318,11 @@ void Resource::initCalc( const string& aRegionName, const int aPeriod ) {
 */
 void Resource::postCalc( const string& aRegionName, const int aPeriod ) {
     // Call subResource post calculations
-    for ( unsigned int i = 0; i < subResource.size(); i++ ) {
-        subResource[i]->postCalc( aRegionName, mName, aPeriod);
+    for ( unsigned int i = 0; i < mSubResource.size(); i++ ) {
+        mSubResource[i]->postCalc( aRegionName, mName, aPeriod);
     }
     // Reset initial resource prices to solved prices
-    rscprc[ aPeriod ] = scenario->getMarketplace()->getPrice( mName, aRegionName, aPeriod, true );
+    mResourcePrice[ aPeriod ] = scenario->getMarketplace()->getPrice( mName, aRegionName, aPeriod, true );
 }
 
 //! Create markets
@@ -340,7 +337,7 @@ void Resource::setMarket( const string& aRegionName ) {
         pMarketInfo->setString( "price-unit", mPriceUnit );
         pMarketInfo->setString( "output-unit", mOutputUnit );
 
-        pMarketplace->setPriceVector( mName, aRegionName, rscprc );
+        pMarketplace->setPriceVector( mName, aRegionName, mResourcePrice );
         for( int period = 0; period < pModeltime->getmaxper(); ++period ){
         
             // TODO: Remove or improve this. Intermittent technologies need to know during initCalc 
@@ -396,7 +393,7 @@ void Resource::calcSupply( const string& aRegionName, const GDP* aGDP, const int
 
     // There is only one primary output at the first position.
     // Setting market supply of resource occurs in setPhysicalOutput().
-    mOutputs[0]->setPhysicalOutput( annualprod[ aPeriod ], aRegionName, 0, aPeriod );
+    mOutputs[0]->setPhysicalOutput( mAnnualProd[ aPeriod ], aRegionName, 0, aPeriod );
     vector<IInput*> inputs; // empty vector
 
     for( unsigned int i = 0; i < ghg.size(); ++i ) {
@@ -405,41 +402,41 @@ void Resource::calcSupply( const string& aRegionName, const GDP* aGDP, const int
     }
 }
 
-void Resource::cumulsupply(double prc,int per)
+void Resource::cumulsupply( double aPrice, int aPeriod )
 {   
-    int i=0;
-    cummprod[per]=0.0;
+    int i = 0;
+    mCumulProd[ aPeriod ] = 0.0;
 
-    rscprc[per] = prc;
+    mResourcePrice[ aPeriod ] = aPrice;
     // sum cumulative production of each subsector
-    for (i=0;i<nosubrsrc;i++) {
-        subResource[i]->cumulsupply(prc,per);
-        cummprod[per] += subResource[i]->getCumulProd(per);
+    for ( i = 0; i < mNumSubResource; i++ ) {
+        mSubResource[ i ]->cumulsupply( aPrice, aPeriod );
+        mCumulProd[ aPeriod ] += mSubResource[ i ]->getCumulProd( aPeriod );
     }
 }
 
 //! Calculate annual production
-void Resource::annualsupply( const string& regionName, int per, const GDP* gdp, double price, double prev_price )
+void Resource::annualsupply( const string& aRegionName, int aPeriod, const GDP* aGdp, double aPrice, double aPrevPrice )
 {   
-    int i=0;
-    annualprod[per]=0.0;
-    available[per]=0.0;
+    int i = 0;
+    mAnnualProd[ aPeriod ] = 0.0;
+    mAvailable[ aPeriod ] = 0.0;
 
     // calculate cumulative production
-    cumulsupply(price,per);
+    cumulsupply( aPrice, aPeriod );
 
     // sum annual production of each subsector
-    for (i=0;i<nosubrsrc;i++) {
-        subResource[i]->annualsupply( per, gdp, price, prev_price );
-        annualprod[per] += subResource[i]->getAnnualProd(per);
-        available[per] += subResource[i]->getAvailable(per);
+    for ( i = 0; i < mNumSubResource; i++) {
+        mSubResource[i]->annualsupply( aPeriod, aGdp, aPrice, aPrevPrice );
+        mAnnualProd[ aPeriod ] += mSubResource[i]->getAnnualProd( aPeriod );
+        mAvailable[ aPeriod ] += mSubResource[i]->getAvailable( aPeriod );
     }
 }
 
 
 //! Return annual production of resources.
-double Resource::getAnnualProd( const string& aRegionName, const int per ) const {
-    return annualprod[per];
+double Resource::getAnnualProd( const string& aRegionName, const int aPeriod ) const {
+    return mAnnualProd[ aPeriod ];
 }
 
 //! Write resource output to file.
@@ -452,11 +449,11 @@ void Resource::csvOutputFile( const string& regname )
     // function arguments are variable name, double array, db name, table name
     // the function writes all years
     // total sector output
-    fileoutput3( regname,mName," "," ","production",mOutputUnit,annualprod);
+    fileoutput3( regname,mName," "," ","production",mOutputUnit,mAnnualProd);
 
     // do for all subsectors in the sector
-    for (int i=0;i<nosubrsrc;i++) {
-        subResource[i]->csvOutputFile(regname ,mName);
+    for (int i=0;i<mNumSubResource;i++) {
+        mSubResource[i]->csvOutputFile(regname ,mName);
     }
 }
 
@@ -469,20 +466,20 @@ void Resource::dbOutput( const string& regname ) {
     void dboutput4(string var1name,string var2name,string var3name,string var4name,
         string uname,vector<double> dout);
     // resource price
-    dboutput4(regname,"Price","by Sector",mName,mPriceUnit,rscprc);
+    dboutput4(regname,"Price","by Sector",mName,mPriceUnit,mResourcePrice);
     // do for all subsectors in the sector
     temp.assign( temp.size(), 0.0 );
     for (int m=0;m<maxper;m++) {
-        for (int i=0;i<nosubrsrc;i++) {
-            temp[m] += subResource[i]->getCumulProd(m);
+        for (int i=0;i<mNumSubResource;i++) {
+            temp[m] += mSubResource[i]->getCumulProd(m);
         }
     }
     dboutput4(regname,"Resource","CummProd "+mName,"zTotal",mOutputUnit,temp);
 
     temp.assign( temp.size(), 0.0 );
     for (int m=0;m<maxper;m++) {
-        for (int i=0;i<nosubrsrc;i++) {
-            temp[m] += subResource[i]->getAnnualProd(m);
+        for (int i=0;i<mNumSubResource;i++) {
+            temp[m] += mSubResource[i]->getAnnualProd(m);
         }
     }
     dboutput4(regname,"Resource","annual-production", mName, mOutputUnit, temp);
@@ -490,8 +487,8 @@ void Resource::dbOutput( const string& regname ) {
     temp.assign( temp.size(), 0.0 );
     // do for all subsectors in the sector
     for (int m=0;m<maxper;m++) {
-        for (int i=0;i<nosubrsrc;i++) {
-            temp[m] += subResource[i]->getAvailable(m);
+        for (int i=0;i<mNumSubResource;i++) {
+            temp[m] += mSubResource[i]->getAvailable(m);
         }
     }
     dboutput4(regname,"Resource","Available "+mName,"zTotal",mOutputUnit,temp);
@@ -506,8 +503,8 @@ void Resource::dbOutput( const string& regname ) {
     }
 
     // do for all subsectors in the sector
-    for (int i=0;i<nosubrsrc;i++) {
-        subResource[i]->dbOutput(regname,mName);
+    for (int i=0;i<mNumSubResource;i++) {
+        mSubResource[i]->dbOutput(regname,mName);
     }
 }
 
@@ -519,8 +516,8 @@ void Resource::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitResource( this, aPeriod );
 
     // Update the output container for the subresources.
-    for( unsigned int i = 0; i < subResource.size(); ++i ){
-        subResource[ i ]->accept( aVisitor, aPeriod );
+    for( unsigned int i = 0; i < mSubResource.size(); ++i ){
+        mSubResource[ i ]->accept( aVisitor, aPeriod );
     }
 
     for( unsigned int i = 0; i < ghg.size(); ++i ) {
@@ -578,7 +575,7 @@ const std::string& DepletableResource::getXMLNameStatic() {
 bool DepletableResource::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aNode ) {
     // TODO: Fix this.
     if( aNodeName == SubResource::getXMLNameStatic() || aNodeName == SubDepletableResource::getXMLNameStatic() ){
-        parseContainerNode( aNode, subResource, subResourceNameMap, new SubDepletableResource() );
+        parseContainerNode( aNode, mSubResource, mSubResourceNameMap, new SubDepletableResource() );
         return true;
     }
     return false;
@@ -625,7 +622,7 @@ const std::string& FixedResource::getXMLNameStatic() {
 */
 bool FixedResource::XMLDerivedClassParse( const string& nodeName, const DOMNode* node ) {
     if( nodeName == SubResource::getXMLNameStatic() || nodeName == SubFixedResource::getXMLNameStatic() ){
-        parseContainerNode( node, subResource, subResourceNameMap, new SubFixedResource() );
+        parseContainerNode( node, mSubResource, mSubResourceNameMap, new SubFixedResource() );
         return true;
     }
     return false;
@@ -682,11 +679,11 @@ bool RenewableResource::XMLDerivedClassParse( const string& nodeName, const DOMN
 {
     if( nodeName == SubResource::getXMLNameStatic() ||
         nodeName == SubRenewableResource::getXMLNameStatic() ) {
-            parseContainerNode( node, subResource, subResourceNameMap, new SubRenewableResource() );
+            parseContainerNode( node, mSubResource, mSubResourceNameMap, new SubRenewableResource() );
             return true;
         }
     else if ( nodeName == SmoothRenewableSubresource::getXMLNameStatic() ) {
-        parseContainerNode( node, subResource, subResourceNameMap, new SmoothRenewableSubresource() );
+        parseContainerNode( node, mSubResource, mSubResourceNameMap, new SmoothRenewableSubresource() );
         return true;
     }
     return false;
@@ -723,17 +720,17 @@ void RenewableResource::completeInit( const string& aRegionName, const IInfo* aR
 *
 * \author Steve Smith.  Mod for intermittent by Marshall Wise
 */
-void RenewableResource::annualsupply( const string& regionName, int per, const GDP* gdp, double price, double prev_price )
+void RenewableResource::annualsupply( const string& aRegionName, int aPeriod, const GDP* aGdp, double aPrice, double aPrevPrice )
 {
 
     // calculate cumulative production
-    cumulsupply(price,per);
+    cumulsupply( aPrice, aPeriod );
 
     // clear out sums for this iteration
-    annualprod[per]=0.0;
-    available[per]=0.0;
-    resourceVariance[per]=0.0;
-    resourceCapacityFactor[per] = 0.0;
+    mAnnualProd[ aPeriod ]=0.0;
+    mAvailable[ aPeriod ]=0.0;
+    resourceVariance[ aPeriod ]=0.0;
+    resourceCapacityFactor[ aPeriod ] = 0.0;
     
     // If annual production is extremely small or zero, these will not be calculated properly.
     // In this case, set production to some minimum number.
@@ -741,17 +738,17 @@ void RenewableResource::annualsupply( const string& regionName, int per, const G
     double adjustedProduction = 0;
     
     // sum annual production of each subsector
-    for (int i=0;i<nosubrsrc;i++) {
-        subResource[i]->annualsupply( per, gdp, price, prev_price );
-        annualprod[per] += subResource[i]->getAnnualProd(per);
-        double adjustedSubResourceProd = max( subResource[i]->getAnnualProd(per), MIN_RESOURCE_PROD );
+    for (int i=0;i<mNumSubResource;i++) {
+        mSubResource[i]->annualsupply( aPeriod, aGdp, aPrice, aPrevPrice );
+        mAnnualProd[ aPeriod ] += mSubResource[i]->getAnnualProd( aPeriod );
+        double adjustedSubResourceProd = max( mSubResource[i]->getAnnualProd( aPeriod ), MIN_RESOURCE_PROD );
         adjustedProduction += adjustedSubResourceProd;
-        available[per] += subResource[i]->getAvailable(per);
+        mAvailable[ aPeriod ] += mSubResource[i]->getAvailable( aPeriod );
         
         // and compute weighted average variance
-        resourceVariance[per] += adjustedSubResourceProd * subResource[i]->getVariance();
+        resourceVariance[ aPeriod ] += adjustedSubResourceProd * mSubResource[i]->getVariance();
         // and compute weighted average capacity factor
-        resourceCapacityFactor[per] += adjustedSubResourceProd * subResource[i]->getAverageCapacityFactor();
+        resourceCapacityFactor[ aPeriod ] += adjustedSubResourceProd * mSubResource[i]->getAverageCapacityFactor();
     }
 
     // TODO: This is currently wrong because the resource calculation is done last
@@ -762,17 +759,17 @@ void RenewableResource::annualsupply( const string& regionName, int per, const G
     // This may be a global market and the resource may only exist to add the
     // region into the market. In this case the resource will not have any
     // subresources, and should not adjust the market info values.
-    if( !subResource.empty() ){
+    if( !mSubResource.empty() ){
         if ( adjustedProduction >= MIN_RESOURCE_PROD ) {
-            resourceVariance[per] /= adjustedProduction;
-            resourceCapacityFactor[per] /= adjustedProduction;
+            resourceVariance[ aPeriod ] /= adjustedProduction;
+            resourceCapacityFactor[ aPeriod ] /= adjustedProduction;
         }
 
         // add variance to marketinfo
-        IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( mName, regionName, per, true );
-        marketInfo->setDouble( "resourceVariance", resourceVariance[ per ] );
+        IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( mName, aRegionName, aPeriod, true );
+        marketInfo->setDouble( "resourceVariance", resourceVariance[ aPeriod ] );
 
         // add capacity factor to marketinfo
-        marketInfo->setDouble( "resourceCapacityFactor", resourceCapacityFactor[ per ] );
+        marketInfo->setDouble( "resourceCapacityFactor", resourceCapacityFactor[ aPeriod ] );
     }
 }

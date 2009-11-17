@@ -53,6 +53,7 @@ class Grade;
 class GDP;
 class IInfo;
 class IVisitor;
+class Tabs;
 
 /*! 
 * \ingroup Objects
@@ -63,6 +64,8 @@ class IVisitor;
 class SubResource: public IVisitable
 {
 	friend class XMLDBOutputter;
+    friend class CalibrateResourceVisitor;    
+    friend class EnergyBalanceTable;
 public:
     SubResource();
     virtual ~SubResource();
@@ -72,39 +75,40 @@ public:
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
-    virtual void cumulsupply(double prc,int per);
+    virtual void cumulsupply( double aPrice, int aPeriod );
     virtual void initCalc( const std::string& aRegionName, const std::string& aResourceName, const int aPeriod );
     virtual void postCalc( const std::string& aRegionName, const std::string& aResourceName, const int aPeriod );
     double getCumulProd( const int aPeriod ) const;
-    virtual void annualsupply( int per, const GDP* gdp, double price1, double price2 );
-    double getAnnualProd(int per) const;
-    double getAvailable(int per) const;
+    virtual void annualsupply( int aPeriod, const GDP* aGdp, double aPrice, double aPrevPrice );
+    double getAnnualProd( int aPeriod ) const;
+    double getAvailable( int aPeriod ) const;
     void dbOutput( const std::string& regname, const std::string& secname); 
     void csvOutputFile(const std::string &regname, const std::string& sname); 
     void updateAvailable( const int period );
-	virtual double getVariance() const;
-	virtual double getAverageCapacityFactor() const;
-	virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
+    virtual double getVariance() const;
+    virtual double getAverageCapacityFactor() const;
+    virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node ) = 0;
     virtual void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;
 
-    std::string name; //!< SubResource name
+    std::string mName; //!< SubResource name
     std::auto_ptr<IInfo> mSubresourceInfo; //!< The subsector's information store.
-    double priceElas; //!< price elasticity for short-term supply limit
-    double minShortTermSLimit; //!< short-term supply limit.
-    std::vector<double> techChange; //!< technical change
-    std::vector<double> environCost; //!< Environmental costs
-    std::vector<double> severanceTax; //!< Severance Tax (exogenous)
-    std::vector<double> available; //!< total available resource
-    std::vector<double> annualprod; //!< annual production of SubResource
-    std::vector<double> cumulprod; //!< cumulative production of SubResource
-    std::vector<double> gdpExpans; //!< short-term supply limit expansion elasticity w/ gdp
-    std::vector<double> cumulativeTechChange; //!< Cumulative Technical Change for this subsector
+    std::vector<double> mTechChange; //!< technical change
+    std::vector<double> mEnvironCost; //!< Environmental costs
+    std::vector<double> mSeveranceTax; //!< Severance Tax (exogenous)
+    std::vector<double> mAvailable; //!< total available resource
+    std::vector<double> mAnnualProd; //!< annual production of SubResource
+    std::vector<double> mCumulProd; //!< cumulative production of SubResource
+    std::vector<double> mCumulativeTechChange; //!< Cumulative Technical Change for this subsector
+    std::vector<double> mPriceAdder; //!< price adder used for calibration purposes
+    std::vector<double> mEffectivePrice; //!< effective price (global price + price adder)
+    std::vector<double> mCalProduction; //!< calibrated production 
+
     // Cumulative technical change needs to be in sub-resource sector 
-    std::vector<Grade*> grade; //!< amount of SubResource for each grade
-    std::map<std::string,int> gradeNameMap; //!< Map of grade name to integer position in vector. 
+    std::vector<Grade*> mGrade; //!< amount of SubResource for each grade
+    std::map<std::string,int> mGradeNameMap; //!< Map of grade name to integer position in vector. 
 
 private:
     static const std::string XML_NAME; //!< node name for toXML methods

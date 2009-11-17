@@ -123,5 +123,5 @@ void AccumulatedPostGrade::postCalc( const string& aRegionName,
 
     const Modeltime* modeltime = scenario->getModeltime();
     double accumulatedAmount = ( lastPerAmount + 0.5 * diffAmount ) * modeltime->gettimestep( aPeriod );
-    available += accumulatedAmount; // add total accumulated from current period
+    mAvailable += accumulatedAmount; // add total accumulated from current period
 }

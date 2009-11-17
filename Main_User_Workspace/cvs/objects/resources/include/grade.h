@@ -83,11 +83,11 @@ public:
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     virtual const std::string& getXMLName() const;
-    std::string name; //!< Grade name
+    std::string mName; //!< Grade name
     std::auto_ptr<IInfo> mGradeInfo; //!< The Grade's information store.
-    double available; //!< amount of Grade for each Grade
-    double extractCost; //!< extraction cost of each Grade
-    std::vector<double> totalCost; //!< total cost
+    double mAvailable; //!< amount of Grade for each Grade
+    double mExtractCost; //!< extraction cost of each Grade
+    std::vector<double> mTotalCost; //!< total cost
 };
 
 #endif // _GRADE_H_

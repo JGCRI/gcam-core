@@ -102,7 +102,7 @@ void SmoothRenewableSubresource::annualsupply(
       gdpSupplyElasticity );
 
    // now convert to absolute value of production
-   annualprod[ aPeriod ] =
+   mAnnualProd[ aPeriod ] =
       fractionAvailable * maxSubResource * gpdSupplyExpansion;
 }
 
@@ -144,15 +144,15 @@ void SmoothRenewableSubresource::initCalc(const std::string& aRegionName, const 
     // The mid price is the price at which 50% of potential supply is utilized
     // This implementation assumes techChange shifts the supply curve
     if( aPeriod == 0 ){
-        cumulativeTechChange[ aPeriod ] = 1.0;
+        mCumulativeTechChange[ aPeriod ] = 1.0;
     }
     else {
         const Modeltime* modeltime = scenario->getModeltime();
-        cumulativeTechChange[ aPeriod ] = cumulativeTechChange[ aPeriod - 1 ] * 
-                    pow( ( 1.0 + techChange[ aPeriod ] ), modeltime->gettimestep( aPeriod ) );
+        mCumulativeTechChange[ aPeriod ] = mCumulativeTechChange[ aPeriod - 1 ] * 
+                    pow( ( 1.0 + mTechChange[ aPeriod ] ), modeltime->gettimestep( aPeriod ) );
     }
 
-    mCostCurve.setMidprice( mMidPrice / cumulativeTechChange[ aPeriod ] );
+    mCostCurve.setMidprice( mMidPrice / mCumulativeTechChange[ aPeriod ] );
 
 }
 

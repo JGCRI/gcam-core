@@ -110,7 +110,7 @@ void AccumulatedGrade::initCalc( const string& aRegionName, const string& aResou
     double accumulatedAmount = ( lastLastPerAmount + 0.5 * diffAmount ) * modeltime->gettimestep( aPeriod );
     // if assuming steady-state for nuclear breeder reactors
     //accumulatedAmount = ( lastPerAmount ) * modeltime->gettimestep( period );
-    available += accumulatedAmount; // add total accumulated from current period
+    mAvailable += accumulatedAmount; // add total accumulated from current period
 }
 
 /*! \brief Perform any initializations needed after each period.

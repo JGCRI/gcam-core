@@ -79,7 +79,7 @@ public:
     virtual void initCalc( const std::string& aRegionName, const int aPeriod );
     virtual void postCalc( const std::string& aRegionName, const int aPeriod );
     
-    void calcSupply( const std::string& regionName, const GDP* gdp, const int period );
+    void calcSupply( const std::string& aRegionName, const GDP* aGdp, const int aPeriod );
     virtual double getAnnualProd( const std::string& aRegionName, const int aPeriod ) const;
     void dbOutput( const std::string& regname ); 
     void csvOutputFile( const std::string& regname ); 
@@ -89,21 +89,21 @@ protected:
     typedef ObjECTS::TObjectMetaInfo<> object_meta_info_type;
     typedef std::vector<object_meta_info_type> object_meta_info_vector_type;
 
-    int nosubrsrc; //!< number of subsectors for each Resource
+    int mNumSubResource; //!< number of subsectors for each Resource
     std::auto_ptr<IInfo> mResourceInfo; //!< Pointer to the resource's information store.
-    std::vector<SubResource*> subResource; //!< subsector objects for each Resource
-    std::vector<double> rscprc; //!< Resource price
-    std::vector<double> available; //!< total Resource available
-    std::vector<double> annualprod; //!< annual production rate of Resource
-    std::vector<double> cummprod; //!< cumulative production of Resource
-    std::map<std::string,int> subResourceNameMap; //!< Map of subResource name to integer position in vector.
+    std::vector<SubResource*> mSubResource; //!< subsector objects for each Resource
+    std::vector<double> mResourcePrice; //!< Resource price
+    std::vector<double> mAvailable; //!< total Resource available
+    std::vector<double> mAnnualProd; //!< annual production rate of Resource
+    std::vector<double> mCumulProd; //!< cumulative production of Resource
+    std::map<std::string,int> mSubResourceNameMap; //!< Map of subResource name to integer position in vector.
     object_meta_info_vector_type mObjectMetaInfo; //!< Vector of object meta info to pass to the market
     virtual bool XMLDerivedClassParse( const std::string& aNodeName,
                                        const xercesc::DOMNode* aNode ) = 0;
     virtual const std::string& getXMLName() const = 0;
     void setMarket( const std::string& aRegionName );
-    virtual void annualsupply( const std::string& regionName, int per, const GDP* gdp, double price, double prev_price );
-    void cumulsupply( double prc, int per );
+    virtual void annualsupply( const std::string& aRegionName, int aPeriod, const GDP* aGdp, double aPrice, double aPrevPrice );
+    void cumulsupply( double aPrice, int aPeriod );
 };
 
 /*! 
