@@ -323,11 +323,14 @@ void PowerPlantCaptureComponent::adjustEnergyInput( IInput* aEnergyInput,
 {
     assert( aEnergyInput > 0 );
 
-    // Calculate effective intensity, increases the intensity by a penalty.
-    double adjustedIntensity = aEnergyInput->getCoefficient( aPeriod )
-                               + mCaptureEnergy
-                               * aEnergyInput->getCO2EmissionsCoefficient( mTargetGas, aPeriod )
-                               * mRemoveFraction;
+    // Calculate effective intensity: This increases the intensity by first converting
+	// to an efficiency then subtracting by the product of capture energy, CO2 coefficient
+	// and removal fraction, and finally converting back to an intensity.
+ 
+	double adjustedIntensity = 1/(1/aEnergyInput->getCoefficient( aPeriod ) 
+	                          - mCaptureEnergy
+	                          * aEnergyInput->getCO2EmissionsCoefficient( mTargetGas, aPeriod )
+	                          * mRemoveFraction);
 
     aEnergyInput->setCoefficient( adjustedIntensity, aPeriod );
 }
