@@ -2498,7 +2498,7 @@ public class DataBuilder
     String ref = null;
     String unit = null;
     double time = 0;
-    double res = dataStruct.getResolution();
+ 	double res = dataStruct.getResolution();
     double x, y, mult;
     boolean avg = true;
     boolean typeWarn = false;
@@ -2551,7 +2551,7 @@ public class DataBuilder
     {
       //dont want to add all this information if we already have!!!
       if(!init)
-      { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
+      { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use the *global* res
         dataStruct.fillWorld(res);
         init = true;
       }
@@ -2769,7 +2769,7 @@ public class DataBuilder
     List infoChildren;
     Element currElem;
     TreeMap timeValue;
-    Double dataValue;
+    Integer dataValue;
     DataBlock toAdd;
     TreeMap<String, Boolean> overwrite = new TreeMap<String, Boolean>();
     int skipLines = 0;
@@ -2914,10 +2914,10 @@ public class DataBuilder
         //System.out.println(k);
         if(dec)
         { //numbers stored in decimal format
-          dataValue = Double.valueOf(readWord(input));
+          dataValue = Integer.valueOf(readWord(input));
         } else
         { //numbers stored in scientific notation
-          dataValue = new Double(scientificToDouble(readWord(input)));
+          dataValue = Integer.valueOf( new Double(scientificToDouble(readWord(input))).toString() );
         }
         
         if(dataValue != NaN)
@@ -3493,7 +3493,7 @@ public class DataBuilder
     
     List infoChildren;
     Element currElem;
-    
+   
     String fileName = "init";
     String attrName = "init";
     String nameConvention = "natural";
@@ -3502,7 +3502,7 @@ public class DataBuilder
     String prefix = "";
     String ref = null;
     double time = 0;
-    double res = 1;
+ 	double res = dataStruct.getResolution();
     double x, y, mult;
     boolean avg = true; //avg is always true for coverage readings
     boolean typeWarn = false;
@@ -3580,7 +3580,7 @@ public class DataBuilder
   //done reading from XML file
     
     if(!init)
-    { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use this files res
+    { //IMPORTANT CODE- if this is first file read and user didnt specify a resolution use the *global* res
       dataStruct.fillWorld(res);
       init = true;
     }
@@ -4865,8 +4865,8 @@ public class DataBuilder
 	  }
 	  //done adding region masks
 	  
-	  // Write data to netCDF file. Comment out since won't use this very often.
-  	 // writeData.createNetCDFFileFromData(maskArray, numCols, numRows, fileName+".nc", res, baseYVal );
+	 // Write data to netCDF file. Comment out since won't use this very often.
+  	 // writeData.createNetCDFFileFromData(maskArray, numCols, numRows, fileName+".nc", res, baseYVal);
 	  
   }
   
