@@ -62,6 +62,7 @@ class Input;
 class AEmissionsDriver;
 class ICaptureComponent;
 class IInput;
+class CachedMarket;
 
 /*! 
  * \ingroup Objects
@@ -213,6 +214,10 @@ protected:
     std::vector<double> mEmissionsSequestered;
 
     std::auto_ptr<AEmissionsDriver> mEmissionsDriver; //!< emissions driver delegate
+    
+    //! Pre-located market which has been cached from the marketplace to get the price
+    //! of this ghg and add demands to the market.
+    std::auto_ptr<CachedMarket> mCachedMarket;
 
     /*!
      * \brief Parses any child nodes specific to derived classes

@@ -56,6 +56,7 @@
 #include "containers/include/dependency_finder.h"
 #include "containers/include/iinfo.h"
 #include "functions/include/function_utils.h"
+#include "marketplace/include/cached_market.h"
 
 using namespace std;
 using namespace xercesc;
@@ -287,6 +288,8 @@ void EnergyInput::initCalc( const string& aRegionName,
     else if( !mAdjustedCoefficients[ aPeriod ].isInited() ){
         mAdjustedCoefficients[ aPeriod ] = 1;
     }
+    
+    mCachedMarket = scenario->getMarketplace()->locateMarket( mName, aRegionName, aPeriod );
 }
 
 void EnergyInput::copyParam( const IInput* aInput,
@@ -331,9 +334,9 @@ void EnergyInput::setPhysicalDemand( double aPhysicalDemand,
                                      const int aPeriod )
 {
     mPhysicalDemand[ aPeriod ].set( aPhysicalDemand );
-    scenario->getMarketplace()->addToDemand( mName, aRegionName,
-                                             mPhysicalDemand[ aPeriod ],
-                                             aPeriod, true );
+    mCachedMarket->addToDemand( mName, aRegionName,
+                                       mPhysicalDemand[ aPeriod ],
+                                       aPeriod, true );
     mCarbonContent[ aPeriod ].set( aPhysicalDemand * mCO2Coefficient );
 }
 
@@ -358,7 +361,7 @@ double EnergyInput::getPrice( const string& aRegionName,
                               const int aPeriod ) const
 {
     return mPriceUnitConversionFactor *
-        scenario->getMarketplace()->getPrice( mName, aRegionName, aPeriod );
+        mCachedMarket->getPrice( mName, aRegionName, aPeriod );
 }
 
 void EnergyInput::setPrice( const string& aRegionName,

@@ -54,6 +54,7 @@
 
 class Tabs;
 class ICoefficient;
+class CachedMarket;
 
 /*! 
  * \ingroup Objects
@@ -191,6 +192,10 @@ protected:
     //! Current coefficient after adjustments have been made by the technology's
     //! capture component.
     std::vector<Value> mAdjustedCoefficients;
+    
+    //! A pre-located market which has been cahced from the marketplace to get
+    //! the price and add demands to.
+    std::auto_ptr<CachedMarket> mCachedMarket;
 
 private:
     const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 

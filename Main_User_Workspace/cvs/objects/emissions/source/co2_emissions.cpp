@@ -40,7 +40,6 @@
  */
 
 #include "util/base/include/definitions.h"
-//#include "emissions/include/aghg.h"
 
 #include "emissions/include/co2_emissions.h"
 #include "containers/include/scenario.h"
@@ -49,6 +48,7 @@
 #include "containers/include/iinfo.h"
 #include "technologies/include/ioutput.h"
 #include "technologies/include/icapture_component.h"
+#include "marketplace/include/cached_market.h"
 
 using namespace std;
 using namespace xercesc;
@@ -131,6 +131,7 @@ void CO2Emissions::initCalc( const string& aRegionName,
                              const IInfo* aLocalInfo,
                              const int aPeriod )
 {
+    mCachedMarket = scenario->getMarketplace()->locateMarket( getName(), aRegionName, aPeriod );
 }
 
 double CO2Emissions::getGHGValue( const std::string& aRegionName,
@@ -153,15 +154,14 @@ double CO2Emissions::getGHGValue( const std::string& aRegionName,
     double removeFraction = aSequestrationDevice ? aSequestrationDevice->getRemoveFraction( getName() ) : 0;
 
     // Get the greenhouse gas tax from the marketplace.
-    const Marketplace* marketplace = scenario->getMarketplace();
-    double GHGTax = marketplace->getPrice( getName(), aRegionName, aPeriod, false );
+    double GHGTax = mCachedMarket->getPrice( getName(), aRegionName, aPeriod, false );
 
     if( GHGTax == Marketplace::NO_MARKET_PRICE ){
         GHGTax = 0;
     }
     
     // Retrieve proportional tax rate.
-    const IInfo* marketInfo = marketplace->getMarketInfo( getName(), aRegionName, aPeriod, false );
+    const IInfo* marketInfo = mCachedMarket->getMarketInfo( getName(), aRegionName, aPeriod, false );
     // Note: the key includes the region name.
     const double proportionalTaxRate = 
         ( marketInfo && marketInfo->hasValue( "proportional-tax-rate" + aRegionName ) ) 
@@ -217,12 +217,13 @@ void CO2Emissions::calcEmission( const std::string& aRegionName,
     // the GHG.
     // This is wrong if capture occurs down the line.
     // TODO: Store this property in the output object.
+    /* TODO: this is SGM only and is currently not correct, will be fixed with the merge
     Marketplace* marketplace = scenario->getMarketplace();
     const IInfo* marketInfo = marketplace->getMarketInfo( aOutputs[ 0 ]->getName(),
         aRegionName, aPeriod, false );
     if( marketInfo && marketInfo->getBoolean( "IsPrimaryEnergyGood", false ) ){
         mEmissionsByFuel[ aPeriod ] = outputEmissions;
-    }
+    }*/
 
     // Store the total emissions.
     mEmissions[ aPeriod ] = totalEmissions;

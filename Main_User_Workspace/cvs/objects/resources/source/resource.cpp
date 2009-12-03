@@ -305,6 +305,10 @@ void Resource::initCalc( const string& aRegionName, const int aPeriod ) {
     for( unsigned int i = 0; i < ghg.size(); i++ ) {
         ghg[ i ]->initCalc( aRegionName, 0, aPeriod );
     }
+    
+    for( unsigned int i = 0; i < mOutputs.size(); i++ ) {
+        mOutputs[ i ]->initCalc( aRegionName, mName, aPeriod );
+    }
 }
 
 /*! \brief Perform any calculations needed for each period after solution is

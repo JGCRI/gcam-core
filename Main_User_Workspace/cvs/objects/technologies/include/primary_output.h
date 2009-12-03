@@ -50,6 +50,7 @@
 
 class Tabs;
 class DependencyFinder;
+class CachedMarket;
 
 #include "technologies/include/ioutput.h"
 #include "util/base/include/value.h"
@@ -76,6 +77,10 @@ public:
      * \param aSectorName Name of the sector and primary output.
      */
     PrimaryOutput( const std::string& aSectorName );
+    
+    PrimaryOutput( const PrimaryOutput& aPrimaryOutput );
+    
+    virtual ~PrimaryOutput();
 
     virtual PrimaryOutput* clone() const;
 
@@ -158,6 +163,9 @@ protected:
 
     //! CO2 emissions coefficient cached from the marketplace.
     Value mCachedCO2Coef;
+    
+    //! A pre-located market which has been cached from the marketplace to add supply to.
+    std::auto_ptr<CachedMarket> mCachedMarket;
 
 private:
     const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 

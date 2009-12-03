@@ -49,6 +49,7 @@
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/ivisitor.h"
 #include "functions/include/function_utils.h"
+#include "marketplace/include/cached_market.h"
 
 using namespace std;
 using namespace xercesc;
@@ -62,6 +63,22 @@ PrimaryOutput::PrimaryOutput( const string& aSectorName )
     : mPhysicalOutputs( scenario->getModeltime()->getmaxper() ), // Name of the primary output is the sector name.
 mName( aSectorName )
 {
+}
+
+/*!
+ * \brief Copy constructor.
+ * \note This class requires a copy constructor because it has dynamically
+ *          allocated memory.
+ * \param aPrimaryOutput Primary output from which to copy.
+ */
+PrimaryOutput::PrimaryOutput( const PrimaryOutput& aPrimaryOutput )
+    : mPhysicalOutputs( scenario->getModeltime()->getmaxper() ),
+mName( aPrimaryOutput.mName )
+{
+    // not copying outputs or coefs is this fine?
+}
+
+PrimaryOutput::~PrimaryOutput() {
 }
 
 PrimaryOutput* PrimaryOutput::clone() const
@@ -134,6 +151,8 @@ void PrimaryOutput::initCalc( const string& aRegionName,
 
     // Initialize the cached CO2 coefficient.
     mCachedCO2Coef.set( FunctionUtils::getCO2Coef( aRegionName, aSectorName, aPeriod ) );
+    
+    mCachedMarket = scenario->getMarketplace()->locateMarket( mName, aRegionName, aPeriod );
 }
 
 void PrimaryOutput::postCalc( const string& aRegionName,
@@ -170,8 +189,7 @@ void PrimaryOutput::setPhysicalOutput( const double aPrimaryOutput,
     // Add the primary output to the marketplace.
     // TODO: Once demand sectors are separated this should be changed.
     if( aPrimaryOutput > util::getSmallNumber() ){
-        Marketplace* marketplace = scenario->getMarketplace();
-        marketplace->addToSupply( mName, aRegionName, aPrimaryOutput, aPeriod, false );
+        mCachedMarket->addToSupply( mName, aRegionName, aPrimaryOutput, aPeriod, false );
     }
 }
 

@@ -56,6 +56,7 @@ class Market;
 class MarketLocator;
 class IVisitor;
 class IInfo;
+class CachedMarket;
 
 /*! 
  * \ingroup Objects
@@ -164,6 +165,9 @@ public:
 
     IInfo* getMarketInfo( const std::string& aGoodName, const std::string& aRegionName,
                          const int aPeriod, const bool aMustExist );
+    
+    std::auto_ptr<CachedMarket> locateMarket( const std::string& aGoodName, const std::string& aRegionName,
+                                               const int aPeriod ) const;
 
     void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     void accept( IVisitor* aVisitor, const int aPeriod ) const;

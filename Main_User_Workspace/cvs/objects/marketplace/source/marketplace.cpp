@@ -55,6 +55,7 @@
 #include "marketplace/include/market_locator.h"
 #include "util/base/include/ivisitor.h"
 #include "containers/include/iinfo.h"
+#include "marketplace/include/cached_market.h"
 
 using namespace std;
 
@@ -768,6 +769,30 @@ IInfo* Marketplace::getMarketInfo( const string& aGoodName, const string& aRegio
                 << aGoodName << " in " << aRegionName << " does not exist." << endl;
     }
     return info;
+}
+
+/*!
+ * \brief Locate the market for the given good, region, and period.
+ * \details Returns a CachedMarket that wraps the found Market object so that
+ *          only functionality provided through the marketplace will be available.
+ *          Note that it is not an error to locate a market which does not exist
+ *          and calls to methods of a CachedMarket which did not exist will have the
+ *          same behavior as the equivalent method in this class.
+ * \param aGoodName The good of the market to locate.
+ * \param aRegionName The region of the market to locate.
+ * \param aPeriod The period for which to locate.
+ * \return A CachedMarket object which wraps the requested market.  This will always
+ *         be a valid object regardless of if the market was not found.
+ * \see CachedMarket
+ */
+auto_ptr<CachedMarket> Marketplace::locateMarket( const string& aGoodName, const string& aRegionName,
+                                                  const int aPeriod ) const
+{
+    const int marketNumber = mMarketLocator->getMarketNumber( aRegionName, aGoodName );
+    auto_ptr<CachedMarket> locatedMarket( new CachedMarket( aGoodName, aRegionName, aPeriod,
+                                                            marketNumber != MarketLocator::MARKET_NOT_FOUND ?
+                                                            markets[ marketNumber ][ aPeriod ] : 0 ) );
+    return locatedMarket;
 }
 
 /*! \brief Write out the market information to the database.

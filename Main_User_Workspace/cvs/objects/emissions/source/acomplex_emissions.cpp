@@ -61,6 +61,7 @@
 #include "emissions/include/read_emissions_coef.h"
 #include "emissions/include/aggr_emissions_coef.h"
 #include "functions/include/function_utils.h"
+#include "marketplace/include/cached_market.h"
 
 using namespace std;
 using namespace xercesc;
@@ -206,13 +207,11 @@ double AComplexEmissions::getGHGValue( const string& aRegionName,
                                        const vector<IOutput*>& aOutputs,
                                        const ICaptureComponent* aSequestrationDevice,
                                         const int aPeriod ) const 
-{
-    const Marketplace* marketplace = scenario->getMarketplace();
-    
+{   
     // Constants
     const double CVRT90 = 2.212; // 1975 $ to 1990 $
     
-    double GHGTax = marketplace->getPrice( getName(), aRegionName, aPeriod, false );
+    double GHGTax = mCachedMarket->getPrice( getName(), aRegionName, aPeriod, false );
     if( GHGTax == Marketplace::NO_MARKET_PRICE ){
         GHGTax = 0;
     }
@@ -503,6 +502,7 @@ void AComplexEmissions::initCalc( const string& aRegionName,
         }
     }
 
+    mCachedMarket = scenario->getMarketplace()->locateMarket( getName(), aRegionName, aPeriod );
 }
 
 

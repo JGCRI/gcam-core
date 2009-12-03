@@ -59,6 +59,7 @@
 #include "technologies/include/ioutput.h"
 #include "emissions/include/aemissions_driver.h"
 #include "emissions/include/emissions_driver_factory.h"
+#include "marketplace/include/cached_market.h"
 
 using namespace std;
 using namespace xercesc;
@@ -201,9 +202,9 @@ void AGHG::addEmissionsToMarket( const string& aRegionName, const int aPeriod ){
     // Emissions can be positive or negative.
     if( !util::isEqual( mEmissions[ aPeriod ], 0.0 ) ){
         // set emissions as demand side of gas market
-        scenario->getMarketplace()->addToDemand( getName(), aRegionName,
-                                                mEmissions[ aPeriod ],
-                                                aPeriod, false );
+        mCachedMarket->addToDemand( getName(), aRegionName,
+                                               mEmissions[ aPeriod ],
+                                               aPeriod, false );
     }
 }
 
@@ -222,8 +223,7 @@ double AGHG::getGHGValue( const IInput* aInput, const string& aRegionName,
                           const string& aGoodName, const int aPeriod ) const
 {
     // Determine if there is a tax.
-    const Marketplace* marketplace = scenario->getMarketplace();
-    double ghgTax = marketplace->getPrice( getName(), aRegionName, aPeriod, false );
+    double ghgTax = mCachedMarket->getPrice( getName(), aRegionName, aPeriod, false );
     if( ghgTax == Marketplace::NO_MARKET_PRICE ){
         ghgTax = 0;
     }

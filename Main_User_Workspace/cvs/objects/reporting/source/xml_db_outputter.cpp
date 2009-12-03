@@ -823,11 +823,14 @@ void XMLDBOutputter::startVisitInput( const IInput* aInput, const int aPeriod ) 
         attrs[ "vintage" ] = util::toString( currYear );
         // Avoid writing zeros to save space.
         // Write price paid for input.
-        double currValue = aInput->getPricePaid( mCurrentRegion, i );
-        if( !objects::isEqual<double>( currValue, 0.0 ) ) {
-            attrs[ "unit" ] = mCurrentPriceUnit;
-            XMLWriteElementWithAttributes( currValue, "price-paid", *childBuffer,
-                mTabs.get(), attrs );
+        double currValue;
+        if( !aInput->hasTypeFlag( IInput::ENERGY ) ) {
+            currValue = aInput->getPricePaid( mCurrentRegion, i );
+            if( !objects::isEqual<double>( currValue, 0.0 ) ) {
+                attrs[ "unit" ] = mCurrentPriceUnit;
+                XMLWriteElementWithAttributes( currValue, "price-paid", *childBuffer,
+                    mTabs.get(), attrs );
+            }
         }
 
         // Write physical demand (not currency demand) for input.
