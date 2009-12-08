@@ -670,6 +670,36 @@ public final class ComponentManipulator
     }
     return toReturn;
   }
+  public static Wrapper[] maskRemain(Wrapper[] R, double remainVal)
+{ //0 is defined as removed, all other values stay
+    log.log(Level.FINER, "begin function");
+    double[][] holdMR;
+    double[][] holdMS;
+    Wrapper[] toReturn = new Wrapper[R.length];
+    
+    for(int i = 0; i < R.length; i++)
+    {
+      holdMS = R[i].data;
+      holdMR = new double[holdMS.length][holdMS[0].length];
+      for(int iY = 0; iY < holdMR.length; iY++)
+      {
+        for(int iX = 0; iX < holdMR[0].length; iX++)
+        {
+          if(holdMS[iY][iX] == remainVal)
+          {
+              holdMR[iY][iX] = holdMS[iY][iX];
+          } else
+          {
+            holdMR[iY][iX] = Double.NaN;
+          }
+        }
+      }
+
+      toReturn[i] = R[i].makeCopy();
+      toReturn[i].data = holdMR;
+    }
+    return toReturn;
+  }
   public static Wrapper[] maskRemainWeight(Wrapper[] R, Wrapper[] M, double limit)
   { //0 is defined as removed, all other values stay
     //reamaining values weighted based on mask value
@@ -697,6 +727,37 @@ public final class ComponentManipulator
             {
               holdMR[iY][iX] = Double.NaN;
             }
+          } else
+          {
+            holdMR[iY][iX] = Double.NaN;
+          }
+        }
+      }
+
+      toReturn[i] = R[i].makeCopy();
+      toReturn[i].data = holdMR;
+    }
+    return toReturn;
+  }
+  public static Wrapper[] maskRemainWeight(Wrapper[] R, double remainVal)
+{ //0 is defined as removed, all other values stay
+    //reamaining values weighted based on mask value
+    log.log(Level.FINER, "begin function");
+    double[][] holdMR;
+    double[][] holdMS;
+    Wrapper[] toReturn = new Wrapper[R.length];
+    
+    for(int i = 0; i < R.length; i++)
+    {
+      holdMS = R[i].data;
+      holdMR = new double[holdMS.length][holdMS[0].length];
+      for(int iY = 0; iY < holdMR.length; iY++)
+      {
+        for(int iX = 0; iX < holdMR[0].length; iX++)
+        {
+          if(holdMS[iY][iX] == remainVal)
+          {
+              holdMR[iY][iX] = (holdMS[iY][iX]*remainVal);
           } else
           {
             holdMR[iY][iX] = Double.NaN;
@@ -747,6 +808,35 @@ public final class ComponentManipulator
     }
     return toReturn;
   }
+  public static Wrapper[] maskRemove(Wrapper[] R, double removeVal)
+{ //0 is defined as remains, all other values are removed
+    log.log(Level.FINER, "begin function");
+    double[][] holdMR;
+    double[][] holdMS;
+    Wrapper[] toReturn = new Wrapper[R.length];
+    
+    for(int i = 0; i < R.length; i++)
+    {
+      holdMS = R[i].data;
+      holdMR = new double[holdMS.length][holdMS[0].length];
+      for(int iY = 0; iY < holdMR.length; iY++)
+      {
+        for(int iX = 0; iX < holdMR[0].length; iX++)
+        {
+          if(holdMS[iY][iX] == removeVal)
+          {
+              holdMR[iY][iX] = Double.NaN;
+          } else {
+              holdMR[iY][iX] = (holdMS[iY][iX]);
+          }
+        }
+      }
+
+      toReturn[i] = R[i].makeCopy();
+      toReturn[i].data = holdMR;
+    }
+    return toReturn;
+  }
   public static Wrapper[] maskRemoveWeight(Wrapper[] R, Wrapper[] M, double limit)
   { //0 is defined as remains, all other values are removed
     //remaining values weighted based on mask value
@@ -778,6 +868,37 @@ public final class ComponentManipulator
               holdMR[iY][iX] = (holdMS[iY][iX]*(1-holdMM[iY][iX]));
             }
           }
+        }
+      }
+
+      toReturn[i] = R[i].makeCopy();
+      toReturn[i].data = holdMR;
+    }
+    return toReturn;
+  }
+  public static Wrapper[] maskRemoveWeight(Wrapper[] R, double removeVal)
+{ //0 is defined as remains, all other values are removed
+    //remaining values weighted based on mask value
+    log.log(Level.FINER, "begin function");
+    double[][] holdMR;
+    double[][] holdMS;
+    Wrapper[] toReturn = new Wrapper[R.length];
+    
+    for(int i = 0; i < R.length; i++)
+    {
+      holdMS = R[i].data;
+      holdMR = new double[holdMS.length][holdMS[0].length];
+      for(int iY = 0; iY < holdMR.length; iY++)
+      {
+        for(int iX = 0; iX < holdMR[0].length; iX++)
+        {
+            if(holdMS[iY][iX] == removeVal)
+            {
+              holdMR[iY][iX] = Double.NaN;
+            } else
+            {
+              holdMR[iY][iX] = (holdMS[iY][iX]*(removeVal));
+            }
         }
       }
 
@@ -1742,5 +1863,182 @@ public final class ComponentManipulator
 		    }
 	    }
     }
+  }
+  /**
+   * Calculate minimum distance from distanceFrom to targetData.  This algorithm take a brute force approach
+   * to find this value by calculating the distance between each non-NaN value (and where values in distanceFrom
+   * are greater than the minDataValue threshold) and keeping track of the min.  This command utilizes the
+   * DistanceStruct to help organize and keep track of results as well as calculute distance.
+   * @param distanceFrom Var to calc distance from such as land.
+   * @param distanceFromWeight The weights for distanceFrom since for ties in distance we want
+   * 			       to use the region ID of the region with the greater weight.
+   * @param targetData Var to calc distance to such as offshore wind.
+   * @param distanceOut The var which min distance results will be stored in.
+   * @param regionMaskOut The var in which closest region's region ID will be stored.
+   * @param regionLevel The region level to use when getting a region ID.
+   * @param minDataValue The minimum data value in distanceFrom to consider.
+   */
+  public static void distanceToData(Wrapper[] distanceFrom, Wrapper[] distanceFromWeight, Wrapper[] targetData, Wrapper[] distanceOut, Wrapper[] regionMaskOut, int regionLevel, double minDataValue) {
+	  List<DistanceStruct> distancesToFind = new ArrayList<DistanceStruct>();
+
+	  // initialize the output var and set up the list of grid cells which need to get calculated
+	  for(int rIndex = 0; rIndex < targetData.length; ++rIndex) {
+		  // all latitude and longitudes are in radians
+		  double currLat = targetData[rIndex].getY() * (Math.PI / 180);
+		  double currLon = targetData[rIndex].getX() * (Math.PI / 180);
+		  double res = targetData[rIndex].getRes() * (Math.PI / 180);
+		  double[][] currDataArr = targetData[rIndex].getData();
+		  double[][] currDistanceArr = new double[currDataArr.length][currDataArr[0].length];
+		  double[][] currRegionArr = new double[currDataArr.length][currDataArr[0].length];
+		  distanceOut[rIndex].setData(currDistanceArr);
+		  regionMaskOut[rIndex].setData(currRegionArr);
+
+		  // go through the data arr backwards since targetData.getY is of the lower corner
+		  // and row 0 is the upper corner
+		  for(int row = currDataArr.length-1; row >= 0; --row) {
+			  currLon = targetData[rIndex].getX() * (Math.PI / 180);
+			  for(int col = 0; col < currDataArr[0].length; ++col) {
+				  if(Double.isNaN(currDataArr[row][col])) {
+					  // if the target data is NaN at this grid cell we won't
+					  // consider it
+					  currDistanceArr[row][col] = Double.NaN;
+					  currRegionArr[row][col] = Double.NaN;
+				  } else {
+					  // we must find the min distance to this grid cell
+					  // start with a min of MAX_VALUE so that the next
+					  // distance comparison will be less than it
+					  currDistanceArr[row][col] = Double.MAX_VALUE;
+					  // the DistanceStruct represents a single cell in
+					  // targetData/distanceOut/regionMaskOut all of which
+					  // are of the same shape
+					  distancesToFind.add(new DistanceStruct(currLat, currLon, distanceOut[rIndex],
+								  regionMaskOut[rIndex], row, col));
+				  }
+				  currLon += res;
+			  }
+			  currLat += res;
+		  }
+	  }
+
+	  // process each cell for which we are calculating distance from
+	  for(int rIndex = 0; rIndex < distanceFrom.length; ++rIndex) {
+		  // all latitude and longitudes are in radians
+		  double currLat = distanceFrom[rIndex].getY() * (Math.PI / 180);
+		  double currLon = distanceFrom[rIndex].getX() * (Math.PI / 180);
+		  double res = distanceFrom[rIndex].getRes() * (Math.PI / 180);
+		  double[][] currDataArr = distanceFrom[rIndex].getData();
+		  double[][] currWeightArr = distanceFromWeight[rIndex].getData();
+		  double currRegionID = distanceFrom[rIndex].getInternalRegionID(regionLevel);
+
+		  // go through the data arr backwards since distanceFrom.getY is of the lower corner
+		  // and row 0 is the upper corner
+		  for(int row = currDataArr.length-1; row >= 0; --row) {
+			  currLon = distanceFrom[rIndex].getX() * (Math.PI / 180);
+			  for(int col = 0; col < currDataArr[0].length; ++col) {
+				  // only consider cells which are non-NaN and the value is above the
+				  // min value threshold
+				  if(!Double.isNaN(currDataArr[row][col]) && currDataArr[row][col] >= minDataValue) {
+					  double currWeight = currWeightArr[row][col];
+					  // brute force search through all valid distance to cells
+					  for(Iterator<DistanceStruct> it = distancesToFind.iterator(); it.hasNext(); ) {
+						  DistanceStruct currStruct = it.next();
+						  double distance = currStruct.getDistanceTo(currLat, currLon);
+						  // set a new min distance if the curr distance is less the current min
+						  // or there is a tie in distance but the current region's cell weight
+						  // is greater than the curr region's cell weight
+						  if(distance < currStruct.getCurrMinDistance() || (distance == currStruct.getCurrMinDistance() && currWeight > currStruct.getCurrRegionWeight())) {
+							  currStruct.setDistance(distance, currRegionID, currWeight);
+						  }
+					  }
+				  }
+				  currLon += res;
+			  }
+			  currLat += res;
+		  }
+	  }
+  }
+  /**
+   * Create a mask out of distanceFrom and extend it to include grid cells within the given distance threshold.
+   * This algorithm does a brute force search from valid values in distanceFrom(non-NaN and values greater than
+   * minDataValue) to ANY cell in targetData.  Note that this command is very time intensive since there are no
+   * constraints in targetData even though chances are most cells would not be contained in the mask.
+   * @param distanceFrom The var to start the a distance search from.
+   * @param targetData The var to calc distances to, should the distance be less than or equal to maxDistance
+   * 		       distanceOut will be set with a value of 1.
+   * @param distanceOut The output mask with a value of 1 for any cell a with a distance less than or equal to
+   * 			maxDistance to distanceFrom
+   * @param maxDistance A max distance threshold in km.
+   * @param minDataValue A minimum value threshold of data in distanceFrom to consider.
+   */
+  public static void maskDistanceFrom(Wrapper[] distanceFrom, Wrapper[] targetData, Wrapper[] distanceOut, double maxDistance, double minDataValue) {
+	  // use a linked list since all we need is sequential access and will be preforming random
+	  // deletes which should suits a linked list better than an array based list
+	  List<DistanceStruct> distancesToFind = new LinkedList<DistanceStruct>();
+
+	  // initialize the output var and set up the list of grid cells which need to get calculated
+	  for(int rIndex = 0; rIndex < targetData.length; ++rIndex) {
+		  // all latitude and longitudes are in radians
+		  double currLat = targetData[rIndex].getY() * (Math.PI / 180);
+		  double currLon = targetData[rIndex].getX() * (Math.PI / 180);
+		  double res = targetData[rIndex].getRes() * (Math.PI / 180);
+		  double[][] currDataArr = targetData[rIndex].getData();
+		  double[][] currDistanceArr = new double[currDataArr.length][currDataArr[0].length];
+		  distanceOut[rIndex].setData(currDistanceArr);
+
+		  // go through the data arr backwards since targetData.getY is of the lower corner
+		  // and row 0 is the upper corner
+		  for(int row = currDataArr.length-1; row >= 0; --row) {
+			  currLon = targetData[rIndex].getX() * (Math.PI / 180);
+			  for(int col = 0; col < currDataArr[0].length; ++col) {
+				  // initialize the mask with all NaNs and ALL cells will be
+				  // considered for inclusion into the mask
+				  currDistanceArr[row][col] = Double.NaN;
+				  // note that we are not concerned about region masks so just pass null
+				  // the DistanceStruct will know to ignore it
+				  distancesToFind.add(new DistanceStruct(currLat, currLon, distanceOut[rIndex],
+							  null, row, col));
+				  currLon += res;
+			  }
+			  currLat += res;
+		  }
+	  }
+
+	  // process each cell for which we are calculating distance from
+	  for(int rIndex = 0; rIndex < distanceFrom.length; ++rIndex) {
+		  // all latitude and longitudes are in radians
+		  double currLat = distanceFrom[rIndex].getY() * (Math.PI / 180);
+		  double currLon = distanceFrom[rIndex].getX() * (Math.PI / 180);
+		  double res = distanceFrom[rIndex].getRes() * (Math.PI / 180);
+		  double[][] currDataArr = distanceFrom[rIndex].getData();
+
+		  // go through the data arr backwards since distanceFrom.getY is of the lower corner
+		  // and row 0 is the upper corner
+		  for(int row = currDataArr.length-1; row >= 0; --row) {
+			  currLon = distanceFrom[rIndex].getX() * (Math.PI / 180);
+			  for(int col = 0; col < currDataArr[0].length; ++col) {
+				  // only consider cells which are non-NaN and the value is above the
+				  // min value threshold
+				  if(!Double.isNaN(currDataArr[row][col]) && currDataArr[row][col] >= minDataValue) {
+					  // brute force search through all valid distance to cells
+					  for(Iterator<DistanceStruct> it = distancesToFind.iterator(); it.hasNext(); ) {
+						  DistanceStruct currStruct = it.next();
+						  double distance = currStruct.getDistanceTo(currLat, currLon);
+						  // if the distance is less than or equal to the maxDistance
+						  // threshold then set the mask to a value of 1
+						  if(distance <= maxDistance) {
+							  // we don't need to worry about region IDs so just pass
+							  // anything
+							  currStruct.setDistance(1, 0, 0);
+							  // since this value has already been set we won't need to
+							  // consider it again so remove it from the cells to search
+							  it.remove();
+						  }
+					  }
+				  }
+				  currLon += res;
+			  }
+			  currLat += res;
+		  }
+	  }
   }
 }

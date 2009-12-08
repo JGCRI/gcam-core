@@ -42,6 +42,7 @@ public class ReferenceWrapper extends Wrapper
   double y;
   double height;
   double width;
+  Region wrappedRegion;
   
   //***************************************************************************
   
@@ -58,6 +59,7 @@ public class ReferenceWrapper extends Wrapper
     y = 0;
     height = 0;
     width = 0;
+    wrappedRegion = null;
   }
   /**
    * Copy Constructor which does NOT take data only size information.
@@ -72,6 +74,7 @@ public class ReferenceWrapper extends Wrapper
     height = copy.height;
     width = copy.width;
     mask = copy.mask;
+    wrappedRegion = copy.wrappedRegion;
     //doesnt copy data, initializes it?
   }
   /**
@@ -90,6 +93,7 @@ public class ReferenceWrapper extends Wrapper
     width = r.width;
     data = new double[(int)Math.round(height/res)][(int)Math.round(width/res)];
     mask = r.getBitMask();
+    wrappedRegion = r;
   }
   /**
    * Simulated region-based DataWrapper constuctor. Passed values give the
@@ -112,6 +116,8 @@ public class ReferenceWrapper extends Wrapper
     width = W;
     data = new double[(int)(H/res)][(int)(W/res)];
     mask = new byte[(int)(H/res)][(int)(W/res)];
+    // don't really have a region
+    wrappedRegion = null;
   }
   
   //***************************************************************************
@@ -193,5 +199,9 @@ public class ReferenceWrapper extends Wrapper
         out.write(data[i][data[0].length-1]+"");
       out.newLine();
     }
+  }
+
+  public double getInternalRegionID(int level) {
+	  return wrappedRegion != null ? wrappedRegion.getInternalID(level) : -1;
   }
 }

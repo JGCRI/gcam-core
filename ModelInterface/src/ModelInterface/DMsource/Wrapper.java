@@ -67,4 +67,13 @@ public abstract class Wrapper
   public abstract boolean isData();
   
   public abstract void printStandard(BufferedWriter out) throws IOException;
+
+  /**
+   * Get the internal region ID for the wrapped data at the given level.  If
+   * this wrapper does not have an associated reigon then -1 will be returned.
+   * @param level The level at which to get the region ID.
+   * @return The internal reigon ID or -1 if not applicable.
+   * @see Region.getInternalID
+   */
+  public abstract double getInternalRegionID(int level);
 }

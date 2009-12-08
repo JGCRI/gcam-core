@@ -55,6 +55,16 @@ public abstract class Region extends Rectangle2D.Double
   public double resolution; //how large each block of the matricies are
   public int numSub; //number of sub regions this region contains will normally be 0
   public int level; //the level of this region as defined in the early XML file
+  /**
+   * A unique number that can be used internally to create region masks necesarry
+   * for some commands such as finding distance to off shore wind resources.
+   */
+  public double regionID = -1; 
+  /**
+   * A pointer to a Region that contains this one.  WARNING: this does not properly
+   * handle the case where a Region is contained by multiple Regions.
+   */
+  public Region parentRegion = null;
   
   public abstract boolean isSuper();
   /**
@@ -129,5 +139,18 @@ public abstract class Region extends Rectangle2D.Double
       }
       System.out.print("\n");
     }
+  }
+  /**
+   * Get the internal ID for the region at the given level.  This method
+   * allows users flexiblity to create masks with varying granularity.  Note
+   * that levels are not necessarily kept track of to ensure proper ordering so
+   * we do this check like: this.level &ge; level or there is parent region
+   * the return regionID otherwise ask the parent region.  WARNING this would
+   * not properly handle regions contained under multiple superRegions.
+   * @param level The level at which we want the region ID.
+   * @return The region ID of the Region that is the closest match the given level.
+   */
+  public double getInternalID(int level) {
+	  return this.level >= level || parentRegion == null ? regionID : parentRegion.getInternalID(level);
   }
 }

@@ -133,4 +133,9 @@ public class DataWrapper extends Wrapper
       out.newLine();
     }
   }
+
+  public double getInternalRegionID(int level) {
+	  // does not make sense for a data wrapper
+	  return -1;
+  }
 }

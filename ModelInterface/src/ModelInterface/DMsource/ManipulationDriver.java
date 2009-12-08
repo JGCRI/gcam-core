@@ -209,11 +209,12 @@ public class ManipulationDriver
     }
     log.log(Level.FINEST, "begin adding superregions loop");
     //BEGIN MAIN LOOP FOR READING SUPER REGIONS
+    int internalRegionIDCount = 0;
     for(int i = 0; i < numLevels; i++)
     {
       for(int j = 0; j < superChildren[i].size(); j++)
       {
-        addSuperRegion((Element)superChildren[i].get(j));
+        internalRegionIDCount = addSuperRegion((Element)superChildren[i].get(j), internalRegionIDCount);
       }
     }
     //END MAIN LOOP FOR SUPER REGION CREATION
@@ -1303,6 +1304,20 @@ public class ManipulationDriver
     {
       limit = 0;
     }
+
+    if(!VMask.isReference()) {
+	    double maskVal = VMask.getData()[0].getData()[0][0];
+	    VD = VSource.getShape(VDname);
+	    variableList.put(VDname, VD);
+	    if(toWeight)
+	    {
+		    VD.setData(ComponentManipulator.maskRemainWeight(VSource.getData(), maskVal));
+	    } else
+	    {
+		    VD.setData(ComponentManipulator.maskRemain(VSource.getData(), maskVal));
+	    }
+	    return;
+    }
     
     if(VSource.sameShape(VMask))
     {
@@ -1367,6 +1382,20 @@ public class ManipulationDriver
       userLimit = true;
     }
     
+    if(!VMask.isReference()) {
+	    double maskVal = VMask.getData()[0].getData()[0][0];
+	    VD = VSource.getShape(VDname);
+	    variableList.put(VDname, VD);
+	    if(toWeight)
+	    {
+		    VD.setData(ComponentManipulator.maskRemoveWeight(VSource.getData(), maskVal));
+	    } else
+	    {
+		    VD.setData(ComponentManipulator.maskRemove(VSource.getData(), maskVal));
+	    }
+	    return;
+    }
+
     if(VSource.sameShape(VMask))
     {
       VD = VSource.getShape(VDname);
@@ -2810,13 +2839,13 @@ public class ManipulationDriver
 			  } else {
 				  missingValue = Float.NaN; // default value
 			  }
-			  ncfile.addVariableAttribute(var.name, "missing_value", missingValue);
+			  ncfile.addVariableAttribute(var.name, "_FillValue", missingValue);
 
 			  // Overwrite missing value in netCDF file to test if actual value was written. 
 			  // This is useful since Panoply (as of Feb 2009) display the missing_value as NaN no matter what.
 			  if(  !(currInfo == null) && !(currInfo.getAttributeValue( "missing_value_test" ) == null) )
 			  {
-				  ncfile.addVariableAttribute( var.name,"missing_value", currInfo.getAttributeValue("missing_value_test") );
+				  ncfile.addVariableAttribute( var.name,"_FillValue", currInfo.getAttributeValue("missing_value_test") );
 			  }
 
 			  if(  !(currInfo == null) && !(currInfo.getAttributeValue( "longName" ) == null) )
@@ -2884,10 +2913,13 @@ public class ManipulationDriver
 				  {
 					  for(int j = 0; j < lonDim.getLength(); j++)
 					  {
-						  if ( Double.isNaN( myData[i][j] ) ) {
+						  // we want to flip the y so that (0,0) in the matrix
+						  // is the lower left i.e. (-90, -180)
+						  double currVal =  myData[(latDim.getLength() - i) - 1][j];
+						  if ( Double.isNaN(currVal) ) {
 							  dataArr.setFloat( ima.set(t,i,j), missingValue );
 						  } else {
-							  dataArr.setFloat( ima.set(t,i,j), (float)myData[i][j] );
+							  dataArr.setFloat( ima.set(t,i,j), (float)currVal );
 						  }
 					  }
 				  }
@@ -2915,11 +2947,13 @@ public class ManipulationDriver
 		  Index iml = latArr.getIndex();
 		  // want the index to be in the middle of the grid cell
 		  // so we shift half a res down from the top
-		  degHold = (float)(90.0 - (res / 2));
+		  // also we are starting at the lower left so start
+		  // degHold at -90 and move up
+		  degHold = (float)(-90.0 + (res / 2));
 		  for(int i = 0; i < latDim.getLength(); i++)
 		  {
 			  latArr.setFloat(iml.set(i), degHold);
-			  degHold -= res;
+			  degHold += res;
 		  }
 		  //filling array with longitude degrees
 		  iml = lonArr.getIndex();
@@ -3707,8 +3741,11 @@ public class ManipulationDriver
    * form it gets it in, as a collection of matrices one for each contained 
    * sub-region.
    * @param currRegion XML element which contains a list of contained regions.
+   * @param internalRegionIDCount A count to assign unique region IDs to all
+   * 				  created regions.
+   * @return The current region ID count
    */
-  private void addSuperRegion(Element currRegion)
+  private int addSuperRegion(Element currRegion, int internalRegionIDCount)
   {
     log.log(Level.FINER, "begin function");
     List subRegions;
@@ -3719,6 +3756,7 @@ public class ManipulationDriver
     toAdd.name = currRegion.getAttributeValue("name");
     toAdd.resolution = resolution;
     toAdd.level = Integer.parseInt(currRegion.getAttributeValue("level"));
+    toAdd.regionID = ++internalRegionIDCount;
     
     //begin loop to add subregions to this superregion
     subRegions = currRegion.getChildren("region");
@@ -3729,6 +3767,12 @@ public class ManipulationDriver
         sub = (Region)regionList.get(((Element)subRegions.get(i)).getAttributeValue("name"));
         toAdd.data.add(sub);
         toAdd.numSub += sub.numSub;
+	if(sub.regionID == -1) {
+		sub.regionID = ++internalRegionIDCount;
+	}
+	// WARNING: this implies the last super region to contain this region will be called
+	// it's parent
+	sub.parentRegion = toAdd;
         //updating superregions bounds if necessary
         if(toAdd.height==-1)
         { //this is the first block being added to this region nothing to
@@ -3766,6 +3810,7 @@ public class ManipulationDriver
     //end adding regions
     
     regionList.put(toAdd.name, toAdd);
+    return internalRegionIDCount;
   }
 
   /**
@@ -3957,6 +4002,152 @@ public class ManipulationDriver
 	  if(forceGC) {
 		  log.log(Level.FINER, "Forcing garbage collection");
 		  System.gc();
+	  }
+  }
+
+  /**
+   * Calculate the minimum distance(in km) from a reference variable such as land to another
+   * reference variable such as offshore wind resource.  The result will be a reference variable
+   * of the same shape as the distance to variable filled with the minimum distance to each cell.
+   * Note that it is also useful to know which region was closest so a second output variable,
+   * target region mask is also provided which is filled with the internal region ID of the closest
+   * region.  This command provides the user to supply a parameter for the minimum value threshold
+   * in the distance from variable to consider as well the region level to use when filling the
+   * target region mask output variable.
+   * @param command An XML command in the follow format:
+   * <p>
+   * <calcMinDistanceTo>
+   *     <target name="[output with min distance]" />
+   *     <targetRegionMask name="[output with the closest region's ID]" />
+   *     <regionLevel value="[integer value represnting the region level for targetRegionMask]" />
+   *     <distanceFrom name="[variable where the algorithm will search from]" />
+   *     <distanceFromThreshold value="[optional param(default 0) minimum value to consider in distanceFrom" />
+   *     <distanceTo name="[variable where the algorithm will calc a distance to]" />
+   * </calcMinDistanceTo>
+   * </p>
+   */
+  private void calcMinDistanceToCommand(Element command) {
+	  log.log(Level.FINER, "begin function");
+	  Element currInfo;
+	  String valueTemp;
+	  currInfo = command.getChild("regionLevel");
+	  int regionLevel = Integer.parseInt(currInfo.getAttributeValue("value"));
+	  currInfo = command.getChild("distanceFromThreshold");
+	  double distanceFromThreshold = currInfo != null ? Double.parseDouble(currInfo.getAttributeValue("value")) : 0;
+	  currInfo = command.getChild("distanceFrom");
+	  Variable distanceFrom = getVariable(currInfo.getAttributeValue("name"));
+	  currInfo = command.getChild("distanceTo");
+	  Variable targetData = getVariable(currInfo.getAttributeValue("name"));
+
+	  // both the target and target region mask take the same shape as distanceTo
+	  currInfo = command.getChild("target");
+	  Variable dataOut = targetData.getShape(currInfo.getAttributeValue("name"));
+	  currInfo = command.getChild("targetRegionMask");
+	  Variable regionMaskOut = targetData.getShape(currInfo.getAttributeValue("name"));
+
+	  // copy all of the region info now, the data matricies will be created in the
+	  // ComponentManipulator
+	  Wrapper[] targetDataWrapper = targetData.getData();
+	  Wrapper[] outWrapper = new Wrapper[targetDataWrapper.length];
+	  Wrapper[] outRegionWrapper = new Wrapper[targetDataWrapper.length];
+	  for(int rIndex = 0; rIndex < targetDataWrapper.length; ++rIndex) {
+		  outWrapper[rIndex] = targetDataWrapper[rIndex].makeCopy();
+		  outRegionWrapper[rIndex] = targetDataWrapper[rIndex].makeCopy();
+	  }
+	  dataOut.setData(outWrapper);
+	  regionMaskOut.setData(outRegionWrapper);
+
+	  // run the distance calculations
+	  ComponentManipulator.distanceToData(distanceFrom.getData(), ((ReferenceVariable)distanceFrom).weight, targetDataWrapper, outWrapper, outRegionWrapper, regionLevel, distanceFromThreshold);
+
+	  // place the results in the variable list so the user can use them
+	  variableList.put(dataOut.name, dataOut);
+	  variableList.put(regionMaskOut.name, regionMaskOut);
+  }
+
+  /**
+   * Create a mask, where the data values of each contained cell is 1, from a given reference variable
+   * and extending the mask to contain any cells within range of the given distance(in km).  Since we
+   * are extending the range it is understandable that a user may want to use a differenct shape than
+   * the data variable so a targetShape parameter is provided to determine the shape of the output
+   * variable(note that values in targetShape are not considered at all only the shape).  An optional
+   * parameter for the minimum value in the distance var to consider is also given which defaults to 0.
+   * @param command An XML command in the follow format:
+   * <p>
+   * <maskDistanceFrom>
+   *     <target name="[output mask]" />
+   *     <targetShape name=”[the shape to use for target]” />
+   *     <data name="[the data to create the mask from]" />
+   *     <distance value="[a distance in km to extend the mask]" />
+   *     <threshold value="[min value in data to consider, default 0]" />
+   * </maskDistanceFrom>
+   * </p>
+   */
+  private void maskDistanceFromCommand(Element command) {
+	  log.log(Level.FINER, "begin function");
+	  Element currInfo;
+	  String valueTemp;
+	  currInfo = command.getChild("distance");
+	  double maxDistance = Double.parseDouble(currInfo.getAttributeValue("value"));
+	  currInfo = command.getChild("threshold");
+	  double minDataValue = currInfo != null ? Double.parseDouble(currInfo.getAttributeValue("value")) : 0;
+	  currInfo = command.getChild("data");
+	  ReferenceVariable distanceFrom = (ReferenceVariable)getVariable(currInfo.getAttributeValue("name"));
+	  currInfo = command.getChild("targetShape");
+	  Variable targetData = getVariable(currInfo.getAttributeValue("name"));
+
+	  // copy the shape of targetShape for target
+	  currInfo = command.getChild("target");
+	  Variable dataOut = targetData.getShape(currInfo.getAttributeValue("name"));
+	  Wrapper[] targetDataWrapper = targetData.getData();
+	  Wrapper[] outWrapper = new Wrapper[targetDataWrapper.length];
+	  for(int rIndex = 0; rIndex < targetDataWrapper.length; ++rIndex) {
+		  outWrapper[rIndex] = targetDataWrapper[rIndex].makeCopy();
+	  }
+	  dataOut.setData(outWrapper);
+
+	  // do the distance calculation to create the mask
+	  ComponentManipulator.maskDistanceFrom(distanceFrom.getData(), targetDataWrapper, outWrapper, maxDistance, minDataValue);
+
+	  // set the results into the variable list for use
+	  variableList.put(dataOut.name, dataOut);
+  }
+
+  /**
+   * Gets the internal region ID for a region by getting the region from a reference
+   * variable and setting the ID into the target variable name as a DataVariable.  The
+   * argument must be a reference variable so that we can get the associated region name
+   * from it.  This command does not attempt to resolve levels of regions.  Note that
+   * this method does not support looking up regions directly from a region name.
+   * @param command The XML command which is assumed to be in the following format:
+   * <p><getInternalID>
+   * 		<target name="[target var name]" />
+   * 		<argument name="[name of a reference variable to get the region from]" />
+   * 	</getInternalID>
+   * </p>
+   */
+  private void getInternalRegionIDCommand(Element command) {
+	  log.log(Level.FINER, "begin function");
+	  Element currInfo;
+	  currInfo = command.getChild("target");
+	  String targetVarName = currInfo.getAttributeValue("name");
+	  if(targetVarName == null) {
+		  log.log(Level.WARNING, "Could not find target attribute name");
+		  return;
+	  }
+	  // we will attempt to get the region name from a reference variable, this
+	  // approach allows us to use this within a forEachSubRegion command
+	  currInfo = command.getChild("argument");
+	  Variable regionVar= getVariable(currInfo.getAttributeValue("name"));
+	  if(regionVar.isReference()) {
+		  // get the region by looking it up by name in the regionList map
+		  Region r = (Region)regionList.get(((ReferenceVariable)regionVar).region);
+		  // we will just get the regionID directly instead of using the getInternalID
+		  // method since we are not concerned about levels here
+		  Variable regionIDVar = new DataVariable(targetVarName, r.regionID);
+		  variableList.put(targetVarName, regionIDVar);
+	  } else {
+		  log.log(Level.WARNING, "Argument must be a reference variable to get the name of the region.");
 	  }
   }
 
@@ -4247,6 +4438,15 @@ public class ManipulationDriver
 		  } else if(currCom.getName().equals("releaseVar"))
 		  {
 			  releaseVarCommand(currCom);
+		  } else if(currCom.getName().equals("calcMinDistanceTo"))
+		  {
+			  calcMinDistanceToCommand(currCom);
+		  } else if(currCom.getName().equals("maskDistanceFrom"))
+		  {
+			  maskDistanceFromCommand(currCom);
+		  } else if(currCom.getName().equals("getInternalRegionID"))
+		  {
+			  getInternalRegionIDCommand(currCom);
 		  } else if(currCom.getName().equals("exit"))
 		  {
 			  System.exit(0);
