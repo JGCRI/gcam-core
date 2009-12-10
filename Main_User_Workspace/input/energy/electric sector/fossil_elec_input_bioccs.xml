@@ -1075,7 +1075,7 @@
             <subsector name="biomass">
                <scaleYear>2020</scaleYear>
                <techScaleYear>1975</techScaleYear>
-               <sharewt year="2020">1</sharewt>
+               <sharewt year="2020">0.333</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
                <sharewt year="2065">1</sharewt>
@@ -1103,7 +1103,7 @@
                         <efficiency>0.382</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.68</input-cost>
+                        <input-cost>3.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
@@ -1111,7 +1111,7 @@
                         <efficiency>0.382</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.68</input-cost>
+                        <input-cost>3.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
@@ -1119,7 +1119,7 @@
                         <efficiency>0.390</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.47</input-cost>
+                        <input-cost>3.60</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
@@ -1127,7 +1127,7 @@
                         <efficiency>0.399</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.26</input-cost>
+                        <input-cost>3.39</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
@@ -1135,7 +1135,7 @@
                         <efficiency>0.408</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.07</input-cost>
+                        <input-cost>3.19</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
@@ -1143,7 +1143,7 @@
                         <efficiency>0.418</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.89</input-cost>
+                        <input-cost>3.00</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
@@ -1151,7 +1151,7 @@
                         <efficiency>0.427</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.72</input-cost>
+                        <input-cost>2.83</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -1177,7 +1177,7 @@
                         <efficiency>0.416</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
@@ -1185,7 +1185,7 @@
                         <efficiency>0.416</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
@@ -1193,7 +1193,7 @@
                         <efficiency>0.438</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.92</input-cost>
+                        <input-cost>3.89</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
@@ -1201,7 +1201,7 @@
                         <efficiency>0.458</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.40</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
@@ -1209,7 +1209,7 @@
                         <efficiency>0.474</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.37</input-cost>
+                        <input-cost>3.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
@@ -1217,7 +1217,7 @@
                         <efficiency>0.484</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.22</input-cost>
+                        <input-cost>3.14</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
@@ -1225,7 +1225,7 @@
                         <efficiency>0.488</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.17</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -1288,7 +1288,7 @@
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.42</efficiency>
@@ -1310,7 +1310,7 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.42</efficiency>
@@ -1332,7 +1332,7 @@
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.92</input-cost>
+                        <input-cost>3.89</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.44</efficiency>
@@ -1354,7 +1354,7 @@
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.40</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.46</efficiency>
@@ -1376,7 +1376,7 @@
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.37</input-cost>
+                        <input-cost>3.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.47</efficiency>
@@ -1398,7 +1398,7 @@
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.22</input-cost>
+                        <input-cost>3.14</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.48</efficiency>
@@ -1420,7 +1420,7 @@
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.17</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.49</efficiency>
@@ -2518,7 +2518,7 @@
             <subsector name="biomass">
                <scaleYear>2020</scaleYear>
                <techScaleYear>1975</techScaleYear>
-               <sharewt year="2020">1</sharewt>
+               <sharewt year="2020">0.333</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
                <sharewt year="2065">1</sharewt>
@@ -2546,7 +2546,7 @@
                         <efficiency>0.382</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.68</input-cost>
+                        <input-cost>3.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
@@ -2554,7 +2554,7 @@
                         <efficiency>0.382</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.68</input-cost>
+                        <input-cost>3.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
@@ -2562,7 +2562,7 @@
                         <efficiency>0.390</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.47</input-cost>
+                        <input-cost>3.60</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
@@ -2570,7 +2570,7 @@
                         <efficiency>0.399</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.26</input-cost>
+                        <input-cost>3.39</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
@@ -2578,7 +2578,7 @@
                         <efficiency>0.408</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.07</input-cost>
+                        <input-cost>3.19</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
@@ -2586,7 +2586,7 @@
                         <efficiency>0.418</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.89</input-cost>
+                        <input-cost>3.00</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
@@ -2594,7 +2594,7 @@
                         <efficiency>0.427</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.72</input-cost>
+                        <input-cost>2.83</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -2620,7 +2620,7 @@
                         <efficiency>0.416</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
@@ -2628,7 +2628,7 @@
                         <efficiency>0.416</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
@@ -2636,7 +2636,7 @@
                         <efficiency>0.438</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.92</input-cost>
+                        <input-cost>3.89</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
@@ -2644,7 +2644,7 @@
                         <efficiency>0.458</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.40</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
@@ -2652,7 +2652,7 @@
                         <efficiency>0.474</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.37</input-cost>
+                        <input-cost>3.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
@@ -2660,7 +2660,7 @@
                         <efficiency>0.484</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.22</input-cost>
+                        <input-cost>3.14</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
@@ -2668,7 +2668,7 @@
                         <efficiency>0.488</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.17</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -2731,7 +2731,7 @@
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.42</efficiency>
@@ -2753,7 +2753,7 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.42</efficiency>
@@ -2775,7 +2775,7 @@
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.92</input-cost>
+                        <input-cost>3.89</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.44</efficiency>
@@ -2797,7 +2797,7 @@
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.40</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.46</efficiency>
@@ -2819,7 +2819,7 @@
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.37</input-cost>
+                        <input-cost>3.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.47</efficiency>
@@ -2841,7 +2841,7 @@
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.22</input-cost>
+                        <input-cost>3.14</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.48</efficiency>
@@ -2863,7 +2863,7 @@
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.17</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.49</efficiency>
@@ -3961,7 +3961,7 @@
             <subsector name="biomass">
                <scaleYear>2020</scaleYear>
                <techScaleYear>1975</techScaleYear>
-               <sharewt year="2020">1</sharewt>
+               <sharewt year="2020">0.333</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
                <sharewt year="2065">1</sharewt>
@@ -3989,7 +3989,7 @@
                         <efficiency>0.382</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.68</input-cost>
+                        <input-cost>3.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
@@ -3997,7 +3997,7 @@
                         <efficiency>0.382</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.68</input-cost>
+                        <input-cost>3.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
@@ -4005,7 +4005,7 @@
                         <efficiency>0.390</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.47</input-cost>
+                        <input-cost>3.60</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
@@ -4013,7 +4013,7 @@
                         <efficiency>0.399</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.26</input-cost>
+                        <input-cost>3.39</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
@@ -4021,7 +4021,7 @@
                         <efficiency>0.408</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.07</input-cost>
+                        <input-cost>3.19</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
@@ -4029,7 +4029,7 @@
                         <efficiency>0.418</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.89</input-cost>
+                        <input-cost>3.00</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
@@ -4037,7 +4037,7 @@
                         <efficiency>0.427</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.72</input-cost>
+                        <input-cost>2.83</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -4063,7 +4063,7 @@
                         <efficiency>0.416</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
@@ -4071,7 +4071,7 @@
                         <efficiency>0.416</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
@@ -4079,7 +4079,7 @@
                         <efficiency>0.438</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.92</input-cost>
+                        <input-cost>3.89</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
@@ -4087,7 +4087,7 @@
                         <efficiency>0.458</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.40</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
@@ -4095,7 +4095,7 @@
                         <efficiency>0.474</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.37</input-cost>
+                        <input-cost>3.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
@@ -4103,7 +4103,7 @@
                         <efficiency>0.484</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.22</input-cost>
+                        <input-cost>3.14</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
@@ -4111,7 +4111,7 @@
                         <efficiency>0.488</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.17</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -4174,7 +4174,7 @@
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.42</efficiency>
@@ -4196,7 +4196,7 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.42</efficiency>
@@ -4218,7 +4218,7 @@
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.92</input-cost>
+                        <input-cost>3.89</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.44</efficiency>
@@ -4240,7 +4240,7 @@
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.40</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.46</efficiency>
@@ -4262,7 +4262,7 @@
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.37</input-cost>
+                        <input-cost>3.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.47</efficiency>
@@ -4284,7 +4284,7 @@
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.22</input-cost>
+                        <input-cost>3.14</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.48</efficiency>
@@ -4306,7 +4306,7 @@
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.17</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.49</efficiency>
@@ -5404,7 +5404,7 @@
             <subsector name="biomass">
                <scaleYear>2020</scaleYear>
                <techScaleYear>1975</techScaleYear>
-               <sharewt year="2020">1</sharewt>
+               <sharewt year="2020">0.333</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
                <sharewt year="2065">1</sharewt>
@@ -5432,7 +5432,7 @@
                         <efficiency>0.382</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.68</input-cost>
+                        <input-cost>3.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
@@ -5440,7 +5440,7 @@
                         <efficiency>0.382</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.68</input-cost>
+                        <input-cost>3.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
@@ -5448,7 +5448,7 @@
                         <efficiency>0.390</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.47</input-cost>
+                        <input-cost>3.60</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
@@ -5456,7 +5456,7 @@
                         <efficiency>0.399</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.26</input-cost>
+                        <input-cost>3.39</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
@@ -5464,7 +5464,7 @@
                         <efficiency>0.408</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.07</input-cost>
+                        <input-cost>3.19</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
@@ -5472,7 +5472,7 @@
                         <efficiency>0.418</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.89</input-cost>
+                        <input-cost>3.00</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
@@ -5480,7 +5480,7 @@
                         <efficiency>0.427</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.72</input-cost>
+                        <input-cost>2.83</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -5506,7 +5506,7 @@
                         <efficiency>0.416</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
@@ -5514,7 +5514,7 @@
                         <efficiency>0.416</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
@@ -5522,7 +5522,7 @@
                         <efficiency>0.438</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.92</input-cost>
+                        <input-cost>3.89</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
@@ -5530,7 +5530,7 @@
                         <efficiency>0.458</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.40</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
@@ -5538,7 +5538,7 @@
                         <efficiency>0.474</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.37</input-cost>
+                        <input-cost>3.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
@@ -5546,7 +5546,7 @@
                         <efficiency>0.484</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.22</input-cost>
+                        <input-cost>3.14</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
@@ -5554,7 +5554,7 @@
                         <efficiency>0.488</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.17</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -5617,7 +5617,7 @@
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.42</efficiency>
@@ -5639,7 +5639,7 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.42</efficiency>
@@ -5661,7 +5661,7 @@
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.92</input-cost>
+                        <input-cost>3.89</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.44</efficiency>
@@ -5683,7 +5683,7 @@
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.40</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.46</efficiency>
@@ -5705,7 +5705,7 @@
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.37</input-cost>
+                        <input-cost>3.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.47</efficiency>
@@ -5727,7 +5727,7 @@
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.22</input-cost>
+                        <input-cost>3.14</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.48</efficiency>
@@ -5749,7 +5749,7 @@
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.17</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.49</efficiency>
@@ -6847,7 +6847,7 @@
             <subsector name="biomass">
                <scaleYear>2020</scaleYear>
                <techScaleYear>1975</techScaleYear>
-               <sharewt year="2020">1</sharewt>
+               <sharewt year="2020">0.333</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
                <sharewt year="2065">1</sharewt>
@@ -6875,7 +6875,7 @@
                         <efficiency>0.382</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.68</input-cost>
+                        <input-cost>3.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
@@ -6883,7 +6883,7 @@
                         <efficiency>0.382</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.68</input-cost>
+                        <input-cost>3.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
@@ -6891,7 +6891,7 @@
                         <efficiency>0.390</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.47</input-cost>
+                        <input-cost>3.60</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
@@ -6899,7 +6899,7 @@
                         <efficiency>0.399</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.26</input-cost>
+                        <input-cost>3.39</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
@@ -6907,7 +6907,7 @@
                         <efficiency>0.408</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.07</input-cost>
+                        <input-cost>3.19</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
@@ -6915,7 +6915,7 @@
                         <efficiency>0.418</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.89</input-cost>
+                        <input-cost>3.00</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
@@ -6923,7 +6923,7 @@
                         <efficiency>0.427</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.72</input-cost>
+                        <input-cost>2.83</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -6949,7 +6949,7 @@
                         <efficiency>0.416</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
@@ -6957,7 +6957,7 @@
                         <efficiency>0.416</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
@@ -6965,7 +6965,7 @@
                         <efficiency>0.438</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.92</input-cost>
+                        <input-cost>3.89</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
@@ -6973,7 +6973,7 @@
                         <efficiency>0.458</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.40</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
@@ -6981,7 +6981,7 @@
                         <efficiency>0.474</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.37</input-cost>
+                        <input-cost>3.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
@@ -6989,7 +6989,7 @@
                         <efficiency>0.484</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.22</input-cost>
+                        <input-cost>3.14</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
@@ -6997,7 +6997,7 @@
                         <efficiency>0.488</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.17</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -7060,7 +7060,7 @@
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.42</efficiency>
@@ -7082,7 +7082,7 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.42</efficiency>
@@ -7104,7 +7104,7 @@
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.92</input-cost>
+                        <input-cost>3.89</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.44</efficiency>
@@ -7126,7 +7126,7 @@
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.40</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.46</efficiency>
@@ -7148,7 +7148,7 @@
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.37</input-cost>
+                        <input-cost>3.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.47</efficiency>
@@ -7170,7 +7170,7 @@
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.22</input-cost>
+                        <input-cost>3.14</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.48</efficiency>
@@ -7192,7 +7192,7 @@
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.17</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.49</efficiency>
@@ -8290,7 +8290,7 @@
             <subsector name="biomass">
                <scaleYear>2020</scaleYear>
                <techScaleYear>1975</techScaleYear>
-               <sharewt year="2020">1</sharewt>
+               <sharewt year="2020">0.333</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
                <sharewt year="2065">1</sharewt>
@@ -8318,7 +8318,7 @@
                         <efficiency>0.382</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.68</input-cost>
+                        <input-cost>3.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
@@ -8326,7 +8326,7 @@
                         <efficiency>0.382</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.68</input-cost>
+                        <input-cost>3.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
@@ -8334,7 +8334,7 @@
                         <efficiency>0.390</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.47</input-cost>
+                        <input-cost>3.60</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
@@ -8342,7 +8342,7 @@
                         <efficiency>0.399</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.26</input-cost>
+                        <input-cost>3.39</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
@@ -8350,7 +8350,7 @@
                         <efficiency>0.408</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.07</input-cost>
+                        <input-cost>3.19</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
@@ -8358,7 +8358,7 @@
                         <efficiency>0.418</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.89</input-cost>
+                        <input-cost>3.00</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
@@ -8366,7 +8366,7 @@
                         <efficiency>0.427</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.72</input-cost>
+                        <input-cost>2.83</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -8392,7 +8392,7 @@
                         <efficiency>0.416</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
@@ -8400,7 +8400,7 @@
                         <efficiency>0.416</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
@@ -8408,7 +8408,7 @@
                         <efficiency>0.438</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.92</input-cost>
+                        <input-cost>3.89</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
@@ -8416,7 +8416,7 @@
                         <efficiency>0.458</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.40</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
@@ -8424,7 +8424,7 @@
                         <efficiency>0.474</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.37</input-cost>
+                        <input-cost>3.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
@@ -8432,7 +8432,7 @@
                         <efficiency>0.484</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.22</input-cost>
+                        <input-cost>3.14</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
@@ -8440,7 +8440,7 @@
                         <efficiency>0.488</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.17</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -8503,7 +8503,7 @@
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.42</efficiency>
@@ -8525,7 +8525,7 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.42</efficiency>
@@ -8547,7 +8547,7 @@
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.92</input-cost>
+                        <input-cost>3.89</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.44</efficiency>
@@ -8569,7 +8569,7 @@
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.40</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.46</efficiency>
@@ -8591,7 +8591,7 @@
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.37</input-cost>
+                        <input-cost>3.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.47</efficiency>
@@ -8613,7 +8613,7 @@
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.22</input-cost>
+                        <input-cost>3.14</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.48</efficiency>
@@ -8635,7 +8635,7 @@
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.17</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.49</efficiency>
@@ -9733,7 +9733,7 @@
             <subsector name="biomass">
                <scaleYear>2020</scaleYear>
                <techScaleYear>1975</techScaleYear>
-               <sharewt year="2020">1</sharewt>
+               <sharewt year="2020">0.333</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
                <sharewt year="2065">1</sharewt>
@@ -9761,7 +9761,7 @@
                         <efficiency>0.382</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.68</input-cost>
+                        <input-cost>3.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
@@ -9769,7 +9769,7 @@
                         <efficiency>0.382</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.68</input-cost>
+                        <input-cost>3.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
@@ -9777,7 +9777,7 @@
                         <efficiency>0.390</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.47</input-cost>
+                        <input-cost>3.60</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
@@ -9785,7 +9785,7 @@
                         <efficiency>0.399</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.26</input-cost>
+                        <input-cost>3.39</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
@@ -9793,7 +9793,7 @@
                         <efficiency>0.408</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.07</input-cost>
+                        <input-cost>3.19</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
@@ -9801,7 +9801,7 @@
                         <efficiency>0.418</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.89</input-cost>
+                        <input-cost>3.00</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
@@ -9809,7 +9809,7 @@
                         <efficiency>0.427</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.72</input-cost>
+                        <input-cost>2.83</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -9835,7 +9835,7 @@
                         <efficiency>0.416</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
@@ -9843,7 +9843,7 @@
                         <efficiency>0.416</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
@@ -9851,7 +9851,7 @@
                         <efficiency>0.438</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.92</input-cost>
+                        <input-cost>3.89</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
@@ -9859,7 +9859,7 @@
                         <efficiency>0.458</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.40</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
@@ -9867,7 +9867,7 @@
                         <efficiency>0.474</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.37</input-cost>
+                        <input-cost>3.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
@@ -9875,7 +9875,7 @@
                         <efficiency>0.484</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.22</input-cost>
+                        <input-cost>3.14</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
@@ -9883,7 +9883,7 @@
                         <efficiency>0.488</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.17</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -9946,7 +9946,7 @@
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.42</efficiency>
@@ -9968,7 +9968,7 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.42</efficiency>
@@ -9990,7 +9990,7 @@
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.92</input-cost>
+                        <input-cost>3.89</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.44</efficiency>
@@ -10012,7 +10012,7 @@
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.40</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.46</efficiency>
@@ -10034,7 +10034,7 @@
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.37</input-cost>
+                        <input-cost>3.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.47</efficiency>
@@ -10056,7 +10056,7 @@
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.22</input-cost>
+                        <input-cost>3.14</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.48</efficiency>
@@ -10078,7 +10078,7 @@
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.17</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.49</efficiency>
@@ -11204,7 +11204,7 @@
                         <efficiency>0.382</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.68</input-cost>
+                        <input-cost>3.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
@@ -11212,7 +11212,7 @@
                         <efficiency>0.382</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.68</input-cost>
+                        <input-cost>3.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
@@ -11220,7 +11220,7 @@
                         <efficiency>0.390</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.47</input-cost>
+                        <input-cost>3.60</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
@@ -11228,7 +11228,7 @@
                         <efficiency>0.399</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.26</input-cost>
+                        <input-cost>3.39</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
@@ -11236,7 +11236,7 @@
                         <efficiency>0.408</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.07</input-cost>
+                        <input-cost>3.19</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
@@ -11244,7 +11244,7 @@
                         <efficiency>0.418</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.89</input-cost>
+                        <input-cost>3.00</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
@@ -11252,7 +11252,7 @@
                         <efficiency>0.427</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.72</input-cost>
+                        <input-cost>2.83</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -11278,7 +11278,7 @@
                         <efficiency>0.416</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
@@ -11286,7 +11286,7 @@
                         <efficiency>0.416</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
@@ -11294,7 +11294,7 @@
                         <efficiency>0.438</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.92</input-cost>
+                        <input-cost>3.89</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
@@ -11302,7 +11302,7 @@
                         <efficiency>0.458</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.40</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
@@ -11310,7 +11310,7 @@
                         <efficiency>0.474</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.37</input-cost>
+                        <input-cost>3.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
@@ -11318,7 +11318,7 @@
                         <efficiency>0.484</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.22</input-cost>
+                        <input-cost>3.14</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
@@ -11326,7 +11326,7 @@
                         <efficiency>0.488</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.17</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -11389,7 +11389,7 @@
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.42</efficiency>
@@ -11411,7 +11411,7 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.42</efficiency>
@@ -11433,7 +11433,7 @@
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.92</input-cost>
+                        <input-cost>3.89</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.44</efficiency>
@@ -11455,7 +11455,7 @@
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.40</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.46</efficiency>
@@ -11477,7 +11477,7 @@
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.37</input-cost>
+                        <input-cost>3.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.47</efficiency>
@@ -11499,7 +11499,7 @@
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.22</input-cost>
+                        <input-cost>3.14</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.48</efficiency>
@@ -11521,7 +11521,7 @@
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.17</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.49</efficiency>
@@ -12619,7 +12619,7 @@
             <subsector name="biomass">
                <scaleYear>2020</scaleYear>
                <techScaleYear>1975</techScaleYear>
-               <sharewt year="2020">1</sharewt>
+               <sharewt year="2020">0.333</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
                <sharewt year="2065">1</sharewt>
@@ -12647,7 +12647,7 @@
                         <efficiency>0.382</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.68</input-cost>
+                        <input-cost>3.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
@@ -12655,7 +12655,7 @@
                         <efficiency>0.382</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.68</input-cost>
+                        <input-cost>3.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
@@ -12663,7 +12663,7 @@
                         <efficiency>0.390</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.47</input-cost>
+                        <input-cost>3.60</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
@@ -12671,7 +12671,7 @@
                         <efficiency>0.399</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.26</input-cost>
+                        <input-cost>3.39</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
@@ -12679,7 +12679,7 @@
                         <efficiency>0.408</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.07</input-cost>
+                        <input-cost>3.19</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
@@ -12687,7 +12687,7 @@
                         <efficiency>0.418</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.89</input-cost>
+                        <input-cost>3.00</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
@@ -12695,7 +12695,7 @@
                         <efficiency>0.427</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.72</input-cost>
+                        <input-cost>2.83</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -12721,7 +12721,7 @@
                         <efficiency>0.416</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
@@ -12729,7 +12729,7 @@
                         <efficiency>0.416</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
@@ -12737,7 +12737,7 @@
                         <efficiency>0.438</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.92</input-cost>
+                        <input-cost>3.89</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
@@ -12745,7 +12745,7 @@
                         <efficiency>0.458</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.40</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
@@ -12753,7 +12753,7 @@
                         <efficiency>0.474</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.37</input-cost>
+                        <input-cost>3.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
@@ -12761,7 +12761,7 @@
                         <efficiency>0.484</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.22</input-cost>
+                        <input-cost>3.14</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
@@ -12769,7 +12769,7 @@
                         <efficiency>0.488</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.17</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -12832,7 +12832,7 @@
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.42</efficiency>
@@ -12854,7 +12854,7 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.42</efficiency>
@@ -12876,7 +12876,7 @@
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.92</input-cost>
+                        <input-cost>3.89</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.44</efficiency>
@@ -12898,7 +12898,7 @@
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.40</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.46</efficiency>
@@ -12920,7 +12920,7 @@
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.37</input-cost>
+                        <input-cost>3.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.47</efficiency>
@@ -12942,7 +12942,7 @@
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.22</input-cost>
+                        <input-cost>3.14</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.48</efficiency>
@@ -12964,7 +12964,7 @@
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.17</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.49</efficiency>
@@ -14062,7 +14062,7 @@
             <subsector name="biomass">
                <scaleYear>2020</scaleYear>
                <techScaleYear>1975</techScaleYear>
-               <sharewt year="2020">1</sharewt>
+               <sharewt year="2020">0.333</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
                <sharewt year="2065">1</sharewt>
@@ -14090,7 +14090,7 @@
                         <efficiency>0.382</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.68</input-cost>
+                        <input-cost>3.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
@@ -14098,7 +14098,7 @@
                         <efficiency>0.382</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.68</input-cost>
+                        <input-cost>3.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
@@ -14106,7 +14106,7 @@
                         <efficiency>0.390</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.47</input-cost>
+                        <input-cost>3.60</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
@@ -14114,7 +14114,7 @@
                         <efficiency>0.399</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.26</input-cost>
+                        <input-cost>3.39</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
@@ -14122,7 +14122,7 @@
                         <efficiency>0.408</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.07</input-cost>
+                        <input-cost>3.19</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
@@ -14130,7 +14130,7 @@
                         <efficiency>0.418</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.89</input-cost>
+                        <input-cost>3.00</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
@@ -14138,7 +14138,7 @@
                         <efficiency>0.427</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.72</input-cost>
+                        <input-cost>2.83</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -14164,7 +14164,7 @@
                         <efficiency>0.416</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
@@ -14172,7 +14172,7 @@
                         <efficiency>0.416</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
@@ -14180,7 +14180,7 @@
                         <efficiency>0.438</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.92</input-cost>
+                        <input-cost>3.89</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
@@ -14188,7 +14188,7 @@
                         <efficiency>0.458</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.40</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
@@ -14196,7 +14196,7 @@
                         <efficiency>0.474</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.37</input-cost>
+                        <input-cost>3.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
@@ -14204,7 +14204,7 @@
                         <efficiency>0.484</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.22</input-cost>
+                        <input-cost>3.14</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
@@ -14212,7 +14212,7 @@
                         <efficiency>0.488</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.17</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -14275,7 +14275,7 @@
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.42</efficiency>
@@ -14297,7 +14297,7 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.42</efficiency>
@@ -14319,7 +14319,7 @@
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.92</input-cost>
+                        <input-cost>3.89</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.44</efficiency>
@@ -14341,7 +14341,7 @@
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.40</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.46</efficiency>
@@ -14363,7 +14363,7 @@
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.37</input-cost>
+                        <input-cost>3.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.47</efficiency>
@@ -14385,7 +14385,7 @@
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.22</input-cost>
+                        <input-cost>3.14</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.48</efficiency>
@@ -14407,7 +14407,7 @@
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.17</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.49</efficiency>
@@ -15505,7 +15505,7 @@
             <subsector name="biomass">
                <scaleYear>2020</scaleYear>
                <techScaleYear>1975</techScaleYear>
-               <sharewt year="2020">1</sharewt>
+               <sharewt year="2020">0.333</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
                <sharewt year="2065">1</sharewt>
@@ -15533,7 +15533,7 @@
                         <efficiency>0.382</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.68</input-cost>
+                        <input-cost>3.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
@@ -15541,7 +15541,7 @@
                         <efficiency>0.382</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.68</input-cost>
+                        <input-cost>3.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
@@ -15549,7 +15549,7 @@
                         <efficiency>0.390</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.47</input-cost>
+                        <input-cost>3.60</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
@@ -15557,7 +15557,7 @@
                         <efficiency>0.399</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.26</input-cost>
+                        <input-cost>3.39</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
@@ -15565,7 +15565,7 @@
                         <efficiency>0.408</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.07</input-cost>
+                        <input-cost>3.19</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
@@ -15573,7 +15573,7 @@
                         <efficiency>0.418</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.89</input-cost>
+                        <input-cost>3.00</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
@@ -15581,7 +15581,7 @@
                         <efficiency>0.427</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.72</input-cost>
+                        <input-cost>2.83</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -15607,7 +15607,7 @@
                         <efficiency>0.416</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
@@ -15615,7 +15615,7 @@
                         <efficiency>0.416</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
@@ -15623,7 +15623,7 @@
                         <efficiency>0.438</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.92</input-cost>
+                        <input-cost>3.89</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
@@ -15631,7 +15631,7 @@
                         <efficiency>0.458</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.40</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
@@ -15639,7 +15639,7 @@
                         <efficiency>0.474</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.37</input-cost>
+                        <input-cost>3.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
@@ -15647,7 +15647,7 @@
                         <efficiency>0.484</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.22</input-cost>
+                        <input-cost>3.14</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
@@ -15655,7 +15655,7 @@
                         <efficiency>0.488</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.17</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -15718,7 +15718,7 @@
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.42</efficiency>
@@ -15740,7 +15740,7 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.42</efficiency>
@@ -15762,7 +15762,7 @@
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.92</input-cost>
+                        <input-cost>3.89</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.44</efficiency>
@@ -15784,7 +15784,7 @@
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.40</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.46</efficiency>
@@ -15806,7 +15806,7 @@
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.37</input-cost>
+                        <input-cost>3.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.47</efficiency>
@@ -15828,7 +15828,7 @@
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.22</input-cost>
+                        <input-cost>3.14</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.48</efficiency>
@@ -15850,7 +15850,7 @@
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.17</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.49</efficiency>
@@ -16948,7 +16948,7 @@
             <subsector name="biomass">
                <scaleYear>2020</scaleYear>
                <techScaleYear>1975</techScaleYear>
-               <sharewt year="2020">1</sharewt>
+               <sharewt year="2020">0.333</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
                <sharewt year="2065">1</sharewt>
@@ -16976,7 +16976,7 @@
                         <efficiency>0.382</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.68</input-cost>
+                        <input-cost>3.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
@@ -16984,7 +16984,7 @@
                         <efficiency>0.382</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.68</input-cost>
+                        <input-cost>3.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
@@ -16992,7 +16992,7 @@
                         <efficiency>0.390</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.47</input-cost>
+                        <input-cost>3.60</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
@@ -17000,7 +17000,7 @@
                         <efficiency>0.399</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.26</input-cost>
+                        <input-cost>3.39</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
@@ -17008,7 +17008,7 @@
                         <efficiency>0.408</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.07</input-cost>
+                        <input-cost>3.19</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
@@ -17016,7 +17016,7 @@
                         <efficiency>0.418</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.89</input-cost>
+                        <input-cost>3.00</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
@@ -17024,7 +17024,7 @@
                         <efficiency>0.427</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.72</input-cost>
+                        <input-cost>2.83</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -17050,7 +17050,7 @@
                         <efficiency>0.416</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
@@ -17058,7 +17058,7 @@
                         <efficiency>0.416</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
@@ -17066,7 +17066,7 @@
                         <efficiency>0.438</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.92</input-cost>
+                        <input-cost>3.89</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
@@ -17074,7 +17074,7 @@
                         <efficiency>0.458</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.40</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
@@ -17082,7 +17082,7 @@
                         <efficiency>0.474</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.37</input-cost>
+                        <input-cost>3.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
@@ -17090,7 +17090,7 @@
                         <efficiency>0.484</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.22</input-cost>
+                        <input-cost>3.14</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
@@ -17098,7 +17098,7 @@
                         <efficiency>0.488</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.17</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -17161,7 +17161,7 @@
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.42</efficiency>
@@ -17183,7 +17183,7 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.42</efficiency>
@@ -17205,7 +17205,7 @@
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.92</input-cost>
+                        <input-cost>3.89</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.44</efficiency>
@@ -17227,7 +17227,7 @@
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.40</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.46</efficiency>
@@ -17249,7 +17249,7 @@
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.37</input-cost>
+                        <input-cost>3.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.47</efficiency>
@@ -17271,7 +17271,7 @@
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.22</input-cost>
+                        <input-cost>3.14</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.48</efficiency>
@@ -17293,7 +17293,7 @@
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.17</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.49</efficiency>
@@ -18391,7 +18391,7 @@
             <subsector name="biomass">
                <scaleYear>2020</scaleYear>
                <techScaleYear>1975</techScaleYear>
-               <sharewt year="2020">1</sharewt>
+               <sharewt year="2020">0.333</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
                <sharewt year="2065">1</sharewt>
@@ -18419,7 +18419,7 @@
                         <efficiency>0.382</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.68</input-cost>
+                        <input-cost>3.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
@@ -18427,7 +18427,7 @@
                         <efficiency>0.382</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.68</input-cost>
+                        <input-cost>3.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
@@ -18435,7 +18435,7 @@
                         <efficiency>0.390</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.47</input-cost>
+                        <input-cost>3.60</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
@@ -18443,7 +18443,7 @@
                         <efficiency>0.399</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.26</input-cost>
+                        <input-cost>3.39</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
@@ -18451,7 +18451,7 @@
                         <efficiency>0.408</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.07</input-cost>
+                        <input-cost>3.19</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
@@ -18459,7 +18459,7 @@
                         <efficiency>0.418</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.89</input-cost>
+                        <input-cost>3.00</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
@@ -18467,7 +18467,7 @@
                         <efficiency>0.427</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.72</input-cost>
+                        <input-cost>2.83</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -18493,7 +18493,7 @@
                         <efficiency>0.416</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
@@ -18501,7 +18501,7 @@
                         <efficiency>0.416</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
@@ -18509,7 +18509,7 @@
                         <efficiency>0.438</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.92</input-cost>
+                        <input-cost>3.89</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
@@ -18517,7 +18517,7 @@
                         <efficiency>0.458</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.40</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
@@ -18525,7 +18525,7 @@
                         <efficiency>0.474</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.37</input-cost>
+                        <input-cost>3.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
@@ -18533,7 +18533,7 @@
                         <efficiency>0.484</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.22</input-cost>
+                        <input-cost>3.14</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
@@ -18541,7 +18541,7 @@
                         <efficiency>0.488</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.17</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -18604,7 +18604,7 @@
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.42</efficiency>
@@ -18626,7 +18626,7 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.42</efficiency>
@@ -18648,7 +18648,7 @@
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.92</input-cost>
+                        <input-cost>3.89</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.44</efficiency>
@@ -18670,7 +18670,7 @@
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.40</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.46</efficiency>
@@ -18692,7 +18692,7 @@
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.37</input-cost>
+                        <input-cost>3.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.47</efficiency>
@@ -18714,7 +18714,7 @@
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.22</input-cost>
+                        <input-cost>3.14</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.48</efficiency>
@@ -18736,7 +18736,7 @@
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.17</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.49</efficiency>
@@ -19834,7 +19834,7 @@
             <subsector name="biomass">
                <scaleYear>2020</scaleYear>
                <techScaleYear>1975</techScaleYear>
-               <sharewt year="2020">1</sharewt>
+               <sharewt year="2020">0.333</sharewt>
                <sharewt year="2035">1</sharewt>
                <sharewt year="2050">1</sharewt>
                <sharewt year="2065">1</sharewt>
@@ -19862,7 +19862,7 @@
                         <efficiency>0.382</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.68</input-cost>
+                        <input-cost>3.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
@@ -19870,7 +19870,7 @@
                         <efficiency>0.382</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.68</input-cost>
+                        <input-cost>3.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
@@ -19878,7 +19878,7 @@
                         <efficiency>0.390</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.47</input-cost>
+                        <input-cost>3.60</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
@@ -19886,7 +19886,7 @@
                         <efficiency>0.399</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.26</input-cost>
+                        <input-cost>3.39</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
@@ -19894,7 +19894,7 @@
                         <efficiency>0.408</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.07</input-cost>
+                        <input-cost>3.19</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
@@ -19902,7 +19902,7 @@
                         <efficiency>0.418</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.89</input-cost>
+                        <input-cost>3.00</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
@@ -19910,7 +19910,7 @@
                         <efficiency>0.427</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>2.72</input-cost>
+                        <input-cost>2.83</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -19936,7 +19936,7 @@
                         <efficiency>0.416</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
@@ -19944,7 +19944,7 @@
                         <efficiency>0.416</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
@@ -19952,7 +19952,7 @@
                         <efficiency>0.438</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.92</input-cost>
+                        <input-cost>3.89</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
@@ -19960,7 +19960,7 @@
                         <efficiency>0.458</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.40</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
@@ -19968,7 +19968,7 @@
                         <efficiency>0.474</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.37</input-cost>
+                        <input-cost>3.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
@@ -19976,7 +19976,7 @@
                         <efficiency>0.484</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.22</input-cost>
+                        <input-cost>3.14</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
@@ -19984,7 +19984,7 @@
                         <efficiency>0.488</efficiency>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.17</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -20047,7 +20047,7 @@
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.42</efficiency>
@@ -20069,7 +20069,7 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>4.29</input-cost>
+                        <input-cost>4.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.42</efficiency>
@@ -20091,7 +20091,7 @@
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.92</input-cost>
+                        <input-cost>3.89</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.44</efficiency>
@@ -20113,7 +20113,7 @@
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.40</input-cost>
+                        <input-cost>3.33</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.46</efficiency>
@@ -20135,7 +20135,7 @@
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.37</input-cost>
+                        <input-cost>3.30</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.47</efficiency>
@@ -20157,7 +20157,7 @@
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.22</input-cost>
+                        <input-cost>3.14</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.48</efficiency>
@@ -20179,7 +20179,7 @@
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>3.17</input-cost>
+                        <input-cost>3.09</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="regional biomass">
                         <efficiency>0.49</efficiency>
