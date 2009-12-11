@@ -3,412 +3,184 @@
    <world>
       <region name="USA">
          <renewresource name="geothermal">
-            <smooth-renewable-subresource name="hydrothermal">
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0095</techChange>
-               <techChange year="2035">0.0066</techChange>
-               <techChange year="2050">0.0043</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-            </smooth-renewable-subresource>
-            <smooth-renewable-subresource name="EGS">
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.015893675</techChange>
-               <techChange year="2035">0.007377795</techChange>
-               <techChange year="2050">0.003288091</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-               <maxSubResource>48.48</maxSubResource>
-               <mid-price>0.861</mid-price>
-               <curve-exponent>8.596</curve-exponent>
-            </smooth-renewable-subresource>
+            <sub-renewable-resource name="EGS">
+               <maxSubResource>78.46</maxSubResource>
+               <grade name="grade 1">
+                  <extractioncost>0.350</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.000</available>
+                  <extractioncost>0.831</extractioncost>
+               </grade>
+            </sub-renewable-resource>
          </renewresource>
       </region>
       <region name="Canada">
          <renewresource name="geothermal">
-            <smooth-renewable-subresource name="hydrothermal">
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0095</techChange>
-               <techChange year="2035">0.0066</techChange>
-               <techChange year="2050">0.0043</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-            </smooth-renewable-subresource>
-            <smooth-renewable-subresource name="EGS">
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.015893675</techChange>
-               <techChange year="2035">0.007377795</techChange>
-               <techChange year="2050">0.003288091</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-               <maxSubResource>0.48</maxSubResource>
-               <mid-price>0.861</mid-price>
-               <curve-exponent>8.596</curve-exponent>
-            </smooth-renewable-subresource>
+            <sub-renewable-resource name="EGS">
+               <maxSubResource>3.02</maxSubResource>
+               <grade name="grade 1">
+                  <extractioncost>0.350</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.000</available>
+                  <extractioncost>0.831</extractioncost>
+               </grade>
+            </sub-renewable-resource>
          </renewresource>
-         <renewresource delete="1" name="geothermal"/>
       </region>
       <region name="Western Europe">
          <renewresource name="geothermal">
-            <smooth-renewable-subresource name="hydrothermal">
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0095</techChange>
-               <techChange year="2035">0.0066</techChange>
-               <techChange year="2050">0.0043</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-            </smooth-renewable-subresource>
-            <smooth-renewable-subresource name="EGS">
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.015893675</techChange>
-               <techChange year="2035">0.007377795</techChange>
-               <techChange year="2050">0.003288091</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-               <maxSubResource>25.20</maxSubResource>
-               <mid-price>0.861</mid-price>
-               <curve-exponent>8.596</curve-exponent>
-            </smooth-renewable-subresource>
+            <sub-renewable-resource name="EGS">
+               <maxSubResource>43.75</maxSubResource>
+               <grade name="grade 1">
+                  <extractioncost>0.350</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.000</available>
+                  <extractioncost>0.831</extractioncost>
+               </grade>
+            </sub-renewable-resource>
          </renewresource>
       </region>
       <region name="Japan">
          <renewresource name="geothermal">
-            <smooth-renewable-subresource name="hydrothermal">
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0095</techChange>
-               <techChange year="2035">0.0066</techChange>
-               <techChange year="2050">0.0043</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-            </smooth-renewable-subresource>
-            <smooth-renewable-subresource name="EGS">
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.015893675</techChange>
-               <techChange year="2035">0.007377795</techChange>
-               <techChange year="2050">0.003288091</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-               <maxSubResource>10.87</maxSubResource>
-               <mid-price>0.861</mid-price>
-               <curve-exponent>8.596</curve-exponent>
-            </smooth-renewable-subresource>
+            <sub-renewable-resource name="EGS">
+               <maxSubResource>5.74</maxSubResource>
+               <grade name="grade 1">
+                  <extractioncost>0.350</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.000</available>
+                  <extractioncost>0.831</extractioncost>
+               </grade>
+            </sub-renewable-resource>
          </renewresource>
       </region>
       <region name="Australia_NZ">
          <renewresource name="geothermal">
-            <smooth-renewable-subresource name="hydrothermal">
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0095</techChange>
-               <techChange year="2035">0.0066</techChange>
-               <techChange year="2050">0.0043</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-            </smooth-renewable-subresource>
-            <smooth-renewable-subresource name="EGS">
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.015893675</techChange>
-               <techChange year="2035">0.007377795</techChange>
-               <techChange year="2050">0.003288091</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-               <maxSubResource>14.54</maxSubResource>
-               <mid-price>0.861</mid-price>
-               <curve-exponent>8.596</curve-exponent>
-            </smooth-renewable-subresource>
+            <sub-renewable-resource name="EGS">
+               <maxSubResource>7.04</maxSubResource>
+               <grade name="grade 1">
+                  <extractioncost>0.350</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.000</available>
+                  <extractioncost>0.831</extractioncost>
+               </grade>
+            </sub-renewable-resource>
          </renewresource>
       </region>
       <region name="Former Soviet Union">
          <renewresource name="geothermal">
-            <smooth-renewable-subresource name="hydrothermal">
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0095</techChange>
-               <techChange year="2035">0.0066</techChange>
-               <techChange year="2050">0.0043</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-            </smooth-renewable-subresource>
-            <smooth-renewable-subresource name="EGS">
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.015893675</techChange>
-               <techChange year="2035">0.007377795</techChange>
-               <techChange year="2050">0.003288091</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-               <maxSubResource>1.38</maxSubResource>
-               <mid-price>0.861</mid-price>
-               <curve-exponent>8.596</curve-exponent>
-            </smooth-renewable-subresource>
+            <sub-renewable-resource name="EGS">
+               <maxSubResource>25.84</maxSubResource>
+               <grade name="grade 1">
+                  <extractioncost>0.350</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.000</available>
+                  <extractioncost>0.831</extractioncost>
+               </grade>
+            </sub-renewable-resource>
          </renewresource>
       </region>
       <region name="China">
          <renewresource name="geothermal">
-            <smooth-renewable-subresource name="hydrothermal">
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0095</techChange>
-               <techChange year="2035">0.0066</techChange>
-               <techChange year="2050">0.0043</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-            </smooth-renewable-subresource>
-            <smooth-renewable-subresource name="EGS">
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.015893675</techChange>
-               <techChange year="2035">0.007377795</techChange>
-               <techChange year="2050">0.003288091</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-               <maxSubResource>12.12</maxSubResource>
-               <mid-price>0.861</mid-price>
-               <curve-exponent>8.596</curve-exponent>
-            </smooth-renewable-subresource>
+            <sub-renewable-resource name="EGS">
+               <maxSubResource>14.36</maxSubResource>
+               <grade name="grade 1">
+                  <extractioncost>0.350</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.000</available>
+                  <extractioncost>0.831</extractioncost>
+               </grade>
+            </sub-renewable-resource>
          </renewresource>
       </region>
       <region name="Middle East">
          <renewresource name="geothermal">
-            <smooth-renewable-subresource name="hydrothermal">
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0095</techChange>
-               <techChange year="2035">0.0066</techChange>
-               <techChange year="2050">0.0043</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-            </smooth-renewable-subresource>
-            <smooth-renewable-subresource name="EGS">
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.015893675</techChange>
-               <techChange year="2035">0.007377795</techChange>
-               <techChange year="2050">0.003288091</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-               <maxSubResource>0.48</maxSubResource>
-               <mid-price>0.861</mid-price>
-               <curve-exponent>8.596</curve-exponent>
-            </smooth-renewable-subresource>
+            <sub-renewable-resource name="EGS">
+               <maxSubResource>5.74</maxSubResource>
+               <grade name="grade 1">
+                  <extractioncost>0.350</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.000</available>
+                  <extractioncost>0.831</extractioncost>
+               </grade>
+            </sub-renewable-resource>
          </renewresource>
-         <renewresource delete="1" name="geothermal"/>
       </region>
       <region name="Africa">
          <renewresource name="geothermal">
-            <smooth-renewable-subresource name="hydrothermal">
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0095</techChange>
-               <techChange year="2035">0.0066</techChange>
-               <techChange year="2050">0.0043</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-            </smooth-renewable-subresource>
-            <smooth-renewable-subresource name="EGS">
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.015893675</techChange>
-               <techChange year="2035">0.007377795</techChange>
-               <techChange year="2050">0.003288091</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-               <maxSubResource>22.62</maxSubResource>
-               <mid-price>0.861</mid-price>
-               <curve-exponent>8.596</curve-exponent>
-            </smooth-renewable-subresource>
+            <sub-renewable-resource name="EGS">
+               <maxSubResource>5.69</maxSubResource>
+               <grade name="grade 1">
+                  <extractioncost>0.350</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.000</available>
+                  <extractioncost>0.831</extractioncost>
+               </grade>
+            </sub-renewable-resource>
          </renewresource>
       </region>
       <region name="Latin America">
          <renewresource name="geothermal">
-            <smooth-renewable-subresource name="hydrothermal">
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0095</techChange>
-               <techChange year="2035">0.0066</techChange>
-               <techChange year="2050">0.0043</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-            </smooth-renewable-subresource>
-            <smooth-renewable-subresource name="EGS">
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.015893675</techChange>
-               <techChange year="2035">0.007377795</techChange>
-               <techChange year="2050">0.003288091</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-               <maxSubResource>61.41</maxSubResource>
-               <mid-price>0.861</mid-price>
-               <curve-exponent>8.596</curve-exponent>
-            </smooth-renewable-subresource>
+            <sub-renewable-resource name="EGS">
+               <maxSubResource>37.07</maxSubResource>
+               <grade name="grade 1">
+                  <extractioncost>0.350</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.000</available>
+                  <extractioncost>0.831</extractioncost>
+               </grade>
+            </sub-renewable-resource>
          </renewresource>
       </region>
       <region name="Southeast Asia">
          <renewresource name="geothermal">
-            <smooth-renewable-subresource name="hydrothermal">
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0095</techChange>
-               <techChange year="2035">0.0066</techChange>
-               <techChange year="2050">0.0043</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-            </smooth-renewable-subresource>
-            <smooth-renewable-subresource name="EGS">
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.015893675</techChange>
-               <techChange year="2035">0.007377795</techChange>
-               <techChange year="2050">0.003288091</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-               <maxSubResource>55.62</maxSubResource>
-               <mid-price>0.861</mid-price>
-               <curve-exponent>8.596</curve-exponent>
-            </smooth-renewable-subresource>
+            <sub-renewable-resource name="EGS">
+               <maxSubResource>57.41</maxSubResource>
+               <grade name="grade 1">
+                  <extractioncost>0.350</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.000</available>
+                  <extractioncost>0.831</extractioncost>
+               </grade>
+            </sub-renewable-resource>
          </renewresource>
       </region>
       <region name="Eastern Europe">
          <renewresource name="geothermal">
-            <smooth-renewable-subresource name="hydrothermal">
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0095</techChange>
-               <techChange year="2035">0.0066</techChange>
-               <techChange year="2050">0.0043</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-            </smooth-renewable-subresource>
-            <smooth-renewable-subresource name="EGS">
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.015893675</techChange>
-               <techChange year="2035">0.007377795</techChange>
-               <techChange year="2050">0.003288091</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-               <maxSubResource>0.48</maxSubResource>
-               <mid-price>0.861</mid-price>
-               <curve-exponent>8.596</curve-exponent>
-            </smooth-renewable-subresource>
+            <sub-renewable-resource name="EGS">
+               <maxSubResource>8.75</maxSubResource>
+               <grade name="grade 1">
+                  <extractioncost>0.350</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.000</available>
+                  <extractioncost>0.831</extractioncost>
+               </grade>
+            </sub-renewable-resource>
          </renewresource>
-         <renewresource delete="1" name="geothermal"/>
-      </region>
-      <region name="Korea">
-         <renewresource name="geothermal">
-            <smooth-renewable-subresource name="hydrothermal">
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0095</techChange>
-               <techChange year="2035">0.0066</techChange>
-               <techChange year="2050">0.0043</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-            </smooth-renewable-subresource>
-            <smooth-renewable-subresource name="EGS">
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.015893675</techChange>
-               <techChange year="2035">0.007377795</techChange>
-               <techChange year="2050">0.003288091</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-               <maxSubResource>0.48</maxSubResource>
-               <mid-price>0.861</mid-price>
-               <curve-exponent>8.596</curve-exponent>
-            </smooth-renewable-subresource>
-         </renewresource>
-         <renewresource delete="1" name="geothermal"/>
       </region>
       <region name="India">
          <renewresource name="geothermal">
-            <smooth-renewable-subresource name="hydrothermal">
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0095</techChange>
-               <techChange year="2035">0.0066</techChange>
-               <techChange year="2050">0.0043</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-            </smooth-renewable-subresource>
-            <smooth-renewable-subresource name="EGS">
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.015893675</techChange>
-               <techChange year="2035">0.007377795</techChange>
-               <techChange year="2050">0.003288091</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-               <maxSubResource>12.12</maxSubResource>
-               <mid-price>0.861</mid-price>
-               <curve-exponent>8.596</curve-exponent>
-            </smooth-renewable-subresource>
+            <sub-renewable-resource name="EGS">
+               <maxSubResource>5.74</maxSubResource>
+               <grade name="grade 1">
+                  <extractioncost>0.350</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.000</available>
+                  <extractioncost>0.831</extractioncost>
+               </grade>
+            </sub-renewable-resource>
          </renewresource>
       </region>
    </world>

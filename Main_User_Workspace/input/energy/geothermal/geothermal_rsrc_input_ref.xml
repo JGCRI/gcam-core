@@ -7,25 +7,18 @@
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>USA</market>
-            <price year="1975">1</price>
-            <smooth-renewable-subresource name="hydrothermal">
-               <environCost fillout="1" year="1975">0</environCost>
-               <severanceTax fillout="1" year="1975">0</severanceTax>
-               <gdpSupplyElast>0</gdpSupplyElast>
-               <subResourceCapacityFactor>1</subResourceCapacityFactor>
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0048</techChange>
-               <techChange year="2035">0.0053</techChange>
-               <techChange year="2050">0.0040</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-               <maxSubResource>8.23</maxSubResource>
-               <mid-price>0.613</mid-price>
-               <curve-exponent>10.735</curve-exponent>
-            </smooth-renewable-subresource>
+            <price year="1975">0.45</price>
+            <sub-renewable-resource name="hydrothermal">
+               <annualprod year="1975">0.576</annualprod>
+               <maxSubResource>7.948</maxSubResource>
+               <grade name="grade 1">
+                  <extractioncost>0.064</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.00</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+            </sub-renewable-resource>
          </renewresource>
       </region>
       <region name="Canada">
@@ -34,27 +27,19 @@
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>Canada</market>
-            <price year="1975">1</price>
-            <smooth-renewable-subresource name="hydrothermal">
-               <environCost fillout="1" year="1975">0</environCost>
-               <severanceTax fillout="1" year="1975">0</severanceTax>
-               <gdpSupplyElast>0</gdpSupplyElast>
-               <subResourceCapacityFactor>1</subResourceCapacityFactor>
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0048</techChange>
-               <techChange year="2035">0.0053</techChange>
-               <techChange year="2050">0.0040</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-               <maxSubResource>0.08</maxSubResource>
-               <mid-price>0.613</mid-price>
-               <curve-exponent>10.735</curve-exponent>
-            </smooth-renewable-subresource>
+            <price year="1975">0.45</price>
+            <sub-renewable-resource name="hydrothermal">
+               <annualprod year="1975">0.000</annualprod>
+               <maxSubResource>0.132</maxSubResource>
+               <grade name="grade 1">
+                  <extractioncost>0.064</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.00</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+            </sub-renewable-resource>
          </renewresource>
-         <renewresource delete="1" name="geothermal"/>
       </region>
       <region name="Western Europe">
          <PrimaryFuelCO2Coef name="geothermal">0</PrimaryFuelCO2Coef>
@@ -62,25 +47,18 @@
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>Western Europe</market>
-            <price year="1975">1</price>
-            <smooth-renewable-subresource name="hydrothermal">
-               <environCost fillout="1" year="1975">0</environCost>
-               <severanceTax fillout="1" year="1975">0</severanceTax>
-               <gdpSupplyElast>0</gdpSupplyElast>
-               <subResourceCapacityFactor>1</subResourceCapacityFactor>
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0048</techChange>
-               <techChange year="2035">0.0053</techChange>
-               <techChange year="2050">0.0040</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-               <maxSubResource>4.28</maxSubResource>
-               <mid-price>0.613</mid-price>
-               <curve-exponent>10.735</curve-exponent>
-            </smooth-renewable-subresource>
+            <price year="1975">0.45</price>
+            <sub-renewable-resource name="hydrothermal">
+               <annualprod year="1975">0.127</annualprod>
+               <maxSubResource>3.546</maxSubResource>
+               <grade name="grade 1">
+                  <extractioncost>0.064</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.00</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+            </sub-renewable-resource>
          </renewresource>
       </region>
       <region name="Japan">
@@ -89,25 +67,18 @@
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>Japan</market>
-            <price year="1975">1</price>
-            <smooth-renewable-subresource name="hydrothermal">
-               <environCost fillout="1" year="1975">0</environCost>
-               <severanceTax fillout="1" year="1975">0</severanceTax>
-               <gdpSupplyElast>0</gdpSupplyElast>
-               <subResourceCapacityFactor>1</subResourceCapacityFactor>
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0048</techChange>
-               <techChange year="2035">0.0053</techChange>
-               <techChange year="2050">0.0040</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-               <maxSubResource>1.84</maxSubResource>
-               <mid-price>0.613</mid-price>
-               <curve-exponent>10.735</curve-exponent>
-            </smooth-renewable-subresource>
+            <price year="1975">0.45</price>
+            <sub-renewable-resource name="hydrothermal">
+               <annualprod year="1975">0.063</annualprod>
+               <maxSubResource>0.566</maxSubResource>
+               <grade name="grade 1">
+                  <extractioncost>0.064</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.00</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+            </sub-renewable-resource>
          </renewresource>
       </region>
       <region name="Australia_NZ">
@@ -116,25 +87,18 @@
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>Australia_NZ</market>
-            <price year="1975">1</price>
-            <smooth-renewable-subresource name="hydrothermal">
-               <environCost fillout="1" year="1975">0</environCost>
-               <severanceTax fillout="1" year="1975">0</severanceTax>
-               <gdpSupplyElast>0</gdpSupplyElast>
-               <subResourceCapacityFactor>1</subResourceCapacityFactor>
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0048</techChange>
-               <techChange year="2035">0.0053</techChange>
-               <techChange year="2050">0.0040</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-               <maxSubResource>2.47</maxSubResource>
-               <mid-price>0.613</mid-price>
-               <curve-exponent>10.735</curve-exponent>
-            </smooth-renewable-subresource>
+            <price year="1975">0.45</price>
+            <sub-renewable-resource name="hydrothermal">
+               <annualprod year="1975">0.080</annualprod>
+               <maxSubResource>2.424</maxSubResource>
+               <grade name="grade 1">
+                  <extractioncost>0.064</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.00</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+            </sub-renewable-resource>
          </renewresource>
       </region>
       <region name="Former Soviet Union">
@@ -143,25 +107,18 @@
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>Former Soviet Union</market>
-            <price year="1975">1</price>
-            <smooth-renewable-subresource name="hydrothermal">
-               <environCost fillout="1" year="1975">0</environCost>
-               <severanceTax fillout="1" year="1975">0</severanceTax>
-               <gdpSupplyElast>0</gdpSupplyElast>
-               <subResourceCapacityFactor>1</subResourceCapacityFactor>
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0048</techChange>
-               <techChange year="2035">0.0053</techChange>
-               <techChange year="2050">0.0040</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-               <maxSubResource>0.23</maxSubResource>
-               <mid-price>0.613</mid-price>
-               <curve-exponent>10.735</curve-exponent>
-            </smooth-renewable-subresource>
+            <price year="1975">0.45</price>
+            <sub-renewable-resource name="hydrothermal">
+               <annualprod year="1975">0.001</annualprod>
+               <maxSubResource>2.545</maxSubResource>
+               <grade name="grade 1">
+                  <extractioncost>0.064</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.00</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+            </sub-renewable-resource>
          </renewresource>
       </region>
       <region name="China">
@@ -170,25 +127,18 @@
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>China</market>
-            <price year="1975">1</price>
-            <smooth-renewable-subresource name="hydrothermal">
-               <environCost fillout="1" year="1975">0</environCost>
-               <severanceTax fillout="1" year="1975">0</severanceTax>
-               <gdpSupplyElast>0</gdpSupplyElast>
-               <subResourceCapacityFactor>1</subResourceCapacityFactor>
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0048</techChange>
-               <techChange year="2035">0.0053</techChange>
-               <techChange year="2050">0.0040</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-               <maxSubResource>2.06</maxSubResource>
-               <mid-price>0.613</mid-price>
-               <curve-exponent>10.735</curve-exponent>
-            </smooth-renewable-subresource>
+            <price year="1975">0.45</price>
+            <sub-renewable-resource name="hydrothermal">
+               <annualprod year="1975">0.000</annualprod>
+               <maxSubResource>1.414</maxSubResource>
+               <grade name="grade 1">
+                  <extractioncost>0.064</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.00</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+            </sub-renewable-resource>
          </renewresource>
       </region>
       <region name="Middle East">
@@ -197,27 +147,19 @@
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>Middle East</market>
-            <price year="1975">1</price>
-            <smooth-renewable-subresource name="hydrothermal">
-               <environCost fillout="1" year="1975">0</environCost>
-               <severanceTax fillout="1" year="1975">0</severanceTax>
-               <gdpSupplyElast>0</gdpSupplyElast>
-               <subResourceCapacityFactor>1</subResourceCapacityFactor>
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0048</techChange>
-               <techChange year="2035">0.0053</techChange>
-               <techChange year="2050">0.0040</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-               <maxSubResource>0.08</maxSubResource>
-               <mid-price>0.613</mid-price>
-               <curve-exponent>10.735</curve-exponent>
-            </smooth-renewable-subresource>
+            <price year="1975">0.45</price>
+            <sub-renewable-resource name="hydrothermal">
+               <annualprod year="1975">0.000</annualprod>
+               <maxSubResource>0.566</maxSubResource>
+               <grade name="grade 1">
+                  <extractioncost>0.064</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.00</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+            </sub-renewable-resource>
          </renewresource>
-         <renewresource delete="1" name="geothermal"/>
       </region>
       <region name="Africa">
          <PrimaryFuelCO2Coef name="geothermal">0</PrimaryFuelCO2Coef>
@@ -225,25 +167,18 @@
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>Africa</market>
-            <price year="1975">1</price>
-            <smooth-renewable-subresource name="hydrothermal">
-               <environCost fillout="1" year="1975">0</environCost>
-               <severanceTax fillout="1" year="1975">0</severanceTax>
-               <gdpSupplyElast>0</gdpSupplyElast>
-               <subResourceCapacityFactor>1</subResourceCapacityFactor>
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0048</techChange>
-               <techChange year="2035">0.0053</techChange>
-               <techChange year="2050">0.0040</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-               <maxSubResource>3.84</maxSubResource>
-               <mid-price>0.613</mid-price>
-               <curve-exponent>10.735</curve-exponent>
-            </smooth-renewable-subresource>
+            <price year="1975">0.45</price>
+            <sub-renewable-resource name="hydrothermal">
+               <annualprod year="1975">0.012</annualprod>
+               <maxSubResource>3.771</maxSubResource>
+               <grade name="grade 1">
+                  <extractioncost>0.064</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.00</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+            </sub-renewable-resource>
          </renewresource>
       </region>
       <region name="Latin America">
@@ -252,25 +187,18 @@
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>Latin America</market>
-            <price year="1975">1</price>
-            <smooth-renewable-subresource name="hydrothermal">
-               <environCost fillout="1" year="1975">0</environCost>
-               <severanceTax fillout="1" year="1975">0</severanceTax>
-               <gdpSupplyElast>0</gdpSupplyElast>
-               <subResourceCapacityFactor>1</subResourceCapacityFactor>
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0048</techChange>
-               <techChange year="2035">0.0053</techChange>
-               <techChange year="2050">0.0040</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-               <maxSubResource>10.42</maxSubResource>
-               <mid-price>0.613</mid-price>
-               <curve-exponent>10.735</curve-exponent>
-            </smooth-renewable-subresource>
+            <price year="1975">0.45</price>
+            <sub-renewable-resource name="hydrothermal">
+               <annualprod year="1975">0.213</annualprod>
+               <maxSubResource>10.235</maxSubResource>
+               <grade name="grade 1">
+                  <extractioncost>0.064</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.00</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+            </sub-renewable-resource>
          </renewresource>
       </region>
       <region name="Southeast Asia">
@@ -279,25 +207,18 @@
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>Southeast Asia</market>
-            <price year="1975">1</price>
-            <smooth-renewable-subresource name="hydrothermal">
-               <environCost fillout="1" year="1975">0</environCost>
-               <severanceTax fillout="1" year="1975">0</severanceTax>
-               <gdpSupplyElast>0</gdpSupplyElast>
-               <subResourceCapacityFactor>1</subResourceCapacityFactor>
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0048</techChange>
-               <techChange year="2035">0.0053</techChange>
-               <techChange year="2050">0.0040</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-               <maxSubResource>9.44</maxSubResource>
-               <mid-price>0.613</mid-price>
-               <curve-exponent>10.735</curve-exponent>
-            </smooth-renewable-subresource>
+            <price year="1975">0.45</price>
+            <sub-renewable-resource name="hydrothermal">
+               <annualprod year="1975">0.236</annualprod>
+               <maxSubResource>5.655</maxSubResource>
+               <grade name="grade 1">
+                  <extractioncost>0.064</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.00</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+            </sub-renewable-resource>
          </renewresource>
       </region>
       <region name="Eastern Europe">
@@ -306,55 +227,19 @@
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>Eastern Europe</market>
-            <price year="1975">1</price>
-            <smooth-renewable-subresource name="hydrothermal">
-               <environCost fillout="1" year="1975">0</environCost>
-               <severanceTax fillout="1" year="1975">0</severanceTax>
-               <gdpSupplyElast>0</gdpSupplyElast>
-               <subResourceCapacityFactor>1</subResourceCapacityFactor>
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0048</techChange>
-               <techChange year="2035">0.0053</techChange>
-               <techChange year="2050">0.0040</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-               <maxSubResource>0.08</maxSubResource>
-               <mid-price>0.613</mid-price>
-               <curve-exponent>10.735</curve-exponent>
-            </smooth-renewable-subresource>
+            <price year="1975">0.45</price>
+            <sub-renewable-resource name="hydrothermal">
+               <annualprod year="1975">0.003</annualprod>
+               <maxSubResource>0.709</maxSubResource>
+               <grade name="grade 1">
+                  <extractioncost>0.064</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.00</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+            </sub-renewable-resource>
          </renewresource>
-         <renewresource delete="1" name="geothermal"/>
-      </region>
-      <region name="Korea">
-         <PrimaryFuelCO2Coef name="geothermal">0</PrimaryFuelCO2Coef>
-         <renewresource name="geothermal">
-            <output-unit>EJ</output-unit>
-            <price-unit>1975$/GJ</price-unit>
-            <market>Korea</market>
-            <price year="1975">1</price>
-            <smooth-renewable-subresource name="hydrothermal">
-               <environCost fillout="1" year="1975">0</environCost>
-               <severanceTax fillout="1" year="1975">0</severanceTax>
-               <gdpSupplyElast>0</gdpSupplyElast>
-               <subResourceCapacityFactor>1</subResourceCapacityFactor>
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0048</techChange>
-               <techChange year="2035">0.0053</techChange>
-               <techChange year="2050">0.0040</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-               <maxSubResource>0.08</maxSubResource>
-               <mid-price>0.613</mid-price>
-               <curve-exponent>10.735</curve-exponent>
-            </smooth-renewable-subresource>
-         </renewresource>
-         <renewresource delete="1" name="geothermal"/>
       </region>
       <region name="India">
          <PrimaryFuelCO2Coef name="geothermal">0</PrimaryFuelCO2Coef>
@@ -362,25 +247,18 @@
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>India</market>
-            <price year="1975">1</price>
-            <smooth-renewable-subresource name="hydrothermal">
-               <environCost fillout="1" year="1975">0</environCost>
-               <severanceTax fillout="1" year="1975">0</severanceTax>
-               <gdpSupplyElast>0</gdpSupplyElast>
-               <subResourceCapacityFactor>1</subResourceCapacityFactor>
-               <techChange year="1975">0</techChange>
-               <techChange year="1990">0</techChange>
-               <techChange year="2005">0</techChange>
-               <techChange year="2020">0.0048</techChange>
-               <techChange year="2035">0.0053</techChange>
-               <techChange year="2050">0.0040</techChange>
-               <techChange year="2065">0.0025</techChange>
-               <techChange year="2080">0.0025</techChange>
-               <techChange year="2095">0.0025</techChange>
-               <maxSubResource>2.06</maxSubResource>
-               <mid-price>0.613</mid-price>
-               <curve-exponent>10.735</curve-exponent>
-            </smooth-renewable-subresource>
+            <price year="1975">0.45</price>
+            <sub-renewable-resource name="hydrothermal">
+               <annualprod year="1975">0.000</annualprod>
+               <maxSubResource>0.566</maxSubResource>
+               <grade name="grade 1">
+                  <extractioncost>0.064</extractioncost>
+               </grade>
+               <grade name="grade 2">
+                  <available>1.00</available>
+                  <extractioncost>0.569</extractioncost>
+               </grade>
+            </sub-renewable-resource>
          </renewresource>
       </region>
    </world>

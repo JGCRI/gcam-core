@@ -1,9 +1,0 @@
-digraph world{
-	electricity[style=filled,color=yellow];
-	geothermal_resource[style=filled,color=indianred1];
-	electricity->geothermal_subsector[dir=back];
-	geothermal_subsector->geothermal_tech[dir=back];
-	geothermal_tech->geothermal_resource[dir=back];
-	geothermal_resource->hydrothermal_subresource[dir=back];
-	geothermal_resource->EGS_subresource[dir=back];
-}

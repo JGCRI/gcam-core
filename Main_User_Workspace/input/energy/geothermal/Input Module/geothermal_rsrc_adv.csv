@@ -1,41 +1,52 @@
 Tech change (assumed equal by region),,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,
 Variable ID,,,,,,,,,,,
-201,,,,,,,,,,,
+301,,,,,,,,,,,
 ,,,techChange,,,,,,,,
-region,renewresource,subresource,1975,1990,2005,2020,2035,2050,2065,2080,2095
-all,geothermal,hydrothermal,0,0,0,0.0095,0.0066,0.0043,0.0025,0.0025,0.0025
-all,geothermal,EGS,0,0,0,0.015893675,0.007377795,0.003288091,0.0025,0.0025,0.0025
-
+region,renewresource,sub-renewable-resource,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,geothermal,hydrothermal,0,0,0,0.0095,0.0066,0.0043,0.0025,0.0025,0.0025
+Canada,geothermal,hydrothermal,0,0,0,0.0095,0.0066,0.0043,0.0025,0.0025,0.0025
+Western Europe,geothermal,hydrothermal,0,0,0,0.0095,0.0066,0.0043,0.0025,0.0025,0.0025
+Japan,geothermal,hydrothermal,0,0,0,0.0095,0.0066,0.0043,0.0025,0.0025,0.0025
+Australia_NZ,geothermal,hydrothermal,0,0,0,0.0095,0.0066,0.0043,0.0025,0.0025,0.0025
+Former Soviet Union,geothermal,hydrothermal,0,0,0,0.0095,0.0066,0.0043,0.0025,0.0025,0.0025
+China,geothermal,hydrothermal,0,0,0,0.0095,0.0066,0.0043,0.0025,0.0025,0.0025
+Middle East,geothermal,hydrothermal,0,0,0,0.0095,0.0066,0.0043,0.0025,0.0025,0.0025
+Africa,geothermal,hydrothermal,0,0,0,0.0095,0.0066,0.0043,0.0025,0.0025,0.0025
+Latin America,geothermal,hydrothermal,0,0,0,0.0095,0.0066,0.0043,0.0025,0.0025,0.0025
+Southeast Asia,geothermal,hydrothermal,0,0,0,0.0095,0.0066,0.0043,0.0025,0.0025,0.0025
+Eastern Europe,geothermal,hydrothermal,0,0,0,0.0095,0.0066,0.0043,0.0025,0.0025,0.0025
+India,geothermal,hydrothermal,0,0,0,0.0095,0.0066,0.0043,0.0025,0.0025,0.0025
+USA,geothermal,EGS,0,0,0,0.015893675,0.007377795,0.003288091,0.0025,0.0025,0.0025
+Canada,geothermal,EGS,0,0,0,0.015893675,0.007377795,0.003288091,0.0025,0.0025,0.0025
+Western Europe,geothermal,EGS,0,0,0,0.015893675,0.007377795,0.003288091,0.0025,0.0025,0.0025
+Japan,geothermal,EGS,0,0,0,0.015893675,0.007377795,0.003288091,0.0025,0.0025,0.0025
+Australia_NZ,geothermal,EGS,0,0,0,0.015893675,0.007377795,0.003288091,0.0025,0.0025,0.0025
+Former Soviet Union,geothermal,EGS,0,0,0,0.015893675,0.007377795,0.003288091,0.0025,0.0025,0.0025
+China,geothermal,EGS,0,0,0,0.015893675,0.007377795,0.003288091,0.0025,0.0025,0.0025
+Middle East,geothermal,EGS,0,0,0,0.015893675,0.007377795,0.003288091,0.0025,0.0025,0.0025
+Africa,geothermal,EGS,0,0,0,0.015893675,0.007377795,0.003288091,0.0025,0.0025,0.0025
+Latin America,geothermal,EGS,0,0,0,0.015893675,0.007377795,0.003288091,0.0025,0.0025,0.0025
+Southeast Asia,geothermal,EGS,0,0,0,0.015893675,0.007377795,0.003288091,0.0025,0.0025,0.0025
+Eastern Europe,geothermal,EGS,0,0,0,0.015893675,0.007377795,0.003288091,0.0025,0.0025,0.0025
+India,geothermal,EGS,0,0,0,0.015893675,0.007377795,0.003288091,0.0025,0.0025,0.0025
+,,,,,,,,,,,
 Supply curve characteristics,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,
 Variable ID,,,,,,,,,,,
-202,,,divide by efficiency,multiply by efficiency,,,,,,,
-
-region,renewresource,subresource,maxSubResource,mid-price,curve-exponent,,,,,,
-USA,geothermal,EGS, 48.48 ,0.472,4.171,,,,,,
-Canada,geothermal,EGS, 0.48 ,0.472,4.171
-Western Europe,geothermal,EGS, 25.20 ,0.472,4.171
-Japan,geothermal,EGS, 10.87 ,0.472,4.171
-Australia_NZ,geothermal,EGS, 14.54 ,0.472,4.171
-Former Soviet Union,geothermal,EGS, 1.38 ,0.472,4.171
-China,geothermal,EGS, 48.48 ,0.472,4.171
-Middle East,geothermal,EGS, 0.48 ,0.472,4.171
-Africa,geothermal,EGS, 22.62 ,0.472,4.171
-Latin America,geothermal,EGS, 61.41 ,0.472,4.171
-Southeast Asia,geothermal,EGS, 55.62 ,0.472,4.171
-Eastern Europe,geothermal,EGS, 0.48 ,0.472,4.171
-Korea,geothermal,EGS, 0.48 ,0.472,4.171
-India,geothermal,EGS, 48.48 ,0.472,4.171
-
-
-Delete small regions,,,,,
-INPUT_TABLE,
-Variable ID,
-400,
-
-region,renewresource
-Canada,geothermal
-Middle East,geothermal
-Eastern Europe,geothermal
-Korea,geothermal
+302,,,,,,,,,,,
+,,,,grade 1,grade 2,,,,,,
+region,renewresource,sub-renewable-resource,maxSubResource,extractionCost,available,extractionCost,,,,,
+USA,geothermal,EGS,78.46 ,0.350,1.000,0.831,,,,,
+Canada,geothermal,EGS,3.02 ,0.350,1.000,0.831,,,,,
+Western Europe,geothermal,EGS,43.75 ,0.350,1.000,0.831,,,,,
+Japan,geothermal,EGS,5.74 ,0.350,1.000,0.831,,,,,
+Australia_NZ,geothermal,EGS,7.04 ,0.350,1.000,0.831,,,,,
+Former Soviet Union,geothermal,EGS,25.84 ,0.350,1.000,0.831,,,,,
+China,geothermal,EGS,14.36 ,0.350,1.000,0.831,,,,,
+Middle East,geothermal,EGS,5.74 ,0.350,1.000,0.831,,,,,
+Africa,geothermal,EGS,5.69 ,0.350,1.000,0.831,,,,,
+Latin America,geothermal,EGS,37.07 ,0.350,1.000,0.831,,,,,
+Southeast Asia,geothermal,EGS,57.41 ,0.350,1.000,0.831,,,,,
+Eastern Europe,geothermal,EGS,8.75 ,0.350,1.000,0.831,,,,,
+India,geothermal,EGS,5.74 ,0.350,1.000,0.831,,,,,

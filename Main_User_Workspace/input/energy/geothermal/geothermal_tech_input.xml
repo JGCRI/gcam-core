@@ -11,8 +11,8 @@
                <sharewt year="1975">1</sharewt>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
-               <sharewt year="2020">0.01</sharewt>
-               <sharewt year="2035">0.2</sharewt>
+               <sharewt year="2020">0.17</sharewt>
+               <sharewt year="2035">0.33</sharewt>
                <sharewt year="2050">0.5</sharewt>
                <sharewt year="2065">0.5</sharewt>
                <sharewt year="2080">0.5</sharewt>
@@ -22,7 +22,7 @@
                      <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -32,7 +32,7 @@
                      <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -43,7 +43,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -54,7 +54,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.91</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -64,7 +64,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.69</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -74,7 +74,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.53</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -84,7 +84,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.43</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -94,7 +94,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.34</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -104,7 +104,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.26</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -124,18 +124,18 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0</sharewt>
-               <sharewt year="2035">0</sharewt>
-               <sharewt year="2050">0</sharewt>
-               <sharewt year="2065">0</sharewt>
-               <sharewt year="2080">0</sharewt>
-               <sharewt year="2095">0</sharewt>
+               <sharewt year="2020">0.05</sharewt>
+               <sharewt year="2035">0.25</sharewt>
+               <sharewt year="2050">0.5</sharewt>
+               <sharewt year="2065">0.5</sharewt>
+               <sharewt year="2080">0.5</sharewt>
+               <sharewt year="2095">0.5</sharewt>
                <technology name="geothermal">
                   <period year="1975">
                      <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -145,95 +145,86 @@
                      <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                         <calibrated-value>0</calibrated-value>
                      </minicam-energy-input>
-                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                         <calibrated-value>0</calibrated-value>
                      </minicam-energy-input>
-                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.91</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
-                     <sharewt>0</sharewt>
                   </period>
                   <period year="2035">
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.69</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
-                     <sharewt>0</sharewt>
                   </period>
                   <period year="2050">
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.53</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
-                     <sharewt>0</sharewt>
                   </period>
                   <period year="2065">
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.43</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
-                     <sharewt>0</sharewt>
                   </period>
                   <period year="2080">
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.34</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
-                     <sharewt>0</sharewt>
                   </period>
                   <period year="2095">
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.26</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
-                     <sharewt>0</sharewt>
                   </period>
                </technology>
             </subsector>
-            <subsector delete="1" name="geothermal"/>
          </supplysector>
       </region>
       <region name="Western Europe">
@@ -246,8 +237,8 @@
                <sharewt year="1975">1</sharewt>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
-               <sharewt year="2020">0.005</sharewt>
-               <sharewt year="2035">0.2</sharewt>
+               <sharewt year="2020">0.17</sharewt>
+               <sharewt year="2035">0.33</sharewt>
                <sharewt year="2050">0.5</sharewt>
                <sharewt year="2065">0.5</sharewt>
                <sharewt year="2080">0.5</sharewt>
@@ -257,7 +248,7 @@
                      <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -267,7 +258,7 @@
                      <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -278,7 +269,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -289,7 +280,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.91</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -299,7 +290,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.69</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -309,7 +300,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.53</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -319,7 +310,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.43</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -329,7 +320,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.34</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -339,7 +330,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.26</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -359,8 +350,8 @@
                <sharewt year="1975">1</sharewt>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
-               <sharewt year="2020">0.01</sharewt>
-               <sharewt year="2035">0.2</sharewt>
+               <sharewt year="2020">0.17</sharewt>
+               <sharewt year="2035">0.33</sharewt>
                <sharewt year="2050">0.5</sharewt>
                <sharewt year="2065">0.5</sharewt>
                <sharewt year="2080">0.5</sharewt>
@@ -370,7 +361,7 @@
                      <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -380,7 +371,7 @@
                      <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -391,7 +382,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -402,7 +393,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.91</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -412,7 +403,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.69</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -422,7 +413,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.53</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -432,7 +423,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.43</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -442,7 +433,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.34</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -452,7 +443,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.26</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -472,18 +463,18 @@
                <sharewt year="1975">1</sharewt>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
-               <sharewt year="2020">0.01</sharewt>
-               <sharewt year="2035">0.05</sharewt>
-               <sharewt year="2050">0.1</sharewt>
-               <sharewt year="2065">0.1</sharewt>
-               <sharewt year="2080">0.1</sharewt>
-               <sharewt year="2095">0.1</sharewt>
+               <sharewt year="2020">0.17</sharewt>
+               <sharewt year="2035">0.33</sharewt>
+               <sharewt year="2050">0.5</sharewt>
+               <sharewt year="2065">0.5</sharewt>
+               <sharewt year="2080">0.5</sharewt>
+               <sharewt year="2095">0.5</sharewt>
                <technology name="geothermal">
                   <period year="1975">
                      <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -493,7 +484,7 @@
                      <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -504,7 +495,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -515,7 +506,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.91</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -525,7 +516,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.69</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -535,7 +526,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.53</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -545,7 +536,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.43</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -555,7 +546,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.34</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -565,7 +556,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.26</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -585,8 +576,8 @@
                <sharewt year="1975">1</sharewt>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
-               <sharewt year="2020">0.01</sharewt>
-               <sharewt year="2035">0.2</sharewt>
+               <sharewt year="2020">0.17</sharewt>
+               <sharewt year="2035">0.33</sharewt>
                <sharewt year="2050">0.5</sharewt>
                <sharewt year="2065">0.5</sharewt>
                <sharewt year="2080">0.5</sharewt>
@@ -596,7 +587,7 @@
                      <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -606,7 +597,7 @@
                      <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -617,7 +608,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -628,7 +619,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.91</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -638,7 +629,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.69</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -648,7 +639,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.53</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -658,7 +649,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.43</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -668,7 +659,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.34</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -678,7 +669,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.26</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -698,8 +689,8 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.01</sharewt>
-               <sharewt year="2035">0.2</sharewt>
+               <sharewt year="2020">0.05</sharewt>
+               <sharewt year="2035">0.25</sharewt>
                <sharewt year="2050">0.5</sharewt>
                <sharewt year="2065">0.5</sharewt>
                <sharewt year="2080">0.5</sharewt>
@@ -709,7 +700,7 @@
                      <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -719,31 +710,29 @@
                      <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                         <calibrated-value>0</calibrated-value>
                      </minicam-energy-input>
-                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                         <calibrated-value>0</calibrated-value>
                      </minicam-energy-input>
-                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.91</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -753,7 +742,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.69</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -763,7 +752,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.53</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -773,7 +762,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.43</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -783,7 +772,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.34</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -793,7 +782,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.26</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -813,18 +802,18 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0</sharewt>
-               <sharewt year="2035">0</sharewt>
-               <sharewt year="2050">0</sharewt>
-               <sharewt year="2065">0</sharewt>
-               <sharewt year="2080">0</sharewt>
-               <sharewt year="2095">0</sharewt>
+               <sharewt year="2020">0.05</sharewt>
+               <sharewt year="2035">0.25</sharewt>
+               <sharewt year="2050">0.5</sharewt>
+               <sharewt year="2065">0.5</sharewt>
+               <sharewt year="2080">0.5</sharewt>
+               <sharewt year="2095">0.5</sharewt>
                <technology name="geothermal">
                   <period year="1975">
                      <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -834,95 +823,86 @@
                      <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                         <calibrated-value>0</calibrated-value>
                      </minicam-energy-input>
-                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                         <calibrated-value>0</calibrated-value>
                      </minicam-energy-input>
-                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.91</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
-                     <sharewt>0</sharewt>
                   </period>
                   <period year="2035">
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.69</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
-                     <sharewt>0</sharewt>
                   </period>
                   <period year="2050">
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.53</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
-                     <sharewt>0</sharewt>
                   </period>
                   <period year="2065">
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.43</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
-                     <sharewt>0</sharewt>
                   </period>
                   <period year="2080">
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.34</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
-                     <sharewt>0</sharewt>
                   </period>
                   <period year="2095">
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.26</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
-                     <sharewt>0</sharewt>
                   </period>
                </technology>
             </subsector>
-            <subsector delete="1" name="geothermal"/>
          </supplysector>
       </region>
       <region name="Africa">
@@ -935,8 +915,8 @@
                <sharewt year="1975">1</sharewt>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
-               <sharewt year="2020">0.01</sharewt>
-               <sharewt year="2035">0.2</sharewt>
+               <sharewt year="2020">0.17</sharewt>
+               <sharewt year="2035">0.33</sharewt>
                <sharewt year="2050">0.5</sharewt>
                <sharewt year="2065">0.5</sharewt>
                <sharewt year="2080">0.5</sharewt>
@@ -946,7 +926,7 @@
                      <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -956,7 +936,7 @@
                      <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -967,7 +947,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -978,7 +958,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.91</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -988,7 +968,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.69</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -998,7 +978,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.53</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1008,7 +988,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.43</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1018,7 +998,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.34</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1028,7 +1008,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.26</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1048,8 +1028,8 @@
                <sharewt year="1975">1</sharewt>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
-               <sharewt year="2020">0.05</sharewt>
-               <sharewt year="2035">0.2</sharewt>
+               <sharewt year="2020">0.17</sharewt>
+               <sharewt year="2035">0.33</sharewt>
                <sharewt year="2050">0.5</sharewt>
                <sharewt year="2065">0.5</sharewt>
                <sharewt year="2080">0.5</sharewt>
@@ -1059,7 +1039,7 @@
                      <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1069,7 +1049,7 @@
                      <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1080,7 +1060,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1091,7 +1071,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.91</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1101,7 +1081,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.69</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1111,7 +1091,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.53</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1121,7 +1101,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.43</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1131,7 +1111,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.34</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1141,7 +1121,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.26</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1161,8 +1141,8 @@
                <sharewt year="1975">1</sharewt>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
-               <sharewt year="2020">0.05</sharewt>
-               <sharewt year="2035">0.2</sharewt>
+               <sharewt year="2020">0.17</sharewt>
+               <sharewt year="2035">0.33</sharewt>
                <sharewt year="2050">0.5</sharewt>
                <sharewt year="2065">0.5</sharewt>
                <sharewt year="2080">0.5</sharewt>
@@ -1172,7 +1152,7 @@
                      <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1182,7 +1162,7 @@
                      <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1193,7 +1173,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1204,7 +1184,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.91</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1214,7 +1194,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.69</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1224,7 +1204,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.53</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1234,7 +1214,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.43</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1244,7 +1224,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.34</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1254,7 +1234,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.26</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1274,18 +1254,18 @@
                <sharewt year="1975">1</sharewt>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
-               <sharewt year="2020">0</sharewt>
-               <sharewt year="2035">0</sharewt>
-               <sharewt year="2050">0</sharewt>
-               <sharewt year="2065">0</sharewt>
-               <sharewt year="2080">0</sharewt>
-               <sharewt year="2095">0</sharewt>
+               <sharewt year="2020">0.05</sharewt>
+               <sharewt year="2035">0.25</sharewt>
+               <sharewt year="2050">0.5</sharewt>
+               <sharewt year="2065">0.5</sharewt>
+               <sharewt year="2080">0.5</sharewt>
+               <sharewt year="2095">0.5</sharewt>
                <technology name="geothermal">
                   <period year="1975">
                      <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1295,217 +1275,86 @@
                      <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                         <calibrated-value>0.00288</calibrated-value>
                      </minicam-energy-input>
-                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                         <calibrated-value>0.003384</calibrated-value>
                      </minicam-energy-input>
-                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.91</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
-                     <sharewt>0</sharewt>
                   </period>
                   <period year="2035">
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.69</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
-                     <sharewt>0</sharewt>
                   </period>
                   <period year="2050">
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.53</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
-                     <sharewt>0</sharewt>
                   </period>
                   <period year="2065">
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.43</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
-                     <sharewt>0</sharewt>
                   </period>
                   <period year="2080">
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.34</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
-                     <sharewt>0</sharewt>
                   </period>
                   <period year="2095">
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.26</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
-                     <sharewt>0</sharewt>
                   </period>
                </technology>
             </subsector>
-            <subsector delete="1" name="geothermal"/>
-         </supplysector>
-      </region>
-      <region name="Korea">
-         <supplysector name="electricity">
-            <subsector name="geothermal">
-               <logitexp fillout="1" year="1975">-3</logitexp>
-               <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
-               <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>1975</scaleYear>
-               <sharewt year="1975">0</sharewt>
-               <sharewt year="1990">0</sharewt>
-               <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0</sharewt>
-               <sharewt year="2035">0</sharewt>
-               <sharewt year="2050">0</sharewt>
-               <sharewt year="2065">0</sharewt>
-               <sharewt year="2080">0</sharewt>
-               <sharewt year="2095">0</sharewt>
-               <technology name="geothermal">
-                  <period year="1975">
-                     <lifetime>-1</lifetime>
-                     <CO2 name="CO2"/>
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
-                     </minicam-non-energy-input>
-                     <minicam-energy-input name="geothermal">
-                        <efficiency>0.1</efficiency>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="1990">
-                     <lifetime>-1</lifetime>
-                     <CO2 name="CO2"/>
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
-                     </minicam-non-energy-input>
-                     <minicam-energy-input name="geothermal">
-                        <efficiency>0.1</efficiency>
-                        <calibrated-value>0</calibrated-value>
-                     </minicam-energy-input>
-                     <sharewt>0</sharewt>
-                  </period>
-                  <period year="2005">
-                     <lifetime>30</lifetime>
-                     <CO2 name="CO2"/>
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
-                     </minicam-non-energy-input>
-                     <minicam-energy-input name="geothermal">
-                        <efficiency>0.1</efficiency>
-                        <calibrated-value>0</calibrated-value>
-                     </minicam-energy-input>
-                     <sharewt>0</sharewt>
-                  </period>
-                  <period year="2020">
-                     <lifetime>30</lifetime>
-                     <CO2 name="CO2"/>
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
-                     </minicam-non-energy-input>
-                     <minicam-energy-input name="geothermal">
-                        <efficiency>0.1</efficiency>
-                     </minicam-energy-input>
-                     <sharewt>0</sharewt>
-                  </period>
-                  <period year="2035">
-                     <lifetime>30</lifetime>
-                     <CO2 name="CO2"/>
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
-                     </minicam-non-energy-input>
-                     <minicam-energy-input name="geothermal">
-                        <efficiency>0.1</efficiency>
-                     </minicam-energy-input>
-                     <sharewt>0</sharewt>
-                  </period>
-                  <period year="2050">
-                     <lifetime>30</lifetime>
-                     <CO2 name="CO2"/>
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
-                     </minicam-non-energy-input>
-                     <minicam-energy-input name="geothermal">
-                        <efficiency>0.1</efficiency>
-                     </minicam-energy-input>
-                     <sharewt>0</sharewt>
-                  </period>
-                  <period year="2065">
-                     <lifetime>30</lifetime>
-                     <CO2 name="CO2"/>
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
-                     </minicam-non-energy-input>
-                     <minicam-energy-input name="geothermal">
-                        <efficiency>0.1</efficiency>
-                     </minicam-energy-input>
-                     <sharewt>0</sharewt>
-                  </period>
-                  <period year="2080">
-                     <lifetime>30</lifetime>
-                     <CO2 name="CO2"/>
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
-                     </minicam-non-energy-input>
-                     <minicam-energy-input name="geothermal">
-                        <efficiency>0.1</efficiency>
-                     </minicam-energy-input>
-                     <sharewt>0</sharewt>
-                  </period>
-                  <period year="2095">
-                     <lifetime>30</lifetime>
-                     <CO2 name="CO2"/>
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
-                     </minicam-non-energy-input>
-                     <minicam-energy-input name="geothermal">
-                        <efficiency>0.1</efficiency>
-                     </minicam-energy-input>
-                     <sharewt>0</sharewt>
-                  </period>
-               </technology>
-            </subsector>
-            <subsector delete="1" name="geothermal"/>
          </supplysector>
       </region>
       <region name="India">
@@ -1518,8 +1367,8 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.01</sharewt>
-               <sharewt year="2035">0.2</sharewt>
+               <sharewt year="2020">0.17</sharewt>
+               <sharewt year="2035">0.33</sharewt>
                <sharewt year="2050">0.5</sharewt>
                <sharewt year="2065">0.5</sharewt>
                <sharewt year="2080">0.5</sharewt>
@@ -1529,7 +1378,7 @@
                      <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1539,31 +1388,29 @@
                      <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                         <calibrated-value>0</calibrated-value>
                      </minicam-energy-input>
-                     <sharewt>0</sharewt>
                   </period>
                   <period year="2005">
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>3.12</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                         <calibrated-value>0</calibrated-value>
                      </minicam-energy-input>
-                     <sharewt>0</sharewt>
                   </period>
                   <period year="2020">
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.91</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1573,7 +1420,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.69</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1583,7 +1430,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.53</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1593,7 +1440,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.43</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1603,7 +1450,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.34</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1613,7 +1460,7 @@
                      <lifetime>30</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>0</input-cost>
+                        <input-cost>2.26</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
@@ -1621,6 +1468,11 @@
                   </period>
                </technology>
             </subsector>
+         </supplysector>
+      </region>
+      <region name="Korea">
+         <supplysector name="electricity">
+            <subsector delete="1" name="geothermal"/>
          </supplysector>
       </region>
    </world>
