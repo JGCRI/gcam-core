@@ -181,10 +181,10 @@ public class GDPQueryBuilder extends QueryBuilder {
 		strBuff.append(regionQueryPortion.substring(0, regionQueryPortion.length()-1));
 		if(((String)regions[0]).equals("Global")) {
 			strBuff.append("]/").append(qg.xPath);
-			isGlobal = true;
+			qg.isGlobal = true;
 			return strBuff.toString();
 		} else {
-			isGlobal = false;
+			qg.isGlobal = false;
 			strBuff.append(" and (");
 			for(int i = 0; i < regions.length; ++i) {
 				strBuff.append(" (@name='").append(regions[i]).append("') or ");
@@ -199,7 +199,7 @@ public class GDPQueryBuilder extends QueryBuilder {
 		XmlValue nBefore;
 		do {
 			if(qg.nodeLevel.getKey().equals(XMLDB.getAttr(n, "type"))) {
-				if(!isGlobal) {
+				if(!qg.isGlobal) {
 					if(qg.nodeLevel.getValue() == null) {
 						ret.add(XMLDB.getAttr(n, "name"));
 					} else {
@@ -279,5 +279,59 @@ public class GDPQueryBuilder extends QueryBuilder {
 	}
 	public List<String> getDefaultCollpaseList() {
 		return new Vector<String>();
+	}
+	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue) throws Exception {
+		// stop point for recursion is the root
+		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
+			currNode.delete();
+			return dataTree;
+		}
+
+		// recursively process parents first
+		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree, axisValue);
+
+		// cache node properties
+		final String nodeName = currNode.getNodeName();
+		final Map<String, String> attrMap = XMLDB.getAttrMap(currNode);
+
+		// attempt to find the axis at this node
+		String type = attrMap.get("type");
+		boolean addedNodeLevel = false;
+		boolean addedYearLevel = false;
+		if(qg.nodeLevel.getKey().equals(type)) {
+			addedNodeLevel = true;
+			if(qg.nodeLevel.getKey().equals("region") && qg.isGlobal) {
+				axisValue.setValue("Global");
+			} else {
+				axisValue.setValue(attrMap.get(qg.nodeLevel.getValue() != null ? qg.nodeLevel.getValue() : "name"));
+			}
+		}
+		if(nodeName.equals(qg.yearLevel.getKey())) {
+			addedYearLevel = true;
+			axisValue.setKey(attrMap.get(qg.yearLevel.getValue() != null ? qg.yearLevel.getValue() : "year"));
+		}
+
+		// split maps if we shouldn't collapse at this node
+		if(type == null) {
+			type = nodeName;
+		}
+		// special case since male and female do not actually have attributes
+		if(!addedNodeLevel && !addedYearLevel && !attrMap.isEmpty()) {
+			String attr = XMLDB.getAllAttr(attrMap);
+			// check for rewrites
+			if(qg.labelRewriteMap != null && qg.labelRewriteMap.containsKey(type)) {
+				Map<String, String> currRewriteMap = qg.labelRewriteMap.get(type);
+				if(currRewriteMap.containsKey(attr)) {
+					attr = currRewriteMap.get(attr);
+				}
+			}
+			attr = type+"@"+attr;
+			if(!tempMap.containsKey(attr)) {
+				tempMap.put(attr, new TreeMap());
+			}
+			tempMap = (Map)tempMap.get(attr);
+		}
+		currNode.delete();
+		return tempMap;
 	}
 }

@@ -399,10 +399,10 @@ public class DbViewer implements ActionListener, MenuAdder {
 			XmlResults res = XMLDB.getInstance().createQuery("/scenario", null, null, null);
 			while(res.hasNext()) {
 				temp = res.next();
+				Map<String, String> scnAttrMap = XMLDB.getAttrMap(temp);
 				XmlDocument tempDoc = temp.asDocument();
-				ret.add(new ScenarioListItem(tempDoc.getName(), XMLDB.getAttr(temp, "name"), XMLDB.getAttr(temp, "date")));
+				ret.add(new ScenarioListItem(tempDoc.getName(), scnAttrMap.get("name"), scnAttrMap.get("date")));
 				tempDoc.delete();
-				temp.delete();
 			}
 			res.delete();
 		} catch(XmlException e) {
@@ -710,7 +710,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 							TabCloseIcon loadingIcon = new TabCloseIcon();
 							JComponent ret = new QueryResultsPanel(qg, singleBinding, parentFrame, scnList.getSelectedValues(), regionList.getSelectedValues(), loadingIcon);
 
-							tablesTabs.addTab(qg.toString(), new TabCloseIcon(), ret, createCommentTooltip(selPaths[i])); 
+							tablesTabs.addTab(qg.toString(), loadingIcon, ret, createCommentTooltip(selPaths[i])); 
 							if(!movedTabAlready) { 
 								tablesTabs.setSelectedIndex(tablesTabs.getTabCount()-1);
 								movedTabAlready = true; 
@@ -1174,21 +1174,30 @@ public class DbViewer implements ActionListener, MenuAdder {
 
 	protected void batchQuery(File queryFile, final File excelFile) {
 		final Vector tempScns = getScenarios();
+		final String singleSheetCheckBoxPropName = "batchQueryResultsInDifferentSheets";
+		final String includeChartsPropName ="batchQueryIncludeCharts";
+		final String splitRunsPropName = "batchQuerySplitRunsInDifferentSheets";
+		final String replaceResultsPropName = "batchQueryReplaceResults";
+		Properties prop = InterfaceMain.getInstance().getProperties();
 
 		// Create a Select Scenarios dialog to get which scenarios to run
 		final JList scenarioList = new JList(tempScns); 
 		final JDialog scenarioDialog = new JDialog(parentFrame, "Select Scenarios to Run", true);
 		JPanel listPane = new JPanel();
 		JPanel buttonPane = new JPanel();
-		final JCheckBox singleSheetCheckBox = new JCheckBox("Place all results in different sheet", false);
-		final JCheckBox drawPicsCheckBox = new JCheckBox("Include charts with results", true);
-		final JCheckBox seperateRunsCheckBox = new JCheckBox("Split runs into different sheets", false);
+		final JCheckBox singleSheetCheckBox = new JCheckBox("Place all results in different sheet",
+				Boolean.parseBoolean(prop.getProperty(singleSheetCheckBoxPropName, "false")));
+		final JCheckBox drawPicsCheckBox = new JCheckBox("Include charts with results",
+				Boolean.parseBoolean(prop.getProperty(includeChartsPropName, "true")));
+		final JCheckBox seperateRunsCheckBox = new JCheckBox("Split runs into different sheets",
+				Boolean.parseBoolean(prop.getProperty(splitRunsPropName, "false")));
 		final JButton okButton = new JButton("Ok");
 		okButton.setEnabled(false);
 		JButton cancelButton = new JButton("Cancel");
 		listPane.setLayout( new BoxLayout(listPane, BoxLayout.Y_AXIS));
 		Container contentPane = scenarioDialog.getContentPane();
-		final JCheckBox overwriteCheckBox = new JCheckBox("Overwrite selected file if it exists", false);
+		final JCheckBox overwriteCheckBox = new JCheckBox("Overwrite selected file if it exists",
+				Boolean.parseBoolean(prop.getProperty(replaceResultsPropName, "false")));
 
 		scenarioList.addListSelectionListener(new ListSelectionListener() {
 			public void valueChanged(ListSelectionEvent e) {
@@ -1238,6 +1247,11 @@ public class DbViewer implements ActionListener, MenuAdder {
 		if(scenarioList.isSelectionEmpty()) {
 			return;
 		}
+		// save the check box options back into the properties
+		prop.setProperty(singleSheetCheckBoxPropName, Boolean.toString(singleSheetCheckBox.isSelected()));
+		prop.setProperty(includeChartsPropName, Boolean.toString(drawPicsCheckBox.isSelected()));
+		prop.setProperty(splitRunsPropName, Boolean.toString(seperateRunsCheckBox.isSelected()));
+		prop.setProperty(replaceResultsPropName, Boolean.toString(overwriteCheckBox.isSelected()));
 
 		// read the batch query file
 		Document queries = readQueries( queryFile );
@@ -1567,6 +1581,12 @@ public class DbViewer implements ActionListener, MenuAdder {
 				if(scanThread.isAlive()) {
 					progLabel.setText("Canceling Scan");
 					scanThread.interrupt();
+					// this is in effect interrupting all single queries create list
+					// queries
+					int[] selIndexes = selectQueries.getSelectedIndices();
+					for(int selIndex : selIndexes) {
+						queriesArr[selIndex].getSingleQueryExtension().interruptGatherThread();
+					}
 					// will let the scan thread hide the dialog
 				} else {
 					// has not started yet so just hide it

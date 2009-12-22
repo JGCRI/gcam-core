@@ -163,4 +163,8 @@ public class ClimateQueryBuilder extends QueryBuilder {
 	public List<String> getDefaultCollpaseList() {
 		return new Vector<String>();
 	}
+	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue) throws Exception {
+		axisValue.setValue(currNode.getNodeName());
+		return qg.defaultAddToDataTree(currNode, dataTree, axisValue);
+	}
 }

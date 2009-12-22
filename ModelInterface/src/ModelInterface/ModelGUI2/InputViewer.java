@@ -1411,7 +1411,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 	 */
 	public void readCSVFile(File[] csvFiles, File file2) {
 		StringTokenizer st;
-		String intValueStr;
+		String intValueStr = null;
 		String strToReplace;
 		int counter;
 		int intValue;
@@ -1572,6 +1572,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 
 
 		} catch (Exception e) {
+			System.out.println("intValueStr "+intValueStr);
 			System.out
 					.println("Excpetion thrown while trying to read csv and header files "
 							+ e);

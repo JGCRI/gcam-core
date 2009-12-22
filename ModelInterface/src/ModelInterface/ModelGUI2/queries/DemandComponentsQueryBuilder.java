@@ -376,9 +376,9 @@ public class DemandComponentsQueryBuilder extends QueryBuilder {
 			ret.append(regionQueryPortion+"/");
 			//regionSel = new int[0]; 
 			regions = new Object[0];
-			isGlobal = true;
+			qg.isGlobal = true;
 		} else {
-			isGlobal = false;
+			qg.isGlobal = false;
 		}
 		for(int i = 0; i < regions.length; ++i) {
 			if(!added) {
@@ -472,5 +472,59 @@ public class DemandComponentsQueryBuilder extends QueryBuilder {
 	}
 	public List<String> getDefaultCollpaseList() {
 		return new Vector<String>();
+	}
+	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue) throws Exception {
+		// stop point for recursion is when we reach the root
+		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
+			currNode.delete();
+			return dataTree;
+		}
+
+		// recursively process parents first
+		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree, axisValue);
+
+		final String nodeName = currNode.getNodeName();
+		final Map<String, String> attrMap = XMLDB.getAttrMap(currNode);
+
+		// attemp to find axis values at the current node
+		String type = attrMap.get("type");
+		boolean addedNodeLevel = false;
+		boolean addedYearLevel = false;
+		if(qg.nodeLevel.getKey().equals(type)) {
+			addedNodeLevel = true;
+			axisValue.setValue(attrMap.get(qg.nodeLevel.getValue()));
+		} 
+		if(qg.yearLevel.getKey().equals(type)) {
+			addedYearLevel = true;
+			String sectorType = attrMap.get(qg.yearLevel.getValue());
+			if(sectorType.equals("Household")) {
+				axisValue.setKey("Consumption");
+			} else if(sectorType.equals("Government")) {
+				axisValue.setKey("Government");
+			} else if(sectorType.equals("Investment")) {
+				axisValue.setKey("Investment");
+			} else if(sectorType.equals("Trade")) {
+				axisValue.setKey("Trade");
+			} else {
+				axisValue.setKey("Intermediate Production");
+			}
+		}
+		if(type == null) {
+			type = nodeName;
+		}
+		if(type.equals("demand-currency") || type.equals("region")) {
+			String attr;
+			if(type.equals("region")) {
+				attr = "region@"+attrMap.get("name");
+			} else {
+				attr = "year@"+attrMap.get("year");
+			}
+			if(!tempMap.containsKey(attr)) {
+				tempMap.put(attr, new HashMap());
+			}
+			tempMap = (Map)tempMap.get(attr);
+		} 
+		currNode.delete();
+		return tempMap;
 	}
 }

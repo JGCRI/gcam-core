@@ -33,6 +33,7 @@ import ModelInterface.ModelGUI2.undo.EditQueryUndoableEdit;
 import com.sleepycat.dbxml.XmlResults;
 import com.sleepycat.dbxml.XmlValue;
 import com.sleepycat.dbxml.XmlDocument;
+import com.sleepycat.dbxml.XmlQueryContext;
 import com.sleepycat.dbxml.XmlException;
 
 /**
@@ -126,6 +127,14 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 	 * a new one is allowed to be set.
 	 */
 	private Thread gatherThread = null;
+
+	/**
+	 * The query context that will be used when gathering
+	 * a query list.  If a user attempts to interrupt or
+	 * start a new gather this context must be interrupted
+	 * and reset.
+	 */
+	private XmlQueryContext gatherContext = null;
 
 	/**
 	 * A simple class which holds a single query value which
@@ -484,6 +493,17 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 	}
 
 	/**
+	 * Public method that could tell this class to cancel creating
+	 * the single query list.
+	 */
+	public void interruptGatherThread() {
+		// can achieve this by setting the gather thread to null
+		// which will be sure to interrupt any currently running
+		// queries first
+		setGatherThread(null);
+	}
+
+	/**
 	 * Sets the gatherThread to the new thread.  If gatherThread
 	 * was not null and still alive it must be interrupted first
 	 * before proceeding.
@@ -494,7 +514,18 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 		       gatherThread.interrupt();
 		       // should I join?
 	       }
+	       if(gatherContext != null) {
+		       try {
+			       gatherContext.interruptQuery();
+		       } catch(XmlException e) {
+			       System.out.println("Error while interrupting gather list query:");
+			       e.printStackTrace();
+		       } finally {
+			       gatherContext.delete();
+		       }
+	       }
 	       gatherThread = newThread;
+	       gatherContext = XMLDB.getInstance().createQueryContext();
        }
 
        /**
@@ -584,11 +615,11 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 			       final long startTime = System.currentTimeMillis();
 			       try {
 				       XmlResults res = XMLDB.getInstance().createQuery(new SingleQueryListQueryBinding(qg, 
-						       XMLDB.getInstance().getContainer(), qg.getCollapseOnList()), scenarios, regions);
+						       XMLDB.getInstance().getContainer(), qg.getCollapseOnList()), scenarios, regions, gatherContext);
 				       // createQuery won't pass along the XmlException so we will
 				       // have to check for null
 				       if(res == null) {
-					       throw new XmlException(XmlException.XPATH_PARSER_ERROR,
+					       throw new XmlException(XmlException.QUERY_PARSER_ERROR,
 						       "Probably invalid syntax", null, 0);
 				       }
 				       XmlValue curr;
@@ -792,7 +823,11 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 	       // now that I have sorted these out it is just simply adding new SingleQueryValue to the list
 	       for(Iterator<Map.Entry<String, List<String>>> it = reverseMapping.entrySet().iterator(); it.hasNext(); ) {
 		       Map.Entry<String, List<String>> currEntry = it.next();
-		       currValues.add(new SingleQueryValue(currEntry.getKey(), currEntry.getValue()));
+		       // the empty string is a special case which meant that we wanted to delete that row
+		       // and we definatly do not want the empty string as a row so skip it
+		       if(!currEntry.getKey().equals("")) {
+			       currValues.add(new SingleQueryValue(currEntry.getKey(), currEntry.getValue()));
+		       }
 	       }
        }
 }

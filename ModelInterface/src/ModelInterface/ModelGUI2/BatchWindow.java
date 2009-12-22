@@ -10,6 +10,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.WindowAdapter;
+import java.awt.event.WindowListener;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
@@ -19,6 +20,7 @@ import java.io.IOException;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.Vector;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -31,11 +33,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingUtilities;
+import javax.swing.JButton;
 import javax.swing.event.ChangeListener;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 import org.apache.poi.hssf.usermodel.HSSFPatriarch;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -68,7 +74,6 @@ public class BatchWindow extends Window {
 	private static final long serialVersionUID = -1481157258336281895L;
 
 	final File excelFile;
-	final File tempFile;
 	final Vector<Object[]> toRunScns; 
 	final JCheckBox singleSheetCheckBox; 
 	final JCheckBox drawPicsCheckBox; 
@@ -82,7 +87,6 @@ public class BatchWindow extends Window {
 	final JProgressBar progressBar;
 	final Runnable increaseProgress;
 	final Window progressDialog;
-	HSSFWorkbook tempWB;
 
 
 	/**
@@ -106,7 +110,7 @@ public class BatchWindow extends Window {
 
 
 		super(parentFrame);
-		this.excelFile = this.tempFile= excelFile;
+		this.excelFile = excelFile;
 		this.toRunScns = toRunScns;
 		this.singleSheetCheckBox = singleSheetCheckBox;
 		this.drawPicsCheckBox = drawPicsCheckBox;
@@ -135,9 +139,6 @@ public class BatchWindow extends Window {
 				"Running Queries", "Run and Export Progress");
 		WindowAdapter myWindowAdapter = new WindowAdapter() {
 			public void windowClosing(WindowEvent e) {
-				//why won't this work?
-				// TODO: Figure out why
-				System.out.println("Killing being attempted1212");
 				killThread();
 			}
 		};
@@ -154,7 +155,8 @@ public class BatchWindow extends Window {
 				HSSFSheet sheet = null;
 				HSSFPatriarch drawingPat = null;
 				QueryGenerator qgTemp = null;
-				Vector tempRegions = new Vector();
+				List<String>tempRegions = new Vector<String>();
+				int numErrors = 0;
 				// read/create the output excel file
 
 
@@ -163,7 +165,7 @@ public class BatchWindow extends Window {
 
 				if(excelFile.exists() && !(overwrite)) {
 					try {
-						tempWB = wb = new HSSFWorkbook(new FileInputStream(excelFile));
+						wb = new HSSFWorkbook(new FileInputStream(excelFile));
 					} catch (IOException ioe) {
 						ioe.printStackTrace();
 						return;
@@ -183,16 +185,16 @@ public class BatchWindow extends Window {
 					}
 					for(int snapshotIndex = 0; snapshotIndex < numQueries; ++snapshotIndex) {
 						tempNode = res.snapshotItem(snapshotIndex);
-						tempRegions.removeAllElements();
+						tempRegions.clear();
 						NodeList nl = tempNode.getChildNodes();
 						boolean isGlobal = false;
 						for(int i = 0; i < nl.getLength(); ++i) {
-							Element currEl = (Element)nl.item(i);
+							Node currEl = nl.item(i);
 							if(currEl.getNodeName().equals("region")) {
-								String currRegionName = currEl.getAttribute("name");
+								String currRegionName = ((Element)currEl).getAttribute("name");
 								// if Global is in the list we will run it separately
 								if(!currRegionName.equals("Global")) {
-									tempRegions.add(currEl.getAttribute("name"));
+									tempRegions.add(((Element)currEl).getAttribute("name"));
 								} else {
 									isGlobal = true;
 								}
@@ -202,6 +204,12 @@ public class BatchWindow extends Window {
 								} catch (NullPointerException e) {
 									e.printStackTrace();
 									// don’t warn the user just yet
+								} catch(ClassCastException ce) {
+									ce.printStackTrace();
+									// don't want the user yet since this may have just
+									// been a comment mistaken as the query
+									// TODO: we need a better way of knowing if something
+									// is a query
 								}
 							}
 						}
@@ -211,6 +219,7 @@ public class BatchWindow extends Window {
 									"<html><br></html>" + "Check xml code.",
 									"Batch Query Error", JOptionPane.ERROR_MESSAGE);
 							
+							++numErrors;
 							continue;
 						}
 						if(singleSheetCheckBox.isSelected()) {
@@ -236,7 +245,7 @@ public class BatchWindow extends Window {
 							// if global was selected we will run it again.  this covers the case where
 							// Global and other regions where selected
 							if(isGlobal) {
-								tempRegions.removeAllElements();
+								tempRegions.clear();
 								tempRegions.add("Global");
 								if(qgTemp.isGroup()) {
 									(new MultiTableModel(qgTemp, currScns, 
@@ -249,8 +258,10 @@ public class BatchWindow extends Window {
 								}
 							}
 						} catch(Exception e) {
-							System.out.println("Warning possible that a query didn't get results");
 							e.printStackTrace();
+							HSSFRow row = sheet.createRow(sheet.getLastRowNum()+1);
+							row.createCell((short)0).setCellValue("Error: "+e.getMessage());
+							++numErrors;
 						} finally {
 							SwingUtilities.invokeLater(increaseProgress);
 						}
@@ -261,9 +272,6 @@ public class BatchWindow extends Window {
 					return;
 
 
-				System.out.println("Hope you didnt try to quit");
-				if(isInterrupted())
-					return;
 				try {
 					String fileName = excelFile.toString();
 					if(fileName.contains(".xml"))
@@ -274,9 +282,16 @@ public class BatchWindow extends Window {
 					FileOutputStream fos = new FileOutputStream(fileName+".xls");
 					wb.write(fos);
 					fos.close();
-					JOptionPane.showMessageDialog(parentFrame,
-							"Sucessfully ran batch query",
-							"Batch Query", JOptionPane.INFORMATION_MESSAGE);
+					if(numErrors == 0) {
+						JOptionPane.showMessageDialog(parentFrame,
+								"Sucessfully ran batch query",
+								"Batch Query", JOptionPane.INFORMATION_MESSAGE);
+					} else {
+						// warn the users that some queries had errors
+						JOptionPane.showMessageDialog(parentFrame,
+								"Batch queries finished with "+numErrors+" error"+(numErrors == 1 ? "." : "s."),
+								"Batch Query", JOptionPane.WARNING_MESSAGE);
+					}
 				} catch(IOException ioe) {
 					ioe.printStackTrace();
 					JOptionPane.showMessageDialog(parentFrame,
@@ -289,11 +304,6 @@ public class BatchWindow extends Window {
 		};
 
 		exportThread.start();
-
-
-
-
-
 	}
 
 
@@ -312,7 +322,8 @@ public class BatchWindow extends Window {
 		if(progBar.getMaximum() == 0) {
 			return null;
 		}
-		Window filterDialog = new JDialog(parentFrame, title, false);
+		final JDialog filterDialog = new JDialog(parentFrame, title, false);
+		filterDialog.setResizable(false);
 		filterDialog.setAlwaysOnTop(true);
 		JPanel all = new JPanel();
 		all.setLayout( new BoxLayout(all, BoxLayout.Y_AXIS));
@@ -322,6 +333,24 @@ public class BatchWindow extends Window {
 		all.add(label, BorderLayout.PAGE_START);
 		all.add(Box.createVerticalStrut(10));
 		all.add(progBar);
+		final JButton cancelButton = new JButton("Cancel");
+		cancelButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// let listeners know the window is closing
+				final WindowEvent windowEvent = new WindowEvent(filterDialog, WindowEvent.WINDOW_CLOSING);
+				for(WindowListener adapter : filterDialog.getWindowListeners()) {
+					adapter.windowClosing(windowEvent);
+				}
+				// close the window
+				filterDialog.dispose();
+			}
+		});
+		final JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+		buttonPanel.add(Box.createHorizontalGlue());
+		buttonPanel.add(cancelButton);
+		all.add(Box.createVerticalStrut(10));
+		all.add(buttonPanel);
 		all.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
 
@@ -334,8 +363,7 @@ public class BatchWindow extends Window {
 
 
 	/**
-	 * Kill thread. notifies user with a message dialog when the 
-	 * query is terminated.
+	 * Kill the query thread. 
 	 * @throws IOException 
 	 */
 	public void killThread() {
@@ -348,21 +376,6 @@ public class BatchWindow extends Window {
 		}
 		exportThread.interrupt();
 		System.out.println("Tried to kill it");
-		if(tempFile.exists()){
-			FileOutputStream fos;
-			try {
-				fos = new FileOutputStream(tempFile.getName());
-				tempWB.write(fos);
-				fos.close();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
-		JOptionPane.showMessageDialog(parentFrame,
-				"User terminated",
-				"Batch process terminated", JOptionPane.CANCEL_OPTION);
 	}
 
 }

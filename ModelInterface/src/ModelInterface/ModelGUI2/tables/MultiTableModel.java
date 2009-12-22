@@ -1,5 +1,6 @@
 package ModelInterface.ModelGUI2.tables;
 
+import ModelInterface.common.DataPair;
 import ModelInterface.ModelGUI2.DOMmodel;
 import ModelInterface.ModelGUI2.DbViewer;
 import ModelInterface.ModelGUI2.queries.QueryGenerator;
@@ -13,17 +14,13 @@ import org.apache.poi.hssf.usermodel.*;
 import org.jfree.chart.JFreeChart;
 import java.awt.image.BufferedImage;
 import org.w3c.dom.*;
-
-import javax.imageio.ImageIO;
 import javax.swing.table.*;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.io.File;
 
 import javax.swing.*;
 import javax.swing.event.CellEditorListener;
@@ -121,8 +118,8 @@ public class MultiTableModel extends BaseTableModel{
 	public MultiTableModel(TreePath tp, Document doc, JFrame parentFrame, String tableTypeString, Documentation documentationIn) {
 		super(tp, doc, parentFrame, tableTypeString, documentationIn);
 		wild = chooseTableHeaders(tp/*, parentFrame*/);
-		wild.set(0, ((DOMmodel.DOMNodeAdapter)wild.get(0)).getNode().getNodeName());
-		wild.set(1, ((DOMmodel.DOMNodeAdapter)wild.get(1)).getNode().getNodeName());
+	        wild.set(0, ((DOMmodel.DOMNodeAdapter)wild.get(0)).getNode().getNodeName());
+	        wild.set(1, ((DOMmodel.DOMNodeAdapter)wild.get(1)).getNode().getNodeName());
 		wild.add("");
 		buildTable(treePathtoXPath(tp, doc.getDocumentElement(), 0));
 		tableEditor = new TableEditor();
@@ -146,26 +143,26 @@ public class MultiTableModel extends BaseTableModel{
 	 * the tree.  Uses the sorted data to create a set of tables, also initalizes the filterMaps.
 	 * @param xpe the XPath expression which will be used to get nodes.
 	 */
-	protected void buildTable(XPathExpression xpe) {
-		XPathResult res = (XPathResult)xpe.evaluate(doc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
-		xpe = null;
-		Node tempNode;
-		Object[] regionAndYear;
-		TreeSet regions = new TreeSet();
-		TreeSet years = new TreeSet();
-		tableFilterMaps = new LinkedHashMap();
-		Map dataTree = new TreeMap();
-		while ((tempNode = res.iterateNext()) != null) {
-			regionAndYear = getRegionAndYearFromNode(tempNode.getParentNode(), tableFilterMaps);
-			regions.add(regionAndYear[0]);
-			years.add(regionAndYear[1]);
-			addToDataTree(tempNode, dataTree).put((String)regionAndYear[0]+";"+(String)regionAndYear[1], tempNode);
-			if(units == null) {
-				units = ((Element)tempNode.getParentNode()).getAttribute("unit");
-			}
+  	protected void buildTable(XPathExpression xpe) {
+	  XPathResult res = (XPathResult)xpe.evaluate(doc.getDocumentElement(), XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+	  xpe = null;
+	  Node tempNode;
+	  Object[] regionAndYear;
+	  TreeSet regions = new TreeSet();
+	  TreeSet years = new TreeSet();
+	  tableFilterMaps = new LinkedHashMap();
+	  Map dataTree = new TreeMap();
+	  while ((tempNode = res.iterateNext()) != null) {
+		regionAndYear = getRegionAndYearFromNode(tempNode.getParentNode(), tableFilterMaps);
+		regions.add(regionAndYear[0]);
+		years.add(regionAndYear[1]);
+		addToDataTree(tempNode, dataTree).put((String)regionAndYear[0]+";"+(String)regionAndYear[1], tempNode);
+		if(units == null) {
+			units = ((Element)tempNode.getParentNode()).getAttribute("unit");
 		}
-		recAddTables(dataTree, null, regions, years, "");
-	}
+	  }
+	  recAddTables(dataTree, null, regions, years, "");
+  	}
 
 	/**
 	 * Gets the 2 attributes of the 2 wilds from going up the parent path of a node, also update the
@@ -174,174 +171,173 @@ public class MultiTableModel extends BaseTableModel{
 	 *        filterMaps maps which has the filtering information, which will be updated with the attribute value from this nodes parent path
 	 * @return an array of size 2 with the attrubute values of the wild which lead to this node
 	 */
-	private Object[] getRegionAndYearFromNode(Node n, Map filterMaps) {
-		Vector ret = new Vector(2,0);
-		do {
-			if(n.getNodeName().equals((String)wild.get(0)) || n.getNodeName().equals((String)wild.get(1))) {
-				//ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
-				ret.add(getOneAttrVal(n));
-				/*
+  	private Object[] getRegionAndYearFromNode(Node n, Map filterMaps) {
+	  Vector ret = new Vector(2,0);
+	  do {
+		  if(n.getNodeName().equals((String)wild.get(0)) || n.getNodeName().equals((String)wild.get(1))) {
+			  //ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
+			  ret.add(getOneAttrVal(n));
+			  /*
 			  if(!getOneAttrVal(n).equals("fillout=1")) {
 			  	ret.add(getOneAttrVal(n));
 			  } else {
 			        ret.add(getOneAttrVal(n, 1));
 			  }
-				 */
+			  */
 
-			} else if(n.hasAttributes()) {
-				Map tempFilter;
-				if (filterMaps.containsKey(n.getNodeName())) {
-					tempFilter = (Map)filterMaps.get(n.getNodeName());
-				} else {
-					tempFilter = new HashMap();
-				}
-				String attr = getOneAttrVal(n);
-				/*
+		  } else if(n.hasAttributes()) {
+			  Map tempFilter;
+	           	  if (filterMaps.containsKey(n.getNodeName())) {
+	                          tempFilter = (Map)filterMaps.get(n.getNodeName());
+                          } else {
+                                  tempFilter = new HashMap();
+                          }
+			  String attr = getOneAttrVal(n);
+			  /*
 			  if(attr.equals("fillout=1")) {
 				  attr = getOneAttrVal(n, 1);
 			  }
-				 */
-				if (!tempFilter.containsKey(attr)) {
-					tempFilter.put(attr, new Boolean(true));
-					filterMaps.put(n.getNodeName(), tempFilter);
-				}
-			}
-			n = n.getParentNode();
-		} while(n.getNodeType() != Node.DOCUMENT_NODE /*&& (region == null || year == null)*/);
-		return ret.toArray();
-	}
-	/**
-	 * Sort data so that we know where each set of data comes from. Recursivly moves to the top of the parentPath
-	 * and at each level crates/uses the appropriate mapping for this node
-	 * @param currNode current node we are analyzing in the tree
-	 *        dataTree the complete set of maps sorting the data
-	 * @return the current mapping that was just created/used
-	 */
-	private Map addToDataTree(Node currNode, Map dataTree) {
-		if (currNode.getNodeType() == Node.DOCUMENT_NODE) {
-			return dataTree;
-		}
-		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree);
-		// used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
-		if( ((((String)wild.get(0)).matches(".*[Ss]ector") || ((String)wild.get(1)).matches(".*[Ss]ector"))) && currNode.getNodeName().equals(".*[Ss]ector") ) {
-			return tempMap;
-		}
-		if(currNode.hasAttributes() && !currNode.getNodeName().equals((String)wild.get(0)) && !currNode.getNodeName().equals((String)wild.get(1))) {
-			String attr = getOneAttrVal(currNode);
-			/*
+			  */
+			  if (!tempFilter.containsKey(attr)) {
+                          	tempFilter.put(attr, new Boolean(true));
+                          	filterMaps.put(n.getNodeName(), tempFilter);
+			  }
+		  }
+		  n = n.getParentNode();
+	  } while(n.getNodeType() != Node.DOCUMENT_NODE /*&& (region == null || year == null)*/);
+	  return ret.toArray();
+  	}
+  /**
+   * Sort data so that we know where each set of data comes from. Recursivly moves to the top of the parentPath
+   * and at each level crates/uses the appropriate mapping for this node
+   * @param currNode current node we are analyzing in the tree
+   *        dataTree the complete set of maps sorting the data
+   * @return the current mapping that was just created/used
+   */
+  private Map addToDataTree(Node currNode, Map dataTree) {
+	  if (currNode.getNodeType() == Node.DOCUMENT_NODE) {
+		  return dataTree;
+	  }
+	  Map tempMap = addToDataTree(currNode.getParentNode(), dataTree);
+	  // used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
+	  if( ((((String)wild.get(0)).matches(".*[Ss]ector") || ((String)wild.get(1)).matches(".*[Ss]ector"))) && currNode.getNodeName().equals(".*[Ss]ector") ) {
+		  return tempMap;
+	  }
+	  if(currNode.hasAttributes() && !currNode.getNodeName().equals((String)wild.get(0)) && !currNode.getNodeName().equals((String)wild.get(1))) {
+		String attr = getOneAttrVal(currNode);
+		/*
 		if(attr.equals("fillout=1")) {
 			attr = getOneAttrVal(currNode, 1);
 		}
-			 */
-			attr = currNode.getNodeName()+"@"+attr;
-			if(!tempMap.containsKey(attr)) {
-				tempMap.put(attr, new TreeMap());
-			}
-			return (Map)tempMap.get(attr);
+		*/
+		attr = currNode.getNodeName()+"@"+attr;
+		if(!tempMap.containsKey(attr)) {
+			tempMap.put(attr, new TreeMap());
 		}
-		return tempMap;
-	}
+		return (Map)tempMap.get(attr);
+	  }
+	  return tempMap;
+  }
 
-	/**
-	 * Move down the dataTree map until we hit the level of node, as apposed to mappin, then the mapping 
-	 * one level up is the data map for a table, and it's path is described by title
-	 * @param dataTree the mappings of attrubutes which will get us to the data
-	 *        parent so that we can get the data map which is a level up once we hit the bottom
-	 *        regions column axis attrubutes
-	 *        years row axis attributes
-	 *        title a string describing the path in which the data in the table is coming from
-	 */
-	private void recAddTables(Map dataTree, Map.Entry parent, Set regions, Set years, String titleStr) {
-		Iterator it = dataTree.entrySet().iterator();
-		while(it.hasNext()) {
-			Map.Entry me = (Map.Entry)it.next();
-			if(me.getValue() instanceof Node || me.getValue() instanceof Double || 
-					me.getValue() instanceof String) {
-				NewDataTableModel tM;
-				if(me.getValue() instanceof Double || me.getValue() instanceof String) {
-					tM = new NewDataTableModel(regions, qg.getAxis1Name()/*(String)wild.get(0)*/, years, 
-							qg.getVariable(), /*titleStr+'/'+(String)parent.getKey()*/title, (Map)parent.getValue(), doc,
-							null); 
-					tM.setColNameIndex(qg.getChartLabelColumnName());
-				} else {
-					tM = new NewDataTableModel(regions, (String)wild.get(0), years, 
-							(String)wild.get(1), /*titleStr+'/'+(String)parent.getKey()*/title, (Map)parent.getValue(), doc,
-							documentation /*, (String)wild.get(2)*/); 
-				}
-				tM.units = units;
-				JTable jTable = tM.getAsSortedTable();
-
-				jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
-				jTable.setCellSelectionEnabled(true);
-
-				javax.swing.table.TableColumn col;
-				Iterator i = regions.iterator();
-				int j = 1;
-				while(i.hasNext()) {
-					col = jTable.getColumnModel().getColumn(j);
-					col.setPreferredWidth(((String)i.next()).length()*5+30);
-					if(qg == null) { // only want to do this when values might have documentation
-						col.setCellRenderer(tM.getCellRenderer(0, j));
-					}
-					j++;
-				}
-				CopyPaste copyPaste = new CopyPaste( jTable );
-				JScrollPane tV = new JScrollPane(jTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER,
-						ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-				JScrollPane tableView = tV;
-				if(me.getValue() instanceof Double || me.getValue() instanceof String) {
-					JPanel tpanel = new JPanel();
-					JSplitPane sp = new JSplitPane();
-
-					JLabel labelChart = new JLabel();
-					try {
-						JFreeChart chart = tM.createChart(0,0);
-						Dimension chartDim = tM.getChartDimensions(chart);
-						BufferedImage chartImage = chart.createBufferedImage( (int)chartDim.getWidth(), 
-								(int)chartDim.getHeight());
-						labelChart.setIcon(new ImageIcon(chartImage));
-						
-					} catch(Exception e) {
-						//e.printStackTrace();
-						labelChart.setText("Cannot Create Chart");
-					}
-					//labelChart.setIcon(tM.getChartImage());
-
-					sp.setLeftComponent(tV);
-					sp.setRightComponent(labelChart);
-					tableView = new JScrollPane(sp);
-					sp.setDividerLocation(parentFrame.getWidth()-350);
-				}
-
-				if(tables == null) {
-					tables = new Vector();
-				}
-				String labelStr = titleStr.replace("/", ",   ").replace("@", ": ");
-				labelStr = labelStr.substring(2, labelStr.length());
-				//tables.add(titleStr+"/");
-				tables.add(labelStr);
-				tables.add(tableView);
-				return;
+  /**
+   * Move down the dataTree map until we hit the level of node, as apposed to mappin, then the mapping 
+   * one level up is the data map for a table, and it's path is described by title
+   * @param dataTree the mappings of attrubutes which will get us to the data
+   *        parent so that we can get the data map which is a level up once we hit the bottom
+   *        regions column axis attrubutes
+   *        years row axis attributes
+   *        title a string describing the path in which the data in the table is coming from
+   */
+  private void recAddTables(Map dataTree, Map.Entry parent, Set regions, Set years, String titleStr) {
+	Iterator it = dataTree.entrySet().iterator();
+	while(it.hasNext()) {
+		Map.Entry me = (Map.Entry)it.next();
+		if(me.getValue() instanceof Node || me.getValue() instanceof Double || 
+				me.getValue() instanceof String) {
+			NewDataTableModel tM;
+			if(me.getValue() instanceof Double || me.getValue() instanceof String) {
+				tM = new NewDataTableModel(regions, qg.getAxis1Name()/*(String)wild.get(0)*/, years, 
+						qg.getVariable(), /*titleStr+'/'+(String)parent.getKey()*/title, (Map)parent.getValue(), doc,
+						null); 
+				tM.setColNameIndex(qg.getChartLabelColumnName());
 			} else {
-				recAddTables((Map)me.getValue(), me, regions, years, titleStr+'/'+(String)me.getKey());
+				tM = new NewDataTableModel(regions, (String)wild.get(0), years, 
+						(String)wild.get(1), /*titleStr+'/'+(String)parent.getKey()*/title, (Map)parent.getValue(), doc,
+						documentation /*, (String)wild.get(2)*/); 
 			}
+			tM.units = units;
+			JTable jTable = tM.getAsSortedTable();
+
+	  		jTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+	 
+			jTable.setCellSelectionEnabled(true);
+
+	  		javax.swing.table.TableColumn col;
+	  		Iterator i = regions.iterator();
+	  		int j = 1;
+	  		while(i.hasNext()) {
+		  		col = jTable.getColumnModel().getColumn(j);
+				col.setPreferredWidth(((String)i.next()).length()*5+30);
+				if(qg == null) { // only want to do this when values might have documentation
+					col.setCellRenderer(tM.getCellRenderer(0, j));
+				}
+		  		j++;
+	  		}
+			CopyPaste copyPaste = new CopyPaste( jTable );
+	  		JScrollPane tV = new JScrollPane(jTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER,
+					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+			JScrollPane tableView = tV;
+			if(me.getValue() instanceof Double || me.getValue() instanceof String) {
+				JPanel tpanel = new JPanel();
+				JSplitPane sp = new JSplitPane();
+
+				JLabel labelChart = new JLabel();
+				try {
+					JFreeChart chart = tM.createChart(0,0);
+					Dimension chartDim = tM.getChartDimensions(chart);
+					BufferedImage chartImage = chart.createBufferedImage( (int)chartDim.getWidth(), 
+							(int)chartDim.getHeight());
+					labelChart.setIcon(new ImageIcon(chartImage));
+				} catch(Exception e) {
+					//e.printStackTrace();
+					labelChart.setText("Cannot Create Chart");
+				}
+				//labelChart.setIcon(tM.getChartImage());
+
+				sp.setLeftComponent(tV);
+				sp.setRightComponent(labelChart);
+				tableView = new JScrollPane(sp);
+				sp.setDividerLocation(parentFrame.getWidth()-350);
+			}
+
+	  		if(tables == null) {
+		  		tables = new Vector();
+	  		}
+			String labelStr = titleStr.replace("/", ",   ").replace("@", ": ");
+			labelStr = labelStr.substring(2, labelStr.length());
+			//tables.add(titleStr+"/");
+			tables.add(labelStr);
+	  		tables.add(tableView);
+			return;
+		} else {
+			recAddTables((Map)me.getValue(), me, regions, years, titleStr+'/'+(String)me.getKey());
 		}
 	}
-	/**
+  }
+        /**
 	 * gets the instance of table editor used to be able to edit a table within a table cell
 	 * @return tableEditor
 	 */
 	public TableCellEditor getCellEditor(int row, int col ) {
-		return tableEditor;
+			return tableEditor;
 	}
 
-	/**
+        /**
 	 * gets the instance of table renderer used to be able to view a table within a table cell
 	 * @return tableRenderer
 	 */
 	public TableCellRenderer getCellRenderer(int row, int col ) {
-		return tableRenderer;
+			return tableRenderer;
 	}
 
 	/**
@@ -416,7 +412,7 @@ public class MultiTableModel extends BaseTableModel{
 				/*
 				if(regex.endsWith("|")) {
 					regex = regex.substring(0,regex.length()-1)+")/";
-				 */
+					*/
 				if(regex.charAt(regex.length()-1) == '|') {
 					regex.deleteCharAt(regex.length()-1).append(")/");
 				} else {
@@ -443,19 +439,18 @@ public class MultiTableModel extends BaseTableModel{
 	}
 
 	QueryGenerator qg;
-
-
-
+	
+	
 	public MultiTableModel(QueryGenerator qgIn, Object[] scenarios, Object[] regions, JFrame parentFrameIn, XmlQueryContext context) throws Exception {
 		qg = qgIn;
 		parentFrame = parentFrameIn;
 		title = qgIn.toString();
 		wild = new ArrayList();
-
+		
 		wild.add(qgIn.getNodeLevel());
 		wild.add(qgIn.getYearLevel());
 		//System.out.println("Query is "+qgIn.getCompleteXPath(regions));
-		//System.out.println("Before Function: "+System.currentTimeMillis());
+		System.out.println("Before Function: "+System.currentTimeMillis());
 		buildTable(XMLDB.getInstance().createQuery(qgIn, scenarios, regions, context), qgIn.isSumAll(), qgIn.getLevelValues());
 		tableEditor = new TableEditor();
 		tableRenderer = new TableRenderer();
@@ -475,118 +470,179 @@ public class MultiTableModel extends BaseTableModel{
 	}
 	private void buildTable(XmlResults res, boolean sumAll, Object[] levelValues) throws Exception {
 		System.out.println("In Function: "+System.currentTimeMillis());
-		try {
-			if(!res.hasNext()) {
-				System.out.println("Query didn't get any results");
-				// display an error on the screen
-				res.delete();
-				throw new Exception("The Query did not get any results.");
-			}
-		} catch(XmlException e) {
-			e.printStackTrace();
-			res.delete();
-			throw e;
-		}
-		XmlValue tempNode;
-		Object[] regionAndYear;
-		Set regions = new TreeSet();
-		Set years = new LinkedHashSet();
-		regions.addAll(getDefaultYearList());
-		tableFilterMaps = new LinkedHashMap();
-		Map dataTree = new LinkedHashMap();
-		Map<String, String> rewriteMap = qg.getNodeLevelRewriteMap();
-		try {
-			while(res.hasNext()) {
-				tempNode = res.next();
-				regionAndYear = qg.extractAxisInfo(tempNode.getParentNode(), tableFilterMaps);
-				if(regionAndYear.length < 2) {
-					tempNode.delete();
-					throw new Exception("<html><body>Could not determine how to categorize the results.<br> Please check your axis node values.</body></html>");
-				}
-
-				XmlValue delVal = tempNode.getParentNode();
-				units = XMLDB.getAttr(delVal, "unit");
-				delVal.delete();
-				if(units == null) {
-					units = "None Specified";
-				}
-				if(sumAll) {
-					//regionAndYear[1] = "All "+(String)wild.get(0);
-					regionAndYear[1] = levelValues[0];
-				}
-				// check for rewrites
-				if(rewriteMap != null && rewriteMap.containsKey(regionAndYear[1])) {
-					regionAndYear[1] = rewriteMap.get(regionAndYear[1]);
-					if(regionAndYear[1].equals("")) {
-						tempNode.delete();
-						continue;
-					}
-				}
-				regions.add(regionAndYear[0]);
-				years.add(regionAndYear[1]);
-				Map retMap = qg.addToDataTree(new XmlValue(tempNode), dataTree); 
-				XMLDB.getInstance().printLockStats("addToDataTree");
-				Double ret = (Double)retMap.get((String)regionAndYear[0]+";"+(String)regionAndYear[1]);
-				if(ret == null) {
-					retMap.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], new Double(tempNode.asNumber()));
-				} else {
-					retMap.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], 
-							new Double(ret.doubleValue() + tempNode.asNumber()));
-				}
-				ret = (Double)retMap.get((String)regionAndYear[0]+";Total");
-				if(ret == null) {
-					retMap.put((String)regionAndYear[0]+";Total", new Double(tempNode.asNumber()));
-				} else {
-					retMap.put((String)regionAndYear[0]+";Total", 
-							new Double(ret.doubleValue() + tempNode.asNumber()));
-				}
-				retMap.put("Units;"+(String)regionAndYear[1], units);
-				retMap.put("Units;Total", units);
-				tempNode.delete();
-			}
-			XMLDB.getInstance().printLockStats("buildTable");
-		} catch(Exception e) {
-			e.printStackTrace();
-			throw e;
-		} finally {
-			res.delete();
-		}
-		years.add("Total");
-		regions.add("Units");
-
-		if(remove1975) {
-			regions.remove("1975");
-		}
-		//System.out.println("After build Tree: "+System.currentTimeMillis());
-		recAddTables(dataTree, null, regions, years, "");
-		//System.out.println("After Add table: "+System.currentTimeMillis());
-		/* Figure out what to do for level selected
-	  System.out.println("Level Selected: "+levelValues);
-	  if(!sumAll && levelValues != null && years.size() != levelValues.length) {
-		  //indRow = new Vector(levelValues);
-		  indRow = new Vector(levelValues.length, 0);
-		  for(int i =0; i < levelValues.length; ++i) {
-			  System.out.println(levelValues[i]);
-			  indRow.add(levelValues[i]);
+		/*
+	  try {
+		  if(!res.hasNext()) {
+			  System.out.println("Query didn't get any results");
+			  // display an error on the screen
+			  res.delete();
+			  throw new Exception("The Query did not get any results.");
 		  }
-	  } else {
-		  indRow = new Vector( years );
-	  //}
-	  indCol = new Vector( regions );
-	  ind1Name = (String)wild.get(0);
-	  //ind2Name = (String)wild.get(1);
-		 */
+	  } catch(XmlException e) {
+		  e.printStackTrace();
+		  res.delete();
+		  throw e;
+	  }
+	  */
+	  XmlValue tempNode;
+	  /* comment out Object[] regionAndYear;*/
+	  final Set<String> yearLevelAxis = new TreeSet<String>();
+	  final Set<String> nodeLevelAxis = new TreeSet<String>();
+	  yearLevelAxis.addAll(getDefaultYearList());
+	  //tableFilterMaps = new LinkedHashMap();
+	  final Map dataTree = new LinkedHashMap();
+	  final Map<String, String> rewriteMap = qg.getNodeLevelRewriteMap();
+	  // axisValues will be passed to the query generator which will set the
+	  // year level value as the key and the node level value as the value
+	  final DataPair<String, String> axisValues = new DataPair<String, String>();
+	  try {
+		  //while(res.hasNext()) {
+		  while((tempNode = res.next()) != null) {
+			  /*
+			  tempNode = res.next();
+			  regionAndYear = qg.extractAxisInfo(tempNode.getParentNode(), tableFilterMaps);
+			  if(regionAndYear.length < 2) {
+				  tempNode.delete();
+				  throw new Exception("<html><body>Could not determine how to categorize the results.<br> Please check your axis node values.</body></html>");
+			  }
+
+			  XmlValue delVal = tempNode.getParentNode();
+			  units = XMLDB.getAttr(delVal, "unit");
+			  delVal.delete();
+			  if(units == null) {
+				  units = "None Specified";
+			  }
+			  if(sumAll) {
+				  //regionAndYear[1] = "All "+(String)wild.get(0);
+				  regionAndYear[1] = levelValues[0];
+			  }
+			  // check for rewrites
+			  if(rewriteMap != null && rewriteMap.containsKey(regionAndYear[1])) {
+				  regionAndYear[1] = rewriteMap.get(regionAndYear[1]);
+				  if(regionAndYear[1].equals("")) {
+					  tempNode.delete();
+					  continue;
+				  }
+			  }
+			  yearLevelAxis.add(regionAndYear[0]);
+			  nodeLevelAxis.add(regionAndYear[1]);
+			  Map retMap = qg.addToDataTree(new XmlValue(tempNode), dataTree); 
+			  XMLDB.getInstance().printLockStats("addToDataTree");
+			  Double ret = (Double)retMap.get((String)regionAndYear[0]+";"+(String)regionAndYear[1]);
+			  if(ret == null) {
+				  retMap.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], new Double(tempNode.asNumber()));
+			  } else {
+				  retMap.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], 
+						  new Double(ret.doubleValue() + tempNode.asNumber()));
+			  }
+			  ret = (Double)retMap.get((String)regionAndYear[0]+";Total");
+			  if(ret == null) {
+				  retMap.put((String)regionAndYear[0]+";Total", new Double(tempNode.asNumber()));
+			  } else {
+				  retMap.put((String)regionAndYear[0]+";Total", 
+						  new Double(ret.doubleValue() + tempNode.asNumber()));
+			  }
+			  retMap.put("Units;"+(String)regionAndYear[1], units);
+			  retMap.put("Units;Total", units);
+			  */
+			  // make sure we have not been interrupted
+			  if(Thread.currentThread().isInterrupted()) {
+				  tempNode.delete();
+				  throw new Exception("Query interrupted");
+			  }
+			  // catgorize this result
+			  axisValues.setKey(null);
+			  axisValues.setValue(null);
+			  Map retMap = qg.addToDataTree(tempNode.getParentNode(), dataTree, axisValues);
+			  if(axisValues.getKey() == null || axisValues.getValue() == null) {
+				  tempNode.delete();
+				  throw new Exception("<html><body>Could not determine how to categorize the results.<br> Please check your axis node values.</body></html>");
+			  }
+
+			  // if we did sum all we will collapse them all by always setting the node level
+			  // to All + whatever the node level was
+			  if(sumAll) {
+				  axisValues.setValue((String)levelValues[0]);
+			  }
+			  // check for rewrites
+			  if(rewriteMap != null && rewriteMap.containsKey(axisValues.getValue())) {
+				  axisValues.setValue(rewriteMap.get(axisValues.getValue()));
+				  if(axisValues.getValue().equals("")) {
+					  tempNode.delete();
+					  continue;
+				  }
+			  }
+
+			  // check if the row has already set it's units, we will only overwrite
+			  // it the very first time around for performance reasons, this means
+			  // there will be no checking for mismatched units
+			  if((units = (String)retMap.get("Units;"+axisValues.getValue())) == null) {
+				  XmlValue delVal = tempNode.getParentNode();
+				  units = XMLDB.getAttr(delVal, "unit");
+				  delVal.delete();
+				  if(units == null) {
+					  units = "None Specified";
+				  }
+			  }
+
+			  // add the node level and year level (into a set so we only have unique values)
+			  yearLevelAxis.add(axisValues.getKey());
+			  nodeLevelAxis.add(axisValues.getValue());
+
+			  // add number into the lowest level table
+			  // if there was already an entry in it's spot sum the values
+			  double currNumber = tempNode.asNumber();
+			  String currKey = axisValues.getKey()+";"+axisValues.getValue();
+			  Double ret = (Double)retMap.get(currKey);
+			  retMap.put(currKey, ret == null ? currNumber : ret + currNumber);
+
+			  // also add the value to the total sum
+			  currKey = axisValues.getKey()+";Total";
+			  ret = (Double)retMap.get(currKey);
+			  retMap.put(currKey, ret == null ? currNumber : ret + currNumber);
+
+			  // add the units for the current row under the Units column
+			  // This will use the unit seen from the first value in the
+			  // row, see comment above regarding units
+			  retMap.put("Units;"+axisValues.getValue(), units);
+			  retMap.put("Units;Total", units);
+			  tempNode.delete();
+		  }
+		  XMLDB.getInstance().printLockStats("buildTable");
+	  } catch(Exception e) {
+		  e.printStackTrace();
+		  throw e;
+	  } finally {
+		  res.delete();
+	  }
+	  // check if we had no results
+	  if(dataTree.isEmpty()) {
+		  throw new Exception("The query returned no results.");
+	  }
+	  // before we add Total make sure we stop sorting by turning the Set
+	  // into a LinkedHashSet
+	  final Set<String> nodeLevelAxisOrdered = new LinkedHashSet<String>(nodeLevelAxis);
+	  nodeLevelAxisOrdered.add("Total");
+	  yearLevelAxis.add("Units");
+	  
+	  if(remove1975) {
+		  yearLevelAxis.remove("1975");
+	  }
+	  System.out.println("After build Tree: "+System.currentTimeMillis());
+	  // now that results are sorted into maps we can create the actual tables
+	  recAddTables(dataTree, null, yearLevelAxis, nodeLevelAxisOrdered, "");
+	  System.out.println("After Add table: "+System.currentTimeMillis());
 	}
 
-	public void exportToExcel(HSSFSheet sheet, HSSFWorkbook wb, HSSFPatriarch dp) {
-		HSSFRow row = sheet.createRow(sheet.getLastRowNum()+1);
-		row.createCell((short)0).setCellValue(getColumnName(0));
-		for(int rowN = 0; rowN < getRowCount(); rowN +=2) {
-			row = sheet.createRow(sheet.getLastRowNum()+1);
-			row.createCell((short)0).setCellValue(getValueAt(rowN,0).toString());
-			getModelAt(rowN+1).exportToExcel(sheet, wb, dp);
-		}
-	}
+  public void exportToExcel(HSSFSheet sheet, HSSFWorkbook wb, HSSFPatriarch dp) {
+	  HSSFRow row = sheet.createRow(sheet.getLastRowNum()+1);
+	  row.createCell((short)0).setCellValue(getColumnName(0));
+	  for(int rowN = 0; rowN < getRowCount(); rowN +=2) {
+		  row = sheet.createRow(sheet.getLastRowNum()+1);
+		  row.createCell((short)0).setCellValue(getValueAt(rowN,0).toString());
+		  getModelAt(rowN+1).exportToExcel(sheet, wb, dp);
+	  }
+  }
 	public boolean equals(Object other) {
 		if(other == this) {
 			return true;
@@ -616,32 +672,32 @@ public class MultiTableModel extends BaseTableModel{
 		return null;
 	}
 
-	public void annotate(int[] rows, int[] cols, Documentation documentation) {
-		JTable jTable = (JTable)((JScrollPane)getValueAt(rows[0], cols[0])).getViewport().getView();
-		((BaseTableModel)jTable.getModel()).annotate(jTable.getSelectedRows(), jTable.getSelectedColumns(), documentation);
-	}
-	public String exportToText() {
-		String lineEnding = System.getProperty("line.separator");
-		StringBuilder ret = new StringBuilder();
-		// excel doesn't handle html properly so we will have 
-		// to build the title without html
-		String tempTitle = qg.toString() + " Comments: ";
-		String comments = qg.getRealComments();
-		if(comments == null) {
-			comments = "None";
-		}
-		tempTitle += comments;
-		int numTables = getRowCount() / 2;
-		if(numTables > 1) {
-			tempTitle += " ("+numTables+" Tables)";
-		} else {
-			tempTitle += " (1 Table)";
-		}
-		ret.append(tempTitle).append(lineEnding);
-		for(int i = 0; i < getRowCount(); i += 2) {
-			ret.append(getValueAt(i, 0).toString()).append(lineEnding)
-			.append(getModelAt(i+1).exportToText());
-		}
-		return ret.toString();
-	}
+  public void annotate(int[] rows, int[] cols, Documentation documentation) {
+	  JTable jTable = (JTable)((JScrollPane)getValueAt(rows[0], cols[0])).getViewport().getView();
+	  ((BaseTableModel)jTable.getModel()).annotate(jTable.getSelectedRows(), jTable.getSelectedColumns(), documentation);
+  }
+  public String exportToText() {
+	  String lineEnding = System.getProperty("line.separator");
+	  StringBuilder ret = new StringBuilder();
+	  // excel doesn't handle html properly so we will have 
+	  // to build the title without html
+	  String tempTitle = qg.toString() + " Comments: ";
+	  String comments = qg.getRealComments();
+	  if(comments == null) {
+		  comments = "None";
+	  }
+	  tempTitle += comments;
+	  int numTables = getRowCount() / 2;
+	  if(numTables > 1) {
+		  tempTitle += " ("+numTables+" Tables)";
+	  } else {
+		  tempTitle += " (1 Table)";
+	  }
+	  ret.append(tempTitle).append(lineEnding);
+	  for(int i = 0; i < getRowCount(); i += 2) {
+		  ret.append(getValueAt(i, 0).toString()).append(lineEnding)
+					  .append(getModelAt(i+1).exportToText());
+	  }
+	  return ret.toString();
+  }
 }

@@ -356,9 +356,9 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 			ret.append(regionQueryPortion+"/");
 			//regionSel = new int[0]; 
 			regions = new Object[0];
-			isGlobal = true;
+			qg.isGlobal = true;
 		} else {
-			isGlobal = false;
+			qg.isGlobal = false;
 		}
 		for(int i = 0; i < regions.length; ++i) {
 			if(!added) {
@@ -446,7 +446,7 @@ public class SupplyDemandQueryBuilder extends QueryBuilder {
 			type = currNode.getNodeName();
 		}
 		// used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
-		if( (isGlobal && type.equals("region")) || qg.getCollapseOnList().contains(type)) {
+		if( (qg.isGlobal && type.equals("region")) || qg.getCollapseOnList().contains(type)) {
 			currNode.delete();
 			return tempMap;
 		}

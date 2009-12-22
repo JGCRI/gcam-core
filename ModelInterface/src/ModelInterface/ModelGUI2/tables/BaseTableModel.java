@@ -671,6 +671,14 @@ public abstract class BaseTableModel extends AbstractTableModel {
 			       }
 		       } else {
 			       defaultYearList = new ArrayList<String>();
+			       defaultYearList.add("1990");
+			       defaultYearList.add("2005");
+			       defaultYearList.add("2020");
+			       defaultYearList.add("2035");
+			       defaultYearList.add("2050");
+			       defaultYearList.add("2065");
+			       defaultYearList.add("2080");
+			       defaultYearList.add("2095");
 		       }
 	       }
 	       return defaultYearList;

@@ -1,5 +1,7 @@
 package ModelInterface.ModelGUI2.queries;
 
+import ModelInterface.common.DataPair;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import com.sleepycat.dbxml.XmlValue;
@@ -25,7 +27,6 @@ public abstract class QueryBuilder implements java.io.Serializable {
 	protected transient QueryGenerator qg;
 	protected String queryFilter;
 	protected Vector<String> queryFunctions;
-	boolean isGlobal;
 	protected QueryBuilder(QueryGenerator qgIn) {
 		qg = qgIn;
 		queryFilter = "";
@@ -57,4 +58,7 @@ public abstract class QueryBuilder implements java.io.Serializable {
 		qg = qgIn;
 	}
 	public abstract List<String> getDefaultCollpaseList();
+	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue) throws Exception {
+		return qg.defaultAddToDataTree(currNode, dataTree, axisValue);
+	}
 }

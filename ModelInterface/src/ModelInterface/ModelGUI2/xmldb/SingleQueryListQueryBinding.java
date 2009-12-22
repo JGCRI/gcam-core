@@ -51,9 +51,8 @@ public class SingleQueryListQueryBinding implements QueryBinding {
 		if(!matches.find()) {
 			// regular format query
 			query.append("fn:distinct-values(local:get-singlequery-name(");
-			query.append(QueryBindingFactory.getQueryBinding(qg.getCompleteXPath(regions)+
-						qg.getNodeLevelPath(), null, collection)
-					.bindToQuery(scenarios, regions));
+			query.append(getNodeLevelFilterQuery(QueryBindingFactory.getQueryBinding(qg.getCompleteXPath(regions), null, collection)
+					.bindToQuery(scenarios, regions), qg.getNodeLevelPath()));
 			query.append(", ").append(collapseList).append("))");
 		} else {
 			try {
@@ -63,14 +62,30 @@ public class SingleQueryListQueryBinding implements QueryBinding {
 				matches = pat.matcher(runBinding.bindToQuery(scenarios, regions));
 				matches.find();
 				String theCall = matches.group();
-				query.append(matches.replaceFirst("fn:distinct-values(local:get-singlequery-name("+theCall+
-							qg.getNodeLevelPath()+", "+collapseList+"))"));
+				query.append(matches.replaceFirst(Matcher.quoteReplacement("fn:distinct-values(local:get-singlequery-name("+
+							getNodeLevelFilterQuery(theCall, qg.getNodeLevelPath())+", "+collapseList+"))")));
 			} catch(Exception e) {
 				e.printStackTrace();
 				// return something that will not run so they know SOMETHING went wrong
 				return "failure";
 			}
 		}
+		return query.toString();
+	}
+	/**
+	 * Gets the appropriate query to get node level values.  This could be as simple
+	 * as concatinating the base query with the nodel level path however there seems
+	 * to be issues with the way this gets optimized in BDBXML 2.4.  So will try
+	 * wrapping this in a simple FLWR expression like:
+	 * for $n in *baseQuery*
+	 * return $n/*nodeLevelPath*
+	 * @param baseQuery The base portion of the query
+	 * @param nodeLevelPath The generated query portion which will give us the node level path.
+	 * @return A query which will get you the node level values in a reasonable way.
+	 */
+	private String getNodeLevelFilterQuery(String baseQuery, String nodeLevelPath) {
+		StringBuilder query = new StringBuilder("for $n in "); 
+		query.append(baseQuery).append(" return $n/").append(nodeLevelPath);
 		return query.toString();
 	}
 }

@@ -27,11 +27,17 @@ public class QueryBindingFactory {
 	 */
 	public static QueryBinding getQueryBinding(QueryGenerator qg, String collection) {
 		QueryBinding ret;
-		if(qg.getXPath().matches("(?s).*:run.*\\(\\s*\\(:scenarios:\\)\\s*,\\s*\\(:regions:\\).*")) {
-		//.*:run.*(\s*(:scenarios:)\s*,\s*(:regions:).*
+		if(qg.isRunFunctionQuery()) {
 			ret = new RunFunctionQueryBinding(qg, collection);
 		} else {
 			ret = new QueryGeneratorQueryBinding(qg, collection);
+			// in case there was an old style node level filter, this happens with
+			// copy/pasted single values as well
+			// note that run functions will still work just fine with the old style
+			// so don't worry about them
+			if(qg.getXPath().matches(".*(?:text|node)\\(\\)\\[.*\\]$")) {
+				ret = new NodeFilterDecoratorQueryBinding(ret);
+			}
 		}
 		if(qg.getXPath().matches("mi:")) {
 			ret = new ImportDecoratorQueryBinding(ret);

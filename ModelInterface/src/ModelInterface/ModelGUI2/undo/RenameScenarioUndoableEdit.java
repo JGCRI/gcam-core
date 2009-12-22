@@ -3,6 +3,7 @@ package ModelInterface.ModelGUI2.undo;
 import javax.swing.undo.CannotUndoException;
 import javax.swing.undo.CannotRedoException;
 
+import com.sleepycat.dbxml.XmlQueryContext;
 import com.sleepycat.dbxml.XmlResults;
 import com.sleepycat.dbxml.XmlValue;
 import com.sleepycat.dbxml.XmlException;
@@ -66,9 +67,14 @@ public class RenameScenarioUndoableEdit extends MiAbstractUndoableEdit {
 	 * @param toName The scenario will be named after this method.
 	 */
 	private void doRename(String fromName, String toName) {
-		XmlResults res = XMLDB.getInstance().createQuery(
-				"/scenario[@date='"+oldName.getScnDate()+"' and @name='"+fromName+"']/@name", null, null, null);
+		// As of dbxml 2.4 we must get an eager result otherwise we will have a deadlock
+		// when we try to update
+		XmlQueryContext qc = XMLDB.getInstance().createQueryContext();
+		XmlResults res = null;
 		try { 
+			qc.setEvaluationType(XmlQueryContext.Eager);
+			res = XMLDB.getInstance().createQuery(
+					"/scenario[@date='"+oldName.getScnDate()+"' and @name='"+fromName+"']/@name", null, null, null, qc);
 			// if it has no results that is bad.. I'll just go with the null pointer exception
 			XmlValue context = res.next();
 			XMLDB.getInstance().setValue(context, toName);
@@ -77,7 +83,11 @@ public class RenameScenarioUndoableEdit extends MiAbstractUndoableEdit {
 		} catch(XmlException e) {
 			// TODO: put an error up on the screen
 			e.printStackTrace();
+		} finally {
+			if(res != null) {
+				res.delete();
+			}
+			qc.delete();
 		}
-		res.delete();
 	}
 }

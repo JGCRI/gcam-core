@@ -54,6 +54,7 @@ public class QueryGenerator implements java.io.Serializable{
 	public static java.util.List<String> hasYearList;
 	String axis1Name;
 	String axis2Name;
+	boolean isRunFunction;
 	/**
 	 * A map that maps a node level to a map of node level value to 
 	 * what the value should be called.  This is used to customize labels/
@@ -84,6 +85,7 @@ public class QueryGenerator implements java.io.Serializable{
 		parentFrame = parentFrameIn;
 		sumAll = false;
 		labelRewriteMap = null;
+		isRunFunction = false;
 		getQueryDialog();
 	}
 	public QueryGenerator(Node queryIn) {
@@ -224,6 +226,7 @@ public class QueryGenerator implements java.io.Serializable{
 				}
 			}
 		}
+		setIsRunFunction();
 	}
 	protected void getQueryDialog() {
 		final QueryGenerator thisGen = this;
@@ -586,6 +589,7 @@ public class QueryGenerator implements java.io.Serializable{
 	}
 	public void setXPath(String xp) {
 		xPath = xp;
+		setIsRunFunction();
 	}
 	public String getVariable() {
 		return var;
@@ -811,6 +815,72 @@ public class QueryGenerator implements java.io.Serializable{
 		} else {
 			return defaultAddToDataTree(currNode, dataTree);
 		}
+	}
+	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue) throws Exception {
+		if(qb != null) {
+			return qb.addToDataTree(currNode, dataTree, axisValue);
+		} else {
+			return defaultAddToDataTree(currNode, dataTree, axisValue);
+		}
+	}
+	Map defaultAddToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue) throws Exception {
+		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
+			currNode.delete();
+			return dataTree;
+		}
+		// recursively process parents first
+		Map tempMap = defaultAddToDataTree(currNode.getParentNode(), dataTree, axisValue);
+
+		// cache node properties since these may need to go back to the database which could
+		// be expensive
+		String nodeName = currNode.getNodeName();
+		// run functions can not utilize an attribute map cache since they rely on getNodeHandle
+		// which is not available in those kinds of queries
+		Map<String, String> attrMap = !isRunFunction ? XMLDB.getAttrMapWithCache(currNode) : XMLDB.getAttrMap(currNode);
+
+		// try to find the axis values at the current node
+		String type = attrMap.get("type");
+		boolean setNodeLevel = false;
+		boolean setYearLevel = false;
+		if(nodeLevel.getKey().equals(type) || nodeLevel.getKey().equals(nodeName)) {
+			setNodeLevel = true;
+			axisValue.setValue(attrMap.get(nodeLevel.getValue() != null ? nodeLevel.getValue() : "name"));
+		} 
+		if(yearLevel.getKey().equals(type) || yearLevel.getKey().equals(nodeName)) {
+			setYearLevel = true;
+			axisValue.setKey(attrMap.get(yearLevel.getValue() != null ? yearLevel.getValue() : "year"));
+		}
+		// if we should not collapse this node then pick out the attributes which
+		// define how to differentiate this node path
+		// we want to collapse if:
+		// 	- This node is either the node level or year level
+		// 	- This is the region level node and isGlobal is set
+		// 	- The collapse list contains this level
+		// 	- This node has no attributes (since it would not differentiate itself)
+		// TODO: checking if the map is empty alone does not seem correct since getAllAttr
+		//       ignores some attributes
+		// set the type as the node name if it does not have a type attribute
+		if(type == null) {
+			type = nodeName;
+		}
+		if(!setNodeLevel && !setYearLevel && !(isGlobal && type.equals("region")) &&
+				!attrMap.isEmpty() && !getCollapseOnList().contains(type)) {
+			String attr = XMLDB.getAllAttr(attrMap);
+			// check for rewrites
+			if(labelRewriteMap != null && labelRewriteMap.containsKey(type)) {
+				Map<String, String> currRewriteMap = labelRewriteMap.get(type);
+				if(currRewriteMap.containsKey(attr)) {
+					attr = currRewriteMap.get(attr);
+				}
+			}
+			attr = type+"@"+attr;
+			if(!tempMap.containsKey(attr)) {
+				tempMap.put(attr, new TreeMap(String.CASE_INSENSITIVE_ORDER));
+			}
+			tempMap = (Map)tempMap.get(attr);
+		} 
+		currNode.delete();
+		return tempMap;
 	}
 	protected boolean isGlobal;
 	protected String defaultCompleteXPath(Object[] regions) {
@@ -1072,6 +1142,7 @@ public class QueryGenerator implements java.io.Serializable{
 				var = dataNameTextF.getText();
 				labelColumnName = labelCol.getText();
 				xPath = xPathTextF.getText();
+				setIsRunFunction();
 				sumAll = sumAllCheckBox.isSelected();
 				group = groupCheckBox.isSelected();
 				setBuildList(buildListCheckBox.isSelected());
@@ -1217,11 +1288,7 @@ public class QueryGenerator implements java.io.Serializable{
 	}
 
 	public void setGlobal(boolean newGlobal) {
-		if(qb != null) {
-			qb.isGlobal = newGlobal;
-		} else {
-			isGlobal = newGlobal;
-		}
+		isGlobal = newGlobal;
 	}
 
 	/**
@@ -1381,5 +1448,21 @@ public class QueryGenerator implements java.io.Serializable{
 	 */
        public Map<String, String> getNodeLevelRewriteMap() {
 	       return labelRewriteMap == null ? null : labelRewriteMap.get(nodeLevel.getKey());
+       }
+
+       /**
+	* Determines if the xpath is a run function type query.
+	* Sets isRunFunction to true if it is, false otherwise.
+	* TODO: this must get called anytime xPath gets updated.
+	*/
+       private void setIsRunFunction() {
+	       isRunFunction = xPath.matches("(?s).*:run.*\\(\\s*\\(:scenarios:\\)\\s*,\\s*\\(:regions:\\).*");
+       }
+
+       /**
+	* Gets if the xpath is of run function type.
+	*/
+       public boolean isRunFunctionQuery() {
+	       return isRunFunction;
        }
 }

@@ -235,8 +235,7 @@ public class QueryTransferHandler extends TransferHandler {
 			List<String> tempSingleNameList;
 			if(paths.length == 1) {
 				if(paths[0].getLastPathComponent() instanceof SingleQueryExtension.SingleQueryValue) {
-					tempSingleNameList = new ArrayList<String>(1);
-					tempSingleNameList.add(paths[0].getLastPathComponent().toString());
+					tempSingleNameList = ((SingleQueryExtension.SingleQueryValue)paths[0].getLastPathComponent()).getValues();
 					Map.Entry<QueryGenerator, List<String>> tempPair =
 						new DataPair<QueryGenerator, List<String>>(
 								getSingleQueryParent(paths[0]), tempSingleNameList);
@@ -255,7 +254,7 @@ public class QueryTransferHandler extends TransferHandler {
 						if(tempSingleNameList == null) {
 							tempSingleNameList = new ArrayList<String>();
 						}
-						tempSingleNameList.add(path.getLastPathComponent().toString());
+						tempSingleNameList.addAll(((SingleQueryExtension.SingleQueryValue)path.getLastPathComponent()).getValues());
 						tempSingleQueryMerge.put(tempParent, tempSingleNameList);
 					} else {
 						dataGrouped.add(path.getLastPathComponent());

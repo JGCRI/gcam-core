@@ -361,9 +361,9 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 			ret.append(regionQueryPortion+"/");
 			//regionSel = new int[0]; 
 			regions = new Object[0];
-			isGlobal = true;
+			qg.isGlobal = true;
 		} else {
-			isGlobal = false;
+			qg.isGlobal = false;
 		}
 		for(int i = 0; i < regions.length; ++i) {
 			if(!added) {
@@ -374,7 +374,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 			}
 			ret.append("(@name='").append(regions[i]).append("')");
 		}
-		if(!isGlobal) {
+		if(!qg.isGlobal) {
 			ret.append(" )]/");
 		}
 		return ret.append(qg.getXPath()).toString();
@@ -384,7 +384,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		XmlValue nBefore;
 		do {
 			if(qg.nodeLevel.getKey().equals(XMLDB.getAttr(n, "type"))) {
-				if(qg.nodeLevel.getKey().equals("region") && isGlobal) {
+				if(qg.nodeLevel.getKey().equals("region") && qg.isGlobal) {
 					ret.add("Global");
 				} else if(qg.nodeLevel.getValue() == null) {
 					ret.add(XMLDB.getAttr(n, "name"));
@@ -476,6 +476,79 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		return xmlName;
 	}
 	public List<String> getDefaultCollpaseList() {
-		return new Vector<String>();
+		List<String> ret = new Vector<String>();
+		ret.add("total-population");
+		return ret;
+	}
+	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue) throws Exception {
+		// stop point for recursion is the root
+		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
+			currNode.delete();
+			return dataTree;
+		}
+
+		// recursively process parents first
+		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree, axisValue);
+
+		// cache node properties
+		final String nodeName = currNode.getNodeName();
+		final Map<String, String> attrMap = XMLDB.getAttrMap(currNode);
+
+		// attempt to find the axis at this node
+		String type = attrMap.get("type");
+		boolean addedNodeLevel = false;
+		boolean addedYearLevel = false;
+		if(qg.nodeLevel.getKey().equals(type)) {
+			addedNodeLevel = true;
+			if(qg.nodeLevel.getKey().equals("region") && qg.isGlobal) {
+				axisValue.setValue("Global");
+			} else {
+				axisValue.setValue(attrMap.get(qg.nodeLevel.getValue() != null ? qg.nodeLevel.getValue() : "name"));
+			}
+		} else if(nodeName.equals(qg.nodeLevel.getKey())) {
+			addedNodeLevel = true;
+			axisValue.setValue(attrMap.get(qg.nodeLevel.getValue() != null ? qg.nodeLevel.getValue() : "ageGroup"));
+		}
+		if(nodeName.equals(qg.yearLevel.getKey())) {
+			addedYearLevel = true;
+			axisValue.setKey(attrMap.get(qg.yearLevel.getValue() != null ? qg.yearLevel.getValue() : "year"));
+		}
+
+		// split maps if we shouldn't collapse at this node
+		if(type == null) {
+			type = nodeName;
+		}
+		// special case since male and female do not actually have attributes
+		if(type.equals("male") || type.equals("female")) {
+			String attr = type;
+			// check for rewrites
+			if(qg.labelRewriteMap != null && qg.labelRewriteMap.containsKey(type)) {
+				Map<String, String> currRewriteMap = qg.labelRewriteMap.get(type);
+				if(currRewriteMap.containsKey(attr)) {
+					attr = currRewriteMap.get(attr);
+				}
+			}
+			attr = type+"@"+attr;
+			if(!tempMap.containsKey(attr)) {
+				tempMap.put(attr, new TreeMap());
+			}
+			tempMap = (Map)tempMap.get(attr);
+		} else if(!addedNodeLevel && !addedYearLevel && !attrMap.isEmpty() && !qg.getCollapseOnList().contains(type)) {
+			String attr = XMLDB.getAllAttr(attrMap);
+			// check for rewrites
+			if(qg.labelRewriteMap != null && qg.labelRewriteMap.containsKey(type)) {
+				Map<String, String> currRewriteMap = qg.labelRewriteMap.get(type);
+				if(currRewriteMap.containsKey(attr)) {
+					attr = currRewriteMap.get(attr);
+				}
+			}
+			attr = type+"@"+attr;
+			if(!tempMap.containsKey(attr)) {
+				tempMap.put(attr, new TreeMap());
+			}
+			tempMap = (Map)tempMap.get(attr);
+		}
+		currNode.delete();
+		return tempMap;
 	}
 }

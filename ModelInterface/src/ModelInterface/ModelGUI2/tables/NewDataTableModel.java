@@ -287,7 +287,7 @@ public class NewDataTableModel extends BaseTableModel{
 	 * will return String.class for the first and the last columns and
 	 * Double.class for the rest.
 	 * @param columnIndex The column being queried.
-	 * @return Double.class for 1 &lt columnIndex &lt getColumnCount()-1 else String.class
+	 * @return Double.class for 1 &lt; columnIndex &lt; getColumnCount()-1 else String.class
 	 */
 	public Class getColumnClass(int columnIndex) {
 		// TODO: figure out if I was to return Doubles or just do strings
@@ -513,6 +513,13 @@ public class NewDataTableModel extends BaseTableModel{
 			for( int col = 1; col < getColumnCount(); ++col ){
 				String fullColumn = getColumnName(col);
 				if(fullColumn.equals("Units")) {
+					continue;
+				}
+				boolean isAllNull = true;
+				for( int rowTemp = 0; rowTemp < getRowCount() && isAllNull; ++rowTemp ){
+					isAllNull = data.get(getKey(rowTemp, col)) == null;
+				}
+				if(isAllNull) {
 					continue;
 				}
 				//double yValue = Double.parseDouble( (String)getValueAt(row, col) );

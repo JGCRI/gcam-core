@@ -181,10 +181,10 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 				.append("s/").append(qg.nodeLevel.getKey());
 			if(((String)regions[0]).equals("Global")) {
 				strBuff.append("/").append(qg.xPath);
-				isGlobal = true;
+				qg.isGlobal = true;
 				return strBuff.toString();
 			} else {
-				isGlobal = false;
+				qg.isGlobal = false;
 				strBuff.append("[");
 				for(int i = 0; i < regions.length; ++i) {
 					strBuff.append(" (@name='").append(regions[i]).append("') or ");
@@ -197,10 +197,10 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 			strBuff.append("CostCurvesInfo/RegionalCostCurvesByPeriod/Curve");
 			if(((String)regions[0]).equals("Global")) {
 				strBuff.append("/").append(qg.xPath);
-				isGlobal = true;
+				qg.isGlobal = true;
 				return strBuff.toString();
 			} else {
-				isGlobal = false;
+				qg.isGlobal = false;
 				strBuff.append("[ child::title[");
 				for(int i = 0; i < regions.length; ++i) {
 					strBuff.append(" (child::text()='").append(regions[i]).append("') or ");
@@ -214,10 +214,10 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 			strBuff.append("CostCurvesInfo/PeriodCostCurves/CostCurves/Curve");
 			if(((String)regions[0]).equals("Global")) {
 				strBuff.append("/").append(qg.xPath);
-				isGlobal = true;
+				qg.isGlobal = true;
 				return strBuff.toString();
 			} else {
-				isGlobal = false;
+				qg.isGlobal = false;
 				strBuff.append("[ child::title[");
 				for(int i = 0; i < regions.length; ++i) {
 					strBuff.append(" (matches(child::text(),'").append(regions[i]).append("')) or ");
@@ -241,7 +241,7 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 					// check the locks after this line, It might leave some
 					ret.add(n.getFirstChild().getFirstChild().getNodeValue());
 					*/
-				} else if(isGlobal) {
+				} else if(qg.isGlobal) {
 					ret.add("Global");
 				} else {
 					// check the locks after this line, It might leave some
@@ -277,7 +277,7 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 			} 
 			if(n.getNodeName().equals(qg.yearLevel.getKey())) {
 				if(qg.nodeLevel.getKey().equals("UndiscountedCost") || qg.nodeLevel.getKey().equals("DiscountedCost")) {
-					if(isGlobal) {
+					if(qg.isGlobal) {
 						ret.add("Global");
 					} else {
 						ret.add(XMLDB.getAttr(n, "name"));
@@ -361,6 +361,120 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 		return xmlName;
 	}
 	public List<String> getDefaultCollpaseList() {
-		return new Vector<String>();
+		Vector<String> ret = new Vector<String>(1);
+		ret.add("PointSet");
+		return ret;
+	}
+	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue) throws Exception {
+		// stop condition for recursion when we hit the root of the tree
+		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
+			currNode.delete();
+			return dataTree;
+		}
+		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree, axisValue);
+
+		// cache node properties
+		final String nodeName = currNode.getNodeName();
+		final Map<String, String> attrMap = XMLDB.getAttrMap(currNode);
+		boolean addedNodeLevel = false;
+		boolean addedYearLevel = false;
+
+		if(nodeName.equals(qg.nodeLevel.getKey())) {
+			addedNodeLevel = true;
+			if(qg.nodeLevel.getKey().equals("UndiscountedCost") || qg.nodeLevel.getKey().equals("DiscountedCost")) {
+				// check this is was adding to pos 0 but I think it should be nodeLevel
+				//ret.add(0, qg.nodeLevel.getKey());
+				axisValue.setValue(qg.nodeLevel.getKey());
+				/*
+				   } else if(qg.yearLevel.equals("DataPoint")) {
+				// check the locks after this line, It might leave some
+				ret.add(n.getFirstChild().getFirstChild().getNodeValue());
+				*/
+			} else if(qg.isGlobal) {
+				axisValue.setValue("Global");
+			} else {
+				// check the locks after this line, It might leave some
+				//ret.add(n.getFirstChild().getFirstChild().getNodeValue());
+				/*
+				   System.out.println("Nodel level node name: "+n.getNodeName());
+				   System.out.println("FC Node Name: "+n.getFirstChild().getNodeName());
+				   System.out.println("FC Node Value: "+n.getFirstChild().getNodeValue());
+				   System.out.println("FC Node Type: "+n.getFirstChild().getNodeType());
+				   XmlValue tn = n.getFirstChild();
+				   while((tn = tn.getNextSibling()).getNodeType() != 3) {
+				   System.out.println("FC Node Name: "+tn.getNodeName());
+				   System.out.println("FC Node Value: "+tn.getNodeValue());
+				   System.out.println("FC Node Type: "+tn.getNodeType());
+				   }
+				   System.out.println("after FC Node Name: "+tn.getNodeName());
+				   System.out.println("after FC Node Value: "+tn.getNodeValue());
+				   System.out.println("after FC Node Type: "+tn.getNodeType());
+
+				   ret.add(tn.getFirstChild().getFirstChild().getNodeValue());
+				   */
+				XmlValue delValue = currNode.getFirstChild();
+				XmlValue nBefore = delValue.getNextSibling();
+				delValue.delete();
+				delValue = nBefore;
+				nBefore = delValue.getFirstChild();
+				delValue.delete();
+				axisValue.setValue(nBefore.getNodeValue());
+				nBefore.delete();
+			}
+
+			//ret.add(XMLDB.getAttr(n, "name"));
+		} 
+		if(nodeName.equals(qg.yearLevel.getKey())) {
+			addedYearLevel = true;
+			if(qg.nodeLevel.getKey().equals("UndiscountedCost") || qg.nodeLevel.getKey().equals("DiscountedCost")) {
+				if(qg.isGlobal) {
+					// TODO: check if it should be key
+					axisValue.setKey("Global");
+				} else {
+					// TODO: check if it should be key
+					axisValue.setKey(attrMap.get("name"));
+				}
+				/*
+				   } else if(qg.yearLevel.equals("DataPoint")) {
+			// check the locks after this line, It might leave some
+			ret.add(0, n.getFirstChild().getFirstChild().getNodeValue());
+			*/
+		} else {
+			// check the locks after this line, It might leave some
+			//ret.add(0, n.getFirstChild().getFirstChil!().getNodeValue());
+			//ret.add(0, n.getFirstChild().getNodeValue());
+			XmlValue delValue = currNode.getFirstChild();
+			XmlValue nBefore = delValue.getNextSibling();
+			delValue.delete();
+			delValue = nBefore;
+			nBefore = delValue.getFirstChild();
+			delValue.delete();
+			axisValue.setKey(nBefore.getNodeValue());
+			nBefore.delete();
+		}
+
+		/*
+		//ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
+		if(!getOneAttrVal(n).equals("fillout=1")) {
+		ret.add(getOneAttrVal(n));
+		} else {
+		ret.add(getOneAttrVal(n, 1));
+		}
+		*/
+
+		} 
+
+
+		// check if we need to collapse this level
+		if(!addedNodeLevel && !addedYearLevel && !attrMap.isEmpty()) {
+			String attr = XMLDB.getAllAttr(attrMap);
+			attr = nodeName+"@"+attr;
+			if(!tempMap.containsKey(attr)) {
+				tempMap.put(attr, new TreeMap());
+			}
+			tempMap = (Map)tempMap.get(attr);
+		} 
+		currNode.delete();
+		return tempMap;
 	}
 }

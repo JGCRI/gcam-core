@@ -334,6 +334,10 @@ public class MarketQueryBuilder extends QueryBuilder {
 		return xmlName;
 	}
 	public List<String> getDefaultCollpaseList() {
-		return new Vector<String>();
+		List<String> defaultCollapse = new Vector<String>(3);
+		defaultCollapse.add("price");
+		defaultCollapse.add("supply");
+		defaultCollapse.add("demand");
+		return defaultCollapse;
 	}
 }

@@ -391,9 +391,9 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			ret.append(regionQueryPortion+"/");
 			//regionSel = new int[0]; 
 			regions = new Object[0];
-			isGlobal = true;
+			qg.isGlobal = true;
 		} else {
-			isGlobal = false;
+			qg.isGlobal = false;
 		}
 		for(int i = 0; i < regions.length; ++i) {
 			if(!added) {
@@ -404,7 +404,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			}
 			ret.append("(@name='").append(regions[i]).append("')");
 		}
-		if(!isGlobal) {
+		if(!qg.isGlobal) {
 			ret.append(" )]/");
 		}
 		return ret.append(qg.getXPath()).toString();
@@ -432,7 +432,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 				} else {
 					ret.add(XMLDB.getAttr(n, qg.yearLevel.getValue()));
 				}
-			} else if(XMLDB.hasAttr(n)) {
+			} /*else if(XMLDB.hasAttr(n)) {
 				Map tempFilter;
 				if (filterMaps.containsKey(n.getNodeName())) {
 					tempFilter = (HashMap)filterMaps.get(n.getNodeName());
@@ -445,6 +445,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 					filterMaps.put(n.getNodeName(), tempFilter);
 				}
 			}
+			*/
 			nBefore = n;
 			n = n.getParentNode();
 			nBefore.delete();
@@ -465,7 +466,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			type = currNode.getNodeName();
 		}
 		// used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
-		if((isGlobal && type.equals("region")) || qg.getCollapseOnList().contains(type)) {
+		if((qg.isGlobal && type.equals("region")) || qg.getCollapseOnList().contains(type)) {
 			currNode.delete();
 			return tempMap;
 		}

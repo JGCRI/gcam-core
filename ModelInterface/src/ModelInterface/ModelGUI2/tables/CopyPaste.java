@@ -169,8 +169,8 @@ public class CopyPaste implements ActionListener{
 					for(int j=0; stCol.hasMoreTokens(); j++){
 						onePiece = (String)stCol.nextToken();
 						if (startRow+i < myJTable.getRowCount() && startCol+j < myJTable.getColumnCount()){
-							String oldStr = myJTable.getValueAt( startRow+i, startCol+j ).toString();
-							if ( areOfTheSameType( oldStr, onePiece )){
+							Object oldStr = myJTable.getValueAt( startRow+i, startCol+j );
+							if ( oldStr == null || areOfTheSameType( oldStr.toString(), onePiece )){
 								myJTable.setValueAt(onePiece, startRow+i, startCol+j);
 				  	 			System.out.println("Putting "+ onePiece + "at row =" + startRow+i + "column =" + startCol+j );
 							}else{
