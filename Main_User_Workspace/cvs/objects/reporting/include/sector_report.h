@@ -75,6 +75,8 @@ public:
     void endVisitRegion( const Region* aRegion, const int aPeriod );
     void startVisitSector( const Sector* sector, const int aPeriod );
     void startVisitProductionTechnology( const ProductionTechnology* prodTechnology, const int period );
+    void endVisitProductionTechnology( const ProductionTechnology* prodTechnology, const int period );
+    void startVisitSGMInput( const SGMInput* aSGMInput, const int aPeriod );
 private:
     //! The file to which to write.
     std::ostream& mFile;
@@ -83,10 +85,20 @@ private:
 
     //! The current region name.
     std::string mCurrRegion;
+    
+    //! The current technology name
+    std::string mTechName;
+    
+    //! If the input should be visited
+    bool mVisitInput;
+    
+    //! If the input should add PricePaid
+    bool mInputAddPricePaid;
 
     static const std::string getYearString( const int aYear );
 };
 
 #endif // _SECTOR_REPORT_H_
+
 
 

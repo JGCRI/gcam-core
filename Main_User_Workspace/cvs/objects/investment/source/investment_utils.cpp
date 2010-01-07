@@ -37,7 +37,7 @@
  * \file investment_utils.cpp
  * \ingroup Objects
  * \brief InvestmentUtils class source file.
- * \author Josh Lurz
+ * \author Josh Lurz, Sonny Kim
  */
 
 #include "util/base/include/definitions.h"
@@ -45,6 +45,8 @@
 #include <cassert>
 #include <numeric>
 
+#include "util/base/include/model_time.h"
+#include "technologies/include/base_technology.h"
 #include "investment/include/investment_utils.h"
 #include "investment/include/iinvestable.h"
 #include "marketplace/include/marketplace.h"
@@ -182,3 +184,36 @@ double InvestmentUtils::sumFixedInvestment( const vector<IInvestable*>& aInvesta
     }
     return sumFixed;
 }
+
+/*!
+* \brief Function which gets a vector of IInvestable technologies
+*          converted to a vector of Investables.
+* \details Convert the vector of IInvestable technologies to a vector of
+*          IInvestable objects. This is legal given that the technology class
+*          passed in is a subtype of IInvestable. This will fail at
+*          compilation time if this is not true. This must be done
+*          explicitly because even if class B inherits from class A,
+*          vector<B> does not inherit from vector<A>.
+* \author Sonny Kim
+* \param aAllTechs A vector of technologies of IInvestable to upcast.
+* \return A vector of IInvestable pointers corresponding to the technology
+*         pointer vector passed in.
+*/
+vector<IInvestable*> InvestmentUtils::getTechInvestables( const vector<BaseTechnology*>& aAllTechs,
+                                                const int aPeriod )
+{
+    const Modeltime* modeltime = scenario->getModeltime();
+    vector<BaseTechnology*> investableTechs;
+    typedef vector<BaseTechnology*>::const_iterator BaseTechIterator;
+    for( BaseTechIterator currTech = aAllTechs.begin(); currTech != aAllTechs.end(); ++currTech ){
+        // TODO change this to check if the tech year <= the current year so that we can
+        // avoid some extra processing
+        //if ( (*currTech)->isNewInvestment( aPeriod ) ){
+            investableTechs.push_back( *currTech );
+        //}
+    }
+    vector<IInvestable*> investables( investableTechs.size() );
+    copy( investableTechs.begin(), investableTechs.end(), investables.begin() );
+    return investables;
+}
+

@@ -1,5 +1,5 @@
-#ifndef _PRIMARY_OUTPUT_H_
-#define _PRIMARY_OUTPUT_H_
+#ifndef _SGM_OUTPUT_H_
+#define _SGM_OUTPUT_H_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -39,9 +39,9 @@
  */
 
 /*! 
- * \file primary_output.h
+ * \file sgm_output.h
  * \ingroup Objects
- * \brief PrimaryOutput class header file.
+ * \brief SGMOutput class header file.
  * \author Josh Lurz
  */
 
@@ -50,44 +50,47 @@
 
 class Tabs;
 class DependencyFinder;
+class CachedMarket;
 
 #include "technologies/include/ioutput.h"
 #include "util/base/include/value.h"
 
 /*! 
  * \ingroup Objects
- * \todo FIX FIX FIX
- * \brief An output representing the primary output of a Technology.
- * \details The primary output of a Technology is the same as the output of the
+ * \brief An output representing the primary output of a SGM Technology.
+ * \details The primary output of a SGM Technology is the same as the output of the
  *          sector containing a Technology. The primary output should always be
  *          chosen such that the revenue from the primary output always exceeds
  *          any revenue from secondary outputs. Primary outputs have expenses and
  *          revenues calculated directly by the Technolgy object.
  *          
- *          <b>XML specification for PrimaryOutput</b>
- *          - XML name: None. The primary output is generated automatically
-                        and cannot be parsed.
+ *          <b>XML specification for SGMOutput</b>
+ *          - XML name: \c sgm-output
+ *          - Contained by: BaseTechnology
+ *          - Parsing inherited from class: None.
+ *          - Attributes: name
+ *          - Elements:
+ *              - \c physical-output SGMOutput::mPhysicalOutputs
  *
  * \author Josh Lurz
  */
 class SGMOutput: public IOutput
 {
 public:
-     /*
+     /*!
       * \brief Constructor
       * \param aSectorName Name of the sector and primary output.
       */
     SGMOutput( const std::string& aSectorName );
-    
-    /*
-     * \brief Constructor that initializes the conversion factor.
-     * \param aSectorName Name of the sector and primary output.
-     * \param aConversionFactor The conversion factor to user when converting currency
-     *          output to physical.
-     * \param aCO2Coef The CO2 emissions coefficient cached from the marketplace.
-     */
-    SGMOutput( const std::string& aSectorName, const double aConversionFactor, const double aCO2Coef );
 
+    /*!
+     * \brief Create a clone of this output.
+     * \details Creates a copy of this output object however none
+     *          of the output quantaties are copied.  Calling this
+     *          method would be equivalent to creating a new SGMOutput
+     *          using the same name as this SGMOutput.
+     * \return A clone of this object.
+     */
     virtual SGMOutput* clone() const;
 
     virtual bool isSameType( const std::string& aType ) const;
@@ -95,6 +98,8 @@ public:
     virtual const std::string& getName() const;
 
     virtual const std::string& getXMLReportingName() const;
+    
+    static const std::string& getXMLReportingNameStatic();
 
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
     
@@ -153,20 +158,21 @@ public:
        const std::string& aName,
        const std::string& aLandType ) {}
 protected:
-    //! Currency output by period.
-    std::vector<Value> mCurrencyOutputs;
+    // TODO: switch this to a PeriodVector
+    //! Physical output by period.
+    std::vector<Value> mPhysicalOutputs;
 
     //! Name of the primary output. This is the same as the sector name.
-    const std::string mName;
+    std::string mName;
 
     //! CO2 emissions coefficient cached from the marketplace.
     Value mCachedCO2Coef;
-    
-    //! Conversion factor to convert from currency to physical
-    Value mConversionFactor;
 
-private :
-    const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 
+    //! Stored region for this good used to get the price of the good
+    std::string mRegionName;
+
+    //! A pre-located market which has been cached from the marketplace to add supply to.
+    std::auto_ptr<CachedMarket> mCachedMarket;
 };
 
-#endif // _PRIMARY_OUTPUT_H_
+#endif // _SGM_OUTPUT_H_

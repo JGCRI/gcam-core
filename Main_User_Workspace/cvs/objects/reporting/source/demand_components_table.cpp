@@ -122,9 +122,9 @@ void DemandComponentsTable::startVisitHouseholdConsumer( const HouseholdConsumer
 {
     // add only current year consumer
     if( householdConsumer->year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
-        for( unsigned int i = 0; i < householdConsumer->input.size(); ++i ){
-            mTable->addToType( householdConsumer->input[ i ]->getName(), getLabel( CONSUMPTION ),
-                               householdConsumer->input[ i ]->getCurrencyDemand( aPeriod ) );
+        for( unsigned int i = 0; i < householdConsumer->mLeafInputs.size(); ++i ){
+            mTable->addToType( householdConsumer->mLeafInputs[ i ]->getName(), getLabel( CONSUMPTION ),
+                               householdConsumer->mLeafInputs[ i ]->getCurrencyDemand( aPeriod ) );
         }
     }
 }
@@ -134,9 +134,9 @@ void DemandComponentsTable::startVisitGovtConsumer( const GovtConsumer* govtCons
 {
     // add only current year consumer
     if( govtConsumer->year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
-        for( unsigned int i = 0; i < govtConsumer->input.size(); ++i ){
-            mTable->addToType( govtConsumer->input[ i ]->getName(), getLabel( GOVERNMENT ),
-                               govtConsumer->input[ i ]->getCurrencyDemand( aPeriod ) );
+        for( unsigned int i = 0; i < govtConsumer->mLeafInputs.size(); ++i ){
+            mTable->addToType( govtConsumer->mLeafInputs[ i ]->getName(), getLabel( GOVERNMENT ),
+                               govtConsumer->mLeafInputs[ i ]->getCurrencyDemand( aPeriod ) );
         }
     }
 }
@@ -145,9 +145,9 @@ void DemandComponentsTable::startVisitTradeConsumer( const TradeConsumer* tradeC
 {
     // add only current year consumer
     if( tradeConsumer->year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
-        for( unsigned int i = 0; i< tradeConsumer->input.size(); i++ ){
-            mTable->addToType( tradeConsumer->input[ i ]->getName(), getLabel( TRADE ),
-                               tradeConsumer->input[ i ]->getCurrencyDemand( aPeriod ) );
+        for( unsigned int i = 0; i< tradeConsumer->mLeafInputs.size(); i++ ){
+            mTable->addToType( tradeConsumer->mLeafInputs[ i ]->getName(), getLabel( TRADE ),
+                               tradeConsumer->mLeafInputs[ i ]->getCurrencyDemand( aPeriod ) );
         }
     }
 }
@@ -157,9 +157,9 @@ void DemandComponentsTable::startVisitInvestConsumer( const InvestConsumer* inve
 {
     // add only current year consumer
     if( investConsumer->year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
-        for( unsigned int i = 0; i < investConsumer->input.size(); ++i ){
-            mTable->addToType( investConsumer->input[ i ]->getName(), getLabel( INVESTMENT ),
-                               investConsumer->input[ i ]->getCurrencyDemand( aPeriod ) );
+        for( unsigned int i = 0; i < investConsumer->mLeafInputs.size(); ++i ){
+            mTable->addToType( investConsumer->mLeafInputs[ i ]->getName(), getLabel( INVESTMENT ),
+                               investConsumer->mLeafInputs[ i ]->getCurrencyDemand( aPeriod ) );
         }
     }
 }
@@ -169,18 +169,18 @@ void DemandComponentsTable::startVisitProductionTechnology( const ProductionTech
 {
     if( aPeriod == -1 || ( prodTech->isAvailable( aPeriod ) &&
             !prodTech->isRetired( aPeriod ) ) ) {
-        for( unsigned int i=0; i<prodTech->input.size(); i++ ){
+        for( unsigned int i=0; i<prodTech->mLeafInputs.size(); i++ ){
             // if capital, add only current vintage demand
-            if( prodTech->input[i]->hasTypeFlag( IInput::CAPITAL ) ) {
+            if( prodTech->mLeafInputs[i]->hasTypeFlag( IInput::CAPITAL ) ) {
                 if( prodTech->getYear() == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
-                    mTable->addToType( prodTech->input[ i ]->getName(), getLabel( INTERMED ),
-                                       prodTech->input[ i ]->getCurrencyDemand( aPeriod ) );
+                    mTable->addToType( prodTech->mLeafInputs[ i ]->getName(), getLabel( INTERMED ),
+                                       prodTech->mLeafInputs[ i ]->getCurrencyDemand( aPeriod ) );
                 }
             }
             // for all other inputs, add all vintages
             else {
-                mTable->addToType( prodTech->input[ i ]->getName(), getLabel( INTERMED ),
-                                   prodTech->input[ i ]->getCurrencyDemand( aPeriod ) );
+                mTable->addToType( prodTech->mLeafInputs[ i ]->getName(), getLabel( INTERMED ),
+                                   prodTech->mLeafInputs[ i ]->getCurrencyDemand( aPeriod ) );
             }
         }
     }

@@ -92,7 +92,6 @@ void TradeConsumer::completeInit( const string& aRegionName,
                                   const string& aSectorName,
                                   const string& aSubsectorName )
 {
-	prodDmdFnType = "TradeDemandFn";
 	BaseTechnology::completeInit( aRegionName, aSectorName, aSubsectorName );
 }
 
@@ -106,9 +105,10 @@ void TradeConsumer::initCalc( const MoreSectorInfo* aMoreSectorInfo, const strin
                         aNationalAccount, aDemographics, aCapitalStock,
                         aPeriod );
 
+    // TODO: again why is this here?
     if( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
         // calculate Price Paid
-        BaseTechnology::calcPricePaid( aMoreSectorInfo, aRegionName, aSectorName, aPeriod );
+        //BaseTechnology::calcPricePaid( aMoreSectorInfo, aRegionName, aSectorName, aPeriod );
     }
 }
 
@@ -121,8 +121,8 @@ void TradeConsumer::calcIncome( NationalAccount& aNationalAccount, const Demogra
 	expenditures[ aPeriod ].setType( Expenditure::TOTAL_IMPORTS, netExport );
 
 	// set National Accounts Consumption for GNP calculation
-	aNationalAccount.addToAccount( NationalAccount::GNP, netExport );
-	aNationalAccount.addToAccount( NationalAccount::NET_EXPORT, netExport );
+	aNationalAccount.addToAccount( NationalAccount::GNP_NOMINAL, netExport );
+	aNationalAccount.addToAccount( NationalAccount::NET_EXPORT_NOMINAL, netExport );
 }
 
 //! calculate demand
@@ -130,12 +130,20 @@ void TradeConsumer::operate( NationalAccount& aNationalAccount, const Demographi
                              const MoreSectorInfo* aMoreSectorInfo, const string& aRegionName, 
                              const string& aSectorName, const bool aIsNewVintageMode, int aPeriod ) 
 {
-	if( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
+    const Modeltime* modelTime = scenario->getModeltime();
+	if( year == modelTime->getper_to_yr( aPeriod ) ) {
 		// calculate prices paid for consumer inputs
-		BaseTechnology::calcPricePaid( aMoreSectorInfo, aRegionName, aSectorName, aPeriod );
+		BaseTechnology::calcPricePaid( aMoreSectorInfo, aRegionName, aSectorName, aPeriod,
+            modelTime->gettimestep( aPeriod ) );
 		calcInputDemand( expenditures[ aPeriod ].getValue( Expenditure::CONSUMPTION ), aRegionName, aSectorName, aPeriod );
 		calcIncome( aNationalAccount, aDemographics, aRegionName, aSectorName, aPeriod );
         // Trade consumer does not have emissions so it does not calculate them here.
+        // calculate the real amount consumed
+        // TODO: this could currently just go in post calc
+        aNationalAccount.addToAccount( NationalAccount::NET_EXPORT_REAL,
+            calcRealGNP( aNationalAccount, aRegionName, aPeriod ) );
+
+        mPricePaidCached = false;
 	}
 }
 

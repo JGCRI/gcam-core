@@ -53,10 +53,17 @@ class Tabs;
 class DependencyFinder;
 class ICaptureComponent;
 class IInfo;
+class MoreSectorInfo;
+class AGHG;
+class ICaptureComponent;
+class NationalAccount;
+class Expenditure;
 
 // Until copyParam is fixed.
 class DemandInput;
 class ProductionInput;
+class NodeInput;
+class TradeInput;
 class BuildingDemandInput;
 class EnergyInput;
 class NonEnergyInput;
@@ -121,7 +128,10 @@ public:
         SUBSIDY = 1 << 10,
 
         //! Tax.
-        TAX = 1 << 11
+        TAX = 1 << 11,
+
+        //! Traded Good.
+        TRADED = 1 << 12
 
     };
 
@@ -323,6 +333,26 @@ public:
                                const int aPeriod ) = 0;
 
     /*!
+     * \brief Calculate the price paid of the input.
+     * \param aRegionName Name of the region containing the input.
+     * \param aSectorName Name of the containing sector.
+     * \param aMoreSectorInfo The sector info which may contain additional costs.
+     * \param aGhgs GHGs which may add to the cost of the input.
+     * \param aSequestrationDevice A capture component which may capture some emssions
+     *          and thus reduce emissions tax costs.
+     * \param aLifetimeYears The number of years the technology will operate for.
+     *          Used to calculate depreciation of capital.
+     * \param aPeriod Period for which to calculate price paid.
+     */
+    virtual void calcPricePaid( const std::string& aRegionName,
+                                const std::string& aSectorName,
+                                const MoreSectorInfo* aMoreSectorInfo,
+                                const std::vector<AGHG*>& aGhgs,
+                                const ICaptureComponent* aSequestrationDevice,
+                                const int aLifetimeYears,
+                                const int aPeriod ) = 0;
+
+    /*!
      * \brief Get the coefficient of the input.
      * \param aPeriod Model period.
      * \return Coefficient
@@ -353,12 +383,27 @@ public:
                                              const int aPeriod ) const = 0;
 
     /*!
+     * \brief Calculate taxes from the input.
+     * \details Calculates the taxes and places them into the appropriate
+     *          accounting structure.
+     * \param aRegionName Name of the region containing the input.
+     * \param aNationalAccount The national account to add taxes into if avaiable.
+     * \param aExpenditure The current period expenditure to track technology expenses if availabe.
+     * \param aPeriod The period in which to calculate taxes.
+     * \return The amount of non-emission taxes collected.
+     */
+    virtual double calcTaxes( const std::string& aRegionName,
+                            NationalAccount* aNationalAccount,
+                            Expenditure* aExpenditure,
+                            const int aPeriod ) const = 0;
+
+    /*!
      * \brief Get the current calibration quantity.
      * \param aPeriod The period for which to get the calibration quantity.
      * \details
      * \return The current calibration quantity.
      */
-	virtual double getCalibrationQuantity( const int aPeriod ) const = 0;
+    virtual double getCalibrationQuantity( const int aPeriod ) const = 0;
 
     /*!
      * \brief Get the price elasticity of the input.
@@ -392,6 +437,12 @@ public:
                                  const int aPeriod ) const = 0;
 
     virtual void copyParamsInto( DemandInput& aInput,
+                                 const int aPeriod ) const = 0;
+
+    virtual void copyParamsInto( NodeInput& aInput,
+                                 const int aPeriod ) const = 0;
+
+    virtual void copyParamsInto( TradeInput& aInput,
                                  const int aPeriod ) const = 0;
 
     virtual void copyParamsInto( EnergyInput& aInput,

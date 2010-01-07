@@ -52,6 +52,7 @@
 class IInput;
 class IFunction;
 struct TechChange;
+class INestedInput;
 
 typedef std::vector<IInput*> InputSet;
 
@@ -73,6 +74,9 @@ struct ProductionFunctionInfo {
 
     //! Amount of capital stock the vintage owns.
     const double mCapitalStock;
+    
+    //! The root of the nested inputs.
+    const INestedInput* mNestedInputRoot;
 };
 
 /*! 
@@ -84,14 +88,14 @@ struct ProductionFunctionInfo {
 */
 class FunctionUtils {
 public:
-	static void scaleCoefficientInputs( InputSet& input,
+    static void scaleCoefficientInputs( InputSet& input,
                                         double scaler, const int aPeriod );
     
     static double getCurrencyDemandSum( const InputSet& aInputs, const int aPeriod );
 
-	static double getPhysicalDemandSum( const InputSet& aInputs, const int aPeriod );
+    static double getPhysicalDemandSum( const InputSet& aInputs, const int aPeriod );
     
-	static double getCoefSum( const InputSet& input, const int aPeriod );
+    static double getCoefSum( const InputSet& input, const int aPeriod );
     
     static IInput* getInput( const InputSet& aInputs,
                              const std::string& aInputName );
@@ -103,9 +107,9 @@ public:
     static double getRho( const double aSigma );
     
     static double getNetPresentValueMult( const InputSet& aInputs,
-										  const std::string& aRegionName,
+                                          const std::string& aRegionName,
                                           const double aLifetimeYears,
-										  const int aPeriod  );
+                                          const int aPeriod  );
     
     static double calcNetPresentValueMult( const double aDiscountRate,
                                            const double aLifetime );
@@ -116,23 +120,23 @@ public:
                                             const double aLifetimeYears,
                                             const int aPeriod );
 
-	static void setPricePaid( const std::string& aRegionName,
-							  const std::string& aGoodName,
-						      const int aPeriod,
-							  const double aPricePaid );
+    static void setPricePaid( const std::string& aRegionName,
+                              const std::string& aGoodName,
+                              const int aPeriod,
+                              const double aPricePaid );
 
-	static double getPricePaid( const std::string& aRegionName,
-								const std::string& aGoodName,
-								const int aPeriod );
+    static double getPricePaid( const std::string& aRegionName,
+                                const std::string& aGoodName,
+                                const int aPeriod );
 
-	static void setPriceReceived( const std::string& aRegionName,
-								  const std::string& aGoodName,
-								  const int aPeriod,
-								  const double aPriceReceived );
+    static void setPriceReceived( const std::string& aRegionName,
+                                  const std::string& aGoodName,
+                                  const int aPeriod,
+                                  const double aPriceReceived );
 
-	static double getPriceReceived( const std::string& aRegionName,
-									const std::string& aGoodName,
-									const int aPeriod );
+    static double getPriceReceived( const std::string& aRegionName,
+                                    const std::string& aGoodName,
+                                    const int aPeriod );
 
     static double applyTechnicalChangeInternal( InputSet& input,
                                                 const TechChange& aTechChange, 
@@ -151,7 +155,8 @@ public:
                               const int aPeriod );
 
     static double getMarketConversionFactor( const std::string& aRegionName,
-                                             const std::string& aGoodName );
+                                             const std::string& aGoodName,
+                                             const bool aMustExist = true );
 
     static void copyInputParamsForward( const InputSet& aPrevInputs,
                                         InputSet& aCurrInputs,
@@ -159,12 +164,23 @@ public:
 
     static double getCO2Coef( const std::string& aRegionName,
                               const std::string& aGoodName,
-                              const int aPeriod );
+                              const int aPeriod,
+                              const bool aMustExist = true );
 
     static double calcPriceRatio( const std::string& aRegionName,
                                   const IInput* aInput,
                                   const int aBasePeriod,
                                   const int aCurrentPeriod );
+
+    static InputSet getLeafInputs( const INestedInput* aNestedInput );
+    
+    // TODO: should the following two be in another utility?
+    static void setCapitalGoodPrice( const std::string& aRegionName,
+                                     const int aPeriod,
+                                     const double aCapitalGoodPrice );
+
+    static double getCapitalGoodPrice( const std::string& aRegionName,
+                                       const int aPeriod );
 };
 
 #endif // _FUNCTION_UTILS_H_

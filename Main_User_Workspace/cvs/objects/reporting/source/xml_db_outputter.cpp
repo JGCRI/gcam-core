@@ -88,11 +88,13 @@
 #include "technologies/include/expenditure.h"
 #include "technologies/include/production_technology.h"
 #include "functions/include/sgm_input.h"
+#include "functions/include/node_input.h"
 #include "consumers/include/household_consumer.h"
 #include "consumers/include/govt_consumer.h"
 #include "consumers/include/trade_consumer.h"
 #include "consumers/include/invest_consumer.h"
 #include "sectors/include/factor_supply.h"
+#include "containers/include/national_account.h"
 #include "sectors/include/more_sector_info.h"
 #include "util/base/include/util.h"
 #include "reporting/include/indirect_emissions_calculator.h"
@@ -488,22 +490,9 @@ void XMLDBOutputter::startVisitResource( const AResource* aResource,
             aResource->getAnnualProd( mCurrentRegion, per ), per );
     }
 
-    // children of ghg go in the child buffer
-    for( unsigned int i = 0; i < aResource->ghg.size(); ++i ) {
-        XMLWriteOpeningTag( aResource->ghg[i]->getXMLName(), mBuffer, mTabs.get(),
-            aResource->ghg[i]->getName(), 0, "GHG" );
-        for( int per = 0; per < modeltime->getmaxper(); ++per ){
-            int year = modeltime->getper_to_yr( per );
-            double currEmission = aResource->ghg[i]->getEmission( per );
-            // Avoid writing zeros to save space.
-            // Write GHG emissions.
-            if( !objects::isEqual<double>( currEmission, 0.0 ) ) {
-                writeItemUsingYear( "emissions", aResource->ghg[i]->mEmissionsUnit,
-                    currEmission, year );
-            }
-        }
-        XMLWriteClosingTag( aResource->ghg[i]->getXMLName(), mBuffer, mTabs.get() );
-    }
+    // Ghgs are expecting to use the buffer stack to write results into
+    // so create one for them to write into.
+    mBufferStack.push( new stringstream );
 
     // We want to write the keywords last due to limitations in
     // XPath we could be searching for them using following-sibling
@@ -515,6 +504,16 @@ void XMLDBOutputter::startVisitResource( const AResource* aResource,
 void XMLDBOutputter::endVisitResource( const AResource* aResource,
                                        const int aPeriod )
 {
+    // Write the ghgs which put their output into the buffer stack.  We
+    // are not too concerned with writting empty tags at the resource
+    // level so we are not doing the full parent child buffers as in
+    // technology.
+    stringstream* childBuffer = popBufferStack();
+    mBuffer << childBuffer->str();
+    delete childBuffer;
+    // the buffer stack should be empty by now
+    assert( mBufferStack.empty() );
+
     // Write the closing resource tag.
     XMLWriteClosingTag( aResource->getXMLName(), mBuffer, mTabs.get() );
     // Clear the current resource.
@@ -659,26 +658,18 @@ void XMLDBOutputter::endVisitEnergyFinalDemand( const EnergyFinalDemand* aEnergy
 
 
 void XMLDBOutputter::startVisitBaseTechnology( const BaseTechnology* aBaseTech, const int aPeriod ) {
-
-    const Modeltime* modeltime = scenario->getModeltime();
-    if( aPeriod == -1 ) {
-        for( int i = 0; i < modeltime->getmaxper(); ++i ){
-            // avoid writing zeros for the sake of saving space
-            double currOutput = aBaseTech->mOutputs[ 0 ]->getCurrencyOutput( aPeriod );
-            if( !objects::isEqual<double>( currOutput, 0.0 ) ) {
-                int year = modeltime->getper_to_yr( i );
-                XMLWriteElement( currOutput, "output",
-                    mBuffer, mTabs.get(), year );
-            }
-        }
-    }
-    else {
-        int year = modeltime->getper_to_yr( aPeriod );
-        XMLWriteElement( aBaseTech->mOutputs[ aPeriod ], "output", mBuffer, mTabs.get(), year );
-    }
+    // writing blank technologies is not a big concern for sgm so just create a child buffer
+    // for it's children to write to and write the technology anyway even if the buffer was empty
+    mBufferStack.push( new stringstream() );
 }
 
 void XMLDBOutputter::endVisitBaseTechnology( const BaseTechnology* aBaseTech, const int aPeriod ){
+    // write out anything written to the child buffer
+    stringstream* childBuffer = popBufferStack();
+    mBuffer << childBuffer->str();
+    
+    // clean up the child buffer
+    delete childBuffer;
 }
 
 /* \brief Visit the Technology.
@@ -696,7 +687,7 @@ void XMLDBOutputter::startVisitTechnology( const Technology* aTechnology, const 
     // write the technology tag and it's children in temp buffers so that we can
     // check if anything was really written out and avoid writing blank technologies
     stringstream* parentBuffer = new stringstream();
-    stringstream* childBuffer = new stringstream();    
+    stringstream* childBuffer = new stringstream();
     
     // the opening tag goes in the parent buffer
     // TODO: Inconsistent use of year attribute.  Technology vintage written out
@@ -795,9 +786,6 @@ void XMLDBOutputter::endVisitMiniCAMInput( const MiniCAMInput* aInput, const int
 }
 
 void XMLDBOutputter::startVisitInput( const IInput* aInput, const int aPeriod ) {
-    // TODO: there needs to be a ->getXMLName() in IInput so that instead of having
-    // input as the tag it will have the input's correct xml name
-    
     // write the input tag and it's children in temp buffers so that we can
     // check if anything was really written out and avoid writing blank inputs
     stringstream* parentBuffer = new stringstream();
@@ -814,8 +802,12 @@ void XMLDBOutputter::startVisitInput( const IInput* aInput, const int aPeriod ) 
     map<string, string> attrs;
 
     // children of input go in the child buffer
-    for( int i = 0; i <= aPeriod; ++i ) {
-        if( !isTechnologyOperating( i ) ){
+    // note minicam is using real periods at this point where as sgm is
+    // always using -1 
+    double maxPer = aPeriod == -1 ? modeltime->getmaxper() -1 : aPeriod;
+    for( int i = 0; i <= maxPer; ++i ) {
+        // isTechnologyOperating will crash for sgm so avoid calling it
+        if( aPeriod != -1 && !isTechnologyOperating( i ) ){
             continue;
         }
 
@@ -842,7 +834,7 @@ void XMLDBOutputter::startVisitInput( const IInput* aInput, const int aPeriod ) 
                Marketplace* marketplace = scenario->getMarketplace();
                const IInfo* marketInfo = marketplace->getMarketInfo( aInput->getName(), mCurrentRegion, 0, false );
                if ( marketInfo ) {
-                  attrs[ "unit" ] = marketInfo->getString( "output-unit", true );
+                  attrs[ "unit" ] = marketInfo->getString( "output-unit", false );
                }
             }
             // if not energy input or market did not exist, then use default unit assignment
@@ -917,11 +909,15 @@ void XMLDBOutputter::startVisitOutput( const IOutput* aOutput, const int aPeriod
 
     map<string, string> attrs;
 
+    // note minicam is using real periods at this point where as sgm is
+    // always using -1
+    double maxPer = aPeriod == -1 ? modeltime->getmaxper() -1 : aPeriod;
     // Write out physical output.
     // loop for all vintages up to current period
     // children of output go in the child buffer
-    for( int curr = 0; curr <= aPeriod; ++curr ){
-        if( !isTechnologyOperating( curr ) ){
+    for( int curr = 0; curr <= maxPer; ++curr ){
+        // isTechnologyOperating will crash for sgm so avoid calling it
+        if( aPeriod != -1 && !isTechnologyOperating( curr ) ){
             continue;
         }
         attrs[ "vintage" ] = util::toString( modeltime->getper_to_yr( curr ) );
@@ -931,6 +927,14 @@ void XMLDBOutputter::startVisitOutput( const IOutput* aOutput, const int aPeriod
         double currValue = aOutput->getPhysicalOutput( curr );
         if( !objects::isEqual<double>( currValue, 0.0 ) ) {
             XMLWriteElementWithAttributes( currValue, "physical-output", *childBuffer,
+                mTabs.get(), attrs );
+        }
+        // Write currency output for each output. Note that it may be possible to convert
+        // from currency to physical and vice-versa so for the sake of saving space maybe
+        // don't write both?
+        currValue = aOutput->getCurrencyOutput( curr );
+        if( !objects::isEqual<double>( currValue, 0.0 ) ) {
+            XMLWriteElementWithAttributes( currValue, "currency-output", *childBuffer,
                 mTabs.get(), attrs );
         }
     }
@@ -1053,62 +1057,45 @@ void XMLDBOutputter::startVisitGHG( const AGHG* aGHG, const int aPeriod ){
     const Modeltime* modeltime = scenario->getModeltime();
     double currEmission = 0.0;
 
+    // children of input go in the child buffer
+    // note minicam is using real periods at this point where as sgm is
+    // always using -1 
+    double maxPer = aPeriod == -1 ? modeltime->getmaxper() -1 : aPeriod;
+
     // children of ghg go in the child buffer
-    for( int i = 0; i <= aPeriod; ++i ){
-        if( !isTechnologyOperating( i ) ){
+    for( int i = 0; i <= maxPer; ++i ){
+        // isTechnologyOperating will crash for sgm so avoid calling it
+        if( aPeriod != -1 && !isTechnologyOperating( i ) ){
             continue;
         }
+
         attrs[ "year" ] = util::toString( modeltime->getper_to_yr( i ) );
+        attrs[ "unit" ] = aGHG->mEmissionsUnit;
         currEmission = aGHG->getEmission( i );
         // Avoid writing zeros to save space.
         // Write GHG emissions.
         if( !objects::isEqual<double>( currEmission, 0.0 ) ) {
-            attrs[ "unit" ] = aGHG->mEmissionsUnit;
             XMLWriteElementWithAttributes( currEmission, "emissions",
                 *childBuffer, mTabs.get(), attrs );
         }
-    }
-    // Write sequestered amount of GHG emissions .
-    for( int i = 0; i <= aPeriod; ++i ){
-        if( !isTechnologyOperating( i ) ){
-            continue;
-        }
-        attrs[ "year" ] = util::toString( modeltime->getper_to_yr( i ) );
+
+        // Write sequestered amount of GHG emissions .
         currEmission = aGHG->getEmissionsSequestered( i );
-        // No need to write out zero sequestered emissions as this will happen often and
-        // will waste space.
         if( !objects::isEqual<double>( currEmission, 0.0 ) ) {
-            attrs[ "unit" ] = aGHG->mEmissionsUnit;
             XMLWriteElementWithAttributes( currEmission, "emissions-sequestered",
                 *childBuffer, mTabs.get(), attrs );
         }
-    }
-    // Write emissions by fuel if sector is primary energy.
-    for( int i = 0; i <= aPeriod; ++i ){
-        if( !isTechnologyOperating( i ) ){
-            continue;
-        }
-        attrs[ "year" ] = util::toString( modeltime->getper_to_yr( i ) );
+
+        // Write emissions by fuel if sector is primary energy.
         currEmission = aGHG->getEmissFuel( i );
-        // No need to write out zero emissions as this will happen often and
-        // will waste space.
         if( !objects::isEqual<double>( currEmission, 0.0 ) ) {
             attrs[ "fuel-name" ] = mCurrentSector;
-            attrs[ "unit" ] = aGHG->mEmissionsUnit;
             XMLWriteElementWithAttributes( currEmission, "emissions-by-fuel",
                 *childBuffer, mTabs.get(), attrs );
         }
-    }
-    // Write indirect emissions if this is CO2.
-    if( aGHG->getName() == "CO2" ){
-        for( int i = 0; i <= aPeriod; ++i ){
-            if( !isTechnologyOperating( i ) ){
-                continue;
-            }
-            // Skip writing zeros to save space.
-            if( util::isEqual( mCurrIndirectEmissions[ i ], 0.0 ) ){
-                continue;
-            }
+
+        // Write indirect emissions if this is CO2.
+        if( aGHG->getName() == "CO2" && !util::isEqual( mCurrIndirectEmissions[ i ], 0.0 ) ){
             writeItemToBuffer( mCurrIndirectEmissions[ i ], "indirect-emissions", *childBuffer, 
                 mTabs.get(), i, aGHG->mEmissionsUnit );
         }
@@ -1176,10 +1163,10 @@ void XMLDBOutputter::startVisitMarket( const Market* aMarket,
     // Store unit information from base period
     if( aMarket->period == 0 ) {
         if( mCurrentPriceUnit.empty() ){
-            mCurrentPriceUnit = aMarket->getMarketInfo()->getString( "price-unit", true );
+            mCurrentPriceUnit = aMarket->getMarketInfo()->getString( "price-unit", false );
         }
         if( mCurrentOutputUnit.empty() ){
-            mCurrentOutputUnit = aMarket->getMarketInfo()->getString( "output-unit", true );
+            mCurrentOutputUnit = aMarket->getMarketInfo()->getString( "output-unit", false );
         }
     }
 
@@ -1587,10 +1574,19 @@ void XMLDBOutputter::endVisitCarbonBoxModel( const CarbonBoxModel* aCarbonBoxMod
 }
 
 void XMLDBOutputter::startVisitExpenditure( const Expenditure* aExpenditure, const int aPeriod ) {
+    // write the expenditure tag and it's children in temp buffers so that we can
+    // check if anything was really written out and avoid writing blank expenditures
+    stringstream* parentBuffer = new stringstream();
+    stringstream* childBuffer = new stringstream();
+
+    // the opening tag gets written in the parent buffer
     const Modeltime* modeltime = scenario->getModeltime();
     // should I make and getXMLNameStatic() form expenditure?
-    // TODO: figure out a way to not write expenditure elements if it will have no children.
-    XMLWriteOpeningTag( "expenditure", mBuffer, mTabs.get(), "", modeltime->getper_to_yr( aPeriod ) );
+    XMLWriteOpeningTag( "expenditure", *parentBuffer, mTabs.get(), "", modeltime->getper_to_yr( aPeriod ) );
+
+    // put the buffers on a stack so that we have the correct ordering
+    mBufferStack.push( parentBuffer );
+    mBufferStack.push( childBuffer );
 
     double currValue = 0.0;
     for( int i = 0; i < Expenditure::END; ++i ) {
@@ -1598,36 +1594,85 @@ void XMLDBOutputter::startVisitExpenditure( const Expenditure* aExpenditure, con
         if( !objects::isEqual<double>( currValue, 0.0 ) ) {
             XMLWriteElement( currValue,
                 aExpenditure->enumToXMLName( static_cast< Expenditure::ExpenditureType >( i ) ),
-                mBuffer, mTabs.get() );
+                *childBuffer, mTabs.get() );
         }
     }
 }
 
 void XMLDBOutputter::endVisitExpenditure( const Expenditure* aExpenditure, const int aPeriod ) {
-    XMLWriteClosingTag( "expenditure", mBuffer, mTabs.get() );
+    // Write the expenditure (open tag, children, and closing tag) to the buffer at
+    // the top of the stack only if the child buffer is not empty
+    stringstream* childBuffer = popBufferStack();
+    stringstream* parentBuffer = popBufferStack();
+    if( !childBuffer->str().empty() ){
+        // retBuffer is still at the top of the stack
+        stringstream* retBuffer = mBufferStack.top();
+        (*retBuffer) << parentBuffer->str() << childBuffer->str();
+        XMLWriteClosingTag( "expenditure", *retBuffer, mTabs.get() );
+    }
+    else {
+        // if we don't write the closing tag we still need to decrease the indent
+        mTabs->decreaseIndent();
+    }
+    
+    // clean up any extra buffers
+    delete childBuffer;
+    delete parentBuffer;
 }
 
 void XMLDBOutputter::startVisitSGMInput( const SGMInput* aInput, const int aPeriod ) {
-    XMLWriteOpeningTag( aInput->getXMLName(), mBuffer, mTabs.get(), aInput->getName(), 0, "input" );
-    const Modeltime* modeltime = scenario->getModeltime();
-    for( int i = 0; i < modeltime->getmaxper(); ++i ) {
-        double currValue = aInput->getCurrencyDemand( i );
-        int currYear = modeltime->getper_to_yr( i );
-        // avoid writing zeros to save space
-        if( !objects::isEqual<double>( currValue, 0.0 ) ) {
-            XMLWriteElement( currValue, "demand-currency",
-                mBuffer, mTabs.get(), currYear );
-        }
-        currValue = aInput->getPricePaid( mCurrentRegion, i );
-        if( !objects::isEqual<double>( currValue, 0.0 ) ) {
-            XMLWriteElement( currValue, "price-paid",
-                mBuffer, mTabs.get(), currYear );
-        }
-    }
+    mBufferStack.push( &mBuffer );
+    startVisitInput( aInput, aPeriod );
 }
 
 void XMLDBOutputter::endVisitSGMInput( const SGMInput* aInput, const int aPeriod ) {
-    XMLWriteClosingTag( aInput->getXMLName(), mBuffer, mTabs.get() );
+    endVisitInput( aInput, aPeriod );
+    mBufferStack.pop();
+}
+
+void XMLDBOutputter::startVisitNodeInput( const NodeInput* aNodeInput, const int aPeriod ) {
+    // write the nodeInput tag and it's children in temp buffers so that we can
+    // check if anything was really written out and avoid writing blank nodeInputs
+    // which will be very often since we are currently only writing aidads paramaters
+    stringstream* parentBuffer = new stringstream();
+    stringstream* childBuffer = new stringstream();
+
+    XMLWriteOpeningTag( NodeInput::getXMLNameStatic(), *parentBuffer, mTabs.get(), aNodeInput->getName() );
+
+    // put the buffers on a stack so that we have the correct ordering
+    mBufferStack.push( parentBuffer );
+    mBufferStack.push( childBuffer );
+
+    if( !objects::isEqual<double>( aNodeInput->getPriceElasticity(), 0.0 ) ||
+        !objects::isEqual<double>( aNodeInput->getIncomeElasticity(), 0.0 ) ) {
+        // we have AIDADS/LES paramaters so write them out
+        XMLWriteElement( aNodeInput->getPriceElasticity(), "alpha-utility-param", *childBuffer, mTabs.get() );
+        XMLWriteElement( aNodeInput->getIncomeElasticity(), "beta-utility-param", *childBuffer, mTabs.get() );
+        XMLWriteElement( aNodeInput->getCoefficient( aPeriod ), "gamma-utility-param", *childBuffer, mTabs.get() );
+        XMLWriteElement( aNodeInput->getPricePaid( "", aPeriod ), "price", *childBuffer, mTabs.get() );
+        XMLWriteElement( aNodeInput->getPhysicalDemand( aPeriod ), "demand", *childBuffer, mTabs.get() );
+    }
+}
+
+void XMLDBOutputter::endVisitNodeInput( const NodeInput* aNodeInput, const int aPeriod ) {
+    // Write the nodeInput (open tag, children, and closing tag) to the buffer at
+    // the top of the stack only if the child buffer is not empty
+    stringstream* childBuffer = popBufferStack();
+    stringstream* parentBuffer = popBufferStack();
+    if( !childBuffer->str().empty() ){
+        // retBuffer is still at the top of the stack
+        stringstream* retBuffer = mBufferStack.top();
+        (*retBuffer) << parentBuffer->str() << childBuffer->str();
+        XMLWriteClosingTag( NodeInput::getXMLNameStatic(), *retBuffer, mTabs.get() );
+    }
+    else {
+        // if we don't write the closing tag we still need to decrease the indent
+        mTabs->decreaseIndent();
+    }
+    
+    // clean up any extra buffers
+    delete childBuffer;
+    delete parentBuffer;
 }
 
 void XMLDBOutputter::startVisitHouseholdConsumer( const HouseholdConsumer* aHouseholdConsumer,
@@ -1642,7 +1687,7 @@ void XMLDBOutputter::startVisitHouseholdConsumer( const HouseholdConsumer* aHous
     XMLWriteElement( aHouseholdConsumer->householdLaborDemand, "household-labor-demand", mBuffer, mTabs.get() );
 
     XMLWriteElement( aHouseholdConsumer->socialSecurityTaxRate, "social-security-taxrate", mBuffer, mTabs.get() );
-    XMLWriteElement( aHouseholdConsumer->incomeTaxRate, "income-tax-rate", mBuffer, mTabs.get() );
+    //XMLWriteElement( aHouseholdConsumer->incomeTaxRate, "income-tax-rate", mBuffer, mTabs.get() );
     XMLWriteElement( aHouseholdConsumer->personsPerHousehold, "persons-per-household", mBuffer, mTabs.get() );
     XMLWriteElement( aHouseholdConsumer->numberOfHouseholds, "number-of-households", mBuffer, mTabs.get() );
     XMLWriteElement( aHouseholdConsumer->totalLandArea, "total-land-area", mBuffer, mTabs.get() );
@@ -1651,16 +1696,24 @@ void XMLDBOutputter::startVisitHouseholdConsumer( const HouseholdConsumer* aHous
     XMLWriteElement( aHouseholdConsumer->transfer, "transfer", mBuffer, mTabs.get() );
 
     XMLWriteElement( aHouseholdConsumer->landSupply, "land-supply", mBuffer, mTabs.get() );
-    XMLWriteElement( aHouseholdConsumer->laborSupplyMale, "labor-supply-male", mBuffer, mTabs.get() );
-    XMLWriteElement( aHouseholdConsumer->laborSupplyFemale, "labor-supply-female", mBuffer, mTabs.get() );
+    XMLWriteElement( aHouseholdConsumer->laborSupplyMaleUnSkLab, "unskilled-labor-supply-male", mBuffer, mTabs.get() );
+    XMLWriteElement( aHouseholdConsumer->laborSupplyFemaleUnSkLab, "unskilled-labor-supply-female", mBuffer, mTabs.get() );
+    XMLWriteElement( aHouseholdConsumer->laborSupplyMaleSkLab, "skilled-labor-supply-male", mBuffer, mTabs.get() );
+    XMLWriteElement( aHouseholdConsumer->laborSupplyFemaleSkLab, "skilled-labor-supply-female", mBuffer, mTabs.get() );
 
     XMLWriteElement( aHouseholdConsumer->workingAgePopMale, "working-age-pop-male", mBuffer, mTabs.get() );
     XMLWriteElement( aHouseholdConsumer->workingAgePopFemale, "working-age-pop-female", mBuffer, mTabs.get() );
+
+    // need to put mBuffer on the stack for the node inputs to write AIDADS/LES params
+    mBufferStack.push( &mBuffer );
 }
 
 void XMLDBOutputter::endVisitHouseholdConsumer( const HouseholdConsumer* aHouseholdConsumer,
                                                const int aPeriod )
 {
+    // the node inputs would have written themselves so we just need to pop the stack
+    mBufferStack.pop();
+
     XMLWriteClosingTag( aHouseholdConsumer->getXMLName(), mBuffer, mTabs.get() );
 }
 
@@ -1691,6 +1744,7 @@ void XMLDBOutputter::endVisitTradeConsumer( const TradeConsumer* aTradeConsumer,
 void XMLDBOutputter::startVisitInvestConsumer( const InvestConsumer* aInvestConsumer, const int aPeriod ) {
     XMLWriteOpeningTag( aInvestConsumer->getXMLName(), mBuffer, mTabs.get(), aInvestConsumer->getName(),
         aInvestConsumer->getYear(), "baseTechnology" );
+    XMLWriteElement( aInvestConsumer->mCapitalGoodPrice, "capital-good-price", mBuffer, mTabs.get() );
 }
 
 void XMLDBOutputter::endVisitInvestConsumer( const InvestConsumer* aInvestConsumer, const int aPeriod ) {
@@ -1704,18 +1758,15 @@ void XMLDBOutputter::startVisitProductionTechnology( const ProductionTechnology*
         aProductionTechnology->getYear(), "baseTechnology" );
 
     // could this info have been found elsewhere?
-    XMLWriteElement( aProductionTechnology->capital, "capital", mBuffer, mTabs.get());
+    XMLWriteElement( aProductionTechnology->mCapitalStock, "capital-stock", mBuffer, mTabs.get());
 
     XMLWriteElement( aProductionTechnology->mExpectedProfitRateReporting, "expected-profit-rate", mBuffer, mTabs.get());
 
+    XMLWriteElement( aProductionTechnology->mAnnualInvestment, "annual-investment", mBuffer, mTabs.get() );
+
     const Modeltime* modeltime = scenario->getModeltime();
     for( int i = 0; i < modeltime->getmaxper(); ++i ) {
-        double value = aProductionTechnology->getAnnualInvestment( i );
-        if( !objects::isEqual<double>( value, 0.0 ) ) {
-            XMLWriteElement( value, "annual-investment", mBuffer, mTabs.get(),
-                modeltime->getper_to_yr( i ) );
-        }
-        value = aProductionTechnology->mProfits[ i ];
+        double value = aProductionTechnology->mProfits[ i ];
         if( !objects::isEqual<double>( value, 0.0 ) ) {
             XMLWriteElement( value, "profit", mBuffer, mTabs.get(),
                 modeltime->getper_to_yr( i ) );
@@ -1755,6 +1806,29 @@ void XMLDBOutputter::endVisitFactorSupply( const FactorSupply* aFactorSupply, co
     XMLWriteClosingTag( FactorSupply::getXMLNameStatic(), mBuffer, mTabs.get() );
 }
 
+void XMLDBOutputter::startVisitNationalAccount( const NationalAccount* aNationalAccount, const int aPeriod ) {
+    // national accounts are visited by period so the year attribute can be converted from aPeriod
+    const Modeltime* modeltime = scenario->getModeltime();
+    XMLWriteOpeningTag( NationalAccount::getXMLNameStatic(), mBuffer, mTabs.get(), "", modeltime->getper_to_yr( aPeriod ) );
+
+    // TODO: move enumToXMLName to public so these element names are not hard coded here
+    double currValue = aNationalAccount->getAccountValue( NationalAccount::GNP_NOMINAL );
+    if( !objects::isEqual<double>( currValue, 0.0 ) ) {
+        XMLWriteElement( currValue, "GNP-nominal", mBuffer, mTabs.get() );
+    }
+    currValue = aNationalAccount->getAccountValue( NationalAccount::GNP_REAL );
+    if( !objects::isEqual<double>( currValue, 0.0 ) ) {
+        XMLWriteElement( currValue, "GNP-real", mBuffer, mTabs.get() );
+    }
+    currValue = aNationalAccount->getAccountValue( NationalAccount::CARBON_TAX );
+    if( !objects::isEqual<double>( currValue, 0.0 ) ) {
+        XMLWriteElement( currValue, "carbon-tax", mBuffer, mTabs.get() );
+    }
+}
+
+void XMLDBOutputter::endVisitNationalAccount( const NationalAccount* aNationalAccount, const int aPeriod ) {
+    XMLWriteClosingTag( NationalAccount::getXMLNameStatic(), mBuffer, mTabs.get() ) ;
+}
 
 /*!
  * \brief Write a single item to the string stream buffer.

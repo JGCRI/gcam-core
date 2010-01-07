@@ -49,7 +49,7 @@
 #include <memory>
 #include <map>
 #include "sectors/include/sector.h"
-// There are some missing includes here!
+
 class IInvestor;
 class Demographic;
 class NationalAccount;
@@ -58,11 +58,44 @@ class IInfo;
 class DependencyFinder;
 
 /*! 
-* \ingroup Objects
-* \brief This class represents a single production sector.
-* \details TODO
-* \author Sonny Kim
-*/
+ * \ingroup Objects
+ * \brief This class represents a single production sector.
+ * \details A ProductionSector basically consists of subsectors and an IInvestor to
+ *          handle new investments.  It also contains other meta data such as wether
+ *          it is an energy good, primary energy, etc however all of that info will
+ *          be placed into the Sector Info object.  When operating a ProductionSector
+ *          the follwoing steps will occur:
+ *           - Calculate the price recieved and store it into a market info so that a
+ *             technology will know how much to set aside for production taxes.
+ *           - Operate old capital technologies.  Since old vintages already know how
+ *             much investment they have they can operate it to calculate their supplies
+ *             and demands.  Note that there are no ordering depencies which forces these
+ *             to operate before new vintage technologies.
+ *           - Calculate and distribute new investment to the technologies.  This task is
+ *             delegated to the IInvestor object.  This must be done before new vintage
+ *             technologies can operate.
+ *           - Operate new vintage technologies so that they may add there demands into
+ *             the marketplace.
+ *
+ *          <b>XML specification for ProductionSector</b>
+ *          - XML name: \c productionSector
+ *          - Contained by: Region
+ *          - Parsing inherited from class: Sector
+ *          - Attributes:
+ *          - Elements:
+ *              - \c Accelerator::getXMLNameStatic() ProductionSector::mInvestor
+ *              - \c MarketBasedInvestor::getXMLNameStatic() ProductionSector::mInvestor
+ *              - \c market-name ProductionSector::mMarketName
+ *              - \c FixedPricePath ProductionSector::mIsFixedPrice
+ *              - \c numeraire ProductionSector::mIsNumeraireSector
+ *              - \c ghgEmissCoef ProductionSector::ghgEmissCoefMap
+ *              - \c IsEnergyGood ProductionSector::mIsEnergyGood
+ *              - \c IsPrimaryEnergyGood ProductionSector::mIsPrimaryEnergyGood
+ *              - \c IsSecondaryEnergyGood ProductionSector::mIsSecondaryEnergyGood
+ *              - \c sectorprice ProductionSector::mFixedPrices
+ *
+ * \author Sonny Kim
+ */
 class ProductionSector: public Sector
 {
 
@@ -84,7 +117,8 @@ public:
                            const Demographic* aDemographics,
                            const int aPeriod );
 
-    virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic, const int aPeriod ); // Passing demographic here is not good.
+    virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographics, const int aPeriod ); // Passing demographic here is not good.
+    virtual void postCalc( const int aPeriod );
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 
     virtual void dbOutput( const GDP* aGDP,
@@ -111,6 +145,9 @@ private:
     //! Whether this sector is on a fixed price path.
     bool mIsFixedPrice;
 
+    //! Whether this is a numeraire sector.
+    bool mIsNumeraireSector;
+
     //! If the sector has an energy product.
     bool mIsEnergyGood;
 
@@ -125,9 +162,9 @@ private:
     //! be read in to change the investment behavior.
     std::auto_ptr<IInvestor> mInvestor;
     
-    void calcInvestment( const Demographic* aDemographic, NationalAccount& aNationalAccount, const int period );
-    void operateOldCapital( const Demographic* aDemographic, NationalAccount& aNationalAccount, const int period );
-    void operateNewCapital( const Demographic* aDemographic, NationalAccount& aNationalAccount, const int period );
+    void calcInvestment( const Demographic* aDemographic, NationalAccount& aNationalAccount, const int aPeriod );
+    void operateOldCapital( const Demographic* aDemographic, NationalAccount& aNationalAccount, const int aPeriod );
+    void operateNewCapital( const Demographic* aDemographic, NationalAccount& aNationalAccount, const int aPeriod );
     void calcPriceReceived( const int period );
 };
 

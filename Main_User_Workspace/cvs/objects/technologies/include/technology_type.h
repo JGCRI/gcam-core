@@ -50,6 +50,9 @@
 #include <climits>
 // Forward declaration
 class BaseTechnology;
+class MoreSectorInfo;
+class Demographic;
+class NationalAccount;
 
 /*! 
 * \ingroup Objects
@@ -63,7 +66,9 @@ public:
     TechnologyType();
     bool addVintage( BaseTechnology* aTech );
     double getTotalCapitalStock( const int aUpToYear = INT_MAX ) const;
-    void initializeTechsFromBase( const int aTechYear );
+    void initializeTechsFromBase( const int aTechYear, const MoreSectorInfo* aMoreSectorInfo, const std::string& aRegionName,
+                                  const std::string& aSectorName, NationalAccount& aNationalAccount,
+                                  const Demographic* aDemographics, const double aCapitalStock );
     BaseTechnology* initOrCreateTech( const int aNewTechYear, const int aCurrTechYear );
     double setTotalInvestment( const std::string& aRegionName, const int aPrevYear, const int aCurrentYear,
                                const double aAnnualInvestment, const int aPeriod );

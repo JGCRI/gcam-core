@@ -46,6 +46,7 @@
 #include <xercesc/dom/DOMNodeList.hpp>
 #include "functions/include/function_utils.h"
 #include "functions/include/ifunction.h"
+#include "functions/include/inested_input.h"
 #include "util/base/include/xml_helper.h"
 
 using namespace std;
@@ -127,9 +128,9 @@ void ProfitShutdownDecider::toInputXML( ostream& aOut, Tabs* aTabs ) const {
 
 void ProfitShutdownDecider::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-    XMLWriteElement( mMaxShutdown, "max-shutdown", aOut, aTabs, 0.0 );
-    XMLWriteElement( mSteepness, "steepness", aOut, aTabs, 0.0 );
-    XMLWriteElement( mMedianShutdownPoint, "median-shutdown-point", aOut, aTabs, 0.0 );
+    XMLWriteElement( mMaxShutdown, "max-shutdown", aOut, aTabs );
+    XMLWriteElement( mSteepness, "steepness", aOut, aTabs );
+    XMLWriteElement( mMedianShutdownPoint, "median-shutdown-point", aOut, aTabs );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
@@ -140,26 +141,31 @@ double ProfitShutdownDecider::calcShutdownCoef( const ProductionFunctionInfo* aF
                                                 const int aInitialTechYear,
                                                 const int aPeriod ) const 
 {
-    // Default scale factor not to scale.
+    // Default scale factor is not to scale.
     double scaleFactor = 1;
     // There is no shutdown decision in the base period.
     if( aPeriod > 0 ){
         double profitRate;
         // Calculate the profit rate dynamically.
         if( aCalculatedProfitRate == getUncalculatedProfitRateConstant() ){
-            // Calculate the unscaled profits.
+            // Calculate the profit rate.
             assert( aFuncInfo );
-            double profits = aFuncInfo->mProductionFunction->calcUnscaledProfits( aFuncInfo->mInputs,
-                                                                                  aRegionName,
-                                                                                  aSectorName,
-                                                                                  aPeriod,
-                                                                                  aFuncInfo->mCapitalStock, 
-                                                                                  aFuncInfo->mAlphaZeroScaler,
-                                                                                  aFuncInfo->mSigma );
-            assert( profits >= 0 );
-            assert( aFuncInfo->mCapitalStock > 0 );
-            // Determine the profit per unit of capital.
-            profitRate = profits / aFuncInfo->mCapitalStock;
+
+            double priceReceived = FunctionUtils::getPriceReceived( aRegionName,
+                aSectorName, aPeriod );
+
+            // note that the variable costs should have already been calculated and set
+            // so we can get it by just calling getLevelizedCost.
+            // TODO: we can not compuate it dynamically here because it is a const method and
+            // calc variable costs need to set intermediate price when calculating it
+            double variableCost = aFuncInfo->mNestedInputRoot->getLevelizedCost( aRegionName,
+                                                                                 aSectorName,
+                                                                                 aPeriod );
+
+            // we make this profit rate relative to the priceReceived rather than
+            // absolute difference since that would not be compatible with the
+            // numeraire test
+            profitRate = ( priceReceived - variableCost ) / priceReceived;
         }
         else {
             // Use the passed in profit rate.
@@ -168,7 +174,6 @@ double ProfitShutdownDecider::calcShutdownCoef( const ProductionFunctionInfo* aF
        
         // Compute Shutdown factor using exponential S-curve.  ScaleFactor that is returned
         // is actually the fraction not shut down, so it is 1.0 - the shutdown fraction.
-
         scaleFactor = 1.0 - mMaxShutdown / 
                       ( 1.0 + exp(mSteepness * (profitRate - mMedianShutdownPoint) ) );
     }

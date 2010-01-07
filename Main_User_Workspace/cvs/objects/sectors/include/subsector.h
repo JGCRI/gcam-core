@@ -52,7 +52,6 @@
 #include <list>
 #include <xercesc/dom/DOMNode.hpp>
 #include "investment/include/iinvestable.h"
-#include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
 
 // Forward declarations
@@ -84,7 +83,6 @@ class GlobalTechnologyDatabase;
 */
 
 class Subsector: public IInvestable,
-                 public IVisitable,
                  public IRoundTrippable
 {
     friend class SocialAccountingMatrix;
@@ -92,10 +90,19 @@ class Subsector: public IInvestable,
     friend class SectorReport;
     friend class SGMGenTable;
     friend class XMLDBOutputter;
+    // needs to be friend so that it can set the doCalibration flag
+    friend class InvestableCounterVisitor;
+    // needs to be friend so that it can set a new share weight directly into
+    // shrwts, note that if there was a setShare weight method this would not
+    // be necessary
+    friend class SetShareWeightVisitor;
     friend class CalibrateShareWeightVisitor;
 private:
     static const std::string XML_NAME; //!< node name for toXML methods
     void clear();
+    //! A flag for convenience to know whether this Subsector created a market
+    //! for calibration
+    bool doCalibration;
 protected:
     std::string name; //!< subsector name
     std::string regionName; //!< region name
@@ -231,6 +238,7 @@ public:
                                   const IExpectedProfitRateCalculator* aExpProfitRateCalc,
                                   const double aInvestmentLogitExp,
                                   const bool aIsShareCalc,
+                                  const bool aIsDistributing,
                                   const int aPeriod ) const;
     
     double getCapitalOutputRatio( const IDistributor* aDistributor,
@@ -248,5 +256,6 @@ public:
     void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     double getFixedInvestment( const int aPeriod ) const;
+    bool hasCalibrationMarket() const;
 };
 #endif // _SUBSECTOR_H_

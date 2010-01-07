@@ -44,7 +44,6 @@
 #include <cassert>
 #include <xercesc/dom/DOMNode.hpp>
 #include "util/base/include/xml_helper.h"
-#include "sectors/include/sector.h"
 #include "sectors/include/subsector.h"
 #include "sectors/include/production_sector.h"
 #include "sectors/include/more_sector_info.h"
@@ -60,6 +59,7 @@
 #include "util/logger/include/ilogger.h"
 #include "containers/include/iinfo.h"
 #include "functions/include/function_utils.h"
+#include "util/base/include/configuration.h"
 
 using namespace std;
 using namespace xercesc;
@@ -102,13 +102,16 @@ bool ProductionSector::XMLDerivedClassParse( const string& nodeName, const DOMNo
         mInvestor.reset( new MarketBasedInvestor() );
         mInvestor->XMLParse( curr );
     }
-    else if( nodeName == "market" ){
+    else if( nodeName == "market-name" ){
         mMarketName = XMLHelper<string>::getValue( curr );
     }
     // Note: This behavior is either on or off, not by period currently.
     else if( nodeName == "FixedPricePath" ){
         mIsFixedPrice = XMLHelper<bool>::getValue( curr );
-    } 
+    }
+    else if( nodeName == "numeraire" ){
+        mIsNumeraireSector = XMLHelper<bool>::getValue( curr );
+    }
     else if( nodeName == "ghgEmissCoef" ){
         ghgEmissCoefMap[ XMLHelper<string>::getAttr( curr, "name" ) ] = XMLHelper<double>::getValue( curr );
     } 
@@ -139,7 +142,7 @@ void ProductionSector::toInputXMLDerived( std::ostream& out, Tabs* tabs ) const 
         mInvestor->toInputXML( out, tabs );
     }
     // write out the market string.
-    XMLWriteElement( mMarketName, "market", out, tabs );
+    XMLWriteElement( mMarketName, "market-name", out, tabs );
     XMLWriteElementCheckDefault( mIsFixedPrice, "FixedPricePath", out, tabs );
     XMLWriteElementCheckDefault( mIsEnergyGood, "IsEnergyGood", out, tabs );
     XMLWriteVector( mFixedPrices, "sectorprice", out, tabs, scenario->getModeltime(), 0.0 );
@@ -159,7 +162,7 @@ void ProductionSector::toDebugXMLDerived( const int period, std::ostream& out, T
     }
     
     // write out the market string.
-    XMLWriteElement( mMarketName, "market", out, tabs );
+    XMLWriteElement( mMarketName, "market-name", out, tabs );
     XMLWriteElement( mIsFixedPrice, "FixedPricePath", out, tabs, false );
     XMLWriteElement( mIsEnergyGood, "IsEnergyGood", out, tabs );
     XMLWriteElement( mFixedPrices[ period ], "fixed-price", out, tabs );
@@ -210,7 +213,7 @@ void ProductionSector::completeInit( const IInfo* aRegionInfo,
 *          The read-in prices will be used as the initial prices for the Market,
 *          for fixed price path sectors this will also be the final price.
 */
-void ProductionSector::setMarket() {    
+void ProductionSector::setMarket() {
     // Check if the market name was not read-in
     if( mMarketName.empty()  ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -221,6 +224,8 @@ void ProductionSector::setMarket() {
     
     // Create the market.
     Marketplace* marketplace = scenario->getMarketplace();
+    const int START_PERIOD = scenario->getModeltime()->getBasePeriod();
+
     // name is Sector name (name of good supplied or demanded)
     // market is the name of the regional market from the input file (i.e., global, region, regional group, etc.)
     if( marketplace->createMarket( regionName, mMarketName, name, IMarketType::NORMAL ) ) {
@@ -230,13 +235,13 @@ void ProductionSector::setMarket() {
         mFixedPrices[ 0 ] = mBasePrice;
         marketplace->setPriceVector( name, regionName, mFixedPrices );
         for( int period = 0; period < scenario->getModeltime()->getmaxper(); ++period ){
-            // IInfo needs to be set in period 0, but the market should never be set to solve 
-            // in period zero. 
             // Setup the market information on the sector.
             IInfo* marketInfo = marketplace->getMarketInfo( name, regionName, period, true );
             if( !mIsFixedPrice ){
-                if( period > 0 ){
-                    marketplace->setMarketToSolve( name, regionName, period );
+                if( !Configuration::getInstance()->getBool( "CalibrationActive" ) ){
+                    if( period >= START_PERIOD ){
+                        marketplace->setMarketToSolve( name, regionName, period );
+                    }
                 }
             }
             else {
@@ -279,8 +284,13 @@ void ProductionSector::initCalc( NationalAccount* aNationalAccount,
     if ( aPeriod == 0 && moreSectorInfo.get() && aNationalAccount ) {
         Marketplace* marketplace = scenario->getMarketplace();
         double corpIncTaxRate = aNationalAccount->getAccountValue(NationalAccount::CORPORATE_INCOME_TAX_RATE);
+
+        // get the total retained earnings and total profits which were read in from the base dataset
+        // so that we back out a retained earnings param we can use for this sector that will reproduce
+        // base year data
         double totalRetEarnings = aNationalAccount->getAccountValue(NationalAccount::RETAINED_EARNINGS);
-        double totalProfits = marketplace->getDemand("Capital", regionName, aPeriod);
+        double totalProfits = aNationalAccount->getAccountValue(NationalAccount::CORPORATE_PROFITS);
+
         // Set retained earnings to zero by setting MAX_CORP_RET_EARNINGS_RATE
         // to 0. This is for the technology sectors, like the transportation
         // vehicle sectors. All of the profits goes to dividends and there are
@@ -288,22 +298,37 @@ void ProductionSector::initCalc( NationalAccount* aNationalAccount,
         // SHK  4/21/2005
         double retEarnParam = 0;
         if( moreSectorInfo->getValue(MoreSectorInfo::MAX_CORP_RET_EARNINGS_RATE) != 0 ) {
+            // back out retained earnings param
             retEarnParam = log( 1 - (totalRetEarnings/(totalProfits*moreSectorInfo->getValue(MoreSectorInfo::MAX_CORP_RET_EARNINGS_RATE)
                 *(1 - corpIncTaxRate)))) / marketplace->getPrice("Capital", regionName, aPeriod );
         }
+
+        // set these params into the sector info so that they may be retrieved by the technologies
+        // when calculating taxes and retained earnings
         moreSectorInfo->setType(MoreSectorInfo::RET_EARNINGS_PARAM, retEarnParam);
         moreSectorInfo->setType(MoreSectorInfo::CORP_INCOME_TAX_RATE, corpIncTaxRate);
     }
 
+    // we should calculate price recived now since technologies may need that info when
+    // calibrating it's nested input structure
     calcPriceReceived( aPeriod );
     
     // The ITC is being read in at the sector level but set to the national level?
+    // TODO: check this, at the moment ITC is not used
     if( moreSectorInfo.get() ){
         aNationalAccount->setAccount( NationalAccount::INVESTMENT_TAX_CREDIT, 
             moreSectorInfo->getValue( MoreSectorInfo::INVEST_TAX_CREDIT_RATE ) );
     }
 
     Sector::initCalc( aNationalAccount, aDemographics, aPeriod );
+
+    //*************** begin initialize the investment routine ********
+    // Calculate and distribute investment to the subsectors of this sector.
+    vector<IInvestable*> investableSubsecs = InvestmentUtils::convertToInvestables( subsec );
+    // aNationalAccount is a pointer here, but initCalc needs a reference to aNationalAccount
+    mInvestor->initCalc( investableSubsecs, *aNationalAccount, aDemographics, aPeriod );
+    //*************** end initialize the investment routine ********
+
 }
 
 /*! \brief Returns the output of the ProductionSector.
@@ -354,13 +379,13 @@ double ProductionSector::getPrice( const GDP* aGDP,
 * \param aNationalAccount The national accounts container.
 * \param aPeriod The period in which to operate capital.
 */
-void ProductionSector::operate( NationalAccount& aNationalAccount, const Demographic* aDemographic,
+void ProductionSector::operate( NationalAccount& aNationalAccount, const Demographic* aDemographics,
                                 const int aPeriod )
 {
     calcPriceReceived( aPeriod );
-    operateOldCapital( aDemographic, aNationalAccount, aPeriod );
-    calcInvestment( aDemographic, aNationalAccount, aPeriod );
-    operateNewCapital( aDemographic, aNationalAccount, aPeriod );
+    operateOldCapital( aDemographics, aNationalAccount, aPeriod );
+    calcInvestment( aDemographics, aNationalAccount, aPeriod );
+    operateNewCapital( aDemographics, aNationalAccount, aPeriod );
 }
 
 /*! \brief Calculate new investment for the sector.
@@ -372,16 +397,20 @@ void ProductionSector::operate( NationalAccount& aNationalAccount, const Demogra
 */
 void ProductionSector::calcInvestment( const Demographic* aDemographic,
                                        NationalAccount& aNationalAccount,
-                                       const int period )
+                                       const int aPeriod )
 {
-    // Calculate and distribute investment to the subsectors of this sector.
     vector<IInvestable*> investableSubsecs = InvestmentUtils::convertToInvestables( subsec );
-    mInvestor->calcAndDistributeInvestment( investableSubsecs,
-                                            aNationalAccount,
-                                            aDemographic,
-                                            period );
+    // Calculate and distribute investment to the subsectors of this sector.
+    mInvestor->calcAndDistributeInvestment( investableSubsecs, aNationalAccount, aDemographic,
+        aPeriod );
+    // Set efficiency conditions here.
+    // Note: efficiency conditions do not change until the next iteration and so setting them 
+    // before or after calculating and distributing investments does not matter unless using an
+    // output share levelized cost calculator in which case it must be done after the distribution
+    // TODO: perhaps we should collapse setEfficiencyConditions back into calcAndDistributeInvestment
+    // so that we do not need to worry about ordering issues anymore
+    mInvestor->setEfficiencyConditions( investableSubsecs, aNationalAccount, aDemographic, aPeriod );
 }
-    
 
 /*! \brief Operate the old capital for the sector.
 * \details Operate the old investment for the sector to determine the level of
@@ -414,6 +443,22 @@ void ProductionSector::operateNewCapital( const Demographic* aDemographic, Natio
         // flag tells the subsector to operate new capital.
         (*currSub)->operate( aNationalAccount, aDemographic, moreSectorInfo.get(), true, aPeriod );
     }
+}
+
+/*! \brief Function to finalize objects after a period is solved.
+* \details This function is used to calculate and store variables which are only needed after the current
+* period is complete.
+* \param aPeriod The period to finalize.
+* \todo Finish this function.
+* \author Sonny Kim
+*/
+void ProductionSector::postCalc( const int aPeriod ){
+
+    // Call base class postCalc.
+    Sector::postCalc( aPeriod );
+
+    // TODO: is there any thing else that needs to get postCalc, if not we should just
+    // get rid of it in ProductionSector
 }
 
 /*! \brief Get the XML node name for output to XML.

@@ -77,13 +77,20 @@ public:
     void XMLParse( const xercesc::DOMNode* node ); 
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
-    void completeInit( const std::string& aRegionName, const std::string& aSectorName );
     static const std::string& getXMLNameStatic();
-    
+    void completeInit( const std::string& aRegionName, const std::string& aSectorName );
+    void initCalc( std::vector<IInvestable*>& aInvestables,
+                   NationalAccount& aNationalAccount, 
+                   const Demographic* aDemographic,
+                   const int aPeriod );
     double calcAndDistributeInvestment( std::vector<IInvestable*>& aInvestables,
                                         NationalAccount& aNationalAccount, 
                                         const Demographic* aDemographic,
                                         const int aPeriod );
+    void setEfficiencyConditions( std::vector<IInvestable*>& aInvestables,
+                                  NationalAccount& aNationalAccount, 
+                                  const Demographic* aDemographic,
+                                  const int aPeriod ) const;
 private:
 
     //! Investment by period.

@@ -61,7 +61,6 @@
 // Forward declarations.
 class Population;
 class Demographic;
-class AResource;
 class Sector;
 class SupplySector;
 class DemandSector;
@@ -74,7 +73,6 @@ class GDP;
 class Curve;
 class DependencyFinder;
 class TotalSectorEmissions;
-class IInfo;
 class GlobalTechnologyDatabase;
 class AFinalDemand;
 
@@ -140,10 +138,6 @@ protected:
     //! Regional land allocator.
     std::auto_ptr<ILandAllocator> mLandAllocator;
 
-    //! The region's information store.
-    std::auto_ptr<IInfo> mRegionInfo;
-
-    std::vector<AResource*> resources; //!< vector of pointers to resource objects
     std::vector<AFinalDemand*> mFinalDemands; //!< vector of pointers to demand sector objects
 
     //! Container of objects which calculate an aggregate emissions coefficient

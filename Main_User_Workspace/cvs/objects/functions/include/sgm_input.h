@@ -43,27 +43,69 @@
 * \ingroup Objects
 * \brief SGMInput class header file.
 * \author Pralit Patel, Sonny Kim
-* \date $Date: 2005/06/01 22:01:13 $
-* \version $Revision: 1.3 $
 */
 
 #include <string>
 #include <vector>
 #include <xercesc/dom/DOMNode.hpp>
 #include "util/base/include/value.h"
+#include "util/base/include/time_vector.h"
 #include "functions/include/iinput.h"
+#include "functions/include/inested_input.h"
 
 class Tabs;
 class DemandInput;
 class ProductionInput;
+class CachedMarket;
 
 /*! 
-* \ingroup Objects
-* \brief Defines a single SGMInput to a production or demand function.
-* \details TODO
-* \author Pralit Patel, Sonny Kim, Josh Lurz
-*/
-class SGMInput: public IInput
+ * \ingroup Objects
+ * \brief Defines a single SGMInput to a production or demand function.
+ * \details This input keeps track of the usual coefficients for a production function,
+ *          price paid, and physical demands.  It also has a sales tax price adjustmnet,
+ *          and will set type flags to distiguish between energy, material, land, labor,
+ *          and capital mostly to help the accounting structures.  An SGMInput is also
+ *           considered a nested input so that they can be included in a nested input 
+ *          structure however all the INestedInput methods essentially do nothing since
+ *          SGMInputs are intended to be leaves in the nesting structure.
+ *
+ *          <b>XML specification for SGMInput</b>
+ *          - XML name: \c N/A (abstract base class)
+ *          - Contained by: NodeInput
+ *          - Parsing inherited from class: None
+ *          - Attributes: \c name SGMInput::mName
+ *                           This is a name which should correspond to a market name.
+ *                           Note that certain names will imply that a flag type be
+ *                           be set for this input see SGMInput::setFlagsByName(string).
+ *          - Elements:
+ *              - \c coefficient SGMInput::mCoefficient
+ *                   The base year coefficient to be used with a production function.
+ *              - \c demandCurrency SGMInput::mPhysicalDemand
+ *                   If no year attribute is specified this is the base year currency
+ *                   demand otherwise it will be placed with in the vector for the 
+ *                   corresponding period.  Note that even though this is called currency
+ *                   demand it is being placed into the physical demand vector.  This is
+ *                   a hack which was necessary because we use currency demands to calibrate
+ *                   CES coefficients in init calc of the  base year but for the rest of the
+ *                   model these values will really be physical.
+ *              - \c priceAdjustFactor SGMInput::mPriceAdjustFactor
+ *                   The a constant price adjustment.  Note that this is no longer used.
+ *              - \c technicalChange SGMInput::mTechnicalChange
+ *                   An input specific technical change paramater which would only get
+ *                   applied for the initial year that this input was operated.
+ *              - \c flag SGMInput::mTypeFlags
+ *                   - Attributes: \c type
+ *                                    Attempt to set an input type flag directly rather than
+ *                                    relying on hard coded market names.  This will rely on
+ *                                    SGMInput::setFlagsByName(string) see that method for 
+ *                                    details.
+ *              - \c sales-tax-rate SGMInput::mSalesTaxRate
+ *                   A price adjustment to account for sales taxes, see SGMInput::calcPricePaid
+ *                   and SGMInput::calcTaxes for details.
+ *
+ * \author Pralit Patel, Sonny Kim, Josh Lurz
+ */
+class SGMInput: public INestedInput
 {
     friend class SocialAccountingMatrix;
     friend class DemandComponentsTable;
@@ -72,7 +114,9 @@ class SGMInput: public IInput
     friend class XMLDBOutputter;
 public:
     SGMInput();
+    SGMInput( const SGMInput& aInput );
     virtual ~SGMInput();
+    // TODO: shouldn't this be IInput* clone()?
     virtual SGMInput* clone() const = 0;
     virtual void copyParam( const IInput* aInput, const int aPeriod ) = 0;
 
@@ -112,6 +156,19 @@ public:
 
     double getPricePaid( const std::string& aRegionName, const int aPeriod ) const;
     void setPricePaid( const double aPricePaid, const int aPeriod );
+    virtual void calcPricePaid( const std::string& aRegionName,
+                                const std::string& aSectorName,
+                                const MoreSectorInfo* aMoreSectorInfo,
+                                const std::vector<AGHG*>& aGhgs,
+                                const ICaptureComponent* aSequestrationDevice,
+                                const int aLifetimeYears,
+                                const int aPeriod );
+
+    virtual double calcTaxes( const std::string& aRegionName,
+                            NationalAccount* aNationalAccount,
+                            Expenditure* aExpenditure,
+                            const int aPeriod ) const;
+
     double getPriceReceived( const std::string& aRegionName, const int aPeriod ) const;
 
     void setCurrencyDemand( const double aCurrencyDemand, const std::string& aRegionName, const int aPeriod );
@@ -140,36 +197,89 @@ public:
     virtual void copyParamsInto( RenewableInput& aInput, const int aPeriod ) const {}
     virtual void copyParamsInto( InputSubsidy& aInput, const int aPeriod ) const {}
     virtual void copyParamsInto( InputTax& aInput, const int aPeriod ) const {}
+    virtual void copyParamsInto( NodeInput& aInput, const int aPeriod ) const {}
+    virtual void copyParamsInto( TradeInput& aInput, const int aPeriod ) const {}
+
+    // INestedInput methods
+    // define them to do nothing since an SGMInput is a leaf in the nesting structure
+    // this should be the end point for recursion
+    virtual void removeEmptyInputs() {}
+
+    virtual void initialize() {}
+
+    virtual void calcCoefficient( const std::string& aRegionName, const std::string& aSectorName,
+        const int aTechPeriod ) {}
+
+    virtual void changeElasticity( const std::string& aRegionName, const int aPeriod,
+        const double aAlphaZero ) {}
+
+    virtual void changeSigma( const std::string& aRegionName, const int aPeriod,
+        const double aAlphaZero ) {}
+
+    virtual void calcLevelizedCost( const std::string& aRegionName, const std::string& aSectorName,
+        const int aPeriod, const double aAlphaZero ) {}
+
+    virtual double calcInputDemand( const std::string& aRegionName, const std::string& aSectorName,
+        const int aPeriod, const double aPhysicalOutput, const double aUtilityParameterA,
+        const double aAlphaZero ) { return 0; }
+
+    virtual double calcCapitalOutputRatio( const std::string& aRegionName, const std::string& aSectorName,
+        const int aPeriod, const double aAlphaZero ) { return 1.0; }
+
+    virtual void calcVariableLevelizedCost( const std::string& aRegionName, const std::string& aSectorName,
+        const int aPeriod, const double aAlphaZero ) {}
+
+    virtual const IFunction* getFunction() const { return 0; }
+    
+    virtual double getLevelizedCost( const std::string& aRegionName, const std::string& aSectorName,
+        const int aPeriod ) const { return 0; }
+
+    virtual void applyTechnicalChange( const std::string& aRegionName, const std::string& aSectorName,
+        const int aPeriod, const TechChange& aTechChange ) {}
+
+    virtual void resetCalcLevelizedCostFlag() {}
 protected:
     //! Name of the SGMInput.
     std::string mName;
 
     //! Coefficient for production or demand function.
-    Value mCoefficient;
+    objects::PeriodVector<Value> mCoefficient;
 
     //! Currency Demand.
-    Value mCurrencyDemand;
+    objects::PeriodVector<Value> mPhysicalDemand;
 
-    //! Price adjustment factor.
+    //! Price adjustment factor.  It used to be utilized
+    //! to implement price wedges for Capital.  It is no
+    //! longer used and should likely be removed.
     Value mPriceAdjustFactor;
 
     //! Price paid for SGMInput, adjusted from market price.
-    Value mPricePaid;
+    objects::PeriodVector<Value> mPricePaid;
 
     //! Technical Change.
     Value mTechnicalChange;
 
-    //! Conversion factor.
+    //! Conversion factor.  Was used to convert from currency
+    //! to energy however we now use prices to take care of this.
+    //! This value is no longer used and should likely be removed.
     Value mConversionFactor;
 
     //! CO2 coefficient.
     Value mCO2Coefficient;
 
+    //! Sales tax rate
+    Value mSalesTaxRate;
+
     //! Type flags.
     int mTypeFlags;
 
+    //! A pre-located market which has been cahced from the marketplace to get
+    //! the price and add demands to.
+    std::auto_ptr<CachedMarket> mCachedMarket;
+
     void initializeTypeFlags( const std::string& aRegionName );
     void initializeCachedCoefficients( const std::string& aRegionName );
+    void setFlagsByName( const std::string& aTypeName );
 
     bool isEnergyGood( const std::string& aRegionName ) const;
 

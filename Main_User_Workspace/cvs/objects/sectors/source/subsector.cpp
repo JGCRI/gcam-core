@@ -98,7 +98,8 @@ const double LOGIT_EXP_DEFAULT = -3;
 
 Subsector::Subsector( const string& aRegionName, const string& aSectorName ):
 regionName( aRegionName ),
-sectorName( aSectorName ){
+sectorName( aSectorName ),
+doCalibration( false ){
     // resize vectors.
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
@@ -469,18 +470,24 @@ bool Subsector::XMLDerivedClassParse( const string& nodeName, const DOMNode* cur
 void Subsector::completeInit( const IInfo* aSectorInfo,
                               DependencyFinder* aDependencyFinder,
                               ILandAllocator* aLandAllocator,
-                              const GlobalTechnologyDatabase* aGlobalTechDB)
+                              const GlobalTechnologyDatabase* aGlobalTechDB )
 {
     mSubsectorInfo.reset( InfoFactory::constructInfo( aSectorInfo, regionName + "-" + sectorName + "-" + name ) );
     
     for( unsigned int i = 0; i < baseTechs.size(); i++) {
         baseTechs[i]->completeInit( regionName, sectorName, name );
     }
+    // TODO: make sure that isInitialYear() flag on the baseTechs is consistent
+    // They would be consisitent if exactly one technology per tech name had the 
+    // flag set to true.
 
     for( unsigned int j = 0; j < baseTechs.size(); ++j ){
-        //if( baseTechs[ j ]->getYear() == modeltime->getper_to_yr( 0 ) ) {
+        // Remove empty inputs for the initial year of the tech only.
+        // removing unecessary inputs into the future will be handled
+        // by the nested input structure in the technology
+        if( baseTechs[ j ]->isInitialYear() ){
             baseTechs[ j ]->removeEmptyInputs();
-        //}
+        }
     }
 
     typedef vector<vector<ITechnology*> >::iterator TechVecIterator;
@@ -724,13 +731,17 @@ void Subsector::initCalc( NationalAccount* aNationalAccount,
     // Initialize the baseTechs. This might be better as a loop over tech types. 
     const Modeltime* modeltime = scenario->getModeltime();
     for( unsigned int j = 0; j < baseTechs.size(); j++ ){
-        if( aPeriod == 0 && baseTechs[ j ]->getYear() == modeltime->getper_to_yr( 0 ) ){
-            double totalCapital = mTechTypes[ baseTechs[ j ]->getName() ]->getTotalCapitalStock( baseTechs[ j ]->getYear() );
+        if( aPeriod == 0 && baseTechs[ j ]->isInitialYear() ){
+            // TODO: remove capital stock as it is no longer used
+            double totalCapital = 0;
+            //double totalCapital = mTechTypes[ baseTechs[ j ]->getName() ]->getTotalCapitalStock( baseTechs[ j ]->getYear() );
             baseTechs[ j ]->initCalc( aMoreSectorInfo, regionName, sectorName, *aNationalAccount,
                                       aDemographics, totalCapital, aPeriod );
         
             // copy base year tech to old vintages
-            mTechTypes[ baseTechs[ j ]->getName() ]->initializeTechsFromBase( baseTechs[ j ]->getYear() );
+            mTechTypes[ baseTechs[ j ]->getName() ]->initializeTechsFromBase( baseTechs[ j ]->getYear(),
+                                      aMoreSectorInfo, regionName, sectorName, *aNationalAccount,
+                                      aDemographics, totalCapital );
         }
         // If the current tech is from the previous period, initialize the current tech with its parameters.
         else if ( aPeriod > 0 && baseTechs[ j ]->getYear() == modeltime->getper_to_yr( aPeriod - 1 ) ) {
@@ -1786,10 +1797,11 @@ double Subsector::distributeInvestment( const IDistributor* aDistributor,
     }
 
     // Set the investment amount for the subsector to the quantity actually distributed.
-    vector<IInvestable*> investmentTechs = InvestmentUtils::convertToInvestables( baseTechs );
+    // Ensure that distribute() for current period is not affected by looping thru future technologies.
     mInvestments[ aPeriod ] = aDistributor->distribute( aExpProfitRateCalc,
-                                                        investmentTechs,
+                                                        InvestmentUtils::getTechInvestables( baseTechs, aPeriod ),
                                                         aNationalAccount,
+                                                        lexp[ aPeriod ],
                                                         aRegionName,
                                                         aSectorName,
                                                         actInvestment,
@@ -1797,8 +1809,12 @@ double Subsector::distributeInvestment( const IDistributor* aDistributor,
 
     // Check that the full amount of investment was distributed.
     if( !util::isEqual( mInvestments[ aPeriod ], actInvestment ) ){
-        cout << "Warning: " << fabs( mInvestments[ aPeriod ] - actInvestment ) << " difference between "
-             << " requested and actual investment in " << aSectorName << " in " << aRegionName << endl;
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Warning: full amount of the investment was not distributed.  Actual: " << actInvestment
+            << "  Distributed: " << mInvestments[ aPeriod ] << "  Difference: " 
+            << fabs( mInvestments[ aPeriod ] - actInvestment ) 
+            << "  in " << name << " " << aSectorName << " " << aRegionName << endl;
     }
     // Return the actual amount of investment that occurred.
     return mInvestments[ aPeriod ];
@@ -1864,6 +1880,8 @@ void Subsector::updateSummary( const list<string>& aPrimaryFuelList,
 * \param aInvestmentLogitExp The investment logit exponential.
 * \param aIsShareCalc Whether this expected profit rate is being used to
 *        calculate shares. Not great.
+* \param aIsDistributing Whether this expected profit rate is being used
+*        to distribute investment.
 * \param aPeriod The period for which to get the expected profit rate.
 * \return The expected profit rate for the subsector.
 * \author Josh Lurz
@@ -1874,23 +1892,26 @@ double Subsector::getExpectedProfitRate( const NationalAccount& aNationalAccount
                                          const IExpectedProfitRateCalculator* aExpProfitRateCalc,
                                          const double aInvestmentLogitExp,
                                          const bool aIsShareCalc,
+                                         const bool aIsDistributing,
                                          const int aPeriod ) const
 {   
     assert( aExpProfitRateCalc );
 
     // Check for fixed investment.
-    if( mFixedInvestments[ aPeriod ] != -1 ){
+    if( mFixedInvestments[ aPeriod ] != -1 && aIsDistributing ){
         return 0;
     }
+
     // Use the passed in expected profit calculator to determine the rate.
-    const vector<IInvestable*> investables = InvestmentUtils::convertToInvestables( baseTechs );
-    return aExpProfitRateCalc->calcSectorExpectedProfitRate( investables,
-                                                             aNationalAccount,
-                                                             aRegionName,
-                                                             aSectorName,
-                                                             aInvestmentLogitExp, 
-                                                             aIsShareCalc, 
-                                                             aPeriod );
+    return aExpProfitRateCalc->calcSectorExpectedProfitRate( 
+                                         InvestmentUtils::getTechInvestables( baseTechs, aPeriod ),
+                                         aNationalAccount,
+                                         aRegionName,
+                                         aSectorName,
+                                         lexp[ aPeriod ],
+                                         aIsShareCalc,
+                                         aIsDistributing,
+                                         aPeriod );
 }
 
 /*! \brief Get the capital output ratio.
@@ -1910,11 +1931,13 @@ double Subsector::getCapitalOutputRatio( const IDistributor* aDistributor,
     assert( aDistributor );
     // Use the passed in investment distributor to calculate the share weighted average
     // capital to output ratio for the subsector.
-    const vector<IInvestable*> investables = InvestmentUtils::convertToInvestables( baseTechs );
-    const double capOutputRatio = aDistributor->calcCapitalOutputRatio( investables, aExpProfitRateCalc,
-                                                                        aNationalAccount,
-                                                                        aRegionName, aSectorName,
-                                                                        aPeriod );
+    const double capOutputRatio = aDistributor->calcCapitalOutputRatio( 
+                                    InvestmentUtils::getTechInvestables( baseTechs, aPeriod ),
+                                    aExpProfitRateCalc,
+                                    aNationalAccount,
+                                    aRegionName,
+                                    aSectorName,
+                                    aPeriod );
     assert( capOutputRatio >= 0 );
     return capOutputRatio;
 }
@@ -1924,9 +1947,13 @@ double Subsector::getCapitalOutputRatio( const IDistributor* aDistributor,
 * \param aPeriod Period to operate in.
 */
 void Subsector::operate( NationalAccount& aNationalAccount, const Demographic* aDemographic, const MoreSectorInfo* aMoreSectorInfo, const bool isNewVintageMode, const int aPeriod ){
+    const Modeltime* modeltime = scenario->getModeltime();
     typedef vector<BaseTechnology*>::iterator BaseTechIterator;
     for( BaseTechIterator currTech = baseTechs.begin(); currTech != baseTechs.end(); ++currTech ){
-        (*currTech)->operate( aNationalAccount, aDemographic, aMoreSectorInfo, regionName, sectorName, isNewVintageMode, aPeriod );
+        // SHK only operate for technology vintages up to current period
+        if ( (*currTech)->getYear() <= modeltime->getper_to_yr( aPeriod ) ){
+            (*currTech)->operate( aNationalAccount, aDemographic, aMoreSectorInfo, regionName, sectorName, isNewVintageMode, aPeriod );
+        }
     }
 }
 
@@ -2033,10 +2060,14 @@ double Subsector::getFixedInvestment( const int aPeriod ) const {
         return mFixedInvestments[ aPeriod ];
     }
     // Sum any fixed investment at the vintage level.
-    const vector<IInvestable*> investables = InvestmentUtils::convertToInvestables( baseTechs );
-    double totalFixedTechInvestment = InvestmentUtils::sumFixedInvestment( investables, aPeriod );
+    double totalFixedTechInvestment = InvestmentUtils::sumFixedInvestment( 
+                                      InvestmentUtils::getTechInvestables( baseTechs, aPeriod ), aPeriod );
     
     /*! \post Fixed investment must be positive */
     assert( totalFixedTechInvestment >= 0 );
     return totalFixedTechInvestment;
+}
+
+bool Subsector::hasCalibrationMarket() const {
+    return doCalibration;
 }

@@ -185,27 +185,27 @@ void SGMGenTable::startVisitFactorSupply( const FactorSupply* aFactorSupply, con
 void SGMGenTable::startVisitNationalAccount( const NationalAccount* aNationalAccount, const int aPeriod ) {
     if( mName == "GNPREAL" ) {
         addToType( mModeltime->getper_to_yr( aPeriod ), "Consumption",
-            aNationalAccount->getAccountValue( NationalAccount::CONSUMPTION ) );
+            aNationalAccount->getAccountValue( NationalAccount::CONSUMPTION_REAL ) );
         addToType( mModeltime->getper_to_yr( aPeriod ), "Investment",
-            aNationalAccount->getAccountValue( NationalAccount::INVESTMENT ) );
+            aNationalAccount->getAccountValue( NationalAccount::INVESTMENT_REAL ) );
         addToType( mModeltime->getper_to_yr( aPeriod ), "Government",
-            aNationalAccount->getAccountValue( NationalAccount::GOVERNMENT ) );
+            aNationalAccount->getAccountValue( NationalAccount::GOVERNMENT_REAL ) );
         addToType( mModeltime->getper_to_yr( aPeriod ), "Trade Balance",
-            aNationalAccount->getAccountValue( NationalAccount::NET_EXPORT ) );
+            aNationalAccount->getAccountValue( NationalAccount::NET_EXPORT_REAL ) );
         addToType( mModeltime->getper_to_yr( aPeriod ), "GNP",
-            aNationalAccount->getAccountValue( NationalAccount::GNP ) );
+            aNationalAccount->getAccountValue( NationalAccount::GNP_REAL ) );
     }
     else if( mName == "GNPNOM" ) {
         addToType( mModeltime->getper_to_yr( aPeriod ), "Consumption",
-            aNationalAccount->getAccountValue( NationalAccount::CONSUMPTION ) );
+            aNationalAccount->getAccountValue( NationalAccount::CONSUMPTION_NOMINAL ) );
         addToType( mModeltime->getper_to_yr( aPeriod ), "Investment",
-            aNationalAccount->getAccountValue( NationalAccount::INVESTMENT ) );
+            aNationalAccount->getAccountValue( NationalAccount::INVESTMENT_NOMINAL ) );
         addToType( mModeltime->getper_to_yr( aPeriod ), "Government",
-            aNationalAccount->getAccountValue( NationalAccount::GOVERNMENT ) );
+            aNationalAccount->getAccountValue( NationalAccount::GOVERNMENT_NOMINAL ) );
         addToType( mModeltime->getper_to_yr( aPeriod ), "Trade Balance",
-            aNationalAccount->getAccountValue( NationalAccount::NET_EXPORT ) );
+            aNationalAccount->getAccountValue( NationalAccount::NET_EXPORT_NOMINAL ) );
         addToType( mModeltime->getper_to_yr( aPeriod ), "GNP",
-            aNationalAccount->getAccountValue( NationalAccount::GNP ) );
+            aNationalAccount->getAccountValue( NationalAccount::GNP_NOMINAL ) );
     }
 }
 
@@ -271,7 +271,7 @@ void SGMGenTable::startVisitGovtConsumer( const GovtConsumer* govtConsumer, cons
         if( govtConsumer->year == mModeltime->getper_to_yr( aPeriod ) ) {
             // note the negative sign to get
             addToType( mModeltime->getper_to_yr( aPeriod ), "Govt Deficit",
-                - govtConsumer->expenditures[ aPeriod ].getValue( Expenditure::SAVINGS ) );
+                govtConsumer->expenditures[ aPeriod ].getValue( Expenditure::SAVINGS ) );
         }
     }
 }
@@ -284,11 +284,10 @@ void SGMGenTable::startVisitTradeConsumer( const TradeConsumer* tradeConsumer,
         // add only current year consumer
         if( tradeConsumer->getYear() == mModeltime->getper_to_yr( aPeriod ) ) {
             // get energy inputs only
-            for( unsigned int i=0; i<tradeConsumer->input.size(); i++ ){
-                if( tradeConsumer->input[ i ]->hasTypeFlag( IInput::ENERGY ) ){
-                    addToType( mModeltime->getper_to_yr( aPeriod ), tradeConsumer->input[ i ]->getName(),
-                        tradeConsumer->input[ i ]->getCurrencyDemand( aPeriod )
-                        * tradeConsumer->input[ i ]->getConversionFactor( aPeriod ) );
+            for( unsigned int i=0; i<tradeConsumer->mLeafInputs.size(); i++ ){
+                if( tradeConsumer->mLeafInputs[ i ]->hasTypeFlag( IInput::ENERGY ) ){
+                    addToType( mModeltime->getper_to_yr( aPeriod ), tradeConsumer->mLeafInputs[ i ]->getName(),
+                        tradeConsumer->mLeafInputs[ i ]->getPhysicalDemand( aPeriod ) );
                 }
             }
         }
@@ -300,18 +299,18 @@ void SGMGenTable::startVisitTradeConsumer( const TradeConsumer* tradeConsumer,
         }
 
         // Loop through the inputs and find primary goods.
-        for( unsigned int i = 0; i < tradeConsumer->input.size(); ++i ){
+        for( unsigned int i = 0; i < tradeConsumer->mLeafInputs.size(); ++i ){
             // Skip non-primary inputs
-            if( !tradeConsumer->input[ i ]->hasTypeFlag( IInput::PRIMARY ) ){
+            if( !tradeConsumer->mLeafInputs[ i ]->hasTypeFlag( IInput::PRIMARY ) ){
                 continue;
             }
 
             // Calculate the amount of emissions that are being traded.
-            const double tradedEmissions = tradeConsumer->input[ i ]->getPhysicalDemand( aPeriod )
-                * tradeConsumer->input[ i ]->getCO2EmissionsCoefficient( "CO2", aPeriod );
+            const double tradedEmissions = tradeConsumer->mLeafInputs[ i ]->getPhysicalDemand( aPeriod )
+                * tradeConsumer->mLeafInputs[ i ]->getCO2EmissionsCoefficient( "CO2", aPeriod );
             // Add or remove the emissions to the column for the sector and year. Check that the sign is right.
             addToType( mModeltime->getper_to_yr( aPeriod ),
-                tradeConsumer->input[ i ]->getName(), -1 * tradedEmissions );
+                tradeConsumer->mLeafInputs[ i ]->getName(), -1 * tradedEmissions );
         }
     }
 }
@@ -352,13 +351,12 @@ void SGMGenTable::startVisitProductionTechnology( const ProductionTechnology* pr
             }
         }
         else if( mName == "PEC" ) {
-            for( unsigned int i=0; i<prodTech->input.size(); i++ ){
+            for( unsigned int i=0; i<prodTech->mLeafInputs.size(); i++ ){
                 // get primary energy input only
-                if( prodTech->input[ i ]->hasTypeFlag( IInput::PRIMARY ) ){
+                if( prodTech->mLeafInputs[ i ]->hasTypeFlag( IInput::PRIMARY ) ){
                     // isn't this the same as getting physical demand?
-                    addToType( mModeltime->getper_to_yr( aPeriod ), prodTech->input[ i ]->getName(),
-                        prodTech->input[ i ]->getCurrencyDemand( aPeriod )
-                        * prodTech->input[ i ]->getConversionFactor( aPeriod ) );
+                    addToType( mModeltime->getper_to_yr( aPeriod ), prodTech->mLeafInputs[ i ]->getName(),
+                        prodTech->mLeafInputs[ i ]->getPhysicalDemand( aPeriod ) );
                 }
             }
             // special code to add renewable, nuclear and hydro electricity to primary energy consumption
@@ -367,8 +365,7 @@ void SGMGenTable::startVisitProductionTechnology( const ProductionTechnology* pr
                 double fossilEfficiency = 0.3;
                 if( prodTech->categoryName == "Renewable"){
                     addToType( mModeltime->getper_to_yr( aPeriod ), prodTech->name,
-                        prodTech->getOutput( aPeriod ) *
-                        FunctionUtils::getMarketConversionFactor( mCurrentRegionName, mCurrentSectorName  ) / fossilEfficiency );
+                        prodTech->getOutput( aPeriod ) / fossilEfficiency );
                 }
             }
         }
@@ -377,8 +374,7 @@ void SGMGenTable::startVisitProductionTechnology( const ProductionTechnology* pr
             // get primary energy input only
             if( isPrimaryEnergyGood( mCurrentRegionName, mCurrentSectorName ) ){
                 addToType( mModeltime->getper_to_yr( aPeriod ), mCurrentSectorName,
-                    prodTech->getOutput( aPeriod ) *
-                    FunctionUtils::getMarketConversionFactor( mCurrentRegionName, mCurrentSectorName ) );
+                    prodTech->getOutput( aPeriod ) );
             }
             // special code to add renewable, nuclear and hydro electricity to primary energy production
             if( mCurrentSectorName == "ElectricityGeneration" ) {
@@ -386,8 +382,7 @@ void SGMGenTable::startVisitProductionTechnology( const ProductionTechnology* pr
                 double fossilEfficiency = 0.3;
                 if( prodTech->categoryName == "Renewable"){
                     addToType( mModeltime->getper_to_yr( aPeriod ), prodTech->name,
-                        prodTech->getOutput( aPeriod ) *
-                        FunctionUtils::getMarketConversionFactor( mCurrentRegionName, mCurrentSectorName )
+                        prodTech->getOutput( aPeriod )
                         / fossilEfficiency );
                 }
             }
@@ -397,8 +392,7 @@ void SGMGenTable::startVisitProductionTechnology( const ProductionTechnology* pr
             // get secondary energy goods only
             if( isSecondaryEnergyGood( mCurrentRegionName, mCurrentSectorName  ) ){
                 addToType( mModeltime->getper_to_yr( aPeriod ), mCurrentSectorName,
-                    prodTech->getOutput( aPeriod ) *
-                    FunctionUtils::getMarketConversionFactor( mCurrentRegionName, mCurrentSectorName ) );
+                    prodTech->getOutput( aPeriod ) );
             }
         }
         // non-energy sector output
@@ -413,29 +407,29 @@ void SGMGenTable::startVisitProductionTechnology( const ProductionTechnology* pr
         else if( mName == "ELEC" ) {
             if( mCurrentSectorName == "ElectricityGeneration" ) {
                 addToType( mModeltime->getper_to_yr( aPeriod ), prodTech->getName(),
-                    prodTech->getOutput(aPeriod) *
-                    FunctionUtils::getMarketConversionFactor( mCurrentRegionName, mCurrentSectorName ) );
+                    prodTech->getOutput(aPeriod) );
             }
         }
         // fuel consumption for electricity generation
         else if( mName == "ElecFuel" ) {
             if( mCurrentSectorName == "ElectricityGeneration" ) {
-                for( unsigned int i=0; i<prodTech->input.size(); i++ ){
+                for( unsigned int i=0; i<prodTech->mLeafInputs.size(); i++ ){
                     // get energy input only
-                    if( prodTech->input[ i ]->hasTypeFlag( IInput::ENERGY ) ){
+                    if( prodTech->mLeafInputs[ i ]->hasTypeFlag( IInput::ENERGY ) ){
                         addToType( mModeltime->getper_to_yr( aPeriod ),
-                            prodTech->input[ i ]->getName(),
-                            prodTech->input[ i ]->getCurrencyDemand( aPeriod )
-                            * prodTech->input[ i ]->getConversionFactor( aPeriod ) );
+                            prodTech->mLeafInputs[ i ]->getName(),
+                            prodTech->mLeafInputs[ i ]->getPhysicalDemand( aPeriod ) );
                     }
                 }
             }
         }
         // capital stock and other related output
         else if( mName == "CAP" ) {
-            addToType( mModeltime->getper_to_yr( aPeriod ), "Capital", prodTech->getCapital() );
-            addToType( mModeltime->getper_to_yr( aPeriod ), "Cap/1000 Worker", prodTech->getCapital() /
+            addToType( mModeltime->getper_to_yr( aPeriod ), "CapitalStock", prodTech->getCapitalStock() );
+            /*
+            addToType( mModeltime->getper_to_yr( aPeriod ), "CapitalStock/1000 Worker", prodTech->getCapitalStock() /
                 scenario->getMarketplace()->getSupply( "Labor", mCurrentRegionName, aPeriod ) );
+                */
             addToType( mModeltime->getper_to_yr( aPeriod ), "Profits", prodTech->mProfits[ aPeriod ] );
             addToType( mModeltime->getper_to_yr( aPeriod ), "Retained Earnings",
                 prodTech->expenditures[ aPeriod ].getValue( Expenditure::RETAINED_EARNINGS ) );
@@ -470,15 +464,15 @@ void SGMGenTable::startVisitProductionTechnology( const ProductionTechnology* pr
                     }
                     // for all other tables that require inputs
                     else {
-                        for( unsigned int i=0; i<prodTech->input.size(); i++ ){
+                        for( unsigned int i=0; i<prodTech->mLeafInputs.size(); i++ ){
                             // get secondary energy input only
-                            string inputName = prodTech->input[ i ]->getName();
+                            string inputName = prodTech->mLeafInputs[ i ]->getName();
                             // *** skip if not refined oil input ***
                             // this is problematic for other vehicles that do not use refined oil
                             if( inputName != "RefinedOil" ) {
                                 continue;
                             }
-                            double fuelConsumption = prodTech->input[ i ]->getPhysicalDemand( aPeriod );
+                            double fuelConsumption = prodTech->mLeafInputs[ i ]->getPhysicalDemand( aPeriod );
                             // passenger transportation technology fuel consumption by fuel
                             if( mName == "PASSTRANFC" ) {
                                 addToType( mModeltime->getper_to_yr( aPeriod ), inputName, fuelConsumption );

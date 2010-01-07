@@ -115,7 +115,7 @@ public:
     virtual void nullDemand();
     void setRawDemand( const double value );
     virtual void addToDemand( const double demandIn ) = 0;
-    void removeFromRawDemand( const double demandIn );
+    virtual void removeFromRawDemand( const double demandIn );
     double getRawDemand() const;
     double getStoredRawDemand() const;
     virtual double getDemand() const = 0;

@@ -49,6 +49,7 @@
 #include <vector>
 
 class IInvestable;
+class BaseTechnology;
 
 /*! 
  * \ingroup Objects
@@ -77,6 +78,9 @@ public:
     static double sumFixedInvestment( const std::vector<IInvestable*>& aInvestables,
                                       const int aPeriod );
 
+    static std::vector<IInvestable*> getTechInvestables( const std::vector<BaseTechnology*>& aAllTechs,
+        const int aPeriod );
+    
     /*!
      * \brief Template function which converts a vector of IInvestable subtypes
      *          to a vector of Investables.

@@ -50,6 +50,7 @@
 #include "sectors/include/sector.h"
 #include "technologies/include/production_technology.h"
 #include "functions/include/iinput.h"
+#include "functions/include/sgm_input.h"
 #include "util/base/include/model_time.h"
 #include "containers/include/scenario.h" // for modeltime
 #include "util/base/include/util.h"
@@ -62,7 +63,9 @@ using namespace std;
 //! Default Constructor
 SectorReport::SectorReport( ostream& aFile ):
 mFile( aFile ),
-mTable( new StorageTable )
+mTable( new StorageTable ),
+mVisitInput( false ),
+mInputAddPricePaid( false )
 {
 }
 
@@ -121,48 +124,61 @@ void SectorReport::startVisitSector( const Sector* sector, const int aPeriod ) {
 void SectorReport::startVisitProductionTechnology( const ProductionTechnology* prodTechnology,
                                                const int aPeriod )
 {
+    // make sure the input flags and tech name have already been reset
+    assert( !mVisitInput );
+    assert( !mInputAddPricePaid );
+    assert( mTechName.empty() );
+    
     if( aPeriod == -1 || ( prodTechnology->isAvailable( aPeriod ) &&
             !prodTechnology->isRetired( aPeriod ) ) ) {
         // Create a unique name for the vintage based on the name and year.
-        const string currName = util::toString( prodTechnology->getYear() ) + prodTechnology->getName();
+        mTechName = util::toString( prodTechnology->getYear() ) + prodTechnology->getName();
         
         // Add a column for the current tech.
-        mTable->addColumn( currName );
+        mTable->addColumn( mTechName );
 
         // Add the values for the technology.
         if( prodTechnology->isNewInvestment( aPeriod ) ){
-            mTable->addToType( "Annual Investment", currName, prodTechnology->mAnnualInvestment );
-            mTable->addToType( "Capital Stock", currName, prodTechnology->capital );
+            mTable->addToType( "Annual Investment", mTechName, prodTechnology->mAnnualInvestment );
+            mTable->addToType( "Capital Stock", mTechName, prodTechnology->mCapitalStock );
         }
-        mTable->addToType( "Output", currName, prodTechnology->getOutput( aPeriod ) );
-        mTable->addToType( "Profits", currName, prodTechnology->mProfits[ aPeriod ] );
-        mTable->addToType( "Costs", currName, prodTechnology->mCostsReporting[ aPeriod ] );
+        mTable->addToType( "Output", mTechName, prodTechnology->getOutput( aPeriod ) );
+        mTable->addToType( "Profits", mTechName, prodTechnology->mProfits[ aPeriod ] );
+        mTable->addToType( "Costs", mTechName, prodTechnology->mCostsReporting[ aPeriod ] );
         // This isn't right, retained earnings has values by period.
-        mTable->addToType( "Retained Earnings", currName, prodTechnology->expenditures[ aPeriod ].getValue(Expenditure::RETAINED_EARNINGS) );
+        mTable->addToType( "Retained Earnings", mTechName, prodTechnology->expenditures[ aPeriod ].getValue(Expenditure::RETAINED_EARNINGS) );
         if( prodTechnology->isNewInvestment( aPeriod ) ){
-            mTable->setType( "Expected Profit Rate", currName, prodTechnology->mExpectedProfitRateReporting );
+            mTable->setType( "Expected Profit Rate", mTechName, prodTechnology->mExpectedProfitRateReporting );
             // mTable->setType( "Expected Price Received", currName, prodTechnology->mExpectedPriceReceivedReporting );
         }
+        mVisitInput = true;
         const Modeltime* modeltime = scenario->getModeltime();
-        // Its questionable if this should be here or in updateInput.
-        for( unsigned int i = 0; i < prodTechnology->input.size(); ++i ){
-            // report price paid only for new vintage.
-            // Since the new vintage is the last vintage, this also allows price paid to be the last column.
-            if( prodTechnology->isNewInvestment( aPeriod ) || 
+        mInputAddPricePaid = prodTechnology->isNewInvestment( aPeriod ) || 
                 // If we are in the base year the base year technology is the newest technology.
                 // There is no new investment.
                 ( aPeriod == modeltime->getBasePeriod() && 
-                modeltime->getper_to_yr( modeltime->getBasePeriod() ) == prodTechnology->year ) )
-            {
-                // Add a column to the table.
-                mTable->addColumn( "Price Paid" );
-                mTable->setType( prodTechnology->input[ i ]->getName(), "Price Paid",
-                    prodTechnology->input[ i ]->getPricePaid( mCurrRegion, aPeriod ) );
-            }
-            mTable->addToType( prodTechnology->input[ i ]->getName(), currName,
-                prodTechnology->input[ i ]->getCurrencyDemand( aPeriod ) );
-        }
+                modeltime->getper_to_yr( modeltime->getBasePeriod() ) == prodTechnology->year );
     }
 }
 
+void SectorReport::endVisitProductionTechnology( const ProductionTechnology* prodTechnology,
+                                               const int aPeriod )
+{
+    // reset all the input flags and tech name
+    mVisitInput = false;
+    mInputAddPricePaid = false;
+    mTechName.clear();
+}
+
+void SectorReport::startVisitSGMInput( const SGMInput* aSGMInput, const int aPeriod ) {
+    if( mVisitInput ) {
+        if( mInputAddPricePaid ) {
+            mTable->addColumn( "Price Paid" );
+            mTable->setType( aSGMInput->getName(), "Price Paid",
+                aSGMInput->getPricePaid( mCurrRegion, aPeriod ) );
+        }
+        mTable->addToType( aSGMInput->getName(), mTechName,
+                aSGMInput->getCurrencyDemand( aPeriod ) );
+    }
+}
 

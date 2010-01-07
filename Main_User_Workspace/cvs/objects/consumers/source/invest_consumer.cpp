@@ -52,6 +52,8 @@
 #include "util/base/include/ivisitor.h"
 #include "marketplace/include/marketplace.h"
 #include "technologies/include/ioutput.h"
+#include "functions/include/node_input.h"
+#include "functions/include/function_utils.h"
 
 using namespace std;
 using namespace xercesc;
@@ -93,7 +95,6 @@ void InvestConsumer::completeInit( const string& aRegionName,
                                    const string& aSectorName,
                                    const string& aSubsectorName )
 {
-	prodDmdFnType = "InvestDemandFn";
 	BaseTechnology::completeInit( aRegionName, aSectorName, aSubsectorName );
 }
 
@@ -106,9 +107,24 @@ void InvestConsumer::initCalc( const MoreSectorInfo* aMoreSectorInfo, const stri
                         aNationalAccount, aDemographics, aCapitalStock,
                         aPeriod );
 
-    if ( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
-        BaseTechnology::calcPricePaid( aMoreSectorInfo, aRegionName, aSectorName, aPeriod );
+    const Modeltime* modelTime = scenario->getModeltime();
+    if ( aPeriod == 0 && year == modelTime->getper_to_yr( aPeriod ) ) {
+        Marketplace* marketplace = scenario->getMarketplace();
+        // calculate Price Paid
+        BaseTechnology::calcPricePaid(aMoreSectorInfo, aRegionName, aSectorName, aPeriod, 
+            modelTime->gettimestep( aPeriod ) );
+        // the initial capital good price should have been set by now
+        mNestedInputRoot->setPricePaid( FunctionUtils::getCapitalGoodPrice( aRegionName, aPeriod ),
+            aPeriod );
+        
+        mNestedInputRoot->calcCoefficient( aRegionName, aSectorName, 0 );
     }
+    else if ( year == modelTime->getper_to_yr( aPeriod ) ) {
+        mNestedInputRoot->changeSigma( aRegionName, aPeriod, 
+                mNestedInputRoot->getCoefficient( aPeriod ) );
+    }
+
+    // tech change?
 }
 
 //! calculate income
@@ -118,14 +134,12 @@ void InvestConsumer::calcIncome( NationalAccount& aNationalAccount, const Demogr
     // Whats up with these?-JPL
 	//allocateTransportationDemand( nationalAccount, regionName, period );
 	//allocateDistributionCost( nationalAccount, regionName, period );
-    expenditures[ aPeriod ].setType( Expenditure::INVESTMENT, mOutputs[ 0 ]->getCurrencyOutput( aPeriod ) );
-    scenario->getMarketplace()->addToDemand( "Capital", aRegionName, mOutputs[ 0 ]->getCurrencyOutput( aPeriod ), aPeriod );
+    double investment = aNationalAccount.getAccountValue( NationalAccount::ANNUAL_INVESTMENT );
+    expenditures[ aPeriod ].setType( Expenditure::INVESTMENT, investment );
+    scenario->getMarketplace()->addToDemand( "Capital", aRegionName, investment, aPeriod );
 	// set National Accounts Consumption for GNP calculation
-	aNationalAccount.addToAccount( NationalAccount::GNP, 
-		   aNationalAccount.getAccountValue( NationalAccount::ANNUAL_INVESTMENT ) );
-	//aNationalAccount.addToAccount( NationalAccount::INVESTMENT, output[ aPeriod ] );
-	aNationalAccount.addToAccount( NationalAccount::INVESTMENT, 
-		   aNationalAccount.getAccountValue( NationalAccount::ANNUAL_INVESTMENT ) );
+	aNationalAccount.addToAccount( NationalAccount::GNP_NOMINAL, investment );
+	aNationalAccount.addToAccount( NationalAccount::INVESTMENT_NOMINAL, investment );
 }
 
 //! calculate demand
@@ -133,15 +147,43 @@ void InvestConsumer::operate( NationalAccount& aNationalAccount, const Demograph
                              const MoreSectorInfo* aMoreSectorInfo, const string& aRegionName, 
                              const string& aSectorName, const bool aIsNewVintageMode, int aPeriod ) 
 {
-	if( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
+    const Modeltime* modelTime = scenario->getModeltime();
+	if( year == modelTime->getper_to_yr( aPeriod ) ) {
         expenditures[ aPeriod ].reset();
 		// calculate prices paid for consumer inputs
-		BaseTechnology::calcPricePaid( aMoreSectorInfo, aRegionName, aSectorName, aPeriod );
+		BaseTechnology::calcPricePaid(aMoreSectorInfo, aRegionName, aSectorName, aPeriod, 
+            modelTime->gettimestep( aPeriod ) );
+        mNestedInputRoot->calcLevelizedCost( aRegionName, aSectorName, aPeriod, 
+                mNestedInputRoot->getCoefficient( aPeriod ) ); // alpha zero is the root's alpha
+        
+        // store the price for reporting
+        mCapitalGoodPrice.set( mNestedInputRoot->getPricePaid( aRegionName, aPeriod ) );
+        
+        // we need to convert the annual investment from a value to a quantity by dividing
+        // by the price of the capital good and use that to drive demands
+        const double capitalQuantity = aNationalAccount.getAccountValue( NationalAccount::ANNUAL_INVESTMENT ) 
+            / mCapitalGoodPrice;
+        
 		// calculate consumption demands for each final good or service
-		calcInputDemand( aNationalAccount.getAccountValue( NationalAccount::ANNUAL_INVESTMENT ), 
-                         aRegionName, aSectorName, aPeriod );
+		calcInputDemand( capitalQuantity, aRegionName, aSectorName, aPeriod );
         calcIncome( aNationalAccount, aDemographics, aRegionName, aPeriod );
         calcEmissions( aSectorName, aRegionName, aPeriod );
+        Expenditure& currExpenditure = expenditures[ aPeriod ];
+        for( vector<IInput*>::const_iterator inputIt = mLeafInputs.begin(); inputIt != mLeafInputs.end(); ++inputIt ) {
+            (*inputIt)->calcTaxes( aRegionName, &aNationalAccount, &currExpenditure, aPeriod );
+        }
+
+        // TODO: what about emissions taxes?
+        double investmentTaxes = expenditures[ aPeriod ].getValue( Expenditure::INDIRECT_TAXES );
+        scenario->getMarketplace()->addToDemand( "government-taxes", aRegionName, investmentTaxes, aPeriod );
+
+        // calculate the real amount consumed
+        // TODO: this could currently just go in post calc
+        aNationalAccount.addToAccount( NationalAccount::INVESTMENT_REAL,
+            calcRealGNP( aNationalAccount, aRegionName, aPeriod ) );
+
+        mPricePaidCached = false;
+        mNestedInputRoot->resetCalcLevelizedCostFlag();
     }
 }
 
@@ -175,6 +217,7 @@ const string& InvestConsumer::getXMLNameStatic() {
 void InvestConsumer::csvSGMOutputFile( ostream& aFile, const int aPeriod ) const {
 	if ( year == scenario->getModeltime()->getper_to_yr( aPeriod ) ) {
 		aFile << "***** Investment Sector Results *****" << endl << endl;
+        aFile << "Capital good price," << mCapitalGoodPrice << endl;
 		expenditures[ aPeriod ].csvSGMOutputFile( aFile, aPeriod );
 		aFile << endl;
 

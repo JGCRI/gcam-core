@@ -119,3 +119,7 @@ bool CalibrationMarket::meetsSpecialSolutionCriteria() const {
     return ( demand < util::getSmallNumber() );
 }
 
+void CalibrationMarket::removeFromRawDemand( const double demandIn ) {
+    // need to make sure that the demand will never get wiped out
+    // because it will not get set again for a calibration market
+}

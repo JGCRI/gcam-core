@@ -1,3 +1,9 @@
+#ifndef _PROFIT_SHUTDOWN_DECIDER_H_
+#define _PROFIT_SHUTDOWN_DECIDER_H_
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
 /*
  * LEGAL NOTICE
  * This computer software was prepared by Battelle Memorial Institute,
@@ -32,12 +38,6 @@
  * by User.
  */
 
-#ifndef _PROFIT_SHUTDOWN_DECIDER_H_
-#define _PROFIT_SHUTDOWN_DECIDER_H_
-#if defined(_MSC_VER)
-#pragma once
-#endif
-
 /*! 
  * \file profit_shutdown_decider.h
  * \ingroup Objects
@@ -53,7 +53,6 @@ struct ProductionFunctionInfo;
  * \ingroup Objects
  * \brief This object begins to shut down a vintage when its profit rate falls
  *        below a minimum level.
-
  * \details Profit shutdown decider which applies an exponential S-shaped curve
  *          to determine the shutdown rate. The proportion shutdown is based
  *          the percentage that the price receive exceeds or is below variable cost.<br>

@@ -110,6 +110,7 @@ class LandUseHistory;
 class FoodProductionTechnology;
 class ForestProductionTechnology;
 class BuildingGenericDmdTechnology;
+class NodeInput;
 
 /*!
  * \brief An interface to a class which visits every node in the tree and
@@ -305,6 +306,9 @@ public:
 
     virtual void startVisitClimateModel( const IClimateModel* aClimateModel, const int aPeriod ) = 0;
     virtual void endVisitClimateModel( const IClimateModel* aClimateModel, const int aPeriod ) = 0;
+
+    virtual void startVisitNodeInput( const NodeInput* aNodeInput, const int aPeriod ) = 0;
+    virtual void endVisitNodeInput( const NodeInput* aNodeInput, const int aPeriod ) = 0;
 
     // Following are the derived class accepts
     virtual void startVisitTranTechnology( const TranTechnology* aTranTechnology, const int aPeriod ) = 0;

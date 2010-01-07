@@ -74,7 +74,6 @@
 #include "sectors/include/interm_supply_sector.h"
 
 #include "resources/include/resource.h"
-#include "resources/include/unlimited_resource.h"
 
 #include "demographics/include/demographic.h"
 
@@ -106,7 +105,6 @@ using namespace xercesc;
 typedef std::vector<AFinalDemand*>::iterator FinalDemandIterator;
 typedef std::vector<AFinalDemand*>::const_iterator CFinalDemandIterator;
 typedef std::vector<AResource*>::iterator ResourceIterator;
-typedef std::vector<AResource*>::const_iterator CResourceIterator;
 typedef std::vector<GHGPolicy*>::iterator GHGPolicyIterator;
 typedef std::vector<GHGPolicy*>::const_iterator CGHGPolicyIterator;
 typedef std::vector<Sector*>::iterator SectorIterator;
@@ -145,10 +143,6 @@ void RegionMiniCAM::clear(){
     for ( FinalDemandIterator demIter = mFinalDemands.begin(); demIter != mFinalDemands.end(); ++demIter ) {
         delete *demIter;
     }
-
-    for ( ResourceIterator rescIter = resources.begin(); rescIter != resources.end(); ++rescIter ) {
-        delete *rescIter;
-    }
 }
 
 // for parsing derived region classes
@@ -177,18 +171,6 @@ bool RegionMiniCAM::XMLDerivedClassParse( const std::string& nodeName, const xer
     }
     else if( nodeName == "heating-fraction-of-year-active" ){
         mHeatingFractionOfYearActive = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == DepletableResource::getXMLNameStatic() ){
-        parseContainerNode( curr, resources, new DepletableResource() );
-    }
-    else if( nodeName == FixedResource::getXMLNameStatic() ){
-        parseContainerNode( curr, resources, new FixedResource() );
-    }
-    else if( nodeName == RenewableResource::getXMLNameStatic() ){
-        parseContainerNode( curr, resources, new RenewableResource() );
-    }
-    else if( nodeName == UnlimitedResource::getXMLNameStatic() ){
-        parseContainerNode( curr, resources, new UnlimitedResource );
     }
     else if( nodeName == SupplySector::getXMLNameStatic() ){
         parseContainerNode( curr, supplySector, supplySectorNameMap, new SupplySector( name ) );
@@ -353,10 +335,6 @@ void RegionMiniCAM::completeInit( const GlobalTechnologyDatabase* aGlobalTechDB 
         // need to be set by all production technologies (within their completeInit methods) that use land
         // before this function is called.
         mLandAllocator->completeInit( name, mRegionInfo.get() );
-    }
-
-    for( ResourceIterator resourceIter = resources.begin(); resourceIter != resources.end(); ++resourceIter ) {
-        (*resourceIter)->completeInit( name, mRegionInfo.get() );
     }
 
     for( FinalDemandIterator demandSectorIter = mFinalDemands.begin();
@@ -546,11 +524,6 @@ void RegionMiniCAM::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
         gdp->toInputXML( out, tabs );
     }
 
-    // write out the resources objects.
-    for( CResourceIterator i = resources.begin(); i != resources.end(); i++ ){
-        ( *i )->toInputXML( out, tabs );
-    }
-
     // write out demand sector objects.
     for( CFinalDemandIterator k = mFinalDemands.begin(); k != mFinalDemands.end(); k++ ){
         ( *k )->toInputXML( out, tabs );
@@ -614,11 +587,6 @@ void RegionMiniCAM::toDebugXMLDerived( const int period, std::ostream& out, Tabs
     // Write out the land allocator.
     if ( mLandAllocator.get() ) {
         mLandAllocator->toDebugXML( period, out, tabs );
-    }
-
-    // write out the resources objects.
-    for( CResourceIterator currResource = resources.begin(); currResource != resources.end(); ++currResource ){
-        (*currResource)->toDebugXML( period, out, tabs );
     }
 
     // write out demand sector objects.
@@ -725,7 +693,7 @@ void RegionMiniCAM::calcResourceSupply( const int period ){
         return;
     }
     
-    for( ResourceIterator currResource = resources.begin(); currResource != resources.end(); ++currResource ){
+    for( ResourceIterator currResource = mResources.begin(); currResource != mResources.end(); ++currResource ){
         (*currResource)->calcSupply( name, gdp.get(), period );
     }
 }
@@ -760,7 +728,7 @@ void RegionMiniCAM::calcFinalSupplyPrice( const int period ) {
 
     if( calibrationActive && calibrationPeriod ) {
         CalibrateResourceVisitor resourceCalibrator( name );
-        for( ResourceIterator currResource = resources.begin(); currResource != resources.end(); ++currResource ){
+        for( ResourceIterator currResource = mResources.begin(); currResource != mResources.end(); ++currResource ){
             (*currResource)->accept( &resourceCalibrator, period );
         }
     }
@@ -933,7 +901,7 @@ void RegionMiniCAM::initCalc( const int period )
     for ( FinalDemandIterator currSector = mFinalDemands.begin(); currSector != mFinalDemands.end(); ++currSector ) {
         (*currSector)->initCalc( name, gdp.get(), demographic.get(), period  );
     }
-    for( ResourceIterator currResource = resources.begin(); currResource != resources.end(); ++currResource ){
+    for( ResourceIterator currResource = mResources.begin(); currResource != mResources.end(); ++currResource ){
         (*currResource)->initCalc( name, period );
     }
 }
@@ -974,11 +942,6 @@ void RegionMiniCAM::setCO2CoefsIntoMarketplace( const int aPeriod ){
  */
 void RegionMiniCAM::postCalc( const int aPeriod ) {
     Region::postCalc( aPeriod );
-
-    // Post calculation for resource sectors
-    for( ResourceIterator currResource = resources.begin(); currResource != resources.end(); ++currResource ){
-        (*currResource)->postCalc( name, aPeriod );
-     }
  }
 
 /*! \brief Tabulates all calibrated supplies and demands with in the region.
@@ -1076,9 +1039,9 @@ void RegionMiniCAM::initializeCalValues( const int period ) {
         marketInfo->setDouble( "calDemand", DEFAULT_CAL_VALUE );
     }
 
-    for ( unsigned int i = 0; i < resources.size(); i++ ) {
+    for ( unsigned int i = 0; i < mResources.size(); i++ ) {
         // Now prepare to loop through all the fuels used by this sector
-        IInfo* resourceMarketInfo = marketplace->getMarketInfo( resources[ i ]->getName(), name, period, true );
+        IInfo* resourceMarketInfo = marketplace->getMarketInfo( mResources[ i ]->getName(), name, period, true );
         resourceMarketInfo->setDouble( "calSupply", DEFAULT_CAL_VALUE );
         resourceMarketInfo->setDouble( "calDemand", DEFAULT_CAL_VALUE );
     }
@@ -1203,8 +1166,8 @@ void RegionMiniCAM::csvOutputFile() const {
     }
 
     // write resource results to file
-    for ( unsigned int i = 0; i < resources.size(); i++ )
-        resources[i]->csvOutputFile( name );
+    for ( unsigned int i = 0; i < mResources.size(); i++ )
+        mResources[i]->csvOutputFile( name );
 
     // write supply sector results to file
     for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
@@ -1331,8 +1294,8 @@ void RegionMiniCAM::dbOutput( const list<string>& aPrimaryFuelList ) const {
     }
 
     // write resource results to database
-    for ( unsigned int i = 0; i < resources.size(); i++ ) {
-        resources[i]->dbOutput( name );
+    for ( unsigned int i = 0; i < mResources.size(); i++ ) {
+        mResources[i]->dbOutput( name );
     }
 
     // Calculate indirect emissions so they can be written to the database.
@@ -1366,9 +1329,9 @@ void RegionMiniCAM::updateSummary( const list<string>& aPrimaryFuelList, const i
     summary[period].clearfuelcons();
     summary[period].clearemfuelmap();
 
-    for ( unsigned int i = 0; i < resources.size(); i++ ) {
-        summary[period].initpeprod( aPrimaryFuelList, resources[i]->getName(),
-            resources[i]->getAnnualProd( name, period) );
+    for ( unsigned int i = 0; i < mResources.size(); i++ ) {
+        summary[period].initpeprod( aPrimaryFuelList, mResources[i]->getName(),
+            mResources[i]->getAnnualProd( name, period) );
     }
 
     for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
@@ -1444,11 +1407,6 @@ void RegionMiniCAM::accept( IVisitor* aVisitor, const int aPeriod ) const {
     // Visit LandAllocator object
     if ( mLandAllocator.get() ){
         mLandAllocator->accept( aVisitor, aPeriod );
-    }
-
-    // loop for resources.
-    for( CResourceIterator currResource = resources.begin(); currResource != resources.end(); ++currResource ){
-        (*currResource)->accept( aVisitor, aPeriod );
     }
 
     // loop for final demand sectors.

@@ -129,3 +129,17 @@ void MiniCAMInput::copyParamsInto( DemandInput& aDemandInput,
     // This should never be called.
     assert( false );
 }
+
+void MiniCAMInput::copyParamsInto( NodeInput& aNodeInput,
+                                   const int aPeriod ) const
+{
+    // This should never be called.
+    assert( false );
+}
+
+void MiniCAMInput::copyParamsInto( TradeInput& aDemandInput,
+                                   const int aPeriod ) const
+{
+    // This should never be called.
+    assert( false );
+}

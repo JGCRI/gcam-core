@@ -126,6 +126,7 @@ private:
     void calcNoHouseholds( const Demographic* aDemographics, int aPeriod );
     void calcBudget( const std::string& aRegionName, const int aPeriod );
     const std::string getBudgetMarketName() const;
+    const std::string getPriceIndexMarketName() const;
 
     // corresponds to S2, R1, L1
     double baseScalerLand; //!< base land scaler
@@ -137,7 +138,8 @@ private:
     double maxLandSupplyFrac; //!< max land supply fraction
     double maxLaborSupplyFracMale; //!< max labor supply fraction
     double maxLaborSupplyFracFemale; //!< max labor supply fraction
-    double fixedLaborSupplyFrac; //!< fixed labor supply fraction for both gender
+    double fixedLaborSupplyFracUnSkLab; //!< fixed unskilled labor supply fraction for both gender
+    double fixedLaborSupplyFracSkLab; //!< fixed skilled labor supply fraction for both gender
     double maxSavingsSupplyFrac; //!< maximum savings supply fraction
 
     double baseLandDemandPerHH; //!< base land demand per household
@@ -148,7 +150,15 @@ private:
     double householdLaborDemand; //!< household labor demand
 
     double socialSecurityTaxRate; //!< social security tax rate
-    double incomeTaxRate; //!< income tax rate
+    //! land income tax rate
+    Value landIncomeTaxRate;
+
+    //! labor income tax rate
+    Value laborIncomeTaxRate;
+
+    //! dividends income tax rate
+    Value dividendsIncomeTaxRate;
+
     double personsPerHousehold; //!< people per household
     double numberOfHouseholds; //!< number of households
     double totalLandArea; //!< total land area
@@ -157,19 +167,22 @@ private:
     double transfer; //!< government transfer
 
     double baseLandSupply; //!< base year land supply, in physical units
-    double baseLaborSupply; //!< base year labor supply, in physical untis
 
     double landSupply; //!< land supply
-    double laborSupplyMale; //!< male labor supply
-    double laborSupplyFemale; //!< female labor supply
+    double laborSupplyMaleUnSkLab; //!< male unskilled labor supply
+    double laborSupplyFemaleUnSkLab; //!< female unskilled labor supply
+    double laborSupplyUnSkLab; //!< total unskilled labor supply
+    double laborSupplyMaleSkLab; //!< male skilled labor supply
+    double laborSupplyFemaleSkLab; //!< female skilled labor supply
+    double laborSupplySkLab; //!< total skilled labor supply
     
     double mInitialSavings;
 
     double workingAgePopMale; //!< population of working age males(from Demographics)
     double workingAgePopFemale; //!< population of working age females(from Demographics)
+    double workingAgePop; //!< population of working age (from Demographics)
 
     void copy( const HouseholdConsumer& householdConsumerIn );
 };
 
 #endif // _HOUSEHOLD_CONSUMER_H_
-

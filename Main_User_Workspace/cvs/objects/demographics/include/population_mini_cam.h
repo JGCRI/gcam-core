@@ -86,7 +86,9 @@ protected:
     virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const;
 private:
     static const std::string XML_NAME; //!< node name for toXML methods
+    double mFractionWorking; //!< Fraction of the total population which is assumed to be of working age
 };
 
 #endif // _POPULATION_MINI_CAM_H_
+
 

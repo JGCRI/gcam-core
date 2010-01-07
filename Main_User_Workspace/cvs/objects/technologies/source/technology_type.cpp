@@ -91,7 +91,7 @@ double TechnologyType::getTotalCapitalStock( const int aUpToYear ) const {
         // Check if the year of the technology is less than or equal to the top
         // year.
         if( cVintage->first <= aUpToYear ){
-            totalStock += cVintage->second->getCapital();
+            totalStock += cVintage->second->getCapitalStock();
         }
     }
     return totalStock;
@@ -99,10 +99,27 @@ double TechnologyType::getTotalCapitalStock( const int aUpToYear ) const {
 
 /*! \brief Initialize technologies earlier than the given year with the
 *          technology from the given year.
+* \details This method will attempt to merge the technology at aBaseYear
+*          with any earlier technologies, it will NOT attempt to copy it
+*          backwards if there were missing technologies.  This method will
+*          also call initCalc on those technologies to ensure that they
+*          have a chance to initialize themselves once paramaters are copied.
 * \param aBaseYear Year to use as the base.
+* \param aMoreSectorInfo A more sector info which will be necessary for initCalc
+*                        of a technology.
+* \param aRegionName The containing region's name.
+* \param aSectorName The containing sector's name.
+* \param aNationalAccount The national accounts object necessary for initCalc of
+*                         a technology.
+* \param aDemographics The demographics object necessary for initCalc of a technology.
+* \param aCapitalStock The total capital stock for the sector.  I don't think this
+*                      is still utilized and can probably be removed.
 * \author Josh Lurz
 */
-void TechnologyType::initializeTechsFromBase( const int aBaseYear ){
+void TechnologyType::initializeTechsFromBase( const int aBaseYear, const MoreSectorInfo* aMoreSectorInfo, const string& aRegionName,
+                                  const string& aSectorName, NationalAccount& aNationalAccount,
+                                  const Demographic* aDemographics, const double aCapitalStock )
+{
     // Find the base technology.
     const BaseTechnology* baseTech = util::searchForValue( mVintages, aBaseYear );
     if( !baseTech ){
@@ -119,6 +136,8 @@ void TechnologyType::initializeTechsFromBase( const int aBaseYear ){
         // year
         if( cVintage->first < aBaseYear ){
             cVintage->second->copyParam( baseTech, basePeriod );
+            cVintage->second->initCalc( aMoreSectorInfo, aRegionName, aSectorName, aNationalAccount,
+                aDemographics, aCapitalStock, basePeriod );
         }
     }
 }
@@ -157,7 +176,7 @@ BaseTechnology* TechnologyType::initOrCreateTech( const int aNewTechYear, const 
         newTech = baseTech->clone();
         newTech->setYear( aNewTechYear );
         addVintage( newTech );
-	}
+    }
     return newTech;
 }
 
@@ -188,22 +207,29 @@ double TechnologyType::setTotalInvestment( const string& aRegionName, const int 
     assert( aAnnualInvestment > 0 );
 
     // Find the previous technology level investment.
-    const BaseTechnology* prevTech = util::searchForValue( mVintages, aPrevYear );
-    double prevAnnualInvestment = prevTech ? prevTech->getAnnualInvestment( -1 ) : 0;
+    /*const BaseTechnology* prevTech = util::searchForValue( mVintages, aPrevYear );
+    double prevAnnualInvestment = prevTech ? prevTech->getAnnualInvestment( -1 ) : 0;*/
     
     // Find the new technology.
     BaseTechnology* currTech = util::searchForValue( mVintages, aCurrentYear );
     assert( currTech );
     
+    /*
     // Set the total investment level and annual investment.
     double totalInvestment = InvestmentUtils::interpolateAndSumFlows( prevAnnualInvestment, aAnnualInvestment,
                                                                       aCurrentYear - aPrevYear );
 
+    // Override total investment to annual times the time step.
+    totalInvestment = aAnnualInvestment * scenario->getModeltime()->gettimestep( aPeriod );
+
     // Make sure total investment is valid. 
     assert( util::isValidNumber( totalInvestment ) );
-    assert( totalInvestment > 0 );
+    assert( totalInvestment > 0 );*/
+
+    double totalInvestment = aAnnualInvestment;
+    double annualInvestment = aAnnualInvestment;
 
     // Set the new technologies investment level and return the amount actually
     // invested.
-    return currTech->setInvestment( aRegionName, aAnnualInvestment, totalInvestment, aPeriod );
+    return currTech->setInvestment( aRegionName, annualInvestment, totalInvestment, aPeriod );
 }

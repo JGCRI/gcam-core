@@ -76,6 +76,7 @@ void ProductionInput::copyParam( const IInput* aInput,
 
 void ProductionInput::copyParamsInto( ProductionInput& aProductionInput,
                                       const int aPeriod ) const {
+    aProductionInput.mSalesTaxRate.init( mSalesTaxRate );
 }
 
 void ProductionInput::copyParamsInto( DemandInput& aDemandInput,

@@ -68,6 +68,12 @@
 #include "util/curves/include/point_set.h"
 #include "util/curves/include/explicit_point_set.h"
 
+#include "resources/include/resource.h"
+#include "resources/include/unlimited_resource.h"
+#include "resources/include/depleting_fixed_resource.h"
+
+#include "containers/include/iinfo.h"
+
 #include "util/logger/include/ilogger.h"
 #include "util/base/include/xml_helper.h"
 
@@ -82,6 +88,8 @@ typedef std::vector<GHGPolicy*>::iterator GHGPolicyIterator;
 typedef std::vector<GHGPolicy*>::const_iterator CGHGPolicyIterator;
 typedef std::vector<PolicyPortfolioStandard*>::iterator PolicyIterator;
 typedef std::vector<PolicyPortfolioStandard*>::const_iterator CPolicyIterator;
+typedef std::vector<AResource*>::iterator ResourceIterator;
+typedef std::vector<AResource*>::const_iterator CResourceIterator;
 //! Default constructor
 Region::Region() {
 }
@@ -105,7 +113,10 @@ void Region::clear(){
     for( PolicyIterator policyIter = mPolicies.begin(); policyIter != mPolicies.end(); ++policyIter ){
         delete *policyIter;
     }
-
+    
+    for ( ResourceIterator rescIter = mResources.begin(); rescIter != mResources.end(); ++rescIter ) {
+        delete *rescIter;
+    }
 }
 
 /*! Return the region name.
@@ -152,6 +163,22 @@ void Region::XMLParse( const DOMNode* node ){
         else if( nodeName == PolicyPortfolioStandard::getXMLNameStatic() ){
             parseContainerNode( curr, mPolicies, new PolicyPortfolioStandard() );
         }
+        // TODO: should we create a factory for resources?
+        else if( nodeName == DepletableResource::getXMLNameStatic() ){
+            parseContainerNode( curr, mResources, new DepletableResource() );
+        }
+        else if( nodeName == FixedResource::getXMLNameStatic() ){
+            parseContainerNode( curr, mResources, new FixedResource() );
+        }
+        else if( nodeName == RenewableResource::getXMLNameStatic() ){
+            parseContainerNode( curr, mResources, new RenewableResource() );
+        }
+        else if( nodeName == UnlimitedResource::getXMLNameStatic() ){
+            parseContainerNode( curr, mResources, new UnlimitedResource );
+        }
+        else if( nodeName == DepletingFixedResource::getXMLNameStatic() ) {
+            parseContainerNode( curr, mResources, new DepletingFixedResource() );
+        }
         else if( XMLDerivedClassParse(nodeName, curr) ){
             // Do nothing but avoid printing the error.
         }
@@ -192,6 +219,11 @@ void Region::toInputXML( ostream& out, Tabs* tabs ) const {
     // write out mPolicies objects.
     for( CPolicyIterator l = mPolicies.begin(); l != mPolicies.end(); l++ ){
         ( *l )->toInputXML( out, tabs );
+    }
+    
+    // write out the resources objects.
+    for( CResourceIterator i = mResources.begin(); i != mResources.end(); i++ ){
+        ( *i )->toInputXML( out, tabs );
     }
 
     toInputXMLDerived( out, tabs );
@@ -235,6 +267,11 @@ void Region::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     for( CPolicyIterator currPolicy = mPolicies.begin(); currPolicy != mPolicies.end(); ++currPolicy ){
         (*currPolicy)->toDebugXML( period, out, tabs );
     }
+    
+    // write out the resources objects.
+    for( CResourceIterator currResource = mResources.begin(); currResource != mResources.end(); ++currResource ){
+        (*currResource)->toDebugXML( period, out, tabs );
+    }
 
     toDebugXMLDerived( period, out, tabs );
     // Finished writing xml for the class members.
@@ -265,12 +302,15 @@ const std::string& Region::getXMLNameStatic() {
  *       be moved down from RegionMiniCAM and RegionCGE.
  * \author Pralit Patel
  */
-void Region::completeInit( const GlobalTechnologyDatabase *aGlobalTechDB ) {
+void Region::completeInit( const GlobalTechnologyDatabase *aGlobalTechDB ) {    
     for( GHGPolicyIterator ghgPolicy = mGhgPolicies.begin(); ghgPolicy != mGhgPolicies.end(); ++ghgPolicy ){
         (*ghgPolicy)->completeInit( name );
     }
     for( PolicyIterator policy = mPolicies.begin(); policy != mPolicies.end(); ++policy ){
         (*policy)->completeInit( name );
+    }
+    for( ResourceIterator resourceIter = mResources.begin(); resourceIter != mResources.end(); ++resourceIter ) {
+        (*resourceIter)->completeInit( name, mRegionInfo.get() );
     }
 }
 
@@ -285,6 +325,10 @@ void Region::postCalc( const int aPeriod ){
     // Finalize sectors.
     for( SectorIterator sector = supplySector.begin(); sector != supplySector.end(); ++sector ){
         (*sector)->postCalc( aPeriod );
+    }
+    // Post calculation for resource sectors
+    for( ResourceIterator currResource = mResources.begin(); currResource != mResources.end(); ++currResource ){
+        (*currResource)->postCalc( name, aPeriod );
     }
 }
 
@@ -303,6 +347,11 @@ void Region::accept( IVisitor* aVisitor, const int aPeriod ) const {
     // loop for supply sectors
     for( CSectorIterator currSec = supplySector.begin(); currSec != supplySector.end(); ++currSec ){
         (*currSec)->accept( aVisitor, aPeriod );
+    }
+    
+    // loop for resources.
+    for( CResourceIterator currResource = mResources.begin(); currResource != mResources.end(); ++currResource ){
+        (*currResource)->accept( aVisitor, aPeriod );
     }
 
     aVisitor->endVisitRegion( this, aPeriod );

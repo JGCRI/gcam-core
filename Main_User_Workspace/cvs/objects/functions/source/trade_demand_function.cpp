@@ -81,18 +81,20 @@ double TradeDemandFunction::calcDemand( InputSet& input, double consumption, con
 			}
 			// Fixed Trade
 			else {
-				netExport = input[ i ]->getCurrencyDemand( period );
+				netExport = input[ i ]->getPhysicalDemand( period );
 			}
 			// set here adds to marketplace demand as well as setting net export in input
-			input[ i ]->setCurrencyDemand( netExport, regionName, period );
+			input[ i ]->setPhysicalDemand( netExport, regionName, period );
             totalNetExport += netExport * input[ i ]->getPrice( regionName, period );
 		}
 		// for capital, add to market demand but not to total net export
 		else if( input[ i ]->hasTypeFlag( IInput::CAPITAL ) ){
-			double netExport = input[ i ]->getCurrencyDemand( period );
-			// set here adds to marketplace demand
-			input[ i ]->setCurrencyDemand( netExport, regionName, period );
-			// not added to total net export?????
+			double netExport = input[ i ]->getPhysicalDemand( period );
+			// TODO: a subtle thing to note here is demand for capital will 
+            // not be added to the marketplace directly although I could get
+            // this to work by allowing a setCurrencyDemand to add to the marketplace
+			input[ i ]->setPhysicalDemand( netExport, regionName, period );
+            marketplace->addToSupply( input[ i ]->getName(), regionName, netExport, period );
 		}
 	}
     assert( util::isValidNumber( totalNetExport ) );

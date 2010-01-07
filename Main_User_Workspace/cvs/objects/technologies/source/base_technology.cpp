@@ -36,9 +36,6 @@
 * \file base_technology.cpp
 * \ingroup Objects
 * \brief The BaseTechnology class source file.
-*
-*  Detailed Description.
-*
 * \author Pralit Patel
 * \author Sonny Kim
 */
@@ -54,21 +51,17 @@
 #include "functions/include/iinput.h"
 #include "technologies/include/ioutput.h"
 #include "technologies/include/sgm_output.h"
-#include "functions/include/production_input.h"
-#include "functions/include/demand_input.h"
-#include "functions/include/ifunction.h"
-#include "sectors/include/more_sector_info.h"
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
-#include "functions/include/function_manager.h"
-#include "util/base/include/model_time.h"
-#include "technologies/include/expenditure.h"
 #include "marketplace/include/marketplace.h"
-#include "emissions/include/aghg.h"
 #include "util/base/include/ivisitor.h"
 #include "emissions/include/ghg_factory.h"
 #include "emissions/include/co2_emissions.h"
 #include "functions/include/function_utils.h"
+#include "functions/include/node_input.h"
+#include "technologies/include/icapture_component.h"
+#include "technologies/include/capture_component_factory.h"
+
 
 using namespace std;
 using namespace xercesc;
@@ -81,10 +74,12 @@ typedef vector<AGHG*>::const_iterator CGHGIterator;
 typedef vector<AGHG*>::iterator GHGIterator;
 
 //!< Default Constructor
-BaseTechnology::BaseTechnology() {
+BaseTechnology::BaseTechnology(): doCalibration( false ),
+mShareWeight( 1.0 ), mNestedInputRoot( 0 ), mIsInitialYear( false ),
+mSequestrationDevice( 0 )
+{
     const int maxper = scenario->getModeltime()->getmaxper();
     expenditures.resize( maxper );
-    prodDmdFn = 0;
 }
 
 //!< Destructor
@@ -109,15 +104,19 @@ BaseTechnology& BaseTechnology::operator =( const BaseTechnology& baseTechIn ) {
 void BaseTechnology::copy( const BaseTechnology& baseTechIn ) {
     name = baseTechIn.name;
     categoryName = baseTechIn.categoryName;
-    prodDmdFnType = baseTechIn.prodDmdFnType;
-    prodDmdFn = baseTechIn.prodDmdFn;
-    inputNameToNo = baseTechIn.inputNameToNo;
     mGhgNameMap = baseTechIn.mGhgNameMap;
-    // year? expenditure?
+    mShareWeight = baseTechIn.mShareWeight;
+    mNestedInputRoot = static_cast<INestedInput*>( baseTechIn.mNestedInputRoot->clone() );
+    mLeafInputs = FunctionUtils::getLeafInputs( mNestedInputRoot );
 
-    for ( unsigned int i = 0; i < baseTechIn.input.size(); i++) {
-        input.push_back( baseTechIn.input[i]->clone() );
+    // copies can not be an initial year
+    mIsInitialYear = false;
+
+    // clone the baseTechIn sequestration device if it had one
+    if( baseTechIn.mSequestrationDevice.get() ) {
+        mSequestrationDevice.reset( baseTechIn.mSequestrationDevice.get()->clone() );
     }
+
     for ( unsigned int i = 0; i < baseTechIn.mOutputs.size(); i++) {
         mOutputs.push_back( baseTechIn.mOutputs[i]->clone() );
     }
@@ -131,52 +130,29 @@ void BaseTechnology::copyParam( const BaseTechnology* baseTechIn,
 {
     name = baseTechIn->name;
     categoryName = baseTechIn->categoryName;
-    prodDmdFnType = baseTechIn->prodDmdFnType;
-    prodDmdFn = baseTechIn->prodDmdFn;
+
+    // only copy the share weight if it was not already read in
+    // TODO: use a Value or something else for this
+    if( mShareWeight == 1 ) {
+        mShareWeight = baseTechIn->mShareWeight;
+    }
+
+    // only clone if we don't already have a sequestration device and 
+    // basTechIn did
+    if( baseTechIn->mSequestrationDevice.get() && !mSequestrationDevice.get() ) {
+        mSequestrationDevice.reset( baseTechIn->mSequestrationDevice.get()->clone() );
+    }
     
     const Modeltime* modeltime = scenario->getModeltime();
     const int initialYear = max( modeltime->getStartYear(), year );
     const int initialPeriod = modeltime->getyr_to_per( initialYear );
-    
-    // First loop through and remove any inputs that are not in the copy-from technology.
-    for( InputIterator iter = input.begin(); iter != input.end(); ++iter ){
-        if( !isCoefBased() && (*iter)->getCurrencyDemand( initialPeriod ) != 0 ){
-            continue;
-        }
-        // Doesn't exist in the other one. 
-        if( !util::hasValue( baseTechIn->inputNameToNo, (*iter)->getName() ) ){
-            // Remove the map entry for it. This is not strictly necessary.
-            map<string,int>::iterator mapEntry = inputNameToNo.find( (*iter)->getName() );
-            assert( mapEntry != inputNameToNo.end() ); 
-            inputNameToNo.erase( mapEntry );
-            // Remove it from the vector.
-            delete *iter;
-            input.erase( iter-- );
-        }
+    if( mNestedInputRoot ) {
+        mNestedInputRoot->copyParam( baseTechIn->mNestedInputRoot, aPeriod );
     }
-    
-    // Need to reset the map because the indexes will no longer be correct as they will account for
-    // items removed from the vector. 
-    resetMapIndices( input, inputNameToNo );
-
-    // For each input, check if it exists in the current technology. 
-    for ( CInputIterator iter = baseTechIn->input.begin(); iter != baseTechIn->input.end(); ++iter ) {
-        if( !util::hasValue( inputNameToNo, (*iter)->getName() ) ){
-            IInput* newInput = (*iter)->clone();
-            // TODO: Figure out if we need to initialize here.
-            // newInput->completeInit( initialPeriod );
-            input.push_back( newInput );
-            inputNameToNo[ (*iter)->getName() ] = static_cast<int>( input.size() - 1 );
-        }
-        // It already exists, we need to copy into.
-        else {
-            IInput* newInput = input[ util::searchForValue( inputNameToNo, (*iter)->getName() ) ];
-            newInput->copyParam( *iter, aPeriod );
-
-            // TODO: Figure out if we need to initialize here.
-            // newInput->completeInit( initialPeriod );
-        }
-    } // end for
+    else {
+        mNestedInputRoot = static_cast<INestedInput*>( baseTechIn->mNestedInputRoot->clone() );
+        mLeafInputs = FunctionUtils::getLeafInputs( mNestedInputRoot );
+    }
     
     // For each Ghg check if it exists in the current technology.
     for ( CGHGIterator ghg = baseTechIn->mGhgs.begin(); ghg != baseTechIn->mGhgs.end(); ++ghg ) {
@@ -194,9 +170,8 @@ void BaseTechnology::copyParam( const BaseTechnology* baseTechIn,
 }
 
 void BaseTechnology::clear() {
-    for( InputIterator iter = input.begin(); iter != input.end(); ++iter ) {
-        delete *iter;
-    }
+    delete mNestedInputRoot;
+
     for( vector<IOutput*>::iterator iter = mOutputs.begin(); iter != mOutputs.end(); ++iter ) {
         delete *iter;
     }
@@ -225,20 +200,36 @@ void BaseTechnology::XMLParse( const DOMNode* node ) {
         if( nodeName == "#text" ) {
             continue;
         }
-        else if ( nodeName == ProductionInput::getXMLNameStatic() ) {
-            parseContainerNode( curr, input, inputNameToNo, new ProductionInput() );
-        }
-        else if (nodeName == DemandInput::getXMLNameStatic() ) {
-            parseContainerNode( curr, input, inputNameToNo, new DemandInput() );
-        }
-        else if ( nodeName == "prodDmdFnType" ) {
-            prodDmdFnType = XMLHelper<string>::getValue( curr );
+        else if ( nodeName == SGMOutput::getXMLReportingNameStatic() ) {
+            parseContainerNode( curr, mOutputs, new SGMOutput("") );
         }
         else if ( nodeName == "categoryName" ) {
             categoryName = XMLHelper<string>::getValue( curr );
         }
         else if( GHGFactory::isGHGNode( nodeName ) ){
             parseContainerNode( curr, mGhgs, mGhgNameMap, GHGFactory::create( nodeName ).release() );
+        }
+        else if( nodeName == "share-weight" ){
+            mShareWeight = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "initial-year" ) {
+            mIsInitialYear = XMLHelper<bool>::getValue( curr );
+        }
+        else if( CaptureComponentFactory::isOfType( nodeName ) ) {
+            // Check if a new capture component needs to be created because
+            // there is not currently one or the current type does not match the
+            // new type.
+            if( !mSequestrationDevice.get() || !mSequestrationDevice->isSameType( nodeName ) ) {
+                mSequestrationDevice = CaptureComponentFactory::create( nodeName );
+            }
+            mSequestrationDevice->XMLParse( curr );
+        }
+        else if ( nodeName == NodeInput::getXMLNameStatic() ) {
+            // the root must be a node
+            // TODO: maybe I should just make mNestedInputRoot an auto_ptr
+            auto_ptr<INestedInput> tempRoot( mNestedInputRoot );
+            parseSingleNode( curr, tempRoot, new NodeInput );
+            mNestedInputRoot = tempRoot.release();
         }
         else if( !XMLDerivedClassParse( nodeName, curr ) ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -254,12 +245,8 @@ void BaseTechnology::toInputXML( ostream& out, Tabs* tabs ) const {
     // write the beginning tag.
     XMLWriteOpeningTag ( getXMLName(), out, tabs, name, year, "");
 
-    //XMLWriteElement( year, "year", out, tabs );
-    XMLWriteElement( prodDmdFnType, "prodDmdFnType", out, tabs );
-    
-    for( unsigned int iter = 0; iter < input.size(); iter++ ){
-        input[ iter ]->toInputXML( out, tabs );
-    }
+    XMLWriteElement( mShareWeight, "share-weight", out, tabs );
+    mNestedInputRoot->toInputXML( out, tabs );
     
     for( CGHGIterator ghg = mGhgs.begin(); ghg != mGhgs.end(); ++ghg ){
         (*ghg)->toInputXML( out, tabs );
@@ -275,11 +262,8 @@ void BaseTechnology::toDebugXML( const int period, ostream& out, Tabs* tabs ) co
     // write the beginning tag.
     XMLWriteOpeningTag ( getXMLName(), out, tabs, name, year );
 
-    XMLWriteElement( prodDmdFnType, "prodDmdFnType", out, tabs );
-
-    for( unsigned int iter = 0; iter < input.size(); iter++ ){
-        input[ iter ]->toDebugXML( period, out, tabs );
-    }
+    XMLWriteElement( mShareWeight, "share-weight", out, tabs );
+    mNestedInputRoot->toDebugXML( period, out, tabs );
 
     for( unsigned int iter = 0; iter < mOutputs.size(); iter++ ){
         mOutputs[ iter ]->toDebugXML( period, out, tabs );
@@ -302,9 +286,9 @@ void BaseTechnology::completeInit( const string& aRegionName,
     const Modeltime* modeltime = scenario->getModeltime();
     const int initialYear = max( modeltime->getStartYear(), year );
 
-    for( InputIterator anInput = input.begin(); anInput != input.end(); ++anInput ) {
-         // This does not appear to do anything, might not work if it did due to later copying.
-        (*anInput)->completeInit( aRegionName, aSectorName, aSubsectorName, name, 0, 0 );
+    // technologies before the base year will not have inputs yet
+    if( mNestedInputRoot ) {
+        mNestedInputRoot->completeInit( aRegionName, aSectorName, aSubsectorName, name, 0, 0 );
     }
 
     // Check if CO2 is missing. 
@@ -318,26 +302,16 @@ void BaseTechnology::completeInit( const string& aRegionName,
         // (*ghg)->completeInit();
     }
 
-    // Create the primary output for this technology. All technologies will have
-    // a primary output. Always insert the primary output at position 0.
-    SGMOutput* primaryOutput;
-    
-    // outputs before the start year need to get their conversionFactor now,
-    // outputs in the initial year will have it's conversionFactor calculated in
-    // the base year's initCalc and set it then
-    if( initialYear == year ) {
-        primaryOutput = new SGMOutput( aSectorName );
-    } else {
-        double conversionFactor = FunctionUtils::getMarketConversionFactor( aRegionName, aSectorName );
-        double co2Coef = FunctionUtils::getCO2Coef( aRegionName, aSectorName, 0 );
-        primaryOutput = new SGMOutput( aSectorName, conversionFactor, co2Coef );
+    // Create the primary output for this technology if it does not 
+    // already exist. All technologies will have a primary output.
+    // Always insert the primary output at position 0.
+    if( mOutputs.size() == 0 ) {
+        mOutputs.insert( mOutputs.begin(), new SGMOutput( aSectorName ) );    
     }
-    mOutputs.insert( mOutputs.begin(), primaryOutput );    
         
     for( unsigned int i = 0; i < mOutputs.size(); ++i ){
         mOutputs[ i ]->completeInit( aSectorName, 0, 0, true );
     }
-    initProdDmdFn();
 }
 
 void BaseTechnology::initCalc( const MoreSectorInfo* aMoreSectorInfo, const string& aRegionName,
@@ -347,61 +321,45 @@ void BaseTechnology::initCalc( const MoreSectorInfo* aMoreSectorInfo, const stri
     for( CGHGIterator ghg = mGhgs.begin(); ghg != mGhgs.end(); ++ghg ){
         (*ghg)->initCalc( aRegionName, 0, aPeriod );
     }
-
-    for( InputIterator i = input.begin(); i != input.end(); ++i ){
-        // TODO: Fix the is new vintage parameter here to be right.
-        //( *i )->initCalc( aRegionName, aSectorName, isTrade(), true, aPeriod );
-    }
     
     // Initialize the inputs.
+    // TODO: derived classes will need to initialize the node input
+    // themselves until I can figure out how to get this correct for
+    // all of them here
+    /*
+    const Modeltime* modeltime = scenario->getModeltime();
+    const bool isInitialYear = modeltime->getper_to_yr( aPeriod ) == year;
     for( InputIterator curr = input.begin(); curr != input.end(); ++curr ){
-        // TODO: Fix the is new vintage parameter here to be right.
-        (*curr)->initCalc( aRegionName, aSectorName, true, isTrade(), aPeriod );
+        (*curr)->initCalc( aRegionName, aSectorName, isInitialYear, isTrade(), aPeriod );
     }
+    */
+
     for( unsigned int i = 0; i < mOutputs.size(); ++i ){
         mOutputs[ i ]->initCalc( aRegionName, aSectorName, aPeriod );
     }
+    mPricePaidCached = false;
+}
+
+/*! \brief Return whether a technology is new investment for the current period.
+* \param aPeriod The current period.
+* \return Whether the technology is new investment in the period.
+* \author Josh Lurz, Sonny Kim
+*/
+bool BaseTechnology::isNewInvestment( const int aPeriod ) const {
+    // Return false for base technology.
+    return false;
 }
 
 /*! \brief Clear out empty inputs.
 * \details Loop through the set of inputs for a technology and remove all inputs
-*          which have a currency demand of zero. Resets the name to number map
-*          to contain the correct mappings.
+*          which have a currency demand of zero.
 */
 void BaseTechnology::removeEmptyInputs(){
-
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int initialYear = max( modeltime->getStartYear(), year );
-    const int initialPeriod = modeltime->getyr_to_per( initialYear );
-
-    for( InputIterator currInput = input.begin(); currInput != input.end(); ++currInput ){
-        if( (*currInput)->getCurrencyDemand( initialPeriod ) == 0 ){
-            // Remove the input object.
-            delete *currInput;
-            // Remove the dangling pointer and empty vector position. The erase
-            // operation invalidates any iterators at or after the position that
-            // was erased. The postfix decrement returns the current iterator to
-            // the vector delete function, then decrements the iterator. This
-            // allows the erasure of the current position without invalidating
-            // the iterator.
-            if( currInput == input.begin() ){
-                input.erase( currInput );
-                currInput = input.begin();
-            }
-            else {
-                input.erase( currInput-- );
-            }
-        }
+    // Technologies before the base year will not have inputs yet.
+    if( mNestedInputRoot ) {
+        // This method is recursive for all nodes.
+        mNestedInputRoot->removeEmptyInputs();
     }
-
-    // Rewrite the map.
-    resetMapIndices( input, inputNameToNo );
-}
-
-//! Initialize prodDmdFn by choosing the appropriate type
-void BaseTechnology::initProdDmdFn() {
-    assert( !prodDmdFnType.empty() );
-    prodDmdFn = FunctionManager::getFunction( prodDmdFnType );
 }
 
 //! get technology name
@@ -418,7 +376,7 @@ void BaseTechnology::setYear( int newYear ) {
     year = newYear;
 }
 
-/*! \brief Get the output of the technology in a given period.
+/*! \brief Get the physical output of the technology in a given period.
 * \param aPeriod Period to get output for.
 * \return The output for the given period.
 * \author Josh Lurz
@@ -426,7 +384,7 @@ void BaseTechnology::setYear( int newYear ) {
 * investments are being included in subsector level output. 
 */
 double BaseTechnology::getOutput( const int aPeriod ) const {
-    return mOutputs[ 0 ]->getCurrencyOutput( aPeriod );
+    return mOutputs[ 0 ]->getPhysicalOutput( aPeriod );
 }
 
 /*! \brief Calculates and sets the price paid for each input of the the
@@ -439,65 +397,51 @@ double BaseTechnology::getOutput( const int aPeriod ) const {
 * \author Sonny Kim
 */
 void BaseTechnology::calcPricePaid( const MoreSectorInfo* aMoreSectorInfo, const string& aRegionName,
-                                    const string& aSectorName, const int aPeriod )
+                                    const string& aSectorName, const int aPeriod, const int aLifetimeYears ) const
 {
-    // initialize so that aMoreSectorInfo does not have any impact on price 
-    // and override only if aMoreSectorInfo is not null
-    double transportationAdder = 0;
-    double transportationMult = 1;
-    double proportionalTax = 1;
-    double additiveTax = 0;
-
-    // if pointer is not null
-    if(aMoreSectorInfo) {
-        transportationAdder = aMoreSectorInfo->getValue(MoreSectorInfo::TRANSPORTATION_COST);
-        transportationMult = aMoreSectorInfo->getValue(MoreSectorInfo::TRAN_COST_MULT);
-        proportionalTax = aMoreSectorInfo->getValue(MoreSectorInfo::PROPORTIONAL_TAX_RATE);
-        additiveTax = aMoreSectorInfo->getValue(MoreSectorInfo::ADDITIVE_TAX);
+    /*!
+     * \warning Using the mPricePaidCached hack here to avoid excessive calls to calcPricePaid
+     *          this means we are relying on the technology to reset this flag at the end of
+     *          it's operate to ensure that prices will be recalculated the next time the solver
+     *          changes prices.
+     */
+    if( mPricePaidCached ) {
+        return;
     }
+    mPricePaidCached = true;
 
-    for( unsigned int i = 0; i < input.size(); i++ ) {
-        // Could this be simplified some by moving it into input? Possibly a derived class for capital?
-        // fails without using inputName in argument, don't know the cause
-        double tempPricePaid = 0;
-        if( input[ i ]->hasTypeFlag( IInput::CAPITAL ) ){
-            tempPricePaid = input[ i ]->getPrice( aRegionName, aPeriod ) + input[i]->getPriceAdjustment();
-        }
-        // This is not right because capital and numeraire are not mutually exclusive.
-        else if( input[ i ]->hasTypeFlag( IInput::NUMERAIRE ) ){
-            tempPricePaid = 1;
-        }
-        else {
-            // Calculate GHG taxes.
-            double carbonTax = 0;
-            for( CGHGIterator ghg = mGhgs.begin(); ghg != mGhgs.end(); ++ghg ){
-                carbonTax += (*ghg)->getGHGValue( input[ i ], aRegionName, aSectorName, aPeriod );
-            }
-            tempPricePaid = ( ( input[ i ]->getPrice( aRegionName, aPeriod ) + 
-                ( transportationAdder * transportationMult ) ) * proportionalTax + additiveTax + carbonTax ) * 
-                input[i]->getPriceAdjustment();
-        }
-        input[i]->setPricePaid( tempPricePaid, aPeriod );
+    // the leaves must calculate their price paid first, then the nesting structure can calculate
+    // node prices through the calcLevelizedCost method
+    // Note the hack on the sequestration device, this is because MiniCAM uses a getLargeNumber
+    // for the storage cost when there is no policy market to keep CCS out of a reference.  In
+    // SGM we would have calibrated with that large number which leads to incorrect behavior so
+    // we just need to make sure when we calibrate (aPeriod is zero) that value is not included.
+    for( vector<IInput*>::const_iterator it = mLeafInputs.begin(); it != mLeafInputs.end(); ++it ) {
+        (*it)->calcPricePaid( aRegionName, aSectorName, aMoreSectorInfo, mGhgs,
+            aPeriod > 0 ? mSequestrationDevice.get() : 0, // hack to avoid getLargeNumber when calibrating
+            aLifetimeYears, aPeriod );
     }
 }
 
 void BaseTechnology::updateMarketplace( const string& sectorName, const string& regionName, const int period ) {
+    // need to create the list here so that marketplaces get set up correctly
+    // TODO: I could just create an updateMarketplace in the node input
+    mLeafInputs = FunctionUtils::getLeafInputs( mNestedInputRoot );
     Marketplace* marketplace = scenario->getMarketplace();
     double totalDemand = 0;
-    for( InputIterator curr = input.begin(); curr != input.end(); ++curr ) {
-        double tempDemand = (*curr)->getCurrencyDemand( period );
-        if( tempDemand < 0 ){
-            cout << "Error trying to add negative demand currency to marketplace from BaseTechnology." << endl;
-        }
+    for( InputIterator curr = mLeafInputs.begin(); curr != mLeafInputs.end(); ++curr ) {
+        // really currency
+        double tempDemand = (*curr)->getPhysicalDemand( period );
         marketplace->addToDemand( (*curr)->getName(), regionName, tempDemand, period );
         totalDemand += tempDemand;
     }
     marketplace->addToSupply( sectorName, regionName, totalDemand, period );
+    mLeafInputs.clear();
 }
 
 void BaseTechnology::csvSGMOutputFile( ostream& aFile, const int period ) const {
     aFile <<  "Commodity" << ',' << "Consumption" << ',' << "Price Paid" << endl;
-    for( CInputIterator curr = input.begin(); curr != input.end(); ++curr ) {
+    for( CInputIterator curr = mLeafInputs.begin(); curr != mLeafInputs.end(); ++curr ) {
         (*curr)->csvSGMOutputFile( aFile, period );
     }
     aFile << "Total Consumption" << ',' << mOutputs[ 0 ]->getCurrencyOutput( period ) << endl << endl;
@@ -506,9 +450,8 @@ void BaseTechnology::csvSGMOutputFile( ostream& aFile, const int period ) const 
 void BaseTechnology::accept( IVisitor* aVisitor, const int aPeriod ) const
 {
     aVisitor->startVisitBaseTechnology( this, aPeriod );
-    for( CInputIterator cInput = input.begin(); cInput != input.end(); ++cInput ) {
-        (*cInput)->accept( aVisitor, aPeriod );
-    }
+
+    mNestedInputRoot->accept( aVisitor, aPeriod );
 
     if( aPeriod == -1 ) {
         int currPeriod = 0;
@@ -521,6 +464,10 @@ void BaseTechnology::accept( IVisitor* aVisitor, const int aPeriod ) const
     } else {
         expenditures[ aPeriod].accept( aVisitor, aPeriod );
     }
+    for( unsigned int iter = 0; iter < mOutputs.size(); iter++ ){
+        mOutputs[ iter ]->accept( aVisitor, aPeriod );
+    }
+    
     for( vector<AGHG*>::const_iterator cGHG = mGhgs.begin(); cGHG != mGhgs.end(); ++cGHG ) {
         (*cGHG)->accept( aVisitor, aPeriod );
     }
@@ -534,4 +481,23 @@ const string BaseTechnology::getIdentifier() const {
 
 const string BaseTechnology::createIdentifier( const string& aName, int aYear ){
     return aName + util::toString( aYear );
+}
+
+bool BaseTechnology::hasCalibrationMarket() const {
+    return doCalibration;
+}
+
+double BaseTechnology::getShareWeight( const int aPeriod ) const {
+    // maybe check that the period is equivalent to this year
+
+    return mShareWeight;
+}
+
+/*! \breif Whether this is the first year for this kind of technology.
+ * \details This flag is used to be able to determine which year 
+ *           of a technology will be used to calibrate coefficients.
+ * \return True if this is the first year for this technology.
+ */
+bool BaseTechnology::isInitialYear() const {
+    return mIsInitialYear;
 }

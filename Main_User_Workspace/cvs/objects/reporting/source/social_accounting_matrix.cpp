@@ -48,6 +48,7 @@
 
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
+#include "marketplace/include/marketplace.h"
 #include "containers/include/region.h"
 #include "sectors/include/sector.h"
 #include "sectors/include/subsector.h"
@@ -61,6 +62,7 @@
 #include "functions/include/iinput.h"
 #include "sectors/include/factor_supply.h"
 #include "reporting/include/storage_table.h"
+#include "functions/include/function_utils.h"
 
 using namespace std;
 extern Scenario* scenario;
@@ -78,8 +80,8 @@ void SocialAccountingMatrix::finish() const {
     mFile << "Social Accounting Matrix" << endl
           << "Receipts" << ',' << "Activites" << ',' << "Commoditites" << ',' << "Land" << ',' 
           << "Labor" << ',' << "Capital" << ',' << "Households" << ',' << "Enterprises" << ',' 
-          << "Government" << ',' << "Capital Account" << ',' << "Rest Of World" << ',' 
-          << "Totals" << endl;
+          << "Government" << ','<< "Carbon Tax" << ',' << "Capital Account" << ','
+          << "Rest Of World" << ',' << "Totals" << endl;
 
     for ( int categoryIndex = ACTIVITIES; categoryIndex <= TOTALS; categoryIndex++ ) {
         mTable->addColumn( getString( CategoryType( categoryIndex ) ) );
@@ -102,8 +104,8 @@ void SocialAccountingMatrix::startVisitHouseholdConsumer( const HouseholdConsume
         // for household column of SAM
         addToType( HOUSEHOLDS, COMMODITIES,
             householdConsumer->expenditures[ aPeriod ].getValue( Expenditure::CONSUMPTION ) );
-        addToType( HOUSEHOLDS, HOUSEHOLDS,
-            householdConsumer->expenditures[ aPeriod ].getValue( Expenditure::TRANSFERS ) );
+        addToType( HOUSEHOLDS, GOVERNMENT,
+            householdConsumer->expenditures[ aPeriod ].getValue( Expenditure::SOCIAL_SECURITY_TAX ) );
         addToType( HOUSEHOLDS, GOVERNMENT,
             householdConsumer->expenditures[ aPeriod ].getValue( Expenditure::DIRECT_TAXES ) );
         addToType( HOUSEHOLDS, CAPITAL_ACCOUNT,
@@ -120,8 +122,12 @@ void SocialAccountingMatrix::startVisitGovtConsumer( const GovtConsumer* govtCon
             govtConsumer->expenditures[ aPeriod ].getValue( Expenditure::SUBSIDY ) );
         addToType( GOVERNMENT, COMMODITIES,
             govtConsumer->expenditures[ aPeriod ].getValue( Expenditure::CONSUMPTION ) );
+        // we are spliting out carbon tax into its own category
         addToType( GOVERNMENT, HOUSEHOLDS,
-            govtConsumer->expenditures[ aPeriod ].getValue( Expenditure::TRANSFERS ) );
+            govtConsumer->expenditures[ aPeriod ].getValue( Expenditure::TRANSFERS )
+            - govtConsumer->expenditures[ aPeriod ].getValue( Expenditure::CARBON_TAX ) );
+        addToType( CARBON_TAX, HOUSEHOLDS,
+            govtConsumer->expenditures[ aPeriod ].getValue( Expenditure::CARBON_TAX ) );
         addToType( GOVERNMENT, CAPITAL_ACCOUNT,
             govtConsumer->expenditures[ aPeriod ].getValue( Expenditure::SAVINGS ) );   
     }
@@ -133,6 +139,13 @@ void SocialAccountingMatrix::startVisitTradeConsumer( const TradeConsumer* trade
         // for net export or rest of world column of SAM
         addToType( REST_OF_WORLD, ACTIVITIES,
             tradeConsumer->expenditures[ aPeriod ].getValue( Expenditure::TOTAL_IMPORTS ) );
+
+        // we have to get the leaves again because they would have been cleared by now
+        // maybe we should store this value in the expenditure somewhere
+        IInput* capInput = FunctionUtils::getCapitalInput( FunctionUtils::getLeafInputs( tradeConsumer->mNestedInputRoot ) );
+        // add the capital flow
+        addToType( REST_OF_WORLD, CAPITAL_ACCOUNT,
+            capInput->getCurrencyDemand( aPeriod ) );
     }
 }
 
@@ -151,8 +164,11 @@ void SocialAccountingMatrix::startVisitProductionTechnology( const ProductionTec
 {
     if( aPeriod == -1 || ( prodTech->isAvailable( aPeriod ) && !prodTech->isRetired( aPeriod ) ) ) {
         // for activities column of SAM
+        // split out carbon tax
         addToType( ACTIVITIES, COMMODITIES,
-            prodTech->expenditures[ aPeriod ].getValue( Expenditure::INTERMEDIATE_INPUTS ) );
+            prodTech->expenditures[ aPeriod ].getValue( Expenditure::INTERMEDIATE_INPUTS )
+            - prodTech->expenditures[ aPeriod ].getValue( Expenditure::CARBON_TAX ) );
+        addToType( ACTIVITIES, CARBON_TAX, prodTech->expenditures[ aPeriod ].getValue( Expenditure::CARBON_TAX ) );
         addToType( ACTIVITIES, FACTORS_LABOR, prodTech->expenditures[ aPeriod ].getValue( Expenditure::WAGES ) );
         addToType( ACTIVITIES, FACTORS_LAND, prodTech->expenditures[ aPeriod ].getValue( Expenditure::LAND_RENTS ) );
         addToType( ACTIVITIES, FACTORS_CAPITAL, prodTech->expenditures[ aPeriod ].getValue( Expenditure::RENTALS ) );
@@ -175,7 +191,9 @@ void SocialAccountingMatrix::startVisitProductionTechnology( const ProductionTec
 void SocialAccountingMatrix::startVisitFactorSupply( const FactorSupply* factorSupply,
                                                  const int period )
 {   
-    double tempSupply = factorSupply->getSupply( mRegionName, period );
+    const Marketplace* marketplace = scenario->getMarketplace();
+    double tempSupply = factorSupply->getSupply( mRegionName, period )
+        * marketplace->getPrice( factorSupply->getName(), mRegionName, period );
 
     if( factorSupply->getName() == "Land" ) {
         // for land column of SAM
@@ -191,15 +209,21 @@ void SocialAccountingMatrix::startVisitFactorSupply( const FactorSupply* factorS
 
 //! Helper function which converts enums to strings and writes to the internal table.
 void SocialAccountingMatrix::addToType( CategoryType aRowCat, CategoryType aColCat, double aValue ){
+    // TODO: I think rows a columns are switched somewhere but everything turns
+    // out right the way it is now
     assert( mTable.get() );
     mTable->addToType( getString( aRowCat ), getString( aColCat ), aValue );
+
+    // need to sum rows as well
+    const string total = getString( TOTALS );
+    mTable->addToType( total, getString( aColCat ), aValue );
 }
 
 const string& SocialAccountingMatrix::getString( const CategoryType aType ) {
     // Create a static array of labels in order of their enum.
     const static string labels[] = { "Activities", "Commodities", "Factors: Land", "Factors: Labor",
                                      "Factors: Capital", "Households", "Enterprises", "Government",
-                                     "Capital Account", "Rest of world", "Total" };
+                                     "Carbon Tax", "Capital Account", "Rest of world", "Total" };
     // Return the correct label based on the enum value.
     return labels[ aType ];
 }

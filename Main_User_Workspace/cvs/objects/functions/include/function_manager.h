@@ -65,18 +65,18 @@ class IFunction;
 *          cannot be directly instantiated as it is a static class, the only
 *          access to the it is through the static getFunction method.
 * \author Pralit Patel, Josh Lurz
+* \todo Perhaps rename this to FunctionFactory to have more consistent naming.
 */
 class FunctionManager {
 public:
-	static const IFunction* getFunction( const std::string& aFunctionName );
+    static const IFunction* getFunction( const std::string& aFunctionName );
 private:
     FunctionManager();
-	~FunctionManager();
+    ~FunctionManager();
 
     //! Maps the function's name to the pointer to the funtion
-	std::map<std::string, IFunction*> mFunctions;
-	typedef std::map<std::string, IFunction*>::iterator FunctionsIterator;
+    std::map<std::string, IFunction*> mFunctions;
+    typedef std::map<std::string, IFunction*>::iterator FunctionsIterator;
 };
 
 #endif // _FUNCTION_MANAGER_H_
-

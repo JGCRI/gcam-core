@@ -81,39 +81,6 @@ mFixedInvestments( scenario->getModeltime()->getmaxper(), -1.0 )
 Accelerator::~Accelerator(){
 }
 
-/*! \brief Complete the initialization of the Accelerator before it is used.
-* \details This function stores the region and sector name internally, and then
-*          creates default growth and profit calculation objects if they were
-*          not read in. The default growth calculator is the
-*          InvestmentGrowthCalculator and the default profit rate calculator is
-*          the SimpleExpectedProfitRateCalculator. These objects are created
-*          with their default parameters.
-* \param aRegionName Name of the region containing the accelerator.
-* \param aSectorName Name of the sector containing the accelerator.
-*/
-void Accelerator::completeInit( const string& aRegionName, const string& aSectorName ){
-    mRegionName = aRegionName;
-    mSectorName = aSectorName;
-    // Create a default type of growth calculator if one was not created during
-    // parsing.
-    if( !mGrowthCalculator.get() ){
-        mGrowthCalculator.reset( new InvestmentGrowthCalculator );
-        mGrowthCalculatorType = InvestmentGrowthCalculator::getXMLNameStatic();
-    }
-    if( !mProfitRateCalculator.get() ){
-        mProfitRateCalculator.reset( new SimpleExpectedProfitCalculator() );
-        mProfitRateCalculatorType = SimpleExpectedProfitCalculator::getXMLNameStatic();
-    }
-
-    // Warn if fixed investment for the base period was read in, as it will be ignored.
-    if( mFixedInvestments[ 0 ] != -1 ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::NOTICE );
-        mainLog << "Will ignore fixed investment in the base period for sector "
-                << mSectorName << " in region " << mRegionName << endl;
-    }
-}
-
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
 * \details This public function accesses the private constant string, XML_NAME.
 *          This way the tag is always consistent for both read-in and output and
@@ -251,6 +218,57 @@ void Accelerator::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
+/*! \brief Complete the initialization of the Accelerator before it is used.
+* \details This function stores the region and sector name internally, and then
+*          creates default growth and profit calculation objects if they were
+*          not read in. The default growth calculator is the
+*          InvestmentGrowthCalculator and the default profit rate calculator is
+*          the SimpleExpectedProfitRateCalculator. These objects are created
+*          with their default parameters.
+* \param aRegionName Name of the region containing the accelerator.
+* \param aSectorName Name of the sector containing the accelerator.
+*/
+void Accelerator::completeInit( const string& aRegionName, const string& aSectorName ){
+    mRegionName = aRegionName;
+    mSectorName = aSectorName;
+    // Create a default type of growth calculator if one was not created during
+    // parsing.
+    if( !mGrowthCalculator.get() ){
+        mGrowthCalculator.reset( new InvestmentGrowthCalculator );
+        mGrowthCalculatorType = InvestmentGrowthCalculator::getXMLNameStatic();
+    }
+    if( !mProfitRateCalculator.get() ){
+        mProfitRateCalculator.reset( new SimpleExpectedProfitCalculator() );
+        mProfitRateCalculatorType = SimpleExpectedProfitCalculator::getXMLNameStatic();
+    }
+
+    // Warn if fixed investment for the base period was read in, as it will be ignored.
+    if( mFixedInvestments[ 0 ] != -1 ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::NOTICE );
+        mainLog << "Will ignore fixed investment in the base period for sector "
+                << mSectorName << " in region " << mRegionName << endl;
+    }
+}
+
+/*! \brief Initialization of the accelerator based investor for each period.
+* \param aRegionName Name of the region containing this investor.
+* \param aSectorName Name of the sector the investor is investing in.
+* \author Josh Lurz
+*/
+void Accelerator::initCalc( vector<IInvestable*>& aInvestables,
+                            NationalAccount& aNationalAccount, 
+                            const Demographic* aDemographic,
+                            const int aPeriod )
+{
+    /*! \pre Check that the period is not nonsensical */
+    assert( aPeriod >= 0 );
+    if( aPeriod == 0 ){
+        // Don't need to determine investment for the base period.
+        mInvestments[ aPeriod ] = InvestmentUtils::sumInvestment( aInvestables, aPeriod );
+        assert( mInvestments[ aPeriod ] >= 0 );
+    }        
+}
 /*! \brief Calculates a lump sum investment using an acceleration or scaling and
 *          distributes that amount.
 * \details This function is the main operation of the Accelerator. In the base
@@ -269,45 +287,41 @@ void Accelerator::toInputXML( ostream& aOut, Tabs* aTabs ) const {
 * \return The total investment which occurred.
 * \author Josh Lurz
 */
+
 double Accelerator::calcAndDistributeInvestment( vector<IInvestable*>& aInvestables,
                                                  NationalAccount& aNationalAccount, 
                                                  const Demographic* aDemographic,
                                                  const int aPeriod )
 {   
-    /*! \pre Check that the period is not nonsensical */
-    assert( aPeriod >= 0 );
+    // For the base period use read-in investments. Do not calculate new investments.
+    // Revise to calculate investment is base period is to be solved.
+    // SHK debugging
+    double currInvestment = 0;
     if( aPeriod == 0 ){
-        // Don't need to determine investment for the base period.
-        mInvestments[ aPeriod ] = InvestmentUtils::sumInvestment( aInvestables, aPeriod );
-        assert( mInvestments[ aPeriod ] >= 0 );
-        return mInvestments[ aPeriod ];
+        //return mInvestments[ aPeriod ];
+        currInvestment = mInvestments[ aPeriod ];
     }
-        
+    else{
+        currInvestment = mInvestments[ aPeriod - 1 ];
+    }
+
     // Calculate the investment dependency scalar.
     double invDepScalar = mGrowthCalculator->calcInvestmentDependencyScalar( aInvestables,
-                                                                             aDemographic, 
-                                                                             aNationalAccount,
-                                                                             mSectorName,
-                                                                             mRegionName, 
-                                                                             mInvestments[ aPeriod - 1 ],
-                                                                             mInvestmentLogitExp,
-                                                                             aPeriod );
+                          aDemographic, aNationalAccount, mSectorName, mRegionName, 
+//                          mInvestments[ aPeriod - 1 ], mInvestmentLogitExp, aPeriod );
+                          currInvestment, mInvestmentLogitExp, aPeriod );
     // Calculate total investment
     const double newInvestment = calcNewInvestment( aInvestables, aNationalAccount,
                                                     invDepScalar, aPeriod );
     assert( newInvestment >= 0 );
 
     // Create a logit based investment distributor.
-    RateLogitDistributor invDistributor( mInvestmentLogitExp );
+    RateLogitDistributor invDistributor;
 
     // Use the investment distributor to distribute the investment.
     mInvestments[ aPeriod ] = invDistributor.distribute( mProfitRateCalculator.get(),
-                                                         aInvestables,
-                                                         aNationalAccount,
-                                                         mRegionName,
-                                                         mSectorName,
-                                                         newInvestment,
-                                                         aPeriod );
+                              aInvestables, aNationalAccount, mInvestmentLogitExp,
+                              mRegionName, mSectorName, newInvestment, aPeriod );
 
     // Check that total investment and distributed investment are equal.
     if( !util::isEqual( newInvestment, mInvestments[ aPeriod ] ) ){
@@ -375,6 +389,7 @@ double Accelerator::calcNewInvestment( vector<IInvestable*>& aInvestables,
                                                                                  mSectorName,
                                                                                  mInvestmentLogitExp,
                                                                                  false,
+                                                                                 false,
                                                                                  aPeriod );
     
     // Calculate the total new investment using the expected profit and the
@@ -388,3 +403,20 @@ double Accelerator::calcNewInvestment( vector<IInvestable*>& aInvestables,
     // regardless of the profit rate.
     return max( newInvestment, sumFixed );
 }   
+
+/*! \brief A function to sets the efficienty conditions for the investment.
+* \details Do nothing the investment based on the Accelerator.
+* \param aInvestables The vector of children which will receive investment.
+* \param aNationalAccount The national accounts container.
+* \param aCapDependencyScalar The previous calculator growth scalar.
+* \param aPeriod The period in which to calculate new investment.
+* \author Sonny Kim
+*/
+void Accelerator::setEfficiencyConditions( vector<IInvestable*>& aInvestables,
+                                           NationalAccount& aNationalAccount, 
+                                           const Demographic* aDemographic,
+                                           const int aPeriod ) const
+{
+    // Do nothing.  Only applicable for market based investment calculation.
+}
+

@@ -60,7 +60,9 @@ class IExpectedProfitRateCalculator;
 /*! 
 * \ingroup Objects
 * \brief A type of SGM technology representing purchases of good by consumers.
-* \details CHANGE
+* \details This is just an abstract base class which defines empty implementations
+*          for methods only intended to be used on the production side.  It also
+*          contains some other cominalities between consumers.
 * \author Pralit Patel, Sonny Kim
 */
 class Consumer : public BaseTechnology
@@ -93,7 +95,7 @@ public:
     virtual void updateMarketplace( const std::string& aSectorName, const std::string& aRegionName,
                                     const int aPeriod );
     virtual void postCalc( const std::string& aRegionName, const std::string& aSectorName, 
-                           const int aPeriod ){} // do nothing for now.
+                           const int aPeriod );
     virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const = 0;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     
@@ -104,6 +106,7 @@ public:
                                   const IExpectedProfitRateCalculator* aExpProfitRateCalc,
                                   const double aInvestmentLogitExp,
                                   const bool aIsShareCalc,
+                                  const bool aIsDistributing,
                                   const int aPeriod ) const
     { 
         return 0; 
@@ -133,7 +136,7 @@ public:
     double getOutput( const int aPeriod ) const {
         return 0;
     }
-    double getCapital() const {
+    double getCapitalStock() const {
         return 0;
     }
     double distributeInvestment( const IDistributor* aDistributor,
@@ -147,16 +150,22 @@ public:
         return 0;
     };
     void setTypeHelper( TechnologyType* aTechType ){}
+
 protected:
     void calcInputDemand( double aConsumption, const std::string& aRegionName, 
         const std::string& aSectorName, int aPeriod );
+
+    double calcRealGNP( NationalAccount& aNationalAccount, const std::string& aRegionName,
+        int aPeriod ) const;
     
     void calcEmissions( const std::string& aGoodName, const std::string& aRegionName, const int aPeriod );
     virtual const std::string& getXMLName() const = 0;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
+    double mUtilityParameterA;
 };
 
 #endif // _CONSUMER_H_
+
 

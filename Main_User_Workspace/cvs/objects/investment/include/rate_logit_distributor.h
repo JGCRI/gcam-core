@@ -70,11 +70,12 @@ class IExpectedProfitRateCalc;
 class RateLogitDistributor: public IDistributor
 {
 public:
-    RateLogitDistributor( const double aInvestmentLogitExp );
+    RateLogitDistributor();
 
     double distribute( const IExpectedProfitRateCalculator* IExpectedProfitRateCalculator,
                        std::vector<IInvestable*>& aInvestables,
                        NationalAccount& aNationalAccount,
+                       const double aInvestmentExp,
                        const std::string& aRegionName,
                        const std::string& aSectorName,
                        const double aAmount,
@@ -87,12 +88,11 @@ public:
                                    const std::string& aSectorName,
                                    const int aPeriod ) const;
 private:
-    //! The investment logit exponential(RHOINV).
-    double mInvestmentLogitExp;
 
     const std::vector<double> calcInvestmentShares( const std::vector<IInvestable*>& aInvestables,
                                                     const IExpectedProfitRateCalculator* aRateCalc,
                                                     const NationalAccount& aNationalAccount,
+                                                    const double aInvestmentExp,
                                                     const std::string& aRegionName,
                                                     const std::string& aSectorName,
                                                     const int aPeriod ) const;

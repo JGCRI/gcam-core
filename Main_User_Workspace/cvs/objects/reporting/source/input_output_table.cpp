@@ -50,6 +50,7 @@
 #include "functions/include/demand_input.h"
 #include "functions/include/production_input.h"
 #include "technologies/include/production_technology.h"
+#include "technologies/include/ioutput.h"
 #include "reporting/include/storage_table.h"
 #include "sectors/include/sector.h"
 #include "sectors/include/factor_supply.h"
@@ -127,8 +128,10 @@ void InputOutputTable::startVisitProductionTechnology( const ProductionTechnolog
         !prodTechnology->isRetired( aPeriod ) ) ) {
             mUseInput = true;
             // Add the technologies output as a negative demand on the diagonal.
-            mInternalTable->addToType( mCurrSectorName, mCurrSectorName, -1 * prodTechnology->getOutput( aPeriod ) );
-            mInternalTable->addToType( "Capital", mCurrSectorName, prodTechnology->getAnnualInvestment( aPeriod ) );
+            mInternalTable->addToType( mCurrSectorName, mCurrSectorName, -1 * prodTechnology->mOutputs[ 0 ]->getCurrencyOutput( aPeriod ) );
+            if( prodTechnology->isNewInvestment( aPeriod ) ) {
+                mInternalTable->addToType( "Capital", mCurrSectorName, prodTechnology->mAnnualInvestment );
+            }
 
             // Everything else will be updated at the input level.
             mParsingConsumer = false; // set that we aren't currently parsing a consumer.

@@ -74,6 +74,7 @@ public:
     virtual double getSupply() const;
     virtual void addToSupply( const double supplyIn );
     virtual bool meetsSpecialSolutionCriteria() const;
+    virtual void removeFromRawDemand( const double demandIn );
 
     virtual bool shouldSolve() const;
     virtual bool shouldSolveNR() const;

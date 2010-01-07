@@ -59,6 +59,7 @@
 #include "technologies/include/ioutput.h"
 #include "emissions/include/aemissions_driver.h"
 #include "emissions/include/emissions_driver_factory.h"
+#include "technologies/include/icapture_component.h"
 #include "marketplace/include/cached_market.h"
 
 using namespace std;
@@ -215,26 +216,91 @@ void AGHG::addEmissionsToMarket( const string& aRegionName, const int aPeriod ){
 *  \param aInput Input for which to calculate the carbon tax.
 *  \param aRegionName The name of the current region.
 *  \param aGoodName The name of the output product.
+*  \param aSequestrationDevice A capture component which will adjust the cost.
 *  \param aPeriod The period in which this calculation is occurring. 
 *  \return Generalized cost or value of the GHG
-*  \todo Sequestration and collapsing two methods.
+*  \todo Collapsing two methods.
 */
 double AGHG::getGHGValue( const IInput* aInput, const string& aRegionName,
-                          const string& aGoodName, const int aPeriod ) const
+                          const string& aGoodName,
+                          const ICaptureComponent* aSequestrationDevice,
+                          const int aPeriod ) const
 {
     // Determine if there is a tax.
     double ghgTax = mCachedMarket->getPrice( getName(), aRegionName, aPeriod, false );
     if( ghgTax == Marketplace::NO_MARKET_PRICE ){
         ghgTax = 0;
     }
+
+    // Retrieve proportional tax rate.
+    const IInfo* marketInfo = mCachedMarket->getMarketInfo( getName(), aRegionName, aPeriod, false );
+    // Note: the key includes the region name.
+    const double proportionalTaxRate = 
+        ( marketInfo && marketInfo->hasValue( "proportional-tax-rate" + aRegionName ) ) 
+        ? marketInfo->getDouble( "proportional-tax-rate" + aRegionName, true )
+        : 1.0;
+    // Adjust greenhouse gas tax with the proportional tax rate.
+    ghgTax *= proportionalTaxRate;
+
     // Get the emissions coef for the input.
     double currInputGasCoef = aInput->getCO2EmissionsCoefficient( getName(), aPeriod );
-    
-    // Get the conversion factor.
-    double convFactor = aInput->getConversionFactor( aPeriod );
-    
+
+    // Get the remove fraction
+    double removeFract = aSequestrationDevice ? aSequestrationDevice->getRemoveFraction( getName() ) : 0;
+
+    // Get the storage cost of sequestered emissions
+    double storageCost = aSequestrationDevice ? aSequestrationDevice->getStorageCost( aRegionName, getName(), 
+        aPeriod ) : 0;
+
     // Return the rate.
-    return ghgTax * currInputGasCoef * convFactor;
+    return ( ( 1 - removeFract ) * ghgTax + removeFract * storageCost ) * currInputGasCoef;
+}
+
+/*! Second Method: Convert GHG tax and any storage costs into energy units using
+*   GHG coefficients and return the value or cost of the tax and storage for the
+*   GHG. Apply taxes only if emissions occur. Emissions occur if there is a
+*   difference in the emissions coefficients.
+*  \param aOutput Output for which to calculate the carbon tax.
+*  \param aRegionName The name of the current region.
+*  \param aGoodName The name of the output product.
+*  \param aSequestrationDevice A capture component which will adjust the cost.
+*  \param aPeriod The period in which this calculation is occurring. 
+*  \return Generalized cost or value of the GHG
+*  \todo Collapsing two methods.
+*/
+double AGHG::getGHGValue( const IOutput* aOutput, const string& aRegionName,
+                          const string& aGoodName,
+                          const ICaptureComponent* aSequestrationDevice,
+                          const int aPeriod ) const
+{
+    // Determine if there is a tax.
+    double ghgTax = mCachedMarket->getPrice( getName(), aRegionName, aPeriod, false );
+    if( ghgTax == Marketplace::NO_MARKET_PRICE ){
+        ghgTax = 0;
+    }
+
+    // Retrieve proportional tax rate.
+    const IInfo* ghgMarketInfo = mCachedMarket->getMarketInfo( getName(), aRegionName, aPeriod, false );
+    // Note: the key includes the region name.
+    const double proportionalTaxRate = 
+        ( ghgMarketInfo && ghgMarketInfo->hasValue( "proportional-tax-rate" + aRegionName ) ) 
+        ? ghgMarketInfo->getDouble( "proportional-tax-rate" + aRegionName, true )
+        : 1.0;
+    // Adjust greenhouse gas tax with the proportional tax rate.
+    ghgTax *= proportionalTaxRate;
+
+    // Get the emissions coef for the output.
+    double currOutputGasCoef = aOutput->getEmissionsPerOutput( getName(), aPeriod );
+
+    // Get the remove fraction
+    double removeFract = aSequestrationDevice ? aSequestrationDevice->getRemoveFraction( getName() ) : 0;
+
+    // Get the storage cost of sequestered emissions
+    double storageCost = aSequestrationDevice ? aSequestrationDevice->getStorageCost( aRegionName, getName(), 
+        aPeriod ) : 0;
+
+    // Return the rate.
+    return ( ( 1 - removeFract ) * ghgTax + removeFract * storageCost ) * currOutputGasCoef;
 }
 
 /*! \brief Calculate the input CO2 emissions for a good.
@@ -255,7 +321,7 @@ double AGHG::calcInputCO2Emissions( const vector<IInput*>& aInputs, const string
         // Add on the physical amount of the input multplied by the amount of
         // emissions per unit of physical output.
         totalEmissions += (*input)->getPhysicalDemand( aPeriod ) 
-                        * (*input)->getCO2EmissionsCoefficient( getName(), aPeriod ); 
+                        * (*input)->getCO2EmissionsCoefficient( getName(), aPeriod );
     }
     return totalEmissions;
 }

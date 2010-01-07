@@ -58,13 +58,49 @@ class MoreSectorInfo;
 class IVisitor;
 class IExpectedProfitRateCalculator;
 class IShutdownDecider;
+
 /*! 
-* \ingroup Objects
-* \brief A technology which accepts investment and produces output for SGM
-*        production sectors.
-* \details TODO
-* \author Pralit Patel, Sonny Kim
-*/
+ * \ingroup Objects
+ * \brief A technology which accepts investment and produces output for SGM
+ *        production sectors.
+ * \details Represents a single vintage of an SGM production technology.  This technology
+ *          is responsible calculating its own coefficients, passing its self forward,
+ *          converting to an old vintage, calculating a technology cost, supply output
+ *          and input demands based on investment, calculating emissions, and collecting
+ *          taxes and various other accounting.
+ *
+ *          <b>XML specification for ProductionTechnology</b>
+ *          - XML name: \c productionTechnology
+ *          - Contained by: Subsector
+ *          - Parsing inherited from class: BaseTechnology
+ *          - Elements:
+ *              - \c lifeTime TradeInput::lifeTime
+ *                   The lifetime in years of this technology.
+ *              - \c basePhysicalOutput TradeInput::mBasePhysicalOutput
+ *                   Base year physical output of this technology.  This value is utilized
+ *                   in conjunction with the total currency demand from the inputs to determine
+ *                   the base year technology cost to use when initializing coefficients.  Note
+ *                   that if this value is not provided we assume the cost is equal to the sector
+ *                   price recieved.
+ *              - \c fixed-investment TradeInput::mFixedInvestment
+ *                   Fixed investment our output level of this technology.  Note that reading
+ *                   this value implies this technology is a fixed technology and the investor will
+ *                   not attempt to invest in this technology.  The technology cost will however
+ *                   factor into the levelized cost of the sector.  Also note that even though
+ *                   a fixed amount is read when the technology is an old vintage it is still
+ *                   susceptible  to the shutdown coef.
+ *              - \c technicalChangeHicks TradeInput::mTechChange.mHicksTechChange
+ *                   Hicks neutral tech change applied in the initial investment year of this
+ *                   technology.
+ *              - \c technicalChangeEnergy TradeInput::mTechChange.mEnergyTechChange
+ *                   Tech change for energy inputs applied in the initial investment year of this
+ *                   technology.
+ *              - \c technicalChangeMaterial TradeInput::mTechChange.mMaterialTechChange
+ *                   Tech change for material inputs applied in the initial investment year of this
+ *                   technology.
+ *
+ * \author Pralit Patel, Sonny Kim
+ */
 class ProductionTechnology : public BaseTechnology
 {
     friend class SocialAccountingMatrix;
@@ -74,7 +110,8 @@ class ProductionTechnology : public BaseTechnology
     friend class SectorResults;
     friend class GovtResults;
     friend class XMLDBOutputter;
-    // either this is a friend or move isAvailable and isRetired to public
+    // either these are friends or move isAvailable and isRetired to public
+    friend class EnergyBalanceTable;
     friend class InputOutputTable;
 public:
     ProductionTechnology();
@@ -101,6 +138,8 @@ public:
     
     static const std::string& getXMLNameStatic();
 
+    bool isNewInvestment( const int period ) const;
+
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic, 
         const MoreSectorInfo* aMoreSectorInfo, const std::string& aRegionName, const std::string& aSectorName, 
         const bool aIsNewVintageMode, const int aPeriod );
@@ -108,7 +147,7 @@ public:
     virtual double setInvestment( const std::string& aRegionName, const double aAnnualInvestment,
                                   const double aTotalInvestment, const int aPeriod );
 
-    virtual double getCapital() const;
+    virtual double getCapitalStock() const;
     virtual double getAnnualInvestment( const int aPeriod ) const;
     
     double getExpectedProfitRate( const NationalAccount& aNationalAccount,
@@ -117,6 +156,7 @@ public:
                                   const IExpectedProfitRateCalculator* aExpProfitRateCalc,
                                   const double aInvestmentLogitExp,
                                   const bool aIsShareCalc,
+                                  const bool aIsDistributing,
                                   const int aPeriod ) const;
     
     virtual double getCapitalOutputRatio( const IDistributor* aDistributor,
@@ -145,8 +185,6 @@ protected:
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 private:
-     //! Lower limit of sigma for CES.
-    const static double LEONTIEF_THRESHOLD;
 
     //! Costs stored by period for reporting.
     std::vector<double> mCostsReporting;
@@ -162,7 +200,6 @@ private:
     
     //! Expected profit rate stored for reporting.
     double mExpectedProfitRateReporting;
-    
     
     /*! \brief An enum which describes the types of cached function return
     *          values for a specific year. 
@@ -180,14 +217,9 @@ private:
     //! A vector of cached results indexed by year for frequently called checks.
     std::vector<bool> mCachedValues;
     
-    double capital; //!< capital cost
-    double alphaZeroScaler; //!< scaler for production funtion
+    double mCapitalStock; //!< capital stock
     double indBusTax; //!< indirect business tax
-    double sigma1; //!< elasticity of substitution for new vintage
-    double sigma2; //!< elasticity of substitution for old vintage
-    double currSigma; //!< The sigma currently being used.
     double mBasePhysicalOutput; //!< base year physical output for calculating conversion factor
-    double mConversionFactor; //!< conversion factor to get physical output from currency output
     double mAnnualInvestment; //!< Annual investment
     double mFixedInvestment; //!< Quantity of fixed investment in the initial year for the technology.
     
@@ -207,7 +239,6 @@ private:
     void calcTaxes( NationalAccount& aNationalAccount, const MoreSectorInfo* aMoreSectorInfo, 
         const std::string& aRegionName, const std::string aSectorName, const int aPeriod );
     
-    inline bool isNewInvestment( const int period ) const;
     bool calcIsNewInvestment( const int aPeriod ) const;
     
     inline bool isAvailable( const int aPeriod ) const;
@@ -220,21 +251,6 @@ private:
                              const std::string& aSectorName,
                              const int aPeriod ) const;
 };
-
-/*! \brief Return whether a technology is new investment for the current period.
-* \param aPeriod The current period.
-* \return Whether the technology is new investment in the period.
-* \author Josh Lurz
-*/
-bool ProductionTechnology::isNewInvestment( const int aPeriod ) const {
-    // Check if we have a valid cached result for the period.
-    if( aPeriod == mValidCachePeriod ){
-        return mCachedValues[ NEW_INVESTMENT ];
-    }
-    // There is no cached result available for this period, so calculate it
-    // dynamically.
-    return calcIsNewInvestment( aPeriod );
-}
 
 /*! \brief Return whether a technology is available to go online.
 * \param aPeriod The current period.

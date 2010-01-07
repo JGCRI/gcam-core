@@ -236,6 +236,9 @@ public:
 
     virtual void startVisitTranTechnology( const TranTechnology* aTranTechnology, const int aPeriod ){}
     virtual void endVisitTranTechnology( const TranTechnology* aTranTechnology, const int aPeriod ){}
+
+    virtual void startVisitNodeInput( const NodeInput* aNodeInput, const int aPeriod ){}
+    virtual void endVisitNodeInput( const NodeInput* aNodeInput, const int aPeriod ){}
     
     virtual void startVisitBuildingGenericDmdTechnology( const BuildingGenericDmdTechnology* aBuildingTechnology, const int aPeriod ){}
     virtual void endVisitBuildingGenericDmdTechnology( const BuildingGenericDmdTechnology* aBuildingTechnology, const int aPeriod ){}

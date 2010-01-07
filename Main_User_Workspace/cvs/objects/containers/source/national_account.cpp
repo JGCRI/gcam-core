@@ -55,10 +55,11 @@ using namespace std;
 using namespace xercesc;
 
 //! Default Constructor
-NationalAccount::NationalAccount() {
-    // Size the accounts to one after the last valid value in the vector,
-    // represented by END.
-    mAccounts.resize( END );
+NationalAccount::NationalAccount():
+// Size the accounts to one after the last valid value in the vector,
+// represented by END.
+mAccounts( END )
+{
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -75,7 +76,7 @@ const std::string& NationalAccount::getXMLNameStatic() {
     return XML_NAME;
 }
 
-//! parse SOME xml data
+
 void NationalAccount::XMLParse( const DOMNode* node ) {
     /*! \pre make sure we were passed a valid node. */
     assert( node );
@@ -106,6 +107,9 @@ void NationalAccount::XMLParse( const DOMNode* node ) {
         else if  ( nodeName == enumToXMLName( EXCHANGE_RATE ) ) {
             addToAccount( EXCHANGE_RATE, XMLHelper<double>::getValue( curr ) );
         }
+        else if  ( nodeName == enumToXMLName( CORPORATE_PROFITS ) ) {
+            addToAccount( CORPORATE_PROFITS, XMLHelper<double>::getValue( curr ) );
+        }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
@@ -127,23 +131,38 @@ void NationalAccount::toDebugXML( const int period, ostream& out, Tabs* tabs ) c
     XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
 }
 
-//! Add to the value for the national account specified by the account type key. 
+/*!
+ * \brief Add to the value for the national account specified by the account type key.
+ * \param aType The account which will be added to.
+ * \param aValue The value which will be added to account aType.
+ */
 void NationalAccount::addToAccount( const AccountType aType, const double aValue ){
     mAccounts[ aType ]+= aValue;
 }
 
-//! Set the value for the national account specified by the account type key. 
+/*!
+ * \brief Set the value for the national account specified by the account type key.
+ * \param aType The account for which value will be set.
+ * \param aValue The value which wil be set to account aType.
+ */
 void NationalAccount::setAccount( const AccountType aType, const double aValue ){
     mAccounts[ aType ] = aValue;
 }
 
-//! Get the value for the national account specified by the account type key. 
+/*!
+ * \brief Get the value for the national account specified by the account type key.
+ * \param aType The account who's value will be returned.
+ * \return The current value of the account aType.
+ */
 double NationalAccount::getAccountValue( const AccountType aType ) const {
     assert( aType < END );
     return mAccounts[ aType ];
 }
 
-//! Reset the national account values
+/*!
+ * \brief Reset the national account values
+ * \note The accounts TRANSFERS and INVESTMENT_TAX_CREDIT do not get reset.
+ */
 void NationalAccount::reset() {
     // save transfer amount calculated from government's initCalc
     // this is a giant hack. store the values that should not be reset.
@@ -160,26 +179,40 @@ void NationalAccount::reset() {
     mAccounts[ INVESTMENT_TAX_CREDIT ] = tempInvTaxCreditRate;
 }
 
-/*! \brief For outputting SGM data to a flat csv File
- * 
- * \author Pralit Patel
+/*!
+ * \brief For outputting SGM data to a flat csv File
+ * \param aFile The file in which the results will be written.
  * \param period The period which we are outputting for
+ * \author Pralit Patel
  */
 void NationalAccount::csvSGMOutputFile( ostream& aFile, const int period ) const {
     // write headers
     aFile << "GNP Accounts" << endl;
-    aFile << enumToName( GNP ) << ',';
-    aFile << enumToName( CONSUMPTION ) << ',';
-    aFile << enumToName( GOVERNMENT ) << ',';
-    aFile << enumToName( INVESTMENT ) << ',';
-    aFile << enumToName( NET_EXPORT ) << ',';
+    aFile << enumToName( GNP_NOMINAL ) << ',';
+    aFile << enumToName( CONSUMPTION_NOMINAL ) << ',';
+    aFile << enumToName( GOVERNMENT_NOMINAL ) << ',';
+    aFile << enumToName( INVESTMENT_NOMINAL ) << ',';
+    aFile << enumToName( NET_EXPORT_NOMINAL ) << ',';
     aFile << endl;
     // write data
-    aFile << getAccountValue( GNP ) << ',';
-    aFile << getAccountValue( CONSUMPTION ) << ',';
-    aFile << getAccountValue( GOVERNMENT ) << ',';
-    aFile << getAccountValue( INVESTMENT ) << ',';
-    aFile << getAccountValue( NET_EXPORT ) << ',';
+    aFile << getAccountValue( GNP_NOMINAL ) << ',';
+    aFile << getAccountValue( CONSUMPTION_NOMINAL ) << ',';
+    aFile << getAccountValue( GOVERNMENT_NOMINAL ) << ',';
+    aFile << getAccountValue( INVESTMENT_NOMINAL ) << ',';
+    aFile << getAccountValue( NET_EXPORT_NOMINAL ) << ',';
+    aFile << endl << endl;
+    aFile << enumToName( GNP_REAL ) << ',';
+    aFile << enumToName( CONSUMPTION_REAL ) << ',';
+    aFile << enumToName( GOVERNMENT_REAL ) << ',';
+    aFile << enumToName( INVESTMENT_REAL ) << ',';
+    aFile << enumToName( NET_EXPORT_REAL ) << ',';
+    aFile << endl;
+    // write data
+    aFile << getAccountValue( GNP_REAL ) << ',';
+    aFile << getAccountValue( CONSUMPTION_REAL ) << ',';
+    aFile << getAccountValue( GOVERNMENT_REAL ) << ',';
+    aFile << getAccountValue( INVESTMENT_REAL ) << ',';
+    aFile << getAccountValue( NET_EXPORT_REAL ) << ',';
     aFile << endl << endl;
     // write tax accounts
     aFile << "National Tax Accounts" << endl;
@@ -203,14 +236,28 @@ void NationalAccount::csvSGMOutputFile( ostream& aFile, const int period ) const
             + getAccountValue( PERSONAL_INCOME_TAXES )
             + getAccountValue( INVESTMENT_TAX_CREDIT );
     aFile << endl << endl;
+    // write import export breakdown
+    aFile << "National Imports and Exports" << endl;
+    // write headers
+    aFile << enumToName( EXPORT_NOMINAL ) << ',';
+    aFile << enumToName( EXPORT_REAL ) << ',';
+    aFile << enumToName( IMPORT_NOMINAL ) << ',';
+    aFile << enumToName( IMPORT_REAL );
+    aFile << endl;
+    // write data
+    aFile << getAccountValue( EXPORT_NOMINAL ) << ',';
+    aFile << getAccountValue( EXPORT_REAL ) << ',';
+    aFile << getAccountValue( IMPORT_NOMINAL ) << ',';
+    aFile << getAccountValue( IMPORT_REAL );
+    aFile << endl << endl;
 
 }
 
-/*! \brief Convert between the NationalAccount enum type to the String representation
- *
- * \author Pralit Patel
+/*!
+ * \brief Convert between the NationalAccount enum type to the String representation
  * \param aType The enum NationalAccount type
  * \return The string representation of the type
+ * \author Pralit Patel
  */
 const string& NationalAccount::enumToName( const AccountType aType ) const {
     /*! \pre aType is a valid account type. */
@@ -218,7 +265,6 @@ const string& NationalAccount::enumToName( const AccountType aType ) const {
     // Create a static array of values. This will only on the first entrance to
     // the function since this is a const static.
     const static string names[] = {
-            "GDP",
             "Retained Earnings",
             "Subsidy",
             "Corporate Profits",
@@ -233,24 +279,34 @@ const string& NationalAccount::enumToName( const AccountType aType ) const {
             "Transfers",
             "Social Security Tax",
             "Indirect Buisness Tax",
-            "GNP",
+            "GNP Nominal",
             "GNP VA",
-            "Consumption",
-            "Government",
-            "Investment",
-            "Net Export",
+            "GNP Real",
+            "Consumption Nominal",
+            "Government Nominal",
+            "Investment Nominal",
+            "Net Export Nominal",
+            "Consumption Real",
+            "Government Real",
+            "Investment Real",
+            "Net Export Real",
             "Exchange Rate",
-            "Annual Investment" 
+            "Annual Investment",
+            "Carbon Tax",
+            "Export Nominal",
+            "Export Real",
+            "Import Nominal",
+            "Import Real"
     };
     // Return the string in the static array at the index.
     return names[ aType ];
 }
 
-/*! \brief Convert between the NationalAccount enum type to the XML String representation
- *
- * \author Pralit Patel
+/*!
+ * \brief Convert between the NationalAccount enum type to the XML String representation
  * \param aType The enum NationalAccount type
  * \return The XML string representation of the type
+ * \author Pralit Patel
  */
 const string& NationalAccount::enumToXMLName( const AccountType aType ) const {
     /*! \pre aType is a valid account type. */
@@ -259,7 +315,6 @@ const string& NationalAccount::enumToXMLName( const AccountType aType ) const {
     // the function since this is a const static.
 
     const static string names[] = {
-            "GDP",
             "retainedEarning",
             "subsidy",
             "corpProfits",
@@ -274,14 +329,24 @@ const string& NationalAccount::enumToXMLName( const AccountType aType ) const {
             "transfers",
             "socialSecurityTax",
             "indirectBusinessTax",
-            "GNP",
+            "GNP-nominal",
             "GNPVA",
-            "consumption",
-            "government",
-            "investment",
-            "netExport",
+            "GNP-real",
+            "consumption-nominal",
+            "government-nominal",
+            "investment-nominal",
+            "netExport-nominal",
+            "consumption-real",
+            "government-real",
+            "investment-real",
+            "netExport-real",
             "exchangeRate",
-            "annualInvestment"
+            "annualInvestment",
+            "carbon-tax",
+            "export-nominal",
+            "export-real",
+            "import-nominal",
+            "import-real"
     };
     // Return the string in the static array at the index.
     return names[ aType ];

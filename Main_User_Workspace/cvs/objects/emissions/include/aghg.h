@@ -97,7 +97,10 @@ public:
     static const std::string& getXMLNameStatic();
 
     double getGHGValue( const IInput* aInput, const std::string& aRegionName, const std::string& aProdName,
-                        const int aPeriod ) const;
+                        const ICaptureComponent* aSequestrationDevice, const int aPeriod ) const;
+                        
+    double getGHGValue( const IOutput* aOutput, const std::string& aRegionName, const std::string& aProdName,
+                        const ICaptureComponent* aSequestrationDevice, const int aPeriod ) const;
     /*! 
      * \brief Convert GHG tax and any storage costs into energy units using GHG
      *        coefficients and return the value or cost of the tax and storage

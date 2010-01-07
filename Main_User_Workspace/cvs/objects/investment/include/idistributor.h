@@ -77,6 +77,8 @@ public:
      * \param aInvestable Vector of objects across which to distribute
      *        investment.
      * \param aNationalAccount Regional national accounts container.
+     * \param aInvestmentExp Logit exp used to distribute. TODO: remove if
+     *        can think of a better way.
      * \param aRegionName Name of the region in which investment is occurring.
      * \param aSectorName Name of the sector in which investment is occurring.
      * \param aAmount Amount of investment to distribute.
@@ -89,6 +91,7 @@ public:
     virtual double distribute( const IExpectedProfitRateCalculator* aRateCalc,
                                std::vector<IInvestable*>& aInvestables,
                                NationalAccount& aNationalAccount,
+                               const double aInvestmentExp,
                                const std::string& aRegionName,
                                const std::string& aSectorName,
                                const double aAmount,

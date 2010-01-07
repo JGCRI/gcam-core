@@ -53,28 +53,40 @@
 #include "functions/include/leontief_production_function.h"
 #include "functions/include/minicam_leontief_production_function.h"
 #include "functions/include/minicam_price_elasticity_function.h"
+#include "functions/include/nested_ces_production_function.h"
+#include "functions/include/utility_demand_function.h"
+#include "functions/include/logit_production_function.h"
 #include "util/logger/include/ilogger.h"
 
 using namespace std;
 
 //! Default Constructor
 FunctionManager::FunctionManager() {
+    // all avaiable functions must be added here
+    /*!
+     * \todo To avoid spelling issues perhaps we should change the key to
+     *       an enumeration and have a static lookup between a name and the
+     *       enum for use during XML parsing.
+     */
     mFunctions[ "CES" ] = new CESProductionFunction;
-	mFunctions[ "Leontief" ] = new LeontiefProductionFunction;
-	mFunctions[ "minicam-leontief" ] = new MinicamLeontiefProductionFunction;
+    mFunctions[ "Leontief" ] = new LeontiefProductionFunction;
+    mFunctions[ "NestedCES" ] = new NestedCESProductionFunction;
+    mFunctions[ "minicam-leontief" ] = new MinicamLeontiefProductionFunction;
     mFunctions[ "minicam-price-elasticity" ] = new MinicamPriceElasticityFunction;
-	mFunctions[ "HouseholdDemandFn" ] = new HouseholdDemandFunction;
-	mFunctions[ "GovtDemandFn" ] = new GovernmentDemandFunction;
-	mFunctions[ "TradeDemandFn" ] = new TradeDemandFunction;
-	mFunctions[ "InvestDemandFn" ] = new InvestmentDemandFunction;
+    mFunctions[ "HouseholdDemandFn" ] = new HouseholdDemandFunction;
+    mFunctions[ "GovtDemandFn" ] = new GovernmentDemandFunction;
+    mFunctions[ "TradeDemandFn" ] = new TradeDemandFunction;
+    mFunctions[ "InvestDemandFn" ] = new InvestmentDemandFunction;
+    mFunctions[ "UtilityDemandFunction" ] = new UtilityDemandFunction;
+    mFunctions[ "Logit" ] = new LogitProductionFunction;
 }
 
 //! Destructor
 FunctionManager::~FunctionManager() {
-	// delete pointer to each function
-	for( FunctionsIterator funcIter = mFunctions.begin(); funcIter != mFunctions.end(); ++funcIter ) {
-		delete funcIter->second;
-	}
+    // delete pointer to each function
+    for( FunctionsIterator funcIter = mFunctions.begin(); funcIter != mFunctions.end(); ++funcIter ) {
+        delete funcIter->second;
+    }
 }
 
 /*! \brief Get the pointer the the function class represented by aFunctionName
@@ -91,12 +103,12 @@ const IFunction* FunctionManager::getFunction( const string& aFunctionName ) {
     const static FunctionManager functionManager;
 
     const IFunction* tempFn = util::searchForValue( functionManager.mFunctions, aFunctionName );
-	// checking to see if functionName exists in the map
-	if ( !tempFn ) {
+    // checking to see if functionName exists in the map
+    if ( !tempFn ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
-		mainLog << "Could not find Production or Demand Function. Check function type: " 
+        mainLog << "Could not find Production or Demand Function. Check function type: " 
                 << aFunctionName << endl;
-	}
-	return tempFn;
+    }
+    return tempFn;
 }

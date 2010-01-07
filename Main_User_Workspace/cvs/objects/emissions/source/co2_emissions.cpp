@@ -68,7 +68,14 @@ CO2Emissions::~CO2Emissions()
 
 //! Clone operator.
 CO2Emissions* CO2Emissions::clone() const {
-    return new CO2Emissions( *this );
+    /*!
+     * \todo We are just returning a default CO2Emissions object because
+     *       we did not want to copy the past emissions into a new object
+     *       since that would not make sense for reporting.  This strategy
+     *       is not completely correct because there may be things that should
+     *       get copied in the future.  This may be the case for MiniCAM already.
+     */
+    return new CO2Emissions();
 }
 
 void CO2Emissions::copyGHGParameters( const AGHG* aPrevGHG ){
@@ -194,11 +201,11 @@ void CO2Emissions::calcEmission( const std::string& aRegionName,
     double inputEmissions = calcInputCO2Emissions( aInputs, aRegionName, aPeriod );
     double outputEmissions = calcOutputEmissions( aOutputs, aPeriod );
 
-	/* Total emissions are the difference in carbon of the input fuel and the output
-	 * fuel, if any. For conversion technologies like liquefaction or gasification, the
-	 * total emissions is the carbon involved in the conversion process, and the carbon
-	 * in the produced fuel is passed through. For electricity and hydrogen production,
-	 * this same logic works as the carbon in the output is zero */
+    /* Total emissions are the difference in carbon of the input fuel and the output
+     * fuel, if any. For conversion technologies like liquefaction or gasification, the
+     * total emissions is the carbon involved in the conversion process, and the carbon
+     * in the produced fuel is passed through. For electricity and hydrogen production,
+     * this same logic works as the carbon in the output is zero */
 
     double totalEmissions = inputEmissions - outputEmissions;
 
@@ -208,22 +215,9 @@ void CO2Emissions::calcEmission( const std::string& aRegionName,
         mEmissionsSequestered[ aPeriod ] = aSequestrationDevice->calcSequesteredAmount( 
                                            aRegionName, getName(), totalEmissions, aPeriod );
 
-		totalEmissions -= mEmissionsSequestered[ aPeriod ];
+        totalEmissions -= mEmissionsSequestered[ aPeriod ];
     }
 
-    // If the good is a primary fuel, don't subtract output emissions as this is
-    // extraction of the resource, not sequestration, and store the output
-    // emissions as emissions by primary fuel. This should probably be stored by
-    // the GHG.
-    // This is wrong if capture occurs down the line.
-    // TODO: Store this property in the output object.
-    /* TODO: this is SGM only and is currently not correct, will be fixed with the merge
-    Marketplace* marketplace = scenario->getMarketplace();
-    const IInfo* marketInfo = marketplace->getMarketInfo( aOutputs[ 0 ]->getName(),
-        aRegionName, aPeriod, false );
-    if( marketInfo && marketInfo->getBoolean( "IsPrimaryEnergyGood", false ) ){
-        mEmissionsByFuel[ aPeriod ] = outputEmissions;
-    }*/
 
     // Store the total emissions.
     mEmissions[ aPeriod ] = totalEmissions;

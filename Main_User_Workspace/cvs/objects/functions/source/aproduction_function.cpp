@@ -78,9 +78,12 @@ double AProductionFunction::calcCosts( const InputSet& input,
 	for( unsigned int i = 0; i < input.size(); ++i ) {
 		// capital input name should be changed to OtherValueAdded
 		if( !input[i]->hasTypeFlag( IInput::CAPITAL ) ) {
-			totalCost += input[i]->getCurrencyDemand( period )
+			totalCost += input[i]->getPhysicalDemand( period )
 				         * input[i]->getPricePaid( regionName, period );
 		}
+        else {
+            totalCost += input[i]->calcTaxes( regionName, 0, 0, period );
+        }
 	}
 	return totalCost;
 }

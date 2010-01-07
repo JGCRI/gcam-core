@@ -225,7 +225,7 @@ double OutputGrowthCalculator::calcTrialCapital( const vector<IInvestable*>& aIn
     // Create a simple expected profit rate calculator and distributor which are
     // needed to calculate the average sector capital to output ratio.
     SimpleExpectedProfitCalculator expProfitRateCalc;
-    RateLogitDistributor distributor( aInvestmentLogitExp );
+    RateLogitDistributor distributor;
 
     // Calculate the amount of capital required to produce one unit of output.
     const double capitalOutputRatio = distributor.calcCapitalOutputRatio( aInvestables,
@@ -293,7 +293,7 @@ double OutputGrowthCalculator::calcOutputGap( const vector<IInvestable*>& aInves
     // Create a simple expected profit rate calculator and distributor which are
     // needed to calculate the average sector capital to output ratio.
     SimpleExpectedProfitCalculator expProfitRateCalc;
-    RateLogitDistributor distributor( aInvestmentLogitExp );
+    RateLogitDistributor distributor;
     
     for( unsigned int i = 0; i < aInvestables.size(); ++i ){
         // Determine the capital to output ratio for the subsector.

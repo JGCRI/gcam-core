@@ -48,7 +48,6 @@
 
 #include "functions/include/function_utils.h"
 #include "functions/include/iinput.h"
-#include "functions/include/iinput.h"
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/util.h"
 #include "containers/include/scenario.h"
@@ -56,6 +55,8 @@
 #include "functions/include/ifunction.h" // for TechChange.
 #include "containers/include/iinfo.h"
 #include "util/logger/include/ilogger.h"
+#include "functions/include/inested_input.h"
+#include "functions/include/leaf_input_finder.h"
 
 using namespace std;
 
@@ -377,7 +378,7 @@ double FunctionUtils::getTechChangeForInput( const IInput* aInput,
     // If an input specific technical change was not read-in, use an energy
     // or material technical change. TODO: Check for not-initialized vs.
     // zero.
-    if( techChange < util::getSmallNumber() ){
+    if( techChange == 0 ){
         if( aInput->hasTypeFlag( IInput::ENERGY ) ){
             techChange = aTechChange.mEnergyTechChange;
         }
@@ -406,17 +407,20 @@ bool FunctionUtils::isFixedPrice( const string& aRegionName,
 *          which is stored in the marketplace.
 * \param aRegionName The region name.
 * \param aGoodName The good name.
+* \param aMustExist If the conversion factor must exist.  It would be alright
+*                   for it to not exist for consumers.
 * \return The conversion factor for the good.
 */
 double FunctionUtils::getMarketConversionFactor( const string& aRegionName,
-                                                 const string& aGoodName )
+                                                 const string& aGoodName,
+                                                 const bool aMustExist )
 {
     assert( !aGoodName.empty() && !aRegionName.empty() );
     assert( aGoodName != "USA" );
 
-    const IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( aGoodName, aRegionName, 0, true );
+    const IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( aGoodName, aRegionName, 0, aMustExist );
 
-    return marketInfo ? marketInfo->getDouble( "ConversionFactor", true ) : 0;
+    return marketInfo ? marketInfo->getDouble( "ConversionFactor", aMustExist ) : 0;
 }
 
 /*!
@@ -443,13 +447,24 @@ void FunctionUtils::copyInputParamsForward( const InputSet& aPrevInputs,
     }
 }
 
+/*!
+ * \brief Static function which returns the CO2 content for a good
+ *        if it were to be emitted.  The coefficient is stored in the marketplace.
+ * \param aRegionName The region name.
+ * \param aGoodName The good name.
+ * \param aPeriod The period for which to look.
+ * \param aMustExist If the CO2 coefficient must exist.  It would be alright
+ *                   for it to not exist for consumers.
+ * \return The CO2 emissions coefficient for the good.
+ */
 double FunctionUtils::getCO2Coef( const string& aRegionName,
                                   const string& aGoodName,
-                                  const int aPeriod )
+                                  const int aPeriod,
+                                  const bool aMustExist )
 {
     // Initialize the cached CO2 coefficient.
     const Marketplace* marketplace = scenario->getMarketplace();
-    const IInfo* productInfo = marketplace->getMarketInfo( aGoodName, aRegionName, aPeriod, true );
+    const IInfo* productInfo = marketplace->getMarketInfo( aGoodName, aRegionName, aPeriod, aMustExist );
 
     // Output ratio is determined by the CO2 coefficient and the ratio of output
     // to the primary good. The info should not be null except in cases of
@@ -493,3 +508,66 @@ double FunctionUtils::calcPriceRatio( const string& aRegionName,
     return priceRatio;
 }
 
+/*!
+ * \brief Gets the leaf inputs from a nested input structure.
+ * \details This method will use the LeafInputFinder visitor to create a 
+ *          list of any leaf inputs that are a descendant (or self) of the passed 
+ *          in INestedInput.  See LeafInputFinder to determine which inputs
+ *          are considered leaves.
+ * \param aNestedInput The nested input to search for leaves.
+ * \return An InputSet of the leaves that are withing the passed in nested
+ *         input.
+ * \author Pralit Patel
+ */
+InputSet FunctionUtils::getLeafInputs( const INestedInput* aNestedInput ) {
+    assert( aNestedInput );
+    LeafInputFinder inputFinder;
+    aNestedInput->accept( &inputFinder, -1 );
+    return inputFinder.getInputs();
+}
+
+/*!
+ * \breif Sets the price of the capital good.
+ * \details The price of the capital good is the CES aggregate of
+ *          goods that make up capital usually determined by inputs
+ *          to the investment consumer.
+ * \param aRegionName The name of the region in which to set the price.
+ * \param aPeriod The period in which we want to set the price.
+ * \param aCapitalGoodPrice The price to set.
+ * \author Pralit Patel
+ */
+void FunctionUtils::setCapitalGoodPrice( const string& aRegionName,
+                                         const int aPeriod,
+                                         const double aCapitalGoodPrice )
+{
+    static const string capitalGoodName = "Capital";
+    Marketplace* marketplace = scenario->getMarketplace();
+    IInfo* marketInfo = marketplace->getMarketInfo( capitalGoodName, aRegionName, aPeriod, true );
+
+    /*! \invariant The market and market info must exist. */
+    assert( marketInfo );
+    marketInfo->setDouble( "CapitalGoodPrice", aCapitalGoodPrice );
+}
+
+/*!
+ * \breif Gets the price of the capital good.
+ * \details The price of the capital good is the CES aggregate of
+ *          goods that make up capital usually determined by inputs
+ *          to the investment consumer.  This price is used to convert
+ *          a quantity amount of capital to a dollar amount which can
+ *          be used for investment.
+ * \param aRegionName The name of the region in which to get the price.
+ * \param aPeriod The period in which we want to get the price.
+ * \return The price of the capital good.
+ * \author Pralit Patel
+ */
+double FunctionUtils::getCapitalGoodPrice( const string& aRegionName,
+                                           const int aPeriod )
+{
+    static const string capitalGoodName = "Capital";
+    const Marketplace* marketplace = scenario->getMarketplace();
+    const IInfo* marketInfo = marketplace->getMarketInfo( capitalGoodName, aRegionName, aPeriod, true );
+    /*! \invariant The market and market info must exist. */
+    assert( marketInfo );
+    return marketInfo->getDouble( "CapitalGoodPrice", true );
+}

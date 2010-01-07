@@ -65,6 +65,8 @@ class GHGPolicy;
 class PolicyPortfolioStandard;
 class GlobalTechnologyDatabase;
 class Curve;
+class AResource;
+class IInfo;
 /*! 
 * \ingroup Objects
 * \brief This is an abstract base class for Regions.
@@ -119,6 +121,9 @@ protected:
     std::vector<GHGPolicy*> mGhgPolicies;
     //! vector of pointers to portfolio standard market objects, container for constraints
     std::vector<PolicyPortfolioStandard*> mPolicies;
+    std::vector<AResource*> mResources; //!< vector of pointers to resource objects
+    //! The region's information store.
+    std::auto_ptr<IInfo> mRegionInfo;
 
     virtual const std::string& getXMLName() const = 0;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;

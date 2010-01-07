@@ -51,24 +51,56 @@
 
 // User headers
 #include "containers/include/region.h"
-#include "containers/include/national_account.h"
 
 // Forward declare headers
 class ProductionSector;
 class FinalDemandSector;
 class FactorSupply;
 class IVisitor;
+class NationalAccount;
 // TEMP
 class SGMGenTable;
 class Tabs;
 
-/*! 
-* \ingroup Objects-SGM
-* \brief This derived Region class contains SGM specific information.
-* \todo Document this class further.
-* \author Sonny Kim
-*/
-
+/*!
+ * \ingroup Objects-SGM
+ * \brief This derived Region class contains SGM specific information.
+ * \details A RegionCGE basically consists of ProductionSectors, FinalDemandSectors,
+ *          FactorSupplies, and Resources.  They also contain NationalAccounts for regional
+ *          accounting of value flows and various reporting structures.  For SGM these
+ *          steps are completed in the following order to operate a region:
+ *           - Set the price of the numeraire good as the price of the price-index.  This
+ *             is nescessary because there is no direct link between the two markets and 
+ *             it must be taken care of before any of the prices are taken into consideration.
+ *             Note that there may be a better way to ensure that the price of the numeraire is
+ *             equal to the price-index however this was the easiest solution.
+ *           - Calculate the price of the Capital good.  This would be the CES aggregate price
+ *             of the goods that make up the Capital good which is contained in the investment
+ *             consumer.  This must be taken care of before new investment demands are calculated
+ *             by production sectors.
+ *           - Operate all production sectors.  This includes domestic and import sectors.  It will
+ *             operate all old vintage technologies, distrubute the level of new investment, and operate
+ *             the new vintage technologies.  This will calculate the supply of all the regular goods.
+ *           - Operate all consumers which includes government, housholds, investment, and trade.  The
+ *             consumers will provide the supply for the factor goods besides resources.
+ *           - The last step is to calculate the supply for all resources.
+ *
+ *          Note that at the moment FactorSupply is barely used and could possibly be removed or moved
+ *          into the appropriate consumer.
+ *
+ *          <b>XML specification for RegionCGE</b>
+ *          - XML name: \c regionCGE
+ *          - Contained by: World
+ *          - Parsing inherited from class: Region
+ *          - Attributes:
+ *          - Elements:
+ *              - \c FinalDemandSector::getXMLNameStatic() RegionCGE::finalDemandSector
+ *              - \c FactorSupply::getXMLNameStatic() RegionCGE::factorSupply
+ *              - \c ProductionSector::getXMLNameStatic() Region::supplySector
+ *              - \c NationalAccount::getXMLNameStatic() RegionCGE::mNationalAccounts
+ *
+ * \author Sonny Kim
+ */
 class RegionCGE : public Region
 {
     friend class SocialAccountingMatrix;
@@ -93,10 +125,11 @@ public:
 
 protected:
     const static std::string XML_NAME; //!< node name for toXML method.
-    std::vector<FinalDemandSector*> finalDemandSector; //!< vector of pointers to supply sector objects
+    std::vector<FinalDemandSector*> finalDemandSector; //!< vector of pointers to final demand sector objects
     std::vector<FactorSupply*> factorSupply; //!< vector of pointers to factor supply objects
-	std::vector<SGMGenTable*> mOutputContainers; //!< vector of output containers
+    std::vector<SGMGenTable*> mOutputContainers; //!< vector of output containers
     std::vector<NationalAccount*> mNationalAccounts; //!< vector of NationalAccounts, one for each period.
+    IVisitor* mCalcCapitalGoodPriceVisitor; //!< vistor to calculate the price of the capital good
 
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );

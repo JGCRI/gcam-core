@@ -54,10 +54,8 @@
 using namespace std;
 
 /*! \brief Constructor
-* \param aInvestmentLogitExp The investment logit exponential.
 */
-RateLogitDistributor::RateLogitDistributor( const double aInvestmentLogitExp ):
-mInvestmentLogitExp( aInvestmentLogitExp ) {
+RateLogitDistributor::RateLogitDistributor() {
 }
 
 /*! \brief Distribute investment based on the expected profit rates of the
@@ -78,6 +76,8 @@ mInvestmentLogitExp( aInvestmentLogitExp ) {
 * \param aRateCalc An expected profit rate calculation object.
 * \param aInvestables A vector of children which will receive investment.
 * \param aNationalAccount The national account for this region.
+* \param aInvestmentExp Logit exp used to distribute. TODO: remove if
+*        can think of a better way.
 * \param aRegionName The name of the containing region.
 * \param aSectorName The name of the containing sector.
 * \param aAmount The amount of investment to distribute.
@@ -88,6 +88,7 @@ mInvestmentLogitExp( aInvestmentLogitExp ) {
 double RateLogitDistributor::distribute( const IExpectedProfitRateCalculator* aRateCalc,
                                          vector<IInvestable*>& aInvestables,
                                          NationalAccount& aNationalAccount,
+                                         const double aInvestmentExp,
                                          const string& aRegionName,
                                          const string& aSectorName,
                                          const double aAmount,
@@ -96,8 +97,8 @@ double RateLogitDistributor::distribute( const IExpectedProfitRateCalculator* aR
     // Calculate the normalized investment shares.
     // Create a vector of investment shares, one per subsector.
     vector<double> shares = calcInvestmentShares( aInvestables, aRateCalc, 
-                                                  aNationalAccount, aRegionName,
-                                                  aSectorName, aPeriod );
+                                                  aNationalAccount, aInvestmentExp,
+                                                  aRegionName, aSectorName, aPeriod );
     // Should be one share per investable.
     assert( shares.size() == aInvestables.size() );
 
@@ -105,7 +106,8 @@ double RateLogitDistributor::distribute( const IExpectedProfitRateCalculator* aR
     const double sumShares = accumulate( shares.begin(), shares.end(), 0.0 );
     
     // Calculate the variable amount of investment.
-    const double varInvestment = aAmount - InvestmentUtils::sumFixedInvestment( aInvestables, aPeriod );
+    const double totalFixedAmount = InvestmentUtils::sumFixedInvestment( aInvestables, aPeriod );
+    const double varInvestment = aAmount - totalFixedAmount;
 
     // Check if the shares could not be normalized, which means they have
     // expected profit rates of zero, and there is variable investment which
@@ -134,10 +136,14 @@ double RateLogitDistributor::distribute( const IExpectedProfitRateCalculator* aR
     }
     // Check if the amount distributed is equal to that was passed in.
     if( !util::isEqual( sumDistributed, aAmount ) ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
+      /*  ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
-        mainLog << aAmount - sumDistributed << " difference between requested and distributed investment in "
-                << aSectorName << " in " << aRegionName << "." << endl;
+        mainLog << "Investment Problem!  Region: "<< aRegionName << "  Sector: " << aSectorName 
+                << "  Requested Amount: " << aAmount << "  Distributed Amount: " << sumDistributed 
+                << "  Difference: " << aAmount - sumDistributed << endl
+                << "  Variable Amount: " << varInvestment << "  Sum of Fixed Amount: " << totalFixedAmount
+                << endl; 
+      */
     }
     return sumDistributed;
 }
@@ -170,8 +176,9 @@ double RateLogitDistributor::calcCapitalOutputRatio( const vector<IInvestable*>&
                                                      const int aPeriod ) const
 {   
     // Create a vector of investment shares, one per subsector.
+    // TODO: not correct although this should probably never get called.
     vector<double> shares = calcInvestmentShares( aInvestables, aRateCalc, 
-                                                  aNationalAccount, aRegionName,
+                                                  aNationalAccount, 0, aRegionName,
                                                   aSectorName, aPeriod );
     // Should be one share per investable.
     assert( shares.size() == aInvestables.size() );
@@ -204,6 +211,7 @@ double RateLogitDistributor::calcCapitalOutputRatio( const vector<IInvestable*>&
 *        shares.
 * \param aRateCalc The object responsible for calculating expected profit rates.
 * \param aNationalAccount The national account for this region.
+* \param aInvestmentExp An investment logit exponent.
 * \param aRegionName The name of the containing region.
 * \param aSectorName The name of the containing sector.
 * \param aPeriod The period in which to calculate shares.
@@ -212,21 +220,23 @@ double RateLogitDistributor::calcCapitalOutputRatio( const vector<IInvestable*>&
 const vector<double> RateLogitDistributor::calcInvestmentShares( const vector<IInvestable*>& aInvestables,
                                                    const IExpectedProfitRateCalculator* aRateCalc,
                                                    const NationalAccount& aNationalAccount,
+                                                   const double aInvestmentExp,
                                                    const string& aRegionName,
                                                    const string& aSectorName,
                                                    const int aPeriod ) const
-{   
+{
     assert( aRateCalc );
     // Calculate sector level expected profit.
     double expProfitRateTotal = aRateCalc->calcSectorExpectedProfitRate( aInvestables,
                                                                          aNationalAccount,
                                                                          aRegionName,
                                                                          aSectorName,
-                                                                         mInvestmentLogitExp,
+                                                                         aInvestmentExp,
+                                                                         true,
                                                                          true,
                                                                          aPeriod );
     // Create a vector of investment shares, one per subsector.
-    vector<double> shares( aInvestables.size() );
+    vector<double> shares( aInvestables.size(), 0 );
     
     // If there is no expected profit then the shares will stay at zero.
     if( expProfitRateTotal > 0 ){
@@ -236,12 +246,16 @@ const vector<double> RateLogitDistributor::calcInvestmentShares( const vector<II
                                                                                  aRegionName,
                                                                                  aSectorName,
                                                                                  aRateCalc,
-                                                                                 mInvestmentLogitExp,
+                                                                                 aInvestmentExp,
                                                                                  false,
+                                                                                 true,
                                                                                  aPeriod );
 
             // Store the subsector investment share. This will be zero for negative profit subsectors.
-            shares[ i ] = pow( currExpProfitRate, mInvestmentLogitExp ) / expProfitRateTotal;
+            if( currExpProfitRate > 0 ) {
+                shares[ i ] = aInvestables[ i ]->getShareWeight( aPeriod ) * pow( currExpProfitRate, aInvestmentExp ) 
+                    / expProfitRateTotal;
+            }
         }
     }
     // Normalize the investment shares.

@@ -58,6 +58,7 @@
 #include "util/logger/include/ilogger.h"
 #include "containers/include/iinfo.h"
 #include "functions/include/function_utils.h"
+#include "util/base/include/configuration.h"
 
 using namespace std;
 using namespace xercesc;
@@ -169,10 +170,17 @@ void FactorSupply::completeInit( const string& aRegionName ) {
 void FactorSupply::initCalc( const string& aRegionName, const int aPeriod ) {
     Marketplace* marketplace = scenario->getMarketplace();
     if( aPeriod == 0 ) {
-        if( name != "Capital" ) {
+        // if the user does not read in a base price calculate it from the
+        // base physical quantity read in and the total demand which will be in
+        // values
+        // note that the price for Capital (the intrest rate) can not be backed out
+        // here, it must be-pre solved for from the input dataset and read in
+        if( mBasePrice == 0 && name != "Capital" ) {
             assert( mBaseSupply != 0 );
+            double baseDemand = marketplace->getDemand( name, aRegionName, aPeriod );
             mBasePrice = marketplace->getDemand( name, aRegionName, aPeriod ) / mBaseSupply;
         }
+        // if we still do not have a price set it to 1
         if( mBasePrice == 0 ){
             mBasePrice = 1;
         }
@@ -184,6 +192,8 @@ void FactorSupply::initCalc( const string& aRegionName, const int aPeriod ) {
 
 void FactorSupply::setMarket( const string& aRegionName ) {
     Marketplace* marketplace = scenario->getMarketplace();
+    // Change modeltime to get start period
+    const int START_PERIOD = scenario->getModeltime()->getBasePeriod();
 
     // Set the market name to the region name if it is not read in.
     // Currently this is never read in, not sure if this should be fixed.
@@ -194,9 +204,16 @@ void FactorSupply::setMarket( const string& aRegionName ) {
     // name is factor supply name (name of primary factors)
     // market is the name of the regional market from the input file (i.e., global, region, regional group, etc.)
     if( marketplace->createMarket( aRegionName, marketName, name, IMarketType::NORMAL ) ) {
-        for( int per = 1; per < scenario->getModeltime()->getmaxper(); ++per ){
-            marketplace->setMarketToSolve( name, aRegionName, per );
+        if( !Configuration::getInstance()->getBool( "CalibrationActive" ) ){
+            for( int per = START_PERIOD; per < scenario->getModeltime()->getmaxper(); ++per ){
+                marketplace->setMarketToSolve( name, aRegionName, per );
+            }
         }
+    }
+    // TODO: maybe a better place to put this
+    if( name == "Capital" ) {
+        // initialize the price of the capital good as 1
+        FunctionUtils::setCapitalGoodPrice( aRegionName, 0, 1 );
     }
 }
 

@@ -89,7 +89,7 @@ double HouseholdDemandFunction::calcDemand( InputSet& input, double personalInco
 				pow( input[i]->getPricePaid( regionName, period ) / pricePaidNumeraire, input[i]->getPriceElasticity() );
 
             assert( util::isValidNumber( demand ) );
-			input[i]->setCurrencyDemand( demand, regionName, period );
+			input[i]->setPhysicalDemand( demand, regionName, period );
 			totalDemand += demand * input[i]->getPricePaid( regionName, period );
 		}
 	}
@@ -103,8 +103,9 @@ double HouseholdDemandFunction::calcCoefficient( InputSet& input, double consump
 {
 	for ( unsigned int i = 0; i < input.size(); ++i ) {
 		if( !input[ i ]->hasTypeFlag( IInput::FACTOR ) ){
-             // if we use price paid for calcDemand probably need to use it here also
-			double tempCoefficient = input[i]->getCurrencyDemand( period ) /
+            // if we use price paid for calcDemand probably need to use it here also
+            // really currency demand
+			double tempCoefficient = input[i]->getPhysicalDemand( period ) /
                                      pow( consumption, input[i]->getIncomeElasticity() ) *
                                      pow( input[i]->getPrice( regionName, period ),
                                           input[i]->getPriceElasticity() );

@@ -92,6 +92,7 @@ private:
         HOUSEHOLDS,
         ENTERPRISES,
         GOVERNMENT,
+        CARBON_TAX,
         CAPITAL_ACCOUNT,
         REST_OF_WORLD,
         TOTALS

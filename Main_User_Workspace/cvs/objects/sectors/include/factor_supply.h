@@ -60,6 +60,10 @@ class MoreSectorInfo;
 * \brief The supplier of the initial goods such as land, labor and capital used
 *        to create intermediate products,
 * \details
+* \todo This object is barely used, it may be possible to get rid of it and move
+*       it's current functionality into the consumers, or move the object into 
+*       the consumers where it could take over some of the factory supply duties
+*       the consumers currently take care of.
 * \author Pralit Patel, Sonny Kim
 */
 
@@ -97,4 +101,3 @@ private:
 };
 
 #endif // _FACTOR_SUPPLY_H_
-

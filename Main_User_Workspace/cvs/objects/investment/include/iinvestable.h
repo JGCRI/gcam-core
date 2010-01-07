@@ -44,6 +44,8 @@
  * \brief The IInvestable interface header file.
  * \author Josh Lurz
  */
+#include "util/base/include/ivisitable.h"
+
 class NationalAccount;
 class IExpectedProfitRateCalculator;
 class IDistributor;
@@ -59,7 +61,7 @@ class IDistributor;
  * \todo Fix argument ordering of these functions to match.
  * \author Josh Lurz
  */
-class IInvestable
+class IInvestable: public IVisitable
 {
 public:
     IInvestable();
@@ -78,6 +80,8 @@ public:
      * \param aInvestmentLogitExp The investment logit exponential.
      * \param aIsShareCalculation Whether this is expected profit rate is being
      *        used for a share calculation.
+     * \param aIsDistributing Whether this expected profit rate is being used
+     *        to distribute investment.
      * \param aPeriod Period.
      * \return The expected profit rate for the current level.
      */
@@ -87,6 +91,7 @@ public:
                                           const IExpectedProfitRateCalculator* aExpProfitRateCalc,
                                           const double aInvestmentLogitExp,
                                           const bool aIsShareCalc,
+                                          const bool aIsDistributing,
                                           const int aPeriod ) const = 0;
 
     /*!
@@ -100,6 +105,18 @@ public:
      * \return Fixed investment for the period.
      */
     virtual double getFixedInvestment( const int aPeriod ) const = 0;
+
+    /*!
+     * \brief Get the quantity of fixed investment for the period.
+     * \details Objects which implement this interface may choose to read in or
+     *          otherwise set a quantity of fixed investment by period. This
+     *          fixed investment quantity will be used as the investment amount
+     *          for the object in that period, as long as the overall investment
+     *          at that level is enough to satisfy all fixed investment.
+     * \param Period for which to get the fixed investment.
+     * \return Fixed investment for the period.
+     */
+    virtual bool hasCalibrationMarket() const = 0;
 
     /*!
      * \brief Get the annual investment for a period.
@@ -175,6 +192,16 @@ public:
                                          const std::string& aSectorName,
                                          const double aNewInvestment,
                                          const int aPeriod ) = 0;
+
+    /*!
+     * \brief Gets the share weight from the object.
+     * \details Gets the value used to bais the investment to an Investable.
+     *          This share weight should be calibrated such that the all of 
+     *          the investment gets distributed.
+     * \param aPeriod The period for which to get the share weight.
+     * \return The share weight for the given period.
+     */
+    virtual double getShareWeight( const int aPeriod ) const = 0;
 };
 
 // Define empty inline methods.

@@ -54,7 +54,7 @@ class Tabs;
 class Demographic;
 class IInvestable;
 class NationalAccount;
-
+class IVisitor;
 /*! 
  * \ingroup Objects
  * \brief The MarketBasedInvestor class calculates and distributes new
@@ -82,13 +82,20 @@ public:
     void XMLParse( const xercesc::DOMNode* node ); 
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
-    void completeInit( const std::string& aRegionName, const std::string& aGoodName );
     static const std::string& getXMLNameStatic();
-    
+    void completeInit( const std::string& aRegionName, const std::string& aGoodName );
+    void initCalc( std::vector<IInvestable*>& aInvestables,
+                   NationalAccount& aNationalAccount, 
+                   const Demographic* aDemographic,
+                   const int aPeriod );
     double calcAndDistributeInvestment( std::vector<IInvestable*>& aInvestables,
                                         NationalAccount& aNationalAccount, 
                                         const Demographic* aDemographic,
                                         const int aPeriod );
+    void setEfficiencyConditions( std::vector<IInvestable*>& aInvestables,
+                                  NationalAccount& aNationalAccount, 
+                                  const Demographic* aDemographic,
+                                  const int aPeriod ) const;
 protected:
     //! Investment by period.
     std::vector<double> mInvestments;
@@ -107,6 +114,12 @@ protected:
 
     //! The investment logit exponential(RHOINV).
     double mInvestmentLogitExp;
+
+private:
+    void visitInvestables( std::vector<IInvestable*>& aInvestables,
+                           IVisitor* aVisitor,
+                           const int aPeriod ) const;
+
 };
 
 #endif // _MARKET_BASED_INVESTMENT_

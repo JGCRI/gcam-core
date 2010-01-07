@@ -63,13 +63,17 @@ extern Scenario* scenario;
 const string PopulationMiniCAM::XML_NAME = "populationMiniCAM";
 
 //! Default constructor.
-PopulationMiniCAM::PopulationMiniCAM() {
+PopulationMiniCAM::PopulationMiniCAM():
+mFractionWorking( 1.0 ) {
 }
 
 //! parses the rest of PopuationMiniCAM xml object
 bool PopulationMiniCAM::XMLDerivedClassParse( const string &nodeName, const xercesc::DOMNode* curr ){
     if ( nodeName == "totalPop" ) {
         mTotalPop = XMLHelper<double>::getValue( curr );
+    }
+    else if ( nodeName == "fraction-working" ) {
+        mFractionWorking = XMLHelper<double>::getValue( curr );
     }
     else {
         return false;
@@ -79,17 +83,20 @@ bool PopulationMiniCAM::XMLDerivedClassParse( const string &nodeName, const xerc
 
 //! returns total working age population (ages 15-65)
 double PopulationMiniCAM::getWorkingAgePop() const { // ages 15-65
-    return mTotalPop;
+    // for population MiniCAM we just take the total and multiply
+    // by an exogenous working age fraction which defaults to 1
+    return mTotalPop * mFractionWorking;
 }
 
 //! Write out data members to XML output stream.
 void PopulationMiniCAM::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    // do nothing
+    // note that mTotalPop is actually written out by Population
+    XMLWriteElementCheckDefault( mFractionWorking, "fraction-working", out, tabs, 1.0 );
 }
 
 //! Write out XML for debugging purposes.
 void PopulationMiniCAM::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {
-    // do nothing
+    XMLWriteElement( mFractionWorking, "fraction-working", out, tabs );
 }
 
 //! Complete the initialization.

@@ -93,6 +93,8 @@ public:
      * \param aInvestmentLogitExp The investment logit exponential.
      * \param aIsShareCalc Whether this calculation is for the investment share
      *        calculation.
+     * \param aIsDistributing Whether this expected profit rate is being used
+     *        to distribute investment.
      * \param aPeriod Period in which to calculate expected profits.
      * \return The expected profit rate for the ProductionSector or Subsector.
      */
@@ -102,6 +104,7 @@ public:
                                                  const std::string& aSectorName,
                                                  const double aInvestmentLogitExp,
                                                  const bool aIsShareCalc,
+                                                 const bool aIsDistributing,
                                                  const int aPeriod ) const = 0;
 
     /*!

@@ -79,6 +79,17 @@ public:
     virtual void completeInit( const std::string& aRegionName,
                                const std::string& aSectorName ) = 0;
 
+    /*!
+     * \brief Initialization of an IInvestor for each period.
+     * \param aRegionName Region containing the investor.
+     * \param aSectorName Sector for which the IInvestor is determining
+     *        investment.
+     */
+    virtual void initCalc( std::vector<IInvestable*>& aInvestables,
+                   NationalAccount& aNationalAccount, 
+                   const Demographic* aDemographic,
+                   const int aPeriod ) = 0;
+
     // TODO: Inherit and make documentation inherited.
     virtual void XMLParse( const xercesc::DOMNode* node ) = 0; 
     virtual void toDebugXML( const int period, std::ostream& out,
@@ -102,6 +113,10 @@ public:
                                                 NationalAccount& aNationalAccount, 
                                                 const Demographic* aDemographic,
                                                 const int aPeriod ) = 0;
+    virtual void setEfficiencyConditions( std::vector<IInvestable*>& aInvestables,
+                                          NationalAccount& aNationalAccount, 
+                                          const Demographic* aDemographic,
+                                          const int aPeriod ) const = 0;
 };
 
 //! Constructor

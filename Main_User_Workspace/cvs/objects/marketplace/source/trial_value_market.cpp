@@ -68,7 +68,9 @@ IMarketType::Type TrialValueMarket::getType() const {
 void TrialValueMarket::initPrice() {
     // Market price initialization is done before trial markets are created,
     // and this method does not initialize trial market prices.
-    price = util::getSmallNumber();
+    if( price <= 0 ) {
+        price = util::getSmallNumber();
+    }
 }
 
 void TrialValueMarket::setPrice( const double priceIn ) {

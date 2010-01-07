@@ -58,7 +58,8 @@ class IVisitor;
 /*! 
 * \ingroup Objects
 * \brief A class to track various types of expenditures by Consumers or
-*        ProductionTechnologies.
+*        ProductionTechnologies.  This mostly keeps track of values for
+*        reporting.
 * \author Pralit Patel, Sonny Kim
 */
 class Expenditure : IVisitable
@@ -78,6 +79,7 @@ public:
         SUBSIDY,
         INVESTMENT,
         TOTAL_IMPORTS,
+        CARBON_TAX,
         // for production sectors
         DIVIDENDS,
         RETAINED_EARNINGS,
@@ -90,6 +92,7 @@ public:
         IMPORTS,
         SALES,
         COSTS,
+        // Insert new values before END marker.
         END
     };
 

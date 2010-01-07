@@ -50,6 +50,7 @@
 #include "functions/include/ifunction.h"
 #include "containers/include/national_account.h"
 #include "functions/include/iinput.h"
+#include "functions/include/inested_input.h"
 #include "functions/include/function_utils.h"
 #include "util/base/include/xml_helper.h"
 
@@ -95,6 +96,8 @@ void LevelizedCostCalculator::toDebugXML( const int aPeriod, ostream& aOut, Tabs
 * \param aInvestmentLogitExp The investment logit exponential.
 * \param aIsShareCalc Whether this expected profit rate is being used to
 *        calculate shares.
+* \param aIsDistributing Whether this expected profit rate is being used
+*        to distribute investment.
 * \param aPeriod The period in which to calculate the expected profit rate.
 * \return The parent level levelized cost.
 */
@@ -104,13 +107,16 @@ double LevelizedCostCalculator::calcSectorExpectedProfitRate( const vector<IInve
                                                               const string& aGoodName,
                                                               const double aInvestmentLogitExp,
                                                               const bool aIsShareCalc,
+                                                              const bool aIsDistributing,
                                                               const int aPeriod ) const
 {
-    // Sum expected profit rates for the subsector with a logit distribution.
-    double levelizedCostNum = 0;
+    // Sum levelized cost for the subsector/sector with a logit distribution.
+    // TODO: shouldn't there be a way to calculate shares other that rate logit?
     double levelizedCostDenom = 0;
+    vector<double> levelizedCosts( aInvestables.size(), 0 );
+    int levelizedCostPos = 0;
     
-    // I didn't code in beta since as far as i could tell it was always 1. 
+    // beta is equivalent to the share weight of the investable
     for( InvestmentUtils::CInvestableIterator currInv = aInvestables.begin();
         currInv != aInvestables.end(); ++currInv )
     {
@@ -118,24 +124,41 @@ double LevelizedCostCalculator::calcSectorExpectedProfitRate( const vector<IInve
                                                                       aRegionName,
                                                                       aGoodName,
                                                                       this,
+                                                                      // TODO: what is the reason for this hack?
                                                                       -1 * aInvestmentLogitExp, // HACK
                                                                       aIsShareCalc,
+                                                                      aIsDistributing,
                                                                       aPeriod );
         if( currLevelizedCost > 0 ){
-            levelizedCostNum += pow( currLevelizedCost, aInvestmentLogitExp + 1 );
-            levelizedCostDenom += pow( currLevelizedCost, aInvestmentLogitExp );
+            levelizedCosts[ levelizedCostPos ] = currLevelizedCost;
+            levelizedCostDenom += (*currInv)->getShareWeight( aPeriod ) *
+                pow( currLevelizedCost, aInvestmentLogitExp );
         }
+        ++levelizedCostPos;
     }
-    
+
     // If this is the share calc return only the sum of the profit rate to the
     // logit.
     if( aIsShareCalc ){
         return levelizedCostDenom;
     }
-    // Check for a numerator greater than zero so the profit rate is positive
-    // and a denominator greater than zero so the division can occur correctly
-    // and the profit rate is positive.
-    return ( levelizedCostNum > 0 && levelizedCostDenom > 0 ) ? levelizedCostNum / levelizedCostDenom : 0;
+
+    levelizedCostPos = 0;
+    double sectorLevelizedCost = 0;
+    for( InvestmentUtils::CInvestableIterator currInv = aInvestables.begin();
+        currInv != aInvestables.end(); ++currInv )
+    {
+        double currLevelizedCost = levelizedCosts[ levelizedCostPos ];
+        if( currLevelizedCost > 0 ){
+            // maybe put this share calc in a utility
+            double share = (*currInv)->getShareWeight( aPeriod ) *
+                    pow( currLevelizedCost, aInvestmentLogitExp ) / levelizedCostDenom;
+            sectorLevelizedCost += share * currLevelizedCost;
+        }
+        ++levelizedCostPos;
+    }
+
+    return sectorLevelizedCost;
 }
 
 /*! \brief Calculate the levelized cost for a technology.
@@ -167,13 +190,9 @@ double LevelizedCostCalculator::calcTechnologyExpectedProfitRate( const Producti
                                                                   const int aPeriod ) const
 {
     // Compute the expected profit rate.
-    double levelizedCost = aTechProdFuncInfo.mProductionFunction->calcLevelizedCost(
-                                                                   aTechProdFuncInfo.mInputs,
-                                                                   aRegionName, 
-                                                                   aSectorName,
-                                                                   aPeriod,
-                                                                   aTechProdFuncInfo.mAlphaZeroScaler,
-                                                                   aTechProdFuncInfo.mSigma );
+    double levelizedCost = aTechProdFuncInfo.mNestedInputRoot->getLevelizedCost( aRegionName,
+                                                                                  aSectorName,
+                                                                                  aPeriod );
     // Decrease the raw levelized cost by the investment tax credit rate.
     // Check if this is right.
     levelizedCost /= ( 1 + aNationalAccount.getAccountValue( NationalAccount::INVESTMENT_TAX_CREDIT ) );

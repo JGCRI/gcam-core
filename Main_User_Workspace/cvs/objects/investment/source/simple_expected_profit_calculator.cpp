@@ -96,6 +96,8 @@ void SimpleExpectedProfitCalculator::toDebugXML( const int aPeriod, ostream& aOu
 * \param aInvestmentLogitExp The investment logit exponential.
 * \param aIsShareCalc Whether this expected profit rate is being used to
 *        calculate shares.
+* \param aIsDistributing Whether this expected profit rate is being used
+*        to distribute investment.
 * \param aPeriod The period in which to calculate the expected profit rate.
 * \return The sector level expected profit rate.
 */
@@ -105,6 +107,7 @@ double SimpleExpectedProfitCalculator::calcSectorExpectedProfitRate( const vecto
                                                                     const string& aGoodName,
                                                                     const double aInvestmentLogitExp,
                                                                     const bool aIsShareCalc,
+                                                                    const bool aIsDistributing,
                                                                     const int aPeriod ) const
 {
     // Sum expected profit rates for the subsector with a logit distribution.
@@ -121,6 +124,7 @@ double SimpleExpectedProfitCalculator::calcSectorExpectedProfitRate( const vecto
             this,
             aInvestmentLogitExp,
             aIsShareCalc,
+            aIsDistributing,
             aPeriod );
         if( currExpProfitRate > 0 ){
             expProfitRateNum += pow( currExpProfitRate, aInvestmentLogitExp + 1 );

@@ -70,6 +70,7 @@ class InvestConsumer : public Consumer
     friend class SectorReport;
     friend class SGMGenTable;
     friend class XMLDBOutputter;
+    friend class CalcCapitalGoodPriceVisitor;
 public:
 	InvestConsumer();
 	virtual InvestConsumer* clone() const;
@@ -107,6 +108,7 @@ protected:
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 
 private:
+    Value mCapitalGoodPrice; //!< Store the price of the capital good for reporting
     void allocateTransportationDemand( NationalAccount& aNationalAccount, 
         const std::string& aRegionName, int aPeriod );
 

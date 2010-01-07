@@ -68,6 +68,7 @@ public:
                                          const std::string& aGoodName,
                                          const double aInvestmentLogitExp,
                                          const bool aIsShareCalc,
+                                         const bool aIsDistributing,
                                          const int aPeriod ) const;
 
     double calcTechnologyExpectedProfitRate( const ProductionFunctionInfo& aTechProdFuncInfo,
