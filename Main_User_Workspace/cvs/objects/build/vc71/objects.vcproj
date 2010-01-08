@@ -289,6 +289,9 @@
 				Name="marketplace"
 				Filter="">
 				<File
+					RelativePath="..\..\marketplace\source\cached_market.cpp">
+				</File>
+				<File
 					RelativePath="..\..\marketplace\source\calibration_market.cpp">
 				</File>
 				<File
@@ -330,6 +333,9 @@
 				</File>
 				<File
 					RelativePath="..\..\resources\source\accumulated_post_grade.cpp">
+				</File>
+				<File
+					RelativePath="..\..\resources\source\depleting_fixed_resource.cpp">
 				</File>
 				<File
 					RelativePath="..\..\resources\source\grade.cpp">
@@ -659,6 +665,9 @@
 						RelativePath="..\..\util\base\source\atom_registry.cpp">
 					</File>
 					<File
+						RelativePath="..\..\util\base\source\calibrate_resource_visitor.cpp">
+					</File>
+					<File
 						RelativePath="..\..\util\base\source\calibrate_share_weight_visitor.cpp">
 					</File>
 					<File
@@ -733,6 +742,9 @@
 				Name="consumers"
 				Filter="">
 				<File
+					RelativePath="..\..\consumers\source\calc_capital_good_price_visitor.cpp">
+				</File>
+				<File
 					RelativePath="..\..\consumers\source\consumer.cpp">
 				</File>
 				<File
@@ -755,6 +767,12 @@
 					RelativePath="..\..\investment\source\accelerator.cpp">
 				</File>
 				<File
+					RelativePath="..\..\investment\source\get_distributed_investment_visitor.cpp">
+				</File>
+				<File
+					RelativePath="..\..\investment\source\investable_counter_visitor.cpp">
+				</File>
+				<File
 					RelativePath="..\..\investment\source\investment_growth_calculator.cpp">
 				</File>
 				<File
@@ -770,7 +788,13 @@
 					RelativePath="..\..\investment\source\output_growth_calculator.cpp">
 				</File>
 				<File
+					RelativePath="..\..\investment\source\output_share_levelized_cost_calculator.cpp">
+				</File>
+				<File
 					RelativePath="..\..\investment\source\rate_logit_distributor.cpp">
+				</File>
+				<File
+					RelativePath="..\..\investment\source\set_share_weight_visitor.cpp">
 				</File>
 				<File
 					RelativePath="..\..\investment\source\simple_expected_profit_calculator.cpp">
@@ -887,7 +911,13 @@
 					RelativePath="..\..\functions\source\investment_demand_function.cpp">
 				</File>
 				<File
+					RelativePath="..\..\functions\source\leaf_input_finder.cpp">
+				</File>
+				<File
 					RelativePath="..\..\functions\source\leontief_production_function.cpp">
+				</File>
+				<File
+					RelativePath="..\..\functions\source\logit_production_function.cpp">
 				</File>
 				<File
 					RelativePath="..\..\functions\source\minicam_input.cpp">
@@ -897,6 +927,12 @@
 				</File>
 				<File
 					RelativePath="..\..\functions\source\minicam_price_elasticity_function.cpp">
+				</File>
+				<File
+					RelativePath="..\..\functions\source\nested_ces_production_function.cpp">
+				</File>
+				<File
+					RelativePath="..\..\functions\source\node_input.cpp">
 				</File>
 				<File
 					RelativePath="..\..\functions\source\non_energy_input.cpp">
@@ -912,6 +948,12 @@
 				</File>
 				<File
 					RelativePath="..\..\functions\source\trade_demand_function.cpp">
+				</File>
+				<File
+					RelativePath="..\..\functions\source\trade_input.cpp">
+				</File>
+				<File
+					RelativePath="..\..\functions\source\utility_demand_function.cpp">
 				</File>
 			</Filter>
 			<Filter
@@ -1221,6 +1263,9 @@
 				Name="marketplace"
 				Filter="">
 				<File
+					RelativePath="..\..\marketplace\include\cached_market.h">
+				</File>
+				<File
 					RelativePath="..\..\marketplace\include\calibration_market.h">
 				</File>
 				<File
@@ -1268,6 +1313,9 @@
 				</File>
 				<File
 					RelativePath="..\..\resources\include\aresource.h">
+				</File>
+				<File
+					RelativePath="..\..\resources\include\depleting_fixed_resource.h">
 				</File>
 				<File
 					RelativePath="..\..\resources\include\grade.h">
@@ -1630,6 +1678,9 @@
 						RelativePath="..\..\util\base\include\auto_file.h">
 					</File>
 					<File
+						RelativePath="..\..\util\base\include\calibrate_resource_visitor.h">
+					</File>
+					<File
 						RelativePath="..\..\util\base\include\calibrate_share_weight_visitor.h">
 					</File>
 					<File
@@ -1751,6 +1802,9 @@
 				Name="consumers"
 				Filter="">
 				<File
+					RelativePath="..\..\consumers\include\calc_capital_good_price_visitor.h">
+				</File>
+				<File
 					RelativePath="..\..\consumers\include\consumer.h">
 				</File>
 				<File
@@ -1861,6 +1915,9 @@
 					RelativePath="..\..\functions\include\iinput.h">
 				</File>
 				<File
+					RelativePath="..\..\functions\include\inested_input.h">
+				</File>
+				<File
 					RelativePath="..\..\functions\include\input_subsidy.h">
 				</File>
 				<File
@@ -1873,7 +1930,13 @@
 					RelativePath="..\..\functions\include\investment_demand_function.h">
 				</File>
 				<File
+					RelativePath="..\..\functions\include\leaf_input_finder.h">
+				</File>
+				<File
 					RelativePath="..\..\functions\include\leontief_production_function.h">
+				</File>
+				<File
+					RelativePath="..\..\functions\include\logit_production_function.h">
 				</File>
 				<File
 					RelativePath="..\..\functions\include\minicam_input.h">
@@ -1883,6 +1946,12 @@
 				</File>
 				<File
 					RelativePath="..\..\functions\include\minicam_price_elasticity_function.h">
+				</File>
+				<File
+					RelativePath="..\..\functions\include\nested_ces_production_function.h">
+				</File>
+				<File
+					RelativePath="..\..\functions\include\node_input.h">
 				</File>
 				<File
 					RelativePath="..\..\functions\include\non_energy_input.h">
@@ -1898,6 +1967,12 @@
 				</File>
 				<File
 					RelativePath="..\..\functions\include\trade_demand_function.h">
+				</File>
+				<File
+					RelativePath="..\..\functions\include\trade_input.h">
+				</File>
+				<File
+					RelativePath="..\..\functions\include\utility_demand_function.h">
 				</File>
 			</Filter>
 			<Filter
@@ -1967,6 +2042,9 @@
 					RelativePath="..\..\investment\include\accelerator.h">
 				</File>
 				<File
+					RelativePath="..\..\investment\include\get_distributed_investment_visitor.h">
+				</File>
+				<File
 					RelativePath="..\..\investment\include\idistributor.h">
 				</File>
 				<File
@@ -1980,6 +2058,9 @@
 				</File>
 				<File
 					RelativePath="..\..\investment\include\iinvestor.h">
+				</File>
+				<File
+					RelativePath="..\..\investment\include\investable_counter_visitor.h">
 				</File>
 				<File
 					RelativePath="..\..\investment\include\investment_growth_calculator.h">
@@ -1997,7 +2078,13 @@
 					RelativePath="..\..\investment\include\output_growth_calculator.h">
 				</File>
 				<File
+					RelativePath="..\..\investment\include\output_share_levelized_cost_calculator.h">
+				</File>
+				<File
 					RelativePath="..\..\investment\include\rate_logit_distributor.h">
+				</File>
+				<File
+					RelativePath="..\..\investment\include\set_share_weight_visitor.h">
 				</File>
 				<File
 					RelativePath="..\..\investment\include\simple_expected_profit_calculator.h">
