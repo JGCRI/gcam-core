@@ -1,21 +1,21 @@
-Transubsector shareweights for subsectors with 0 in 2005,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
-103,,,,,,,,,,,
-,,,,sharewt,,,,,,,
-region,supplysector,tranSubsector,scaleYear,1990,2005,2020,2035,2050,2065,2080,2095
-USA,trn_passenger,high speed rail,1975,0,0,0.001,0.002,0.002,0.002,0.002,0.002
-Canada,trn_passenger,high speed rail,1975,0,0,0.001,0.002,0.002,0.002,0.002,0.002
-Australia_NZ,trn_passenger,high speed rail,1975,0,0,0.001,0.002,0.002,0.002,0.002,0.002
-Former Soviet Union,trn_passenger,high speed rail,1975,0,0,0.001,0.002,0.002,0.002,0.002,0.002
-China,trn_passenger,high speed rail,1975,0,0,0.001,0.002,0.002,0.002,0.002,0.002
-Middle East,trn_passenger,high speed rail,1975,0,0,0.001,0.002,0.002,0.002,0.002,0.002
-Africa,trn_passenger,high speed rail,1975,0,0,0.001,0.002,0.002,0.002,0.002,0.002
-Latin America,trn_passenger,high speed rail,1975,0,0,0.001,0.002,0.002,0.002,0.002,0.002
-Southeast Asia,trn_passenger,high speed rail,1975,0,0,0.001,0.002,0.002,0.002,0.002,0.002
-Eastern Europe,trn_passenger,high speed rail,1975,0,0,0.001,0.002,0.002,0.002,0.002,0.002
+Transubsector shareweights for subsectors with 0 in 2005,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+103,,,,,,,,,,,,,
+,,,,sharewt,,,,,,,,,
+region,supplysector,tranSubsector,scaleYear,1990,2005,2020,2035,2050,2065,2080,2095,,
+USA,trn_passenger,high speed rail,1975,0,0,0.001,0.002,0.002,0.002,0.002,0.002,,
+Canada,trn_passenger,high speed rail,1975,0,0,0.001,0.002,0.002,0.002,0.002,0.002,,
+Australia_NZ,trn_passenger,high speed rail,1975,0,0,0.001,0.002,0.002,0.002,0.002,0.002,,
+Former Soviet Union,trn_passenger,high speed rail,1975,0,0,0.001,0.002,0.002,0.002,0.002,0.002,,
+China,trn_passenger,high speed rail,1975,0,0,0.001,0.002,0.002,0.002,0.002,0.002,,
+Middle East,trn_passenger,high speed rail,1975,0,0,0.001,0.002,0.002,0.002,0.002,0.002,,
+Africa,trn_passenger,high speed rail,1975,0,0,0.001,0.002,0.002,0.002,0.002,0.002,,
+Latin America,trn_passenger,high speed rail,1975,0,0,0.001,0.002,0.002,0.002,0.002,0.002,,
+Southeast Asia,trn_passenger,high speed rail,1975,0,0,0.001,0.002,0.002,0.002,0.002,0.002,,
+Eastern Europe,trn_passenger,high speed rail,1975,0,0,0.001,0.002,0.002,0.002,0.002,0.002,,
 India,trn_passenger,high speed rail,1975,0,0,0.001,0.002,0.002,0.002,0.002,0.002,,
-
+,,,,,,,,,,,,,
 TranTechnology energy inputs and coefficients,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,
@@ -58,7 +58,7 @@ Canada,trn_pass_road,bus,bus ICE,refined liquids enduse,1,15101,15101,12504,1035
 Canada,trn_pass_road,bus,bus electric,elect_td_trn,1,5034,5034,4740,4463,4203,3958,3727,3509
 Canada,trn_pass_road,bus,bus gas,delivered gas,1,40508,40508,33543,27775,22999,19044,15770,13058
 Canada,trn_pass_road,bus,bus fuel cell,H2 Enduse,1,9564,9564,7919,6558,5430,4496,3723,3083
-
+,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,
 1004,,,,,,,,,,,,,
@@ -100,7 +100,7 @@ Japan,trn_pass_road,bus,bus ICE,refined liquids enduse,1,15101,15101,12504,10354
 Japan,trn_pass_road,bus,bus electric,elect_td_trn,1,5034,5034,4740,4463,4203,3958,3727,3509
 Japan,trn_pass_road,bus,bus gas,delivered gas,1,15101,15101,12504,10354,8574,7100,5879,4868
 Japan,trn_pass_road,bus,bus fuel cell,H2 Enduse,1,9564,9564,7919,6558,5430,4496,3723,3083
-
+,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,
 1004,,,,,,,,,,,,,
@@ -142,7 +142,7 @@ Former Soviet Union,trn_pass_road,bus,bus ICE,refined liquids enduse,1,15101,151
 Former Soviet Union,trn_pass_road,bus,bus electric,elect_td_trn,1,5034,5034,4740,4463,4203,3958,3727,3509
 Former Soviet Union,trn_pass_road,bus,bus gas,delivered gas,1,40434,40434,33481,27724,22957,19009,15741,13034
 Former Soviet Union,trn_pass_road,bus,bus fuel cell,H2 Enduse,1,9564,9564,7919,6558,5430,4496,3723,3083
-
+,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,
 1004,,,,,,,,,,,,,
@@ -186,7 +186,7 @@ Middle East,trn_pass_road,bus,bus ICE,refined liquids enduse,1,15101,15101,12504
 Middle East,trn_pass_road,bus,bus electric,elect_td_trn,1,5034,5034,4740,4463,4203,3958,3727,3509
 Middle East,trn_pass_road,bus,bus gas,delivered gas,1,15101,39973,33100,27408,22696,18793,15562,12886
 Middle East,trn_pass_road,bus,bus fuel cell,H2 Enduse,1,9564,9564,7919,6558,5430,4496,3723,3083
-
+,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,
 1004,,,,,,,,,,,,,
@@ -228,7 +228,7 @@ Latin America,trn_pass_road,bus,bus ICE,refined liquids enduse,1,15101,15101,125
 Latin America,trn_pass_road,bus,bus electric,elect_td_trn,1,11396,11396,10731,10104,9515,8960,8437,7945
 Latin America,trn_pass_road,bus,bus gas,delivered gas,1,34187,34187,28308,23441,19410,16072,13309,11020
 Latin America,trn_pass_road,bus,bus fuel cell,H2 Enduse,1,12676,12676,10497,8692,7197,5960,4935,4086
-
+,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,
 1004,,,,,,,,,,,,,
@@ -270,7 +270,7 @@ Eastern Europe,trn_pass_road,bus,bus ICE,refined liquids enduse,1,15101,15101,12
 Eastern Europe,trn_pass_road,bus,bus electric,elect_td_trn,1,5034,5034,4740,4463,4203,3958,3727,3509
 Eastern Europe,trn_pass_road,bus,bus gas,delivered gas,1,15101,37050,30679,25404,21036,17419,14424,11943
 Eastern Europe,trn_pass_road,bus,bus fuel cell,H2 Enduse,1,9564,9564,7919,6558,5430,4496,3723,3083
-
+,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,
 1004,,,,,,,,,,,,,
@@ -312,898 +312,898 @@ India,trn_pass_road,bus,bus ICE,refined liquids enduse,1,15101,15101,12504,10354
 India,trn_pass_road,bus,bus electric,elect_td_trn,1,6672,6672,6282,5916,5571,5246,4940,4651
 India,trn_pass_road,bus,bus gas,delivered gas,1,20015,21440,17753,14701,12173,10080,8347,6911
 India,trn_pass_road,bus,bus fuel cell,H2 Enduse,1,12676,12676,10497,8692,7197,5960,4935,4086
-
-
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
 TranTechnology non-energy costs,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,
 1005,,,,,,,,,,,,,
-,,,,input-cost,,,,,,,
-region,supplysector,tranSubsector,tranTechnology,1990,2005,2020,2035,2050,2065,2080,2095
-USA,trn_freight,air,air,13.22,13.22,13.22,13.22,13.22,13.22,13.22,13.22
-USA,trn_freight,rail,rail ICE,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70
-USA,trn_freight,rail,rail electric,0.77,0.77,0.73,0.70,0.70,0.70,0.70,0.70
-USA,trn_freight,road,truck ICE,0.89,0.89,0.89,0.89,0.89,0.89,0.89,0.89
-USA,trn_freight,domestic ship,domestic ship ICE,3.60,3.60,3.60,3.60,3.60,3.60,3.60,3.60
-USA,trn_passenger,air,air,9.70,9.70,9.70,9.70,9.70,9.70,9.70,9.70
-USA,trn_passenger,high speed rail,high speed rail,50.64,50.64,49.89,49.15,48.42,47.69,46.98,46.28
-USA,trn_passenger,rail,rail ICE,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43
-USA,trn_passenger,rail,rail electric,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83
-USA,trn_shipping_intl,international ship,international ship ICE,84.93,84.93,84.93,84.93,84.93,84.93,84.93,84.93
-USA,trn_pass_road,LDV,LDV ICE,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42
-USA,trn_pass_road,LDV,LDV electric,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42
-USA,trn_pass_road,LDV,LDV gas,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42
-USA,trn_pass_road,LDV,LDV fuel cell,0.48,0.48,0.44,0.42,0.42,0.42,0.42,0.42
-USA,trn_pass_road,bus,bus ICE,1.64,1.64,1.64,1.64,1.64,1.64,1.64,1.64
-USA,trn_pass_road,bus,bus electric,1.91,1.91,1.77,1.64,1.64,1.64,1.64,1.64
-USA,trn_pass_road,bus,bus gas,1.72,1.72,1.67,1.64,1.64,1.64,1.64,1.64
-USA,trn_pass_road,bus,bus fuel cell,1.89,1.89,1.75,1.64,1.64,1.64,1.64,1.64
-Canada,trn_freight,air,air,13.22,13.22,13.22,13.22,13.22,13.22,13.22,13.22
-Canada,trn_freight,rail,rail ICE,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70
-Canada,trn_freight,rail,rail electric,0.77,0.77,0.73,0.70,0.70,0.70,0.70,0.70
-Canada,trn_freight,road,truck ICE,0.89,0.89,0.89,0.89,0.89,0.89,0.89,0.89
-Canada,trn_freight,domestic ship,domestic ship ICE,3.60,3.60,3.60,3.60,3.60,3.60,3.60,3.60
-Canada,trn_passenger,air,air,9.70,9.70,9.70,9.70,9.70,9.70,9.70,9.70
-Canada,trn_passenger,high speed rail,high speed rail,50.64,50.64,49.89,49.15,48.42,47.69,46.98,46.28
-Canada,trn_passenger,rail,rail ICE,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43
-Canada,trn_passenger,rail,rail electric,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83
-Canada,trn_shipping_intl,international ship,international ship ICE,84.93,84.93,84.93,84.93,84.93,84.93,84.93,84.93
-Canada,trn_pass_road,LDV,LDV ICE,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42
-Canada,trn_pass_road,LDV,LDV electric,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42
-Canada,trn_pass_road,LDV,LDV gas,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42
-Canada,trn_pass_road,LDV,LDV fuel cell,0.48,0.48,0.44,0.42,0.42,0.42,0.42,0.42
-Canada,trn_pass_road,bus,bus ICE,1.64,1.64,1.64,1.64,1.64,1.64,1.64,1.64
-Canada,trn_pass_road,bus,bus electric,1.91,1.91,1.77,1.64,1.64,1.64,1.64,1.64
-Canada,trn_pass_road,bus,bus gas,1.72,1.72,1.67,1.64,1.64,1.64,1.64,1.64
-Canada,trn_pass_road,bus,bus fuel cell,1.89,1.89,1.75,1.64,1.64,1.64,1.64,1.64
-
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
-1005,,,,,,,,,,,
-,,,,input-cost,,,,,,,
-region,supplysector,tranSubsector,tranTechnology,1990,2005,2020,2035,2050,2065,2080,2095
-Western Europe,trn_freight,air,air,13.22,13.22,13.22,13.22,13.22,13.22,13.22,13.22
-Western Europe,trn_freight,rail,rail ICE,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70
-Western Europe,trn_freight,rail,rail electric,0.77,0.77,0.73,0.70,0.70,0.70,0.70,0.70
-Western Europe,trn_freight,road,truck ICE,0.89,0.89,0.89,0.89,0.89,0.89,0.89,0.89
-Western Europe,trn_freight,domestic ship,domestic ship ICE,3.60,3.60,3.60,3.60,3.60,3.60,3.60,3.60
-Western Europe,trn_passenger,air,air,9.70,9.70,9.70,9.70,9.70,9.70,9.70,9.70
-Western Europe,trn_passenger,high speed rail,high speed rail,50.64,50.64,49.89,49.15,48.42,47.69,46.98,46.28
-Western Europe,trn_passenger,rail,rail ICE,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43
-Western Europe,trn_passenger,rail,rail electric,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83
-Western Europe,trn_shipping_intl,international ship,international ship ICE,84.93,84.93,84.93,84.93,84.93,84.93,84.93,84.93
-Western Europe,trn_pass_road,LDV,LDV ICE,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42
-Western Europe,trn_pass_road,LDV,LDV electric,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42
-Western Europe,trn_pass_road,LDV,LDV gas,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42
-Western Europe,trn_pass_road,LDV,LDV fuel cell,0.48,0.48,0.44,0.42,0.42,0.42,0.42,0.42
-Western Europe,trn_pass_road,bus,bus ICE,1.64,1.64,1.64,1.64,1.64,1.64,1.64,1.64
-Western Europe,trn_pass_road,bus,bus electric,1.91,1.91,1.77,1.64,1.64,1.64,1.64,1.64
-Western Europe,trn_pass_road,bus,bus gas,1.72,1.72,1.67,1.64,1.64,1.64,1.64,1.64
-Western Europe,trn_pass_road,bus,bus fuel cell,1.89,1.89,1.75,1.64,1.64,1.64,1.64,1.64
-Japan,trn_freight,air,air,13.22,13.22,13.22,13.22,13.22,13.22,13.22,13.22
-Japan,trn_freight,rail,rail ICE,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70
-Japan,trn_freight,rail,rail electric,0.77,0.77,0.73,0.70,0.70,0.70,0.70,0.70
-Japan,trn_freight,road,truck ICE,0.89,0.89,0.89,0.89,0.89,0.89,0.89,0.89
-Japan,trn_freight,domestic ship,domestic ship ICE,3.60,3.60,3.60,3.60,3.60,3.60,3.60,3.60
-Japan,trn_passenger,air,air,9.70,9.70,9.70,9.70,9.70,9.70,9.70,9.70
-Japan,trn_passenger,high speed rail,high speed rail,50.64,50.64,49.89,49.15,48.42,47.69,46.98,46.28
-Japan,trn_passenger,rail,rail ICE,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43
-Japan,trn_passenger,rail,rail electric,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83
-Japan,trn_shipping_intl,international ship,international ship ICE,84.93,84.93,84.93,84.93,84.93,84.93,84.93,84.93
-Japan,trn_pass_road,LDV,LDV ICE,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42
-Japan,trn_pass_road,LDV,LDV electric,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42
-Japan,trn_pass_road,LDV,LDV gas,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42
-Japan,trn_pass_road,LDV,LDV fuel cell,0.48,0.48,0.44,0.42,0.42,0.42,0.42,0.42
-Japan,trn_pass_road,bus,bus ICE,1.64,1.64,1.64,1.64,1.64,1.64,1.64,1.64
-Japan,trn_pass_road,bus,bus electric,1.91,1.91,1.77,1.64,1.64,1.64,1.64,1.64
-Japan,trn_pass_road,bus,bus gas,1.72,1.72,1.67,1.64,1.64,1.64,1.64,1.64
-Japan,trn_pass_road,bus,bus fuel cell,1.89,1.89,1.75,1.64,1.64,1.64,1.64,1.64
-
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
-1005,,,,,,,,,,,
-,,,,input-cost,,,,,,,
-region,supplysector,tranSubsector,tranTechnology,1990,2005,2020,2035,2050,2065,2080,2095
-Australia_NZ,trn_freight,air,air,13.22,13.22,13.22,13.22,13.22,13.22,13.22,13.22
-Australia_NZ,trn_freight,rail,rail ICE,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70
-Australia_NZ,trn_freight,rail,rail electric,0.77,0.77,0.73,0.70,0.70,0.70,0.70,0.70
-Australia_NZ,trn_freight,road,truck ICE,0.89,0.89,0.89,0.89,0.89,0.89,0.89,0.89
-Australia_NZ,trn_freight,domestic ship,domestic ship ICE,3.60,3.60,3.60,3.60,3.60,3.60,3.60,3.60
-Australia_NZ,trn_passenger,air,air,9.70,9.70,9.70,9.70,9.70,9.70,9.70,9.70
-Australia_NZ,trn_passenger,high speed rail,high speed rail,50.64,50.64,49.89,49.15,48.42,47.69,46.98,46.28
-Australia_NZ,trn_passenger,rail,rail ICE,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43
-Australia_NZ,trn_passenger,rail,rail electric,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83
-Australia_NZ,trn_shipping_intl,international ship,international ship ICE,84.93,84.93,84.93,84.93,84.93,84.93,84.93,84.93
-Australia_NZ,trn_pass_road,LDV,LDV ICE,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42
-Australia_NZ,trn_pass_road,LDV,LDV electric,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42
-Australia_NZ,trn_pass_road,LDV,LDV gas,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42
-Australia_NZ,trn_pass_road,LDV,LDV fuel cell,0.48,0.48,0.44,0.42,0.42,0.42,0.42,0.42
-Australia_NZ,trn_pass_road,bus,bus ICE,1.64,1.64,1.64,1.64,1.64,1.64,1.64,1.64
-Australia_NZ,trn_pass_road,bus,bus electric,1.91,1.91,1.77,1.64,1.64,1.64,1.64,1.64
-Australia_NZ,trn_pass_road,bus,bus gas,1.72,1.72,1.67,1.64,1.64,1.64,1.64,1.64
-Australia_NZ,trn_pass_road,bus,bus fuel cell,1.89,1.89,1.75,1.64,1.64,1.64,1.64,1.64
-Former Soviet Union,trn_freight,air,air,13.22,13.22,13.22,13.22,13.22,13.22,13.22,13.22
-Former Soviet Union,trn_freight,rail,rail ICE,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70
-Former Soviet Union,trn_freight,rail,rail electric,0.77,0.77,0.73,0.70,0.70,0.70,0.70,0.70
-Former Soviet Union,trn_freight,road,truck ICE,0.89,0.89,0.89,0.89,0.89,0.89,0.89,0.89
-Former Soviet Union,trn_freight,domestic ship,domestic ship ICE,3.60,3.60,3.60,3.60,3.60,3.60,3.60,3.60
-Former Soviet Union,trn_passenger,air,air,9.70,9.70,9.70,9.70,9.70,9.70,9.70,9.70
-Former Soviet Union,trn_passenger,high speed rail,high speed rail,50.64,50.64,49.89,49.15,48.42,47.69,46.98,46.28
-Former Soviet Union,trn_passenger,rail,rail ICE,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43
-Former Soviet Union,trn_passenger,rail,rail electric,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83
-Former Soviet Union,trn_shipping_intl,international ship,international ship ICE,84.93,84.93,84.93,84.93,84.93,84.93,84.93,84.93
-Former Soviet Union,trn_pass_road,LDV,LDV ICE,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42
-Former Soviet Union,trn_pass_road,LDV,LDV electric,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42
-Former Soviet Union,trn_pass_road,LDV,LDV gas,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42
-Former Soviet Union,trn_pass_road,LDV,LDV fuel cell,0.48,0.48,0.44,0.42,0.42,0.42,0.42,0.42
-Former Soviet Union,trn_pass_road,bus,bus ICE,1.64,1.64,1.64,1.64,1.64,1.64,1.64,1.64
-Former Soviet Union,trn_pass_road,bus,bus electric,1.91,1.91,1.77,1.64,1.64,1.64,1.64,1.64
-Former Soviet Union,trn_pass_road,bus,bus gas,1.72,1.72,1.67,1.64,1.64,1.64,1.64,1.64
-Former Soviet Union,trn_pass_road,bus,bus fuel cell,1.89,1.89,1.75,1.64,1.64,1.64,1.64,1.64
-
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
-1005,,,,,,,,,,,
-,,,,input-cost,,,,,,,
-region,supplysector,tranSubsector,tranTechnology,1990,2005,2020,2035,2050,2065,2080,2095
-China,trn_freight,air,air,13.22,13.22,13.22,13.22,13.22,13.22,13.22,13.22
-China,trn_freight,rail,rail coal,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70
-China,trn_freight,rail,rail ICE,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70
-China,trn_freight,rail,rail electric,0.77,0.77,0.73,0.70,0.70,0.70,0.70,0.70
-China,trn_freight,road,truck ICE,0.89,0.89,0.89,0.89,0.89,0.89,0.89,0.89
-China,trn_freight,domestic ship,domestic ship ICE,3.60,3.60,3.60,3.60,3.60,3.60,3.60,3.60
-China,trn_passenger,air,air,9.70,9.70,9.70,9.70,9.70,9.70,9.70,9.70
-China,trn_passenger,high speed rail,high speed rail,50.64,50.64,49.89,49.15,48.42,47.69,46.98,46.28
-China,trn_passenger,rail,rail coal,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43
-China,trn_passenger,rail,rail ICE,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43
-China,trn_passenger,rail,rail electric,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83
-China,trn_shipping_intl,international ship,international ship ICE,84.93,84.93,84.93,84.93,84.93,84.93,84.93,84.93
-China,trn_pass_road,LDV,LDV ICE,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42
-China,trn_pass_road,LDV,LDV electric,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42
-China,trn_pass_road,LDV,LDV gas,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42
-China,trn_pass_road,LDV,LDV fuel cell,0.48,0.48,0.44,0.42,0.42,0.42,0.42,0.42
-China,trn_pass_road,bus,bus ICE,1.64,1.64,1.64,1.64,1.64,1.64,1.64,1.64
-China,trn_pass_road,bus,bus electric,1.91,1.91,1.77,1.64,1.64,1.64,1.64,1.64
-China,trn_pass_road,bus,bus gas,1.72,1.72,1.67,1.64,1.64,1.64,1.64,1.64
-China,trn_pass_road,bus,bus fuel cell,1.89,1.89,1.75,1.64,1.64,1.64,1.64,1.64
-Middle East,trn_freight,air,air,13.22,13.22,13.22,13.22,13.22,13.22,13.22,13.22
-Middle East,trn_freight,rail,rail ICE,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70
-Middle East,trn_freight,rail,rail electric,0.77,0.77,0.73,0.70,0.70,0.70,0.70,0.70
-Middle East,trn_freight,road,truck ICE,0.89,0.89,0.89,0.89,0.89,0.89,0.89,0.89
-Middle East,trn_freight,domestic ship,domestic ship ICE,3.60,3.60,3.60,3.60,3.60,3.60,3.60,3.60
-Middle East,trn_passenger,air,air,9.70,9.70,9.70,9.70,9.70,9.70,9.70,9.70
-Middle East,trn_passenger,high speed rail,high speed rail,50.64,50.64,49.89,49.15,48.42,47.69,46.98,46.28
-Middle East,trn_passenger,rail,rail ICE,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43
-Middle East,trn_passenger,rail,rail electric,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83
-Middle East,trn_shipping_intl,international ship,international ship ICE,84.93,84.93,84.93,84.93,84.93,84.93,84.93,84.93
-Middle East,trn_pass_road,LDV,LDV ICE,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42
-Middle East,trn_pass_road,LDV,LDV electric,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42
-Middle East,trn_pass_road,LDV,LDV gas,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42
-Middle East,trn_pass_road,LDV,LDV fuel cell,0.48,0.48,0.44,0.42,0.42,0.42,0.42,0.42
-Middle East,trn_pass_road,bus,bus ICE,1.64,1.64,1.64,1.64,1.64,1.64,1.64,1.64
-Middle East,trn_pass_road,bus,bus electric,1.91,1.91,1.77,1.64,1.64,1.64,1.64,1.64
-Middle East,trn_pass_road,bus,bus gas,1.72,1.72,1.67,1.64,1.64,1.64,1.64,1.64
-Middle East,trn_pass_road,bus,bus fuel cell,1.89,1.89,1.75,1.64,1.64,1.64,1.64,1.64
-
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
-1005,,,,,,,,,,,
-,,,,input-cost,,,,,,,
-region,supplysector,tranSubsector,tranTechnology,1990,2005,2020,2035,2050,2065,2080,2095
-Africa,trn_freight,air,air,13.22,13.22,13.22,13.22,13.22,13.22,13.22,13.22
-Africa,trn_freight,rail,rail ICE,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70
-Africa,trn_freight,rail,rail electric,0.77,0.77,0.73,0.70,0.70,0.70,0.70,0.70
-Africa,trn_freight,road,truck ICE,0.89,0.89,0.89,0.89,0.89,0.89,0.89,0.89
-Africa,trn_freight,domestic ship,domestic ship ICE,3.60,3.60,3.60,3.60,3.60,3.60,3.60,3.60
-Africa,trn_passenger,air,air,9.70,9.70,9.70,9.70,9.70,9.70,9.70,9.70
-Africa,trn_passenger,high speed rail,high speed rail,50.64,50.64,49.89,49.15,48.42,47.69,46.98,46.28
-Africa,trn_passenger,rail,rail ICE,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43
-Africa,trn_passenger,rail,rail electric,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83
-Africa,trn_shipping_intl,international ship,international ship ICE,84.93,84.93,84.93,84.93,84.93,84.93,84.93,84.93
-Africa,trn_pass_road,LDV,LDV ICE,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42
-Africa,trn_pass_road,LDV,LDV electric,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42
-Africa,trn_pass_road,LDV,LDV gas,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42
-Africa,trn_pass_road,LDV,LDV fuel cell,0.48,0.48,0.44,0.42,0.42,0.42,0.42,0.42
-Africa,trn_pass_road,bus,bus ICE,1.64,1.64,1.64,1.64,1.64,1.64,1.64,1.64
-Africa,trn_pass_road,bus,bus electric,1.91,1.91,1.77,1.64,1.64,1.64,1.64,1.64
-Africa,trn_pass_road,bus,bus gas,1.72,1.72,1.67,1.64,1.64,1.64,1.64,1.64
-Africa,trn_pass_road,bus,bus fuel cell,1.89,1.89,1.75,1.64,1.64,1.64,1.64,1.64
-Latin America,trn_freight,air,air,13.22,13.22,13.22,13.22,13.22,13.22,13.22,13.22
-Latin America,trn_freight,rail,rail ICE,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70
-Latin America,trn_freight,rail,rail electric,0.77,0.77,0.73,0.70,0.70,0.70,0.70,0.70
-Latin America,trn_freight,road,truck ICE,0.89,0.89,0.89,0.89,0.89,0.89,0.89,0.89
-Latin America,trn_freight,domestic ship,domestic ship ICE,3.60,3.60,3.60,3.60,3.60,3.60,3.60,3.60
-Latin America,trn_passenger,air,air,9.70,9.70,9.70,9.70,9.70,9.70,9.70,9.70
-Latin America,trn_passenger,high speed rail,high speed rail,50.64,50.64,49.89,49.15,48.42,47.69,46.98,46.28
-Latin America,trn_passenger,rail,rail ICE,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43
-Latin America,trn_passenger,rail,rail electric,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83
-Latin America,trn_shipping_intl,international ship,international ship ICE,84.93,84.93,84.93,84.93,84.93,84.93,84.93,84.93
-Latin America,trn_pass_road,LDV,LDV ICE,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42
-Latin America,trn_pass_road,LDV,LDV electric,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42
-Latin America,trn_pass_road,LDV,LDV gas,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42
-Latin America,trn_pass_road,LDV,LDV fuel cell,0.48,0.48,0.44,0.42,0.42,0.42,0.42,0.42
-Latin America,trn_pass_road,bus,bus ICE,1.64,1.64,1.64,1.64,1.64,1.64,1.64,1.64
-Latin America,trn_pass_road,bus,bus electric,1.91,1.91,1.77,1.64,1.64,1.64,1.64,1.64
-Latin America,trn_pass_road,bus,bus gas,1.72,1.72,1.67,1.64,1.64,1.64,1.64,1.64
-Latin America,trn_pass_road,bus,bus fuel cell,1.89,1.89,1.75,1.64,1.64,1.64,1.64,1.64
-
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
-1005,,,,,,,,,,,
-,,,,input-cost,,,,,,,
-region,supplysector,tranSubsector,tranTechnology,1990,2005,2020,2035,2050,2065,2080,2095
-Southeast Asia,trn_freight,air,air,13.22,13.22,13.22,13.22,13.22,13.22,13.22,13.22
-Southeast Asia,trn_freight,rail,rail ICE,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70
-Southeast Asia,trn_freight,rail,rail electric,0.77,0.77,0.73,0.70,0.70,0.70,0.70,0.70
-Southeast Asia,trn_freight,road,truck ICE,0.89,0.89,0.89,0.89,0.89,0.89,0.89,0.89
-Southeast Asia,trn_freight,domestic ship,domestic ship ICE,3.60,3.60,3.60,3.60,3.60,3.60,3.60,3.60
-Southeast Asia,trn_passenger,air,air,9.70,9.70,9.70,9.70,9.70,9.70,9.70,9.70
-Southeast Asia,trn_passenger,high speed rail,high speed rail,50.64,50.64,49.89,49.15,48.42,47.69,46.98,46.28
-Southeast Asia,trn_passenger,rail,rail ICE,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43
-Southeast Asia,trn_passenger,rail,rail electric,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83
-Southeast Asia,trn_shipping_intl,international ship,international ship ICE,84.93,84.93,84.93,84.93,84.93,84.93,84.93,84.93
-Southeast Asia,trn_pass_road,LDV,LDV ICE,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42
-Southeast Asia,trn_pass_road,LDV,LDV electric,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42
-Southeast Asia,trn_pass_road,LDV,LDV gas,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42
-Southeast Asia,trn_pass_road,LDV,LDV fuel cell,0.48,0.48,0.44,0.42,0.42,0.42,0.42,0.42
-Southeast Asia,trn_pass_road,bus,bus ICE,1.64,1.64,1.64,1.64,1.64,1.64,1.64,1.64
-Southeast Asia,trn_pass_road,bus,bus electric,1.91,1.91,1.77,1.64,1.64,1.64,1.64,1.64
-Southeast Asia,trn_pass_road,bus,bus gas,1.72,1.72,1.67,1.64,1.64,1.64,1.64,1.64
-Southeast Asia,trn_pass_road,bus,bus fuel cell,1.89,1.89,1.75,1.64,1.64,1.64,1.64,1.64
-Eastern Europe,trn_freight,air,air,13.22,13.22,13.22,13.22,13.22,13.22,13.22,13.22
-Eastern Europe,trn_freight,rail,rail ICE,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70
-Eastern Europe,trn_freight,rail,rail electric,0.77,0.77,0.73,0.70,0.70,0.70,0.70,0.70
-Eastern Europe,trn_freight,road,truck ICE,0.89,0.89,0.89,0.89,0.89,0.89,0.89,0.89
-Eastern Europe,trn_freight,domestic ship,domestic ship ICE,3.60,3.60,3.60,3.60,3.60,3.60,3.60,3.60
-Eastern Europe,trn_passenger,air,air,9.70,9.70,9.70,9.70,9.70,9.70,9.70,9.70
-Eastern Europe,trn_passenger,high speed rail,high speed rail,50.64,50.64,49.89,49.15,48.42,47.69,46.98,46.28
-Eastern Europe,trn_passenger,rail,rail ICE,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43
-Eastern Europe,trn_passenger,rail,rail electric,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83
-Eastern Europe,trn_shipping_intl,international ship,international ship ICE,84.93,84.93,84.93,84.93,84.93,84.93,84.93,84.93
-Eastern Europe,trn_pass_road,LDV,LDV ICE,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42
-Eastern Europe,trn_pass_road,LDV,LDV electric,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42
-Eastern Europe,trn_pass_road,LDV,LDV gas,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42
-Eastern Europe,trn_pass_road,LDV,LDV fuel cell,0.48,0.48,0.44,0.42,0.42,0.42,0.42,0.42
-Eastern Europe,trn_pass_road,bus,bus ICE,1.64,1.64,1.64,1.64,1.64,1.64,1.64,1.64
-Eastern Europe,trn_pass_road,bus,bus electric,1.91,1.91,1.77,1.64,1.64,1.64,1.64,1.64
-Eastern Europe,trn_pass_road,bus,bus gas,1.72,1.72,1.67,1.64,1.64,1.64,1.64,1.64
-Eastern Europe,trn_pass_road,bus,bus fuel cell,1.89,1.89,1.75,1.64,1.64,1.64,1.64,1.64
-
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
-1005,,,,,,,,,,,
-,,,,input-cost,,,,,,,
-region,supplysector,tranSubsector,tranTechnology,1990,2005,2020,2035,2050,2065,2080,2095
-Korea,trn_freight,air,air,13.22,13.22,13.22,13.22,13.22,13.22,13.22,13.22
-Korea,trn_freight,rail,rail ICE,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70
-Korea,trn_freight,rail,rail electric,0.77,0.77,0.73,0.70,0.70,0.70,0.70,0.70
-Korea,trn_freight,road,truck ICE,0.89,0.89,0.89,0.89,0.89,0.89,0.89,0.89
-Korea,trn_freight,domestic ship,domestic ship ICE,3.60,3.60,3.60,3.60,3.60,3.60,3.60,3.60
-Korea,trn_passenger,air,air,9.70,9.70,9.70,9.70,9.70,9.70,9.70,9.70
-Korea,trn_passenger,high speed rail,high speed rail,50.64,50.64,49.89,49.15,48.42,47.69,46.98,46.28
-Korea,trn_passenger,rail,rail ICE,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43
-Korea,trn_passenger,rail,rail electric,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83
-Korea,trn_shipping_intl,international ship,international ship ICE,84.93,84.93,84.93,84.93,84.93,84.93,84.93,84.93
-Korea,trn_pass_road,LDV,LDV ICE,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42
-Korea,trn_pass_road,LDV,LDV electric,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42
-Korea,trn_pass_road,LDV,LDV gas,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42
-Korea,trn_pass_road,LDV,LDV fuel cell,0.48,0.48,0.44,0.42,0.42,0.42,0.42,0.42
-Korea,trn_pass_road,bus,bus ICE,1.64,1.64,1.64,1.64,1.64,1.64,1.64,1.64
-Korea,trn_pass_road,bus,bus electric,1.91,1.91,1.77,1.64,1.64,1.64,1.64,1.64
-Korea,trn_pass_road,bus,bus gas,1.72,1.72,1.67,1.64,1.64,1.64,1.64,1.64
-Korea,trn_pass_road,bus,bus fuel cell,1.89,1.89,1.75,1.64,1.64,1.64,1.64,1.64
-India,trn_freight,air,air,13.22,13.22,13.22,13.22,13.22,13.22,13.22,13.22
-India,trn_freight,rail,rail ICE,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70
-India,trn_freight,rail,rail electric,0.77,0.77,0.73,0.70,0.70,0.70,0.70,0.70
-India,trn_freight,road,truck ICE,0.89,0.89,0.89,0.89,0.89,0.89,0.89,0.89
-India,trn_freight,domestic ship,domestic ship ICE,3.60,3.60,3.60,3.60,3.60,3.60,3.60,3.60
-India,trn_passenger,air,air,9.70,9.70,9.70,9.70,9.70,9.70,9.70,9.70
-India,trn_passenger,high speed rail,high speed rail,50.64,50.64,49.89,49.15,48.42,47.69,46.98,46.28
-India,trn_passenger,rail,rail ICE,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43
-India,trn_passenger,rail,rail electric,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83
-India,trn_shipping_intl,international ship,international ship ICE,84.93,84.93,84.93,84.93,84.93,84.93,84.93,84.93
-India,trn_pass_road,LDV,LDV ICE,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42
-India,trn_pass_road,LDV,LDV electric,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42
-India,trn_pass_road,LDV,LDV gas,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42
-India,trn_pass_road,LDV,LDV fuel cell,0.48,0.48,0.44,0.42,0.42,0.42,0.42,0.42
-India,trn_pass_road,bus,bus ICE,1.64,1.64,1.64,1.64,1.64,1.64,1.64,1.64
-India,trn_pass_road,bus,bus electric,1.91,1.91,1.77,1.64,1.64,1.64,1.64,1.64
-India,trn_pass_road,bus,bus gas,1.72,1.72,1.67,1.64,1.64,1.64,1.64,1.64
-India,trn_pass_road,bus,bus fuel cell,1.89,1.89,1.75,1.64,1.64,1.64,1.64,1.64
-,,,,,,,,,,,
-TranTechnology load factors,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
-1006,,,,,,,,,,,
-,,,,loadFactor,,,,,,,
-region,supplysector,tranSubsector,tranTechnology,1990,2005,2020,2035,2050,2065,2080,2095
-USA,trn_freight,air,air,27.62,27.62,27.62,27.62,27.62,27.62,27.62,27.62
-USA,trn_freight,rail,rail ICE,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-USA,trn_freight,rail,rail electric,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-USA,trn_freight,road,truck ICE,5.11,5.11,5.11,5.11,5.11,5.11,5.11,5.11
-USA,trn_freight,domestic ship,domestic ship ICE,1000,1000,1000,1000,1000,1000,1000,1000
-USA,trn_passenger,air,air,123.74,123.74,123.74,123.74,123.74,123.74,123.74,123.74
-USA,trn_passenger,high speed rail,high speed rail,310.33,310.33,310.33,310.33,310.33,310.33,310.33,310.33
-USA,trn_passenger,rail,rail ICE,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-USA,trn_passenger,rail,rail electric,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-USA,trn_shipping_intl,international ship,international ship ICE,19449,19449,19449,19449,19449,19449,19449,19449
-USA,trn_pass_road,LDV,LDV ICE,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-USA,trn_pass_road,LDV,LDV electric,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-USA,trn_pass_road,LDV,LDV gas,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-USA,trn_pass_road,LDV,LDV fuel cell,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-USA,trn_pass_road,bus,bus ICE,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-USA,trn_pass_road,bus,bus electric,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-USA,trn_pass_road,bus,bus gas,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-USA,trn_pass_road,bus,bus fuel cell,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-Canada,trn_freight,air,air,27.62,27.62,27.62,27.62,27.62,27.62,27.62,27.62
-Canada,trn_freight,rail,rail ICE,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-Canada,trn_freight,rail,rail electric,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-Canada,trn_freight,road,truck ICE,5.11,5.11,5.11,5.11,5.11,5.11,5.11,5.11
-Canada,trn_freight,domestic ship,domestic ship ICE,1000,1000,1000,1000,1000,1000,1000,1000
-Canada,trn_passenger,air,air,123.74,123.74,123.74,123.74,123.74,123.74,123.74,123.74
-Canada,trn_passenger,high speed rail,high speed rail,310.33,310.33,310.33,310.33,310.33,310.33,310.33,310.33
-Canada,trn_passenger,rail,rail ICE,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-Canada,trn_passenger,rail,rail electric,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-Canada,trn_shipping_intl,international ship,international ship ICE,19449,19449,19449,19449,19449,19449,19449,19449
-Canada,trn_pass_road,LDV,LDV ICE,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Canada,trn_pass_road,LDV,LDV electric,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Canada,trn_pass_road,LDV,LDV gas,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Canada,trn_pass_road,LDV,LDV fuel cell,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Canada,trn_pass_road,bus,bus ICE,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-Canada,trn_pass_road,bus,bus electric,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-Canada,trn_pass_road,bus,bus gas,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-Canada,trn_pass_road,bus,bus fuel cell,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
-1006,,,,,,,,,,,
-,,,,loadFactor,,,,,,,
-region,supplysector,tranSubsector,tranTechnology,1990,2005,2020,2035,2050,2065,2080,2095
-Western Europe,trn_freight,air,air,27.62,27.62,27.62,27.62,27.62,27.62,27.62,27.62
-Western Europe,trn_freight,rail,rail ICE,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-Western Europe,trn_freight,rail,rail electric,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-Western Europe,trn_freight,road,truck ICE,5.11,5.11,5.11,5.11,5.11,5.11,5.11,5.11
-Western Europe,trn_freight,domestic ship,domestic ship ICE,1000,1000,1000,1000,1000,1000,1000,1000
-Western Europe,trn_passenger,air,air,123.74,123.74,123.74,123.74,123.74,123.74,123.74,123.74
-Western Europe,trn_passenger,high speed rail,high speed rail,310.33,310.33,310.33,310.33,310.33,310.33,310.33,310.33
-Western Europe,trn_passenger,rail,rail ICE,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-Western Europe,trn_passenger,rail,rail electric,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-Western Europe,trn_shipping_intl,international ship,international ship ICE,19449,19449,19449,19449,19449,19449,19449,19449
-Western Europe,trn_pass_road,LDV,LDV ICE,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Western Europe,trn_pass_road,LDV,LDV electric,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Western Europe,trn_pass_road,LDV,LDV gas,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Western Europe,trn_pass_road,LDV,LDV fuel cell,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Western Europe,trn_pass_road,bus,bus ICE,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-Western Europe,trn_pass_road,bus,bus electric,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-Western Europe,trn_pass_road,bus,bus gas,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-Western Europe,trn_pass_road,bus,bus fuel cell,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-Japan,trn_freight,air,air,27.62,27.62,27.62,27.62,27.62,27.62,27.62,27.62
-Japan,trn_freight,rail,rail ICE,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-Japan,trn_freight,rail,rail electric,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-Japan,trn_freight,road,truck ICE,5.11,5.11,5.11,5.11,5.11,5.11,5.11,5.11
-Japan,trn_freight,domestic ship,domestic ship ICE,1000,1000,1000,1000,1000,1000,1000,1000
-Japan,trn_passenger,air,air,123.74,123.74,123.74,123.74,123.74,123.74,123.74,123.74
-Japan,trn_passenger,high speed rail,high speed rail,310.33,310.33,310.33,310.33,310.33,310.33,310.33,310.33
-Japan,trn_passenger,rail,rail ICE,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-Japan,trn_passenger,rail,rail electric,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-Japan,trn_shipping_intl,international ship,international ship ICE,19449,19449,19449,19449,19449,19449,19449,19449
-Japan,trn_pass_road,LDV,LDV ICE,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Japan,trn_pass_road,LDV,LDV electric,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Japan,trn_pass_road,LDV,LDV gas,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Japan,trn_pass_road,LDV,LDV fuel cell,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Japan,trn_pass_road,bus,bus ICE,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-Japan,trn_pass_road,bus,bus electric,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-Japan,trn_pass_road,bus,bus gas,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-Japan,trn_pass_road,bus,bus fuel cell,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
-1006,,,,,,,,,,,
-,,,,loadFactor,,,,,,,
-region,supplysector,tranSubsector,tranTechnology,1990,2005,2020,2035,2050,2065,2080,2095
-Australia_NZ,trn_freight,air,air,27.62,27.62,27.62,27.62,27.62,27.62,27.62,27.62
-Australia_NZ,trn_freight,rail,rail ICE,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-Australia_NZ,trn_freight,rail,rail electric,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-Australia_NZ,trn_freight,road,truck ICE,5.11,5.11,5.11,5.11,5.11,5.11,5.11,5.11
-Australia_NZ,trn_freight,domestic ship,domestic ship ICE,1000,1000,1000,1000,1000,1000,1000,1000
-Australia_NZ,trn_passenger,air,air,123.74,123.74,123.74,123.74,123.74,123.74,123.74,123.74
-Australia_NZ,trn_passenger,high speed rail,high speed rail,310.33,310.33,310.33,310.33,310.33,310.33,310.33,310.33
-Australia_NZ,trn_passenger,rail,rail ICE,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-Australia_NZ,trn_passenger,rail,rail electric,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-Australia_NZ,trn_shipping_intl,international ship,international ship ICE,19449,19449,19449,19449,19449,19449,19449,19449
-Australia_NZ,trn_pass_road,LDV,LDV ICE,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Australia_NZ,trn_pass_road,LDV,LDV electric,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Australia_NZ,trn_pass_road,LDV,LDV gas,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Australia_NZ,trn_pass_road,LDV,LDV fuel cell,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Australia_NZ,trn_pass_road,bus,bus ICE,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-Australia_NZ,trn_pass_road,bus,bus electric,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-Australia_NZ,trn_pass_road,bus,bus gas,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-Australia_NZ,trn_pass_road,bus,bus fuel cell,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-Former Soviet Union,trn_freight,air,air,27.62,27.62,27.62,27.62,27.62,27.62,27.62,27.62
-Former Soviet Union,trn_freight,rail,rail ICE,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-Former Soviet Union,trn_freight,rail,rail electric,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-Former Soviet Union,trn_freight,road,truck ICE,5.11,5.11,5.11,5.11,5.11,5.11,5.11,5.11
-Former Soviet Union,trn_freight,domestic ship,domestic ship ICE,1000,1000,1000,1000,1000,1000,1000,1000
-Former Soviet Union,trn_passenger,air,air,123.74,123.74,123.74,123.74,123.74,123.74,123.74,123.74
-Former Soviet Union,trn_passenger,high speed rail,high speed rail,310.33,310.33,310.33,310.33,310.33,310.33,310.33,310.33
-Former Soviet Union,trn_passenger,rail,rail ICE,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-Former Soviet Union,trn_passenger,rail,rail electric,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-Former Soviet Union,trn_shipping_intl,international ship,international ship ICE,19449,19449,19449,19449,19449,19449,19449,19449
-Former Soviet Union,trn_pass_road,LDV,LDV ICE,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Former Soviet Union,trn_pass_road,LDV,LDV electric,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Former Soviet Union,trn_pass_road,LDV,LDV gas,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Former Soviet Union,trn_pass_road,LDV,LDV fuel cell,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Former Soviet Union,trn_pass_road,bus,bus ICE,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-Former Soviet Union,trn_pass_road,bus,bus electric,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-Former Soviet Union,trn_pass_road,bus,bus gas,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-Former Soviet Union,trn_pass_road,bus,bus fuel cell,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
-1006,,,,,,,,,,,
-,,,,loadFactor,,,,,,,
-region,supplysector,tranSubsector,tranTechnology,1990,2005,2020,2035,2050,2065,2080,2095
-China,trn_freight,air,air,27.62,27.62,27.62,27.62,27.62,27.62,27.62,27.62
-China,trn_freight,rail,rail coal,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-China,trn_freight,rail,rail ICE,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-China,trn_freight,rail,rail electric,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-China,trn_freight,road,truck ICE,5.11,5.11,5.11,5.11,5.11,5.11,5.11,5.11
-China,trn_freight,domestic ship,domestic ship ICE,1000,1000,1000,1000,1000,1000,1000,1000
-China,trn_passenger,air,air,123.74,123.74,123.74,123.74,123.74,123.74,123.74,123.74
-China,trn_passenger,high speed rail,high speed rail,310.33,310.33,310.33,310.33,310.33,310.33,310.33,310.33
-China,trn_passenger,rail,rail coal,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-China,trn_passenger,rail,rail ICE,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-China,trn_passenger,rail,rail electric,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-China,trn_shipping_intl,international ship,international ship ICE,19449,19449,19449,19449,19449,19449,19449,19449
-China,trn_pass_road,LDV,LDV ICE,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20
-China,trn_pass_road,LDV,LDV electric,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20
-China,trn_pass_road,LDV,LDV gas,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20
-China,trn_pass_road,LDV,LDV fuel cell,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20
-China,trn_pass_road,bus,bus ICE,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00
-China,trn_pass_road,bus,bus electric,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00
-China,trn_pass_road,bus,bus gas,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00
-China,trn_pass_road,bus,bus fuel cell,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00
-Middle East,trn_freight,air,air,27.62,27.62,27.62,27.62,27.62,27.62,27.62,27.62
-Middle East,trn_freight,rail,rail ICE,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-Middle East,trn_freight,rail,rail electric,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-Middle East,trn_freight,road,truck ICE,5.11,5.11,5.11,5.11,5.11,5.11,5.11,5.11
-Middle East,trn_freight,domestic ship,domestic ship ICE,1000,1000,1000,1000,1000,1000,1000,1000
-Middle East,trn_passenger,air,air,123.74,123.74,123.74,123.74,123.74,123.74,123.74,123.74
-Middle East,trn_passenger,high speed rail,high speed rail,310.33,310.33,310.33,310.33,310.33,310.33,310.33,310.33
-Middle East,trn_passenger,rail,rail ICE,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-Middle East,trn_passenger,rail,rail electric,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-Middle East,trn_shipping_intl,international ship,international ship ICE,19449,19449,19449,19449,19449,19449,19449,19449
-Middle East,trn_pass_road,LDV,LDV ICE,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Middle East,trn_pass_road,LDV,LDV electric,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Middle East,trn_pass_road,LDV,LDV gas,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Middle East,trn_pass_road,LDV,LDV fuel cell,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Middle East,trn_pass_road,bus,bus ICE,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-Middle East,trn_pass_road,bus,bus electric,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-Middle East,trn_pass_road,bus,bus gas,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-Middle East,trn_pass_road,bus,bus fuel cell,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
-1006,,,,,,,,,,,
-,,,,loadFactor,,,,,,,
-region,supplysector,tranSubsector,tranTechnology,1990,2005,2020,2035,2050,2065,2080,2095
-Africa,trn_freight,air,air,27.62,27.62,27.62,27.62,27.62,27.62,27.62,27.62
-Africa,trn_freight,rail,rail ICE,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-Africa,trn_freight,rail,rail electric,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-Africa,trn_freight,road,truck ICE,5.11,5.11,5.11,5.11,5.11,5.11,5.11,5.11
-Africa,trn_freight,domestic ship,domestic ship ICE,1000,1000,1000,1000,1000,1000,1000,1000
-Africa,trn_passenger,air,air,123.74,123.74,123.74,123.74,123.74,123.74,123.74,123.74
-Africa,trn_passenger,high speed rail,high speed rail,310.33,310.33,310.33,310.33,310.33,310.33,310.33,310.33
-Africa,trn_passenger,rail,rail ICE,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-Africa,trn_passenger,rail,rail electric,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-Africa,trn_shipping_intl,international ship,international ship ICE,19449,19449,19449,19449,19449,19449,19449,19449
-Africa,trn_pass_road,LDV,LDV ICE,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20
-Africa,trn_pass_road,LDV,LDV electric,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20
-Africa,trn_pass_road,LDV,LDV gas,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20
-Africa,trn_pass_road,LDV,LDV fuel cell,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20
-Africa,trn_pass_road,bus,bus ICE,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00
-Africa,trn_pass_road,bus,bus electric,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00
-Africa,trn_pass_road,bus,bus gas,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00
-Africa,trn_pass_road,bus,bus fuel cell,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00
-Latin America,trn_freight,air,air,27.62,27.62,27.62,27.62,27.62,27.62,27.62,27.62
-Latin America,trn_freight,rail,rail ICE,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-Latin America,trn_freight,rail,rail electric,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-Latin America,trn_freight,road,truck ICE,5.11,5.11,5.11,5.11,5.11,5.11,5.11,5.11
-Latin America,trn_freight,domestic ship,domestic ship ICE,1000,1000,1000,1000,1000,1000,1000,1000
-Latin America,trn_passenger,air,air,123.74,123.74,123.74,123.74,123.74,123.74,123.74,123.74
-Latin America,trn_passenger,high speed rail,high speed rail,310.33,310.33,310.33,310.33,310.33,310.33,310.33,310.33
-Latin America,trn_passenger,rail,rail ICE,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-Latin America,trn_passenger,rail,rail electric,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-Latin America,trn_shipping_intl,international ship,international ship ICE,19449,19449,19449,19449,19449,19449,19449,19449
-Latin America,trn_pass_road,LDV,LDV ICE,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20
-Latin America,trn_pass_road,LDV,LDV electric,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20
-Latin America,trn_pass_road,LDV,LDV gas,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20
-Latin America,trn_pass_road,LDV,LDV fuel cell,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20
-Latin America,trn_pass_road,bus,bus ICE,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00
-Latin America,trn_pass_road,bus,bus electric,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00
-Latin America,trn_pass_road,bus,bus gas,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00
-Latin America,trn_pass_road,bus,bus fuel cell,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00
-
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
-1006,,,,,,,,,,,
-,,,,loadFactor,,,,,,,
-region,supplysector,tranSubsector,tranTechnology,1990,2005,2020,2035,2050,2065,2080,2095
-Southeast Asia,trn_freight,air,air,27.62,27.62,27.62,27.62,27.62,27.62,27.62,27.62
-Southeast Asia,trn_freight,rail,rail ICE,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-Southeast Asia,trn_freight,rail,rail electric,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-Southeast Asia,trn_freight,road,truck ICE,5.11,5.11,5.11,5.11,5.11,5.11,5.11,5.11
-Southeast Asia,trn_freight,domestic ship,domestic ship ICE,1000,1000,1000,1000,1000,1000,1000,1000
-Southeast Asia,trn_passenger,air,air,123.74,123.74,123.74,123.74,123.74,123.74,123.74,123.74
-Southeast Asia,trn_passenger,high speed rail,high speed rail,310.33,310.33,310.33,310.33,310.33,310.33,310.33,310.33
-Southeast Asia,trn_passenger,rail,rail ICE,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-Southeast Asia,trn_passenger,rail,rail electric,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-Southeast Asia,trn_shipping_intl,international ship,international ship ICE,19449,19449,19449,19449,19449,19449,19449,19449
-Southeast Asia,trn_pass_road,LDV,LDV ICE,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20
-Southeast Asia,trn_pass_road,LDV,LDV electric,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20
-Southeast Asia,trn_pass_road,LDV,LDV gas,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20
-Southeast Asia,trn_pass_road,LDV,LDV fuel cell,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20
-Southeast Asia,trn_pass_road,bus,bus ICE,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00
-Southeast Asia,trn_pass_road,bus,bus electric,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00
-Southeast Asia,trn_pass_road,bus,bus gas,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00
-Southeast Asia,trn_pass_road,bus,bus fuel cell,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00
-Eastern Europe,trn_freight,air,air,27.62,27.62,27.62,27.62,27.62,27.62,27.62,27.62
-Eastern Europe,trn_freight,rail,rail ICE,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-Eastern Europe,trn_freight,rail,rail electric,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-Eastern Europe,trn_freight,road,truck ICE,5.11,5.11,5.11,5.11,5.11,5.11,5.11,5.11
-Eastern Europe,trn_freight,domestic ship,domestic ship ICE,1000,1000,1000,1000,1000,1000,1000,1000
-Eastern Europe,trn_passenger,air,air,123.74,123.74,123.74,123.74,123.74,123.74,123.74,123.74
-Eastern Europe,trn_passenger,high speed rail,high speed rail,310.33,310.33,310.33,310.33,310.33,310.33,310.33,310.33
-Eastern Europe,trn_passenger,rail,rail ICE,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-Eastern Europe,trn_passenger,rail,rail electric,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-Eastern Europe,trn_shipping_intl,international ship,international ship ICE,19449,19449,19449,19449,19449,19449,19449,19449
-Eastern Europe,trn_pass_road,LDV,LDV ICE,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Eastern Europe,trn_pass_road,LDV,LDV electric,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Eastern Europe,trn_pass_road,LDV,LDV gas,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Eastern Europe,trn_pass_road,LDV,LDV fuel cell,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Eastern Europe,trn_pass_road,bus,bus ICE,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-Eastern Europe,trn_pass_road,bus,bus electric,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-Eastern Europe,trn_pass_road,bus,bus gas,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-Eastern Europe,trn_pass_road,bus,bus fuel cell,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
-1006,,,,,,,,,,,
-,,,,loadFactor,,,,,,,
-region,supplysector,tranSubsector,tranTechnology,1990,2005,2020,2035,2050,2065,2080,2095
-Korea,trn_freight,air,air,27.62,27.62,27.62,27.62,27.62,27.62,27.62,27.62
-Korea,trn_freight,rail,rail ICE,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-Korea,trn_freight,rail,rail electric,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-Korea,trn_freight,road,truck ICE,5.11,5.11,5.11,5.11,5.11,5.11,5.11,5.11
-Korea,trn_freight,domestic ship,domestic ship ICE,1000,1000,1000,1000,1000,1000,1000,1000
-Korea,trn_passenger,air,air,123.74,123.74,123.74,123.74,123.74,123.74,123.74,123.74
-Korea,trn_passenger,high speed rail,high speed rail,310.33,310.33,310.33,310.33,310.33,310.33,310.33,310.33
-Korea,trn_passenger,rail,rail ICE,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-Korea,trn_passenger,rail,rail electric,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-Korea,trn_shipping_intl,international ship,international ship ICE,19449,19449,19449,19449,19449,19449,19449,19449
-Korea,trn_pass_road,LDV,LDV ICE,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Korea,trn_pass_road,LDV,LDV electric,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Korea,trn_pass_road,LDV,LDV gas,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Korea,trn_pass_road,LDV,LDV fuel cell,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63
-Korea,trn_pass_road,bus,bus ICE,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-Korea,trn_pass_road,bus,bus electric,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-Korea,trn_pass_road,bus,bus gas,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-Korea,trn_pass_road,bus,bus fuel cell,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86
-India,trn_freight,air,air,27.62,27.62,27.62,27.62,27.62,27.62,27.62,27.62
-India,trn_freight,rail,rail ICE,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-India,trn_freight,rail,rail electric,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81
-India,trn_freight,road,truck ICE,5.11,5.11,5.11,5.11,5.11,5.11,5.11,5.11
-India,trn_freight,domestic ship,domestic ship ICE,1000,1000,1000,1000,1000,1000,1000,1000
-India,trn_passenger,air,air,123.74,123.74,123.74,123.74,123.74,123.74,123.74,123.74
-India,trn_passenger,high speed rail,high speed rail,310.33,310.33,310.33,310.33,310.33,310.33,310.33,310.33
-India,trn_passenger,rail,rail ICE,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-India,trn_passenger,rail,rail electric,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32
-India,trn_shipping_intl,international ship,international ship ICE,19449,19449,19449,19449,19449,19449,19449,19449
-India,trn_pass_road,LDV,LDV ICE,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20
-India,trn_pass_road,LDV,LDV electric,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20
-India,trn_pass_road,LDV,LDV gas,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20
-India,trn_pass_road,LDV,LDV fuel cell,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20
-India,trn_pass_road,bus,bus ICE,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00
-India,trn_pass_road,bus,bus electric,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00
-India,trn_pass_road,bus,bus gas,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00
-India,trn_pass_road,bus,bus fuel cell,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00
-
-TranTechnology calibrated energy consumption and shareweight path,,,,,,,,,,,
-GENERIC SHAREWEIGHT PATH FOR TECHS THAT DO NOT EXIST IN THE BASE YEAR,,,,,,,,,,,
-,,,,2020,2035,2050,2065,2080,2095
-,,,,0.1,0.25,0.4,0.5,0.5,0.5
-INPUT_TABLE,,,,,,,,,
-Variable ID,,,,,,,,,
-1011,,,,,,,,,
-
-region,supplysector,tranSubsector,tranTechnology,2020,2035,2050,2065,2080,2095
-USA,trn_freight,air,air,1,1,1,1,1,1
-USA,trn_freight,rail,rail ICE,1,1,1,1,1,1
-USA,trn_freight,rail,rail electric,0.1,0.25,0.4,0.5,0.5,0.5
-USA,trn_freight,road,truck ICE,1,1,1,1,1,1
-USA,trn_freight,domestic ship,domestic ship ICE,1,1,1,1,1,1
-USA,trn_passenger,air,air,1,1,1,1,1,1
-USA,trn_passenger,high speed rail,high speed rail,0.1,0.25,0.4,0.5,0.5,0.5
-USA,trn_passenger,rail,rail ICE,1,1,1,1,1,1
-USA,trn_passenger,rail,rail electric,1,1,1,1,1,1
-USA,trn_shipping_intl,international ship,international ship ICE,1,1,1,1,1,1
-USA,trn_pass_road,LDV,LDV ICE,1,1,1,1,1,1
-USA,trn_pass_road,LDV,LDV electric,0.1,0.25,0.4,0.5,0.5,0.5
-USA,trn_pass_road,LDV,LDV gas,0.1,0.25,0.4,0.5,0.5,0.5
-USA,trn_pass_road,LDV,LDV fuel cell,0.1,0.25,0.4,0.5,0.5,0.5
-USA,trn_pass_road,bus,bus ICE,1,1,1,1,1,1
-USA,trn_pass_road,bus,bus electric,0.1,0.25,0.4,0.5,0.5,0.5
-USA,trn_pass_road,bus,bus gas,1,1,1,1,1,1
-USA,trn_pass_road,bus,bus fuel cell,0.1,0.25,0.4,0.5,0.5,0.5
-Canada,trn_freight,air,air,1,1,1,1,1,1
-Canada,trn_freight,rail,rail ICE,1,1,1,1,1,1
-Canada,trn_freight,rail,rail electric,0.1,0.25,0.4,0.5,0.5,0.5
-Canada,trn_freight,road,truck ICE,1,1,1,1,1,1
-Canada,trn_freight,domestic ship,domestic ship ICE,1,1,1,1,1,1
-Canada,trn_passenger,air,air,1,1,1,1,1,1
-Canada,trn_passenger,high speed rail,high speed rail,0.1,0.25,0.4,0.5,0.5,0.5
-Canada,trn_passenger,rail,rail ICE,1,1,1,1,1,1
-Canada,trn_passenger,rail,rail electric,0.1,0.25,0.4,0.5,0.5,0.5
-Canada,trn_shipping_intl,international ship,international ship ICE,1,1,1,1,1,1
-Canada,trn_pass_road,LDV,LDV ICE,1,1,1,1,1,1
-Canada,trn_pass_road,LDV,LDV electric,0.1,0.25,0.4,0.5,0.5,0.5
-Canada,trn_pass_road,LDV,LDV gas,0.1,0.25,0.4,0.5,0.5,0.5
-Canada,trn_pass_road,LDV,LDV fuel cell,0.1,0.25,0.4,0.5,0.5,0.5
-Canada,trn_pass_road,bus,bus ICE,1,1,1,1,1,1
-Canada,trn_pass_road,bus,bus electric,0.1,0.25,0.4,0.5,0.5,0.5
-Canada,trn_pass_road,bus,bus gas,1,1,1,1,1,1
-Canada,trn_pass_road,bus,bus fuel cell,0.1,0.25,0.4,0.5,0.5,0.5
-
-INPUT_TABLE,,,,,,,,,
-Variable ID,,,,,,,,,
-1011,,,,,,,,,
-
-region,supplysector,tranSubsector,tranTechnology,2020,2035,2050,2065,2080,2095,,
-Western Europe,trn_freight,air,air,1,1,1,1,1,1,,
-Western Europe,trn_freight,rail,rail ICE,1,1,1,1,1,1,,
-Western Europe,trn_freight,rail,rail electric,1,1,1,1,1,1,,
-Western Europe,trn_freight,road,truck ICE,1,1,1,1,1,1,,
-Western Europe,trn_freight,domestic ship,domestic ship ICE,1,1,1,1,1,1,,
-Western Europe,trn_passenger,air,air,1,1,1,1,1,1,,
-Western Europe,trn_passenger,high speed rail,high speed rail,1,1,1,1,1,1,,
-Western Europe,trn_passenger,rail,rail ICE,1,1,1,1,1,1,,
-Western Europe,trn_passenger,rail,rail electric,1,1,1,1,1,1,,
-Western Europe,trn_shipping_intl,international ship,international ship ICE,1,1,1,1,1,1,,
-Western Europe,trn_pass_road,LDV,LDV ICE,1,1,1,1,1,1,,
-Western Europe,trn_pass_road,LDV,LDV electric,0.1,0.25,0.4,0.5,0.5,0.5,,
-Western Europe,trn_pass_road,LDV,LDV gas,0.1,0.25,0.4,0.5,0.5,0.5,,
-Western Europe,trn_pass_road,LDV,LDV fuel cell,0.1,0.25,0.4,0.5,0.5,0.5,,
-Western Europe,trn_pass_road,bus,bus ICE,1,1,1,1,1,1,,
-Western Europe,trn_pass_road,bus,bus electric,0.1,0.25,0.4,0.5,0.5,0.5,,
-Western Europe,trn_pass_road,bus,bus gas,1,1,1,1,1,1,,
-Western Europe,trn_pass_road,bus,bus fuel cell,0.1,0.25,0.4,0.5,0.5,0.5,,
-Japan,trn_freight,air,air,1,1,1,1,1,1,,
-Japan,trn_freight,rail,rail ICE,1,1,1,1,1,1,,
-Japan,trn_freight,rail,rail electric,0.1,0.25,0.4,0.5,0.5,0.5,,
-Japan,trn_freight,road,truck ICE,1,1,1,1,1,1,,
-Japan,trn_freight,domestic ship,domestic ship ICE,1,1,1,1,1,1,,
-Japan,trn_passenger,air,air,1,1,1,1,1,1,,
-Japan,trn_passenger,high speed rail,high speed rail,1,1,1,1,1,1,,
-Japan,trn_passenger,rail,rail ICE,1,1,1,1,1,1,,
-Japan,trn_passenger,rail,rail electric,1,1,1,1,1,1,,
-Japan,trn_shipping_intl,international ship,international ship ICE,1,1,1,1,1,1,,
-Japan,trn_pass_road,LDV,LDV ICE,1,1,1,1,1,1,,
-Japan,trn_pass_road,LDV,LDV electric,0.1,0.25,0.4,0.5,0.5,0.5,,
-Japan,trn_pass_road,LDV,LDV gas,0.1,0.25,0.4,0.5,0.5,0.5,,
-Japan,trn_pass_road,LDV,LDV fuel cell,0.1,0.25,0.4,0.5,0.5,0.5
-Japan,trn_pass_road,bus,bus ICE,1,1,1,1,1,1
-Japan,trn_pass_road,bus,bus electric,0.1,0.25,0.4,0.5,0.5,0.5
-Japan,trn_pass_road,bus,bus gas,0.1,0.25,0.4,0.5,0.5,0.5
-Japan,trn_pass_road,bus,bus fuel cell,0.1,0.25,0.4,0.5,0.5,0.5
-
-INPUT_TABLE,,,,,,,,,
-Variable ID,,,,,,,,,
-1011,,,,,,,,,
-
-region,supplysector,tranSubsector,tranTechnology,2020,2035,2050,2065,2080,2095
-Australia_NZ,trn_freight,air,air,1,1,1,1,1,1
-Australia_NZ,trn_freight,rail,rail ICE,1,1,1,1,1,1
-Australia_NZ,trn_freight,rail,rail electric,1,1,1,1,1,1
-Australia_NZ,trn_freight,road,truck ICE,1,1,1,1,1,1
-Australia_NZ,trn_freight,domestic ship,domestic ship ICE,1,1,1,1,1,1
-Australia_NZ,trn_passenger,air,air,1,1,1,1,1,1
-Australia_NZ,trn_passenger,high speed rail,high speed rail,0.1,0.25,0.4,0.5,0.5,0.5
-Australia_NZ,trn_passenger,rail,rail ICE,1,1,1,1,1,1
-Australia_NZ,trn_passenger,rail,rail electric,1,1,1,1,1,1
-Australia_NZ,trn_shipping_intl,international ship,international ship ICE,1,1,1,1,1,1
-Australia_NZ,trn_pass_road,LDV,LDV ICE,1,1,1,1,1,1
-Australia_NZ,trn_pass_road,LDV,LDV electric,0.1,0.25,0.4,0.5,0.5,0.5
-Australia_NZ,trn_pass_road,LDV,LDV gas,0.1,0.25,0.4,0.5,0.5,0.5
-Australia_NZ,trn_pass_road,LDV,LDV fuel cell,0.1,0.25,0.4,0.5,0.5,0.5
-Australia_NZ,trn_pass_road,bus,bus ICE,1,1,1,1,1,1
-Australia_NZ,trn_pass_road,bus,bus electric,0.1,0.25,0.4,0.5,0.5,0.5
-Australia_NZ,trn_pass_road,bus,bus gas,1,1,1,1,1,1
-Australia_NZ,trn_pass_road,bus,bus fuel cell,0.1,0.25,0.4,0.5,0.5,0.5
-Former Soviet Union,trn_freight,air,air,1,1,1,1,1,1
-Former Soviet Union,trn_freight,rail,rail ICE,1,1,1,1,1,1
-Former Soviet Union,trn_freight,rail,rail electric,1,1,1,1,1,1
-Former Soviet Union,trn_freight,road,truck ICE,1,1,1,1,1,1
-Former Soviet Union,trn_freight,domestic ship,domestic ship ICE,1,1,1,1,1,1
-Former Soviet Union,trn_passenger,air,air,1,1,1,1,1,1
-Former Soviet Union,trn_passenger,high speed rail,high speed rail,0.1,0.25,0.4,0.5,0.5,0.5
-Former Soviet Union,trn_passenger,rail,rail ICE,1,1,1,1,1,1
-Former Soviet Union,trn_passenger,rail,rail electric,1,1,1,1,1,1
-Former Soviet Union,trn_shipping_intl,international ship,international ship ICE,1,1,1,1,1,1
-Former Soviet Union,trn_pass_road,LDV,LDV ICE,1,1,1,1,1,1
-Former Soviet Union,trn_pass_road,LDV,LDV electric,0.1,0.25,0.4,0.5,0.5,0.5
-Former Soviet Union,trn_pass_road,LDV,LDV gas,0.1,0.25,0.4,0.5,0.5,0.5
-Former Soviet Union,trn_pass_road,LDV,LDV fuel cell,0.1,0.25,0.4,0.5,0.5,0.5
-Former Soviet Union,trn_pass_road,bus,bus ICE,1,1,1,1,1,1
-Former Soviet Union,trn_pass_road,bus,bus electric,0.1,0.25,0.4,0.5,0.5,0.5
-Former Soviet Union,trn_pass_road,bus,bus gas,1,1,1,1,1,1
-Former Soviet Union,trn_pass_road,bus,bus fuel cell,0.1,0.25,0.4,0.5,0.5,0.5
-
-INPUT_TABLE,,,,,,,,,
-Variable ID,,,,,,,,,
-1011,,,,,,,,,
-
-region,supplysector,tranSubsector,tranTechnology,2020,2035,2050,2065,2080,2095
-China,trn_freight,air,air,1,1,1,1,1,1
-China,trn_freight,rail,rail coal,1,1,0,0,0,0
-China,trn_freight,rail,rail ICE,1,1,1,1,1,1
-China,trn_freight,rail,rail electric,1,1,1,1,1,1
-China,trn_freight,road,truck ICE,1,1,1,1,1,1
-China,trn_freight,domestic ship,domestic ship ICE,1,1,1,1,1,1
-China,trn_passenger,air,air,1,1,1,1,1,1
-China,trn_passenger,high speed rail,high speed rail,0.1,0.25,0.4,0.5,0.5,0.5
-China,trn_passenger,rail,rail coal,1,1,0,0,0,0
-China,trn_passenger,rail,rail ICE,1,1,1,1,1,1
-China,trn_passenger,rail,rail electric,1,1,1,1,1,1
-China,trn_shipping_intl,international ship,international ship ICE,1,1,1,1,1,1
-China,trn_pass_road,LDV,LDV ICE,1,1,1,1,1,1
-China,trn_pass_road,LDV,LDV electric,0.1,0.25,0.4,0.5,0.5,0.5
-China,trn_pass_road,LDV,LDV gas,0.1,0.25,0.4,0.5,0.5,0.5
-China,trn_pass_road,LDV,LDV fuel cell,0.1,0.25,0.4,0.5,0.5,0.5
-China,trn_pass_road,bus,bus ICE,1,1,1,1,1,1
-China,trn_pass_road,bus,bus electric,0.1,0.25,0.4,0.5,0.5,0.5
-China,trn_pass_road,bus,bus gas,1,1,1,1,1,1
-China,trn_pass_road,bus,bus fuel cell,0.1,0.25,0.4,0.5,0.5,0.5
-Middle East,trn_freight,air,air,1,1,1,1,1,1
-Middle East,trn_freight,rail,rail ICE,0.1,0.25,0.4,0.5,0.5,0.5
-Middle East,trn_freight,rail,rail electric,0.1,0.25,0.4,0.5,0.5,0.5
-Middle East,trn_freight,road,truck ICE,1,1,1,1,1,1
-Middle East,trn_freight,domestic ship,domestic ship ICE,0.1,0.25,0.4,0.5,0.5,0.5
-Middle East,trn_passenger,air,air,1,1,1,1,1,1
-Middle East,trn_passenger,high speed rail,high speed rail,0.1,0.25,0.4,0.5,0.5,0.5
-Middle East,trn_passenger,rail,rail ICE,0.1,0.25,0.4,0.5,0.5,0.5
-Middle East,trn_passenger,rail,rail electric,0.1,0.25,0.4,0.5,0.5,0.5
-Middle East,trn_shipping_intl,international ship,international ship ICE,1,1,1,1,1,1
-Middle East,trn_pass_road,LDV,LDV ICE,1,1,1,1,1,1
-Middle East,trn_pass_road,LDV,LDV electric,0.1,0.25,0.4,0.5,0.5,0.5
-Middle East,trn_pass_road,LDV,LDV gas,0.1,0.25,0.4,0.5,0.5,0.5
-Middle East,trn_pass_road,LDV,LDV fuel cell,0.1,0.25,0.4,0.5,0.5,0.5
-Middle East,trn_pass_road,bus,bus ICE,1,1,1,1,1,1
-Middle East,trn_pass_road,bus,bus electric,0.1,0.25,0.4,0.5,0.5,0.5
-Middle East,trn_pass_road,bus,bus gas,1,1,1,1,1,1
-Middle East,trn_pass_road,bus,bus fuel cell,0.1,0.25,0.4,0.5,0.5,0.5
-
-INPUT_TABLE,,,,,,,,,
-Variable ID,,,,,,,,,
-1011,,,,,,,,,
-
-region,supplysector,tranSubsector,tranTechnology,2020,2035,2050,2065,2080,2095
-Africa,trn_freight,air,air,1,1,1,1,1,1
-Africa,trn_freight,rail,rail ICE,1,1,1,1,1,1
-Africa,trn_freight,rail,rail electric,1,1,1,1,1,1
-Africa,trn_freight,road,truck ICE,1,1,1,1,1,1
-Africa,trn_freight,domestic ship,domestic ship ICE,1,1,1,1,1,1
-Africa,trn_passenger,air,air,1,1,1,1,1,1
-Africa,trn_passenger,high speed rail,high speed rail,0.1,0.25,0.4,0.5,0.5,0.5
-Africa,trn_passenger,rail,rail ICE,1,1,1,1,1,1
-Africa,trn_passenger,rail,rail electric,1,1,1,1,1,1
-Africa,trn_shipping_intl,international ship,international ship ICE,1,1,1,1,1,1
-Africa,trn_pass_road,LDV,LDV ICE,1,1,1,1,1,1
-Africa,trn_pass_road,LDV,LDV electric,0.1,0.25,0.4,0.5,0.5,0.5
-Africa,trn_pass_road,LDV,LDV gas,0.1,0.25,0.4,0.5,0.5,0.5
-Africa,trn_pass_road,LDV,LDV fuel cell,0.1,0.25,0.4,0.5,0.5,0.5
-Africa,trn_pass_road,bus,bus ICE,1,1,1,1,1,1
-Africa,trn_pass_road,bus,bus electric,1,1,1,1,1,1
-Africa,trn_pass_road,bus,bus gas,1,1,1,1,1,1
-Africa,trn_pass_road,bus,bus fuel cell,0.1,0.25,0.4,0.5,0.5,0.5
-Latin America,trn_freight,air,air,1,1,1,1,1,1
-Latin America,trn_freight,rail,rail ICE,1,1,1,1,1,1
-Latin America,trn_freight,rail,rail electric,0.1,0.25,0.4,0.5,0.5,0.5
-Latin America,trn_freight,road,truck ICE,1,1,1,1,1,1
-Latin America,trn_freight,domestic ship,domestic ship ICE,1,1,1,1,1,1
-Latin America,trn_passenger,air,air,1,1,1,1,1,1
-Latin America,trn_passenger,high speed rail,high speed rail,0.1,0.25,0.4,0.5,0.5,0.5
-Latin America,trn_passenger,rail,rail ICE,1,1,1,1,1,1
-Latin America,trn_passenger,rail,rail electric,1,1,1,1,1,1
-Latin America,trn_shipping_intl,international ship,international ship ICE,1,1,1,1,1,1
-Latin America,trn_pass_road,LDV,LDV ICE,1,1,1,1,1,1
-Latin America,trn_pass_road,LDV,LDV electric,0.1,0.25,0.4,0.5,0.5,0.5
-Latin America,trn_pass_road,LDV,LDV gas,0.1,0.25,0.4,0.5,0.5,0.5
-Latin America,trn_pass_road,LDV,LDV fuel cell,0.1,0.25,0.4,0.5,0.5,0.5
-Latin America,trn_pass_road,bus,bus ICE,1,1,1,1,1,1
-Latin America,trn_pass_road,bus,bus electric,1,1,1,1,1,1
-Latin America,trn_pass_road,bus,bus gas,1,1,1,1,1,1
-Latin America,trn_pass_road,bus,bus fuel cell,0.1,0.25,0.4,0.5,0.5,0.5
-
-INPUT_TABLE,,,,,,,,,
-Variable ID,,,,,,,,,
-1011,,,,,,,,,
-
-region,supplysector,tranSubsector,tranTechnology,2020,2035,2050,2065,2080,2095
-Southeast Asia,trn_freight,air,air,1,1,1,1,1,1
-Southeast Asia,trn_freight,rail,rail ICE,1,1,1,1,1,1
-Southeast Asia,trn_freight,rail,rail electric,0.1,0.25,0.4,0.5,0.5,0.5
-Southeast Asia,trn_freight,road,truck ICE,1,1,1,1,1,1
-Southeast Asia,trn_freight,domestic ship,domestic ship ICE,1,1,1,1,1,1
-Southeast Asia,trn_passenger,air,air,1,1,1,1,1,1
-Southeast Asia,trn_passenger,high speed rail,high speed rail,0.1,0.25,0.4,0.5,0.5,0.5
-Southeast Asia,trn_passenger,rail,rail ICE,1,1,1,1,1,1
-Southeast Asia,trn_passenger,rail,rail electric,1,1,1,1,1,1
-Southeast Asia,trn_shipping_intl,international ship,international ship ICE,1,1,1,1,1,1
-Southeast Asia,trn_pass_road,LDV,LDV ICE,1,1,1,1,1,1
-Southeast Asia,trn_pass_road,LDV,LDV electric,0.1,0.25,0.4,0.5,0.5,0.5
-Southeast Asia,trn_pass_road,LDV,LDV gas,0.1,0.25,0.4,0.5,0.5,0.5
-Southeast Asia,trn_pass_road,LDV,LDV fuel cell,0.1,0.25,0.4,0.5,0.5,0.5
-Southeast Asia,trn_pass_road,bus,bus ICE,1,1,1,1,1,1
-Southeast Asia,trn_pass_road,bus,bus electric,0.1,0.25,0.4,0.5,0.5,0.5
-Southeast Asia,trn_pass_road,bus,bus gas,1,1,1,1,1,1
-Southeast Asia,trn_pass_road,bus,bus fuel cell,0.1,0.25,0.4,0.5,0.5,0.5
-Eastern Europe,trn_freight,air,air,1,1,1,1,1,1
-Eastern Europe,trn_freight,rail,rail ICE,1,1,1,1,1,1
-Eastern Europe,trn_freight,rail,rail electric,1,1,1,1,1,1
-Eastern Europe,trn_freight,road,truck ICE,1,1,1,1,1,1
-Eastern Europe,trn_freight,domestic ship,domestic ship ICE,1,1,1,1,1,1
-Eastern Europe,trn_passenger,air,air,1,1,1,1,1,1
-Eastern Europe,trn_passenger,high speed rail,high speed rail,0.1,0.25,0.4,0.5,0.5,0.5
-Eastern Europe,trn_passenger,rail,rail ICE,1,1,1,1,1,1
-Eastern Europe,trn_passenger,rail,rail electric,1,1,1,1,1,1
-Eastern Europe,trn_shipping_intl,international ship,international ship ICE,1,1,1,1,1,1
-Eastern Europe,trn_pass_road,LDV,LDV ICE,1,1,1,1,1,1
-Eastern Europe,trn_pass_road,LDV,LDV electric,0.1,0.25,0.4,0.5,0.5,0.5
-Eastern Europe,trn_pass_road,LDV,LDV gas,0.1,0.25,0.4,0.5,0.5,0.5
-Eastern Europe,trn_pass_road,LDV,LDV fuel cell,0.1,0.25,0.4,0.5,0.5,0.5
-Eastern Europe,trn_pass_road,bus,bus ICE,1,1,1,1,1,1
-Eastern Europe,trn_pass_road,bus,bus electric,0.1,0.25,0.4,0.5,0.5,0.5
-Eastern Europe,trn_pass_road,bus,bus gas,1,1,1,1,1,1
-Eastern Europe,trn_pass_road,bus,bus fuel cell,0.1,0.25,0.4,0.5,0.5,0.5
-
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
-1011,,,,,,,,,,,
-
-region,supplysector,tranSubsector,tranTechnology,2020,2035,2050,2065,2080,2095,,
-Korea,trn_freight,air,air,1,1,1,1,1,1,,
-Korea,trn_freight,rail,rail ICE,1,1,1,1,1,1,,
-Korea,trn_freight,rail,rail electric,0.1,0.25,0.4,0.5,0.5,0.5,,
-Korea,trn_freight,road,truck ICE,1,1,1,1,1,1,,
-Korea,trn_freight,domestic ship,domestic ship ICE,1,1,1,1,1,1,,
-Korea,trn_passenger,air,air,1,1,1,1,1,1,,
-Korea,trn_passenger,high speed rail,high speed rail,1,1,1,1,1,1,,
-Korea,trn_passenger,rail,rail ICE,1,1,1,1,1,1,,
-Korea,trn_passenger,rail,rail electric,1,1,1,1,1,1,,
-Korea,trn_shipping_intl,international ship,international ship ICE,1,1,1,1,1,1,,
-Korea,trn_pass_road,LDV,LDV ICE,1,1,1,1,1,1,,
-Korea,trn_pass_road,LDV,LDV electric,0.1,0.25,0.4,0.5,0.5,0.5
-Korea,trn_pass_road,LDV,LDV gas,0.1,0.25,0.4,0.5,0.5,0.5
-Korea,trn_pass_road,LDV,LDV fuel cell,0.1,0.25,0.4,0.5,0.5,0.5
-Korea,trn_pass_road,bus,bus ICE,1,1,1,1,1,1
-Korea,trn_pass_road,bus,bus electric,0.1,0.25,0.4,0.5,0.5,0.5
-Korea,trn_pass_road,bus,bus gas,1,1,1,1,1,1
-Korea,trn_pass_road,bus,bus fuel cell,0.1,0.25,0.4,0.5,0.5,0.5
-India,trn_freight,air,air,1,1,1,1,1,1
-India,trn_freight,rail,rail ICE,1,1,1,1,1,1
-India,trn_freight,rail,rail electric,1,1,1,1,1,1
-India,trn_freight,road,truck ICE,1,1,1,1,1,1
-India,trn_freight,domestic ship,domestic ship ICE,1,1,1,1,1,1
-India,trn_passenger,air,air,1,1,1,1,1,1
-India,trn_passenger,high speed rail,high speed rail,0.1,0.25,0.4,0.5,0.5,0.5
-India,trn_passenger,rail,rail ICE,1,1,1,1,1,1
-India,trn_passenger,rail,rail electric,1,1,1,1,1,1
-India,trn_shipping_intl,international ship,international ship ICE,1,1,1,1,1,1
-India,trn_pass_road,LDV,LDV ICE,1,1,1,1,1,1
-India,trn_pass_road,LDV,LDV electric,0.1,0.25,0.4,0.5,0.5,0.5
-India,trn_pass_road,LDV,LDV gas,0.1,0.25,0.4,0.5,0.5,0.5
-India,trn_pass_road,LDV,LDV fuel cell,0.1,0.25,0.4,0.5,0.5,0.5
-India,trn_pass_road,bus,bus ICE,1,1,1,1,1,1
-India,trn_pass_road,bus,bus electric,0.1,0.25,0.4,0.5,0.5,0.5
-India,trn_pass_road,bus,bus gas,1,1,1,1,1,1
-India,trn_pass_road,bus,bus fuel cell,0.1,0.25,0.4,0.5,0.5,0.5
+,,,,input-cost,,,,,,,,,
+region,supplysector,tranSubsector,tranTechnology,1990,2005,2020,2035,2050,2065,2080,2095,,
+USA,trn_freight,air,air,13.22,13.22,13.22,13.22,13.22,13.22,13.22,13.22,,
+USA,trn_freight,rail,rail ICE,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70,,
+USA,trn_freight,rail,rail electric,0.77,0.77,0.73,0.70,0.70,0.70,0.70,0.70,,
+USA,trn_freight,road,truck ICE,0.89,0.89,0.89,0.89,0.89,0.89,0.89,0.89,,
+USA,trn_freight,domestic ship,domestic ship ICE,3.60,3.60,3.60,3.60,3.60,3.60,3.60,3.60,,
+USA,trn_passenger,air,air,9.70,9.70,9.70,9.70,9.70,9.70,9.70,9.70,,
+USA,trn_passenger,high speed rail,high speed rail,50.64,50.64,49.89,49.15,48.42,47.69,46.98,46.28,,
+USA,trn_passenger,rail,rail ICE,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43,,
+USA,trn_passenger,rail,rail electric,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83,,
+USA,trn_shipping_intl,international ship,international ship ICE,84.93,84.93,84.93,84.93,84.93,84.93,84.93,84.93,,
+USA,trn_pass_road,LDV,LDV ICE,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,,
+USA,trn_pass_road,LDV,LDV electric,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42,,
+USA,trn_pass_road,LDV,LDV gas,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42,,
+USA,trn_pass_road,LDV,LDV fuel cell,0.48,0.48,0.44,0.42,0.42,0.42,0.42,0.42,,
+USA,trn_pass_road,bus,bus ICE,1.64,1.64,1.64,1.64,1.64,1.64,1.64,1.64,,
+USA,trn_pass_road,bus,bus electric,1.91,1.91,1.77,1.64,1.64,1.64,1.64,1.64,,
+USA,trn_pass_road,bus,bus gas,1.72,1.72,1.67,1.64,1.64,1.64,1.64,1.64,,
+USA,trn_pass_road,bus,bus fuel cell,1.89,1.89,1.75,1.64,1.64,1.64,1.64,1.64,,
+Canada,trn_freight,air,air,13.22,13.22,13.22,13.22,13.22,13.22,13.22,13.22,,
+Canada,trn_freight,rail,rail ICE,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70,,
+Canada,trn_freight,rail,rail electric,0.77,0.77,0.73,0.70,0.70,0.70,0.70,0.70,,
+Canada,trn_freight,road,truck ICE,0.89,0.89,0.89,0.89,0.89,0.89,0.89,0.89,,
+Canada,trn_freight,domestic ship,domestic ship ICE,3.60,3.60,3.60,3.60,3.60,3.60,3.60,3.60,,
+Canada,trn_passenger,air,air,9.70,9.70,9.70,9.70,9.70,9.70,9.70,9.70,,
+Canada,trn_passenger,high speed rail,high speed rail,50.64,50.64,49.89,49.15,48.42,47.69,46.98,46.28,,
+Canada,trn_passenger,rail,rail ICE,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43,,
+Canada,trn_passenger,rail,rail electric,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83,,
+Canada,trn_shipping_intl,international ship,international ship ICE,84.93,84.93,84.93,84.93,84.93,84.93,84.93,84.93,,
+Canada,trn_pass_road,LDV,LDV ICE,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,,
+Canada,trn_pass_road,LDV,LDV electric,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42,,
+Canada,trn_pass_road,LDV,LDV gas,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42,,
+Canada,trn_pass_road,LDV,LDV fuel cell,0.48,0.48,0.44,0.42,0.42,0.42,0.42,0.42,,
+Canada,trn_pass_road,bus,bus ICE,1.64,1.64,1.64,1.64,1.64,1.64,1.64,1.64,,
+Canada,trn_pass_road,bus,bus electric,1.91,1.91,1.77,1.64,1.64,1.64,1.64,1.64,,
+Canada,trn_pass_road,bus,bus gas,1.72,1.72,1.67,1.64,1.64,1.64,1.64,1.64,,
+Canada,trn_pass_road,bus,bus fuel cell,1.89,1.89,1.75,1.64,1.64,1.64,1.64,1.64,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1005,,,,,,,,,,,,,
+,,,,input-cost,,,,,,,,,
+region,supplysector,tranSubsector,tranTechnology,1990,2005,2020,2035,2050,2065,2080,2095,,
+Western Europe,trn_freight,air,air,13.22,13.22,13.22,13.22,13.22,13.22,13.22,13.22,,
+Western Europe,trn_freight,rail,rail ICE,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70,,
+Western Europe,trn_freight,rail,rail electric,0.77,0.77,0.73,0.70,0.70,0.70,0.70,0.70,,
+Western Europe,trn_freight,road,truck ICE,0.89,0.89,0.89,0.89,0.89,0.89,0.89,0.89,,
+Western Europe,trn_freight,domestic ship,domestic ship ICE,3.60,3.60,3.60,3.60,3.60,3.60,3.60,3.60,,
+Western Europe,trn_passenger,air,air,9.70,9.70,9.70,9.70,9.70,9.70,9.70,9.70,,
+Western Europe,trn_passenger,high speed rail,high speed rail,50.64,50.64,49.89,49.15,48.42,47.69,46.98,46.28,,
+Western Europe,trn_passenger,rail,rail ICE,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43,,
+Western Europe,trn_passenger,rail,rail electric,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83,,
+Western Europe,trn_shipping_intl,international ship,international ship ICE,84.93,84.93,84.93,84.93,84.93,84.93,84.93,84.93,,
+Western Europe,trn_pass_road,LDV,LDV ICE,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,,
+Western Europe,trn_pass_road,LDV,LDV electric,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42,,
+Western Europe,trn_pass_road,LDV,LDV gas,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42,,
+Western Europe,trn_pass_road,LDV,LDV fuel cell,0.48,0.48,0.44,0.42,0.42,0.42,0.42,0.42,,
+Western Europe,trn_pass_road,bus,bus ICE,1.64,1.64,1.64,1.64,1.64,1.64,1.64,1.64,,
+Western Europe,trn_pass_road,bus,bus electric,1.91,1.91,1.77,1.64,1.64,1.64,1.64,1.64,,
+Western Europe,trn_pass_road,bus,bus gas,1.72,1.72,1.67,1.64,1.64,1.64,1.64,1.64,,
+Western Europe,trn_pass_road,bus,bus fuel cell,1.89,1.89,1.75,1.64,1.64,1.64,1.64,1.64,,
+Japan,trn_freight,air,air,13.22,13.22,13.22,13.22,13.22,13.22,13.22,13.22,,
+Japan,trn_freight,rail,rail ICE,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70,,
+Japan,trn_freight,rail,rail electric,0.77,0.77,0.73,0.70,0.70,0.70,0.70,0.70,,
+Japan,trn_freight,road,truck ICE,0.89,0.89,0.89,0.89,0.89,0.89,0.89,0.89,,
+Japan,trn_freight,domestic ship,domestic ship ICE,3.60,3.60,3.60,3.60,3.60,3.60,3.60,3.60,,
+Japan,trn_passenger,air,air,9.70,9.70,9.70,9.70,9.70,9.70,9.70,9.70,,
+Japan,trn_passenger,high speed rail,high speed rail,50.64,50.64,49.89,49.15,48.42,47.69,46.98,46.28,,
+Japan,trn_passenger,rail,rail ICE,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43,,
+Japan,trn_passenger,rail,rail electric,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83,,
+Japan,trn_shipping_intl,international ship,international ship ICE,84.93,84.93,84.93,84.93,84.93,84.93,84.93,84.93,,
+Japan,trn_pass_road,LDV,LDV ICE,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,,
+Japan,trn_pass_road,LDV,LDV electric,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42,,
+Japan,trn_pass_road,LDV,LDV gas,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42,,
+Japan,trn_pass_road,LDV,LDV fuel cell,0.48,0.48,0.44,0.42,0.42,0.42,0.42,0.42,,
+Japan,trn_pass_road,bus,bus ICE,1.64,1.64,1.64,1.64,1.64,1.64,1.64,1.64,,
+Japan,trn_pass_road,bus,bus electric,1.91,1.91,1.77,1.64,1.64,1.64,1.64,1.64,,
+Japan,trn_pass_road,bus,bus gas,1.72,1.72,1.67,1.64,1.64,1.64,1.64,1.64,,
+Japan,trn_pass_road,bus,bus fuel cell,1.89,1.89,1.75,1.64,1.64,1.64,1.64,1.64,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1005,,,,,,,,,,,,,
+,,,,input-cost,,,,,,,,,
+region,supplysector,tranSubsector,tranTechnology,1990,2005,2020,2035,2050,2065,2080,2095,,
+Australia_NZ,trn_freight,air,air,13.22,13.22,13.22,13.22,13.22,13.22,13.22,13.22,,
+Australia_NZ,trn_freight,rail,rail ICE,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70,,
+Australia_NZ,trn_freight,rail,rail electric,0.77,0.77,0.73,0.70,0.70,0.70,0.70,0.70,,
+Australia_NZ,trn_freight,road,truck ICE,0.89,0.89,0.89,0.89,0.89,0.89,0.89,0.89,,
+Australia_NZ,trn_freight,domestic ship,domestic ship ICE,3.60,3.60,3.60,3.60,3.60,3.60,3.60,3.60,,
+Australia_NZ,trn_passenger,air,air,9.70,9.70,9.70,9.70,9.70,9.70,9.70,9.70,,
+Australia_NZ,trn_passenger,high speed rail,high speed rail,50.64,50.64,49.89,49.15,48.42,47.69,46.98,46.28,,
+Australia_NZ,trn_passenger,rail,rail ICE,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43,,
+Australia_NZ,trn_passenger,rail,rail electric,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83,,
+Australia_NZ,trn_shipping_intl,international ship,international ship ICE,84.93,84.93,84.93,84.93,84.93,84.93,84.93,84.93,,
+Australia_NZ,trn_pass_road,LDV,LDV ICE,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,,
+Australia_NZ,trn_pass_road,LDV,LDV electric,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42,,
+Australia_NZ,trn_pass_road,LDV,LDV gas,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42,,
+Australia_NZ,trn_pass_road,LDV,LDV fuel cell,0.48,0.48,0.44,0.42,0.42,0.42,0.42,0.42,,
+Australia_NZ,trn_pass_road,bus,bus ICE,1.64,1.64,1.64,1.64,1.64,1.64,1.64,1.64,,
+Australia_NZ,trn_pass_road,bus,bus electric,1.91,1.91,1.77,1.64,1.64,1.64,1.64,1.64,,
+Australia_NZ,trn_pass_road,bus,bus gas,1.72,1.72,1.67,1.64,1.64,1.64,1.64,1.64,,
+Australia_NZ,trn_pass_road,bus,bus fuel cell,1.89,1.89,1.75,1.64,1.64,1.64,1.64,1.64,,
+Former Soviet Union,trn_freight,air,air,13.22,13.22,13.22,13.22,13.22,13.22,13.22,13.22,,
+Former Soviet Union,trn_freight,rail,rail ICE,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70,,
+Former Soviet Union,trn_freight,rail,rail electric,0.77,0.77,0.73,0.70,0.70,0.70,0.70,0.70,,
+Former Soviet Union,trn_freight,road,truck ICE,0.89,0.89,0.89,0.89,0.89,0.89,0.89,0.89,,
+Former Soviet Union,trn_freight,domestic ship,domestic ship ICE,3.60,3.60,3.60,3.60,3.60,3.60,3.60,3.60,,
+Former Soviet Union,trn_passenger,air,air,9.70,9.70,9.70,9.70,9.70,9.70,9.70,9.70,,
+Former Soviet Union,trn_passenger,high speed rail,high speed rail,50.64,50.64,49.89,49.15,48.42,47.69,46.98,46.28,,
+Former Soviet Union,trn_passenger,rail,rail ICE,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43,,
+Former Soviet Union,trn_passenger,rail,rail electric,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83,,
+Former Soviet Union,trn_shipping_intl,international ship,international ship ICE,84.93,84.93,84.93,84.93,84.93,84.93,84.93,84.93,,
+Former Soviet Union,trn_pass_road,LDV,LDV ICE,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,,
+Former Soviet Union,trn_pass_road,LDV,LDV electric,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42,,
+Former Soviet Union,trn_pass_road,LDV,LDV gas,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42,,
+Former Soviet Union,trn_pass_road,LDV,LDV fuel cell,0.48,0.48,0.44,0.42,0.42,0.42,0.42,0.42,,
+Former Soviet Union,trn_pass_road,bus,bus ICE,1.64,1.64,1.64,1.64,1.64,1.64,1.64,1.64,,
+Former Soviet Union,trn_pass_road,bus,bus electric,1.91,1.91,1.77,1.64,1.64,1.64,1.64,1.64,,
+Former Soviet Union,trn_pass_road,bus,bus gas,1.72,1.72,1.67,1.64,1.64,1.64,1.64,1.64,,
+Former Soviet Union,trn_pass_road,bus,bus fuel cell,1.89,1.89,1.75,1.64,1.64,1.64,1.64,1.64,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1005,,,,,,,,,,,,,
+,,,,input-cost,,,,,,,,,
+region,supplysector,tranSubsector,tranTechnology,1990,2005,2020,2035,2050,2065,2080,2095,,
+China,trn_freight,air,air,13.22,13.22,13.22,13.22,13.22,13.22,13.22,13.22,,
+China,trn_freight,rail,rail coal,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70,,
+China,trn_freight,rail,rail ICE,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70,,
+China,trn_freight,rail,rail electric,0.77,0.77,0.73,0.70,0.70,0.70,0.70,0.70,,
+China,trn_freight,road,truck ICE,0.89,0.89,0.89,0.89,0.89,0.89,0.89,0.89,,
+China,trn_freight,domestic ship,domestic ship ICE,3.60,3.60,3.60,3.60,3.60,3.60,3.60,3.60,,
+China,trn_passenger,air,air,9.70,9.70,9.70,9.70,9.70,9.70,9.70,9.70,,
+China,trn_passenger,high speed rail,high speed rail,50.64,50.64,49.89,49.15,48.42,47.69,46.98,46.28,,
+China,trn_passenger,rail,rail coal,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43,,
+China,trn_passenger,rail,rail ICE,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43,,
+China,trn_passenger,rail,rail electric,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83,,
+China,trn_shipping_intl,international ship,international ship ICE,84.93,84.93,84.93,84.93,84.93,84.93,84.93,84.93,,
+China,trn_pass_road,LDV,LDV ICE,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,,
+China,trn_pass_road,LDV,LDV electric,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42,,
+China,trn_pass_road,LDV,LDV gas,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42,,
+China,trn_pass_road,LDV,LDV fuel cell,0.48,0.48,0.44,0.42,0.42,0.42,0.42,0.42,,
+China,trn_pass_road,bus,bus ICE,1.64,1.64,1.64,1.64,1.64,1.64,1.64,1.64,,
+China,trn_pass_road,bus,bus electric,1.91,1.91,1.77,1.64,1.64,1.64,1.64,1.64,,
+China,trn_pass_road,bus,bus gas,1.72,1.72,1.67,1.64,1.64,1.64,1.64,1.64,,
+China,trn_pass_road,bus,bus fuel cell,1.89,1.89,1.75,1.64,1.64,1.64,1.64,1.64,,
+Middle East,trn_freight,air,air,13.22,13.22,13.22,13.22,13.22,13.22,13.22,13.22,,
+Middle East,trn_freight,rail,rail ICE,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70,,
+Middle East,trn_freight,rail,rail electric,0.77,0.77,0.73,0.70,0.70,0.70,0.70,0.70,,
+Middle East,trn_freight,road,truck ICE,0.89,0.89,0.89,0.89,0.89,0.89,0.89,0.89,,
+Middle East,trn_freight,domestic ship,domestic ship ICE,3.60,3.60,3.60,3.60,3.60,3.60,3.60,3.60,,
+Middle East,trn_passenger,air,air,9.70,9.70,9.70,9.70,9.70,9.70,9.70,9.70,,
+Middle East,trn_passenger,high speed rail,high speed rail,50.64,50.64,49.89,49.15,48.42,47.69,46.98,46.28,,
+Middle East,trn_passenger,rail,rail ICE,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43,,
+Middle East,trn_passenger,rail,rail electric,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83,,
+Middle East,trn_shipping_intl,international ship,international ship ICE,84.93,84.93,84.93,84.93,84.93,84.93,84.93,84.93,,
+Middle East,trn_pass_road,LDV,LDV ICE,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,,
+Middle East,trn_pass_road,LDV,LDV electric,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42,,
+Middle East,trn_pass_road,LDV,LDV gas,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42,,
+Middle East,trn_pass_road,LDV,LDV fuel cell,0.48,0.48,0.44,0.42,0.42,0.42,0.42,0.42,,
+Middle East,trn_pass_road,bus,bus ICE,1.64,1.64,1.64,1.64,1.64,1.64,1.64,1.64,,
+Middle East,trn_pass_road,bus,bus electric,1.91,1.91,1.77,1.64,1.64,1.64,1.64,1.64,,
+Middle East,trn_pass_road,bus,bus gas,1.72,1.72,1.67,1.64,1.64,1.64,1.64,1.64,,
+Middle East,trn_pass_road,bus,bus fuel cell,1.89,1.89,1.75,1.64,1.64,1.64,1.64,1.64,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1005,,,,,,,,,,,,,
+,,,,input-cost,,,,,,,,,
+region,supplysector,tranSubsector,tranTechnology,1990,2005,2020,2035,2050,2065,2080,2095,,
+Africa,trn_freight,air,air,13.22,13.22,13.22,13.22,13.22,13.22,13.22,13.22,,
+Africa,trn_freight,rail,rail ICE,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70,,
+Africa,trn_freight,rail,rail electric,0.77,0.77,0.73,0.70,0.70,0.70,0.70,0.70,,
+Africa,trn_freight,road,truck ICE,0.89,0.89,0.89,0.89,0.89,0.89,0.89,0.89,,
+Africa,trn_freight,domestic ship,domestic ship ICE,3.60,3.60,3.60,3.60,3.60,3.60,3.60,3.60,,
+Africa,trn_passenger,air,air,9.70,9.70,9.70,9.70,9.70,9.70,9.70,9.70,,
+Africa,trn_passenger,high speed rail,high speed rail,50.64,50.64,49.89,49.15,48.42,47.69,46.98,46.28,,
+Africa,trn_passenger,rail,rail ICE,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43,,
+Africa,trn_passenger,rail,rail electric,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83,,
+Africa,trn_shipping_intl,international ship,international ship ICE,84.93,84.93,84.93,84.93,84.93,84.93,84.93,84.93,,
+Africa,trn_pass_road,LDV,LDV ICE,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,,
+Africa,trn_pass_road,LDV,LDV electric,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42,,
+Africa,trn_pass_road,LDV,LDV gas,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42,,
+Africa,trn_pass_road,LDV,LDV fuel cell,0.48,0.48,0.44,0.42,0.42,0.42,0.42,0.42,,
+Africa,trn_pass_road,bus,bus ICE,1.64,1.64,1.64,1.64,1.64,1.64,1.64,1.64,,
+Africa,trn_pass_road,bus,bus electric,1.91,1.91,1.77,1.64,1.64,1.64,1.64,1.64,,
+Africa,trn_pass_road,bus,bus gas,1.72,1.72,1.67,1.64,1.64,1.64,1.64,1.64,,
+Africa,trn_pass_road,bus,bus fuel cell,1.89,1.89,1.75,1.64,1.64,1.64,1.64,1.64,,
+Latin America,trn_freight,air,air,13.22,13.22,13.22,13.22,13.22,13.22,13.22,13.22,,
+Latin America,trn_freight,rail,rail ICE,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70,,
+Latin America,trn_freight,rail,rail electric,0.77,0.77,0.73,0.70,0.70,0.70,0.70,0.70,,
+Latin America,trn_freight,road,truck ICE,0.89,0.89,0.89,0.89,0.89,0.89,0.89,0.89,,
+Latin America,trn_freight,domestic ship,domestic ship ICE,3.60,3.60,3.60,3.60,3.60,3.60,3.60,3.60,,
+Latin America,trn_passenger,air,air,9.70,9.70,9.70,9.70,9.70,9.70,9.70,9.70,,
+Latin America,trn_passenger,high speed rail,high speed rail,50.64,50.64,49.89,49.15,48.42,47.69,46.98,46.28,,
+Latin America,trn_passenger,rail,rail ICE,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43,,
+Latin America,trn_passenger,rail,rail electric,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83,,
+Latin America,trn_shipping_intl,international ship,international ship ICE,84.93,84.93,84.93,84.93,84.93,84.93,84.93,84.93,,
+Latin America,trn_pass_road,LDV,LDV ICE,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,,
+Latin America,trn_pass_road,LDV,LDV electric,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42,,
+Latin America,trn_pass_road,LDV,LDV gas,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42,,
+Latin America,trn_pass_road,LDV,LDV fuel cell,0.48,0.48,0.44,0.42,0.42,0.42,0.42,0.42,,
+Latin America,trn_pass_road,bus,bus ICE,1.64,1.64,1.64,1.64,1.64,1.64,1.64,1.64,,
+Latin America,trn_pass_road,bus,bus electric,1.91,1.91,1.77,1.64,1.64,1.64,1.64,1.64,,
+Latin America,trn_pass_road,bus,bus gas,1.72,1.72,1.67,1.64,1.64,1.64,1.64,1.64,,
+Latin America,trn_pass_road,bus,bus fuel cell,1.89,1.89,1.75,1.64,1.64,1.64,1.64,1.64,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1005,,,,,,,,,,,,,
+,,,,input-cost,,,,,,,,,
+region,supplysector,tranSubsector,tranTechnology,1990,2005,2020,2035,2050,2065,2080,2095,,
+Southeast Asia,trn_freight,air,air,13.22,13.22,13.22,13.22,13.22,13.22,13.22,13.22,,
+Southeast Asia,trn_freight,rail,rail ICE,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70,,
+Southeast Asia,trn_freight,rail,rail electric,0.77,0.77,0.73,0.70,0.70,0.70,0.70,0.70,,
+Southeast Asia,trn_freight,road,truck ICE,0.89,0.89,0.89,0.89,0.89,0.89,0.89,0.89,,
+Southeast Asia,trn_freight,domestic ship,domestic ship ICE,3.60,3.60,3.60,3.60,3.60,3.60,3.60,3.60,,
+Southeast Asia,trn_passenger,air,air,9.70,9.70,9.70,9.70,9.70,9.70,9.70,9.70,,
+Southeast Asia,trn_passenger,high speed rail,high speed rail,50.64,50.64,49.89,49.15,48.42,47.69,46.98,46.28,,
+Southeast Asia,trn_passenger,rail,rail ICE,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43,,
+Southeast Asia,trn_passenger,rail,rail electric,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83,,
+Southeast Asia,trn_shipping_intl,international ship,international ship ICE,84.93,84.93,84.93,84.93,84.93,84.93,84.93,84.93,,
+Southeast Asia,trn_pass_road,LDV,LDV ICE,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,,
+Southeast Asia,trn_pass_road,LDV,LDV electric,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42,,
+Southeast Asia,trn_pass_road,LDV,LDV gas,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42,,
+Southeast Asia,trn_pass_road,LDV,LDV fuel cell,0.48,0.48,0.44,0.42,0.42,0.42,0.42,0.42,,
+Southeast Asia,trn_pass_road,bus,bus ICE,1.64,1.64,1.64,1.64,1.64,1.64,1.64,1.64,,
+Southeast Asia,trn_pass_road,bus,bus electric,1.91,1.91,1.77,1.64,1.64,1.64,1.64,1.64,,
+Southeast Asia,trn_pass_road,bus,bus gas,1.72,1.72,1.67,1.64,1.64,1.64,1.64,1.64,,
+Southeast Asia,trn_pass_road,bus,bus fuel cell,1.89,1.89,1.75,1.64,1.64,1.64,1.64,1.64,,
+Eastern Europe,trn_freight,air,air,13.22,13.22,13.22,13.22,13.22,13.22,13.22,13.22,,
+Eastern Europe,trn_freight,rail,rail ICE,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70,,
+Eastern Europe,trn_freight,rail,rail electric,0.77,0.77,0.73,0.70,0.70,0.70,0.70,0.70,,
+Eastern Europe,trn_freight,road,truck ICE,0.89,0.89,0.89,0.89,0.89,0.89,0.89,0.89,,
+Eastern Europe,trn_freight,domestic ship,domestic ship ICE,3.60,3.60,3.60,3.60,3.60,3.60,3.60,3.60,,
+Eastern Europe,trn_passenger,air,air,9.70,9.70,9.70,9.70,9.70,9.70,9.70,9.70,,
+Eastern Europe,trn_passenger,high speed rail,high speed rail,50.64,50.64,49.89,49.15,48.42,47.69,46.98,46.28,,
+Eastern Europe,trn_passenger,rail,rail ICE,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43,,
+Eastern Europe,trn_passenger,rail,rail electric,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83,,
+Eastern Europe,trn_shipping_intl,international ship,international ship ICE,84.93,84.93,84.93,84.93,84.93,84.93,84.93,84.93,,
+Eastern Europe,trn_pass_road,LDV,LDV ICE,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,,
+Eastern Europe,trn_pass_road,LDV,LDV electric,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42,,
+Eastern Europe,trn_pass_road,LDV,LDV gas,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42,,
+Eastern Europe,trn_pass_road,LDV,LDV fuel cell,0.48,0.48,0.44,0.42,0.42,0.42,0.42,0.42,,
+Eastern Europe,trn_pass_road,bus,bus ICE,1.64,1.64,1.64,1.64,1.64,1.64,1.64,1.64,,
+Eastern Europe,trn_pass_road,bus,bus electric,1.91,1.91,1.77,1.64,1.64,1.64,1.64,1.64,,
+Eastern Europe,trn_pass_road,bus,bus gas,1.72,1.72,1.67,1.64,1.64,1.64,1.64,1.64,,
+Eastern Europe,trn_pass_road,bus,bus fuel cell,1.89,1.89,1.75,1.64,1.64,1.64,1.64,1.64,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1005,,,,,,,,,,,,,
+,,,,input-cost,,,,,,,,,
+region,supplysector,tranSubsector,tranTechnology,1990,2005,2020,2035,2050,2065,2080,2095,,
+Korea,trn_freight,air,air,13.22,13.22,13.22,13.22,13.22,13.22,13.22,13.22,,
+Korea,trn_freight,rail,rail ICE,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70,,
+Korea,trn_freight,rail,rail electric,0.77,0.77,0.73,0.70,0.70,0.70,0.70,0.70,,
+Korea,trn_freight,road,truck ICE,0.89,0.89,0.89,0.89,0.89,0.89,0.89,0.89,,
+Korea,trn_freight,domestic ship,domestic ship ICE,3.60,3.60,3.60,3.60,3.60,3.60,3.60,3.60,,
+Korea,trn_passenger,air,air,9.70,9.70,9.70,9.70,9.70,9.70,9.70,9.70,,
+Korea,trn_passenger,high speed rail,high speed rail,50.64,50.64,49.89,49.15,48.42,47.69,46.98,46.28,,
+Korea,trn_passenger,rail,rail ICE,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43,,
+Korea,trn_passenger,rail,rail electric,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83,,
+Korea,trn_shipping_intl,international ship,international ship ICE,84.93,84.93,84.93,84.93,84.93,84.93,84.93,84.93,,
+Korea,trn_pass_road,LDV,LDV ICE,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,,
+Korea,trn_pass_road,LDV,LDV electric,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42,,
+Korea,trn_pass_road,LDV,LDV gas,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42,,
+Korea,trn_pass_road,LDV,LDV fuel cell,0.48,0.48,0.44,0.42,0.42,0.42,0.42,0.42,,
+Korea,trn_pass_road,bus,bus ICE,1.64,1.64,1.64,1.64,1.64,1.64,1.64,1.64,,
+Korea,trn_pass_road,bus,bus electric,1.91,1.91,1.77,1.64,1.64,1.64,1.64,1.64,,
+Korea,trn_pass_road,bus,bus gas,1.72,1.72,1.67,1.64,1.64,1.64,1.64,1.64,,
+Korea,trn_pass_road,bus,bus fuel cell,1.89,1.89,1.75,1.64,1.64,1.64,1.64,1.64,,
+India,trn_freight,air,air,13.22,13.22,13.22,13.22,13.22,13.22,13.22,13.22,,
+India,trn_freight,rail,rail ICE,0.70,0.70,0.70,0.70,0.70,0.70,0.70,0.70,,
+India,trn_freight,rail,rail electric,0.77,0.77,0.73,0.70,0.70,0.70,0.70,0.70,,
+India,trn_freight,road,truck ICE,0.89,0.89,0.89,0.89,0.89,0.89,0.89,0.89,,
+India,trn_freight,domestic ship,domestic ship ICE,3.60,3.60,3.60,3.60,3.60,3.60,3.60,3.60,,
+India,trn_passenger,air,air,9.70,9.70,9.70,9.70,9.70,9.70,9.70,9.70,,
+India,trn_passenger,high speed rail,high speed rail,50.64,50.64,49.89,49.15,48.42,47.69,46.98,46.28,,
+India,trn_passenger,rail,rail ICE,3.43,3.43,3.43,3.43,3.43,3.43,3.43,3.43,,
+India,trn_passenger,rail,rail electric,2.83,2.83,2.83,2.83,2.83,2.83,2.83,2.83,,
+India,trn_shipping_intl,international ship,international ship ICE,84.93,84.93,84.93,84.93,84.93,84.93,84.93,84.93,,
+India,trn_pass_road,LDV,LDV ICE,0.42,0.42,0.42,0.42,0.42,0.42,0.42,0.42,,
+India,trn_pass_road,LDV,LDV electric,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42,,
+India,trn_pass_road,LDV,LDV gas,0.46,0.46,0.44,0.42,0.42,0.42,0.42,0.42,,
+India,trn_pass_road,LDV,LDV fuel cell,0.48,0.48,0.44,0.42,0.42,0.42,0.42,0.42,,
+India,trn_pass_road,bus,bus ICE,1.64,1.64,1.64,1.64,1.64,1.64,1.64,1.64,,
+India,trn_pass_road,bus,bus electric,1.91,1.91,1.77,1.64,1.64,1.64,1.64,1.64,,
+India,trn_pass_road,bus,bus gas,1.72,1.72,1.67,1.64,1.64,1.64,1.64,1.64,,
+India,trn_pass_road,bus,bus fuel cell,1.89,1.89,1.75,1.64,1.64,1.64,1.64,1.64,,
+,,,,,,,,,,,,,
+TranTechnology load factors,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1006,,,,,,,,,,,,,
+,,,,loadFactor,,,,,,,,,
+region,supplysector,tranSubsector,tranTechnology,1990,2005,2020,2035,2050,2065,2080,2095,,
+USA,trn_freight,air,air,27.62,27.62,27.62,27.62,27.62,27.62,27.62,27.62,,
+USA,trn_freight,rail,rail ICE,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+USA,trn_freight,rail,rail electric,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+USA,trn_freight,road,truck ICE,5.11,5.11,5.11,5.11,5.11,5.11,5.11,5.11,,
+USA,trn_freight,domestic ship,domestic ship ICE,1000,1000,1000,1000,1000,1000,1000,1000,,
+USA,trn_passenger,air,air,123.74,123.74,123.74,123.74,123.74,123.74,123.74,123.74,,
+USA,trn_passenger,high speed rail,high speed rail,310.33,310.33,310.33,310.33,310.33,310.33,310.33,310.33,,
+USA,trn_passenger,rail,rail ICE,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+USA,trn_passenger,rail,rail electric,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+USA,trn_shipping_intl,international ship,international ship ICE,19449,19449,19449,19449,19449,19449,19449,19449,,
+USA,trn_pass_road,LDV,LDV ICE,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+USA,trn_pass_road,LDV,LDV electric,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+USA,trn_pass_road,LDV,LDV gas,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+USA,trn_pass_road,LDV,LDV fuel cell,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+USA,trn_pass_road,bus,bus ICE,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+USA,trn_pass_road,bus,bus electric,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+USA,trn_pass_road,bus,bus gas,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+USA,trn_pass_road,bus,bus fuel cell,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+Canada,trn_freight,air,air,27.62,27.62,27.62,27.62,27.62,27.62,27.62,27.62,,
+Canada,trn_freight,rail,rail ICE,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+Canada,trn_freight,rail,rail electric,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+Canada,trn_freight,road,truck ICE,5.11,5.11,5.11,5.11,5.11,5.11,5.11,5.11,,
+Canada,trn_freight,domestic ship,domestic ship ICE,1000,1000,1000,1000,1000,1000,1000,1000,,
+Canada,trn_passenger,air,air,123.74,123.74,123.74,123.74,123.74,123.74,123.74,123.74,,
+Canada,trn_passenger,high speed rail,high speed rail,310.33,310.33,310.33,310.33,310.33,310.33,310.33,310.33,,
+Canada,trn_passenger,rail,rail ICE,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+Canada,trn_passenger,rail,rail electric,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+Canada,trn_shipping_intl,international ship,international ship ICE,19449,19449,19449,19449,19449,19449,19449,19449,,
+Canada,trn_pass_road,LDV,LDV ICE,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Canada,trn_pass_road,LDV,LDV electric,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Canada,trn_pass_road,LDV,LDV gas,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Canada,trn_pass_road,LDV,LDV fuel cell,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Canada,trn_pass_road,bus,bus ICE,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+Canada,trn_pass_road,bus,bus electric,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+Canada,trn_pass_road,bus,bus gas,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+Canada,trn_pass_road,bus,bus fuel cell,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1006,,,,,,,,,,,,,
+,,,,loadFactor,,,,,,,,,
+region,supplysector,tranSubsector,tranTechnology,1990,2005,2020,2035,2050,2065,2080,2095,,
+Western Europe,trn_freight,air,air,27.62,27.62,27.62,27.62,27.62,27.62,27.62,27.62,,
+Western Europe,trn_freight,rail,rail ICE,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+Western Europe,trn_freight,rail,rail electric,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+Western Europe,trn_freight,road,truck ICE,5.11,5.11,5.11,5.11,5.11,5.11,5.11,5.11,,
+Western Europe,trn_freight,domestic ship,domestic ship ICE,1000,1000,1000,1000,1000,1000,1000,1000,,
+Western Europe,trn_passenger,air,air,123.74,123.74,123.74,123.74,123.74,123.74,123.74,123.74,,
+Western Europe,trn_passenger,high speed rail,high speed rail,310.33,310.33,310.33,310.33,310.33,310.33,310.33,310.33,,
+Western Europe,trn_passenger,rail,rail ICE,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+Western Europe,trn_passenger,rail,rail electric,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+Western Europe,trn_shipping_intl,international ship,international ship ICE,19449,19449,19449,19449,19449,19449,19449,19449,,
+Western Europe,trn_pass_road,LDV,LDV ICE,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Western Europe,trn_pass_road,LDV,LDV electric,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Western Europe,trn_pass_road,LDV,LDV gas,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Western Europe,trn_pass_road,LDV,LDV fuel cell,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Western Europe,trn_pass_road,bus,bus ICE,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+Western Europe,trn_pass_road,bus,bus electric,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+Western Europe,trn_pass_road,bus,bus gas,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+Western Europe,trn_pass_road,bus,bus fuel cell,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+Japan,trn_freight,air,air,27.62,27.62,27.62,27.62,27.62,27.62,27.62,27.62,,
+Japan,trn_freight,rail,rail ICE,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+Japan,trn_freight,rail,rail electric,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+Japan,trn_freight,road,truck ICE,5.11,5.11,5.11,5.11,5.11,5.11,5.11,5.11,,
+Japan,trn_freight,domestic ship,domestic ship ICE,1000,1000,1000,1000,1000,1000,1000,1000,,
+Japan,trn_passenger,air,air,123.74,123.74,123.74,123.74,123.74,123.74,123.74,123.74,,
+Japan,trn_passenger,high speed rail,high speed rail,310.33,310.33,310.33,310.33,310.33,310.33,310.33,310.33,,
+Japan,trn_passenger,rail,rail ICE,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+Japan,trn_passenger,rail,rail electric,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+Japan,trn_shipping_intl,international ship,international ship ICE,19449,19449,19449,19449,19449,19449,19449,19449,,
+Japan,trn_pass_road,LDV,LDV ICE,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Japan,trn_pass_road,LDV,LDV electric,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Japan,trn_pass_road,LDV,LDV gas,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Japan,trn_pass_road,LDV,LDV fuel cell,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Japan,trn_pass_road,bus,bus ICE,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+Japan,trn_pass_road,bus,bus electric,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+Japan,trn_pass_road,bus,bus gas,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+Japan,trn_pass_road,bus,bus fuel cell,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1006,,,,,,,,,,,,,
+,,,,loadFactor,,,,,,,,,
+region,supplysector,tranSubsector,tranTechnology,1990,2005,2020,2035,2050,2065,2080,2095,,
+Australia_NZ,trn_freight,air,air,27.62,27.62,27.62,27.62,27.62,27.62,27.62,27.62,,
+Australia_NZ,trn_freight,rail,rail ICE,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+Australia_NZ,trn_freight,rail,rail electric,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+Australia_NZ,trn_freight,road,truck ICE,5.11,5.11,5.11,5.11,5.11,5.11,5.11,5.11,,
+Australia_NZ,trn_freight,domestic ship,domestic ship ICE,1000,1000,1000,1000,1000,1000,1000,1000,,
+Australia_NZ,trn_passenger,air,air,123.74,123.74,123.74,123.74,123.74,123.74,123.74,123.74,,
+Australia_NZ,trn_passenger,high speed rail,high speed rail,310.33,310.33,310.33,310.33,310.33,310.33,310.33,310.33,,
+Australia_NZ,trn_passenger,rail,rail ICE,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+Australia_NZ,trn_passenger,rail,rail electric,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+Australia_NZ,trn_shipping_intl,international ship,international ship ICE,19449,19449,19449,19449,19449,19449,19449,19449,,
+Australia_NZ,trn_pass_road,LDV,LDV ICE,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Australia_NZ,trn_pass_road,LDV,LDV electric,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Australia_NZ,trn_pass_road,LDV,LDV gas,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Australia_NZ,trn_pass_road,LDV,LDV fuel cell,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Australia_NZ,trn_pass_road,bus,bus ICE,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+Australia_NZ,trn_pass_road,bus,bus electric,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+Australia_NZ,trn_pass_road,bus,bus gas,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+Australia_NZ,trn_pass_road,bus,bus fuel cell,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+Former Soviet Union,trn_freight,air,air,27.62,27.62,27.62,27.62,27.62,27.62,27.62,27.62,,
+Former Soviet Union,trn_freight,rail,rail ICE,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+Former Soviet Union,trn_freight,rail,rail electric,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+Former Soviet Union,trn_freight,road,truck ICE,5.11,5.11,5.11,5.11,5.11,5.11,5.11,5.11,,
+Former Soviet Union,trn_freight,domestic ship,domestic ship ICE,1000,1000,1000,1000,1000,1000,1000,1000,,
+Former Soviet Union,trn_passenger,air,air,123.74,123.74,123.74,123.74,123.74,123.74,123.74,123.74,,
+Former Soviet Union,trn_passenger,high speed rail,high speed rail,310.33,310.33,310.33,310.33,310.33,310.33,310.33,310.33,,
+Former Soviet Union,trn_passenger,rail,rail ICE,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+Former Soviet Union,trn_passenger,rail,rail electric,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+Former Soviet Union,trn_shipping_intl,international ship,international ship ICE,19449,19449,19449,19449,19449,19449,19449,19449,,
+Former Soviet Union,trn_pass_road,LDV,LDV ICE,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Former Soviet Union,trn_pass_road,LDV,LDV electric,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Former Soviet Union,trn_pass_road,LDV,LDV gas,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Former Soviet Union,trn_pass_road,LDV,LDV fuel cell,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Former Soviet Union,trn_pass_road,bus,bus ICE,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+Former Soviet Union,trn_pass_road,bus,bus electric,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+Former Soviet Union,trn_pass_road,bus,bus gas,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+Former Soviet Union,trn_pass_road,bus,bus fuel cell,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1006,,,,,,,,,,,,,
+,,,,loadFactor,,,,,,,,,
+region,supplysector,tranSubsector,tranTechnology,1990,2005,2020,2035,2050,2065,2080,2095,,
+China,trn_freight,air,air,27.62,27.62,27.62,27.62,27.62,27.62,27.62,27.62,,
+China,trn_freight,rail,rail coal,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+China,trn_freight,rail,rail ICE,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+China,trn_freight,rail,rail electric,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+China,trn_freight,road,truck ICE,5.11,5.11,5.11,5.11,5.11,5.11,5.11,5.11,,
+China,trn_freight,domestic ship,domestic ship ICE,1000,1000,1000,1000,1000,1000,1000,1000,,
+China,trn_passenger,air,air,123.74,123.74,123.74,123.74,123.74,123.74,123.74,123.74,,
+China,trn_passenger,high speed rail,high speed rail,310.33,310.33,310.33,310.33,310.33,310.33,310.33,310.33,,
+China,trn_passenger,rail,rail coal,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+China,trn_passenger,rail,rail ICE,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+China,trn_passenger,rail,rail electric,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+China,trn_shipping_intl,international ship,international ship ICE,19449,19449,19449,19449,19449,19449,19449,19449,,
+China,trn_pass_road,LDV,LDV ICE,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20,,
+China,trn_pass_road,LDV,LDV electric,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20,,
+China,trn_pass_road,LDV,LDV gas,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20,,
+China,trn_pass_road,LDV,LDV fuel cell,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20,,
+China,trn_pass_road,bus,bus ICE,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00,,
+China,trn_pass_road,bus,bus electric,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00,,
+China,trn_pass_road,bus,bus gas,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00,,
+China,trn_pass_road,bus,bus fuel cell,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00,,
+Middle East,trn_freight,air,air,27.62,27.62,27.62,27.62,27.62,27.62,27.62,27.62,,
+Middle East,trn_freight,rail,rail ICE,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+Middle East,trn_freight,rail,rail electric,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+Middle East,trn_freight,road,truck ICE,5.11,5.11,5.11,5.11,5.11,5.11,5.11,5.11,,
+Middle East,trn_freight,domestic ship,domestic ship ICE,1000,1000,1000,1000,1000,1000,1000,1000,,
+Middle East,trn_passenger,air,air,123.74,123.74,123.74,123.74,123.74,123.74,123.74,123.74,,
+Middle East,trn_passenger,high speed rail,high speed rail,310.33,310.33,310.33,310.33,310.33,310.33,310.33,310.33,,
+Middle East,trn_passenger,rail,rail ICE,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+Middle East,trn_passenger,rail,rail electric,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+Middle East,trn_shipping_intl,international ship,international ship ICE,19449,19449,19449,19449,19449,19449,19449,19449,,
+Middle East,trn_pass_road,LDV,LDV ICE,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Middle East,trn_pass_road,LDV,LDV electric,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Middle East,trn_pass_road,LDV,LDV gas,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Middle East,trn_pass_road,LDV,LDV fuel cell,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Middle East,trn_pass_road,bus,bus ICE,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+Middle East,trn_pass_road,bus,bus electric,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+Middle East,trn_pass_road,bus,bus gas,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+Middle East,trn_pass_road,bus,bus fuel cell,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1006,,,,,,,,,,,,,
+,,,,loadFactor,,,,,,,,,
+region,supplysector,tranSubsector,tranTechnology,1990,2005,2020,2035,2050,2065,2080,2095,,
+Africa,trn_freight,air,air,27.62,27.62,27.62,27.62,27.62,27.62,27.62,27.62,,
+Africa,trn_freight,rail,rail ICE,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+Africa,trn_freight,rail,rail electric,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+Africa,trn_freight,road,truck ICE,5.11,5.11,5.11,5.11,5.11,5.11,5.11,5.11,,
+Africa,trn_freight,domestic ship,domestic ship ICE,1000,1000,1000,1000,1000,1000,1000,1000,,
+Africa,trn_passenger,air,air,123.74,123.74,123.74,123.74,123.74,123.74,123.74,123.74,,
+Africa,trn_passenger,high speed rail,high speed rail,310.33,310.33,310.33,310.33,310.33,310.33,310.33,310.33,,
+Africa,trn_passenger,rail,rail ICE,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+Africa,trn_passenger,rail,rail electric,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+Africa,trn_shipping_intl,international ship,international ship ICE,19449,19449,19449,19449,19449,19449,19449,19449,,
+Africa,trn_pass_road,LDV,LDV ICE,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20,,
+Africa,trn_pass_road,LDV,LDV electric,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20,,
+Africa,trn_pass_road,LDV,LDV gas,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20,,
+Africa,trn_pass_road,LDV,LDV fuel cell,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20,,
+Africa,trn_pass_road,bus,bus ICE,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00,,
+Africa,trn_pass_road,bus,bus electric,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00,,
+Africa,trn_pass_road,bus,bus gas,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00,,
+Africa,trn_pass_road,bus,bus fuel cell,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00,,
+Latin America,trn_freight,air,air,27.62,27.62,27.62,27.62,27.62,27.62,27.62,27.62,,
+Latin America,trn_freight,rail,rail ICE,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+Latin America,trn_freight,rail,rail electric,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+Latin America,trn_freight,road,truck ICE,5.11,5.11,5.11,5.11,5.11,5.11,5.11,5.11,,
+Latin America,trn_freight,domestic ship,domestic ship ICE,1000,1000,1000,1000,1000,1000,1000,1000,,
+Latin America,trn_passenger,air,air,123.74,123.74,123.74,123.74,123.74,123.74,123.74,123.74,,
+Latin America,trn_passenger,high speed rail,high speed rail,310.33,310.33,310.33,310.33,310.33,310.33,310.33,310.33,,
+Latin America,trn_passenger,rail,rail ICE,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+Latin America,trn_passenger,rail,rail electric,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+Latin America,trn_shipping_intl,international ship,international ship ICE,19449,19449,19449,19449,19449,19449,19449,19449,,
+Latin America,trn_pass_road,LDV,LDV ICE,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20,,
+Latin America,trn_pass_road,LDV,LDV electric,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20,,
+Latin America,trn_pass_road,LDV,LDV gas,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20,,
+Latin America,trn_pass_road,LDV,LDV fuel cell,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20,,
+Latin America,trn_pass_road,bus,bus ICE,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00,,
+Latin America,trn_pass_road,bus,bus electric,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00,,
+Latin America,trn_pass_road,bus,bus gas,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00,,
+Latin America,trn_pass_road,bus,bus fuel cell,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1006,,,,,,,,,,,,,
+,,,,loadFactor,,,,,,,,,
+region,supplysector,tranSubsector,tranTechnology,1990,2005,2020,2035,2050,2065,2080,2095,,
+Southeast Asia,trn_freight,air,air,27.62,27.62,27.62,27.62,27.62,27.62,27.62,27.62,,
+Southeast Asia,trn_freight,rail,rail ICE,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+Southeast Asia,trn_freight,rail,rail electric,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+Southeast Asia,trn_freight,road,truck ICE,5.11,5.11,5.11,5.11,5.11,5.11,5.11,5.11,,
+Southeast Asia,trn_freight,domestic ship,domestic ship ICE,1000,1000,1000,1000,1000,1000,1000,1000,,
+Southeast Asia,trn_passenger,air,air,123.74,123.74,123.74,123.74,123.74,123.74,123.74,123.74,,
+Southeast Asia,trn_passenger,high speed rail,high speed rail,310.33,310.33,310.33,310.33,310.33,310.33,310.33,310.33,,
+Southeast Asia,trn_passenger,rail,rail ICE,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+Southeast Asia,trn_passenger,rail,rail electric,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+Southeast Asia,trn_shipping_intl,international ship,international ship ICE,19449,19449,19449,19449,19449,19449,19449,19449,,
+Southeast Asia,trn_pass_road,LDV,LDV ICE,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20,,
+Southeast Asia,trn_pass_road,LDV,LDV electric,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20,,
+Southeast Asia,trn_pass_road,LDV,LDV gas,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20,,
+Southeast Asia,trn_pass_road,LDV,LDV fuel cell,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20,,
+Southeast Asia,trn_pass_road,bus,bus ICE,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00,,
+Southeast Asia,trn_pass_road,bus,bus electric,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00,,
+Southeast Asia,trn_pass_road,bus,bus gas,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00,,
+Southeast Asia,trn_pass_road,bus,bus fuel cell,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00,,
+Eastern Europe,trn_freight,air,air,27.62,27.62,27.62,27.62,27.62,27.62,27.62,27.62,,
+Eastern Europe,trn_freight,rail,rail ICE,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+Eastern Europe,trn_freight,rail,rail electric,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+Eastern Europe,trn_freight,road,truck ICE,5.11,5.11,5.11,5.11,5.11,5.11,5.11,5.11,,
+Eastern Europe,trn_freight,domestic ship,domestic ship ICE,1000,1000,1000,1000,1000,1000,1000,1000,,
+Eastern Europe,trn_passenger,air,air,123.74,123.74,123.74,123.74,123.74,123.74,123.74,123.74,,
+Eastern Europe,trn_passenger,high speed rail,high speed rail,310.33,310.33,310.33,310.33,310.33,310.33,310.33,310.33,,
+Eastern Europe,trn_passenger,rail,rail ICE,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+Eastern Europe,trn_passenger,rail,rail electric,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+Eastern Europe,trn_shipping_intl,international ship,international ship ICE,19449,19449,19449,19449,19449,19449,19449,19449,,
+Eastern Europe,trn_pass_road,LDV,LDV ICE,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Eastern Europe,trn_pass_road,LDV,LDV electric,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Eastern Europe,trn_pass_road,LDV,LDV gas,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Eastern Europe,trn_pass_road,LDV,LDV fuel cell,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Eastern Europe,trn_pass_road,bus,bus ICE,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+Eastern Europe,trn_pass_road,bus,bus electric,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+Eastern Europe,trn_pass_road,bus,bus gas,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+Eastern Europe,trn_pass_road,bus,bus fuel cell,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1006,,,,,,,,,,,,,
+,,,,loadFactor,,,,,,,,,
+region,supplysector,tranSubsector,tranTechnology,1990,2005,2020,2035,2050,2065,2080,2095,,
+Korea,trn_freight,air,air,27.62,27.62,27.62,27.62,27.62,27.62,27.62,27.62,,
+Korea,trn_freight,rail,rail ICE,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+Korea,trn_freight,rail,rail electric,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+Korea,trn_freight,road,truck ICE,5.11,5.11,5.11,5.11,5.11,5.11,5.11,5.11,,
+Korea,trn_freight,domestic ship,domestic ship ICE,1000,1000,1000,1000,1000,1000,1000,1000,,
+Korea,trn_passenger,air,air,123.74,123.74,123.74,123.74,123.74,123.74,123.74,123.74,,
+Korea,trn_passenger,high speed rail,high speed rail,310.33,310.33,310.33,310.33,310.33,310.33,310.33,310.33,,
+Korea,trn_passenger,rail,rail ICE,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+Korea,trn_passenger,rail,rail electric,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+Korea,trn_shipping_intl,international ship,international ship ICE,19449,19449,19449,19449,19449,19449,19449,19449,,
+Korea,trn_pass_road,LDV,LDV ICE,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Korea,trn_pass_road,LDV,LDV electric,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Korea,trn_pass_road,LDV,LDV gas,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Korea,trn_pass_road,LDV,LDV fuel cell,1.63,1.63,1.63,1.63,1.63,1.63,1.63,1.63,,
+Korea,trn_pass_road,bus,bus ICE,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+Korea,trn_pass_road,bus,bus electric,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+Korea,trn_pass_road,bus,bus gas,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+Korea,trn_pass_road,bus,bus fuel cell,18.86,18.86,18.86,18.86,18.86,18.86,18.86,18.86,,
+India,trn_freight,air,air,27.62,27.62,27.62,27.62,27.62,27.62,27.62,27.62,,
+India,trn_freight,rail,rail ICE,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+India,trn_freight,rail,rail electric,40.81,40.81,40.81,40.81,40.81,40.81,40.81,40.81,,
+India,trn_freight,road,truck ICE,5.11,5.11,5.11,5.11,5.11,5.11,5.11,5.11,,
+India,trn_freight,domestic ship,domestic ship ICE,1000,1000,1000,1000,1000,1000,1000,1000,,
+India,trn_passenger,air,air,123.74,123.74,123.74,123.74,123.74,123.74,123.74,123.74,,
+India,trn_passenger,high speed rail,high speed rail,310.33,310.33,310.33,310.33,310.33,310.33,310.33,310.33,,
+India,trn_passenger,rail,rail ICE,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+India,trn_passenger,rail,rail electric,25.32,25.32,25.32,25.32,25.32,25.32,25.32,25.32,,
+India,trn_shipping_intl,international ship,international ship ICE,19449,19449,19449,19449,19449,19449,19449,19449,,
+India,trn_pass_road,LDV,LDV ICE,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20,,
+India,trn_pass_road,LDV,LDV electric,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20,,
+India,trn_pass_road,LDV,LDV gas,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20,,
+India,trn_pass_road,LDV,LDV fuel cell,2.20,2.20,2.20,2.20,2.20,2.20,2.20,2.20,,
+India,trn_pass_road,bus,bus ICE,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00,,
+India,trn_pass_road,bus,bus electric,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00,,
+India,trn_pass_road,bus,bus gas,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00,,
+India,trn_pass_road,bus,bus fuel cell,25.00,25.00,25.00,25.00,25.00,25.00,25.00,25.00,,
+,,,,,,,,,,,,,
+TranTechnology calibrated energy consumption and shareweight path,,,,,,,,,,,,,
+GENERIC SHAREWEIGHT PATH FOR TECHS THAT DO NOT EXIST IN THE BASE YEAR,,,,,,,,,,,,,
+,,,,2020,2035,2050,2065,2080,2095,,,,
+,,default,,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+INPUT_TABLE,,LDV H2,,0,0.1,0.25,0.25,0.25,0.25,,,,
+Variable ID,,LDV CNG,,0.01,0.1,0.25,0.25,0.25,0.25,,,,
+1011,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+region,supplysector,tranSubsector,tranTechnology,2020,2035,2050,2065,2080,2095,,,,
+USA,trn_freight,air,air,1,1,1,1,1,1,,,,
+USA,trn_freight,rail,rail ICE,1,1,1,1,1,1,,,,
+USA,trn_freight,rail,rail electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+USA,trn_freight,road,truck ICE,1,1,1,1,1,1,,,,
+USA,trn_freight,domestic ship,domestic ship ICE,1,1,1,1,1,1,,,,
+USA,trn_passenger,air,air,1,1,1,1,1,1,,,,
+USA,trn_passenger,high speed rail,high speed rail,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+USA,trn_passenger,rail,rail ICE,1,1,1,1,1,1,,,,
+USA,trn_passenger,rail,rail electric,1,1,1,1,1,1,,,,
+USA,trn_shipping_intl,international ship,international ship ICE,1,1,1,1,1,1,,,,
+USA,trn_pass_road,LDV,LDV ICE,1,1,1,1,1,1,,,,
+USA,trn_pass_road,LDV,LDV electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+USA,trn_pass_road,LDV,LDV gas,0.01,0.25,0.5,0.5,0.5,0.5,,,,
+USA,trn_pass_road,LDV,LDV fuel cell,0,0.25,0.5,0.5,0.5,0.5,,,,
+USA,trn_pass_road,bus,bus ICE,1,1,1,1,1,1,,,,
+USA,trn_pass_road,bus,bus electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+USA,trn_pass_road,bus,bus gas,1,1,1,1,1,1,,,,
+USA,trn_pass_road,bus,bus fuel cell,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Canada,trn_freight,air,air,1,1,1,1,1,1,,,,
+Canada,trn_freight,rail,rail ICE,1,1,1,1,1,1,,,,
+Canada,trn_freight,rail,rail electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Canada,trn_freight,road,truck ICE,1,1,1,1,1,1,,,,
+Canada,trn_freight,domestic ship,domestic ship ICE,1,1,1,1,1,1,,,,
+Canada,trn_passenger,air,air,1,1,1,1,1,1,,,,
+Canada,trn_passenger,high speed rail,high speed rail,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Canada,trn_passenger,rail,rail ICE,1,1,1,1,1,1,,,,
+Canada,trn_passenger,rail,rail electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Canada,trn_shipping_intl,international ship,international ship ICE,1,1,1,1,1,1,,,,
+Canada,trn_pass_road,LDV,LDV ICE,1,1,1,1,1,1,,,,
+Canada,trn_pass_road,LDV,LDV electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Canada,trn_pass_road,LDV,LDV gas,0.01,0.25,0.5,0.5,0.5,0.5,,,,
+Canada,trn_pass_road,LDV,LDV fuel cell,0,0.25,0.5,0.5,0.5,0.5,,,,
+Canada,trn_pass_road,bus,bus ICE,1,1,1,1,1,1,,,,
+Canada,trn_pass_road,bus,bus electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Canada,trn_pass_road,bus,bus gas,1,1,1,1,1,1,,,,
+Canada,trn_pass_road,bus,bus fuel cell,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1011,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+region,supplysector,tranSubsector,tranTechnology,2020,2035,2050,2065,2080,2095,,,,
+Western Europe,trn_freight,air,air,1,1,1,1,1,1,,,,
+Western Europe,trn_freight,rail,rail ICE,1,1,1,1,1,1,,,,
+Western Europe,trn_freight,rail,rail electric,1,1,1,1,1,1,,,,
+Western Europe,trn_freight,road,truck ICE,1,1,1,1,1,1,,,,
+Western Europe,trn_freight,domestic ship,domestic ship ICE,1,1,1,1,1,1,,,,
+Western Europe,trn_passenger,air,air,1,1,1,1,1,1,,,,
+Western Europe,trn_passenger,high speed rail,high speed rail,1,1,1,1,1,1,,,,
+Western Europe,trn_passenger,rail,rail ICE,1,1,1,1,1,1,,,,
+Western Europe,trn_passenger,rail,rail electric,1,1,1,1,1,1,,,,
+Western Europe,trn_shipping_intl,international ship,international ship ICE,1,1,1,1,1,1,,,,
+Western Europe,trn_pass_road,LDV,LDV ICE,1,1,1,1,1,1,,,,
+Western Europe,trn_pass_road,LDV,LDV electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Western Europe,trn_pass_road,LDV,LDV gas,0.01,0.25,0.5,0.5,0.5,0.5,,,,
+Western Europe,trn_pass_road,LDV,LDV fuel cell,0,0.25,0.5,0.5,0.5,0.5,,,,
+Western Europe,trn_pass_road,bus,bus ICE,1,1,1,1,1,1,,,,
+Western Europe,trn_pass_road,bus,bus electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Western Europe,trn_pass_road,bus,bus gas,1,1,1,1,1,1,,,,
+Western Europe,trn_pass_road,bus,bus fuel cell,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Japan,trn_freight,air,air,1,1,1,1,1,1,,,,
+Japan,trn_freight,rail,rail ICE,1,1,1,1,1,1,,,,
+Japan,trn_freight,rail,rail electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Japan,trn_freight,road,truck ICE,1,1,1,1,1,1,,,,
+Japan,trn_freight,domestic ship,domestic ship ICE,1,1,1,1,1,1,,,,
+Japan,trn_passenger,air,air,1,1,1,1,1,1,,,,
+Japan,trn_passenger,high speed rail,high speed rail,1,1,1,1,1,1,,,,
+Japan,trn_passenger,rail,rail ICE,1,1,1,1,1,1,,,,
+Japan,trn_passenger,rail,rail electric,1,1,1,1,1,1,,,,
+Japan,trn_shipping_intl,international ship,international ship ICE,1,1,1,1,1,1,,,,
+Japan,trn_pass_road,LDV,LDV ICE,1,1,1,1,1,1,,,,
+Japan,trn_pass_road,LDV,LDV electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Japan,trn_pass_road,LDV,LDV gas,0.01,0.25,0.5,0.5,0.5,0.5,,,,
+Japan,trn_pass_road,LDV,LDV fuel cell,0,0.25,0.5,0.5,0.5,0.5,,,,
+Japan,trn_pass_road,bus,bus ICE,1,1,1,1,1,1,,,,
+Japan,trn_pass_road,bus,bus electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Japan,trn_pass_road,bus,bus gas,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Japan,trn_pass_road,bus,bus fuel cell,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1011,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+region,supplysector,tranSubsector,tranTechnology,2020,2035,2050,2065,2080,2095,,,,
+Australia_NZ,trn_freight,air,air,1,1,1,1,1,1,,,,
+Australia_NZ,trn_freight,rail,rail ICE,1,1,1,1,1,1,,,,
+Australia_NZ,trn_freight,rail,rail electric,1,1,1,1,1,1,,,,
+Australia_NZ,trn_freight,road,truck ICE,1,1,1,1,1,1,,,,
+Australia_NZ,trn_freight,domestic ship,domestic ship ICE,1,1,1,1,1,1,,,,
+Australia_NZ,trn_passenger,air,air,1,1,1,1,1,1,,,,
+Australia_NZ,trn_passenger,high speed rail,high speed rail,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Australia_NZ,trn_passenger,rail,rail ICE,1,1,1,1,1,1,,,,
+Australia_NZ,trn_passenger,rail,rail electric,1,1,1,1,1,1,,,,
+Australia_NZ,trn_shipping_intl,international ship,international ship ICE,1,1,1,1,1,1,,,,
+Australia_NZ,trn_pass_road,LDV,LDV ICE,1,1,1,1,1,1,,,,
+Australia_NZ,trn_pass_road,LDV,LDV electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Australia_NZ,trn_pass_road,LDV,LDV gas,0.01,0.25,0.5,0.5,0.5,0.5,,,,
+Australia_NZ,trn_pass_road,LDV,LDV fuel cell,0,0.25,0.5,0.5,0.5,0.5,,,,
+Australia_NZ,trn_pass_road,bus,bus ICE,1,1,1,1,1,1,,,,
+Australia_NZ,trn_pass_road,bus,bus electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Australia_NZ,trn_pass_road,bus,bus gas,1,1,1,1,1,1,,,,
+Australia_NZ,trn_pass_road,bus,bus fuel cell,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Former Soviet Union,trn_freight,air,air,1,1,1,1,1,1,,,,
+Former Soviet Union,trn_freight,rail,rail ICE,1,1,1,1,1,1,,,,
+Former Soviet Union,trn_freight,rail,rail electric,1,1,1,1,1,1,,,,
+Former Soviet Union,trn_freight,road,truck ICE,1,1,1,1,1,1,,,,
+Former Soviet Union,trn_freight,domestic ship,domestic ship ICE,1,1,1,1,1,1,,,,
+Former Soviet Union,trn_passenger,air,air,1,1,1,1,1,1,,,,
+Former Soviet Union,trn_passenger,high speed rail,high speed rail,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Former Soviet Union,trn_passenger,rail,rail ICE,1,1,1,1,1,1,,,,
+Former Soviet Union,trn_passenger,rail,rail electric,1,1,1,1,1,1,,,,
+Former Soviet Union,trn_shipping_intl,international ship,international ship ICE,1,1,1,1,1,1,,,,
+Former Soviet Union,trn_pass_road,LDV,LDV ICE,1,1,1,1,1,1,,,,
+Former Soviet Union,trn_pass_road,LDV,LDV electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Former Soviet Union,trn_pass_road,LDV,LDV gas,0.01,0.25,0.5,0.5,0.5,0.5,,,,
+Former Soviet Union,trn_pass_road,LDV,LDV fuel cell,0,0.25,0.5,0.5,0.5,0.5,,,,
+Former Soviet Union,trn_pass_road,bus,bus ICE,1,1,1,1,1,1,,,,
+Former Soviet Union,trn_pass_road,bus,bus electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Former Soviet Union,trn_pass_road,bus,bus gas,1,1,1,1,1,1,,,,
+Former Soviet Union,trn_pass_road,bus,bus fuel cell,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1011,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+region,supplysector,tranSubsector,tranTechnology,2020,2035,2050,2065,2080,2095,,,,
+China,trn_freight,air,air,1,1,1,1,1,1,,,,
+China,trn_freight,rail,rail coal,1,1,0,0,0,0,,,,
+China,trn_freight,rail,rail ICE,1,1,1,1,1,1,,,,
+China,trn_freight,rail,rail electric,1,1,1,1,1,1,,,,
+China,trn_freight,road,truck ICE,1,1,1,1,1,1,,,,
+China,trn_freight,domestic ship,domestic ship ICE,1,1,1,1,1,1,,,,
+China,trn_passenger,air,air,1,1,1,1,1,1,,,,
+China,trn_passenger,high speed rail,high speed rail,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+China,trn_passenger,rail,rail coal,1,1,0,0,0,0,,,,
+China,trn_passenger,rail,rail ICE,1,1,1,1,1,1,,,,
+China,trn_passenger,rail,rail electric,1,1,1,1,1,1,,,,
+China,trn_shipping_intl,international ship,international ship ICE,1,1,1,1,1,1,,,,
+China,trn_pass_road,LDV,LDV ICE,1,1,1,1,1,1,,,,
+China,trn_pass_road,LDV,LDV electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+China,trn_pass_road,LDV,LDV gas,0.01,0.25,0.5,0.5,0.5,0.5,,,,
+China,trn_pass_road,LDV,LDV fuel cell,0,0.25,0.5,0.5,0.5,0.5,,,,
+China,trn_pass_road,bus,bus ICE,1,1,1,1,1,1,,,,
+China,trn_pass_road,bus,bus electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+China,trn_pass_road,bus,bus gas,1,1,1,1,1,1,,,,
+China,trn_pass_road,bus,bus fuel cell,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Middle East,trn_freight,air,air,1,1,1,1,1,1,,,,
+Middle East,trn_freight,rail,rail ICE,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Middle East,trn_freight,rail,rail electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Middle East,trn_freight,road,truck ICE,1,1,1,1,1,1,,,,
+Middle East,trn_freight,domestic ship,domestic ship ICE,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Middle East,trn_passenger,air,air,1,1,1,1,1,1,,,,
+Middle East,trn_passenger,high speed rail,high speed rail,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Middle East,trn_passenger,rail,rail ICE,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Middle East,trn_passenger,rail,rail electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Middle East,trn_shipping_intl,international ship,international ship ICE,1,1,1,1,1,1,,,,
+Middle East,trn_pass_road,LDV,LDV ICE,1,1,1,1,1,1,,,,
+Middle East,trn_pass_road,LDV,LDV electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Middle East,trn_pass_road,LDV,LDV gas,0.01,0.25,0.5,0.5,0.5,0.5,,,,
+Middle East,trn_pass_road,LDV,LDV fuel cell,0,0.25,0.5,0.5,0.5,0.5,,,,
+Middle East,trn_pass_road,bus,bus ICE,1,1,1,1,1,1,,,,
+Middle East,trn_pass_road,bus,bus electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Middle East,trn_pass_road,bus,bus gas,1,1,1,1,1,1,,,,
+Middle East,trn_pass_road,bus,bus fuel cell,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1011,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+region,supplysector,tranSubsector,tranTechnology,2020,2035,2050,2065,2080,2095,,,,
+Africa,trn_freight,air,air,1,1,1,1,1,1,,,,
+Africa,trn_freight,rail,rail ICE,1,1,1,1,1,1,,,,
+Africa,trn_freight,rail,rail electric,1,1,1,1,1,1,,,,
+Africa,trn_freight,road,truck ICE,1,1,1,1,1,1,,,,
+Africa,trn_freight,domestic ship,domestic ship ICE,1,1,1,1,1,1,,,,
+Africa,trn_passenger,air,air,1,1,1,1,1,1,,,,
+Africa,trn_passenger,high speed rail,high speed rail,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Africa,trn_passenger,rail,rail ICE,1,1,1,1,1,1,,,,
+Africa,trn_passenger,rail,rail electric,1,1,1,1,1,1,,,,
+Africa,trn_shipping_intl,international ship,international ship ICE,1,1,1,1,1,1,,,,
+Africa,trn_pass_road,LDV,LDV ICE,1,1,1,1,1,1,,,,
+Africa,trn_pass_road,LDV,LDV electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Africa,trn_pass_road,LDV,LDV gas,0.01,0.25,0.5,0.5,0.5,0.5,,,,
+Africa,trn_pass_road,LDV,LDV fuel cell,0,0.25,0.5,0.5,0.5,0.5,,,,
+Africa,trn_pass_road,bus,bus ICE,1,1,1,1,1,1,,,,
+Africa,trn_pass_road,bus,bus electric,1,1,1,1,1,1,,,,
+Africa,trn_pass_road,bus,bus gas,1,1,1,1,1,1,,,,
+Africa,trn_pass_road,bus,bus fuel cell,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Latin America,trn_freight,air,air,1,1,1,1,1,1,,,,
+Latin America,trn_freight,rail,rail ICE,1,1,1,1,1,1,,,,
+Latin America,trn_freight,rail,rail electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Latin America,trn_freight,road,truck ICE,1,1,1,1,1,1,,,,
+Latin America,trn_freight,domestic ship,domestic ship ICE,1,1,1,1,1,1,,,,
+Latin America,trn_passenger,air,air,1,1,1,1,1,1,,,,
+Latin America,trn_passenger,high speed rail,high speed rail,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Latin America,trn_passenger,rail,rail ICE,1,1,1,1,1,1,,,,
+Latin America,trn_passenger,rail,rail electric,1,1,1,1,1,1,,,,
+Latin America,trn_shipping_intl,international ship,international ship ICE,1,1,1,1,1,1,,,,
+Latin America,trn_pass_road,LDV,LDV ICE,1,1,1,1,1,1,,,,
+Latin America,trn_pass_road,LDV,LDV electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Latin America,trn_pass_road,LDV,LDV gas,0.01,0.25,0.5,0.5,0.5,0.5,,,,
+Latin America,trn_pass_road,LDV,LDV fuel cell,0,0.25,0.5,0.5,0.5,0.5,,,,
+Latin America,trn_pass_road,bus,bus ICE,1,1,1,1,1,1,,,,
+Latin America,trn_pass_road,bus,bus electric,1,1,1,1,1,1,,,,
+Latin America,trn_pass_road,bus,bus gas,1,1,1,1,1,1,,,,
+Latin America,trn_pass_road,bus,bus fuel cell,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1011,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+region,supplysector,tranSubsector,tranTechnology,2020,2035,2050,2065,2080,2095,,,,
+Southeast Asia,trn_freight,air,air,1,1,1,1,1,1,,,,
+Southeast Asia,trn_freight,rail,rail ICE,1,1,1,1,1,1,,,,
+Southeast Asia,trn_freight,rail,rail electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Southeast Asia,trn_freight,road,truck ICE,1,1,1,1,1,1,,,,
+Southeast Asia,trn_freight,domestic ship,domestic ship ICE,1,1,1,1,1,1,,,,
+Southeast Asia,trn_passenger,air,air,1,1,1,1,1,1,,,,
+Southeast Asia,trn_passenger,high speed rail,high speed rail,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Southeast Asia,trn_passenger,rail,rail ICE,1,1,1,1,1,1,,,,
+Southeast Asia,trn_passenger,rail,rail electric,1,1,1,1,1,1,,,,
+Southeast Asia,trn_shipping_intl,international ship,international ship ICE,1,1,1,1,1,1,,,,
+Southeast Asia,trn_pass_road,LDV,LDV ICE,1,1,1,1,1,1,,,,
+Southeast Asia,trn_pass_road,LDV,LDV electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Southeast Asia,trn_pass_road,LDV,LDV gas,0.01,0.25,0.5,0.5,0.5,0.5,,,,
+Southeast Asia,trn_pass_road,LDV,LDV fuel cell,0,0.25,0.5,0.5,0.5,0.5,,,,
+Southeast Asia,trn_pass_road,bus,bus ICE,1,1,1,1,1,1,,,,
+Southeast Asia,trn_pass_road,bus,bus electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Southeast Asia,trn_pass_road,bus,bus gas,1,1,1,1,1,1,,,,
+Southeast Asia,trn_pass_road,bus,bus fuel cell,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Eastern Europe,trn_freight,air,air,1,1,1,1,1,1,,,,
+Eastern Europe,trn_freight,rail,rail ICE,1,1,1,1,1,1,,,,
+Eastern Europe,trn_freight,rail,rail electric,1,1,1,1,1,1,,,,
+Eastern Europe,trn_freight,road,truck ICE,1,1,1,1,1,1,,,,
+Eastern Europe,trn_freight,domestic ship,domestic ship ICE,1,1,1,1,1,1,,,,
+Eastern Europe,trn_passenger,air,air,1,1,1,1,1,1,,,,
+Eastern Europe,trn_passenger,high speed rail,high speed rail,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Eastern Europe,trn_passenger,rail,rail ICE,1,1,1,1,1,1,,,,
+Eastern Europe,trn_passenger,rail,rail electric,1,1,1,1,1,1,,,,
+Eastern Europe,trn_shipping_intl,international ship,international ship ICE,1,1,1,1,1,1,,,,
+Eastern Europe,trn_pass_road,LDV,LDV ICE,1,1,1,1,1,1,,,,
+Eastern Europe,trn_pass_road,LDV,LDV electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Eastern Europe,trn_pass_road,LDV,LDV gas,0.01,0.25,0.5,0.5,0.5,0.5,,,,
+Eastern Europe,trn_pass_road,LDV,LDV fuel cell,0,0.25,0.5,0.5,0.5,0.5,,,,
+Eastern Europe,trn_pass_road,bus,bus ICE,1,1,1,1,1,1,,,,
+Eastern Europe,trn_pass_road,bus,bus electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Eastern Europe,trn_pass_road,bus,bus gas,1,1,1,1,1,1,,,,
+Eastern Europe,trn_pass_road,bus,bus fuel cell,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1011,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+region,supplysector,tranSubsector,tranTechnology,2020,2035,2050,2065,2080,2095,,,,
+Korea,trn_freight,air,air,1,1,1,1,1,1,,,,
+Korea,trn_freight,rail,rail ICE,1,1,1,1,1,1,,,,
+Korea,trn_freight,rail,rail electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Korea,trn_freight,road,truck ICE,1,1,1,1,1,1,,,,
+Korea,trn_freight,domestic ship,domestic ship ICE,1,1,1,1,1,1,,,,
+Korea,trn_passenger,air,air,1,1,1,1,1,1,,,,
+Korea,trn_passenger,high speed rail,high speed rail,1,1,1,1,1,1,,,,
+Korea,trn_passenger,rail,rail ICE,1,1,1,1,1,1,,,,
+Korea,trn_passenger,rail,rail electric,1,1,1,1,1,1,,,,
+Korea,trn_shipping_intl,international ship,international ship ICE,1,1,1,1,1,1,,,,
+Korea,trn_pass_road,LDV,LDV ICE,1,1,1,1,1,1,,,,
+Korea,trn_pass_road,LDV,LDV electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Korea,trn_pass_road,LDV,LDV gas,0.01,0.25,0.5,0.5,0.5,0.5,,,,
+Korea,trn_pass_road,LDV,LDV fuel cell,0,0.25,0.5,0.5,0.5,0.5,,,,
+Korea,trn_pass_road,bus,bus ICE,1,1,1,1,1,1,,,,
+Korea,trn_pass_road,bus,bus electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+Korea,trn_pass_road,bus,bus gas,1,1,1,1,1,1,,,,
+Korea,trn_pass_road,bus,bus fuel cell,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+India,trn_freight,air,air,1,1,1,1,1,1,,,,
+India,trn_freight,rail,rail ICE,1,1,1,1,1,1,,,,
+India,trn_freight,rail,rail electric,1,1,1,1,1,1,,,,
+India,trn_freight,road,truck ICE,1,1,1,1,1,1,,,,
+India,trn_freight,domestic ship,domestic ship ICE,1,1,1,1,1,1,,,,
+India,trn_passenger,air,air,1,1,1,1,1,1,,,,
+India,trn_passenger,high speed rail,high speed rail,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+India,trn_passenger,rail,rail ICE,1,1,1,1,1,1,,,,
+India,trn_passenger,rail,rail electric,1,1,1,1,1,1,,,,
+India,trn_shipping_intl,international ship,international ship ICE,1,1,1,1,1,1,,,,
+India,trn_pass_road,LDV,LDV ICE,1,1,1,1,1,1,,,,
+India,trn_pass_road,LDV,LDV electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+India,trn_pass_road,LDV,LDV gas,0.01,0.25,0.5,0.5,0.5,0.5,,,,
+India,trn_pass_road,LDV,LDV fuel cell,0,0.25,0.5,0.5,0.5,0.5,,,,
+India,trn_pass_road,bus,bus ICE,1,1,1,1,1,1,,,,
+India,trn_pass_road,bus,bus electric,0.1,0.25,0.5,0.5,0.5,0.5,,,,
+India,trn_pass_road,bus,bus gas,1,1,1,1,1,1,,,,
+India,trn_pass_road,bus,bus fuel cell,0.1,0.25,0.5,0.5,0.5,0.5,,,,

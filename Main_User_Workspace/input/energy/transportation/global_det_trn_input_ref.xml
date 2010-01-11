@@ -15,7 +15,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>0</addTimeValue>
-               <speed fillout="1" year="1975">384</speed>
+               <speed fillout="1" year="1975">270</speed>
                <tranTechnology name="air">
                   <period year="1975">
                      <logitexp>-6</logitexp>
@@ -305,7 +305,7 @@
                         <input-cost>0.77</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>40.81</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -585,7 +585,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">384</speed>
+               <speed fillout="1" year="1975">270</speed>
                <tranTechnology name="air">
                   <period year="1975">
                      <logitexp>-6</logitexp>
@@ -821,7 +821,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">56</speed>
+               <speed fillout="1" year="1975">32</speed>
                <tranTechnology name="rail ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -1241,7 +1241,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">48</speed>
+               <speed fillout="1" year="1975">60</speed>
                <tranTechnology name="LDV ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -1417,7 +1417,7 @@
                         <input-cost>0.44</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -1500,7 +1500,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.1</sharewt>
+                     <sharewt>0.01</sharewt>
                   </period>
                   <period year="2035">
                      <logitexp>-8</logitexp>
@@ -1512,7 +1512,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.25</sharewt>
+                     <sharewt>0.1</sharewt>
                   </period>
                   <period year="2050">
                      <logitexp>-8</logitexp>
@@ -1524,7 +1524,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -1536,7 +1536,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2080">
                      <logitexp>-8</logitexp>
@@ -1548,7 +1548,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2095">
                      <logitexp>-8</logitexp>
@@ -1560,7 +1560,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                </tranTechnology>
                <tranTechnology name="LDV fuel cell">
@@ -1607,7 +1607,7 @@
                         <input-cost>0.47</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2035">
                      <logitexp>-8</logitexp>
@@ -1619,7 +1619,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.25</sharewt>
+                     <sharewt>0.1</sharewt>
                   </period>
                   <period year="2050">
                      <logitexp>-8</logitexp>
@@ -1631,7 +1631,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -1643,7 +1643,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2080">
                      <logitexp>-8</logitexp>
@@ -1655,7 +1655,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2095">
                      <logitexp>-8</logitexp>
@@ -1667,7 +1667,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                </tranTechnology>
             </tranSubsector>
@@ -1676,7 +1676,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">40</speed>
+               <speed fillout="1" year="1975">25</speed>
                <tranTechnology name="bus ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -1852,7 +1852,7 @@
                         <input-cost>1.91</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>18.86</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -2066,7 +2066,7 @@
                         <input-cost>1.89</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>18.86</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -2176,7 +2176,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>0</addTimeValue>
-               <speed fillout="1" year="1975">384</speed>
+               <speed fillout="1" year="1975">270</speed>
                <tranTechnology name="air">
                   <period year="1975">
                      <logitexp>-6</logitexp>
@@ -2466,7 +2466,7 @@
                         <input-cost>0.77</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>40.81</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -2746,7 +2746,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">384</speed>
+               <speed fillout="1" year="1975">270</speed>
                <tranTechnology name="air">
                   <period year="1975">
                      <logitexp>-6</logitexp>
@@ -2982,7 +2982,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">56</speed>
+               <speed fillout="1" year="1975">32</speed>
                <tranTechnology name="rail ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -3158,7 +3158,7 @@
                         <input-cost>2.83</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>25.32</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -3402,7 +3402,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">48</speed>
+               <speed fillout="1" year="1975">60</speed>
                <tranTechnology name="LDV ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -3578,7 +3578,7 @@
                         <input-cost>0.44</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -3661,7 +3661,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.1</sharewt>
+                     <sharewt>0.01</sharewt>
                   </period>
                   <period year="2035">
                      <logitexp>-8</logitexp>
@@ -3673,7 +3673,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.25</sharewt>
+                     <sharewt>0.1</sharewt>
                   </period>
                   <period year="2050">
                      <logitexp>-8</logitexp>
@@ -3685,7 +3685,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -3697,7 +3697,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2080">
                      <logitexp>-8</logitexp>
@@ -3709,7 +3709,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2095">
                      <logitexp>-8</logitexp>
@@ -3721,7 +3721,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                </tranTechnology>
                <tranTechnology name="LDV fuel cell">
@@ -3768,7 +3768,7 @@
                         <input-cost>0.47</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2035">
                      <logitexp>-8</logitexp>
@@ -3780,7 +3780,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.25</sharewt>
+                     <sharewt>0.1</sharewt>
                   </period>
                   <period year="2050">
                      <logitexp>-8</logitexp>
@@ -3792,7 +3792,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -3804,7 +3804,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2080">
                      <logitexp>-8</logitexp>
@@ -3816,7 +3816,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2095">
                      <logitexp>-8</logitexp>
@@ -3828,7 +3828,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                </tranTechnology>
             </tranSubsector>
@@ -3837,7 +3837,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">40</speed>
+               <speed fillout="1" year="1975">25</speed>
                <tranTechnology name="bus ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -4013,7 +4013,7 @@
                         <input-cost>1.91</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>18.86</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -4227,7 +4227,7 @@
                         <input-cost>1.89</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>18.86</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -4337,7 +4337,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>0</addTimeValue>
-               <speed fillout="1" year="1975">384</speed>
+               <speed fillout="1" year="1975">270</speed>
                <tranTechnology name="air">
                   <period year="1975">
                      <logitexp>-6</logitexp>
@@ -4907,7 +4907,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">384</speed>
+               <speed fillout="1" year="1975">270</speed>
                <tranTechnology name="air">
                   <period year="1975">
                      <logitexp>-6</logitexp>
@@ -5135,7 +5135,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">56</speed>
+               <speed fillout="1" year="1975">32</speed>
                <tranTechnology name="rail ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -5555,7 +5555,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">48</speed>
+               <speed fillout="1" year="1975">60</speed>
                <tranTechnology name="LDV ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -5731,7 +5731,7 @@
                         <input-cost>0.44</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -5814,7 +5814,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.1</sharewt>
+                     <sharewt>0.01</sharewt>
                   </period>
                   <period year="2035">
                      <logitexp>-8</logitexp>
@@ -5826,7 +5826,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.25</sharewt>
+                     <sharewt>0.1</sharewt>
                   </period>
                   <period year="2050">
                      <logitexp>-8</logitexp>
@@ -5838,7 +5838,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -5850,7 +5850,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2080">
                      <logitexp>-8</logitexp>
@@ -5862,7 +5862,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2095">
                      <logitexp>-8</logitexp>
@@ -5874,7 +5874,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                </tranTechnology>
                <tranTechnology name="LDV fuel cell">
@@ -5921,7 +5921,7 @@
                         <input-cost>0.47</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2035">
                      <logitexp>-8</logitexp>
@@ -5933,7 +5933,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.25</sharewt>
+                     <sharewt>0.1</sharewt>
                   </period>
                   <period year="2050">
                      <logitexp>-8</logitexp>
@@ -5945,7 +5945,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -5957,7 +5957,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2080">
                      <logitexp>-8</logitexp>
@@ -5969,7 +5969,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2095">
                      <logitexp>-8</logitexp>
@@ -5981,7 +5981,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                </tranTechnology>
             </tranSubsector>
@@ -5990,7 +5990,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">40</speed>
+               <speed fillout="1" year="1975">25</speed>
                <tranTechnology name="bus ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -6166,7 +6166,7 @@
                         <input-cost>1.91</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>18.86</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -6380,7 +6380,7 @@
                         <input-cost>1.89</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>18.86</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -6490,7 +6490,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>0</addTimeValue>
-               <speed fillout="1" year="1975">384</speed>
+               <speed fillout="1" year="1975">270</speed>
                <tranTechnology name="air">
                   <period year="1975">
                      <logitexp>-6</logitexp>
@@ -6780,7 +6780,7 @@
                         <input-cost>0.77</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>40.81</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -7060,7 +7060,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">384</speed>
+               <speed fillout="1" year="1975">270</speed>
                <tranTechnology name="air">
                   <period year="1975">
                      <logitexp>-6</logitexp>
@@ -7288,7 +7288,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">56</speed>
+               <speed fillout="1" year="1975">32</speed>
                <tranTechnology name="rail ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -7708,7 +7708,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">48</speed>
+               <speed fillout="1" year="1975">60</speed>
                <tranTechnology name="LDV ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -7884,7 +7884,7 @@
                         <input-cost>0.44</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -7967,7 +7967,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.1</sharewt>
+                     <sharewt>0.01</sharewt>
                   </period>
                   <period year="2035">
                      <logitexp>-8</logitexp>
@@ -7979,7 +7979,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.25</sharewt>
+                     <sharewt>0.1</sharewt>
                   </period>
                   <period year="2050">
                      <logitexp>-8</logitexp>
@@ -7991,7 +7991,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -8003,7 +8003,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2080">
                      <logitexp>-8</logitexp>
@@ -8015,7 +8015,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2095">
                      <logitexp>-8</logitexp>
@@ -8027,7 +8027,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                </tranTechnology>
                <tranTechnology name="LDV fuel cell">
@@ -8074,7 +8074,7 @@
                         <input-cost>0.47</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2035">
                      <logitexp>-8</logitexp>
@@ -8086,7 +8086,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.25</sharewt>
+                     <sharewt>0.1</sharewt>
                   </period>
                   <period year="2050">
                      <logitexp>-8</logitexp>
@@ -8098,7 +8098,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -8110,7 +8110,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2080">
                      <logitexp>-8</logitexp>
@@ -8122,7 +8122,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2095">
                      <logitexp>-8</logitexp>
@@ -8134,7 +8134,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                </tranTechnology>
             </tranSubsector>
@@ -8143,7 +8143,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">40</speed>
+               <speed fillout="1" year="1975">25</speed>
                <tranTechnology name="bus ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -8319,7 +8319,7 @@
                         <input-cost>1.91</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>18.86</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -8426,7 +8426,7 @@
                         <input-cost>1.72</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>18.86</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -8533,7 +8533,7 @@
                         <input-cost>1.89</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>18.86</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -8643,7 +8643,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>0</addTimeValue>
-               <speed fillout="1" year="1975">384</speed>
+               <speed fillout="1" year="1975">270</speed>
                <tranTechnology name="air">
                   <period year="1975">
                      <logitexp>-6</logitexp>
@@ -9213,7 +9213,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">384</speed>
+               <speed fillout="1" year="1975">270</speed>
                <tranTechnology name="air">
                   <period year="1975">
                      <logitexp>-6</logitexp>
@@ -9449,7 +9449,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">56</speed>
+               <speed fillout="1" year="1975">32</speed>
                <tranTechnology name="rail ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -9869,7 +9869,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">48</speed>
+               <speed fillout="1" year="1975">60</speed>
                <tranTechnology name="LDV ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -10045,7 +10045,7 @@
                         <input-cost>0.44</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -10128,7 +10128,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.1</sharewt>
+                     <sharewt>0.01</sharewt>
                   </period>
                   <period year="2035">
                      <logitexp>-8</logitexp>
@@ -10140,7 +10140,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.25</sharewt>
+                     <sharewt>0.1</sharewt>
                   </period>
                   <period year="2050">
                      <logitexp>-8</logitexp>
@@ -10152,7 +10152,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -10164,7 +10164,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2080">
                      <logitexp>-8</logitexp>
@@ -10176,7 +10176,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2095">
                      <logitexp>-8</logitexp>
@@ -10188,7 +10188,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                </tranTechnology>
                <tranTechnology name="LDV fuel cell">
@@ -10235,7 +10235,7 @@
                         <input-cost>0.47</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2035">
                      <logitexp>-8</logitexp>
@@ -10247,7 +10247,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.25</sharewt>
+                     <sharewt>0.1</sharewt>
                   </period>
                   <period year="2050">
                      <logitexp>-8</logitexp>
@@ -10259,7 +10259,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -10271,7 +10271,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2080">
                      <logitexp>-8</logitexp>
@@ -10283,7 +10283,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2095">
                      <logitexp>-8</logitexp>
@@ -10295,7 +10295,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                </tranTechnology>
             </tranSubsector>
@@ -10304,7 +10304,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">40</speed>
+               <speed fillout="1" year="1975">25</speed>
                <tranTechnology name="bus ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -10480,7 +10480,7 @@
                         <input-cost>1.91</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>18.86</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -10694,7 +10694,7 @@
                         <input-cost>1.89</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>18.86</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -10804,7 +10804,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>0</addTimeValue>
-               <speed fillout="1" year="1975">384</speed>
+               <speed fillout="1" year="1975">270</speed>
                <tranTechnology name="air">
                   <period year="1975">
                      <logitexp>-6</logitexp>
@@ -11374,7 +11374,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">384</speed>
+               <speed fillout="1" year="1975">270</speed>
                <tranTechnology name="air">
                   <period year="1975">
                      <logitexp>-6</logitexp>
@@ -11610,7 +11610,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">56</speed>
+               <speed fillout="1" year="1975">32</speed>
                <tranTechnology name="rail ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -12030,7 +12030,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">48</speed>
+               <speed fillout="1" year="1975">60</speed>
                <tranTechnology name="LDV ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -12206,7 +12206,7 @@
                         <input-cost>0.44</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -12289,7 +12289,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.1</sharewt>
+                     <sharewt>0.01</sharewt>
                   </period>
                   <period year="2035">
                      <logitexp>-8</logitexp>
@@ -12301,7 +12301,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.25</sharewt>
+                     <sharewt>0.1</sharewt>
                   </period>
                   <period year="2050">
                      <logitexp>-8</logitexp>
@@ -12313,7 +12313,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -12325,7 +12325,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2080">
                      <logitexp>-8</logitexp>
@@ -12337,7 +12337,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2095">
                      <logitexp>-8</logitexp>
@@ -12349,7 +12349,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                </tranTechnology>
                <tranTechnology name="LDV fuel cell">
@@ -12396,7 +12396,7 @@
                         <input-cost>0.47</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2035">
                      <logitexp>-8</logitexp>
@@ -12408,7 +12408,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.25</sharewt>
+                     <sharewt>0.1</sharewt>
                   </period>
                   <period year="2050">
                      <logitexp>-8</logitexp>
@@ -12420,7 +12420,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -12432,7 +12432,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2080">
                      <logitexp>-8</logitexp>
@@ -12444,7 +12444,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2095">
                      <logitexp>-8</logitexp>
@@ -12456,7 +12456,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                </tranTechnology>
             </tranSubsector>
@@ -12465,7 +12465,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">40</speed>
+               <speed fillout="1" year="1975">25</speed>
                <tranTechnology name="bus ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -12641,7 +12641,7 @@
                         <input-cost>1.91</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>18.86</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -12855,7 +12855,7 @@
                         <input-cost>1.89</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>18.86</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -12965,7 +12965,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>0</addTimeValue>
-               <speed fillout="1" year="1975">384</speed>
+               <speed fillout="1" year="1975">270</speed>
                <tranTechnology name="air">
                   <period year="1975">
                      <logitexp>-6</logitexp>
@@ -13642,7 +13642,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">384</speed>
+               <speed fillout="1" year="1975">270</speed>
                <tranTechnology name="air">
                   <period year="1975">
                      <logitexp>-6</logitexp>
@@ -13878,7 +13878,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">56</speed>
+               <speed fillout="1" year="1975">32</speed>
                <tranTechnology name="rail ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -14405,7 +14405,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">48</speed>
+               <speed fillout="1" year="1975">60</speed>
                <tranTechnology name="LDV ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -14581,7 +14581,7 @@
                         <input-cost>0.44</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -14664,7 +14664,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.1</sharewt>
+                     <sharewt>0.01</sharewt>
                   </period>
                   <period year="2035">
                      <logitexp>-8</logitexp>
@@ -14676,7 +14676,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.25</sharewt>
+                     <sharewt>0.1</sharewt>
                   </period>
                   <period year="2050">
                      <logitexp>-8</logitexp>
@@ -14688,7 +14688,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -14700,7 +14700,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2080">
                      <logitexp>-8</logitexp>
@@ -14712,7 +14712,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2095">
                      <logitexp>-8</logitexp>
@@ -14724,7 +14724,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                </tranTechnology>
                <tranTechnology name="LDV fuel cell">
@@ -14771,7 +14771,7 @@
                         <input-cost>0.47</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2035">
                      <logitexp>-8</logitexp>
@@ -14783,7 +14783,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.25</sharewt>
+                     <sharewt>0.1</sharewt>
                   </period>
                   <period year="2050">
                      <logitexp>-8</logitexp>
@@ -14795,7 +14795,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -14807,7 +14807,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2080">
                      <logitexp>-8</logitexp>
@@ -14819,7 +14819,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2095">
                      <logitexp>-8</logitexp>
@@ -14831,7 +14831,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                </tranTechnology>
             </tranSubsector>
@@ -14840,7 +14840,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">40</speed>
+               <speed fillout="1" year="1975">25</speed>
                <tranTechnology name="bus ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -15016,7 +15016,7 @@
                         <input-cost>1.91</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>25.00</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -15230,7 +15230,7 @@
                         <input-cost>1.89</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>25.00</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -15340,7 +15340,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>0</addTimeValue>
-               <speed fillout="1" year="1975">384</speed>
+               <speed fillout="1" year="1975">270</speed>
                <tranTechnology name="air">
                   <period year="1975">
                      <logitexp>-6</logitexp>
@@ -15531,7 +15531,7 @@
                         <input-cost>0.70</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>40.81</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -15638,7 +15638,7 @@
                         <input-cost>0.77</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>40.81</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -15874,7 +15874,7 @@
                         <input-cost>3.60</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1000</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -15926,7 +15926,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">384</speed>
+               <speed fillout="1" year="1975">270</speed>
                <tranTechnology name="air">
                   <period year="1975">
                      <logitexp>-6</logitexp>
@@ -16162,7 +16162,7 @@
                <scaleYear>1975</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">56</speed>
+               <speed fillout="1" year="1975">32</speed>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
                <sharewt year="2020">0.005</sharewt>
@@ -16239,7 +16239,7 @@
                         <input-cost>3.43</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>25.32</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -16346,7 +16346,7 @@
                         <input-cost>2.83</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>25.32</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -16590,7 +16590,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">48</speed>
+               <speed fillout="1" year="1975">60</speed>
                <tranTechnology name="LDV ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -16766,7 +16766,7 @@
                         <input-cost>0.44</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -16849,7 +16849,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.1</sharewt>
+                     <sharewt>0.01</sharewt>
                   </period>
                   <period year="2035">
                      <logitexp>-8</logitexp>
@@ -16861,7 +16861,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.25</sharewt>
+                     <sharewt>0.1</sharewt>
                   </period>
                   <period year="2050">
                      <logitexp>-8</logitexp>
@@ -16873,7 +16873,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -16885,7 +16885,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2080">
                      <logitexp>-8</logitexp>
@@ -16897,7 +16897,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2095">
                      <logitexp>-8</logitexp>
@@ -16909,7 +16909,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                </tranTechnology>
                <tranTechnology name="LDV fuel cell">
@@ -16956,7 +16956,7 @@
                         <input-cost>0.47</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2035">
                      <logitexp>-8</logitexp>
@@ -16968,7 +16968,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.25</sharewt>
+                     <sharewt>0.1</sharewt>
                   </period>
                   <period year="2050">
                      <logitexp>-8</logitexp>
@@ -16980,7 +16980,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -16992,7 +16992,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2080">
                      <logitexp>-8</logitexp>
@@ -17004,7 +17004,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2095">
                      <logitexp>-8</logitexp>
@@ -17016,7 +17016,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                </tranTechnology>
             </tranSubsector>
@@ -17025,7 +17025,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">40</speed>
+               <speed fillout="1" year="1975">25</speed>
                <tranTechnology name="bus ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -17201,7 +17201,7 @@
                         <input-cost>1.91</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>18.86</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -17415,7 +17415,7 @@
                         <input-cost>1.89</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>18.86</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -17525,7 +17525,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>0</addTimeValue>
-               <speed fillout="1" year="1975">384</speed>
+               <speed fillout="1" year="1975">270</speed>
                <tranTechnology name="air">
                   <period year="1975">
                      <logitexp>-6</logitexp>
@@ -18095,7 +18095,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">384</speed>
+               <speed fillout="1" year="1975">270</speed>
                <tranTechnology name="air">
                   <period year="1975">
                      <logitexp>-6</logitexp>
@@ -18331,7 +18331,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">56</speed>
+               <speed fillout="1" year="1975">32</speed>
                <tranTechnology name="rail ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -18751,7 +18751,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">48</speed>
+               <speed fillout="1" year="1975">60</speed>
                <tranTechnology name="LDV ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -18927,7 +18927,7 @@
                         <input-cost>0.44</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -19010,7 +19010,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.1</sharewt>
+                     <sharewt>0.01</sharewt>
                   </period>
                   <period year="2035">
                      <logitexp>-8</logitexp>
@@ -19022,7 +19022,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.25</sharewt>
+                     <sharewt>0.1</sharewt>
                   </period>
                   <period year="2050">
                      <logitexp>-8</logitexp>
@@ -19034,7 +19034,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -19046,7 +19046,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2080">
                      <logitexp>-8</logitexp>
@@ -19058,7 +19058,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2095">
                      <logitexp>-8</logitexp>
@@ -19070,7 +19070,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                </tranTechnology>
                <tranTechnology name="LDV fuel cell">
@@ -19117,7 +19117,7 @@
                         <input-cost>0.47</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2035">
                      <logitexp>-8</logitexp>
@@ -19129,7 +19129,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.25</sharewt>
+                     <sharewt>0.1</sharewt>
                   </period>
                   <period year="2050">
                      <logitexp>-8</logitexp>
@@ -19141,7 +19141,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -19153,7 +19153,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2080">
                      <logitexp>-8</logitexp>
@@ -19165,7 +19165,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2095">
                      <logitexp>-8</logitexp>
@@ -19177,7 +19177,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                </tranTechnology>
             </tranSubsector>
@@ -19186,7 +19186,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">40</speed>
+               <speed fillout="1" year="1975">25</speed>
                <tranTechnology name="bus ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -19576,7 +19576,7 @@
                         <input-cost>1.89</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>25.00</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -19686,7 +19686,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>0</addTimeValue>
-               <speed fillout="1" year="1975">384</speed>
+               <speed fillout="1" year="1975">270</speed>
                <tranTechnology name="air">
                   <period year="1975">
                      <logitexp>-6</logitexp>
@@ -19976,7 +19976,7 @@
                         <input-cost>0.77</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>40.81</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -20256,7 +20256,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">384</speed>
+               <speed fillout="1" year="1975">270</speed>
                <tranTechnology name="air">
                   <period year="1975">
                      <logitexp>-6</logitexp>
@@ -20492,7 +20492,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">56</speed>
+               <speed fillout="1" year="1975">32</speed>
                <tranTechnology name="rail ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -20912,7 +20912,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">48</speed>
+               <speed fillout="1" year="1975">60</speed>
                <tranTechnology name="LDV ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -21088,7 +21088,7 @@
                         <input-cost>0.44</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -21171,7 +21171,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.1</sharewt>
+                     <sharewt>0.01</sharewt>
                   </period>
                   <period year="2035">
                      <logitexp>-8</logitexp>
@@ -21183,7 +21183,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.25</sharewt>
+                     <sharewt>0.1</sharewt>
                   </period>
                   <period year="2050">
                      <logitexp>-8</logitexp>
@@ -21195,7 +21195,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -21207,7 +21207,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2080">
                      <logitexp>-8</logitexp>
@@ -21219,7 +21219,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2095">
                      <logitexp>-8</logitexp>
@@ -21231,7 +21231,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                </tranTechnology>
                <tranTechnology name="LDV fuel cell">
@@ -21278,7 +21278,7 @@
                         <input-cost>0.47</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2035">
                      <logitexp>-8</logitexp>
@@ -21290,7 +21290,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.25</sharewt>
+                     <sharewt>0.1</sharewt>
                   </period>
                   <period year="2050">
                      <logitexp>-8</logitexp>
@@ -21302,7 +21302,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -21314,7 +21314,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2080">
                      <logitexp>-8</logitexp>
@@ -21326,7 +21326,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2095">
                      <logitexp>-8</logitexp>
@@ -21338,7 +21338,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                </tranTechnology>
             </tranSubsector>
@@ -21347,7 +21347,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">40</speed>
+               <speed fillout="1" year="1975">25</speed>
                <tranTechnology name="bus ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -21737,7 +21737,7 @@
                         <input-cost>1.89</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>25.00</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -21847,7 +21847,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>0</addTimeValue>
-               <speed fillout="1" year="1975">384</speed>
+               <speed fillout="1" year="1975">270</speed>
                <tranTechnology name="air">
                   <period year="1975">
                      <logitexp>-6</logitexp>
@@ -22137,7 +22137,7 @@
                         <input-cost>0.77</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>40.81</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -22417,7 +22417,7 @@
                <scaleYear>2095</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">384</speed>
+               <speed fillout="1" year="1975">270</speed>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
                <sharewt year="2020">0.04</sharewt>
@@ -22661,7 +22661,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">56</speed>
+               <speed fillout="1" year="1975">32</speed>
                <tranTechnology name="rail ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -23081,7 +23081,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">48</speed>
+               <speed fillout="1" year="1975">60</speed>
                <tranTechnology name="LDV ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -23257,7 +23257,7 @@
                         <input-cost>0.44</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -23340,7 +23340,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.1</sharewt>
+                     <sharewt>0.01</sharewt>
                   </period>
                   <period year="2035">
                      <logitexp>-8</logitexp>
@@ -23352,7 +23352,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.25</sharewt>
+                     <sharewt>0.1</sharewt>
                   </period>
                   <period year="2050">
                      <logitexp>-8</logitexp>
@@ -23364,7 +23364,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -23376,7 +23376,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2080">
                      <logitexp>-8</logitexp>
@@ -23388,7 +23388,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2095">
                      <logitexp>-8</logitexp>
@@ -23400,7 +23400,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                </tranTechnology>
                <tranTechnology name="LDV fuel cell">
@@ -23447,7 +23447,7 @@
                         <input-cost>0.47</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2035">
                      <logitexp>-8</logitexp>
@@ -23459,7 +23459,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.25</sharewt>
+                     <sharewt>0.1</sharewt>
                   </period>
                   <period year="2050">
                      <logitexp>-8</logitexp>
@@ -23471,7 +23471,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -23483,7 +23483,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2080">
                      <logitexp>-8</logitexp>
@@ -23495,7 +23495,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2095">
                      <logitexp>-8</logitexp>
@@ -23507,7 +23507,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                </tranTechnology>
             </tranSubsector>
@@ -23516,7 +23516,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">40</speed>
+               <speed fillout="1" year="1975">25</speed>
                <tranTechnology name="bus ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -23692,7 +23692,7 @@
                         <input-cost>1.91</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>25.00</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -23906,7 +23906,7 @@
                         <input-cost>1.89</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>25.00</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -24016,7 +24016,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>0</addTimeValue>
-               <speed fillout="1" year="1975">384</speed>
+               <speed fillout="1" year="1975">270</speed>
                <tranTechnology name="air">
                   <period year="1975">
                      <logitexp>-6</logitexp>
@@ -24586,7 +24586,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">384</speed>
+               <speed fillout="1" year="1975">270</speed>
                <tranTechnology name="air">
                   <period year="1975">
                      <logitexp>-6</logitexp>
@@ -24822,7 +24822,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">56</speed>
+               <speed fillout="1" year="1975">32</speed>
                <tranTechnology name="rail ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -25242,7 +25242,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">48</speed>
+               <speed fillout="1" year="1975">60</speed>
                <tranTechnology name="LDV ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -25418,7 +25418,7 @@
                         <input-cost>0.44</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -25501,7 +25501,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.1</sharewt>
+                     <sharewt>0.01</sharewt>
                   </period>
                   <period year="2035">
                      <logitexp>-8</logitexp>
@@ -25513,7 +25513,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.25</sharewt>
+                     <sharewt>0.1</sharewt>
                   </period>
                   <period year="2050">
                      <logitexp>-8</logitexp>
@@ -25525,7 +25525,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -25537,7 +25537,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2080">
                      <logitexp>-8</logitexp>
@@ -25549,7 +25549,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2095">
                      <logitexp>-8</logitexp>
@@ -25561,7 +25561,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                </tranTechnology>
                <tranTechnology name="LDV fuel cell">
@@ -25608,7 +25608,7 @@
                         <input-cost>0.47</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2035">
                      <logitexp>-8</logitexp>
@@ -25620,7 +25620,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.25</sharewt>
+                     <sharewt>0.1</sharewt>
                   </period>
                   <period year="2050">
                      <logitexp>-8</logitexp>
@@ -25632,7 +25632,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -25644,7 +25644,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2080">
                      <logitexp>-8</logitexp>
@@ -25656,7 +25656,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2095">
                      <logitexp>-8</logitexp>
@@ -25668,7 +25668,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                </tranTechnology>
             </tranSubsector>
@@ -25677,7 +25677,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">40</speed>
+               <speed fillout="1" year="1975">25</speed>
                <tranTechnology name="bus ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -25853,7 +25853,7 @@
                         <input-cost>1.91</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>18.86</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -26067,7 +26067,7 @@
                         <input-cost>1.89</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>18.86</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -26177,7 +26177,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>0</addTimeValue>
-               <speed fillout="1" year="1975">384</speed>
+               <speed fillout="1" year="1975">270</speed>
                <tranTechnology name="air">
                   <period year="1975">
                      <logitexp>-6</logitexp>
@@ -26467,7 +26467,7 @@
                         <input-cost>0.77</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>40.81</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -26747,7 +26747,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">384</speed>
+               <speed fillout="1" year="1975">270</speed>
                <tranTechnology name="air">
                   <period year="1975">
                      <logitexp>-6</logitexp>
@@ -26983,7 +26983,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">56</speed>
+               <speed fillout="1" year="1975">32</speed>
                <tranTechnology name="rail ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -27403,7 +27403,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">48</speed>
+               <speed fillout="1" year="1975">60</speed>
                <tranTechnology name="LDV ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -27579,7 +27579,7 @@
                         <input-cost>0.44</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -27662,7 +27662,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.1</sharewt>
+                     <sharewt>0.01</sharewt>
                   </period>
                   <period year="2035">
                      <logitexp>-8</logitexp>
@@ -27674,7 +27674,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.25</sharewt>
+                     <sharewt>0.1</sharewt>
                   </period>
                   <period year="2050">
                      <logitexp>-8</logitexp>
@@ -27686,7 +27686,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -27698,7 +27698,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2080">
                      <logitexp>-8</logitexp>
@@ -27710,7 +27710,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2095">
                      <logitexp>-8</logitexp>
@@ -27722,7 +27722,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                </tranTechnology>
                <tranTechnology name="LDV fuel cell">
@@ -27769,7 +27769,7 @@
                         <input-cost>0.47</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2035">
                      <logitexp>-8</logitexp>
@@ -27781,7 +27781,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.25</sharewt>
+                     <sharewt>0.1</sharewt>
                   </period>
                   <period year="2050">
                      <logitexp>-8</logitexp>
@@ -27793,7 +27793,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -27805,7 +27805,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2080">
                      <logitexp>-8</logitexp>
@@ -27817,7 +27817,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2095">
                      <logitexp>-8</logitexp>
@@ -27829,7 +27829,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>1.63</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                </tranTechnology>
             </tranSubsector>
@@ -27838,7 +27838,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">40</speed>
+               <speed fillout="1" year="1975">25</speed>
                <tranTechnology name="bus ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -28014,7 +28014,7 @@
                         <input-cost>1.91</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>18.86</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -28228,7 +28228,7 @@
                         <input-cost>1.89</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>18.86</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -28338,7 +28338,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>0</addTimeValue>
-               <speed fillout="1" year="1975">384</speed>
+               <speed fillout="1" year="1975">270</speed>
                <tranTechnology name="air">
                   <period year="1975">
                      <logitexp>-6</logitexp>
@@ -28908,7 +28908,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">384</speed>
+               <speed fillout="1" year="1975">270</speed>
                <tranTechnology name="air">
                   <period year="1975">
                      <logitexp>-6</logitexp>
@@ -29144,7 +29144,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">56</speed>
+               <speed fillout="1" year="1975">32</speed>
                <tranTechnology name="rail ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -29564,7 +29564,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">48</speed>
+               <speed fillout="1" year="1975">60</speed>
                <tranTechnology name="LDV ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -29740,7 +29740,7 @@
                         <input-cost>0.44</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -29823,7 +29823,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.1</sharewt>
+                     <sharewt>0.01</sharewt>
                   </period>
                   <period year="2035">
                      <logitexp>-8</logitexp>
@@ -29835,7 +29835,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.25</sharewt>
+                     <sharewt>0.1</sharewt>
                   </period>
                   <period year="2050">
                      <logitexp>-8</logitexp>
@@ -29847,7 +29847,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -29859,7 +29859,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2080">
                      <logitexp>-8</logitexp>
@@ -29871,7 +29871,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2095">
                      <logitexp>-8</logitexp>
@@ -29883,7 +29883,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                </tranTechnology>
                <tranTechnology name="LDV fuel cell">
@@ -29930,7 +29930,7 @@
                         <input-cost>0.47</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.1</sharewt>
+                     <sharewt>0</sharewt>
                   </period>
                   <period year="2035">
                      <logitexp>-8</logitexp>
@@ -29942,7 +29942,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.25</sharewt>
+                     <sharewt>0.1</sharewt>
                   </period>
                   <period year="2050">
                      <logitexp>-8</logitexp>
@@ -29954,7 +29954,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -29966,7 +29966,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2080">
                      <logitexp>-8</logitexp>
@@ -29978,7 +29978,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                   <period year="2095">
                      <logitexp>-8</logitexp>
@@ -29990,7 +29990,7 @@
                         <input-cost>0.46</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>2.20</loadFactor>
-                     <sharewt>0.5</sharewt>
+                     <sharewt>0.25</sharewt>
                   </period>
                </tranTechnology>
             </tranSubsector>
@@ -29999,7 +29999,7 @@
                <scaleYear>2005</scaleYear>
                <techScaleYear>2050</techScaleYear>
                <addTimeValue>1</addTimeValue>
-               <speed fillout="1" year="1975">40</speed>
+               <speed fillout="1" year="1975">25</speed>
                <tranTechnology name="bus ICE">
                   <period year="1975">
                      <logitexp>-8</logitexp>
@@ -30175,7 +30175,7 @@
                         <input-cost>1.91</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>25.00</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
@@ -30389,7 +30389,7 @@
                         <input-cost>1.89</input-cost>
                      </minicam-non-energy-input>
                      <loadFactor>25.00</loadFactor>
-                     <sharewt>0.4</sharewt>
+                     <sharewt>0.5</sharewt>
                   </period>
                   <period year="2065">
                      <logitexp>-8</logitexp>
