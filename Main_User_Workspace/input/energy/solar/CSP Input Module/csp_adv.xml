@@ -12,7 +12,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
@@ -22,7 +22,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
@@ -32,7 +32,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">
@@ -208,7 +208,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
@@ -218,7 +218,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
@@ -228,7 +228,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">
@@ -404,7 +404,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
@@ -414,7 +414,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
@@ -424,7 +424,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">
@@ -600,7 +600,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
@@ -610,7 +610,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
@@ -620,7 +620,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">
@@ -796,7 +796,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
@@ -806,7 +806,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
@@ -816,7 +816,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">
@@ -992,7 +992,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
@@ -1002,7 +1002,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
@@ -1012,7 +1012,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">
@@ -1188,7 +1188,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
@@ -1198,7 +1198,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
@@ -1208,7 +1208,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">
@@ -1384,7 +1384,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
@@ -1394,7 +1394,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
@@ -1404,7 +1404,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">
@@ -1580,7 +1580,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
@@ -1590,7 +1590,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
@@ -1600,7 +1600,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">
@@ -1776,7 +1776,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
@@ -1786,7 +1786,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
@@ -1796,7 +1796,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">
@@ -1972,7 +1972,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
@@ -1982,7 +1982,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
@@ -1992,7 +1992,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">
@@ -2168,7 +2168,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
@@ -2178,7 +2178,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
@@ -2188,7 +2188,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">
@@ -2364,7 +2364,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
@@ -2374,7 +2374,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
@@ -2384,7 +2384,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">
@@ -2560,7 +2560,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
@@ -2570,7 +2570,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
@@ -2580,7 +2580,7 @@
                      </minicam-non-energy-input>
                      <electric-sector-name>electricity</electric-sector-name>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">

@@ -10,7 +10,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
@@ -18,7 +18,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
@@ -26,7 +26,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">
@@ -188,7 +188,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
@@ -196,7 +196,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
@@ -204,7 +204,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">
@@ -366,7 +366,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
@@ -374,7 +374,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
@@ -382,7 +382,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">
@@ -544,7 +544,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
@@ -552,7 +552,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
@@ -560,7 +560,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">
@@ -722,7 +722,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
@@ -730,7 +730,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
@@ -738,7 +738,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">
@@ -900,7 +900,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
@@ -908,7 +908,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
@@ -916,7 +916,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">
@@ -1078,7 +1078,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
@@ -1086,7 +1086,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
@@ -1094,7 +1094,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">
@@ -1256,7 +1256,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
@@ -1264,7 +1264,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
@@ -1272,7 +1272,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">
@@ -1434,7 +1434,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
@@ -1442,7 +1442,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
@@ -1450,7 +1450,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">
@@ -1612,7 +1612,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
@@ -1620,7 +1620,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
@@ -1628,7 +1628,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">
@@ -1790,7 +1790,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
@@ -1798,7 +1798,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
@@ -1806,7 +1806,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">
@@ -1968,7 +1968,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
@@ -1976,7 +1976,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
@@ -1984,7 +1984,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">
@@ -2146,7 +2146,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
@@ -2154,7 +2154,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
@@ -2162,7 +2162,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">
@@ -2324,7 +2324,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
@@ -2332,7 +2332,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
@@ -2340,7 +2340,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
+                        <capacity-limit>0.2</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">

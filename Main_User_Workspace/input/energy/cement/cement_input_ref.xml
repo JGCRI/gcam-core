@@ -3,6 +3,8 @@
    <world>
       <region name="USA">
          <PrimaryFuelCO2Coef name="limestone">79.802</PrimaryFuelCO2Coef>
+         <supplysector delete="1" name="Cement"/>
+         <energy-final-demand delete="1" name="Cement"/>
          <supplysector name="cement">
             <output-unit>Gt</output-unit>
             <input-unit>EJ</input-unit>
@@ -108,7 +110,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.441</coefficient>
+                        <coefficient>1.496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.531</coefficient>
@@ -123,7 +125,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.388</coefficient>
+                        <coefficient>1.496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.400</coefficient>
@@ -138,7 +140,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.337</coefficient>
+                        <coefficient>1.496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.275</coefficient>
@@ -153,7 +155,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.287</coefficient>
+                        <coefficient>1.496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.154</coefficient>
@@ -290,7 +292,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.441</coefficient>
+                        <coefficient>1.496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.531</coefficient>
@@ -311,7 +313,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.388</coefficient>
+                        <coefficient>1.496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.400</coefficient>
@@ -332,7 +334,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.337</coefficient>
+                        <coefficient>1.496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.275</coefficient>
@@ -353,7 +355,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.287</coefficient>
+                        <coefficient>1.496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.154</coefficient>
@@ -792,6 +794,8 @@
       </region>
       <region name="Canada">
          <PrimaryFuelCO2Coef name="limestone">82.760</PrimaryFuelCO2Coef>
+         <supplysector delete="1" name="Cement"/>
+         <energy-final-demand delete="1" name="Cement"/>
          <supplysector name="cement">
             <output-unit>Gt</output-unit>
             <input-unit>EJ</input-unit>
@@ -897,7 +901,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.441</coefficient>
+                        <coefficient>1.496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.938</coefficient>
@@ -912,7 +916,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.388</coefficient>
+                        <coefficient>1.496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.830</coefficient>
@@ -927,7 +931,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.337</coefficient>
+                        <coefficient>1.496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.726</coefficient>
@@ -942,7 +946,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.287</coefficient>
+                        <coefficient>1.496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.625</coefficient>
@@ -1079,7 +1083,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.441</coefficient>
+                        <coefficient>1.496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.938</coefficient>
@@ -1100,7 +1104,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.388</coefficient>
+                        <coefficient>1.496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.830</coefficient>
@@ -1121,7 +1125,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.337</coefficient>
+                        <coefficient>1.496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.726</coefficient>
@@ -1142,7 +1146,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.287</coefficient>
+                        <coefficient>1.496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.625</coefficient>
@@ -1581,6 +1585,8 @@
       </region>
       <region name="Western Europe">
          <PrimaryFuelCO2Coef name="limestone">80.173</PrimaryFuelCO2Coef>
+         <supplysector delete="1" name="Cement"/>
+         <energy-final-demand delete="1" name="Cement"/>
          <supplysector name="cement">
             <output-unit>Gt</output-unit>
             <input-unit>EJ</input-unit>
@@ -1686,7 +1692,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.321</coefficient>
+                        <coefficient>1.371</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.428</coefficient>
@@ -1701,7 +1707,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.272</coefficient>
+                        <coefficient>1.371</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.395</coefficient>
@@ -1716,7 +1722,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.225</coefficient>
+                        <coefficient>1.371</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.361</coefficient>
@@ -1731,7 +1737,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.180</coefficient>
+                        <coefficient>1.371</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.329</coefficient>
@@ -1868,7 +1874,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.321</coefficient>
+                        <coefficient>1.371</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.428</coefficient>
@@ -1889,7 +1895,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.272</coefficient>
+                        <coefficient>1.371</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.395</coefficient>
@@ -1910,7 +1916,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.225</coefficient>
+                        <coefficient>1.371</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.361</coefficient>
@@ -1931,7 +1937,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.180</coefficient>
+                        <coefficient>1.371</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.329</coefficient>
@@ -2370,6 +2376,8 @@
       </region>
       <region name="Japan">
          <PrimaryFuelCO2Coef name="limestone">79.470</PrimaryFuelCO2Coef>
+         <supplysector delete="1" name="Cement"/>
+         <energy-final-demand delete="1" name="Cement"/>
          <supplysector name="cement">
             <output-unit>Gt</output-unit>
             <input-unit>EJ</input-unit>
@@ -2475,7 +2483,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.310</coefficient>
+                        <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.463</coefficient>
@@ -2490,7 +2498,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.262</coefficient>
+                        <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.463</coefficient>
@@ -2505,7 +2513,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.215</coefficient>
+                        <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.463</coefficient>
@@ -2520,7 +2528,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.170</coefficient>
+                        <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.463</coefficient>
@@ -2657,7 +2665,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.310</coefficient>
+                        <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.463</coefficient>
@@ -2678,7 +2686,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.262</coefficient>
+                        <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.463</coefficient>
@@ -2699,7 +2707,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.215</coefficient>
+                        <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.463</coefficient>
@@ -2720,7 +2728,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.170</coefficient>
+                        <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.463</coefficient>
@@ -3161,6 +3169,8 @@
       </region>
       <region name="Australia_NZ">
          <PrimaryFuelCO2Coef name="limestone">78.782</PrimaryFuelCO2Coef>
+         <supplysector delete="1" name="Cement"/>
+         <energy-final-demand delete="1" name="Cement"/>
          <supplysector name="cement">
             <output-unit>Gt</output-unit>
             <input-unit>EJ</input-unit>
@@ -3266,7 +3276,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.375</coefficient>
+                        <coefficient>1.428</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.824</coefficient>
@@ -3281,7 +3291,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.325</coefficient>
+                        <coefficient>1.428</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.720</coefficient>
@@ -3296,7 +3306,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.276</coefficient>
+                        <coefficient>1.428</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.620</coefficient>
@@ -3311,7 +3321,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.229</coefficient>
+                        <coefficient>1.428</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.523</coefficient>
@@ -3448,7 +3458,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.375</coefficient>
+                        <coefficient>1.428</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.824</coefficient>
@@ -3469,7 +3479,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.325</coefficient>
+                        <coefficient>1.428</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.720</coefficient>
@@ -3490,7 +3500,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.276</coefficient>
+                        <coefficient>1.428</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.620</coefficient>
@@ -3511,7 +3521,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.229</coefficient>
+                        <coefficient>1.428</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.523</coefficient>
@@ -3952,6 +3962,8 @@
       </region>
       <region name="Former Soviet Union">
          <PrimaryFuelCO2Coef name="limestone">81.699</PrimaryFuelCO2Coef>
+         <supplysector delete="1" name="Cement"/>
+         <energy-final-demand delete="1" name="Cement"/>
          <supplysector name="cement">
             <output-unit>Gt</output-unit>
             <input-unit>EJ</input-unit>
@@ -4057,7 +4069,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.310</coefficient>
+                        <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.748</coefficient>
@@ -4072,7 +4084,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.262</coefficient>
+                        <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.610</coefficient>
@@ -4087,7 +4099,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.215</coefficient>
+                        <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.477</coefficient>
@@ -4102,7 +4114,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.170</coefficient>
+                        <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.349</coefficient>
@@ -4239,7 +4251,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.310</coefficient>
+                        <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.748</coefficient>
@@ -4260,7 +4272,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.262</coefficient>
+                        <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.610</coefficient>
@@ -4281,7 +4293,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.215</coefficient>
+                        <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.477</coefficient>
@@ -4302,7 +4314,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.170</coefficient>
+                        <coefficient>1.360</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.349</coefficient>
@@ -4741,6 +4753,8 @@
       </region>
       <region name="China">
          <PrimaryFuelCO2Coef name="limestone">79.919</PrimaryFuelCO2Coef>
+         <supplysector delete="1" name="Cement"/>
+         <energy-final-demand delete="1" name="Cement"/>
          <supplysector name="cement">
             <output-unit>Gt</output-unit>
             <input-unit>EJ</input-unit>
@@ -4846,7 +4860,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.359</coefficient>
+                        <coefficient>1.411</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.681</coefficient>
@@ -4861,7 +4875,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.309</coefficient>
+                        <coefficient>1.411</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.582</coefficient>
@@ -4876,7 +4890,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.261</coefficient>
+                        <coefficient>1.411</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.487</coefficient>
@@ -4891,7 +4905,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.214</coefficient>
+                        <coefficient>1.411</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.395</coefficient>
@@ -5028,7 +5042,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.359</coefficient>
+                        <coefficient>1.411</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.681</coefficient>
@@ -5049,7 +5063,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.309</coefficient>
+                        <coefficient>1.411</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.582</coefficient>
@@ -5070,7 +5084,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.261</coefficient>
+                        <coefficient>1.411</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.487</coefficient>
@@ -5091,7 +5105,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.214</coefficient>
+                        <coefficient>1.411</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.395</coefficient>
@@ -5534,6 +5548,8 @@
       </region>
       <region name="Middle East">
          <PrimaryFuelCO2Coef name="limestone">80.199</PrimaryFuelCO2Coef>
+         <supplysector delete="1" name="Cement"/>
+         <energy-final-demand delete="1" name="Cement"/>
          <supplysector name="cement">
             <output-unit>Gt</output-unit>
             <input-unit>EJ</input-unit>
@@ -5639,7 +5655,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.490</coefficient>
+                        <coefficient>1.547</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.305</coefficient>
@@ -5654,7 +5670,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.435</coefficient>
+                        <coefficient>1.547</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.183</coefficient>
@@ -5669,7 +5685,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.383</coefficient>
+                        <coefficient>1.547</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.065</coefficient>
@@ -5684,7 +5700,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.332</coefficient>
+                        <coefficient>1.547</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.953</coefficient>
@@ -5821,7 +5837,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.490</coefficient>
+                        <coefficient>1.547</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.305</coefficient>
@@ -5842,7 +5858,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.435</coefficient>
+                        <coefficient>1.547</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.183</coefficient>
@@ -5863,7 +5879,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.383</coefficient>
+                        <coefficient>1.547</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.065</coefficient>
@@ -5884,7 +5900,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.332</coefficient>
+                        <coefficient>1.547</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.953</coefficient>
@@ -6325,6 +6341,8 @@
       </region>
       <region name="Africa">
          <PrimaryFuelCO2Coef name="limestone">80.555</PrimaryFuelCO2Coef>
+         <supplysector delete="1" name="Cement"/>
+         <energy-final-demand delete="1" name="Cement"/>
          <supplysector name="cement">
             <output-unit>Gt</output-unit>
             <input-unit>EJ</input-unit>
@@ -6430,7 +6448,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.429</coefficient>
+                        <coefficient>1.484</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.278</coefficient>
@@ -6445,7 +6463,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.376</coefficient>
+                        <coefficient>1.484</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.157</coefficient>
@@ -6460,7 +6478,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.326</coefficient>
+                        <coefficient>1.484</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.041</coefficient>
@@ -6475,7 +6493,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.277</coefficient>
+                        <coefficient>1.484</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.929</coefficient>
@@ -6612,7 +6630,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.429</coefficient>
+                        <coefficient>1.484</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.278</coefficient>
@@ -6633,7 +6651,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.376</coefficient>
+                        <coefficient>1.484</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.157</coefficient>
@@ -6654,7 +6672,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.326</coefficient>
+                        <coefficient>1.484</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.041</coefficient>
@@ -6675,7 +6693,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.277</coefficient>
+                        <coefficient>1.484</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.929</coefficient>
@@ -7114,6 +7132,8 @@
       </region>
       <region name="Latin America">
          <PrimaryFuelCO2Coef name="limestone">80.064</PrimaryFuelCO2Coef>
+         <supplysector delete="1" name="Cement"/>
+         <energy-final-demand delete="1" name="Cement"/>
          <supplysector name="cement">
             <output-unit>Gt</output-unit>
             <input-unit>EJ</input-unit>
@@ -7219,7 +7239,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.383</coefficient>
+                        <coefficient>1.436</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.428</coefficient>
@@ -7234,7 +7254,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.332</coefficient>
+                        <coefficient>1.436</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.394</coefficient>
@@ -7249,7 +7269,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.283</coefficient>
+                        <coefficient>1.436</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.361</coefficient>
@@ -7264,7 +7284,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.236</coefficient>
+                        <coefficient>1.436</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.328</coefficient>
@@ -7401,7 +7421,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.383</coefficient>
+                        <coefficient>1.436</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.428</coefficient>
@@ -7422,7 +7442,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.332</coefficient>
+                        <coefficient>1.436</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.394</coefficient>
@@ -7443,7 +7463,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.283</coefficient>
+                        <coefficient>1.436</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.361</coefficient>
@@ -7464,7 +7484,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.236</coefficient>
+                        <coefficient>1.436</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.328</coefficient>
@@ -7903,6 +7923,8 @@
       </region>
       <region name="Southeast Asia">
          <PrimaryFuelCO2Coef name="limestone">80.024</PrimaryFuelCO2Coef>
+         <supplysector delete="1" name="Cement"/>
+         <energy-final-demand delete="1" name="Cement"/>
          <supplysector name="cement">
             <output-unit>Gt</output-unit>
             <input-unit>EJ</input-unit>
@@ -8008,7 +8030,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.487</coefficient>
+                        <coefficient>1.544</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.550</coefficient>
@@ -8023,7 +8045,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.433</coefficient>
+                        <coefficient>1.544</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.419</coefficient>
@@ -8038,7 +8060,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.380</coefficient>
+                        <coefficient>1.544</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.293</coefficient>
@@ -8053,7 +8075,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.329</coefficient>
+                        <coefficient>1.544</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.172</coefficient>
@@ -8190,7 +8212,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.487</coefficient>
+                        <coefficient>1.544</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.550</coefficient>
@@ -8211,7 +8233,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.433</coefficient>
+                        <coefficient>1.544</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.419</coefficient>
@@ -8232,7 +8254,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.380</coefficient>
+                        <coefficient>1.544</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.293</coefficient>
@@ -8253,7 +8275,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.329</coefficient>
+                        <coefficient>1.544</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.172</coefficient>
@@ -8692,6 +8714,8 @@
       </region>
       <region name="Eastern Europe">
          <PrimaryFuelCO2Coef name="limestone">80.644</PrimaryFuelCO2Coef>
+         <supplysector delete="1" name="Cement"/>
+         <energy-final-demand delete="1" name="Cement"/>
          <supplysector name="cement">
             <output-unit>Gt</output-unit>
             <input-unit>EJ</input-unit>
@@ -8797,7 +8821,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.401</coefficient>
+                        <coefficient>1.455</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.319</coefficient>
@@ -8812,7 +8836,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.349</coefficient>
+                        <coefficient>1.455</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.197</coefficient>
@@ -8827,7 +8851,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.300</coefficient>
+                        <coefficient>1.455</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.079</coefficient>
@@ -8842,7 +8866,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.252</coefficient>
+                        <coefficient>1.455</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.966</coefficient>
@@ -8979,7 +9003,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.401</coefficient>
+                        <coefficient>1.455</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.319</coefficient>
@@ -9000,7 +9024,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.349</coefficient>
+                        <coefficient>1.455</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.197</coefficient>
@@ -9021,7 +9045,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.300</coefficient>
+                        <coefficient>1.455</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>3.079</coefficient>
@@ -9042,7 +9066,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.252</coefficient>
+                        <coefficient>1.455</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.966</coefficient>
@@ -9481,6 +9505,8 @@
       </region>
       <region name="Korea">
          <PrimaryFuelCO2Coef name="limestone">79.562</PrimaryFuelCO2Coef>
+         <supplysector delete="1" name="Cement"/>
+         <energy-final-demand delete="1" name="Cement"/>
          <supplysector name="cement">
             <output-unit>Gt</output-unit>
             <input-unit>EJ</input-unit>
@@ -9586,7 +9612,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.572</coefficient>
+                        <coefficient>1.632</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.963</coefficient>
@@ -9601,7 +9627,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.514</coefficient>
+                        <coefficient>1.632</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.854</coefficient>
@@ -9616,7 +9642,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.458</coefficient>
+                        <coefficient>1.632</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.749</coefficient>
@@ -9631,7 +9657,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.404</coefficient>
+                        <coefficient>1.632</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.647</coefficient>
@@ -9768,7 +9794,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.572</coefficient>
+                        <coefficient>1.632</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.963</coefficient>
@@ -9789,7 +9815,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.514</coefficient>
+                        <coefficient>1.632</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.854</coefficient>
@@ -9810,7 +9836,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.458</coefficient>
+                        <coefficient>1.632</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.749</coefficient>
@@ -9831,7 +9857,7 @@
                         <input-cost>5</input-cost>
                      </minicam-non-energy-input>
                      <minicam-energy-input name="limestone">
-                        <coefficient>1.404</coefficient>
+                        <coefficient>1.632</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat cement">
                         <coefficient>2.647</coefficient>
@@ -10272,6 +10298,8 @@
       </region>
       <region name="India">
          <PrimaryFuelCO2Coef name="limestone">80.499</PrimaryFuelCO2Coef>
+         <supplysector delete="1" name="Cement"/>
+         <energy-final-demand delete="1" name="Cement"/>
          <supplysector name="cement">
             <output-unit>Gt</output-unit>
             <input-unit>EJ</input-unit>

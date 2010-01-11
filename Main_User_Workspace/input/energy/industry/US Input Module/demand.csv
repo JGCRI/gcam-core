@@ -1,20 +1,20 @@
-Final demand attributes. Also adds final-energy-consumer tag,,,
-INPUT_TABLE,,,
-Variable ID,,,
-30,,,
-,,base-scaler,
-energy-final-demand,perCapitaBased,1990,2005
-chemicals,0,6.420678489,7.579866703
-food processing,1,1.046157105,0.902829198
-iron and steel,0,1.370376787,1.080197352
-other nonmetallic minerals,0,0.67688226,0.592292997
-other manufacturing,0,1.784468566,1.778069308
-aluminum and nonferrous metals,0,0.4567645,0.493411522
-pulp paper and wood,1,1.679435125,2.009898073
-agriculture,1,0.610728516,0.685462896
-construction,0,2.578372264,1.973350504
-mining,0,1.267538727,1.029390956
-
+Final demand attributes. Also adds final-energy-consumer tag,,,,,,
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,
+30,,,,,,
+,,base-scaler,,,,
+energy-final-demand,perCapitaBased,1990,2005,,,
+chemicals,0,6.400548454,7.546275716,,,
+food processing,1,1.038163333,0.889597816,,,
+iron and steel,0,1.362442028,1.066660029,,,
+other nonmetallic minerals,0,0.674035639,0.58804382,,,
+other manufacturing,0,1.757571079,1.731636015,,,
+aluminum and nonferrous metals,0,0.450093632,0.481792523,,,
+pulp paper and wood,1,1.664830732,1.985504507,,,
+agriculture,1,0.610728516,0.685462896,,,
+construction,0,2.575119522,1.97856109,,,
+mining,0,1.260875893,1.020695317,,,
+,,,,,,
 income elasticities,,,,,,
 INPUT_TABLE,,,,,,
 Variable ID,,,,,,
@@ -31,7 +31,7 @@ pulp paper and wood,0,0,0,0,0,0
 agriculture,0,0,0,0,0,0
 construction,0.3,0.3,0.3,0.3,0.3,0.3
 mining,0.2,0.2,0.2,0.2,0.2,0.2
-
+,,,,,,
 price elasticities,,,,,,
 INPUT_TABLE,,,,,,
 Variable ID,,,,,,

@@ -180,7 +180,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>1.4845</calibrated-value>
+                        <calibrated-value>1.4847</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -192,7 +192,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.3640</calibrated-value>
+                        <calibrated-value>0.3644</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -324,7 +324,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.4248</calibrated-value>
+                        <calibrated-value>0.4250</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -378,7 +378,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>5.7353</calibrated-value>
+                        <calibrated-value>5.7354</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -444,7 +444,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>0.5204</calibrated-value>
+                        <calibrated-value>0.5205</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -456,7 +456,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>1.2473</calibrated-value>
+                        <calibrated-value>1.2475</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -625,36 +625,36 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.8996</calibrated-value>
+                        <calibrated-value>0.9007</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.6201</calibrated-value>
+                        <calibrated-value>1.6215</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
                <technology name="gas">
                   <period year="1990">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>1.8687</calibrated-value>
+                        <calibrated-value>1.8731</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>2.9724</calibrated-value>
+                        <calibrated-value>2.9775</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
                <technology name="refined liquids">
                   <period year="1990">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>2.0578</calibrated-value>
+                        <calibrated-value>2.0709</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>2.5705</calibrated-value>
+                        <calibrated-value>2.5857</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -828,7 +828,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>3.2554</calibrated-value>
+                        <calibrated-value>3.2570</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -840,7 +840,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>6.2049</calibrated-value>
+                        <calibrated-value>6.2109</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -852,7 +852,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>1.5791</calibrated-value>
+                        <calibrated-value>1.5968</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -894,7 +894,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>4.1644</calibrated-value>
+                        <calibrated-value>4.1650</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -906,7 +906,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>4.7345</calibrated-value>
+                        <calibrated-value>4.7367</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -918,7 +918,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>2.4799</calibrated-value>
+                        <calibrated-value>2.4866</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>

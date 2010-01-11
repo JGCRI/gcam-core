@@ -25,6 +25,8 @@
 
 1005,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,@period/+{name}minicam-energy-input,{year=1990}period/../minicam-energy-input/+calibrated-value,{year=2005}period/../minicam-energy-input/+calibrated-value,scenario,scenario/world,world/{name=USA}region,@technology/period
 
+1006,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,@period/+{name}minicam-energy-input,{year=1990}period/../minicam-energy-input/+calibrated-value,{year=2005}period/../minicam-energy-input/+calibrated-value,{year=1990}period/../minicam-energy-input/+efficiency,{year=2005}period/../minicam-energy-input/+efficiency,scenario,scenario/world,world/{name=USA}region,@technology/period
+
 1010,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,{year=1990}period/../CalDataOutput/+calOutputValue,{year=2005}period/../CalDataOutput/+calOutputValue,scenario,scenario/world,world/{name=USA}region,@technology/period,period/CalDataOutput
 
 1015,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,@period/+{name}minicam-energy-input,{year=1990}period/../minicam-energy-input/+coefficient,{year=2005}period/../minicam-energy-input/+coefficient,{year=2020}period/../minicam-energy-input/+coefficient,{year=2035}period/../minicam-energy-input/+coefficient,{year=2050}period/../minicam-energy-input/+coefficient,{year=2065}period/../minicam-energy-input/+coefficient,{year=2080}period/../minicam-energy-input/+coefficient,{year=2095}period/../minicam-energy-input/+coefficient,scenario,scenario/world,world/{name=USA}region,@technology/period,@period/minicam-energy-input
