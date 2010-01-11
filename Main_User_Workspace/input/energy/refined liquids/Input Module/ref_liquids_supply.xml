@@ -748,12 +748,12 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.2</sharewt>
-               <sharewt year="2035">0.4</sharewt>
-               <sharewt year="2050">0.6</sharewt>
-               <sharewt year="2065">0.6</sharewt>
-               <sharewt year="2080">0.6</sharewt>
-               <sharewt year="2095">0.6</sharewt>
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0.1</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.2</sharewt>
+               <sharewt year="2080">0.2</sharewt>
+               <sharewt year="2095">0.2</sharewt>
                <logitexp year="1975">-6</logitexp>
                <logitexp year="1990">-6</logitexp>
                <logitexp year="2005">-6</logitexp>
@@ -1762,12 +1762,12 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.2</sharewt>
-               <sharewt year="2035">0.4</sharewt>
-               <sharewt year="2050">0.6</sharewt>
-               <sharewt year="2065">0.6</sharewt>
-               <sharewt year="2080">0.6</sharewt>
-               <sharewt year="2095">0.6</sharewt>
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0.1</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.2</sharewt>
+               <sharewt year="2080">0.2</sharewt>
+               <sharewt year="2095">0.2</sharewt>
                <logitexp year="1975">-6</logitexp>
                <logitexp year="1990">-6</logitexp>
                <logitexp year="2005">-6</logitexp>
@@ -2363,9 +2363,6 @@
             <market>global</market>
             <price year="1975">1.8398</price>
             <subresource name="unconventional oil">
-               <environCost fillout="1" year="1990">0.25</environCost>
-               <severanceTax fillout="1" year="1990">0.17</severanceTax>
-               <techChange fillout="1" year="1975">0</techChange>
                <grade name="grade 1">
                   <extractioncost>1.8</extractioncost>
                   <available>4397</available>
@@ -3192,12 +3189,12 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.2</sharewt>
-               <sharewt year="2035">0.4</sharewt>
-               <sharewt year="2050">0.6</sharewt>
-               <sharewt year="2065">0.6</sharewt>
-               <sharewt year="2080">0.6</sharewt>
-               <sharewt year="2095">0.6</sharewt>
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0.1</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.2</sharewt>
+               <sharewt year="2080">0.2</sharewt>
+               <sharewt year="2095">0.2</sharewt>
                <logitexp year="1975">-6</logitexp>
                <logitexp year="1990">-6</logitexp>
                <logitexp year="2005">-6</logitexp>
@@ -4206,12 +4203,12 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.2</sharewt>
-               <sharewt year="2035">0.4</sharewt>
-               <sharewt year="2050">0.6</sharewt>
-               <sharewt year="2065">0.6</sharewt>
-               <sharewt year="2080">0.6</sharewt>
-               <sharewt year="2095">0.6</sharewt>
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0.1</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.2</sharewt>
+               <sharewt year="2080">0.2</sharewt>
+               <sharewt year="2095">0.2</sharewt>
                <logitexp year="1975">-6</logitexp>
                <logitexp year="1990">-6</logitexp>
                <logitexp year="2005">-6</logitexp>
@@ -4807,9 +4804,6 @@
             <market>global</market>
             <price year="1975">1.8398</price>
             <subresource name="unconventional oil">
-               <environCost fillout="1" year="1990">0.25</environCost>
-               <severanceTax fillout="1" year="1990">0.17</severanceTax>
-               <techChange fillout="1" year="1975">0</techChange>
                <grade name="grade 1">
                   <extractioncost>1.8</extractioncost>
                   <available>803</available>
@@ -5636,12 +5630,12 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.2</sharewt>
-               <sharewt year="2035">0.4</sharewt>
-               <sharewt year="2050">0.6</sharewt>
-               <sharewt year="2065">0.6</sharewt>
-               <sharewt year="2080">0.6</sharewt>
-               <sharewt year="2095">0.6</sharewt>
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0.1</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.2</sharewt>
+               <sharewt year="2080">0.2</sharewt>
+               <sharewt year="2095">0.2</sharewt>
                <logitexp year="1975">-6</logitexp>
                <logitexp year="1990">-6</logitexp>
                <logitexp year="2005">-6</logitexp>
@@ -6650,12 +6644,12 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.2</sharewt>
-               <sharewt year="2035">0.4</sharewt>
-               <sharewt year="2050">0.6</sharewt>
-               <sharewt year="2065">0.6</sharewt>
-               <sharewt year="2080">0.6</sharewt>
-               <sharewt year="2095">0.6</sharewt>
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0.1</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.2</sharewt>
+               <sharewt year="2080">0.2</sharewt>
+               <sharewt year="2095">0.2</sharewt>
                <logitexp year="1975">-6</logitexp>
                <logitexp year="1990">-6</logitexp>
                <logitexp year="2005">-6</logitexp>
@@ -7251,9 +7245,6 @@
             <market>global</market>
             <price year="1975">1.8398</price>
             <subresource name="unconventional oil">
-               <environCost fillout="1" year="1990">0.25</environCost>
-               <severanceTax fillout="1" year="1990">0.17</severanceTax>
-               <techChange fillout="1" year="1975">0</techChange>
                <grade name="grade 1">
                   <extractioncost>1.8</extractioncost>
                   <available>1204</available>
@@ -8080,12 +8071,12 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.2</sharewt>
-               <sharewt year="2035">0.4</sharewt>
-               <sharewt year="2050">0.6</sharewt>
-               <sharewt year="2065">0.6</sharewt>
-               <sharewt year="2080">0.6</sharewt>
-               <sharewt year="2095">0.6</sharewt>
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0.1</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.2</sharewt>
+               <sharewt year="2080">0.2</sharewt>
+               <sharewt year="2095">0.2</sharewt>
                <logitexp year="1975">-6</logitexp>
                <logitexp year="1990">-6</logitexp>
                <logitexp year="2005">-6</logitexp>
@@ -9094,12 +9085,12 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.2</sharewt>
-               <sharewt year="2035">0.4</sharewt>
-               <sharewt year="2050">0.6</sharewt>
-               <sharewt year="2065">0.6</sharewt>
-               <sharewt year="2080">0.6</sharewt>
-               <sharewt year="2095">0.6</sharewt>
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0.1</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.2</sharewt>
+               <sharewt year="2080">0.2</sharewt>
+               <sharewt year="2095">0.2</sharewt>
                <logitexp year="1975">-6</logitexp>
                <logitexp year="1990">-6</logitexp>
                <logitexp year="2005">-6</logitexp>
@@ -9695,9 +9686,6 @@
             <market>global</market>
             <price year="1975">1.8398</price>
             <subresource name="unconventional oil">
-               <environCost fillout="1" year="1990">0.25</environCost>
-               <severanceTax fillout="1" year="1990">0.17</severanceTax>
-               <techChange fillout="1" year="1975">0</techChange>
                <grade name="grade 1">
                   <extractioncost>1.8</extractioncost>
                   <available>146</available>
@@ -10524,12 +10512,12 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.2</sharewt>
-               <sharewt year="2035">0.4</sharewt>
-               <sharewt year="2050">0.6</sharewt>
-               <sharewt year="2065">0.6</sharewt>
-               <sharewt year="2080">0.6</sharewt>
-               <sharewt year="2095">0.6</sharewt>
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0.1</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.2</sharewt>
+               <sharewt year="2080">0.2</sharewt>
+               <sharewt year="2095">0.2</sharewt>
                <logitexp year="1975">-6</logitexp>
                <logitexp year="1990">-6</logitexp>
                <logitexp year="2005">-6</logitexp>
@@ -11538,12 +11526,12 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.2</sharewt>
-               <sharewt year="2035">0.4</sharewt>
-               <sharewt year="2050">0.6</sharewt>
-               <sharewt year="2065">0.6</sharewt>
-               <sharewt year="2080">0.6</sharewt>
-               <sharewt year="2095">0.6</sharewt>
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0.1</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.2</sharewt>
+               <sharewt year="2080">0.2</sharewt>
+               <sharewt year="2095">0.2</sharewt>
                <logitexp year="1975">-6</logitexp>
                <logitexp year="1990">-6</logitexp>
                <logitexp year="2005">-6</logitexp>
@@ -12139,9 +12127,6 @@
             <market>global</market>
             <price year="1975">1.8398</price>
             <subresource name="unconventional oil">
-               <environCost fillout="1" year="1990">0.25</environCost>
-               <severanceTax fillout="1" year="1990">0.17</severanceTax>
-               <techChange fillout="1" year="1975">0</techChange>
                <grade name="grade 1">
                   <extractioncost>1.8</extractioncost>
                   <available>1320</available>
@@ -12968,12 +12953,12 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.2</sharewt>
-               <sharewt year="2035">0.4</sharewt>
-               <sharewt year="2050">0.6</sharewt>
-               <sharewt year="2065">0.6</sharewt>
-               <sharewt year="2080">0.6</sharewt>
-               <sharewt year="2095">0.6</sharewt>
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0.1</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.2</sharewt>
+               <sharewt year="2080">0.2</sharewt>
+               <sharewt year="2095">0.2</sharewt>
                <logitexp year="1975">-6</logitexp>
                <logitexp year="1990">-6</logitexp>
                <logitexp year="2005">-6</logitexp>
@@ -13982,12 +13967,12 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.2</sharewt>
-               <sharewt year="2035">0.4</sharewt>
-               <sharewt year="2050">0.6</sharewt>
-               <sharewt year="2065">0.6</sharewt>
-               <sharewt year="2080">0.6</sharewt>
-               <sharewt year="2095">0.6</sharewt>
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0.1</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.2</sharewt>
+               <sharewt year="2080">0.2</sharewt>
+               <sharewt year="2095">0.2</sharewt>
                <logitexp year="1975">-6</logitexp>
                <logitexp year="1990">-6</logitexp>
                <logitexp year="2005">-6</logitexp>
@@ -14583,9 +14568,6 @@
             <market>global</market>
             <price year="1975">1.8398</price>
             <subresource name="unconventional oil">
-               <environCost fillout="1" year="1990">0.25</environCost>
-               <severanceTax fillout="1" year="1990">0.17</severanceTax>
-               <techChange fillout="1" year="1975">0</techChange>
                <grade name="grade 1">
                   <extractioncost>1.8</extractioncost>
                   <available>3874</available>
@@ -15412,12 +15394,12 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.2</sharewt>
-               <sharewt year="2035">0.4</sharewt>
-               <sharewt year="2050">0.6</sharewt>
-               <sharewt year="2065">0.6</sharewt>
-               <sharewt year="2080">0.6</sharewt>
-               <sharewt year="2095">0.6</sharewt>
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0.1</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.2</sharewt>
+               <sharewt year="2080">0.2</sharewt>
+               <sharewt year="2095">0.2</sharewt>
                <logitexp year="1975">-6</logitexp>
                <logitexp year="1990">-6</logitexp>
                <logitexp year="2005">-6</logitexp>
@@ -16426,12 +16408,12 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.2</sharewt>
-               <sharewt year="2035">0.4</sharewt>
-               <sharewt year="2050">0.6</sharewt>
-               <sharewt year="2065">0.6</sharewt>
-               <sharewt year="2080">0.6</sharewt>
-               <sharewt year="2095">0.6</sharewt>
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0.1</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.2</sharewt>
+               <sharewt year="2080">0.2</sharewt>
+               <sharewt year="2095">0.2</sharewt>
                <logitexp year="1975">-6</logitexp>
                <logitexp year="1990">-6</logitexp>
                <logitexp year="2005">-6</logitexp>
@@ -17027,9 +17009,6 @@
             <market>global</market>
             <price year="1975">1.8398</price>
             <subresource name="unconventional oil">
-               <environCost fillout="1" year="1990">0.25</environCost>
-               <severanceTax fillout="1" year="1990">0.17</severanceTax>
-               <techChange fillout="1" year="1975">0</techChange>
                <grade name="grade 1">
                   <extractioncost>1.8</extractioncost>
                   <available>2012</available>
@@ -17856,12 +17835,12 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.2</sharewt>
-               <sharewt year="2035">0.4</sharewt>
-               <sharewt year="2050">0.6</sharewt>
-               <sharewt year="2065">0.6</sharewt>
-               <sharewt year="2080">0.6</sharewt>
-               <sharewt year="2095">0.6</sharewt>
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0.1</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.2</sharewt>
+               <sharewt year="2080">0.2</sharewt>
+               <sharewt year="2095">0.2</sharewt>
                <logitexp year="1975">-6</logitexp>
                <logitexp year="1990">-6</logitexp>
                <logitexp year="2005">-6</logitexp>
@@ -18870,12 +18849,12 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.2</sharewt>
-               <sharewt year="2035">0.4</sharewt>
-               <sharewt year="2050">0.6</sharewt>
-               <sharewt year="2065">0.6</sharewt>
-               <sharewt year="2080">0.6</sharewt>
-               <sharewt year="2095">0.6</sharewt>
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0.1</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.2</sharewt>
+               <sharewt year="2080">0.2</sharewt>
+               <sharewt year="2095">0.2</sharewt>
                <logitexp year="1975">-6</logitexp>
                <logitexp year="1990">-6</logitexp>
                <logitexp year="2005">-6</logitexp>
@@ -19471,9 +19450,6 @@
             <market>global</market>
             <price year="1975">1.8398</price>
             <subresource name="unconventional oil">
-               <environCost fillout="1" year="1990">0.25</environCost>
-               <severanceTax fillout="1" year="1990">0.17</severanceTax>
-               <techChange fillout="1" year="1975">0</techChange>
                <grade name="grade 1">
                   <extractioncost>1.8</extractioncost>
                   <available>503</available>
@@ -20300,12 +20276,12 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.2</sharewt>
-               <sharewt year="2035">0.4</sharewt>
-               <sharewt year="2050">0.6</sharewt>
-               <sharewt year="2065">0.6</sharewt>
-               <sharewt year="2080">0.6</sharewt>
-               <sharewt year="2095">0.6</sharewt>
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0.1</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.2</sharewt>
+               <sharewt year="2080">0.2</sharewt>
+               <sharewt year="2095">0.2</sharewt>
                <logitexp year="1975">-6</logitexp>
                <logitexp year="1990">-6</logitexp>
                <logitexp year="2005">-6</logitexp>
@@ -21314,12 +21290,12 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.2</sharewt>
-               <sharewt year="2035">0.4</sharewt>
-               <sharewt year="2050">0.6</sharewt>
-               <sharewt year="2065">0.6</sharewt>
-               <sharewt year="2080">0.6</sharewt>
-               <sharewt year="2095">0.6</sharewt>
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0.1</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.2</sharewt>
+               <sharewt year="2080">0.2</sharewt>
+               <sharewt year="2095">0.2</sharewt>
                <logitexp year="1975">-6</logitexp>
                <logitexp year="1990">-6</logitexp>
                <logitexp year="2005">-6</logitexp>
@@ -21915,9 +21891,6 @@
             <market>global</market>
             <price year="1975">1.8398</price>
             <subresource name="unconventional oil">
-               <environCost fillout="1" year="1990">0.25</environCost>
-               <severanceTax fillout="1" year="1990">0.17</severanceTax>
-               <techChange fillout="1" year="1975">0</techChange>
                <grade name="grade 1">
                   <extractioncost>1.8</extractioncost>
                   <available>6009</available>
@@ -22744,12 +22717,12 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.2</sharewt>
-               <sharewt year="2035">0.4</sharewt>
-               <sharewt year="2050">0.6</sharewt>
-               <sharewt year="2065">0.6</sharewt>
-               <sharewt year="2080">0.6</sharewt>
-               <sharewt year="2095">0.6</sharewt>
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0.1</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.2</sharewt>
+               <sharewt year="2080">0.2</sharewt>
+               <sharewt year="2095">0.2</sharewt>
                <logitexp year="1975">-6</logitexp>
                <logitexp year="1990">-6</logitexp>
                <logitexp year="2005">-6</logitexp>
@@ -23758,12 +23731,12 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.2</sharewt>
-               <sharewt year="2035">0.4</sharewt>
-               <sharewt year="2050">0.6</sharewt>
-               <sharewt year="2065">0.6</sharewt>
-               <sharewt year="2080">0.6</sharewt>
-               <sharewt year="2095">0.6</sharewt>
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0.1</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.2</sharewt>
+               <sharewt year="2080">0.2</sharewt>
+               <sharewt year="2095">0.2</sharewt>
                <logitexp year="1975">-6</logitexp>
                <logitexp year="1990">-6</logitexp>
                <logitexp year="2005">-6</logitexp>
@@ -24359,9 +24332,6 @@
             <market>global</market>
             <price year="1975">1.8398</price>
             <subresource name="unconventional oil">
-               <environCost fillout="1" year="1990">0.25</environCost>
-               <severanceTax fillout="1" year="1990">0.17</severanceTax>
-               <techChange fillout="1" year="1975">0</techChange>
                <grade name="grade 1">
                   <extractioncost>1.8</extractioncost>
                   <available>3004</available>
@@ -25188,12 +25158,12 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.2</sharewt>
-               <sharewt year="2035">0.4</sharewt>
-               <sharewt year="2050">0.6</sharewt>
-               <sharewt year="2065">0.6</sharewt>
-               <sharewt year="2080">0.6</sharewt>
-               <sharewt year="2095">0.6</sharewt>
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0.1</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.2</sharewt>
+               <sharewt year="2080">0.2</sharewt>
+               <sharewt year="2095">0.2</sharewt>
                <logitexp year="1975">-6</logitexp>
                <logitexp year="1990">-6</logitexp>
                <logitexp year="2005">-6</logitexp>
@@ -26202,12 +26172,12 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.2</sharewt>
-               <sharewt year="2035">0.4</sharewt>
-               <sharewt year="2050">0.6</sharewt>
-               <sharewt year="2065">0.6</sharewt>
-               <sharewt year="2080">0.6</sharewt>
-               <sharewt year="2095">0.6</sharewt>
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0.1</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.2</sharewt>
+               <sharewt year="2080">0.2</sharewt>
+               <sharewt year="2095">0.2</sharewt>
                <logitexp year="1975">-6</logitexp>
                <logitexp year="1990">-6</logitexp>
                <logitexp year="2005">-6</logitexp>
@@ -26803,9 +26773,6 @@
             <market>global</market>
             <price year="1975">1.8398</price>
             <subresource name="unconventional oil">
-               <environCost fillout="1" year="1990">0.25</environCost>
-               <severanceTax fillout="1" year="1990">0.17</severanceTax>
-               <techChange fillout="1" year="1975">0</techChange>
                <grade name="grade 1">
                   <extractioncost>1.8</extractioncost>
                   <available>1509</available>
@@ -27632,12 +27599,12 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.2</sharewt>
-               <sharewt year="2035">0.4</sharewt>
-               <sharewt year="2050">0.6</sharewt>
-               <sharewt year="2065">0.6</sharewt>
-               <sharewt year="2080">0.6</sharewt>
-               <sharewt year="2095">0.6</sharewt>
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0.1</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.2</sharewt>
+               <sharewt year="2080">0.2</sharewt>
+               <sharewt year="2095">0.2</sharewt>
                <logitexp year="1975">-6</logitexp>
                <logitexp year="1990">-6</logitexp>
                <logitexp year="2005">-6</logitexp>
@@ -28646,12 +28613,12 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.2</sharewt>
-               <sharewt year="2035">0.4</sharewt>
-               <sharewt year="2050">0.6</sharewt>
-               <sharewt year="2065">0.6</sharewt>
-               <sharewt year="2080">0.6</sharewt>
-               <sharewt year="2095">0.6</sharewt>
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0.1</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.2</sharewt>
+               <sharewt year="2080">0.2</sharewt>
+               <sharewt year="2095">0.2</sharewt>
                <logitexp year="1975">-6</logitexp>
                <logitexp year="1990">-6</logitexp>
                <logitexp year="2005">-6</logitexp>
@@ -29247,9 +29214,6 @@
             <market>global</market>
             <price year="1975">1.8398</price>
             <subresource name="unconventional oil">
-               <environCost fillout="1" year="1990">0.25</environCost>
-               <severanceTax fillout="1" year="1990">0.17</severanceTax>
-               <techChange fillout="1" year="1975">0</techChange>
                <grade name="grade 1">
                   <extractioncost>1.8</extractioncost>
                   <available>151</available>
@@ -30076,12 +30040,12 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.2</sharewt>
-               <sharewt year="2035">0.4</sharewt>
-               <sharewt year="2050">0.6</sharewt>
-               <sharewt year="2065">0.6</sharewt>
-               <sharewt year="2080">0.6</sharewt>
-               <sharewt year="2095">0.6</sharewt>
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0.1</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.2</sharewt>
+               <sharewt year="2080">0.2</sharewt>
+               <sharewt year="2095">0.2</sharewt>
                <logitexp year="1975">-6</logitexp>
                <logitexp year="1990">-6</logitexp>
                <logitexp year="2005">-6</logitexp>
@@ -31090,12 +31054,12 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.2</sharewt>
-               <sharewt year="2035">0.4</sharewt>
-               <sharewt year="2050">0.6</sharewt>
-               <sharewt year="2065">0.6</sharewt>
-               <sharewt year="2080">0.6</sharewt>
-               <sharewt year="2095">0.6</sharewt>
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0.1</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.2</sharewt>
+               <sharewt year="2080">0.2</sharewt>
+               <sharewt year="2095">0.2</sharewt>
                <logitexp year="1975">-6</logitexp>
                <logitexp year="1990">-6</logitexp>
                <logitexp year="2005">-6</logitexp>
@@ -31691,9 +31655,6 @@
             <market>global</market>
             <price year="1975">1.8398</price>
             <subresource name="unconventional oil">
-               <environCost fillout="1" year="1990">0.25</environCost>
-               <severanceTax fillout="1" year="1990">0.17</severanceTax>
-               <techChange fillout="1" year="1975">0</techChange>
                <grade name="grade 1">
                   <extractioncost>1.8</extractioncost>
                </grade>
@@ -32516,12 +32477,12 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.2</sharewt>
-               <sharewt year="2035">0.4</sharewt>
-               <sharewt year="2050">0.6</sharewt>
-               <sharewt year="2065">0.6</sharewt>
-               <sharewt year="2080">0.6</sharewt>
-               <sharewt year="2095">0.6</sharewt>
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0.1</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.2</sharewt>
+               <sharewt year="2080">0.2</sharewt>
+               <sharewt year="2095">0.2</sharewt>
                <logitexp year="1975">-6</logitexp>
                <logitexp year="1990">-6</logitexp>
                <logitexp year="2005">-6</logitexp>
@@ -33530,12 +33491,12 @@
                <sharewt year="1975">0</sharewt>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.2</sharewt>
-               <sharewt year="2035">0.4</sharewt>
-               <sharewt year="2050">0.6</sharewt>
-               <sharewt year="2065">0.6</sharewt>
-               <sharewt year="2080">0.6</sharewt>
-               <sharewt year="2095">0.6</sharewt>
+               <sharewt year="2020">0</sharewt>
+               <sharewt year="2035">0.1</sharewt>
+               <sharewt year="2050">0.1</sharewt>
+               <sharewt year="2065">0.2</sharewt>
+               <sharewt year="2080">0.2</sharewt>
+               <sharewt year="2095">0.2</sharewt>
                <logitexp year="1975">-6</logitexp>
                <logitexp year="1990">-6</logitexp>
                <logitexp year="2005">-6</logitexp>
@@ -34131,9 +34092,6 @@
             <market>global</market>
             <price year="1975">1.8398</price>
             <subresource name="unconventional oil">
-               <environCost fillout="1" year="1990">0.25</environCost>
-               <severanceTax fillout="1" year="1990">0.17</severanceTax>
-               <techChange fillout="1" year="1975">0</techChange>
                <grade name="grade 1">
                   <extractioncost>1.8</extractioncost>
                   <available>1509</available>
