@@ -58,7 +58,6 @@
           <Value name="tradbio">../input/energy/tradbio/tradbio.xml</Value>
           <Value name="h2">../input/energy/hydrogen/h2_input_ref_bioccs.xml</Value>
           <Value name="h2">../input/energy/hydrogen/h2_demand.xml</Value>
-          <Value name="oilgasp">../input/energy/fossil/oil_gas_price_adj.xml</Value>
           <Value name="gas">../input/energy/fossil/gas_processing_input.xml</Value>
           <Value name="cement">../input/energy/cement/delete_cement.xml</Value>		
           <Value name="cement">../input/energy/cement/cement_input_ref.xml</Value>
