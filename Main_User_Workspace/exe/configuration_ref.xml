@@ -59,7 +59,6 @@
           <Value name="h2">../input/energy/hydrogen/h2_input_ref_bioccs.xml</Value>
           <Value name="h2">../input/energy/hydrogen/h2_demand.xml</Value>
           <Value name="gas">../input/energy/fossil/gas_processing_input.xml</Value>
-          <Value name="cement">../input/energy/cement/delete_cement.xml</Value>		
           <Value name="cement">../input/energy/cement/cement_input_ref.xml</Value>
           <Value name="cement">../input/energy/cement/ind_cement_adj_minicam.xml</Value>
           <Value name="bld">../input/energy/buildings/global_bld_input_ref.xml</Value>
