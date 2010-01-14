@@ -412,6 +412,7 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 
 				   ret.add(tn.getFirstChild().getFirstChild().getNodeValue());
 				   */
+				/*
 				XmlValue delValue = currNode.getFirstChild();
 				XmlValue nBefore = delValue.getNextSibling();
 				delValue.delete();
@@ -420,6 +421,8 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 				delValue.delete();
 				axisValue.setValue(nBefore.getNodeValue());
 				nBefore.delete();
+				*/
+				axisValue.setValue(currNode.getFirstChild().getFirstChild().getNodeValue());
 			}
 
 			//ret.add(XMLDB.getAttr(n, "name"));
@@ -443,6 +446,7 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 			// check the locks after this line, It might leave some
 			//ret.add(0, n.getFirstChild().getFirstChil!().getNodeValue());
 			//ret.add(0, n.getFirstChild().getNodeValue());
+			/*
 			XmlValue delValue = currNode.getFirstChild();
 			XmlValue nBefore = delValue.getNextSibling();
 			delValue.delete();
@@ -451,6 +455,8 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 			delValue.delete();
 			axisValue.setKey(nBefore.getNodeValue());
 			nBefore.delete();
+			*/
+			axisValue.setKey(currNode.getFirstChild().getFirstChild().getNodeValue());
 		}
 
 		/*

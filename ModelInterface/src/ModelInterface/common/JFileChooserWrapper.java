@@ -50,7 +50,7 @@ public class JFileChooserWrapper implements FileChooser {
 		toWrap.setFileFilter(fileFilter);
 
 		// TODO: find a better way as this is a hack
-		if(fileFilter.getDescription().startsWith("Directory")) {
+		if(fileFilter != null && fileFilter.getDescription().startsWith("Directory")) {
 			toWrap.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		} else {
 			toWrap.setFileSelectionMode(JFileChooser.FILES_ONLY);

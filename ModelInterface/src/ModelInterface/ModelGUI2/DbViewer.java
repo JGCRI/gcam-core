@@ -1185,7 +1185,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		final JDialog scenarioDialog = new JDialog(parentFrame, "Select Scenarios to Run", true);
 		JPanel listPane = new JPanel();
 		JPanel buttonPane = new JPanel();
-		final JCheckBox singleSheetCheckBox = new JCheckBox("Place all results in different sheet",
+		final JCheckBox singleSheetCheckBox = new JCheckBox("Place all results in different sheets",
 				Boolean.parseBoolean(prop.getProperty(singleSheetCheckBoxPropName, "false")));
 		final JCheckBox drawPicsCheckBox = new JCheckBox("Include charts with results",
 				Boolean.parseBoolean(prop.getProperty(includeChartsPropName, "true")));
