@@ -168,6 +168,10 @@ public class BatchWindow extends Window {
 						wb = new HSSFWorkbook(new FileInputStream(excelFile));
 					} catch (IOException ioe) {
 						ioe.printStackTrace();
+						JOptionPane.showMessageDialog(parentFrame,
+								"There was an error while trying to open "+excelFile,
+								"Batch Query Error", JOptionPane.ERROR_MESSAGE);
+						progressDialog.dispose();
 						return;
 					}
 				}
@@ -185,6 +189,11 @@ public class BatchWindow extends Window {
 					}
 					for(int snapshotIndex = 0; snapshotIndex < numQueries; ++snapshotIndex) {
 						tempNode = res.snapshotItem(snapshotIndex);
+						if(tempNode.getNodeType() == Node.COMMENT_NODE) {
+							// skip comments
+							SwingUtilities.invokeLater(increaseProgress);
+							continue;
+						}
 						tempRegions.clear();
 						NodeList nl = tempNode.getChildNodes();
 						boolean isGlobal = false;
@@ -213,22 +222,22 @@ public class BatchWindow extends Window {
 								}
 							}
 						}
-						if(qgTemp == null) {
-							JOptionPane.showMessageDialog(parentFrame,
-									"There was an error while trying to create query." +
-									"<html><br></html>" + "Check xml code.",
-									"Batch Query Error", JOptionPane.ERROR_MESSAGE);
-							
-							++numErrors;
-							continue;
-						}
+						if(isInterrupted())
+							return;
+
 						if(singleSheetCheckBox.isSelected()) {
 							sheet = wb.createSheet("Sheet"+String.valueOf(wb.getNumberOfSheets()+1));
 							drawingPat = drawPicsCheckBox.isSelected() ? sheet.createDrawingPatriarch() : null;
 						}
 
-						if(isInterrupted())
-							return;
+						if(qgTemp == null || !qgTemp.isValid()) {
+							HSSFRow row = sheet.createRow(sheet.getLastRowNum());
+							row.createCell((short)0).setCellValue("Error: could not find a valid query to run.");
+							++numErrors;
+							SwingUtilities.invokeLater(increaseProgress);
+							continue;
+						}
+
 
 						try {
 							if(tempRegions.size() > 0) {
@@ -259,11 +268,12 @@ public class BatchWindow extends Window {
 							}
 						} catch(Exception e) {
 							e.printStackTrace();
-							HSSFRow row = sheet.createRow(sheet.getLastRowNum()+1);
-							row.createCell((short)0).setCellValue("Error: "+e.getMessage());
+							HSSFRow row = sheet.createRow(sheet.getLastRowNum());
+							row.createCell((short)0).setCellValue(qgTemp+": Error: "+e.getMessage());
 							++numErrors;
 						} finally {
 							SwingUtilities.invokeLater(increaseProgress);
+							qgTemp = null;
 						}
 					}
 
