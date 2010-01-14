@@ -2,6 +2,8 @@ package ModelInterface.ModelGUI2;
 
 import java.awt.Dimension;
 import java.awt.image.BufferedImage;
+import java.awt.event.ComponentListener;
+import java.awt.event.ComponentEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -106,7 +108,6 @@ public class QueryResultsPanel extends JPanel {
 			}
 		};
 		runThread.start();
-		System.gc();
 	}
 
 	//terminate the query process that is running
@@ -165,7 +166,9 @@ public class QueryResultsPanel extends JPanel {
 		jTable.getColumnModel().getColumn(0).setCellRenderer(((MultiTableModel)bt).getCellRenderer(0,0));
 		jTable.getColumnModel().getColumn(0).setCellEditor(((MultiTableModel)bt).getCellEditor(0,0));
 		((InterfaceMain)parentFrame).fireProperty("Query", null, bt);
-		return new JScrollPane(jTable);
+		JScrollPane tableScrollPane = new JScrollPane(jTable);
+		tableScrollPane.getViewport().setBackground(getBackground());
+		return tableScrollPane;
 	}
 
 	/**
@@ -203,7 +206,7 @@ public class QueryResultsPanel extends JPanel {
 			}
 			j++;
 		}
-		JLabel labelChart = new JLabel();
+		final JLabel labelChart = new JLabel();
 		try {
 			JFreeChart chart = bt.createChart(0,0);
 			Dimension chartDim = bt.getChartDimensions(chart);
@@ -220,12 +223,45 @@ public class QueryResultsPanel extends JPanel {
 			e.printStackTrace();
 			labelChart.setText("Cannot Create Chart");
 		}
-		JSplitPane sp = new JSplitPane();
-		sp.setLeftComponent(new JScrollPane(jTable));
-		sp.setRightComponent(labelChart);
-		sp.setDividerLocation(parentFrame.getWidth()-350-15);
+		final JSplitPane sp = new JSplitPane();
+		final JScrollPane tableScrollPane = new JScrollPane(jTable);
+		sp.setLeftComponent(tableScrollPane);
+		final JScrollPane chartScrollPane = new JScrollPane(labelChart);
+		chartScrollPane.getViewport().setBackground(labelChart.getBackground());
+		sp.setRightComponent(chartScrollPane);
+		sp.addComponentListener(new ComponentListener() {
+			public void componentResized(ComponentEvent e) {
+				// We want the divider to be as far right as possible without
+				// cutting off any of the chart however we won't know sizes until
+				// the layout has completed so we wait for that resize to ocur, note
+				// I am not sure where the extra -2 comes from but is needed
+				sp.setDividerLocation(sp.getWidth() - (int)chartScrollPane.getPreferredSize().getWidth() 
+					- (int)chartScrollPane.getVerticalScrollBar().getSize().getWidth()
+					- sp.getDividerSize() - 2);
+				// we only set the divider location the first time so we can go ahead and
+				// remove ourselves from listining to future events
+				sp.removeComponentListener(this);
+			}
+			public void componentHidden(ComponentEvent e) {
+				// do not care about this event
+			}
+			public void componentMoved(ComponentEvent e) {
+				// do not care about this event
+			}
+			public void componentShown(ComponentEvent e) {
+				// do not care about this event
+			}
+		});
+
+		// This is not the corrent location however we may want to go ahead and do it
+		// since the split pane will be showing before we can set the corrent divider location
+		// and it is pretty evedent that the resize is going on.  So if we do the following
+		// maybe it won't be as evident.
+		int chartWidth = (int)labelChart.getMinimumSize().getWidth();
+		sp.setDividerLocation(parentFrame.getWidth()-chartWidth-sp.getDividerSize()-2);
+
 		((InterfaceMain)parentFrame).fireProperty("Query", null, bt);
-		return new JScrollPane(sp);
+		return sp;
 	}
 
 }

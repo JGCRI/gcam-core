@@ -68,7 +68,7 @@ public class MultiTableModel extends BaseTableModel{
 			editListeners.add(cE);
 		}
 		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int col) {
-			return (JScrollPane)value;
+			return (JComponent)value;
 		}
 		private void fireEditingStopped() {
 			ChangeEvent ce = new ChangeEvent(this);
@@ -95,11 +95,11 @@ public class MultiTableModel extends BaseTableModel{
 				comp.setBackground(new Color(240,214,19));
 				return comp;
 			} else {
-				if(table.getRowHeight(row) != (int)((JScrollPane)value).getPreferredSize().getHeight()+10) {
-					table.setRowHeight(row, (int)((JScrollPane)value).getPreferredSize().getHeight() +10);
+				JComponent compValue = (JComponent)value;
+				if(table.getRowHeight(row) != (int)compValue.getPreferredSize().getHeight()+30) {
+					table.setRowHeight(row, (int)compValue.getPreferredSize().getHeight() +30);
 				}
-				return (JScrollPane)value;
-				//return (JPanel)value;
+				return compValue;
 			}
 		}
 	}
@@ -286,12 +286,11 @@ public class MultiTableModel extends BaseTableModel{
 			CopyPaste copyPaste = new CopyPaste( jTable );
 	  		JScrollPane tV = new JScrollPane(jTable, ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER,
 					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-			JScrollPane tableView = tV;
+			JComponent tableView = tV;
 			if(me.getValue() instanceof Double || me.getValue() instanceof String) {
-				JPanel tpanel = new JPanel();
-				JSplitPane sp = new JSplitPane();
+				final JSplitPane sp = new JSplitPane();
 
-				JLabel labelChart = new JLabel();
+				final JLabel labelChart = new JLabel();
 				try {
 					JFreeChart chart = tM.createChart(0,0);
 					Dimension chartDim = tM.getChartDimensions(chart);
@@ -299,15 +298,26 @@ public class MultiTableModel extends BaseTableModel{
 							(int)chartDim.getHeight());
 					labelChart.setIcon(new ImageIcon(chartImage));
 				} catch(Exception e) {
-					//e.printStackTrace();
 					labelChart.setText("Cannot Create Chart");
 				}
-				//labelChart.setIcon(tM.getChartImage());
 
 				sp.setLeftComponent(tV);
-				sp.setRightComponent(labelChart);
-				tableView = new JScrollPane(sp);
-				sp.setDividerLocation(parentFrame.getWidth()-350);
+				JPanel lcPanel = new JPanel();
+				lcPanel.setLayout(new BoxLayout(lcPanel, BoxLayout.Y_AXIS));
+				lcPanel.add(labelChart);
+				lcPanel.add(Box.createVerticalGlue());
+				sp.setRightComponent(lcPanel);
+				tV.setPreferredSize(jTable.getPreferredSize());
+				tableView = sp;
+				Dimension tableViewSize = tableView.getPreferredSize();
+				tableViewSize.setSize(tableViewSize.getWidth(), Math.max(labelChart.getMinimumSize().getHeight(), jTable.getMinimumSize().getHeight()));
+				tableView.setPreferredSize(tableViewSize);
+
+				// This is not the corrent location however we may want to go ahead and do it
+				// since the split pane will be showing before we can set the corrent divider location
+				// and it is pretty evedent that the resize is going on.  So if we do the following
+				// maybe it won't be as evident.
+				sp.setDividerLocation(parentFrame.getWidth()-(int)labelChart.getMinimumSize().getWidth()-30);
 			}
 
 	  		if(tables == null) {
@@ -659,9 +669,11 @@ public class MultiTableModel extends BaseTableModel{
 	}
 
 	private BaseTableModel getModelAt(int row) {
-		Object ret = ((JScrollPane)getValueAt(row, 0)).getViewport().getView();
+		Object ret = getValueAt(row, 0);
 		if(ret instanceof JSplitPane) {
 			ret = ((JScrollPane)((JSplitPane)ret).getLeftComponent()).getViewport().getView();
+		} else {
+			ret = ((JScrollPane)ret).getViewport().getView();
 		}
 		return (BaseTableModel)((TableSorter)((JTable)ret).getModel()).getTableModel();
 	}

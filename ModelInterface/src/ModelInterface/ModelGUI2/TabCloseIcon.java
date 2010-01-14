@@ -28,6 +28,7 @@ public class TabCloseIcon implements Icon {
 	
 	public void finishedLoading() {
 		showingIcon = closeIcon;
+		// TODO: race condition with setting tabPane
 		tabPane.repaint();
 	}
 	

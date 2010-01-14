@@ -1,5 +1,6 @@
 package ModelInterface.ModelGUI2.xmldb;
 
+import ModelInterface.common.LRUCacheMap;
 import ModelInterface.ModelGUI2.queries.*;
 import ModelInterface.ModelGUI2.xmldb.QueryBinding;
 import ModelInterface.ModelGUI2.xmldb.QueryBindingFactory;
@@ -426,7 +427,8 @@ public class XMLDB {
 		//printLockStats("getAttr(XmlValue, String)2"); should be lock safe, now can make it static
 		return null;
 	}
-	private static Map<String, Map<String, String>> attrCache = new TreeMap<String, Map<String, String>>();
+	private static Map<String, Map<String, String>> attrCache = new LRUCacheMap<String, Map<String, String>>(500);
+	//private static Map<String, Map<String, String>> attrCache = new TreeMap<String, Map<String, String>>();
 	private static int misses = 0;
 	private static int hits = 0;
 	public static Map<String, String> getAttrMap(XmlValue node) throws XmlException {

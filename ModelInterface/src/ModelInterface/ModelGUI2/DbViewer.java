@@ -1344,11 +1344,10 @@ public class DbViewer implements ActionListener, MenuAdder {
 			if(c instanceof JPanel){
 				return null;
 			}
-			c = ((JScrollPane)c).getViewport().getView();
 			if(c instanceof JSplitPane) {
 				return (BaseTableModel)((TableSorter)((JTable)((JScrollPane)((JSplitPane)c).getLeftComponent()).getViewport().getView()).getModel()).getTableModel();
 			} else {
-				return (BaseTableModel)((JTable)c).getModel();
+				return (BaseTableModel)((JTable)((JScrollPane)c).getViewport().getView()).getModel();
 			}
 		} catch (ClassCastException e) {
 			e.printStackTrace();
@@ -1358,7 +1357,8 @@ public class DbViewer implements ActionListener, MenuAdder {
 	public static JTable getJTableFromComponent(java.awt.Component comp) {
 		Object c;
 		try {
-			c = ((JScrollPane)comp).getViewport().getView();
+			QueryResultsPanel qPanel = (QueryResultsPanel)comp;
+			c = ((JScrollPane)qPanel.getComponent(0)).getViewport().getView();
 			if(c instanceof JSplitPane) {
 				return (JTable)((JScrollPane)((JSplitPane)c).getLeftComponent()).getViewport().getView();
 			} else {
@@ -1610,7 +1610,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 				progPanel.add(scanProgress);
 				progPanel.add(labelPanel);
 				// make sure it is atleast 200 accross
-				progPanel.add(Box.createHorizontalStrut(200));
+				progPanel.add(Box.createHorizontalStrut(300));
 				progPanel.add(Box.createVerticalGlue());
 				progPanel.add(new JSeparator(SwingConstants.HORIZONTAL));
 				progPanel.add(seperator);

@@ -613,8 +613,9 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 			       Object[] regions = currSelection.getValue().toArray();
 			       List<SingleQueryValue> tempValues;
 			       final long startTime = System.currentTimeMillis();
+			       XmlResults res = null;
 			       try {
-				       XmlResults res = XMLDB.getInstance().createQuery(new SingleQueryListQueryBinding(qg, 
+				       res = XMLDB.getInstance().createQuery(new SingleQueryListQueryBinding(qg, 
 						       XMLDB.getInstance().getContainer(), qg.getCollapseOnList()), scenarios, regions, gatherContext);
 				       // createQuery won't pass along the XmlException so we will
 				       // have to check for null
@@ -641,10 +642,13 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 						       tempValues.add(new SingleQueryValue("Total"));
 					       }
 				       }
-				       res.delete();
 			       } catch(XmlException e) {
 				       e.printStackTrace();
 				       tempValues = noResultsList;
+			       } finally {
+				       if(res != null) {
+					       res.delete();
+				       }
 			       }
 			       System.out.println("Time : "+(System.currentTimeMillis()-startTime));
 			       singleLevelCache.put(currSelection, tempValues);
@@ -684,10 +688,11 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 		       public void run() {
 			       List<SingleQueryValue> tempValues = null;
 			       final long startTime = System.currentTimeMillis();
+			       XmlResults res = null;
 			       try {
 				       // I am putting a Q in from of the hash code because otherwise it complains that
 				       // it is not a valid QName
-				       XmlResults res = XMLDB.getInstance().createQuery("/singleQueryListCache/dbxml:metadata('Q"
+				       res = XMLDB.getInstance().createQuery("/singleQueryListCache/dbxml:metadata('Q"
 					       +qg.getStorageHashCode()+"')", null, null, null);
 				       boolean hasResults = false;
 				       if(res.hasNext()) {
@@ -713,10 +718,13 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 				       if(!hasResults) {
 					       tempValues = noResultsList;
 				       }
-				       res.delete();
 			       } catch(XmlException e) {
 				       e.printStackTrace();
 				       tempValues = noResultsList;
+			       } finally {
+				       if(res != null) {
+					       res.delete();
+				       }
 			       }
 			       System.out.println("Time : "+(System.currentTimeMillis()-startTime));
 			       singleLevelCache.put(currSelection, tempValues);

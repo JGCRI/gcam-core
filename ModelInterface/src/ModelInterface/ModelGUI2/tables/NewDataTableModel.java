@@ -295,7 +295,7 @@ public class NewDataTableModel extends BaseTableModel{
 		if(doc != null) {
 			return String.class;
 		}
-		return (1 < columnIndex) && (columnIndex < getColumnCount()-1)? Double.class : String.class;
+		return (1 <= columnIndex) && (columnIndex < getColumnCount()-1)? Double.class : String.class;
 	}
 
 	/**
