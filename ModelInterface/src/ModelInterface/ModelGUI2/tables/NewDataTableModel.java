@@ -177,17 +177,21 @@ public class NewDataTableModel extends BaseTableModel{
 	 *        docIn document of where the data comes from
 	 */
 	public NewDataTableModel(Collection set1, String set1Name, Collection set2, String set2Name, String w3In, Map dataIn, Document docIn,
-			Documentation documentationIn) {
+			Documentation documentationIn, Collection<String> rewriteValues) {
 		documentation = documentationIn;
 		w3 = w3In;
 		title = w3;
 		indCol = new Vector(set1);
 		indCol.add(0,set1Name);
 		indRow = new Vector(set2);
+		// adjust the available rows for those that really had values
+		// we should make sure we don't remove any rows which were added
+		// because of the shouldAppendRewriteValues flag
+		// note that this only applies when using the DbViewer
 		if(indCol.contains("Units")) {
 			for(Iterator i = indRow.iterator(); i.hasNext(); ) {
 				String currRowName = (String)i.next();
-				if(!dataIn.containsKey("Units;"+currRowName)) {
+				if(!dataIn.containsKey("Units;"+currRowName) && !(rewriteValues != null && rewriteValues.contains(currRowName))) {
 					i.remove();
 				}
 			}

@@ -256,14 +256,14 @@ public class MultiTableModel extends BaseTableModel{
 				me.getValue() instanceof String) {
 			NewDataTableModel tM;
 			if(me.getValue() instanceof Double || me.getValue() instanceof String) {
-				tM = new NewDataTableModel(regions, qg.getAxis1Name()/*(String)wild.get(0)*/, years, 
-						qg.getVariable(), /*titleStr+'/'+(String)parent.getKey()*/title, (Map)parent.getValue(), doc,
-						null); 
+				tM = new NewDataTableModel(regions, qg.getAxis1Name(), years, 
+						qg.getVariable(), title, (Map)parent.getValue(), doc,
+						null, qg.shouldAppendRewriteValues() ? qg.getNodeLevelRewriteMap().values() : null);
 				tM.setColNameIndex(qg.getChartLabelColumnName());
 			} else {
 				tM = new NewDataTableModel(regions, (String)wild.get(0), years, 
-						(String)wild.get(1), /*titleStr+'/'+(String)parent.getKey()*/title, (Map)parent.getValue(), doc,
-						documentation /*, (String)wild.get(2)*/); 
+						(String)wild.get(1), title, (Map)parent.getValue(), doc,
+						documentation, null); 
 			}
 			tM.units = units;
 			JTable jTable = tM.getAsSortedTable();
@@ -628,6 +628,17 @@ public class MultiTableModel extends BaseTableModel{
 	  // check if we had no results
 	  if(dataTree.isEmpty()) {
 		  throw new Exception("The query returned no results.");
+	  }
+
+	  if(qg.shouldAppendRewriteValues()) {
+		  for(Iterator<String> rewriteValueIt = rewriteMap.values().iterator(); rewriteValueIt.hasNext(); ) {
+			  String currRewriteValue = rewriteValueIt.next();
+			  // the empty string is a special case which meant that we wanted to delete that row
+			  // and we definitely do not want the empty string as a row so skip it
+			  if(!currRewriteValue.equals("")) {
+				  nodeLevelAxis.add(currRewriteValue);
+			  }
+		  }
 	  }
 	  // before we add Total make sure we stop sorting by turning the Set
 	  // into a LinkedHashSet

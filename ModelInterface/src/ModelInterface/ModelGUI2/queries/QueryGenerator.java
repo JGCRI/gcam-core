@@ -62,6 +62,12 @@ public class QueryGenerator implements java.io.Serializable{
 	 * validity of these levels/values will not be checked.
 	 */
 	Map<String, Map<String, String>> labelRewriteMap;
+	/**
+	 * A flag whether the user wants to append node level rewrite values
+	 * which can be used as a means of ensuring certain rows show up in
+	 * the results.  The default value is to not use this behavoir.
+	 */
+	private boolean doAppendRewriteValues = false;
 
 	// The level has a pair of a nodename
 	// and the attribute name to pull data from
@@ -144,6 +150,7 @@ public class QueryGenerator implements java.io.Serializable{
 					comments = cmtNodeTemp.getNodeValue();
 				}
 			} else if(nl.item(i).getNodeName().equals("labelRewriteList")) {
+				doAppendRewriteValues = Boolean.valueOf(((Element)nl.item(i)).getAttribute("append-values"));
 				NodeList rewriteLevelList = nl.item(i).getChildNodes();
 				labelRewriteMap = new HashMap<String, Map<String, String>>(rewriteLevelList.getLength());
 				for(int levelNum = 0; levelNum < rewriteLevelList.getLength(); ++levelNum) {
@@ -705,6 +712,7 @@ public class QueryGenerator implements java.io.Serializable{
 		queryNode.appendChild(temp);
 		if(labelRewriteMap != null) {
 			temp = doc.createElement("labelRewriteList");
+			temp.setAttribute("append-values", Boolean.toString(doAppendRewriteValues));
 			for(Iterator<Map.Entry<String, Map<String, String>>> itLevel = 
 					labelRewriteMap.entrySet().iterator(); itLevel.hasNext(); ) {
 				Map.Entry<String, Map<String, String>> levelEntry = itLevel.next();
@@ -1464,5 +1472,15 @@ public class QueryGenerator implements java.io.Serializable{
 	*/
        public boolean isRunFunctionQuery() {
 	       return isRunFunction;
+       }
+
+       /**
+	* Gets if all nodel level rewrite values should be appended so that
+	* they are always included in results.  If there was no node level
+	* rewrite map this method will always return false.
+	* @return If node level write values should be appended.
+	*/
+       public boolean shouldAppendRewriteValues() {
+	       return getNodeLevelRewriteMap() != null && doAppendRewriteValues;
        }
 }

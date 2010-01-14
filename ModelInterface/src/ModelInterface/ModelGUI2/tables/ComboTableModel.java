@@ -794,8 +794,13 @@ public class ComboTableModel extends BaseTableModel{
 		}
 		ind2Name = qgIn.getVariable();
 		indCol.add(0, ind1Name);
+		// adjust active rows to remove any rows that are all blank
+		// we should make sure we don't remove any rows which were added
+		// because of the shouldAppendRewriteValues flag unless this is
+		// a single query
 		activeRows = new Vector( leftSideVector.size() * indRow.size() );
-		int wouldRemove = 0;
+		Collection<String> rewriteValues = singleBinding == null && qg.shouldAppendRewriteValues()
+			? qg.getNodeLevelRewriteMap().values() : null;
 		for(int i = 0; i < (leftSideVector.size() * indRow.size() ); i++) {
 			boolean allNulls = true;
 			for( int col = leftHeaderVector.size() + 1; col < getColumnCount() && allNulls; ++col ) {
@@ -804,16 +809,10 @@ public class ComboTableModel extends BaseTableModel{
 					allNulls = false;
 				}
 			}
-			// also check levelValues?
-			if(!allNulls) {
+			if(!allNulls || (rewriteValues != null && rewriteValues.contains(indRow.get(i % indRow.size())))) {
 				activeRows.add(new Integer(i));
-			/*} else {
-				activeRows.add(new Integer(i));
-				++wouldRemove;
-				*/
 			}
 		}
-		//System.out.println("Would have cut down "+wouldRemove+" rows");
 		setColNameIndex(qg.getChartLabelColumnName());
 	}
 	private void buildTable(XmlResults res, boolean sumAll, Object[] levelValues, boolean isTotal) throws Exception{
@@ -950,13 +949,6 @@ public class ComboTableModel extends BaseTableModel{
 			  tempNode.delete();
 			  */
 		  }
-		  // TODO: this needs to be an option
-		  /*
-		  if(rewriteMap != null) {
-			  nodeLevelAxis.addAll(rewriteMap.values());
-		  }
-		  */
-		  yearLevelAxis.add("Units");
 		  XMLDB.getInstance().printLockStats("buildTable");
 	  } catch(Exception e) {
 		  e.printStackTrace();
@@ -972,6 +964,17 @@ public class ComboTableModel extends BaseTableModel{
 
 	  if(remove1975) {
 		  yearLevelAxis.remove("1975");
+	  }
+	  yearLevelAxis.add("Units");
+	  if(qg.shouldAppendRewriteValues()) {
+		  for(Iterator<String> rewriteValueIt = rewriteMap.values().iterator(); rewriteValueIt.hasNext(); ) {
+			  String currRewriteValue = rewriteValueIt.next();
+			  // the empty string is a special case which meant that we wanted to delete that row
+			  // and we definitely do not want the empty string as a row so skip it
+			  if(!currRewriteValue.equals("")) {
+				  nodeLevelAxis.add(currRewriteValue);
+			  }
+		  }
 	  }
 	  System.out.println("After build Tree: "+System.currentTimeMillis());
 	  recAddTables(dataTree, null, yearLevelAxis, nodeLevelAxis, "");

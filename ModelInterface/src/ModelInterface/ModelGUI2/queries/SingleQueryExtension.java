@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.Set;
+import java.util.TreeSet;
 
 import ModelInterface.common.DataPair;
 import ModelInterface.ModelGUI2.xmldb.XMLDB;
@@ -628,15 +630,17 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 					       tempValues = noResultsList;
 				       } else {
 					       tempValues =  new ArrayList<SingleQueryValue>();
+					       Set<String> actualValues = new TreeSet<String>();
 					       while(res.hasNext()) {
 						       curr = res.next();
 						       SingleQueryValue tempValue = new SingleQueryValue(curr.asString());
 						       tempValues.add(tempValue);
+						       actualValues.add(curr.asString());
 						       curr.delete();
 					       }
 					       if(qt != null) {
 						       Map<String, String> rewriteMap = qg.getNodeLevelRewriteMap();
-						       addRewriteListValues(rewriteMap, tempValues);
+						       addRewriteListValues(rewriteMap, tempValues, actualValues);
 					       }
 					       if(qg.isGroup() && qt != null) {
 						       tempValues.add(new SingleQueryValue("Total"));
@@ -703,13 +707,16 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 						       hasResults = true;
 						       tempValues =  new ArrayList<SingleQueryValue>(values.length+1);
 						       Map<String, String> rewriteMap = qg.getNodeLevelRewriteMap();
+						       Set<String> actualValues = new TreeSet<String>();
 						       for(String val : values) {
 							       if(rewriteMap == null || !rewriteMap.containsKey(val)) {
 								       SingleQueryValue tempValue = new SingleQueryValue(val);
 								       tempValues.add(tempValue);
+							       } else {
+								       actualValues.add(val);
 							       }
 						       }
-						       addRewriteListValues(rewriteMap, tempValues);
+						       addRewriteListValues(rewriteMap, tempValues, actualValues);
 						       if(qg.isGroup()) {
 							       tempValues.add(new SingleQueryValue("Total"));
 						       }
@@ -808,10 +815,11 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 	* Adds values that come from the rewrite list for the node level. If the
 	* rewrite list does not exist then nothing will be added.
 	* @param rewriteMap The map that is used for rewrites on the nodeLevel. 
-	* @param values The SingleQueryValue list which we will add the values
+	* @param currValues The SingleQueryValue list which we will add the values
 	* 	from the rewrite list.
+	* @param actualValues Actual node level values which would be rewritten.
 	*/
-       private void addRewriteListValues(Map<String, String> rewriteMap, List<SingleQueryValue> currValues) {
+       private void addRewriteListValues(Map<String, String> rewriteMap, List<SingleQueryValue> currValues, Set<String> actualValues) {
 	       if(rewriteMap == null) {
 		       // don't need to add anything so just return
 		       return;
@@ -819,8 +827,14 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 	       // need to create a reverse mapping of the rewrite value to what it was 
 	       // rewriting
 	       Map<String, List<String>> reverseMapping = new HashMap<String, List<String>>();
+	       final boolean shouldAppendRewrites = qg.shouldAppendRewriteValues();
 	       for(Iterator<Map.Entry<String, String>> it = rewriteMap.entrySet().iterator(); it.hasNext(); ) {
 		       Map.Entry<String, String> currEntry = it.next();
+		       // skip rewrite values that would not have been used if the append-rewrite
+		       // flag has not been set
+		       if(!shouldAppendRewrites && !actualValues.contains(currEntry.getKey())) {
+			       continue;
+		       }
 		       List<String> currList = reverseMapping.get(currEntry.getValue());
 		       if(currList == null) {
 			       currList = new ArrayList<String>();
@@ -832,7 +846,7 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 	       for(Iterator<Map.Entry<String, List<String>>> it = reverseMapping.entrySet().iterator(); it.hasNext(); ) {
 		       Map.Entry<String, List<String>> currEntry = it.next();
 		       // the empty string is a special case which meant that we wanted to delete that row
-		       // and we definatly do not want the empty string as a row so skip it
+		       // and we definitely do not want the empty string as a row so skip it
 		       if(!currEntry.getKey().equals("")) {
 			       currValues.add(new SingleQueryValue(currEntry.getKey(), currEntry.getValue()));
 		       }
