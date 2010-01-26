@@ -110,10 +110,13 @@ public class QueryResultsPanel extends JPanel {
 		runThread.start();
 	}
 
-	//terminate the query process that is running
 	/**
-	 * Terminates the thread. This is normally run
-	 * when the tab is closed before the simulation finishes.
+	 * Interrupt the query that is inprogress. This is normally run
+	 * when the tab is closed before the results are finished.  Note
+	 * that this method is asycnchronous and does not ensure the query
+	 * thread has finished running by the time it returns which is 
+	 * normally not necessary.
+	 * @see killThreadAndWait
 	 */
 	public void killThread(){
 		try {
@@ -127,7 +130,24 @@ public class QueryResultsPanel extends JPanel {
 		runThread.interrupt();
 	}
 
+	/**
+	 * Kills the running query and waits for it to stop running before 
+	 * returning.  This would be useful to call for instance before we 
+	 * are about to close the database since it would not be acceptable
+	 * for the query to take it's time interrupting and coming to a stop.
+	 */
+	public void killThreadAndWait() {
+		// kill the thread same as usual
+		killThread();
 
+		// join with the runThread which ensures the query thread
+		// is done interrupting
+		try {
+			runThread.join();
+		} catch(InterruptedException ie) {
+			// ignore
+		}
+	}
 
 	/**
 	 * Inserts a text box that will be displayed until the results

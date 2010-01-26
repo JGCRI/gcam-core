@@ -128,6 +128,11 @@ public class DbViewer implements ActionListener, MenuAdder {
 			public void propertyChange(PropertyChangeEvent evt) {
 				if(evt.getPropertyName().equals("Control")) {
 					if(evt.getOldValue().equals(controlStr) || evt.getOldValue().equals(controlStr+"Same")) {
+						// make sure all queries get killed before we close the database
+						for(int tab = 0; tab < tablesTabs.getTabCount(); ++tab) {
+							((QueryResultsPanel)tablesTabs.getComponentAt(tab)).killThreadAndWait();
+						}
+
 						if(queries.hasChanges() && JOptionPane.showConfirmDialog(
 								parentFrame, 
 								"The Queries have been modified.  Do you want to save them?",
