@@ -712,7 +712,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 								qg = (QueryGenerator)selPaths[i].getParentPath().getLastPathComponent();
 							}
 							//add loading icon to QueryResultsPanel
-							TabCloseIcon loadingIcon = new TabCloseIcon();
+							TabCloseIcon loadingIcon = new TabCloseIcon(tablesTabs);
 							JComponent ret = new QueryResultsPanel(qg, singleBinding, parentFrame, scnList.getSelectedValues(), regionList.getSelectedValues(), loadingIcon);
 
 							tablesTabs.addTab(qg.toString(), loadingIcon, ret, createCommentTooltip(selPaths[i])); 

@@ -572,7 +572,7 @@ public class MultiTableModel extends BaseTableModel{
 			  // if we did sum all we will collapse them all by always setting the node level
 			  // to All + whatever the node level was
 			  if(sumAll) {
-				  axisValues.setValue((String)levelValues[0]);
+				  axisValues.setValue("All "+qg.getNodeLevel());
 			  }
 			  // check for rewrites
 			  if(rewriteMap != null && rewriteMap.containsKey(axisValues.getValue())) {

@@ -287,7 +287,7 @@ public class XMLDB {
 				scenarios, regions);
 	}
 	public XmlResults createQuery(String query, Vector<String> queryFunctions, 
-			Object[] scenarios, Object[] regions, XmlQueryContext context) {
+			Object[] scenarios, Object[] regions, XmlQueryContext context) throws XmlException {
 		return createQuery(QueryBindingFactory.getQueryBinding(query, queryFunctions, contName),
 				scenarios, regions, context);
 	}
@@ -296,7 +296,7 @@ public class XMLDB {
 		return createQuery(QueryBindingFactory.getQueryBinding(qg, contName), scenarios,
 				regions);
 	}
-	public XmlResults createQuery(QueryGenerator qg, Object[] scenarios, Object[] regions, XmlQueryContext context) {
+	public XmlResults createQuery(QueryGenerator qg, Object[] scenarios, Object[] regions, XmlQueryContext context) throws XmlException {
 		return createQuery(QueryBindingFactory.getQueryBinding(qg, contName), scenarios,
 				regions,context);
 	}
@@ -311,28 +311,23 @@ public class XMLDB {
 		}
 	}
 	
-	public XmlResults createQuery(QueryBinding queryBinding, Object[] scenarios, Object[] regions, XmlQueryContext context) {
+	public XmlResults createQuery(QueryBinding queryBinding, Object[] scenarios, Object[] regions, XmlQueryContext context) throws XmlException {
 		String queryComplete = queryBinding.bindToQuery(scenarios, regions);
 		System.out.println("About to perform query: "+queryComplete);
 		if(context == null){
 			return createQuery(queryBinding, scenarios, regions);
 		}
-		try {
-			//XmlQueryContext qc = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Lazy);
-			/*
-			XmlQueryExpression qeTemp = manager.prepare(queryBuff.toString(), qc);
-			System.out.println("Query Plan: "+qeTemp.getQueryPlan());
-			return qeTemp.execute(qc);
-			*/
-			/*
-			System.out.println("Number of values are currently: "+numVals);
-			return new XmlResultsWrapper(manager.query(queryComplete, qc));
-			*/
-			return manager.query(queryComplete, context);
-		} catch(XmlException e) {
-			e.printStackTrace();
-			return null;
-		}
+		//XmlQueryContext qc = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Lazy);
+		/*
+		   XmlQueryExpression qeTemp = manager.prepare(queryBuff.toString(), qc);
+		   System.out.println("Query Plan: "+qeTemp.getQueryPlan());
+		   return qeTemp.execute(qc);
+		   */
+		/*
+		   System.out.println("Number of values are currently: "+numVals);
+		   return new XmlResultsWrapper(manager.query(queryComplete, qc));
+		   */
+		return manager.query(queryComplete, context);
 	}
 	
 	public XmlResults createQuery(QueryBinding queryBinding, Object[] scenarios, Object[] regions) {
