@@ -139,10 +139,12 @@ public class XMLDB {
 		// TODO: any other invalid URI characters are not taken care of here,  need to find a 
 		// good util to take care of this but there does not seem to be one in the standard
 		// java api
-		contName = dbPath.substring(dbPath.lastIndexOf(System.getProperty("file.separator"))+1).replaceAll(" ", "%20");
+		final String contNameUnmodified = dbPath.substring(dbPath.lastIndexOf(System.getProperty("file.separator"))+1);
+		contName = contNameUnmodified.replaceAll(" ", "%20");
 		uc = manager.createUpdateContext();
 		try {
-			myContainer = manager.openContainer(contName, cconfig);
+			myContainer = manager.openContainer(contNameUnmodified, cconfig);
+			myContainer.addAlias(contName);
 		} catch(XmlException ve) {
 			if(ve.getErrorCode() == XmlException.VERSION_MISMATCH) {
 				int ans;
