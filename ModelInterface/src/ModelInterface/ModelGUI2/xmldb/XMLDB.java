@@ -135,7 +135,11 @@ public class XMLDB {
 		manager = new XmlManager(dbEnv, mc);
 		XmlContainerConfig cconfig = new XmlContainerConfig();
 		cconfig.setAllowCreate(true);
-		contName = dbPath.substring(dbPath.lastIndexOf(System.getProperty("file.separator"))+1);
+		// spaces in a database name is illegal for a URI and must be escaped by a %20
+		// TODO: any other invalid URI characters are not taken care of here,  need to find a 
+		// good util to take care of this but there does not seem to be one in the standard
+		// java api
+		contName = dbPath.substring(dbPath.lastIndexOf(System.getProperty("file.separator"))+1).replaceAll(" ", "%20");
 		uc = manager.createUpdateContext();
 		try {
 			myContainer = manager.openContainer(contName, cconfig);

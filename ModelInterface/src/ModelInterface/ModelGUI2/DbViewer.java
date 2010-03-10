@@ -1264,6 +1264,11 @@ public class DbViewer implements ActionListener, MenuAdder {
 		final XPathResult res = (XPathResult)xpeImpl.createExpression("/queries/node()", xpeImpl.createNSResolver(queries.getDocumentElement())).evaluate(queries.getDocumentElement(), XPathResult.ORDERED_NODE_SNAPSHOT_TYPE, null);
 
 		final int numQueries = res.getSnapshotLength();
+		if(numQueries == 0) {
+			JOptionPane.showMessageDialog(parentFrame, "Could not find queries to run in batch file:\n"+queryFile,
+					"Batch Query Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 		final Vector<Object[]> toRunScns = new Vector<Object[]>();
 		if(!seperateRunsCheckBox.isSelected()) {
 			toRunScns.add(scenarioList.getSelectedValues());
