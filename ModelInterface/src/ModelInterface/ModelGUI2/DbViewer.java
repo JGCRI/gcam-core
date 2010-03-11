@@ -53,7 +53,6 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Component;
 import java.awt.Color;
-import java.awt.image.BufferedImage;
 import java.awt.Cursor;
 import java.awt.event.MouseAdapter;
 import java.util.*;
@@ -407,13 +406,11 @@ public class DbViewer implements ActionListener, MenuAdder {
 				Map<String, String> scnAttrMap = XMLDB.getAttrMap(temp);
 				XmlDocument tempDoc = temp.asDocument();
 				ret.add(new ScenarioListItem(tempDoc.getName(), scnAttrMap.get("name"), scnAttrMap.get("date")));
-				tempDoc.delete();
 			}
 			res.delete();
 		} catch(XmlException e) {
 			e.printStackTrace();
 		}
-		XMLDB.getInstance().printLockStats("getScenarios");
 		return ret;
 	}
 
@@ -426,14 +423,11 @@ public class DbViewer implements ActionListener, MenuAdder {
 		Vector funcTemp = new Vector<String>(1,0);
 		funcTemp.add("distinct-values");
 		Vector ret = new Vector();
-		XmlValue temp;
 		try {
 			XmlResults res = XMLDB.getInstance().createQuery("/scenario/world/"+
 					ModelInterface.ModelGUI2.queries.QueryBuilder.regionQueryPortion+"/@name", funcTemp, null, null);
 			while(res.hasNext()) {
-				temp = res.next();
-				ret.add(temp.asString());
-				temp.delete();
+				ret.add(res.next().asString());
 			}
 			res.delete();
 		} catch(XmlException e) {
@@ -441,7 +435,6 @@ public class DbViewer implements ActionListener, MenuAdder {
 		}
 		ret.add("Global");
 		funcTemp = null;
-		XMLDB.getInstance().printLockStats("getRegions");
 		return ret;
 	}
 
@@ -1550,8 +1543,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 					xmldbInstance.updateDocument(doc);
 				}
 
-				// clean up an take down the progress bar
-				doc.delete();
+				// clean up and take down the progress bar
 				scanDialog.setVisible(false);
 			}
 		});

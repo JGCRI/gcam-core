@@ -70,7 +70,6 @@ public class DemandComponentsQueryBuilder extends QueryBuilder {
 		updateSelected(list);
 		--qg.currSel;
 		createXPath();
-		qg.levelValues = list.getSelectedValues();
 		queryFunctions = null;
 		queryFilter = null;
 	}
@@ -404,69 +403,6 @@ public class DemandComponentsQueryBuilder extends QueryBuilder {
 			.append(retStr).append(part2).toString();
 			*/
 	}
-	public Object[] extractAxisInfo(XmlValue n, Map filterMaps) throws Exception {
-		Vector ret = new Vector(2, 0);
-		XmlValue nBefore;
-		do {
-			if(qg.nodeLevel.getKey().equals(XMLDB.getAttr(n, "type"))) {
-				ret.add(XMLDB.getAttr(n, qg.nodeLevel.getValue()));
-			} 
-			if(qg.yearLevel.getKey().equals(XMLDB.getAttr(n, "type"))) {
-				String sectorType = XMLDB.getAttr(n, qg.yearLevel.getValue());
-				if(sectorType.equals("Household")) {
-					ret.add(0, "Consumption");
-				} else if(sectorType.equals("Government")) {
-					ret.add(0, "Government");
-				} else if(sectorType.equals("Investment")) {
-					ret.add(0, "Investment");
-				} else if(sectorType.equals("Trade")) {
-					ret.add(0, "Trade");
-				} else {
-					ret.add(0, "Intermediate Production");
-				}
-			}
-			if("baseTechnology".equals(XMLDB.getAttr(n, "type")) && "Government".equals(XMLDB.getAttr(n, "name")) &&
-					"Capital".equals(ret.get(0))) {
-				System.out.println("Govt Cap in year "+XMLDB.getAttr(n, "year"));
-			}
-			nBefore = n;
-			n = n.getParentNode();
-			nBefore.delete();
-		} while(n.getNodeType() != XmlValue.DOCUMENT_NODE); 
-		n.delete();
-		XMLDB.getInstance().printLockStats("DemandComponentsQueryBuilder.getRegionAndYearFromNode");
-		if(ret.size() != 2) {
-			System.out.println("Ret only has "+ret.get(0));
-		}
-		return ret.toArray();
-	}
-	public Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {
-		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
-			currNode.delete();
-			return dataTree;
-		}
-		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree);
-		String type = XMLDB.getAttr(currNode, "type");
-		if(type == null) {
-			type = currNode.getNodeName();
-		}
-		if(type.equals("demand-currency") || type.equals("region")) {
-			String attr;
-			if(type.equals("region")) {
-				attr = "region@"+XMLDB.getAttr(currNode, "name");
-			} else {
-				attr = "year@"+XMLDB.getAttr(currNode, "year");
-			}
-			//attr = type+"@"+attr;
-			if(!tempMap.containsKey(attr)) {
-				tempMap.put(attr, new HashMap());
-			}
-			currNode.delete();
-			return (Map)tempMap.get(attr);
-		} 
-		currNode.delete();
-		return tempMap;
-	}
 	public String getXMLName() {
 		return xmlName;
 	}
@@ -476,7 +412,6 @@ public class DemandComponentsQueryBuilder extends QueryBuilder {
 	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue) throws Exception {
 		// stop point for recursion is when we reach the root
 		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
-			currNode.delete();
 			return dataTree;
 		}
 
@@ -524,7 +459,6 @@ public class DemandComponentsQueryBuilder extends QueryBuilder {
 			}
 			tempMap = (Map)tempMap.get(attr);
 		} 
-		currNode.delete();
 		return tempMap;
 	}
 }

@@ -75,8 +75,6 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 		updateSelected(list);
 		--qg.currSel;
 		createXPath();
-		//qg.levelValues = list.getSelectedValues();
-		qg.levelValues = null;
 		queryFunctions = null;
 		queryFilter = null;
 	}
@@ -229,134 +227,6 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 			}
 		}
 	}
-	public Object[] extractAxisInfo(XmlValue n, Map filterMaps) throws Exception {
-		Vector ret = new Vector(2, 0);
-		XmlValue nBefore;
-		do {
-			if(n.getNodeName().equals(qg.nodeLevel.getKey())) {
-				if(qg.nodeLevel.getKey().equals("UndiscountedCost") || qg.nodeLevel.getKey().equals("DiscountedCost")) {
-					ret.add(0, qg.nodeLevel.getKey());
-					/*
-				} else if(qg.yearLevel.equals("DataPoint")) {
-					// check the locks after this line, It might leave some
-					ret.add(n.getFirstChild().getFirstChild().getNodeValue());
-					*/
-				} else if(qg.isGlobal) {
-					ret.add("Global");
-				} else {
-					// check the locks after this line, It might leave some
-					//ret.add(n.getFirstChild().getFirstChild().getNodeValue());
-					/*
-					System.out.println("Nodel level node name: "+n.getNodeName());
-					System.out.println("FC Node Name: "+n.getFirstChild().getNodeName());
-					System.out.println("FC Node Value: "+n.getFirstChild().getNodeValue());
-					System.out.println("FC Node Type: "+n.getFirstChild().getNodeType());
-					XmlValue tn = n.getFirstChild();
-					while((tn = tn.getNextSibling()).getNodeType() != 3) {
-						System.out.println("FC Node Name: "+tn.getNodeName());
-						System.out.println("FC Node Value: "+tn.getNodeValue());
-						System.out.println("FC Node Type: "+tn.getNodeType());
-					}
-					System.out.println("after FC Node Name: "+tn.getNodeName());
-					System.out.println("after FC Node Value: "+tn.getNodeValue());
-					System.out.println("after FC Node Type: "+tn.getNodeType());
-
-					ret.add(tn.getFirstChild().getFirstChild().getNodeValue());
-					*/
-					XmlValue delValue = n.getFirstChild();
-					nBefore = delValue.getNextSibling();
-					delValue.delete();
-					delValue = nBefore;
-					nBefore = delValue.getFirstChild();
-					delValue.delete();
-					ret.add(nBefore.getNodeValue());
-					nBefore.delete();
-				}
-					
-				//ret.add(XMLDB.getAttr(n, "name"));
-			} 
-			if(n.getNodeName().equals(qg.yearLevel.getKey())) {
-				if(qg.nodeLevel.getKey().equals("UndiscountedCost") || qg.nodeLevel.getKey().equals("DiscountedCost")) {
-					if(qg.isGlobal) {
-						ret.add("Global");
-					} else {
-						ret.add(XMLDB.getAttr(n, "name"));
-					}
-					/*
-				} else if(qg.yearLevel.equals("DataPoint")) {
-					// check the locks after this line, It might leave some
-					ret.add(0, n.getFirstChild().getFirstChild().getNodeValue());
-					*/
-				} else {
-					// check the locks after this line, It might leave some
-					//ret.add(0, n.getFirstChild().getFirstChil!().getNodeValue());
-					//ret.add(0, n.getFirstChild().getNodeValue());
-					XmlValue delValue = n.getFirstChild();
-					nBefore = delValue.getNextSibling();
-					delValue.delete();
-					delValue = nBefore;
-					nBefore = delValue.getFirstChild();
-					delValue.delete();
-					ret.add(0, nBefore.getNodeValue());
-					nBefore.delete();
-				}
-
-				/*
-				//ret.add(n.getAttributes().getNamedItem("name").getNodeValue());
-				if(!getOneAttrVal(n).equals("fillout=1")) {
-				ret.add(getOneAttrVal(n));
-				} else {
-				ret.add(getOneAttrVal(n, 1));
-				}
-				*/
-
-			} /*else if(XMLDB.hasAttr(n) && !n.getNodeName().equals(qg.nodeLevel.getKey())) {
-				Map tempFilter;
-				if (filterMaps.containsKey(n.getNodeName())) {
-					tempFilter = (HashMap)filterMaps.get(n.getNodeName());
-				} else {
-					tempFilter = new HashMap();
-				}
-				String attr = XMLDB.getAttr(n);
-				if (!tempFilter.containsKey(attr)) {
-					tempFilter.put(attr, new Boolean(true));
-					filterMaps.put(n.getNodeName(), tempFilter);
-				}
-			}
-			*/
-			nBefore = n;
-			n = n.getParentNode();
-			nBefore.delete();
-		} while(n.getNodeType() != XmlValue.DOCUMENT_NODE); 
-		n.delete();
-		XMLDB.getInstance().printLockStats("CostCurveQueryBuilder.getRegionAndYearFromNode");
-		return ret.toArray();
-	}
-	public Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {
-		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
-			currNode.delete();
-			return dataTree;
-		}
-		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree);
-		/*
-		if( (isGlobal && currNode.getNodeName().equals(qg.nodeLevel)) ) {
-			currNode.delete();
-			return tempMap;
-		}
-		*/
-		if(XMLDB.hasAttr(currNode) && !currNode.getNodeName().equals(qg.nodeLevel.getKey()) 
-				&& !currNode.getNodeName().equals(qg.yearLevel.getKey())) {
-			String attr = XMLDB.getAllAttr(currNode);
-			attr = currNode.getNodeName()+"@"+attr;
-			if(!tempMap.containsKey(attr)) {
-				tempMap.put(attr, new TreeMap());
-			}
-			currNode.delete();
-			return (Map)tempMap.get(attr);
-		} 
-		currNode.delete();
-		return tempMap;
-	}
 	public String getXMLName() {
 		return xmlName;
 	}
@@ -368,7 +238,6 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue) throws Exception {
 		// stop condition for recursion when we hit the root of the tree
 		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
-			currNode.delete();
 			return dataTree;
 		}
 		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree, axisValue);
@@ -480,7 +349,6 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 			}
 			tempMap = (Map)tempMap.get(attr);
 		} 
-		currNode.delete();
 		return tempMap;
 	}
 }

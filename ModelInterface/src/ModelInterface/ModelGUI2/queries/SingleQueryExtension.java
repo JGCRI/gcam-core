@@ -522,8 +522,6 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 		       } catch(XmlException e) {
 			       System.out.println("Error while interrupting gather list query:");
 			       e.printStackTrace();
-		       } finally {
-			       gatherContext.delete();
 		       }
 	       }
 	       gatherThread = newThread;
@@ -625,18 +623,16 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 					       throw new XmlException(XmlException.QUERY_PARSER_ERROR,
 						       "Probably invalid syntax", null, 0);
 				       }
-				       XmlValue curr;
 				       if(!res.hasNext()) {
 					       tempValues = noResultsList;
 				       } else {
 					       tempValues =  new ArrayList<SingleQueryValue>();
 					       Set<String> actualValues = new TreeSet<String>();
 					       while(res.hasNext()) {
-						       curr = res.next();
+						       XmlValue curr = res.next();
 						       SingleQueryValue tempValue = new SingleQueryValue(curr.asString());
 						       tempValues.add(tempValue);
 						       actualValues.add(curr.asString());
-						       curr.delete();
 					       }
 					       if(qt != null) {
 						       Map<String, String> rewriteMap = qg.getNodeLevelRewriteMap();
@@ -702,7 +698,6 @@ public class SingleQueryExtension implements TreeSelectionListener, ListSelectio
 				       if(res.hasNext()) {
 					       XmlValue curr = res.next();
 					       String[] values = curr.asString().split(";");
-					       curr.delete();
 					       if(!(values.length == 1 && values[0].equals(""))) {
 						       hasResults = true;
 						       tempValues =  new ArrayList<SingleQueryValue>(values.length+1);

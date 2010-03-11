@@ -49,8 +49,7 @@ public class QueryGenerator implements java.io.Serializable{
 	boolean isSumable;
 	boolean buildSingleQueryList;
 	String title;
-	Object[] levelValues;
-	public static Vector sumableList;
+	public static Vector<String> sumableList;
 	public static java.util.List<String> hasYearList;
 	String axis1Name;
 	String axis2Name;
@@ -183,54 +182,6 @@ public class QueryGenerator implements java.io.Serializable{
 					buildSingleQueryList = false;
 				}
 				xPath = nl.item(i).getFirstChild().getNodeValue();
-				if(((!sumAll && !group) || (sumAll && group)) && !(qb instanceof CostCurveQueryBuilder)
-						&& !(qb instanceof GDPQueryBuilder)) {
-					Vector temp = new Vector();
-					String xpTemp = xPath;
-					Pattern pat;
-					if(qb instanceof DemographicsQueryBuilder) {
-						//System.out.println("HERE");
-						pat = Pattern.compile("\\(@ageGroup='([\\d\\-+[\\s]]+)'\\)");
-					} else if(qb instanceof EmissionsQueryBuilder) {
-						pat = Pattern.compile("\\(@fuel-name='([\\w:[\\s]]+)'\\)");
-					} else {
-						pat = Pattern.compile("\\(@name='([\\w:[\\s]]+)'\\)");
-					}
-					Matcher mat = pat.matcher(xPath);
-					//XMLDB.getInstance().setQueryFunction("distinct-values(");
-					//XMLDB.getInstance().setQueryFilter("/scenario/world/region/");
-					int skip = 0;
-					if(nodeLevel.getKey().equals("sector")) {
-						currSel = 3;
-					} else if(nodeLevel.getKey().equals("subsector")) {
-						currSel = 4;
-						skip = 1;
-					} else if(nodeLevel.getKey().equals("technology")){
-						currSel = 5;
-						skip = 2;
-					} else if(nodeLevel.getKey().equals("grade")) {
-						skip = 2;
-					} else if(nodeLevel.getKey().equals("input")) {
-						currSel = 6;
-						skip = 3;
-					}
-					while( mat.find()) {
-						if(mat.group(1).startsWith("Group:")) {
-							xpTemp = xpTemp.replace("(@name='"+mat.group(1)+"')", expandGroupName(mat.group(1).substring(7)));
-						}
-						if(skip == 0) {
-							temp.add(mat.group(1));
-						} else {
-							--skip;
-						}
-					} 
-					//XMLDB.getInstance().setQueryFunction("");
-					//XMLDB.getInstance().setQueryFilter("");
-					xPath = xpTemp;
-					levelValues = temp.toArray();
-				} else {
-					levelValues = null;
-				}
 			}
 		}
 		setIsRunFunction();
@@ -588,7 +539,6 @@ public class QueryGenerator implements java.io.Serializable{
 			e.printStackTrace();
 		}
 		ret.delete(ret.length()-4, ret.length());
-		XMLDB.getInstance().printLockStats("expandGroupName");
 		return ret.toString();
 	}
 	public String getXPath() {
@@ -700,12 +650,7 @@ public class QueryGenerator implements java.io.Serializable{
 		} else {
 			temp.setAttribute("buildList", "false");
 		}
-		if(sumAll && group) {
-			// do something else
-			temp.appendChild(doc.createTextNode(qb.createListPath(-1)));
-		} else {
-			temp.appendChild(doc.createTextNode(xPath));
-		}
+		temp.appendChild(doc.createTextNode(xPath));
 		queryNode.appendChild(temp);
 		temp = doc.createElement("comments");
 		temp.appendChild(doc.createTextNode(comments));
@@ -748,9 +693,6 @@ public class QueryGenerator implements java.io.Serializable{
 	}
 	public void setTitle(String titleIn) {
 		title = titleIn;
-	}
-	public Object[] getLevelValues() {
-		return levelValues;
 	}
 	/**
 	 * Returns the comments. If the comments are null
@@ -810,20 +752,6 @@ public class QueryGenerator implements java.io.Serializable{
 			return defaultCompleteXPath(regions);
 		}
 	}
-  	public Object[] extractAxisInfo(XmlValue n, Map filterMaps) throws Exception {
-		if(qb != null) {
-			return qb.extractAxisInfo(n, filterMaps);
-		} else {
-			return defaultAxisInfo(n, filterMaps);
-		}
-	}
-	public Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {
-		if(qb != null) {
-			return qb.addToDataTree(currNode, dataTree);
-		} else {
-			return defaultAddToDataTree(currNode, dataTree);
-		}
-	}
 	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue) throws Exception {
 		if(qb != null) {
 			return qb.addToDataTree(currNode, dataTree, axisValue);
@@ -833,7 +761,6 @@ public class QueryGenerator implements java.io.Serializable{
 	}
 	Map defaultAddToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue) throws Exception {
 		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
-			currNode.delete();
 			return dataTree;
 		}
 		// recursively process parents first
@@ -887,7 +814,6 @@ public class QueryGenerator implements java.io.Serializable{
 			}
 			tempMap = (Map)tempMap.get(attr);
 		} 
-		currNode.delete();
 		return tempMap;
 	}
 	protected boolean isGlobal;
@@ -915,92 +841,6 @@ public class QueryGenerator implements java.io.Serializable{
 			ret.append(" ]/");
 		}
 		return ret.append(xPath).toString();
-	}
-	protected Object[] defaultAxisInfo(XmlValue n, Map filterMaps) throws Exception {
-		Vector ret = new Vector(2,0);
-		XmlValue nBefore;
-		if(nodeLevel.getKey().equals("keyword")) {
-			nBefore = n.getNextSibling();
-			while(!nBefore.isNull()) {
-				if(nBefore.getNodeName().equals(nodeLevel.getKey()) &&
-					XMLDB.getAttr(nBefore, nodeLevel.getValue()) != null) {
-					ret.add(XMLDB.getAttr(nBefore, nodeLevel.getValue()));
-					break;
-				}
-				nBefore = nBefore.getNextSibling();
-			}
-		}
-		do {
-			if(n.getNodeName().equals(nodeLevel.getKey())) {
-				if(nodeLevel.getValue() == null) {
-					ret.add(XMLDB.getAttr(n));
-				} else {
-					ret.add(XMLDB.getAttr(n, nodeLevel.getValue()));
-				}
-			} 
-			if(n.getNodeName().equals(yearLevel.getKey())) {
-				if(yearLevel.getValue() == null) {
-					ret.add(0, XMLDB.getAttr(n, "year"));
-				} else {
-					ret.add(0, XMLDB.getAttr(n, yearLevel.getValue()));
-				}
-			} else if(XMLDB.hasAttr(n)) {
-				HashMap tempFilter;
-				if (filterMaps.containsKey(n.getNodeName())) {
-					tempFilter = (HashMap)filterMaps.get(n.getNodeName());
-				} else {
-					tempFilter = new HashMap();
-				}
-				String attr = XMLDB.getAttr(n);
-				if (!tempFilter.containsKey(attr)) {
-					tempFilter.put(attr, new Boolean(true));
-					filterMaps.put(n.getNodeName(), tempFilter);
-				}
-			}
-			nBefore = n;
-			n = n.getParentNode();
-			nBefore.delete();
-		} while(n.getNodeType() != XmlValue.DOCUMENT_NODE); 
-		n.delete();
-		XMLDB.getInstance().printLockStats("getRegionAndYearFromNode");
-		return ret.toArray();
-	}
-	protected Map defaultAddToDataTree(XmlValue currNode, Map dataTree) throws Exception {
-		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
-			List<String> defaultCollapse = new Vector<String>();
-			createCollapseList(defaultCollapse);
-			currNode.delete();
-			return dataTree;
-		}
-		Map tempMap = defaultAddToDataTree(currNode.getParentNode(), dataTree);
-		String type = XMLDB.getAttr(currNode, "type");
-		if(type == null) {
-			type = currNode.getNodeName();
-		}
-		// used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
-		if( (isGlobal && type.equals("region")) || collapseOnList.contains(type)) {
-			currNode.delete();
-			return tempMap;
-		}
-		if(XMLDB.hasAttr(currNode) && !type.equals(nodeLevel.getKey()) && 
-				!type.equals(yearLevel.getKey())) {
-			String attr = XMLDB.getAllAttr(currNode);
-			// check for rewrites
-			if(labelRewriteMap != null && labelRewriteMap.containsKey(type)) {
-				Map<String, String> currRewriteMap = labelRewriteMap.get(type);
-				if(currRewriteMap.containsKey(attr)) {
-					attr = currRewriteMap.get(attr);
-				}
-			}
-			attr = type+"@"+attr;
-			if(!tempMap.containsKey(attr)) {
-				tempMap.put(attr, new TreeMap());
-			}
-			currNode.delete();
-			return (Map)tempMap.get(attr);
-		} 
-		currNode.delete();
-		return tempMap;
 	}
 	public boolean editDialog(final MiUndoableEditListener listener) {
 		final Object lock = new Object();

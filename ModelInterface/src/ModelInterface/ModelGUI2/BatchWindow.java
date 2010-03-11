@@ -381,8 +381,6 @@ public class BatchWindow extends Window {
 			context.interruptQuery();
 		} catch (XmlException e) {
 			e.printStackTrace();
-		} finally {
-			context.delete();
 		}
 		exportThread.interrupt();
 		System.out.println("Tried to kill it");

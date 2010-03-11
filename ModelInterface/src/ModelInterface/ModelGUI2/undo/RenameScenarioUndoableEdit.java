@@ -79,7 +79,6 @@ public class RenameScenarioUndoableEdit extends MiAbstractUndoableEdit {
 			XmlValue context = res.next();
 			XMLDB.getInstance().setValue(context, toName);
 			viewer.resetScenarioList();
-			context.delete();
 		} catch(XmlException e) {
 			// TODO: put an error up on the screen
 			e.printStackTrace();
@@ -87,7 +86,6 @@ public class RenameScenarioUndoableEdit extends MiAbstractUndoableEdit {
 			if(res != null) {
 				res.delete();
 			}
-			qc.delete();
 		}
 	}
 }

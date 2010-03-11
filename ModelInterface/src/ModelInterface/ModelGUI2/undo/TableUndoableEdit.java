@@ -17,10 +17,10 @@ public class TableUndoableEdit extends AbstractUndoableEdit {
 	private int col;
 	private Node n;
 	private String oldVal;
-	private Map data;
+	private Map<String, Node> data;
 	private String key;
 
-	public TableUndoableEdit(BaseTableModel bt, int row, int col, Node n, String oldVal, Map data, String key) {
+	public TableUndoableEdit(BaseTableModel bt, int row, int col, Node n, String oldVal, Map<String, Node> data, String key) {
 		this.bt = bt;
 		this.row = row;
 		this.col = col;

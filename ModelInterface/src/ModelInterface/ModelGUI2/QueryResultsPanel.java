@@ -122,10 +122,7 @@ public class QueryResultsPanel extends JPanel {
 		try {
 			context.interruptQuery();
 		} catch (XmlException e) {
-			
 			e.printStackTrace();
-		} finally {
-			context.delete();
 		}
 		runThread.interrupt();
 	}

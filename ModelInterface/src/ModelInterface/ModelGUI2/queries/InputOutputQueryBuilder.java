@@ -57,7 +57,6 @@ public class InputOutputQueryBuilder extends QueryBuilder {
 		updateSelected(list);
 		--qg.currSel;
 		createXPath();
-		qg.levelValues = list.getSelectedValues();
 		queryFunctions = null;
 		queryFilter = null;
 	}
@@ -341,7 +340,6 @@ public class InputOutputQueryBuilder extends QueryBuilder {
 			e.printStackTrace();
 		}
 		res.delete();
-		XMLDB.getInstance().printLockStats("InputOutputQueryBuilder.createList");
 		return ret;
 	}
 	public String getCompleteXPath(Object[] regions) {
@@ -396,118 +394,6 @@ public class InputOutputQueryBuilder extends QueryBuilder {
 			.append(" collection('database.dbxml')/scenario[ (@name='test' and @date='2006-27-9T22:20:46-00:00') ]/world/")
 			.append(retStr).append(part2).toString();
 			*/
-	}
-	public Object[] extractAxisInfo(XmlValue n, Map filterMaps) throws Exception {
-		Vector ret = new Vector(2, 0);
-		boolean isOutput = false;
-		boolean isAnualInvestment = false;
-		if(n.getNodeName().equals("output")) {
-			//System.out.println("Finds output");
-			isOutput = true;
-			// try to negitiveify n's value?
-			double tempVal = n.getFirstChild().asNumber();
-			XmlValue changeTo = new XmlValue(-1*tempVal);
-			XmlValue.setValue(changeTo, n.getFirstChild());
-		} else if(n.getNodeName().equals("annual-investment")) {
-			//System.out.println("Finds anual investment");
-			isAnualInvestment = true;
-		} else if(n.getNodeName().equals("supply")) {
-			// TODO: check lock stats here, do I need to do some deleteing?
-			XmlValue prevSib = n.getPreviousSibling();
-			while(prevSib != null && !prevSib.getNodeName().equals("MarketGoodOrFuel")) {
-				prevSib = prevSib.getPreviousSibling();
-			}
-			if(prevSib == null) {
-				prevSib = n.getNextSibling();
-				while(prevSib != null && !prevSib.getNodeName().equals("MarketGoodOrFuel")) {
-					prevSib = prevSib.getNextSibling();
-				}
-			}
-			// if it is still null something is wrong..
-			ret.add("Household");
-			ret.add(prevSib.getFirstChild().getNodeValue());
-			//System.out.println("Returning ret: "+ret.get(0)+"---"+ret.get(1));
-			return ret.toArray();
-		}
-		XmlValue nBefore;
-		boolean isProductionSector = false;
-		do {
-			if(qg.nodeLevel.getKey().equals(XMLDB.getAttr(n, "type"))) {
-				if(qg.nodeLevel.getValue() == null) {
-					ret.add(XMLDB.getAttr(n, "name"));
-				} else { 
-					ret.add(XMLDB.getAttr(n, qg.nodeLevel.getValue()));
-				}
-			} 
-			if(qg.yearLevel.getKey().equals(XMLDB.getAttr(n, "type"))) {
-				if(qg.yearLevel.getValue() == null) {
-					ret.add(0, XMLDB.getAttr(n, "name"));
-				} else {
-					ret.add(XMLDB.getAttr(n, qg.yearLevel.getValue()));
-				}
-				if(isOutput) {
-					//System.out.println("Did set output");
-					ret.add(ret.get(0));
-				} else if(isAnualInvestment) {
-					//System.out.println("Did set invest");
-					ret.add("Capital");
-				} else if(n.getNodeName().equals("productionSector")) {
-					//System.out.println("Might set OVA");
-					isProductionSector = true;
-				}
-			}
-			nBefore = n;
-			n = n.getParentNode();
-			nBefore.delete();
-		} while(n.getNodeType() != XmlValue.DOCUMENT_NODE); 
-		n.delete();
-		XMLDB.getInstance().printLockStats("InputOutputQueryBuilder.getRegionAndYearFromNode");
-		// The capital row is not truely capital but other value added.
-		// The row is only the OVA row in ProductionSectors, it behaves as capital in Consumers.
-		if(isProductionSector && ret.get(1).equals("Capital")) { 
-			//System.out.println("Did set OVA");
-			ret.set(1, "OVA");
-		}
-		return ret.toArray();
-	}
-	public Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {
-		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
-			currNode.delete();
-			return dataTree;
-		}
-		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree);
-		String type = XMLDB.getAttr(currNode, "type");
-		if(type == null) {
-			type = currNode.getNodeName();
-		}
-		if(type.equals("demand-currency") || type.equals("region") || type.equals("output") || type.equals("annual-investment") ||
-				type.equals("supply") || type.equals("market")) {
-			String attr;
-			if(type.equals("supply")) {
-				// have to do some weirdness here as the structure is not quite right,
-				// and year has to get found before the region
-				attr = "year@"+XMLDB.getAttr(currNode.getParentNode(), "year");
-			} else if(type.equals("market")) {
-				XmlValue regionNameNode = currNode.getFirstChild();
-				// if we hit null we have problems anyways..
-				while(!regionNameNode.getNodeName().equals("MarketRegion")) {
-					regionNameNode = regionNameNode.getNextSibling();
-				}
-				attr = "region@"+regionNameNode.getFirstChild().getNodeValue();
-			} else if(type.equals("region")) {
-				attr = "region@"+XMLDB.getAttr(currNode, "name");
-			} else {
-				attr = "year@"+XMLDB.getAttr(currNode, "year");
-			}
-			//attr = type+"@"+attr;
-			if(!tempMap.containsKey(attr)) {
-				tempMap.put(attr, new HashMap());
-			}
-			currNode.delete();
-			return (Map)tempMap.get(attr);
-		} 
-		currNode.delete();
-		return tempMap;
 	}
 	public String getXMLName() {
 		return xmlName;

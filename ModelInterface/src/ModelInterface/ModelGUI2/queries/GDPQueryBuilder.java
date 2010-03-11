@@ -25,7 +25,7 @@ import com.sleepycat.dbxml.XmlValue;
 import com.sleepycat.dbxml.XmlException;
 
 public class GDPQueryBuilder extends QueryBuilder {
-	public static Map varList;
+	public static Map<String, Boolean> varList;
 	public static String xmlName = "gdpQueryBuilder";
 	public GDPQueryBuilder(QueryGenerator qgIn) {
 		super(qgIn);
@@ -55,8 +55,6 @@ public class GDPQueryBuilder extends QueryBuilder {
 		updateSelected(list);
 		--qg.currSel;
 		createXPath();
-		//qg.levelValues = list.getSelectedValues();
-		qg.levelValues = null;
 		queryFunctions = null;
 		queryFilter = null;
 	}
@@ -194,86 +192,6 @@ public class GDPQueryBuilder extends QueryBuilder {
 			return strBuff.toString();
 		}
 	}
-	public Object[] extractAxisInfo(XmlValue n, Map filterMaps) throws Exception {
-		Vector ret = new Vector(2, 0);
-		XmlValue nBefore;
-		do {
-			if(qg.nodeLevel.getKey().equals(XMLDB.getAttr(n, "type"))) {
-				if(!qg.isGlobal) {
-					if(qg.nodeLevel.getValue() == null) {
-						ret.add(XMLDB.getAttr(n, "name"));
-					} else {
-						ret.add(XMLDB.getAttr(n, qg.nodeLevel.getValue()));
-					}
-				} else {
-					ret.add("Global");
-				}
-			} 
-			if(n.getNodeName().equals(qg.yearLevel.getKey())) {
-				if(qg.yearLevel.getValue() == null) {
-					ret.add(0, XMLDB.getAttr(n, "year"));
-				} else {
-					ret.add(0, XMLDB.getAttr(n, qg.yearLevel.getValue()));
-				}
-			} else if(XMLDB.hasAttr(n)) {
-				Map tempFilter;
-				if (filterMaps.containsKey(n.getNodeName())) {
-					tempFilter = (HashMap)filterMaps.get(n.getNodeName());
-				} else {
-					tempFilter = new HashMap();
-				}
-				String attr = XMLDB.getAttr(n);
-				if (!tempFilter.containsKey(attr)) {
-					tempFilter.put(attr, new Boolean(true));
-					filterMaps.put(n.getNodeName(), tempFilter);
-				}
-			}
-			nBefore = n;
-			n = n.getParentNode();
-			nBefore.delete();
-		} while(n.getNodeType() != XmlValue.DOCUMENT_NODE); 
-		n.delete();
-		XMLDB.getInstance().printLockStats("GDPQueryBuilder.getRegionAndYearFromNode");
-		return ret.toArray();
-	}
-	public Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {
-		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
-			currNode.delete();
-			return dataTree;
-		}
-		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree);
-		// used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
-		/*
-		if( (isGlobal && currNode.getNodeName().equals("region")) ) {
-			currNode.delete();
-			return tempMap;
-		}
-		*/
-		if(XMLDB.hasAttr(currNode) && !qg.nodeLevel.getKey().equals(XMLDB.getAttr(currNode, "type"))
-				&& !currNode.getNodeName().equals(qg.yearLevel.getKey())) {
-			String attr = XMLDB.getAllAttr(currNode);
-			// TODO: clean up logic with types
-			String type = XMLDB.getAttr(currNode, "type");
-			if(type == null) {
-				type = currNode.getNodeName();
-			}
-			// check for rewrites
-			if(qg.labelRewriteMap != null && qg.labelRewriteMap.containsKey(type)) {
-				Map<String, String> currRewriteMap = qg.labelRewriteMap.get(type);
-				if(currRewriteMap.containsKey(attr)) {
-					attr = currRewriteMap.get(attr);
-				}
-			}
-			attr = currNode.getNodeName()+"@"+attr;
-			if(!tempMap.containsKey(attr)) {
-				tempMap.put(attr, new TreeMap());
-			}
-			currNode.delete();
-			return (Map)tempMap.get(attr);
-		} 
-		currNode.delete();
-		return tempMap;
-	}
 	public String getXMLName() {
 		return xmlName;
 	}
@@ -283,7 +201,6 @@ public class GDPQueryBuilder extends QueryBuilder {
 	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue) throws Exception {
 		// stop point for recursion is the root
 		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
-			currNode.delete();
 			return dataTree;
 		}
 
@@ -331,7 +248,6 @@ public class GDPQueryBuilder extends QueryBuilder {
 			}
 			tempMap = (Map)tempMap.get(attr);
 		}
-		currNode.delete();
 		return tempMap;
 	}
 }

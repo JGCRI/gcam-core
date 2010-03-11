@@ -12,9 +12,6 @@ import ModelInterface.ModelGUI2.undo.TableUndoableEdit;
 import ModelInterface.ModelGUI2.xmldb.QueryBinding;
 import ModelInterface.common.DataPair;
 
-import java.awt.Graphics2D;
-import java.awt.geom.Rectangle2D;
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import org.apache.poi.hssf.usermodel.*;
@@ -29,7 +26,6 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.w3c.dom.*;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.tree.TreePath;
 import javax.swing.table.TableCellRenderer;
@@ -434,7 +430,7 @@ public class ComboTableModel extends BaseTableModel{
 	 * which is the units column elseDouble.class for the rest.
 	 * @param columnIndex The column being queried.
 	 * @return Double.class for leftHeaderVector.size()  
-	 * 	&lt columnIndex &lt getColumnCount()-1 else String.class
+	 * 	&lt; columnIndex &lt; getColumnCount()-1 else String.class
 	 */
 	public Class getColumnClass(int columnIndex) {
 		return (columnIndex > leftHeaderVector.size()) 
@@ -785,12 +781,12 @@ public class ComboTableModel extends BaseTableModel{
 		System.out.println("Before Function: "+System.currentTimeMillis());
 		if(singleBinding == null) {
 			buildTable(XMLDB.getInstance().createQuery(qgIn, scenarios, regions, context), qgIn.isSumAll(), 
-					qgIn.getLevelValues(), isTotal);
+					isTotal);
 		} else {
 			// TODO: figure out a better way of telling if this is a Total
 			isTotal = !(singleBinding instanceof ModelInterface.ModelGUI2.xmldb.SingleQueryQueryBinding);
 			buildTable(XMLDB.getInstance().createQuery(singleBinding, scenarios, regions, context), 
-					qgIn.isSumAll(), qgIn.getLevelValues(), isTotal);
+					qgIn.isSumAll(), isTotal);
 		}
 		ind2Name = qgIn.getVariable();
 		indCol.add(0, ind1Name);
@@ -815,39 +811,19 @@ public class ComboTableModel extends BaseTableModel{
 		}
 		setColNameIndex(qg.getChartLabelColumnName());
 	}
-	private void buildTable(XmlResults res, boolean sumAll, Object[] levelValues, boolean isTotal) throws Exception{
+	private void buildTable(XmlResults res, boolean sumAll, boolean isTotal) throws Exception{
 		System.out.println("In Function: "+System.currentTimeMillis());
-		/*
-	  try {
-		  if(!res.hasNext()) {
-			  System.out.println("Query didn't get any results");
-			  // display an error on the screen
-			  res.delete();
-			  throw new Exception("Query had no results.");
-		  }
-	  } catch(XmlException e) {
-		  e.printStackTrace();
-		  throw e;
-	  }
-	  */
 	  XmlValue tempNode;
 	  final Set<String> yearLevelAxis = new TreeSet<String>();
 	  final Set<String> nodeLevelAxis = new TreeSet/*LinkedHashSet*/<String>();
 	  yearLevelAxis.addAll(getDefaultYearList());
-	  //tableFilterMaps = new LinkedHashMap();
 	  final Map dataTree = new TreeMap();
 	  final Map<String, String> rewriteMap = qg.getNodeLevelRewriteMap();
 	  // axisValues will be passed to the query generator which will set the
 	  // year level value as the key and the node level value as the value
 	  final DataPair<String, String> axisValues = new DataPair<String, String>();
 	  try {
-		  //while(res.hasNext()) {
 		  while((tempNode = res.next()) != null) {
-			  // make sure we have not been interrupted
-			  if(Thread.currentThread().isInterrupted()) {
-				  tempNode.delete();
-				  throw new Exception("Query interrupted");
-			  }
 			  // catgorize this result
 			  axisValues.setKey(null);
 			  axisValues.setValue(null);
@@ -855,7 +831,6 @@ public class ComboTableModel extends BaseTableModel{
 			  if(axisValues.getKey() == null || axisValues.getValue() == null) {
 				  System.out.println("Key: "+axisValues.getKey());
 				  System.out.println("Value: "+axisValues.getValue());
-				  tempNode.delete();
 				  throw new Exception("<html><body>Could not determine how to categorize the results.<br> Please check your axis node values.</body></html>");
 			  }
 
@@ -873,7 +848,6 @@ public class ComboTableModel extends BaseTableModel{
 			  if(rewriteMap != null && rewriteMap.containsKey(axisValues.getValue())) {
 				  axisValues.setValue(rewriteMap.get(axisValues.getValue()));
 				  if(axisValues.getValue().equals("")) {
-					  tempNode.delete();
 					  continue;
 				  }
 			  }
@@ -882,9 +856,7 @@ public class ComboTableModel extends BaseTableModel{
 			  // it the very first time around for performance reasons, this means
 			  // there will be no checking for mismatched units
 			  if((units = (String)retMap.get("Units;"+axisValues.getValue())) == null) {
-				  XmlValue delVal = tempNode.getParentNode();
-				  units = XMLDB.getAttr(delVal, "unit");
-				  delVal.delete();
+				  units = XMLDB.getAttr(tempNode.getParentNode(), "unit");
 				  if(units == null) {
 					  units = "None Specified";
 				  }
@@ -904,52 +876,7 @@ public class ComboTableModel extends BaseTableModel{
 			  // add the units for the current row under the Units column
 			  // This will use the unit seen from the first value in the
 			  retMap.put("Units;"+axisValues.getValue(), units);
-			  tempNode.delete();
-		  /*
-			  tempNode = res.next();
-			  regionAndYear = qg.extractAxisInfo(tempNode.getParentNode(), tableFilterMaps);
-			  if(regionAndYear.length < 2) {
-				  tempNode.delete();
-				  res.delete();
-				  throw new Exception("Could not determine how to categorize the results."
-						  +"<html><br></html>"+"Please check your axis node values.");
-			  }
-			  if(isTotal) {
-				  regionAndYear[1] = "Total";
-			  }
-			  XmlValue delValue = tempNode.getParentNode();
-			  units = XMLDB.getAttr(delValue, "unit");
-			  delValue.delete();
-			  if(units == null) {
-				  units = "None Specified";
-			  }
-			  if(sumAll) {
-				  regionAndYear[1] = "All "+qg.getNodeLevel();
-			  }
-			  // check for rewrites
-			  if(rewriteMap != null && rewriteMap.containsKey(regionAndYear[1])) {
-				  regionAndYear[1] = rewriteMap.get(regionAndYear[1]);
-				  if(regionAndYear[1].equals("")) {
-					  tempNode.delete();
-					  continue;
-				  }
-			  }
-			  regions.add(regionAndYear[0]);
-			  years.add(regionAndYear[1]);
-			  Map retMap = qg.addToDataTree(new XmlValue(tempNode), dataTree); 
-			  XMLDB.getInstance().printLockStats("addToDataTree");
-			  Double ret = (Double)retMap.get((String)regionAndYear[0]+";"+(String)regionAndYear[1]);
-			  if(ret == null) {
-				  retMap.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], new Double(tempNode.asNumber()));
-			  } else {
-				  retMap.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], 
-						  new Double(ret.doubleValue() + tempNode.asNumber()));
-			  }
-			  retMap.put("Units;"+(String)regionAndYear[1], units);
-			  tempNode.delete();
-			  */
 		  }
-		  XMLDB.getInstance().printLockStats("buildTable");
 	  } catch(Exception e) {
 		  e.printStackTrace();
 		  throw e;
@@ -979,21 +906,6 @@ public class ComboTableModel extends BaseTableModel{
 	  System.out.println("After build Tree: "+System.currentTimeMillis());
 	  recAddTables(dataTree, null, yearLevelAxis, nodeLevelAxis, "");
 	  System.out.println("After Add table: "+System.currentTimeMillis());
-	  //System.out.println("Level Selected: "+levelValues);
-	  // if we are supposed to have more values then found, add the row,
-	  // and it will be filled out with zeros
-	  /*
-	  if(!sumAll && levelValues != null && years.size() < levelValues.length) {
-		  //indRow = new Vector(levelValues);
-		  indRow = new Vector(levelValues.length, 0);
-		  for(int i =0; i < levelValues.length; ++i) {
-			  System.out.println(levelValues[i]);
-			  indRow.add(levelValues[i]);
-		  }
-	  } else {
-		  indRow = new Vector( years );
-	  }
-	  */
 	  indRow = new Vector(nodeLevelAxis);
 	  indCol = new Vector(yearLevelAxis);
 	  ind1Name = qg.getAxis1Name();
@@ -1065,18 +977,7 @@ public class ComboTableModel extends BaseTableModel{
 		  dp.createPicture(new HSSFClientAnchor(0,0,255,255,firstCol,firstRow,colSpan,rowSpan), where);
 
 
-		  //TODO: Make this a user selectable option
-		  /*
-		  try {
-			  File outputfile = new File("saved.jpg");
-			  ImageIO.write(chartImage, "jpg", outputfile);
-		  } catch (IOException e3){
-			  JOptionPane.showMessageDialog(parentFrame, 
-					  "Image didn't save",
-					  "Who knows why", JOptionPane.ERROR_MESSAGE);
-		  }
-		   */
-	  } catch(java.io.IOException ioe) {
+	  } catch(IOException ioe) {
 		  ioe.printStackTrace();
 	  }
   }

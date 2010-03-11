@@ -459,9 +459,8 @@ public class MultiTableModel extends BaseTableModel{
 		
 		wild.add(qgIn.getNodeLevel());
 		wild.add(qgIn.getYearLevel());
-		//System.out.println("Query is "+qgIn.getCompleteXPath(regions));
 		System.out.println("Before Function: "+System.currentTimeMillis());
-		buildTable(XMLDB.getInstance().createQuery(qgIn, scenarios, regions, context), qgIn.isSumAll(), qgIn.getLevelValues());
+		buildTable(XMLDB.getInstance().createQuery(qgIn, scenarios, regions, context), qgIn.isSumAll());
 		tableEditor = new TableEditor();
 		tableRenderer = new TableRenderer();
 		activeRows = new Vector(tables.size());
@@ -478,94 +477,24 @@ public class MultiTableModel extends BaseTableModel{
 		}
 		title += "</body></html>";
 	}
-	private void buildTable(XmlResults res, boolean sumAll, Object[] levelValues) throws Exception {
+	private void buildTable(XmlResults res, boolean sumAll) throws Exception {
 		System.out.println("In Function: "+System.currentTimeMillis());
-		/*
-	  try {
-		  if(!res.hasNext()) {
-			  System.out.println("Query didn't get any results");
-			  // display an error on the screen
-			  res.delete();
-			  throw new Exception("The Query did not get any results.");
-		  }
-	  } catch(XmlException e) {
-		  e.printStackTrace();
-		  res.delete();
-		  throw e;
-	  }
-	  */
 	  XmlValue tempNode;
-	  /* comment out Object[] regionAndYear;*/
 	  final Set<String> yearLevelAxis = new TreeSet<String>();
 	  final Set<String> nodeLevelAxis = new TreeSet<String>();
 	  yearLevelAxis.addAll(getDefaultYearList());
-	  //tableFilterMaps = new LinkedHashMap();
 	  final Map dataTree = new LinkedHashMap();
 	  final Map<String, String> rewriteMap = qg.getNodeLevelRewriteMap();
 	  // axisValues will be passed to the query generator which will set the
 	  // year level value as the key and the node level value as the value
 	  final DataPair<String, String> axisValues = new DataPair<String, String>();
 	  try {
-		  //while(res.hasNext()) {
 		  while((tempNode = res.next()) != null) {
-			  /*
-			  tempNode = res.next();
-			  regionAndYear = qg.extractAxisInfo(tempNode.getParentNode(), tableFilterMaps);
-			  if(regionAndYear.length < 2) {
-				  tempNode.delete();
-				  throw new Exception("<html><body>Could not determine how to categorize the results.<br> Please check your axis node values.</body></html>");
-			  }
-
-			  XmlValue delVal = tempNode.getParentNode();
-			  units = XMLDB.getAttr(delVal, "unit");
-			  delVal.delete();
-			  if(units == null) {
-				  units = "None Specified";
-			  }
-			  if(sumAll) {
-				  //regionAndYear[1] = "All "+(String)wild.get(0);
-				  regionAndYear[1] = levelValues[0];
-			  }
-			  // check for rewrites
-			  if(rewriteMap != null && rewriteMap.containsKey(regionAndYear[1])) {
-				  regionAndYear[1] = rewriteMap.get(regionAndYear[1]);
-				  if(regionAndYear[1].equals("")) {
-					  tempNode.delete();
-					  continue;
-				  }
-			  }
-			  yearLevelAxis.add(regionAndYear[0]);
-			  nodeLevelAxis.add(regionAndYear[1]);
-			  Map retMap = qg.addToDataTree(new XmlValue(tempNode), dataTree); 
-			  XMLDB.getInstance().printLockStats("addToDataTree");
-			  Double ret = (Double)retMap.get((String)regionAndYear[0]+";"+(String)regionAndYear[1]);
-			  if(ret == null) {
-				  retMap.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], new Double(tempNode.asNumber()));
-			  } else {
-				  retMap.put((String)regionAndYear[0]+";"+(String)regionAndYear[1], 
-						  new Double(ret.doubleValue() + tempNode.asNumber()));
-			  }
-			  ret = (Double)retMap.get((String)regionAndYear[0]+";Total");
-			  if(ret == null) {
-				  retMap.put((String)regionAndYear[0]+";Total", new Double(tempNode.asNumber()));
-			  } else {
-				  retMap.put((String)regionAndYear[0]+";Total", 
-						  new Double(ret.doubleValue() + tempNode.asNumber()));
-			  }
-			  retMap.put("Units;"+(String)regionAndYear[1], units);
-			  retMap.put("Units;Total", units);
-			  */
-			  // make sure we have not been interrupted
-			  if(Thread.currentThread().isInterrupted()) {
-				  tempNode.delete();
-				  throw new Exception("Query interrupted");
-			  }
 			  // catgorize this result
 			  axisValues.setKey(null);
 			  axisValues.setValue(null);
 			  Map retMap = qg.addToDataTree(tempNode.getParentNode(), dataTree, axisValues);
 			  if(axisValues.getKey() == null || axisValues.getValue() == null) {
-				  tempNode.delete();
 				  throw new Exception("<html><body>Could not determine how to categorize the results.<br> Please check your axis node values.</body></html>");
 			  }
 
@@ -578,7 +507,6 @@ public class MultiTableModel extends BaseTableModel{
 			  if(rewriteMap != null && rewriteMap.containsKey(axisValues.getValue())) {
 				  axisValues.setValue(rewriteMap.get(axisValues.getValue()));
 				  if(axisValues.getValue().equals("")) {
-					  tempNode.delete();
 					  continue;
 				  }
 			  }
@@ -587,9 +515,7 @@ public class MultiTableModel extends BaseTableModel{
 			  // it the very first time around for performance reasons, this means
 			  // there will be no checking for mismatched units
 			  if((units = (String)retMap.get("Units;"+axisValues.getValue())) == null) {
-				  XmlValue delVal = tempNode.getParentNode();
-				  units = XMLDB.getAttr(delVal, "unit");
-				  delVal.delete();
+				  units = XMLDB.getAttr(tempNode.getParentNode(), "unit");
 				  if(units == null) {
 					  units = "None Specified";
 				  }
@@ -616,9 +542,7 @@ public class MultiTableModel extends BaseTableModel{
 			  // row, see comment above regarding units
 			  retMap.put("Units;"+axisValues.getValue(), units);
 			  retMap.put("Units;Total", units);
-			  tempNode.delete();
 		  }
-		  XMLDB.getInstance().printLockStats("buildTable");
 	  } catch(Exception e) {
 		  e.printStackTrace();
 		  throw e;

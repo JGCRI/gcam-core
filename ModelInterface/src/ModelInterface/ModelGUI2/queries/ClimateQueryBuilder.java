@@ -21,7 +21,7 @@ import java.util.EventListener;
 import com.sleepycat.dbxml.XmlValue;
 
 public class ClimateQueryBuilder extends QueryBuilder {
-	public static Map varList;
+	public static Map<String, Boolean> varList;
 	public static String xmlName = "ClimateQuery";
 	public ClimateQueryBuilder(QueryGenerator qgIn) {
 		super(qgIn);
@@ -51,8 +51,6 @@ public class ClimateQueryBuilder extends QueryBuilder {
 		updateSelected(list);
 		--qg.currSel;
 		createXPath();
-		//qg.levelValues = list.getSelectedValues();
-		qg.levelValues = null;
 		queryFunctions = null;
 		queryFilter = null;
 	}
@@ -131,31 +129,6 @@ public class ClimateQueryBuilder extends QueryBuilder {
 	public String getCompleteXPath(Object[] regions) {
 		// ignoring selected regions
 		return qg.xPath;
-	}
-	public Object[] extractAxisInfo(XmlValue n, Map filterMaps) throws Exception {
-		Object[] ret = new Object[2];
-		ret[0] = XMLDB.getAttr(n, qg.yearLevel.getValue());
-		ret[1] = n.getNodeName();
-		XMLDB.getInstance().printLockStats("ClimateQueryBuilder.extractAxisInfo");
-		return ret;
-	}
-	public Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {
-		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
-			currNode.delete();
-			return dataTree;
-		}
-		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree);
-		if(XMLDB.hasAttr(currNode) && !currNode.getNodeName().equals(qg.yearLevel)) {
-			String attr = XMLDB.getAllAttr(currNode);
-			attr = currNode.getNodeName()+"@"+attr;
-			if(!tempMap.containsKey(attr)) {
-				tempMap.put(attr, new TreeMap());
-			}
-			currNode.delete();
-			return (Map)tempMap.get(attr);
-		} 
-		currNode.delete();
-		return tempMap;
 	}
 	public String getXMLName() {
 		return xmlName;

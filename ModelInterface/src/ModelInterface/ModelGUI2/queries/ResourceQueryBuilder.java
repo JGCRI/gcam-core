@@ -69,7 +69,6 @@ public class ResourceQueryBuilder extends QueryBuilder {
 		updateSelected(list);
 		--qg.currSel;
 		createXPath();
-		qg.levelValues = list.getSelectedValues();
 		queryFunctions = null;
 		queryFilter = null;
 	}
@@ -298,7 +297,6 @@ public class ResourceQueryBuilder extends QueryBuilder {
 			e.printStackTrace();
 		}
 		ret.delete(ret.length()-4, ret.length());
-		XMLDB.getInstance().printLockStats("expandGroupName");
 		return ret.toString();
 	}
 	private void createXPath() {
@@ -338,7 +336,6 @@ public class ResourceQueryBuilder extends QueryBuilder {
 			e.printStackTrace();
 		}
 		res.delete();
-		XMLDB.getInstance().printLockStats("createList");
 		return ret;
 	}
 	public String getCompleteXPath(Object[] regions) {
@@ -365,80 +362,6 @@ public class ResourceQueryBuilder extends QueryBuilder {
 			ret.append(" )]/");
 		}
 		return ret.append(qg.getXPath()).toString();
-	}
-	public Object[] extractAxisInfo(XmlValue n, Map filterMaps) throws Exception {
-		Vector ret = new Vector(2, 0);
-		XmlValue nBefore;
-		do {
-			if(n.getNodeName().matches(qg.nodeLevel.getKey()) || qg.nodeLevel.getKey().equals(XMLDB.getAttr(n, "type"))) {
-				if(qg.nodeLevel.getValue() == null) {
-					ret.add(XMLDB.getAttr(n, "name"));
-				} else {
-					ret.add(XMLDB.getAttr(n, qg.nodeLevel.getValue()));
-				}
-			} 
-			if(n.getNodeName().equals(qg.yearLevel.getKey())) {
-				if(qg.yearLevel.getValue() == null) {
-					ret.add(0, XMLDB.getAttr(n, "year"));
-				} else {
-					ret.add(XMLDB.getAttr(n, qg.yearLevel.getValue()));
-				}
-			} else if(XMLDB.hasAttr(n)) {
-				Map tempFilter;
-				if (filterMaps.containsKey(n.getNodeName())) {
-					tempFilter = (HashMap)filterMaps.get(n.getNodeName());
-				} else {
-					tempFilter = new HashMap();
-				}
-				String attr = XMLDB.getAttr(n);
-				if (!tempFilter.containsKey(attr)) {
-					tempFilter.put(attr, new Boolean(true));
-					filterMaps.put(n.getNodeName(), tempFilter);
-				}
-			}
-			nBefore = n;
-			n = n.getParentNode();
-			nBefore.delete();
-		} while(n.getNodeType() != XmlValue.DOCUMENT_NODE); 
-		n.delete();
-		XMLDB.getInstance().printLockStats("SupplyDemandQueryBuilder.getRegionAndYearFromNode");
-		return ret.toArray();
-	}
-	public Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {
-		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
-			currNode.delete();
-			return dataTree;
-		}
-		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree);
-		String type = XMLDB.getAttr(currNode, "type");
-		if(type == null) {
-			type = currNode.getNodeName();
-		}
-		// used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
-		if( (qg.isGlobal && type.equals("region")) || qg.getCollapseOnList().contains(type)) {
-			currNode.delete();
-			return tempMap;
-		}
-		if(XMLDB.hasAttr(currNode) && !type.equals(qg.nodeLevel.getKey()) 
-				&& !type.equals(qg.yearLevel.getKey())) {
-			String attr = XMLDB.getAllAttr(currNode);
-			//attr = currNode.getNodeName()+"@"+attr;
-			// check for rewrites
-			if(qg.labelRewriteMap != null && qg.labelRewriteMap.containsKey(type)) {
-				Map<String, String> currRewriteMap = qg.labelRewriteMap.get(type);
-				if(currRewriteMap.containsKey(attr)) {
-					attr = currRewriteMap.get(attr);
-				}
-			}
-			attr = type+"@"+attr;
-			if(!tempMap.containsKey(attr)) {
-				tempMap.put(attr, new TreeMap());
-			}
-			currNode.delete();
-			return (Map)tempMap.get(attr);
-		} 
-		currNode.delete();
-		return tempMap;
 	}
 	public String getXMLName() {
 		return xmlName;

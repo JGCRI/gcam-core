@@ -74,7 +74,6 @@ public class InputQueryBuilder extends QueryBuilder {
 		updateSelected(list);
 		--qg.currSel;
 		createXPath();
-		qg.levelValues = list.getSelectedValues();
 		queryFunctions = null;
 		queryFilter = null;
 	}
@@ -310,7 +309,6 @@ public class InputQueryBuilder extends QueryBuilder {
 			e.printStackTrace();
 		}
 		ret.delete(ret.length()-4, ret.length());
-		XMLDB.getInstance().printLockStats("InputQueryBuilder.expandGroupName");
 		return ret.toString();
 	}
 	private void createXPath() {
@@ -372,7 +370,6 @@ public class InputQueryBuilder extends QueryBuilder {
 			e.printStackTrace();
 		}
 		res.delete();
-		XMLDB.getInstance().printLockStats("InputQueryBuilder.createList");
 		return ret;
 	}
 	public String getCompleteXPath(Object[] regions) {
@@ -399,78 +396,6 @@ public class InputQueryBuilder extends QueryBuilder {
 			ret.append(" )]/");
 		}
 		return ret.append(qg.getXPath()).toString();
-	}
-	public Object[] extractAxisInfo(XmlValue n, Map filterMaps) throws Exception {
-		Vector ret = new Vector(2, 0);
-		XmlValue nBefore;
-		do {
-			if(qg.nodeLevel.getKey().equals(XMLDB.getAttr(n, "type"))) {
-				if(qg.nodeLevel.getValue() == null) {
-					ret.add(XMLDB.getAttr(n, "name"));
-				} else { 
-					ret.add(XMLDB.getAttr(n, qg.nodeLevel.getValue()));
-				}
-			} 
-			if(qg.yearLevel.getKey().equals(XMLDB.getAttr(n, "type")) || qg.yearLevel.getKey().equals(n.getNodeName())) {
-				if(qg.yearLevel.getValue() == null) {
-					ret.add(0, XMLDB.getAttr(n, "year"));
-				} else { 
-					ret.add(XMLDB.getAttr(n, qg.yearLevel.getValue()));
-				}
-			} else if(XMLDB.hasAttr(n)) {
-				// are filter maps used, I don't belive filtering is currently enabled for DB Output
-				// is this a feature people would want?
-				Map tempFilter;
-				if (filterMaps.containsKey(n.getNodeName())) {
-					tempFilter = (Map)filterMaps.get(n.getNodeName());
-				} else {
-					tempFilter = new HashMap();
-				}
-				String attr = XMLDB.getAttr(n);
-				if (!tempFilter.containsKey(attr)) {
-					tempFilter.put(attr, new Boolean(true));
-					filterMaps.put(n.getNodeName(), tempFilter);
-				}
-			}
-			nBefore = n;
-			n = n.getParentNode();
-			nBefore.delete();
-		} while(n.getNodeType() != XmlValue.DOCUMENT_NODE); 
-		n.delete();
-		XMLDB.getInstance().printLockStats("InputQueryBuilder.getRegionAndYearFromNode");
-		return ret.toArray();
-	}
-	public Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {
-		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
-			currNode.delete();
-			return dataTree;
-		}
-		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree);
-		String type = XMLDB.getAttr(currNode, "type");
-		if(type == null) {
-			type = currNode.getNodeName();
-		}
-		// used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
-		if( (qg.isGlobal && type.equals("region")) 
-				|| (qg.nodeLevel.getKey().equals("sector") && type.equals("subsector")) 
-				|| ((qg.nodeLevel.getKey().equals("sector") || qg.nodeLevel.getKey().equals("subsector")) && type.equals("baseTechnology"))
-				|| ((qg.nodeLevel.getKey().equals("sector") || qg.nodeLevel.getKey().equals("subsector") || qg.nodeLevel.getKey().equals("baseTechnology")) &&
-						type.equals("input"))) {
-			currNode.delete();
-			return tempMap;
-		}
-		if(XMLDB.hasAttr(currNode) && !type.equals(qg.nodeLevel.getKey()) 
-				&& !type.equals(qg.yearLevel.getKey())) {
-			String attr = XMLDB.getAllAttr(currNode);
-			attr = currNode.getNodeName()+"@"+attr;
-			if(!tempMap.containsKey(attr)) {
-				tempMap.put(attr, new HashMap());
-			}
-			currNode.delete();
-			return (Map)tempMap.get(attr);
-		} 
-		currNode.delete();
-		return tempMap;
 	}
 	public String getXMLName() {
 		return xmlName;

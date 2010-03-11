@@ -43,8 +43,6 @@ public abstract class QueryBuilder implements java.io.Serializable {
 	public abstract void updateSelected(JComponentAdapter list);
 	public abstract String createListPath(int level);
 	public abstract String getCompleteXPath(Object[] regions);
-  	public abstract Object[] extractAxisInfo(XmlValue n, Map filterMaps) throws Exception; 
-	public abstract Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception; 
 	public abstract String getXMLName();
 
 	public String getNodeLevelPath() {

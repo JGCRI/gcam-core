@@ -25,8 +25,8 @@ import com.sleepycat.dbxml.XmlValue;
 import com.sleepycat.dbxml.XmlException;
 
 public class EmissionsQueryBuilder extends QueryBuilder {
-	public static Map ghgList;
-	public static Map fuelList;
+	public static Map<String, Boolean> ghgList;
+	public static Map<String, Boolean> fuelList;
 	protected Map sectorList;
 	protected Map subsectorList;
 	protected Map techList;
@@ -71,7 +71,6 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		updateSelected(list);
 		--qg.currSel;
 		createXPath();
-		qg.levelValues = list.getSelectedValues();
 		queryFunctions = null;
 		queryFilter = null;
 	}
@@ -309,7 +308,6 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 		} else {
 			ret.append("node()");
 			System.out.println("The xpath is: "+ret.toString());
-			//qg.levelValues = lV.toArray();
 		}
 		if(gq) {
 			qg.group = true;
@@ -341,7 +339,6 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			e.printStackTrace();
 		}
 		ret.delete(ret.length()-4, ret.length());
-		XMLDB.getInstance().printLockStats("expandGroupName");
 		return ret.toString();
 	}
 	private void createXPath() {
@@ -381,7 +378,6 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			e.printStackTrace();
 		}
 		res.delete();
-		XMLDB.getInstance().printLockStats("createList");
 		return ret;
 	}
 	public String getCompleteXPath(Object[] regions) {
@@ -408,88 +404,6 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			ret.append(" )]/");
 		}
 		return ret.append(qg.getXPath()).toString();
-	}
-	public Object[] extractAxisInfo(XmlValue n, Map filterMaps) throws Exception {
-		Vector ret = new Vector(2, 0);
-		XmlValue nBefore;
-		do {
-			if(qg.nodeLevel.getKey().equals(XMLDB.getAttr(n, "type")) || qg.nodeLevel.getKey().equals(n.getNodeName())) {
-				if(qg.nodeLevel.getValue() == null) {
-					String temp = XMLDB.getAttr(n, "name");
-					if(temp == null) {
-						ret.add(XMLDB.getAttr(n, "fuel-name"));
-					} else {
-						ret.add(temp);
-					}
-				} else {
-					ret.add(XMLDB.getAttr(n, qg.nodeLevel.getValue()));
-				}
-			} 
-			//if(n.getNodeName().equals(qg.yearLevel)) {  Do I want to make this change??
-			if(qg.yearLevel.getKey().equals(XMLDB.getAttr(n, "type")) || qg.yearLevel.getKey().equals(n.getNodeName())) {
-				if(qg.yearLevel.getValue() == null) {
-					ret.add(0, XMLDB.getAttr(n, "year"));
-				} else {
-					ret.add(XMLDB.getAttr(n, qg.yearLevel.getValue()));
-				}
-			} /*else if(XMLDB.hasAttr(n)) {
-				Map tempFilter;
-				if (filterMaps.containsKey(n.getNodeName())) {
-					tempFilter = (HashMap)filterMaps.get(n.getNodeName());
-				} else {
-					tempFilter = new HashMap();
-				}
-				String attr = XMLDB.getAttr(n);
-				if (!tempFilter.containsKey(attr)) {
-					tempFilter.put(attr, new Boolean(true));
-					filterMaps.put(n.getNodeName(), tempFilter);
-				}
-			}
-			*/
-			nBefore = n;
-			n = n.getParentNode();
-			nBefore.delete();
-		} while(n.getNodeType() != XmlValue.DOCUMENT_NODE); 
-		n.delete();
-		XMLDB.getInstance().printLockStats("SupplyDemandQueryBuilder.getRegionAndYearFromNode");
-		//System.out.println("Returning: "+ret);
-		return ret.toArray();
-	}
-	public Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {
-		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
-			currNode.delete();
-			return dataTree;
-		}
-		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree);
-		String type = XMLDB.getAttr(currNode, "type");
-		if(type == null) {
-			type = currNode.getNodeName();
-		}
-		// used to combine sectors and subsectors when possible to avoid large amounts of sparse tables
-		if((qg.isGlobal && type.equals("region")) || qg.getCollapseOnList().contains(type)) {
-			currNode.delete();
-			return tempMap;
-		}
-		if(XMLDB.hasAttr(currNode) && !qg.nodeLevel.getKey().equals(type)
-				&& !qg.yearLevel.getKey().equals(type)) {
-			String attr = XMLDB.getAllAttr(currNode);
-			//attr = currNode.getNodeName()+"@"+attr;
-			// check for rewrites
-			if(qg.labelRewriteMap != null && qg.labelRewriteMap.containsKey(type)) {
-				Map<String, String> currRewriteMap = qg.labelRewriteMap.get(type);
-				if(currRewriteMap.containsKey(attr)) {
-					attr = currRewriteMap.get(attr);
-				}
-			}
-			attr = type+"@"+attr;
-			if(!tempMap.containsKey(attr)) {
-				tempMap.put(attr, new TreeMap());
-			}
-			currNode.delete();
-			return (Map)tempMap.get(attr);
-		} 
-		currNode.delete();
-		return tempMap;
 	}
 	public String getXMLName() {
 		return xmlName;

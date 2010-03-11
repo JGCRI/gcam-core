@@ -29,7 +29,7 @@ import com.sleepycat.dbxml.XmlResults;
 import com.sleepycat.dbxml.XmlException;
 
 public class LandAllocatorQueryBuilder extends QueryBuilder {
-	public static Map varList;
+	public static Map<String, Boolean> varList;
 	public static String xmlName = "LandAllocatorQuery";
 	private JComponentAdapter listComp;
 	private TreePath selectedTreePath;
@@ -76,8 +76,6 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 		updateSelected(list);
 		--qg.currSel;
 		createXPath();
-		//qg.levelValues = list.getSelectedValues();
-		qg.levelValues = null;
 		queryFunctions = null;
 		queryFilter = null;
 	}
@@ -102,7 +100,6 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 		} catch(XmlException e) {
 			e.printStackTrace();
 		}
-		XMLDB.getInstance().printLockStats("LandAllocatorQueryBuilder.getLeaves");
 	}
 	*/
 	private JTreeAdapter getLandUseTree() {
@@ -116,14 +113,12 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 		try {
 			while((val = res.next()) != null) {
 				addToLandUseTree(val, landUseTree);
-				val.delete();
 			}
 		} catch(XmlException xe) {
 			xe.printStackTrace();
 		} finally {
 			res.delete();
 		}
-		XMLDB.getInstance().printLockStats("LandAllocatorQueryBuilder.getLandUseTree");
 		JTree retTree = new JTree((Hashtable<String, Hashtable>)landUseTree);
 		retTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		retTree.setSelectionRow(0);
@@ -153,7 +148,6 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 			}
 			valPrev = val;
 			val = val.getNextSibling();
-			valPrev.delete();
 		}
 	}
 
@@ -270,17 +264,9 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 		}
 		return ret.append(qg.getXPath()).toString();
 	}
-	public Object[] extractAxisInfo(XmlValue n, Map filterMaps) throws Exception {
-		Object[] ret = new Object[2];
-		ret[0] = XMLDB.getAttr(n, "year");
-		ret[1] = qg.nodeLevel.getKey().split(" ", 2)[1];
-		XMLDB.getInstance().printLockStats("LandAllocatorQueryBuilder.extractAxisInfo");
-		return ret;
-	}
 	private boolean passedIt;
-	public Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {
+	private Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {
 		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
-			currNode.delete();
 			passedIt = false;
 			return dataTree;
 		}
@@ -297,10 +283,8 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 			if(!tempMap.containsKey(attr)) {
 				tempMap.put(attr, new TreeMap());
 			}
-			currNode.delete();
 			return (Map)tempMap.get(attr);
 		} 
-		currNode.delete();
 		return tempMap;
 	}
 	public String getXMLName() {

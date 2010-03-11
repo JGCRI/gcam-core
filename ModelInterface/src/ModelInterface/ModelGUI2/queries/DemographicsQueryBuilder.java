@@ -25,7 +25,7 @@ import com.sleepycat.dbxml.XmlValue;
 import com.sleepycat.dbxml.XmlException;
 
 public class DemographicsQueryBuilder extends QueryBuilder {
-	public static Map varList;
+	public static Map<String, Boolean> varList;
 	protected Map popList;
 	protected Map cohortList;
 	protected Map genderList;
@@ -110,18 +110,6 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		updateSelected(list);
 		--qg.currSel;
 		createXPath();
-		if(isPopMiniCAMSelected() || isTotalPopulation()) {
-			qg.levelValues = list.getSelectedValues(); // doesn't make sense?
-		} else {
-			Vector temp = new Vector();
-			for(Iterator it = cohortList.entrySet().iterator(); it.hasNext(); ) {
-				Map.Entry me = (Map.Entry)it.next();
-				if(((Boolean)me.getValue()).booleanValue()) {
-					temp.add(me.getKey());
-				}
-			}
-			qg.levelValues = temp.toArray();
-		}
 
 		queryFunctions = null;
 		queryFilter = null;
@@ -232,7 +220,6 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 			e.printStackTrace();
 		}
 		ret.delete(ret.length()-4, ret.length());
-		XMLDB.getInstance().printLockStats("expandGroupName");
 		return ret.toString();
 	}
 	private void createXPath() {
@@ -351,7 +338,6 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 			e.printStackTrace();
 		}
 		res.delete();
-		XMLDB.getInstance().printLockStats("createList");
 		return ret;
 	}
 	public String getCompleteXPath(Object[] regions)  {
@@ -379,99 +365,6 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		}
 		return ret.append(qg.getXPath()).toString();
 	}
-	public Object[] extractAxisInfo(XmlValue n, Map filterMaps) throws Exception {
-		Vector ret = new Vector(2,0);
-		XmlValue nBefore;
-		do {
-			if(qg.nodeLevel.getKey().equals(XMLDB.getAttr(n, "type"))) {
-				if(qg.nodeLevel.getKey().equals("region") && qg.isGlobal) {
-					ret.add("Global");
-				} else if(qg.nodeLevel.getValue() == null) {
-					ret.add(XMLDB.getAttr(n, "name"));
-				} else {
-					ret.add(XMLDB.getAttr(n, qg.nodeLevel.getValue()));
-				}
-			} else if(n.getNodeName().equals(qg.nodeLevel.getKey())) {
-				if(qg.nodeLevel.getValue() == null) {
-					ret.add(XMLDB.getAttr(n, "ageGroup"));
-				} else {
-					ret.add(XMLDB.getAttr(n, qg.nodeLevel.getValue()));
-				}
-			}
-			if(n.getNodeName().equals(qg.yearLevel.getKey())) {
-				if(qg.yearLevel.getValue() == null) {
-					ret.add(0, XMLDB.getAttr(n, "year"));
-				} else {
-					ret.add(XMLDB.getAttr(n, qg.yearLevel.getValue()));
-				}
-			} else if(XMLDB.hasAttr(n)) {
-				// TODO: figure out if we really want to be able to filter
-				HashMap tempFilter;
-				if (filterMaps.containsKey(n.getNodeName())) {
-					tempFilter = (HashMap)filterMaps.get(n.getNodeName());
-				} else {
-					tempFilter = new HashMap();
-				}
-				String attr = XMLDB.getAttr(n);
-				if (!tempFilter.containsKey(attr)) {
-					tempFilter.put(attr, new Boolean(true));
-					filterMaps.put(n.getNodeName(), tempFilter);
-				}
-			}
-			nBefore = n;
-			n = n.getParentNode();
-			nBefore.delete();
-		} while(n.getNodeType() != XmlValue.DOCUMENT_NODE); 
-		n.delete();
-		XMLDB.getInstance().printLockStats("getRegionAndYearFromNode");
-		return ret.toArray();
-	}
-	public Map addToDataTree(XmlValue currNode, Map dataTree) throws Exception {
-		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
-			currNode.delete();
-			return dataTree;
-		}
-		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree);
-		String type = XMLDB.getAttr(currNode, "type");
-		if(type == null) {
-			type = currNode.getNodeName();
-		}
-		// used to combine paths when possible to avoid large amounts of sparse tables
-		if(type.equals("male") || type.equals("female")) {
-			String attr = type;
-			// check for rewrites
-			if(qg.labelRewriteMap != null && qg.labelRewriteMap.containsKey(type)) {
-				Map<String, String> currRewriteMap = qg.labelRewriteMap.get(type);
-				if(currRewriteMap.containsKey(attr)) {
-					attr = currRewriteMap.get(attr);
-				}
-			}
-			if(!tempMap.containsKey(attr)) {
-				tempMap.put(attr, new TreeMap());
-			}
-			currNode.delete();
-			return (Map)tempMap.get(attr);
-		} else if(XMLDB.hasAttr(currNode) && !currNode.getNodeName().equals(qg.nodeLevel.getKey()) 
-				&& !qg.nodeLevel.getKey().equals(XMLDB.getAttr(currNode, "type"))
-				&& !currNode.getNodeName().equals(qg.yearLevel.getKey())) {
-			String attr = XMLDB.getAllAttr(currNode);
-			// check for rewrites
-			if(qg.labelRewriteMap != null && qg.labelRewriteMap.containsKey(type)) {
-				Map<String, String> currRewriteMap = qg.labelRewriteMap.get(type);
-				if(currRewriteMap.containsKey(attr)) {
-					attr = currRewriteMap.get(attr);
-				}
-			}
-			attr = currNode.getNodeName()+"@"+attr;
-			if(!tempMap.containsKey(attr)) {
-				tempMap.put(attr, new TreeMap());
-			}
-			currNode.delete();
-			return (Map)tempMap.get(attr);
-		} 
-		currNode.delete();
-		return tempMap;
-	}
 	public String getXMLName() {
 		return xmlName;
 	}
@@ -483,7 +376,6 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue) throws Exception {
 		// stop point for recursion is the root
 		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
-			currNode.delete();
 			return dataTree;
 		}
 
@@ -548,7 +440,6 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 			}
 			tempMap = (Map)tempMap.get(attr);
 		}
-		currNode.delete();
 		return tempMap;
 	}
 }
