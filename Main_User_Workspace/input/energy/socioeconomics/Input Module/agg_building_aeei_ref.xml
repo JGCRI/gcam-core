@@ -7,12 +7,12 @@
                <aeei year="1975">0</aeei>
                <aeei year="1990">0</aeei>
                <aeei year="2005">0</aeei>
-               <aeei year="2020">0.004384289</aeei>
-               <aeei year="2035">0.001815553</aeei>
-               <aeei year="2050">0.002054826</aeei>
-               <aeei year="2065">0.001407783</aeei>
-               <aeei year="2080">0.001610601</aeei>
-               <aeei year="2095">0.001493979</aeei>
+               <aeei year="2020">0.0020</aeei>
+               <aeei year="2035">0.0020</aeei>
+               <aeei year="2050">0.0020</aeei>
+               <aeei year="2065">0.0020</aeei>
+               <aeei year="2080">0.0020</aeei>
+               <aeei year="2095">0.0020</aeei>
             </final-energy-consumer>
          </energy-final-demand>
       </region>
@@ -22,12 +22,12 @@
                <aeei year="1975">0</aeei>
                <aeei year="1990">0</aeei>
                <aeei year="2005">0</aeei>
-               <aeei year="2020">0.004229906</aeei>
-               <aeei year="2035">0.001921109</aeei>
-               <aeei year="2050">0.002100469</aeei>
-               <aeei year="2065">0.001189305</aeei>
-               <aeei year="2080">0.001036068</aeei>
-               <aeei year="2095">0.000913658</aeei>
+               <aeei year="2020">0.0017</aeei>
+               <aeei year="2035">0.0017</aeei>
+               <aeei year="2050">0.0017</aeei>
+               <aeei year="2065">0.0017</aeei>
+               <aeei year="2080">0.0017</aeei>
+               <aeei year="2095">0.0017</aeei>
             </final-energy-consumer>
          </energy-final-demand>
       </region>
@@ -37,12 +37,12 @@
                <aeei year="1975">0</aeei>
                <aeei year="1990">0</aeei>
                <aeei year="2005">0</aeei>
-               <aeei year="2020">0.004828136</aeei>
-               <aeei year="2035">0.002015975</aeei>
-               <aeei year="2050">0.002093366</aeei>
-               <aeei year="2065">0.001203056</aeei>
-               <aeei year="2080">0.00128375</aeei>
-               <aeei year="2095">0.001120208</aeei>
+               <aeei year="2020">0.0019</aeei>
+               <aeei year="2035">0.0019</aeei>
+               <aeei year="2050">0.0019</aeei>
+               <aeei year="2065">0.0019</aeei>
+               <aeei year="2080">0.0019</aeei>
+               <aeei year="2095">0.0019</aeei>
             </final-energy-consumer>
          </energy-final-demand>
       </region>
@@ -52,12 +52,12 @@
                <aeei year="1975">0</aeei>
                <aeei year="1990">0</aeei>
                <aeei year="2005">0</aeei>
-               <aeei year="2020">0.005382962</aeei>
-               <aeei year="2035">0.003061212</aeei>
-               <aeei year="2050">0.003333248</aeei>
-               <aeei year="2065">0.002451367</aeei>
-               <aeei year="2080">0.002791154</aeei>
-               <aeei year="2095">0.002284931</aeei>
+               <aeei year="2020">0.0030</aeei>
+               <aeei year="2035">0.0030</aeei>
+               <aeei year="2050">0.0030</aeei>
+               <aeei year="2065">0.0030</aeei>
+               <aeei year="2080">0.0030</aeei>
+               <aeei year="2095">0.0030</aeei>
             </final-energy-consumer>
          </energy-final-demand>
       </region>
@@ -67,12 +67,12 @@
                <aeei year="1975">0</aeei>
                <aeei year="1990">0</aeei>
                <aeei year="2005">0</aeei>
-               <aeei year="2020">0.005297532</aeei>
-               <aeei year="2035">0.00260312</aeei>
-               <aeei year="2050">0.003262675</aeei>
-               <aeei year="2065">0.002502208</aeei>
-               <aeei year="2080">0.002879283</aeei>
-               <aeei year="2095">0.002682217</aeei>
+               <aeei year="2020">0.0030</aeei>
+               <aeei year="2035">0.0030</aeei>
+               <aeei year="2050">0.0030</aeei>
+               <aeei year="2065">0.0030</aeei>
+               <aeei year="2080">0.0030</aeei>
+               <aeei year="2095">0.0030</aeei>
             </final-energy-consumer>
          </energy-final-demand>
       </region>
@@ -82,12 +82,12 @@
                <aeei year="1975">0</aeei>
                <aeei year="1990">0</aeei>
                <aeei year="2005">0</aeei>
-               <aeei year="2020">0.004785465</aeei>
-               <aeei year="2035">0.002242126</aeei>
-               <aeei year="2050">0.002570926</aeei>
-               <aeei year="2065">0.001826757</aeei>
-               <aeei year="2080">0.002008928</aeei>
-               <aeei year="2095">0.001907691</aeei>
+               <aeei year="2020">0.0024</aeei>
+               <aeei year="2035">0.0024</aeei>
+               <aeei year="2050">0.0024</aeei>
+               <aeei year="2065">0.0024</aeei>
+               <aeei year="2080">0.0024</aeei>
+               <aeei year="2095">0.0024</aeei>
             </final-energy-consumer>
          </energy-final-demand>
       </region>
@@ -97,12 +97,12 @@
                <aeei year="1975">0</aeei>
                <aeei year="1990">0</aeei>
                <aeei year="2005">0</aeei>
-               <aeei year="2020">0.004622927</aeei>
-               <aeei year="2035">0.002222669</aeei>
-               <aeei year="2050">0.002606379</aeei>
-               <aeei year="2065">0.001931801</aeei>
-               <aeei year="2080">0.002137887</aeei>
-               <aeei year="2095">0.002120181</aeei>
+               <aeei year="2020">0.0024</aeei>
+               <aeei year="2035">0.0024</aeei>
+               <aeei year="2050">0.0024</aeei>
+               <aeei year="2065">0.0024</aeei>
+               <aeei year="2080">0.0024</aeei>
+               <aeei year="2095">0.0024</aeei>
             </final-energy-consumer>
          </energy-final-demand>
       </region>
@@ -112,12 +112,12 @@
                <aeei year="1975">0</aeei>
                <aeei year="1990">0</aeei>
                <aeei year="2005">0</aeei>
-               <aeei year="2020">0.003418957</aeei>
-               <aeei year="2035">0.001876524</aeei>
-               <aeei year="2050">0.002082929</aeei>
-               <aeei year="2065">0.001423356</aeei>
-               <aeei year="2080">0.001274473</aeei>
-               <aeei year="2095">0.000809902</aeei>
+               <aeei year="2020">0.0016</aeei>
+               <aeei year="2035">0.0016</aeei>
+               <aeei year="2050">0.0016</aeei>
+               <aeei year="2065">0.0016</aeei>
+               <aeei year="2080">0.0016</aeei>
+               <aeei year="2095">0.0016</aeei>
             </final-energy-consumer>
          </energy-final-demand>
       </region>
@@ -127,12 +127,12 @@
                <aeei year="1975">0</aeei>
                <aeei year="1990">0</aeei>
                <aeei year="2005">0</aeei>
-               <aeei year="2020">0.004337073</aeei>
-               <aeei year="2035">0.002228911</aeei>
-               <aeei year="2050">0.002629515</aeei>
-               <aeei year="2065">0.001810065</aeei>
-               <aeei year="2080">0.001833541</aeei>
-               <aeei year="2095">0.001607039</aeei>
+               <aeei year="2020">0.0022</aeei>
+               <aeei year="2035">0.0022</aeei>
+               <aeei year="2050">0.0022</aeei>
+               <aeei year="2065">0.0022</aeei>
+               <aeei year="2080">0.0022</aeei>
+               <aeei year="2095">0.0022</aeei>
             </final-energy-consumer>
          </energy-final-demand>
       </region>
@@ -142,12 +142,12 @@
                <aeei year="1975">0</aeei>
                <aeei year="1990">0</aeei>
                <aeei year="2005">0</aeei>
-               <aeei year="2020">0.004354512</aeei>
-               <aeei year="2035">0.001782947</aeei>
-               <aeei year="2050">0.002296716</aeei>
-               <aeei year="2065">0.001825159</aeei>
-               <aeei year="2080">0.002152135</aeei>
-               <aeei year="2095">0.002008898</aeei>
+               <aeei year="2020">0.0022</aeei>
+               <aeei year="2035">0.0022</aeei>
+               <aeei year="2050">0.0022</aeei>
+               <aeei year="2065">0.0022</aeei>
+               <aeei year="2080">0.0022</aeei>
+               <aeei year="2095">0.0022</aeei>
             </final-energy-consumer>
          </energy-final-demand>
       </region>
@@ -157,12 +157,12 @@
                <aeei year="1975">0</aeei>
                <aeei year="1990">0</aeei>
                <aeei year="2005">0</aeei>
-               <aeei year="2020">0.004554723</aeei>
-               <aeei year="2035">0.002056253</aeei>
-               <aeei year="2050">0.002145252</aeei>
-               <aeei year="2065">0.001460223</aeei>
-               <aeei year="2080">0.001587711</aeei>
-               <aeei year="2095">0.001393585</aeei>
+               <aeei year="2020">0.0020</aeei>
+               <aeei year="2035">0.0020</aeei>
+               <aeei year="2050">0.0020</aeei>
+               <aeei year="2065">0.0020</aeei>
+               <aeei year="2080">0.0020</aeei>
+               <aeei year="2095">0.0020</aeei>
             </final-energy-consumer>
          </energy-final-demand>
       </region>
@@ -172,12 +172,12 @@
                <aeei year="1975">0</aeei>
                <aeei year="1990">0</aeei>
                <aeei year="2005">0</aeei>
-               <aeei year="2020">0.004886682</aeei>
-               <aeei year="2035">0.002525355</aeei>
-               <aeei year="2050">0.002871231</aeei>
-               <aeei year="2065">0.002342076</aeei>
-               <aeei year="2080">0.002513477</aeei>
-               <aeei year="2095">0.002405633</aeei>
+               <aeei year="2020">0.0027</aeei>
+               <aeei year="2035">0.0027</aeei>
+               <aeei year="2050">0.0027</aeei>
+               <aeei year="2065">0.0027</aeei>
+               <aeei year="2080">0.0027</aeei>
+               <aeei year="2095">0.0027</aeei>
             </final-energy-consumer>
          </energy-final-demand>
       </region>
@@ -187,12 +187,12 @@
                <aeei year="1975">0</aeei>
                <aeei year="1990">0</aeei>
                <aeei year="2005">0</aeei>
-               <aeei year="2020">0.004362496</aeei>
-               <aeei year="2035">0.001787824</aeei>
-               <aeei year="2050">0.002035131</aeei>
-               <aeei year="2065">0.001214746</aeei>
-               <aeei year="2080">0.001370233</aeei>
-               <aeei year="2095">0.001207556</aeei>
+               <aeei year="2020">0.0018</aeei>
+               <aeei year="2035">0.0018</aeei>
+               <aeei year="2050">0.0018</aeei>
+               <aeei year="2065">0.0018</aeei>
+               <aeei year="2080">0.0018</aeei>
+               <aeei year="2095">0.0018</aeei>
             </final-energy-consumer>
          </energy-final-demand>
       </region>
@@ -202,12 +202,12 @@
                <aeei year="1975">0</aeei>
                <aeei year="1990">0</aeei>
                <aeei year="2005">0</aeei>
-               <aeei year="2020">0.004012684</aeei>
-               <aeei year="2035">0.001933228</aeei>
-               <aeei year="2050">0.001902896</aeei>
-               <aeei year="2065">0.001316338</aeei>
-               <aeei year="2080">0.001336568</aeei>
-               <aeei year="2095">0.001029626</aeei>
+               <aeei year="2020">0.0017</aeei>
+               <aeei year="2035">0.0017</aeei>
+               <aeei year="2050">0.0017</aeei>
+               <aeei year="2065">0.0017</aeei>
+               <aeei year="2080">0.0017</aeei>
+               <aeei year="2095">0.0017</aeei>
             </final-energy-consumer>
          </energy-final-demand>
       </region>

@@ -50,7 +50,7 @@
             <laborproductivity year="2065">0.0348</laborproductivity>
             <laborproductivity year="2080">0.0366</laborproductivity>
             <laborproductivity year="2095">0.0344</laborproductivity>
-            <e_GDP_elas>-0.15</e_GDP_elas>
+            <e_GDP_elas>0</e_GDP_elas>
             <baseGDP>250238</baseGDP>
          </GDP>
       </region>
@@ -103,7 +103,7 @@
             <laborproductivity year="2065">0.0131</laborproductivity>
             <laborproductivity year="2080">0.0131</laborproductivity>
             <laborproductivity year="2095">0.0131</laborproductivity>
-            <e_GDP_elas>-0.15</e_GDP_elas>
+            <e_GDP_elas>0</e_GDP_elas>
             <baseGDP>174747</baseGDP>
          </GDP>
       </region>
@@ -125,7 +125,7 @@
                <totalPop>37430</totalPop>
             </populationMiniCAM>
             <populationMiniCAM year="2050">
-               <totalPop>37500</totalPop>
+               <totalPop>37938</totalPop>
             </populationMiniCAM>
             <populationMiniCAM year="2065">
                <totalPop>38445</totalPop>
@@ -156,7 +156,7 @@
             <laborproductivity year="2065">0.0162</laborproductivity>
             <laborproductivity year="2080">0.0164</laborproductivity>
             <laborproductivity year="2095">0.0161</laborproductivity>
-            <e_GDP_elas>-0.15</e_GDP_elas>
+            <e_GDP_elas>0</e_GDP_elas>
             <baseGDP>278868</baseGDP>
          </GDP>
       </region>
@@ -209,7 +209,7 @@
             <laborproductivity year="2065">0.0390</laborproductivity>
             <laborproductivity year="2080">0.0324</laborproductivity>
             <laborproductivity year="2095">0.0257</laborproductivity>
-            <e_GDP_elas>-0.15</e_GDP_elas>
+            <e_GDP_elas>0</e_GDP_elas>
             <baseGDP>118793</baseGDP>
          </GDP>
       </region>
@@ -262,7 +262,7 @@
             <laborproductivity year="2065">0.0292</laborproductivity>
             <laborproductivity year="2080">0.0283</laborproductivity>
             <laborproductivity year="2095">0.0262</laborproductivity>
-            <e_GDP_elas>-0.15</e_GDP_elas>
+            <e_GDP_elas>0</e_GDP_elas>
             <baseGDP>232364</baseGDP>
          </GDP>
       </region>
@@ -315,7 +315,7 @@
             <laborproductivity year="2065">0.0292</laborproductivity>
             <laborproductivity year="2080">0.0283</laborproductivity>
             <laborproductivity year="2095">0.0262</laborproductivity>
-            <e_GDP_elas>-0.15</e_GDP_elas>
+            <e_GDP_elas>0</e_GDP_elas>
             <baseGDP>410608</baseGDP>
          </GDP>
       </region>
@@ -368,7 +368,7 @@
             <laborproductivity year="2065">0.0408</laborproductivity>
             <laborproductivity year="2080">0.0380</laborproductivity>
             <laborproductivity year="2095">0.0353</laborproductivity>
-            <e_GDP_elas>-0.15</e_GDP_elas>
+            <e_GDP_elas>0</e_GDP_elas>
             <baseGDP>106889</baseGDP>
          </GDP>
       </region>
@@ -421,7 +421,7 @@
             <laborproductivity year="2065">0.0140</laborproductivity>
             <laborproductivity year="2080">0.0130</laborproductivity>
             <laborproductivity year="2095">0.0126</laborproductivity>
-            <e_GDP_elas>-0.15</e_GDP_elas>
+            <e_GDP_elas>0</e_GDP_elas>
             <baseGDP>1830703</baseGDP>
          </GDP>
       </region>
@@ -443,7 +443,7 @@
                <totalPop>48935</totalPop>
             </populationMiniCAM>
             <populationMiniCAM year="2050">
-               <totalPop>45078</totalPop>
+               <totalPop>47436</totalPop>
             </populationMiniCAM>
             <populationMiniCAM year="2065">
                <totalPop>45937</totalPop>
@@ -474,7 +474,7 @@
             <laborproductivity year="2065">0.0205</laborproductivity>
             <laborproductivity year="2080">0.0198</laborproductivity>
             <laborproductivity year="2095">0.0191</laborproductivity>
-            <e_GDP_elas>-0.15</e_GDP_elas>
+            <e_GDP_elas>0</e_GDP_elas>
             <baseGDP>71339</baseGDP>
          </GDP>
       </region>
@@ -527,7 +527,7 @@
             <laborproductivity year="2065">0.0314</laborproductivity>
             <laborproductivity year="2080">0.0295</laborproductivity>
             <laborproductivity year="2095">0.0278</laborproductivity>
-            <e_GDP_elas>-0.15</e_GDP_elas>
+            <e_GDP_elas>0</e_GDP_elas>
             <baseGDP>814694</baseGDP>
          </GDP>
       </region>
@@ -580,7 +580,7 @@
             <laborproductivity year="2065">0.0192</laborproductivity>
             <laborproductivity year="2080">0.0192</laborproductivity>
             <laborproductivity year="2095">0.0190</laborproductivity>
-            <e_GDP_elas>-0.15</e_GDP_elas>
+            <e_GDP_elas>0</e_GDP_elas>
             <baseGDP>298287</baseGDP>
          </GDP>
       </region>
@@ -633,7 +633,7 @@
             <laborproductivity year="2065">0.0365</laborproductivity>
             <laborproductivity year="2080">0.0347</laborproductivity>
             <laborproductivity year="2095">0.0315</laborproductivity>
-            <e_GDP_elas>-0.15</e_GDP_elas>
+            <e_GDP_elas>0</e_GDP_elas>
             <baseGDP>222332</baseGDP>
          </GDP>
       </region>
@@ -686,7 +686,7 @@
             <laborproductivity year="2065">0.0149</laborproductivity>
             <laborproductivity year="2080">0.0152</laborproductivity>
             <laborproductivity year="2095">0.0151</laborproductivity>
-            <e_GDP_elas>-0.15</e_GDP_elas>
+            <e_GDP_elas>0</e_GDP_elas>
             <baseGDP>3473912</baseGDP>
          </GDP>
       </region>
@@ -739,7 +739,7 @@
             <laborproductivity year="2065">0.0185</laborproductivity>
             <laborproductivity year="2080">0.0191</laborproductivity>
             <laborproductivity year="2095">0.0151</laborproductivity>
-            <e_GDP_elas>-0.15</e_GDP_elas>
+            <e_GDP_elas>0</e_GDP_elas>
             <baseGDP>3802404</baseGDP>
          </GDP>
       </region>
