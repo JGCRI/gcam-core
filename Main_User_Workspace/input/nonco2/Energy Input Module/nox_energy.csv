@@ -1,73 +1,75 @@
-Input drivers,,,,,,
-INPUT_TABLE,,,,,,
-Variable ID,,,,,,
-10000,,,,,,
-
-region,supplysector,subsector,technology,period,generic-ghg,input-driver
-ALL,regional crude oil,regional crude oil,regional crude oil,ALL,NOx,
-ALL,refined liquids industrial,biomass liquids,biomass liquids,ALL,NOx,
-ALL,refined liquids industrial,unconventional oil refining,unconventional oil refining,ALL,NOx,
-ALL,refined liquids industrial,coal to liquids,coal to liquids,ALL,NOx,
-ALL,refined liquids industrial,gas to liquids,gas to liquids,ALL,NOx,
-ALL,refined liquids enduse,biomass liquids,biomass liquids,ALL,NOx,
-ALL,refined liquids enduse,unconventional oil refining,unconventional oil refining,ALL,NOx,
-ALL,refined liquids enduse,coal to liquids,coal to liquids,ALL,NOx,
-ALL,refined liquids enduse,gas to liquids,gas to liquids,ALL,NOx,
-ALL,electricity,coal,Coal (existing),ALL,NOx,
-ALL,electricity,coal,Coal (conv pul),ALL,NOx
-ALL,electricity,coal,Coal (IGCC),ALL,NOx
-ALL,electricity,coal,Coal (IGCC)_CCS,ALL,NOx
-ALL,electricity,gas,Gas (existing),ALL,NOx
-ALL,electricity,gas,Gas (peak load conv),ALL,NOx
-ALL,electricity,gas,Gas (CC),ALL,NOx
-ALL,electricity,gas,Gas (CC)_CCS,ALL,NOx
-ALL,electricity,oil,Oil (existing),ALL,NOx
-ALL,electricity,oil,Oil (peak load conv),ALL,NOx
-ALL,electricity,oil,Oil (IGCC),ALL,NOx
-ALL,electricity,oil,Oil (IGCC)_CCS,ALL,NOx
-ALL,electricity,biomass,Biomass (existing),ALL,NOx
-ALL,electricity,biomass,Biomass (conv),ALL,NOx
-ALL,electricity,biomass,Biomass (IGCC),ALL,NOx
-ALL,electricity,biomass,Biomass (IGCC)_CCS,ALL,NOx
-ALL,H2 Central Production,gas chemical,natural gas steam reforming,ALL,NOx
-ALL,H2 Central Production,gas chemical,natural gas steam reforming CCS,ALL,NOx
-ALL,H2 Central Production,coal chemical,coal chemical,ALL,NOx
-ALL,H2 Central Production,coal chemical,coal chemical CCS,ALL,NOx
-ALL,H2 Central Production,biomass to H2,biomass to H2,ALL,NOx
-ALL,H2 Central Production,biomass to H2,biomass to H2 CCS,ALL,NOx
-ALL,H2 Forecourt Production,gas chemical,natural gas steam reforming,ALL,NOx
-ALL,building,gas,gas,ALL,NOx
-ALL,building,coal,coal,ALL,NOx
-ALL,building,biomass,biomass,ALL,NOx
-ALL,building,refined liquids,refined liquids,ALL,NOx
-ALL,building,trad biomass,trad biomass,ALL,NOx
-ALL,industry,energy-use,biomass,ALL,NOx
-ALL,industry,energy-use,gas,ALL,NOx
-ALL,industry,energy-use,coal,ALL,NOx
-ALL,industry,energy-use,refined liquids,ALL,NOx
-ALL,transportation,air,refined liquids,ALL,NOx
-ALL,transportation,rail,refined liquids,ALL,NOx,
-ALL,transportation,road,refined liquids,ALL,NOx,
-ALL,transportation,domestic ship,refined liquids,ALL,NOx,
-ALL,transportation,international ship,refined liquids,ALL,NOx,
-,,,,,,
-Output drivers,,,,,,
-INPUT_TABLE,,,,,,
-Variable ID,,,,,,
-10001,,,,,,
-
-region,supplysector,subsector,technology,period,generic-ghg,output-driver
-ALL,urban processes,urban processes,landfills,ALL,NOx,
-ALL,industry,industrial processes,solvents,ALL,NOx,
-ALL,industry,industrial processes,other industrial processes,ALL,NOx,
-
-Uncontrolled emissions coefficient,,,,,,
+Input drivers,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+10000,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,,,,,,
+ALL,regional crude oil,regional crude oil,regional crude oil,ALL,NOx,,,,,,,,,,,,,
+ALL,refined liquids industrial,biomass liquids,biomass liquids,ALL,NOx,,,,,,,,,,,,,
+ALL,refined liquids industrial,unconventional oil refining,unconventional oil refining,ALL,NOx,,,,,,,,,,,,,
+ALL,refined liquids industrial,coal to liquids,coal to liquids,ALL,NOx,,,,,,,,,,,,,
+ALL,refined liquids industrial,gas to liquids,gas to liquids,ALL,NOx,,,,,,,,,,,,,
+ALL,refined liquids enduse,biomass liquids,biomass liquids,ALL,NOx,,,,,,,,,,,,,
+ALL,refined liquids enduse,unconventional oil refining,unconventional oil refining,ALL,NOx,,,,,,,,,,,,,
+ALL,refined liquids enduse,coal to liquids,coal to liquids,ALL,NOx,,,,,,,,,,,,,
+ALL,refined liquids enduse,gas to liquids,gas to liquids,ALL,NOx,,,,,,,,,,,,,
+ALL,electricity,coal,Coal (existing),ALL,NOx,,,,,,,,,,,,,
+ALL,electricity,coal,Coal (conv pul),ALL,NOx,,,,,,,,,,,,,
+ALL,electricity,coal,Coal (IGCC),ALL,NOx,,,,,,,,,,,,,
+ALL,electricity,coal,Coal (IGCC)_CCS,ALL,NOx,,,,,,,,,,,,,
+ALL,electricity,gas,Gas (existing),ALL,NOx,,,,,,,,,,,,,
+ALL,electricity,gas,Gas (peak load conv),ALL,NOx,,,,,,,,,,,,,
+ALL,electricity,gas,Gas (CC),ALL,NOx,,,,,,,,,,,,,
+ALL,electricity,gas,Gas (CC)_CCS,ALL,NOx,,,,,,,,,,,,,
+ALL,electricity,oil,Oil (existing),ALL,NOx,,,,,,,,,,,,,
+ALL,electricity,oil,Oil (peak load conv),ALL,NOx,,,,,,,,,,,,,
+ALL,electricity,oil,Oil (IGCC),ALL,NOx,,,,,,,,,,,,,
+ALL,electricity,oil,Oil (IGCC)_CCS,ALL,NOx,,,,,,,,,,,,,
+ALL,electricity,biomass,Biomass (existing),ALL,NOx,,,,,,,,,,,,,
+ALL,electricity,biomass,Biomass (conv),ALL,NOx,,,,,,,,,,,,,
+ALL,electricity,biomass,Biomass (IGCC),ALL,NOx,,,,,,,,,,,,,
+ALL,electricity,biomass,Biomass (IGCC)_CCS,ALL,NOx,,,,,,,,,,,,,
+ALL,H2 Central Production,gas chemical,natural gas steam reforming,ALL,NOx,,,,,,,,,,,,,
+ALL,H2 Central Production,gas chemical,natural gas steam reforming CCS,ALL,NOx,,,,,,,,,,,,,
+ALL,H2 Central Production,coal chemical,coal chemical,ALL,NOx,,,,,,,,,,,,,
+ALL,H2 Central Production,coal chemical,coal chemical CCS,ALL,NOx,,,,,,,,,,,,,
+ALL,H2 Central Production,biomass to H2,biomass to H2,ALL,NOx,,,,,,,,,,,,,
+ALL,H2 Central Production,biomass to H2,biomass to H2 CCS,ALL,NOx,,,,,,,,,,,,,
+ALL,H2 Forecourt Production,gas chemical,natural gas steam reforming,ALL,NOx,,,,,,,,,,,,,
+ALL,building,gas,gas,ALL,NOx,,,,,,,,,,,,,
+ALL,building,coal,coal,ALL,NOx,,,,,,,,,,,,,
+ALL,building,biomass,biomass,ALL,NOx,,,,,,,,,,,,,
+ALL,building,refined liquids,refined liquids,ALL,NOx,,,,,,,,,,,,,
+ALL,building,trad biomass,trad biomass,ALL,NOx,,,,,,,,,,,,,
+ALL,industrial energy use,biomass,biomass,ALL,NOx,,,,,,,,,,,,,
+ALL,industrial energy use,gas,gas,ALL,NOx,,,,,,,,,,,,,
+ALL,industrial energy use,coal,coal,ALL,NOx,,,,,,,,,,,,,
+ALL,industrial energy use,refined liquids,refined liquids,ALL,NOx,,,,,,,,,,,,,
+ALL,industrial energy use,biomass,biomass cogen,ALL,NOx,,,,,,,,,,,,,
+ALL,industrial energy use,gas,gas cogen,ALL,NOx,,,,,,,,,,,,,
+ALL,industrial energy use,coal,coal cogen,ALL,NOx,,,,,,,,,,,,,
+ALL,industrial energy use,refined liquids,refined liquids cogen,ALL,NOx,,,,,,,,,,,,,
+ALL,process heat cement,biomass,biomass,ALL,NOx,,,,,,,,,,,,,
+ALL,process heat cement,gas,gas,ALL,NOx,,,,,,,,,,,,,
+ALL,process heat cement,coal,coal,ALL,NOx,,,,,,,,,,,,,
+ALL,process heat cement,refined liquids,refined liquids,ALL,NOx,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Output drivers,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+10001,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,period,generic-ghg,output-driver,,,,,,,,,,,,
+ALL,urban processes,landfills,landfills,ALL,NOx,,,,,,,,,,,,,
+ALL,industrial processes,other industrial processes,other industrial processes,ALL,NOx,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Uncontrolled emissions coefficient,,,,,,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,,,,,,
 10015,,,,,,,,,,,,,,,,,,
 ,,,,,uncontrolled-emiss-coef,,,,,,,,,,,,,
 supplysector,subsector,technology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
-regional crude oil,regional crude oil,regional crude oil,1990,NOx,0.000125927,0.002688344,0.003667822,1.22723E-05,0.032017001,0.001357561,0.000217221,0.015018131,0.024319145,0.003965498,0.003253245,0.007394895,0.000204295,0.001302936
+regional crude oil,regional crude oil,regional crude oil,1990,NOx,0.000104911,0.002156599,0.002963334,9.23915E-06,0.028990736,0.001137447,0.000167665,0.010898179,0.020698924,0.003172237,0.003456823,0.007181516,0.000134626,0.000962721
 refined liquids industrial,biomass liquids,biomass liquids,1990,NOx,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
 refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,NOx,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
 refined liquids industrial,coal to liquids,coal to liquids,1990,NOx,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
@@ -76,19 +78,19 @@ refined liquids enduse,biomass liquids,biomass liquids,1990,NOx,0.01,0.01,0.01,0
 refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,NOx,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
 refined liquids enduse,coal to liquids,coal to liquids,1990,NOx,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
 refined liquids enduse,gas to liquids,gas to liquids,1990,NOx,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
-electricity,coal,Coal (existing),1990,NOx,0.801928753,0.797497617,0.818778139,0.820835253,0.783999241,0.784083828,0.264532262,0.409907576,0.452081551,0.695809795,0.523621572,0.270042371,0.579028186,0.370672294
-electricity,coal,Coal (conv pul),1990,NOx,0.801928753,0.797497617,0.818778139,0.820835253,0.783999241,0.784083828,0.264532262,0.409907576,0.452081551,0.695809795,0.523621572,0.270042371,0.579028186,0.370672294
+electricity,coal,Coal (existing),1990,NOx,0.825837978,0.778920702,0.777249858,0.796577819,0.792817668,0.836197775,0.277906533,0.368111097,0.441291127,0.63271899,0.379757849,0.339270614,0.612992879,0.357864009
+electricity,coal,Coal (conv pul),1990,NOx,0.825837978,0.778920702,0.777249858,0.796577819,0.792817668,0.836197775,0.277906533,0.368111097,0.441291127,0.63271899,0.379757849,0.339270614,0.612992879,0.357864009
 electricity,coal,Coal (IGCC),1990,NOx,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03
 electricity,coal,Coal (IGCC)_CCS,1990,NOx,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03
-electricity,gas,Gas (existing),1990,NOx,0.090476225,0.254370998,0.087728348,0.023011482,0.139878052,0.159155616,0.084106631,0.128689022,0.142647581,0.188503217,0.175894647,0.088834448,0.107419887,0.121054381
-electricity,gas,Gas (peak load conv),1990,NOx,0.090476225,0.254370998,0.087728348,0.023011482,0.139878052,0.159155616,0.084106631,0.128689022,0.142647581,0.188503217,0.175894647,0.088834448,0.107419887,0.121054381
+electricity,gas,Gas (existing),1990,NOx,0.101600653,0.270915847,0.090810763,0.024351166,0.154244687,0.185085093,0.096350353,0.126019406,0.151836361,0.186914098,0.139105664,0.121702277,0.124006194,0.127441646
+electricity,gas,Gas (peak load conv),1990,NOx,0.101600653,0.270915847,0.090810763,0.024351166,0.154244687,0.185085093,0.096350353,0.126019406,0.151836361,0.186914098,0.139105664,0.121702277,0.124006194,0.127441646
 electricity,gas,Gas (CC),1990,NOx,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
 electricity,gas,Gas (CC)_CCS,1990,NOx,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
-electricity,oil,Oil (existing),1990,NOx,0.16497261,0.463815191,0.159962184,0.041958694,0.255050952,0.290201293,0.153358415,0.234649091,0.26010086,0.343713144,0.32072292,0.161979026,0.195867358,0.220728233
-electricity,oil,Oil (peak load conv),1990,NOx,0.16497261,0.463815191,0.159962184,0.041958694,0.255050952,0.290201293,0.153358415,0.234649091,0.26010086,0.343713144,0.32072292,0.161979026,0.195867358,0.220728233
+electricity,oil,Oil (existing),1990,NOx,0.197589382,0.526867624,0.176605583,0.047357292,0.299969651,0.359946989,0.187378782,0.245078115,0.295286022,0.363503974,0.27052781,0.236682314,0.241162891,0.247844037
+electricity,oil,Oil (peak load conv),1990,NOx,0.197589382,0.526867624,0.176605583,0.047357292,0.299969651,0.359946989,0.187378782,0.245078115,0.295286022,0.363503974,0.27052781,0.236682314,0.241162891,0.247844037
 electricity,oil,Oil (IGCC),1990,NOx,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03
 electricity,oil,Oil (IGCC)_CCS,1990,NOx,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03
-electricity,biomass,Biomass (existing),1990,NOx,0.058239732,0.017918749,0.125185593,0.134398436,0.078500965,0.189059091,0.00295532,0.1,0.053527144,0.161670211,0.08936505,0.041635215,0.62978665,0.121878221
+electricity,biomass,Biomass (existing),1990,NOx,0.06196869,0.018171379,0.132301087,0.134767583,0,0,0.158300821,0.1,0.044606103,0.142840172,0.099736725,0.0456136,0.247378334,0.130038498
 electricity,biomass,Biomass (conv),1990,NOx,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3
 electricity,biomass,Biomass (IGCC),1990,NOx,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03
 electricity,biomass,Biomass (IGCC)_CCS,1990,NOx,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03
@@ -99,25 +101,27 @@ H2 Central Production,coal chemical,coal chemical CCS,1990,NOx,0.001,0.001,0.001
 H2 Central Production,biomass to H2,biomass to H2,1990,NOx,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
 H2 Central Production,biomass to H2,biomass to H2 CCS,1990,NOx,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
 H2 Forecourt Production,gas chemical,natural gas steam reforming,1990,NOx,0.005462225,0.005462225,0.005462225,0.005462225,0.005462225,0.005462225,0.005462225,0.005462225,0.005462225,0.005462225,0.005462225,0.005462225,0.005462225,0.005462225
-building,gas,gas,1990,NOx,0.063837339,0.052090309,0.155333029,0.047576161,0.267198446,0.072120578,0.017009183,0.097134248,0.045612729,0.08900274,0.018749142,0.068460658,0.064719309,0.005605875
-building,coal,coal,1990,NOx,0.430870096,0.351583522,1.048420228,0.321115285,1.803455823,0.486777816,0.114913515,0.65560757,0.307863102,0.600723966,0.126547327,0.462075187,0.436822955,0.037836853
-building,biomass,biomass,1990,NOx,0.379230195,0.141148282,0.192006943,0.408800568,0.776279957,0.926260164,0.077042525,2.305152398,0.456744267,0.609083906,0.377054266,0.201080632,0.258829891,0.547798853
-building,refined liquids,refined liquids,1990,NOx,0.073130374,0.059673286,0.177945427,0.054501997,0.306095502,0.082619435,0.019485272,0.111274436,0.052252741,0.101959195,0.021478523,0.078426726,0.074140736,0.006421943
-building,trad biomass,trad biomass,1990,NOx,0,0,0,0,0,0,0.154534848,0,0.171751597,0.090896909,0.0604813,0,0,0.103752348
-industry,energy-use,biomass,1990,NOx,0.058998348,0.008074478,0.075242234,0.095118011,0.20077005,0.164436789,0.004811558,0.272984367,0.049665169,0.097300831,0.043342411,0.027016249,0.50742901,0.069140119
-industry,energy-use,gas,1990,NOx,0.158621387,0.049614572,0.047583453,0.028437881,0.197408856,0.05752456,0.086699441,0.034248253,0.057234017,0.04007721,0.026558238,0.060222893,0.04164583,0.049196237
-industry,energy-use,coal,1990,NOx,0.280739961,0.08781157,0.084216743,0.050331483,0.349388915,0.101811256,0.153766159,0.060615112,0.101297032,0.070931635,0.047004751,0.106586968,0.073707896,0.087071169
-industry,energy-use,refined liquids,1990,NOx,0.462647164,0.148812785,0.135890119,0.076100441,0.608861704,0.149876214,0.223157201,0.090292709,0.148404138,0.106360431,0.06900484,0.191616464,0.117515454,0.127328126
-transportation,air,refined liquids,1990,NOx,0.313085773,0.317115013,0.309923724,0.299441792,0.320960162,0.294785437,0.292632255,0.296871222,0.293925141,0.298017958,0.294514434,0.325052617,0.308075389,0.293741513
-transportation,rail,refined liquids,1990,NOx,3.228002708,3.262500841,5.360182235,3.348139533,2.520581139,6.95069215,0.77055166,0,1.141210564,4.51483926,0.993282526,2.711705878,0.762699464,2.162200681
-transportation,road,refined liquids,1990,NOx,0.630960084,0.854474455,0.436448391,0.997362626,0.580231177,0.472583438,0.740533875,0.656768533,0.766346738,0.673777361,0.554531381,1.395169879,0.788032098,1.884823584
-transportation,domestic ship,refined liquids,1990,NOx,2.502092118,1.552969553,4.644127064,3.45747009,2.710475299,6.649277578,0.773866493,0,1.142278622,4.529972486,0.998809145,2.800504453,0.810190665,2.163819201
-transportation,international ship,refined liquids,1990,NOx,3.689499382,3.876442046,3.551952858,3.145512076,4.068335345,2.985937291,2.916251596,3.055984662,2.957694741,3.09547548,2.978884,4.288777155,3.474994667,2.952938655
-urban processes,urban processes,landfills,1990,NOx,152.8238242,7.216122917,31.73297217,98.72238215,0,7.207888835,0,2.472545647,6.011462893,7.162390309,4.175159034,1.830158404,1.656529576,2.012213935
-industry,industrial processes,solvents,1990,NOx,3.708153528,0,0.185465466,0,0,4.175697487,0,0,0,0,0,0,0,0
-industry,industrial processes,other industrial processes,1990,NOx,644.3286542,77.17355832,1080.616929,259.6999757,101.1930151,689.8754517,1893.022771,123.1398533,194.1883657,328.1410097,144.2257939,217.6448787,76.60223503,110.9267418
-
-
+building,gas,gas,1990,NOx,0.063901417,0.052255716,0.140497353,0.047340711,0.267437234,0.044591707,0.015524993,0.097788151,0.04576776,0.089772636,0.025001302,0.071087808,0.086942667,0.00462193
+building,coal,coal,1990,NOx,0.43128769,0.352687748,0.948254065,0.319515068,1.805005145,0.300961307,0.104882747,0.659998283,0.308898805,0.60589944,0.16874045,0.479790557,0.586799221,0.031194634
+building,biomass,biomass,1990,NOx,0.382008524,0.141614348,0.14310916,0.385750007,0.779946195,0.486549213,0.215169637,2.321273339,0.471259867,2.215054807,0.508898128,0.423901782,0.212243769,0.572766536
+building,refined liquids,refined liquids,1990,NOx,0.073235033,0.059888328,0.161018779,0.054255424,0.306499846,0.051104893,0.017792616,0.112071355,0.052452724,0.102885072,0.028653061,0.081471087,0.09964175,0.005297021
+building,trad biomass,trad biomass,1990,NOx,0,0,0,0,0,0,0.139126417,0,0.171510583,0.07429469,0.078850206,0,0,0.103096913
+industrial energy use,biomass,biomass,1990,NOx,0.061727233,0.00829607,0.078137368,0.095110104,0.207681951,0.106754019,0.259525981,0.201454774,0.041222268,0.086468676,0.045721545,0.029957156,0.195120216,0.070690065
+industrial energy use,gas,gas,1990,NOx,0.174647415,0.051485006,0.040820645,0.025748269,0.186074241,0.043770082,0.092710804,0.03876623,0.059665512,0.040160968,0.02764533,0.082452565,0.034056514,0.050270392
+industrial energy use,coal,coal,1990,NOx,0.233368232,0.068795549,0.054545564,0.034405479,0.248637042,0.058486675,0.124140044,0.051800404,0.079726545,0.053664088,0.03694038,0.110175173,0.045507163,0.067172551
+industrial energy use,refined liquids,refined liquids,1990,NOx,0.859272769,0.260490858,0.196649349,0.116230123,0.968097307,0.192370067,0.402536884,0.172404485,0.260973179,0.179790821,0.121166564,0.442543636,0.162107971,0.219475203
+industrial energy use,biomass,biomass cogen,1990,NOx,0.061727233,0.00829607,0.078137368,0.095110104,0.207681951,0.106754019,0.259525981,0.201454774,0.041222268,0.086468676,0.045721545,0.029957156,0.195120216,0.070690065
+industrial energy use,gas,gas cogen,1990,NOx,0.174647415,0.051485006,0.040820645,0.025748269,0.186074241,0.043770082,0.092710804,0.03876623,0.059665512,0.040160968,0.02764533,0.082452565,0.034056514,0.050270392
+industrial energy use,coal,coal cogen,1990,NOx,0.233368232,0.068795549,0.054545564,0.034405479,0.248637042,0.058486675,0.124140044,0.051800404,0.079726545,0.053664088,0.03694038,0.110175173,0.045507163,0.067172551
+industrial energy use,refined liquids,refined liquids cogen,1990,NOx,0.859272769,0.260490858,0.196649349,0.116230123,0.968097307,0.192370067,0.402536884,0.172404485,0.260973179,0.179790821,0.121166564,0.442543636,0.162107971,0.219475203
+process heat cement,biomass,biomass,1990,NOx,0.061727233,0.00829607,0.078137368,0.095110104,0.207681951,0.106754019,0.259525981,0.201454774,0.041222268,0.086468676,0.045721545,0.029957156,0.195120216,0.070690065
+process heat cement,gas,gas,1990,NOx,0.174647415,0.051485006,0.040820645,0.025748269,0.186074241,0.043770082,0.092710804,0.03876623,0.059665512,0.040160968,0.02764533,0.082452565,0.034056514,0.050270392
+process heat cement,coal,coal,1990,NOx,0.233368232,0.068795549,0.054545564,0.034405479,0.248637042,0.058486675,0.124140044,0.051800404,0.079726545,0.053664088,0.03694038,0.110175173,0.045507163,0.067172551
+process heat cement,refined liquids,refined liquids,1990,NOx,0.859272769,0.260490858,0.196649349,0.116230123,0.968097307,0.192370067,0.402536884,0.172404485,0.260973179,0.179790821,0.121166564,0.442543636,0.162107971,0.219475203
+urban processes,landfills,landfills,1990,NOx,153.4333842,7.225198092,31.24612693,98.85743437,1.01778E-05,7.295541489,0.221091998,2.471122443,6.399817521,7.189005229,4.913102117,1.566803435,1.104347562,0.013894226
+industrial processes,other industrial processes,other industrial processes,1990,NOx,632.6411291,75.09591283,998.8440551,260.0301976,108.7221694,308.9344348,1294.797087,135.0797003,139.3538409,332.5417783,160.3273309,243.1976686,63.87290541,93.75925193
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
 per-capita GDP at mid-point of control curve,,,,,,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,,,,,,
@@ -161,20 +165,22 @@ building,coal,coal,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12
 building,biomass,biomass,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
 building,refined liquids,refined liquids,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
 building,trad biomass,trad biomass,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
-industry,energy-use,biomass,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
-industry,energy-use,gas,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
-industry,energy-use,coal,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
-industry,energy-use,refined liquids,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
-transportation,air,refined liquids,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
-transportation,rail,refined liquids,1990,NOx,31.0,17.0,17.0,19.0,16.0,8.0,8.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
-transportation,road,refined liquids,1990,NOx,31.0,26.0,16.6,22.0,16.0,8.0,8.0,12.0,12.0,12.0,12.0,6.0,12.3,6.0
-transportation,domestic ship,refined liquids,1990,NOx,39.0,25.0,25.0,20.0,16.0,15.0,8.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
-transportation,international ship,refined liquids,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
-urban processes,urban processes,landfills,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
-industry,industrial processes,solvents,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
-industry,industrial processes,other industrial processes,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
-
-
+industrial energy use,biomass,biomass,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+industrial energy use,gas,gas,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+industrial energy use,coal,coal,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+industrial energy use,refined liquids,refined liquids,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+industrial energy use,biomass,biomass cogen,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+industrial energy use,gas,gas cogen,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+industrial energy use,coal,coal cogen,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+industrial energy use,refined liquids,refined liquids cogen,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+process heat cement,biomass,biomass,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+process heat cement,gas,gas,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+process heat cement,coal,coal,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+process heat cement,refined liquids,refined liquids,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+urban processes,landfills,landfills,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+industrial processes,other industrial processes,other industrial processes,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
 GDP range from 10% to 90% of maximum control value,,,,,,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,,,,,,
@@ -218,20 +224,22 @@ building,coal,coal,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.
 building,biomass,biomass,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
 building,refined liquids,refined liquids,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
 building,trad biomass,trad biomass,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
-industry,energy-use,biomass,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
-industry,energy-use,gas,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
-industry,energy-use,coal,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
-industry,energy-use,refined liquids,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
-transportation,air,refined liquids,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
-transportation,rail,refined liquids,1990,NOx,30.0,19.0,12.0,12.0,13.0,8.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
-transportation,road,refined liquids,1990,NOx,30.0,20.0,12.0,15.0,13.0,8.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
-transportation,domestic ship,refined liquids,1990,NOx,30.0,20.0,20.0,12.0,13.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
-transportation,international ship,refined liquids,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
-urban processes,urban processes,landfills,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
-industry,industrial processes,solvents,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
-industry,industrial processes,other industrial processes,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
-
-
+industrial energy use,biomass,biomass,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+industrial energy use,gas,gas,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+industrial energy use,coal,coal,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+industrial energy use,refined liquids,refined liquids,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+industrial energy use,biomass,biomass cogen,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+industrial energy use,gas,gas cogen,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+industrial energy use,coal,coal cogen,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+industrial energy use,refined liquids,refined liquids cogen,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+process heat cement,biomass,biomass,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+process heat cement,gas,gas,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+process heat cement,coal,coal,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+process heat cement,refined liquids,refined liquids,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+urban processes,landfills,landfills,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+industrial processes,other industrial processes,other industrial processes,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
 Diffusional lowering of gdp-mid-control over time,,,,,,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,,,,,,
@@ -275,27 +283,29 @@ building,coal,coal,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,
 building,biomass,biomass,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
 building,refined liquids,refined liquids,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
 building,trad biomass,trad biomass,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
-industry,energy-use,biomass,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
-industry,energy-use,gas,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
-industry,energy-use,coal,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
-industry,energy-use,refined liquids,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
-transportation,air,refined liquids,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
-transportation,rail,refined liquids,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
-transportation,road,refined liquids,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
-transportation,domestic ship,refined liquids,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
-transportation,international ship,refined liquids,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
-urban processes,urban processes,landfills,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
-industry,industrial processes,solvents,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
-industry,industrial processes,other industrial processes,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
-
-
+industrial energy use,biomass,biomass,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
+industrial energy use,gas,gas,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
+industrial energy use,coal,coal,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
+industrial energy use,refined liquids,refined liquids,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
+industrial energy use,biomass,biomass cogen,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
+industrial energy use,gas,gas cogen,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
+industrial energy use,coal,coal cogen,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
+industrial energy use,refined liquids,refined liquids cogen,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
+process heat cement,biomass,biomass,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
+process heat cement,gas,gas,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
+process heat cement,coal,coal,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
+process heat cement,refined liquids,refined liquids,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
+urban processes,landfills,landfills,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
+industrial processes,other industrial processes,other industrial processes,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
 Final emissions coefficient,,,,,,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,,,,,,
 10050,,,,,,,,,,,,,,,,,,
 ,,,,,final-emiss-coef,,,,,,,,,,,,,
 supplysector,subsector,technology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
-regional crude oil,regional crude oil,regional crude oil,1990,NOx,7.55562E-05,0.001613006,0.002200693,7.36339E-06,0.0192102,0.000814536,0.0001173,0.009010878,0.014591487,0.002379299,0.001756752,0.004436937,0.000122577,0.000703585
+regional crude oil,regional crude oil,regional crude oil,1990,NOx,6.29464E-05,0.001293959,0.001778,5.54349E-06,0.017394442,0.000682468,9.0539E-05,0.006538908,0.012419355,0.001903342,0.001866685,0.00430891,8.07758E-05,0.000519869
 refined liquids industrial,biomass liquids,biomass liquids,1990,NOx,0.006,0.006,0.006,0.006,0.006,0.006,0.0054,0.006,0.006,0.006,0.0054,0.006,0.006,0.0054
 refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,NOx,0.006,0.006,0.006,0.006,0.006,0.006,0.0054,0.006,0.006,0.006,0.0054,0.006,0.006,0.0054
 refined liquids industrial,coal to liquids,coal to liquids,1990,NOx,0.006,0.006,0.006,0.006,0.006,0.006,0.0054,0.006,0.006,0.006,0.0054,0.006,0.006,0.0054
@@ -304,19 +314,19 @@ refined liquids enduse,biomass liquids,biomass liquids,1990,NOx,0.006,0.006,0.00
 refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,NOx,0.006,0.006,0.006,0.006,0.006,0.006,0.0054,0.006,0.006,0.006,0.0054,0.006,0.006,0.0054
 refined liquids enduse,coal to liquids,coal to liquids,1990,NOx,0.006,0.006,0.006,0.006,0.006,0.006,0.0054,0.006,0.006,0.006,0.0054,0.006,0.006,0.0054
 refined liquids enduse,gas to liquids,gas to liquids,1990,NOx,0.006,0.006,0.006,0.006,0.006,0.006,0.0054,0.006,0.006,0.006,0.0054,0.006,0.006,0.0054
-electricity,coal,Coal (existing),1990,NOx,0.040096438,0.039874881,0.040938907,0.041041763,0.039199962,0.039204191,0.035711855,0.040990758,0.027124893,0.041748588,0.037700753,0.040506356,0.040531973,0.036696557
-electricity,coal,Coal (conv pul),1990,NOx,0.040096438,0.039874881,0.040938907,0.041041763,0.039199962,0.039204191,0.026453226,0.040990758,0.027124893,0.041748588,0.037700753,0.040506356,0.040531973,0.026688405
+electricity,coal,Coal (existing),1990,NOx,0.041291899,0.038946035,0.038862493,0.039828891,0.039640883,0.041809889,0.037517382,0.03681111,0.026477468,0.037963139,0.027342565,0.050890592,0.042909502,0.035428537
+electricity,coal,Coal (conv pul),1990,NOx,0.041291899,0.038946035,0.038862493,0.039828891,0.039640883,0.041809889,0.027790653,0.03681111,0.026477468,0.037963139,0.027342565,0.050890592,0.042909502,0.025766209
 electricity,coal,Coal (IGCC),1990,NOx,0.02,0.02,0.02,0.02,0.02,0.02,0.015,0.02,0.02,0.02,0.02,0.02,0.02,0.015
 electricity,coal,Coal (IGCC)_CCS,1990,NOx,0.02,0.02,0.02,0.02,0.02,0.02,0.015,0.02,0.02,0.02,0.02,0.02,0.02,0.015
-electricity,gas,Gas (existing),1990,NOx,0.018095245,0.0508742,0.01754567,0.004602296,0.02797561,0.031831123,0.015139194,0.025737804,0.028529516,0.037700643,0.031661036,0.01776689,0.021483977,0.021789789
-electricity,gas,Gas (peak load conv),1990,NOx,0.018095245,0.0508742,0.01754567,0.004602296,0.02797561,0.031831123,0.015139194,0.025737804,0.028529516,0.037700643,0.031661036,0.01776689,0.021483977,0.021789789
+electricity,gas,Gas (existing),1990,NOx,0.020320131,0.054183169,0.018162153,0.004870233,0.030848937,0.037017019,0.017343063,0.025203881,0.030367272,0.03738282,0.02503902,0.024340455,0.024801239,0.022939496
+electricity,gas,Gas (peak load conv),1990,NOx,0.020320131,0.054183169,0.018162153,0.004870233,0.030848937,0.037017019,0.017343063,0.025203881,0.030367272,0.03738282,0.02503902,0.024340455,0.024801239,0.022939496
 electricity,gas,Gas (CC),1990,NOx,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005
 electricity,gas,Gas (CC)_CCS,1990,NOx,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005,0.005
-electricity,oil,Oil (existing),1990,NOx,0.032994522,0.092763038,0.031992437,0.008391739,0.05101019,0.058040259,0.027604515,0.046929818,0.052020172,0.068742629,0.057730126,0.032395805,0.039173472,0.039731082
-electricity,oil,Oil (peak load conv),1990,NOx,0.032994522,0.092763038,0.031992437,0.008391739,0.05101019,0.058040259,0.027604515,0.046929818,0.052020172,0.068742629,0.057730126,0.032395805,0.039173472,0.039731082
+electricity,oil,Oil (existing),1990,NOx,0.039517876,0.105373525,0.035321117,0.009471458,0.05999393,0.071989398,0.033728181,0.049015623,0.059057204,0.072700795,0.048695006,0.047336463,0.048232578,0.044611927
+electricity,oil,Oil (peak load conv),1990,NOx,0.039517876,0.105373525,0.035321117,0.009471458,0.05999393,0.071989398,0.033728181,0.049015623,0.059057204,0.072700795,0.048695006,0.047336463,0.048232578,0.044611927
 electricity,oil,Oil (IGCC),1990,NOx,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03
 electricity,oil,Oil (IGCC)_CCS,1990,NOx,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03
-electricity,biomass,Biomass (existing),1990,NOx,0.029119866,0.008959374,0.062592796,0.067199218,0.039250483,0.094529545,0.001329894,0.05,0.026763572,0.080835106,0.040214272,0.020817607,0.314893325,0.054845199
+electricity,biomass,Biomass (existing),1990,NOx,0.030984345,0.00908569,0.066150543,0.067383792,-1,-1,0.07123537,0.05,0.022303052,0.071420086,0.044881526,0.0228068,0.123689167,0.058517324
 electricity,biomass,Biomass (conv),1990,NOx,0.06,0.06,0.06,0.06,0.06,0.06,0.054,0.06,0.06,0.06,0.054,0.06,0.06,0.054
 electricity,biomass,Biomass (IGCC),1990,NOx,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03
 electricity,biomass,Biomass (IGCC)_CCS,1990,NOx,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03,0.03
@@ -327,20 +337,22 @@ H2 Central Production,coal chemical,coal chemical CCS,1990,NOx,0.0002,0.0002,0.0
 H2 Central Production,biomass to H2,biomass to H2,1990,NOx,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.00018,0.0002,0.0002,0.0002,0.00018,0.0002,0.0002,0.00018
 H2 Central Production,biomass to H2,biomass to H2 CCS,1990,NOx,0.0002,0.0002,0.0002,0.0002,0.0002,0.0002,0.00018,0.0002,0.0002,0.0002,0.00018,0.0002,0.0002,0.00018
 H2 Forecourt Production,gas chemical,natural gas steam reforming,1990,NOx,0.004916003,0.004916003,0.004916003,0.004916003,0.004916003,0.004916003,0.004424402,0.004916003,0.004916003,0.004916003,0.004424402,0.004916003,0.004916003,0.004424402
-building,gas,gas,1990,NOx,0.038302403,0.031254185,0.093199818,0.028545697,0.160319068,0.043272347,0.009184959,0.058280549,0.027367638,0.053401644,0.010124537,0.041076395,0.038831585,0.003027173
-building,coal,coal,1990,NOx,0.258522058,0.210950113,0.629052137,0.192669171,1.082073494,0.29206669,0.041368865,0.393364542,0.184717861,0.360434379,0.068335557,0.277245112,0.262093773,0.020431901
-building,biomass,biomass,1990,NOx,0.227538117,0.084688969,0.115204166,0.245280341,0.465767974,0.555756098,0.041602964,1.383091439,0.27404656,0.365450343,0.203609304,0.120648379,0.155297934,0.295811381
-building,refined liquids,refined liquids,1990,NOx,0.043878224,0.035803971,0.106767256,0.032701198,0.183657301,0.049571661,0.010522047,0.066764661,0.031351645,0.061175517,0.011598403,0.047056036,0.044484442,0.003467849
-building,trad biomass,trad biomass,1990,NOx,-1,-1,-1,-1,-1,-1,0.083448818,-1,0.103050958,0.054538145,0.032659902,-1,-1,0.056026268
-industry,energy-use,biomass,1990,NOx,0.035399009,0.004844687,0.045145341,0.057070807,0.12046203,0.098662073,0.002598241,0.16379062,0.029799101,0.058380498,0.023404902,0.016209749,0.304457406,0.028001748
-industry,energy-use,gas,1990,NOx,0.095172832,0.029768743,0.028550072,0.017062729,0.118445313,0.034514736,0.046817698,0.020548952,0.03434041,0.024046326,0.014341449,0.036133736,0.024987498,0.026565968
-industry,energy-use,coal,1990,NOx,0.168443976,0.052686942,0.050530046,0.03019889,0.209633349,0.061086754,0.023064924,0.036369067,0.060778219,0.042558981,0.025382566,0.063952181,0.044224738,0.047018432
-industry,energy-use,refined liquids,1990,NOx,0.092529433,0.029762557,0.027178024,0.015220088,0.121772341,0.029975243,0.040168296,0.018058542,0.029680828,0.021272086,0.012420871,0.038323293,0.023503091,0.022919063
-transportation,air,refined liquids,1990,NOx,0.234814329,0.23783626,0.232442793,0.224581344,0.240720121,0.221089078,0.219474191,0.222653417,0.220443856,0.223513469,0.220885825,0.243789463,0.231056542,0.220306135
-transportation,rail,refined liquids,1990,NOx,0.322800271,0.326250084,0.321610934,0.334813953,0.327675548,0.347534608,0.138699299,-1,0.07988474,0.316038748,0.286065368,0.271170588,0.305079786,0.194598061
-transportation,road,refined liquids,1990,NOx,0.063096008,0.059813212,0.061102775,0.059841758,0.058023118,0.061435847,0.046653634,0.065676853,0.076634674,0.067377736,0.049907824,0.069758494,0.063042568,0.037696472
-transportation,domestic ship,refined liquids,1990,NOx,0.125104606,0.124237564,0.139323812,0.155586154,0.135523765,0.132985552,0.069647984,-1,0.034268359,0.135899175,0.112366029,0.140025223,0.1215286,0.116846237
-transportation,international ship,refined liquids,1990,NOx,0.737899876,0.775288409,0.710390572,0.629102415,0.813667069,0.597187458,0.524925287,0.611196932,0.591538948,0.619095096,0.53619912,0.857755431,0.694998933,0.531528958
-urban processes,urban processes,landfills,1990,NOx,30.56476484,1.443224583,6.346594434,19.74447643,-1,1.441577767,-1,0.494509129,1.202292579,1.432478062,0.751528626,0.366031681,0.331305915,0.362198508
-industry,industrial processes,solvents,1990,NOx,0.741630706,-1,0.037093093,-1,-1,0.835139497,-1,-1,-1,-1,-1,-1,-1,-1
-industry,industrial processes,other industrial processes,1990,NOx,128.8657308,15.43471166,216.1233858,51.93999513,20.23860302,34.49377259,37.86045541,6.156992663,9.709418283,16.40705048,7.211289695,43.52897574,3.830111752,5.546337088
+building,gas,gas,1990,NOx,0.03834085,0.03135343,0.084298412,0.028404426,0.160462341,0.026755024,0.008383496,0.058672891,0.027460656,0.053863582,0.013500703,0.042652685,0.0521656,0.002495842
+building,coal,coal,1990,NOx,0.258772614,0.211612649,0.568952439,0.191709041,1.083003087,0.180576784,0.037757789,0.39599897,0.185339283,0.363539664,0.091119843,0.287874334,0.352079533,0.016845103
+building,biomass,biomass,1990,NOx,0.229205114,0.084968609,0.085865496,0.231450004,0.467967717,0.291929528,0.116191604,1.392764003,0.28275592,1.329032884,0.274804989,0.254341069,0.127346262,0.30929393
+building,refined liquids,refined liquids,1990,NOx,0.04394102,0.035932997,0.096611267,0.032553254,0.183899908,0.030662936,0.009608013,0.067242813,0.031471634,0.061731043,0.015472653,0.048882652,0.05978505,0.002860391
+building,trad biomass,trad biomass,1990,NOx,-1,-1,-1,-1,-1,-1,0.075128265,-1,0.10290635,0.044576814,0.042579111,-1,-1,0.055672333
+industrial energy use,biomass,biomass,1990,NOx,0.03703634,0.004977642,0.046882421,0.057066062,0.12460917,0.064052411,0.14014403,0.120872864,0.024733361,0.051881205,0.024689634,0.017974294,0.11707213,0.028629476
+industrial energy use,gas,gas,1990,NOx,0.104788449,0.030891003,0.024492387,0.015448961,0.111644545,0.026262049,0.050063834,0.023259738,0.035799307,0.024096581,0.014928478,0.049471539,0.020433908,0.027146012
+industrial energy use,coal,coal,1990,NOx,0.140020939,0.041277329,0.032727338,0.020643287,0.149182225,0.035092005,0.018621007,0.031080242,0.047835927,0.032198453,0.019947805,0.066105104,0.027304298,0.036273178
+industrial energy use,refined liquids,refined liquids,1990,NOx,0.171854554,0.052098172,0.03932987,0.023246025,0.193619461,0.038474013,0.072456639,0.034480897,0.052194636,0.035958164,0.021809982,0.088508727,0.032421594,0.039505536
+industrial energy use,biomass,biomass cogen,1990,NOx,0.03703634,0.004977642,0.046882421,0.057066062,0.12460917,0.064052411,0.14014403,0.120872864,0.024733361,0.051881205,0.024689634,0.017974294,0.11707213,0.028629476
+industrial energy use,gas,gas cogen,1990,NOx,0.104788449,0.030891003,0.024492387,0.015448961,0.111644545,0.026262049,0.050063834,0.023259738,0.035799307,0.024096581,0.014928478,0.049471539,0.020433908,0.027146012
+industrial energy use,coal,coal cogen,1990,NOx,0.140020939,0.041277329,0.032727338,0.020643287,0.149182225,0.035092005,0.018621007,0.031080242,0.047835927,0.032198453,0.019947805,0.066105104,0.027304298,0.036273178
+industrial energy use,refined liquids,refined liquids cogen,1990,NOx,0.171854554,0.052098172,0.03932987,0.023246025,0.193619461,0.038474013,0.072456639,0.034480897,0.052194636,0.035958164,0.021809982,0.088508727,0.032421594,0.039505536
+process heat cement,biomass,biomass,1990,NOx,0.03703634,0.004977642,0.046882421,0.057066062,0.12460917,0.064052411,0.14014403,0.120872864,0.024733361,0.051881205,0.024689634,0.017974294,0.11707213,0.028629476
+process heat cement,gas,gas,1990,NOx,0.104788449,0.030891003,0.024492387,0.015448961,0.111644545,0.026262049,0.050063834,0.023259738,0.035799307,0.024096581,0.014928478,0.049471539,0.020433908,0.027146012
+process heat cement,coal,coal,1990,NOx,0.140020939,0.041277329,0.032727338,0.020643287,0.149182225,0.035092005,0.018621007,0.031080242,0.047835927,0.032198453,0.019947805,0.066105104,0.027304298,0.036273178
+process heat cement,refined liquids,refined liquids,1990,NOx,0.171854554,0.052098172,0.03932987,0.023246025,0.193619461,0.038474013,0.072456639,0.034480897,0.052194636,0.035958164,0.021809982,0.088508727,0.032421594,0.039505536
+urban processes,landfills,landfills,1990,NOx,30.68667684,1.445039618,6.249225386,19.77148687,2.03555E-06,1.459108298,0.03979656,0.494224489,1.279963504,1.437801046,0.884358381,0.313360687,0.220869512,0.002500961
+industrial processes,other industrial processes,other industrial processes,1990,NOx,126.5282258,15.01918257,199.768811,52.00603953,21.74443389,15.44672174,25.89594174,6.753985016,6.967692043,16.62708891,8.016366546,48.63953372,3.19364527,4.687962597

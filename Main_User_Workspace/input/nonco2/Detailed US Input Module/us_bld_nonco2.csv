@@ -1,362 +1,314 @@
-INPUT_TABLE,,,,,
-Variable ID,,,,,
-20000,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,input-driver
-residential heating service,gas,gasfurnace,ALL,CH4,
-residential heating service,gas,gasheatpump,ALL,CH4,
-residential heating service,refined liquids,oilfurnace,ALL,CH4,
-residential heating service,biomass,woodfurnace,ALL,CH4,
-residential water heating service,gas,gaswaterheater,ALL,CH4,
-residential water heating service,gas,gashpwaterheater,ALL,CH4,
-residential water heating service,refined liquids,oilwaterheater,ALL,CH4,
-commercial heating service,gas,gasfurnace,ALL,CH4,
-commercial heating service,gas,gasheatpump,ALL,CH4,
-commercial heating service,refined liquids,oilfurnace,ALL,CH4,
-commercial heating service,biomass,woodfurnace,ALL,CH4,
-commercial water heating service,gas,gaswaterheater,ALL,CH4,
-commercial water heating service,gas,gashpwaterheater,ALL,CH4,
-commercial water heating service,refined liquids,oilwaterheater,ALL,CH4,
-
-INPUT_TABLE,,,,,
-Variable ID,,,,,
-20015,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef
-residential heating service,gas,gasfurnace,1990,CH4,0.0058
-residential heating service,gas,gasheatpump,1990,CH4,0.0058
-residential heating service,refined liquids,oilfurnace,1990,CH4,0.0124
-residential heating service,biomass,woodfurnace,1990,CH4,0.2692
-residential water heating service,gas,gaswaterheater,1990,CH4,0.0058
-residential water heating service,gas,gashpwaterheater,1990,CH4,0.0058
-residential water heating service,refined liquids,oilwaterheater,1990,CH4,0.0124
-commercial heating service,gas,gasfurnace,1990,CH4,0.0091
-commercial heating service,gas,gasheatpump,1990,CH4,0.0091
-commercial heating service,refined liquids,oilfurnace,1990,CH4,0.0383
-commercial heating service,biomass,woodfurnace,1990,CH4,0.1971
-commercial water heating service,gas,gaswaterheater,1990,CH4,0.0091
-commercial water heating service,gas,gashpwaterheater,1990,CH4,0.0091
-commercial water heating service,refined liquids,oilwaterheater,1990,CH4,0.0383
-
-
-INPUT_TABLE,,,,,
-Variable ID,,,,,
-20000,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,input-driver
-residential heating service,gas,gasfurnace,ALL,N2O,
-residential heating service,gas,gasheatpump,ALL,N2O,
-residential heating service,refined liquids,oilfurnace,ALL,N2O
-residential heating service,biomass,woodfurnace,ALL,N2O
-residential water heating service,gas,gaswaterheater,ALL,N2O
-residential water heating service,gas,gashpwaterheater,ALL,N2O
-residential water heating service,refined liquids,oilwaterheater,ALL,N2O
-commercial heating service,gas,gasfurnace,ALL,N2O
-commercial heating service,gas,gasheatpump,ALL,N2O
-commercial heating service,refined liquids,oilfurnace,ALL,N2O
-commercial heating service,biomass,woodfurnace,ALL,N2O
-commercial water heating service,gas,gaswaterheater,ALL,N2O
-commercial water heating service,gas,gashpwaterheater,ALL,N2O
-commercial water heating service,refined liquids,oilwaterheater,ALL,N2O
-
-INPUT_TABLE,,,,
-Variable ID,,,,
-20015,,,,
-
-supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef
-residential heating service,gas,gasfurnace,1990,N2O,0.0002
-residential heating service,gas,gasheatpump,1990,N2O,0.0002
-residential heating service,refined liquids,oilfurnace,1990,N2O,0.0012
-residential heating service,biomass,woodfurnace,1990,N2O,0.0057
-residential water heating service,gas,gaswaterheater,1990,N2O,0.0002
-residential water heating service,gas,gashpwaterheater,1990,N2O,0.0002
-residential water heating service,refined liquids,oilwaterheater,1990,N2O,0.0012
-commercial heating service,gas,gasfurnace,1990,N2O,0.0003
-commercial heating service,gas,gasheatpump,1990,N2O,0.0003
-commercial heating service,refined liquids,oilfurnace,1990,N2O,0.0046
-commercial heating service,biomass,woodfurnace,1990,N2O,0.0042
-commercial water heating service,gas,gaswaterheater,1990,N2O,0.0003
-commercial water heating service,gas,gashpwaterheater,1990,N2O,0.0003
-commercial water heating service,refined liquids,oilwaterheater,1990,N2O,0.0046
-
-
-INPUT_TABLE,,,,,
-Variable ID,,,,,
-20000,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,input-driver
-residential heating service,gas,gasfurnace,ALL,NOx,
-residential heating service,gas,gasheatpump,ALL,NOx,
-residential heating service,refined liquids,oilfurnace,ALL,NOx,
-residential heating service,biomass,woodfurnace,ALL,NOx,
-residential water heating service,gas,gaswaterheater,ALL,NOx,
-residential water heating service,gas,gashpwaterheater,ALL,NOx,
-residential water heating service,refined liquids,oilwaterheater,ALL,NOx,
-commercial heating service,gas,gasfurnace,ALL,NOx,
-commercial heating service,gas,gasheatpump,ALL,NOx,
-commercial heating service,refined liquids,oilfurnace,ALL,NOx,,,,
-commercial heating service,biomass,woodfurnace,ALL,NOx,,,,
-commercial water heating service,gas,gaswaterheater,ALL,NOx,,,,
-commercial water heating service,gas,gashpwaterheater,ALL,NOx,,,,
-commercial water heating service,refined liquids,oilwaterheater,ALL,NOx,,,,
-
-INPUT_TABLE,,,,,,,,
-Variable ID,,,,,,,,
-20020,,,,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef
-residential heating service,gas,gasfurnace,1990,NOx,0.1179,23,20,0.0471
-residential heating service,gas,gasheatpump,1990,NOx,0.1179,23,20,0.0471
-residential heating service,refined liquids,oilfurnace,1990,NOx,0.1179,23,20,0.0471
-residential heating service,biomass,woodfurnace,1990,NOx,0.1406,23,20,0.0562
-residential water heating service,gas,gaswaterheater,1990,NOx,0.1179,23,20,0.0471
-residential water heating service,gas,gashpwaterheater,1990,NOx,0.1179,23,20,0.0471
-residential water heating service,refined liquids,oilwaterheater,1990,NOx,0.1179,23,20,0.0471
-commercial heating service,gas,gasfurnace,1990,NOx,0.2846,23,20,0.1139
-commercial heating service,gas,gasheatpump,1990,NOx,0.2846,23,20,0.1139
-commercial heating service,refined liquids,oilfurnace,1990,NOx,0.6588,23,20,0.2635
-commercial heating service,biomass,woodfurnace,1990,NOx,0.6755,23,20,0.2702
-commercial water heating service,gas,gaswaterheater,1990,NOx,0.2846,23,20,0.1139
-commercial water heating service,gas,gashpwaterheater,1990,NOx,0.2846,23,20,0.1139
-commercial water heating service,refined liquids,oilwaterheater,1990,NOx,0.6588,23,20,0.2635
-
-
-INPUT_TABLE,,,,,,,,
-Variable ID,,,,,,,,
-20000,,,,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,input-driver,,,
-residential heating service,gas,gasfurnace,ALL,CO
-residential heating service,gas,gasheatpump,ALL,CO
-residential heating service,refined liquids,oilfurnace,ALL,CO
-residential heating service,biomass,woodfurnace,ALL,CO
-residential water heating service,gas,gaswaterheater,ALL,CO
-residential water heating service,gas,gashpwaterheater,ALL,CO
-residential water heating service,refined liquids,oilwaterheater,ALL,CO
-commercial heating service,gas,gasfurnace,ALL,CO
-commercial heating service,gas,gasheatpump,ALL,CO
-commercial heating service,refined liquids,oilfurnace,ALL,CO
-commercial heating service,biomass,woodfurnace,ALL,CO
-commercial water heating service,gas,gaswaterheater,ALL,CO
-commercial water heating service,gas,gashpwaterheater,ALL,CO
-commercial water heating service,refined liquids,oilwaterheater,ALL,CO
-
-INPUT_TABLE,,,,
-Variable ID,,,,,,,,
-20020,,,,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef
-residential heating service,gas,gasfurnace,1990,CO,0.1781,23,20,0.0713
-residential heating service,gas,gasheatpump,1990,CO,0.1781,23,20,0.0713
-residential heating service,refined liquids,oilfurnace,1990,CO,0.1781,23,20,0.0713
-residential heating service,biomass,woodfurnace,1990,CO,14.1120,23,20,5.6448
-residential water heating service,gas,gaswaterheater,1990,CO,0.1781,23,20,0.0713
-residential water heating service,gas,gashpwaterheater,1990,CO,0.1781,23,20,0.0713
-residential water heating service,refined liquids,oilwaterheater,1990,CO,0.1781,23,20,0.0713
-commercial heating service,gas,gasfurnace,1990,CO,0.1334,23,20,0.0534
-commercial heating service,gas,gasheatpump,1990,CO,0.1334,23,20,0.0534
-commercial heating service,refined liquids,oilfurnace,1990,CO,0.1978,23,20,0.0791
-commercial heating service,biomass,woodfurnace,1990,CO,1.3534,23,20,0.5414
-commercial water heating service,gas,gaswaterheater,1990,CO,0.1334,23,20,0.0534
-commercial water heating service,gas,gashpwaterheater,1990,CO,0.1334,23,20,0.0534
-commercial water heating service,refined liquids,oilwaterheater,1990,CO,0.1978,23,20,0.0791
-
-
-INPUT_TABLE,,,,,,,,
-Variable ID,,,,,,,,
-20000,,,,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,input-driver,,,
-residential heating service,gas,gasfurnace,ALL,NMVOC,,,,
-residential heating service,gas,gasheatpump,ALL,NMVOC,,,,
-residential heating service,refined liquids,oilfurnace,ALL,NMVOC,,,,
-residential heating service,biomass,woodfurnace,ALL,NMVOC,,,,
-residential water heating service,gas,gaswaterheater,ALL,NMVOC,,,,
-residential water heating service,gas,gashpwaterheater,ALL,NMVOC,,,,
-residential water heating service,refined liquids,oilwaterheater,ALL,NMVOC,,,,
-commercial heating service,gas,gasfurnace,ALL,NMVOC,,,,
-commercial heating service,gas,gasheatpump,ALL,NMVOC,,,,
-commercial heating service,refined liquids,oilfurnace,ALL,NMVOC,,,,
-commercial heating service,biomass,woodfurnace,ALL,NMVOC,,,,
-commercial water heating service,gas,gaswaterheater,ALL,NMVOC,,,,
-commercial water heating service,gas,gashpwaterheater,ALL,NMVOC,,,,
-commercial water heating service,refined liquids,oilwaterheater,ALL,NMVOC,,,,
-
-INPUT_TABLE,,,,,,,,
-Variable ID,,,,,,,,
-20020,,,,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef
-residential heating service,gas,gasfurnace,1990,NMVOC,0.0104,23,20,0.0041
-residential heating service,gas,gasheatpump,1990,NMVOC,0.0104,23,20,0.0041
-residential heating service,refined liquids,oilfurnace,1990,NMVOC,0.0104,23,20,0.0041
-residential heating service,biomass,woodfurnace,1990,NMVOC,4.0676,23,20,1.6270
-residential water heating service,gas,gaswaterheater,1990,NMVOC,0.0104,23,20,0.0041
-residential water heating service,gas,gashpwaterheater,1990,NMVOC,0.0104,23,20,0.0041
-residential water heating service,refined liquids,oilwaterheater,1990,NMVOC,0.0104,23,20,0.0041
-commercial heating service,gas,gasfurnace,1990,NMVOC,0.0195,23,20,0.0078
-commercial heating service,gas,gasheatpump,1990,NMVOC,0.0195,23,20,0.0078
-commercial heating service,refined liquids,oilfurnace,1990,NMVOC,0.0254,23,20,0.0102
-commercial heating service,biomass,woodfurnace,1990,NMVOC,0.1201,23,20,0.0480
-commercial water heating service,gas,gaswaterheater,1990,NMVOC,0.0195,23,20,0.0078
-commercial water heating service,gas,gashpwaterheater,1990,NMVOC,0.0195,23,20,0.0078
-commercial water heating service,refined liquids,oilwaterheater,1990,NMVOC,0.0254,23,20,0.0102
-
-
-INPUT_TABLE,,,,,,,,
-Variable ID,,,,,,,,
-20000,,,,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,input-driver,,,
-residential heating service,refined liquids,oilfurnace,ALL,SO2_1,,,,
-residential heating service,biomass,woodfurnace,ALL,SO2_1,,,,
-residential water heating service,refined liquids,oilwaterheater,ALL,SO2_1,,,,
-commercial heating service,refined liquids,oilfurnace,ALL,SO2_1,,,,
-commercial heating service,biomass,woodfurnace,ALL,SO2_1,,,,
-commercial water heating service,refined liquids,oilwaterheater,ALL,SO2_1,,,,
-
-INPUT_TABLE,,,,,,,,
-Variable ID,,,,,,,,
-20020,,,,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef
-residential heating service,refined liquids,oilfurnace,1990,SO2_1,0.3729,23,20,0.1491
-residential heating service,biomass,woodfurnace,1990,SO2_1,0.0245,23,20,0.0098
-residential water heating service,refined liquids,oilwaterheater,1990,SO2_1,0.3729,23,20,0.1491
-commercial heating service,refined liquids,oilfurnace,1990,SO2_1,2.3783,23,20,0.9513
-commercial heating service,biomass,woodfurnace,1990,SO2_1,0.1508,23,20,0.0603
-commercial water heating service,refined liquids,oilwaterheater,1990,SO2_1,2.3783,23,20,0.9513
-
-
-INPUT_TABLE,,,,,,,,
-Variable ID,,,,,,,,
-20000,,,,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,input-driver,,,
-residential heating service,refined liquids,oilfurnace,ALL,BC,,,,
-residential heating service,biomass,woodfurnace,ALL,BC,,,,
-residential water heating service,refined liquids,oilwaterheater,ALL,BC,,,,
-commercial heating service,refined liquids,oilfurnace,ALL,BC,,,,
-commercial heating service,biomass,woodfurnace,ALL,BC,,,,
-commercial water heating service,refined liquids,oilwaterheater,ALL,BC,,,,
-
-INPUT_TABLE,,,,,,,,
-Variable ID,,,,,,,,
-20020,,,,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef
-residential heating service,refined liquids,oilfurnace,1990,BC,0.0014,25,15,0.0007
-residential heating service,biomass,woodfurnace,1990,BC,0.1000,25,15,0.0500
-residential water heating service,refined liquids,oilwaterheater,1990,BC,0.0014,25,15,0.0007
-commercial heating service,refined liquids,oilfurnace,1990,BC,0.0049,25,15,0.0025
-commercial heating service,biomass,woodfurnace,1990,BC,0.0351,25,15,0.0175
-commercial water heating service,refined liquids,oilwaterheater,1990,BC,0.0049,25,15,0.0025
-
-
-INPUT_TABLE,,,,,,,,
-Variable ID,,,,,,,,
-20000,,,,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,input-driver,,,
-residential heating service,refined liquids,oilfurnace,ALL,OC,,,,
-residential heating service,biomass,woodfurnace,ALL,OC,,,,
-residential water heating service,refined liquids,oilwaterheater,ALL,OC,,,,
-commercial heating service,refined liquids,oilfurnace,ALL,OC,,,,
-commercial heating service,biomass,woodfurnace,ALL,OC,,,,
-commercial water heating service,refined liquids,oilwaterheater,ALL,OC,,,,
-
-INPUT_TABLE,,,,,,,,
-Variable ID,,,,,,,,
-20020,,,,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef
-residential heating service,refined liquids,oilfurnace,1990,OC,0.0007,25,15,0.0004
-residential heating service,biomass,woodfurnace,1990,OC,0.5489,25,15,0.2745
-residential water heating service,refined liquids,oilwaterheater,1990,OC,0.0007,25,15,0.0004
-commercial heating service,refined liquids,oilfurnace,1990,OC,0.0025,25,15,0.0013
-commercial heating service,biomass,woodfurnace,1990,OC,0.1927,25,15,0.0964
-commercial water heating service,refined liquids,oilwaterheater,1990,OC,0.0025,25,15,0.0013
-
-
-INPUT_TABLE,,,,,,,,
-Variable ID,,,,,,,,
-20000,,,,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,input-driver,,,
-residential heating service,gas,gasfurnace,ALL,NH3,,,,
-residential heating service,gas,gasheatpump,ALL,NH3,,,,
-residential heating service,refined liquids,oilfurnace,ALL,NH3,,,,
-residential heating service,biomass,woodfurnace,ALL,NH3
-residential water heating service,gas,gaswaterheater,ALL,NH3
-residential water heating service,gas,gashpwaterheater,ALL,NH3
-residential water heating service,refined liquids,oilwaterheater,ALL,NH3
-commercial heating service,gas,gasfurnace,ALL,NH3
-commercial heating service,gas,gasheatpump,ALL,NH3
-commercial heating service,refined liquids,oilfurnace,ALL,NH3
-commercial heating service,biomass,woodfurnace,ALL,NH3
-commercial water heating service,gas,gaswaterheater,ALL,NH3
-commercial water heating service,gas,gashpwaterheater,ALL,NH3
-commercial water heating service,refined liquids,oilwaterheater,ALL,NH3
-
-INPUT_TABLE,,,,
-Variable ID,,,,
-20020,,,,
-
-supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef
-residential heating service,gas,gasfurnace,1990,NH3,0.0013,25,15,0.0007
-residential heating service,gas,gasheatpump,1990,NH3,0.0013,25,15,0.0007
-residential heating service,refined liquids,oilfurnace,1990,NH3,0.0013,25,15,0.0007
-residential heating service,biomass,woodfurnace,1990,NH3,0.0013,25,15,0.0007
-residential water heating service,gas,gaswaterheater,1990,NH3,0.0013,25,15,0.0007
-residential water heating service,gas,gashpwaterheater,1990,NH3,0.0013,25,15,0.0007
-residential water heating service,refined liquids,oilwaterheater,1990,NH3,0.0013,25,15,0.0007
-commercial heating service,gas,gasfurnace,1990,NH3,0.0023,25,15,0.0011
-commercial heating service,gas,gasheatpump,1990,NH3,0.0023,25,15,0.0011
-commercial heating service,refined liquids,oilfurnace,1990,NH3,0.0079,25,15,0.0040
-commercial heating service,biomass,woodfurnace,1990,NH3,0.0000,25,15,0.0000
-commercial water heating service,gas,gaswaterheater,1990,NH3,0.0023,25,15,0.0011
-commercial water heating service,gas,gashpwaterheater,1990,NH3,0.0023,25,15,0.0011
-commercial water heating service,refined liquids,oilwaterheater,1990,NH3,0.0079,25,15,0.0040
-
-
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+20000,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,
+bld_res heating,gas,gas furnace,ALL,CH4,,,,,,,,
+bld_res heating,refined liquids,fuel furnace,ALL,CH4,,,,,,,,
+bld_res heating,biomass,wood furnace,ALL,CH4,,,,,,,,
+bld_res hot water,gas,gas water heater,ALL,CH4,,,,,,,,
+bld_res hot water,refined liquids,fuel water heater,ALL,CH4,,,,,,,,
+bld_comm heating,gas,gas furnace,ALL,CH4,,,,,,,,
+bld_comm heating,refined liquids,fuel boiler,ALL,CH4,,,,,,,,
+bld_comm heating,biomass,biomass boiler,ALL,CH4,,,,,,,,
+bld_comm hot water,gas,gas water heater,ALL,CH4,,,,,,,,
+bld_comm hot water,refined liquids,fuel water heater,ALL,CH4,,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+20015,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,,,,,,,
+bld_res heating,gas,gas furnace,1990,CH4,0.0061,,,,,,,
+bld_res heating,refined liquids,fuel furnace,1990,CH4,0.0139,,,,,,,
+bld_res heating,biomass,wood furnace,1990,CH4,0.2915,,,,,,,
+bld_res hot water,gas,gas water heater,1990,CH4,0.0061,,,,,,,
+bld_res hot water,refined liquids,fuel water heater,1990,CH4,0.0139,,,,,,,
+bld_comm heating,gas,gas furnace,1990,CH4,0.0099,,,,,,,
+bld_comm heating,refined liquids,fuel boiler,1990,CH4,0.0196,,,,,,,
+bld_comm heating,biomass,biomass boiler,1990,CH4,0.2924,,,,,,,
+bld_comm hot water,gas,gas water heater,1990,CH4,0.0099,,,,,,,
+bld_comm hot water,refined liquids,fuel water heater,1990,CH4,0.0196,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+20000,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,
+bld_res heating,gas,gas furnace,ALL,N2O,,,,,,,,
+bld_res heating,refined liquids,fuel furnace,ALL,N2O,,,,,,,,
+bld_res heating,biomass,wood furnace,ALL,N2O,,,,,,,,
+bld_res hot water,gas,gas water heater,ALL,N2O,,,,,,,,
+bld_res hot water,refined liquids,fuel water heater,ALL,N2O,,,,,,,,
+bld_comm heating,gas,gas furnace,ALL,N2O,,,,,,,,
+bld_comm heating,refined liquids,fuel boiler,ALL,N2O,,,,,,,,
+bld_comm heating,biomass,biomass boiler,ALL,N2O,,,,,,,,
+bld_comm hot water,gas,gas water heater,ALL,N2O,,,,,,,,
+bld_comm hot water,refined liquids,fuel water heater,ALL,N2O,,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+20015,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,,,,,,,
+bld_res heating,gas,gas furnace,1990,N2O,0.0002,,,,,,,
+bld_res heating,refined liquids,fuel furnace,1990,N2O,0.0013,,,,,,,
+bld_res heating,biomass,wood furnace,1990,N2O,0.0060,,,,,,,
+bld_res hot water,gas,gas water heater,1990,N2O,0.0002,,,,,,,
+bld_res hot water,refined liquids,fuel water heater,1990,N2O,0.0013,,,,,,,
+bld_comm heating,gas,gas furnace,1990,N2O,0.0003,,,,,,,
+bld_comm heating,refined liquids,fuel boiler,1990,N2O,0.0023,,,,,,,
+bld_comm heating,biomass,biomass boiler,1990,N2O,0.0060,,,,,,,
+bld_comm hot water,gas,gas water heater,1990,N2O,0.0003,,,,,,,
+bld_comm hot water,refined liquids,fuel water heater,1990,N2O,0.0023,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+20000,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,
+bld_res heating,gas,gas furnace,ALL,NOx,,,,,,,,
+bld_res heating,refined liquids,fuel furnace,ALL,NOx,,,,,,,,
+bld_res heating,biomass,wood furnace,ALL,NOx,,,,,,,,
+bld_res hot water,gas,gas water heater,ALL,NOx,,,,,,,,
+bld_res hot water,refined liquids,fuel water heater,ALL,NOx,,,,,,,,
+bld_comm heating,gas,gas furnace,ALL,NOx,,,,,,,,
+bld_comm heating,refined liquids,fuel boiler,ALL,NOx,,,,,,,,
+bld_comm heating,biomass,biomass boiler,ALL,NOx,,,,,,,,
+bld_comm hot water,gas,gas water heater,ALL,NOx,,,,,,,,
+bld_comm hot water,refined liquids,fuel water heater,ALL,NOx,,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+20020,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef,,,,
+bld_res heating,gas,gas furnace,1990,NOx,0.1205,23,20,0.0482,,,,
+bld_res heating,refined liquids,fuel furnace,1990,NOx,0.1205,23,20,0.0482,,,,
+bld_res heating,biomass,wood furnace,1990,NOx,0.1460,23,20,0.0584,,,,
+bld_res hot water,gas,gas water heater,1990,NOx,0.1205,23,20,0.0482,,,,
+bld_res hot water,refined liquids,fuel water heater,1990,NOx,0.1205,23,20,0.0482,,,,
+bld_comm heating,gas,gas furnace,1990,NOx,0.2952,23,20,0.1181,,,,
+bld_comm heating,refined liquids,fuel boiler,1990,NOx,0.3230,23,20,0.1292,,,,
+bld_comm heating,biomass,biomass boiler,1990,NOx,0.9613,23,20,0.3845,,,,
+bld_comm hot water,gas,gas water heater,1990,NOx,0.2952,23,20,0.1181,,,,
+bld_comm hot water,refined liquids,fuel water heater,1990,NOx,0.3230,23,20,0.1292,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+20000,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,
+bld_res heating,gas,gas furnace,ALL,CO,,,,,,,,
+bld_res heating,refined liquids,fuel furnace,ALL,CO,,,,,,,,
+bld_res heating,biomass,wood furnace,ALL,CO,,,,,,,,
+bld_res hot water,gas,gas water heater,ALL,CO,,,,,,,,
+bld_res hot water,refined liquids,fuel water heater,ALL,CO,,,,,,,,
+bld_comm heating,gas,gas furnace,ALL,CO,,,,,,,,
+bld_comm heating,refined liquids,fuel boiler,ALL,CO,,,,,,,,
+bld_comm heating,biomass,biomass boiler,ALL,CO,,,,,,,,
+bld_comm hot water,gas,gas water heater,ALL,CO,,,,,,,,
+bld_comm hot water,refined liquids,fuel water heater,ALL,CO,,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+20020,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef,,,,
+bld_res heating,gas,gas furnace,1990,CO,0.1825,23,20,0.0730,,,,
+bld_res heating,refined liquids,fuel furnace,1990,CO,0.1825,23,20,0.0730,,,,
+bld_res heating,biomass,wood furnace,1990,CO,14.6844,23,20,5.8738,,,,
+bld_res hot water,gas,gas water heater,1990,CO,0.1825,23,20,0.0730,,,,
+bld_res hot water,refined liquids,fuel water heater,1990,CO,0.1825,23,20,0.0730,,,,
+bld_comm heating,gas,gas furnace,1990,CO,0.1386,23,20,0.0555,,,,
+bld_comm heating,refined liquids,fuel boiler,1990,CO,0.0972,23,20,0.0389,,,,
+bld_comm heating,biomass,biomass boiler,1990,CO,1.9297,23,20,0.7719,,,,
+bld_comm hot water,gas,gas water heater,1990,CO,0.1386,23,20,0.0555,,,,
+bld_comm hot water,refined liquids,fuel water heater,1990,CO,0.0972,23,20,0.0389,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+20000,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,
+bld_res heating,gas,gas furnace,ALL,NMVOC,,,,,,,,
+bld_res heating,refined liquids,fuel furnace,ALL,NMVOC,,,,,,,,
+bld_res heating,biomass,wood furnace,ALL,NMVOC,,,,,,,,
+bld_res hot water,gas,gas water heater,ALL,NMVOC,,,,,,,,
+bld_res hot water,refined liquids,fuel water heater,ALL,NMVOC,,,,,,,,
+bld_comm heating,gas,gas furnace,ALL,NMVOC,,,,,,,,
+bld_comm heating,refined liquids,fuel boiler,ALL,NMVOC,,,,,,,,
+bld_comm heating,biomass,biomass boiler,ALL,NMVOC,,,,,,,,
+bld_comm hot water,gas,gas water heater,ALL,NMVOC,,,,,,,,
+bld_comm hot water,refined liquids,fuel water heater,ALL,NMVOC,,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+20020,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef,,,,
+bld_res heating,gas,gas furnace,1990,NMVOC,0.0106,23,20,0.0042,,,,
+bld_res heating,refined liquids,fuel furnace,1990,NMVOC,0.0106,23,20,0.0042,,,,
+bld_res heating,biomass,wood furnace,1990,NMVOC,4.2281,23,20,1.6913,,,,
+bld_res hot water,gas,gas water heater,1990,NMVOC,0.0106,23,20,0.0042,,,,
+bld_res hot water,refined liquids,fuel water heater,1990,NMVOC,0.0106,23,20,0.0042,,,,
+bld_comm heating,gas,gas furnace,1990,NMVOC,0.0203,23,20,0.0081,,,,
+bld_comm heating,refined liquids,fuel boiler,1990,NMVOC,0.0125,23,20,0.0050,,,,
+bld_comm heating,biomass,biomass boiler,1990,NMVOC,0.1711,23,20,0.0684,,,,
+bld_comm hot water,gas,gas water heater,1990,NMVOC,0.0203,23,20,0.0081,,,,
+bld_comm hot water,refined liquids,fuel water heater,1990,NMVOC,0.0125,23,20,0.0050,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+20000,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,
+bld_res heating,refined liquids,fuel furnace,ALL,SO2_1,,,,,,,,
+bld_res heating,biomass,wood furnace,ALL,SO2_1,,,,,,,,
+bld_res hot water,refined liquids,fuel water heater,ALL,SO2_1,,,,,,,,
+bld_comm heating,refined liquids,fuel boiler,ALL,SO2_1,,,,,,,,
+bld_comm heating,biomass,biomass boiler,ALL,SO2_1,,,,,,,,
+bld_comm hot water,refined liquids,fuel water heater,ALL,SO2_1,,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+20020,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef,,,,
+bld_res heating,refined liquids,fuel furnace,1990,SO2_1,0.3993,23,20,0.1597,,,,
+bld_res heating,biomass,wood furnace,1990,SO2_1,0.0254,23,20,0.0102,,,,
+bld_res hot water,refined liquids,fuel water heater,1990,SO2_1,0.3993,23,20,0.1597,,,,
+bld_comm heating,refined liquids,fuel boiler,1990,SO2_1,1.1682,23,20,0.4673,,,,
+bld_comm heating,biomass,biomass boiler,1990,SO2_1,0.2150,23,20,0.0860,,,,
+bld_comm hot water,refined liquids,fuel water heater,1990,SO2_1,1.1682,23,20,0.4673,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+20000,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,
+bld_res heating,refined liquids,fuel furnace,ALL,BC,,,,,,,,
+bld_res heating,biomass,wood furnace,ALL,BC,,,,,,,,
+bld_res hot water,refined liquids,fuel water heater,ALL,BC,,,,,,,,
+bld_comm heating,refined liquids,fuel boiler,ALL,BC,,,,,,,,
+bld_comm heating,biomass,biomass boiler,ALL,BC,,,,,,,,
+bld_comm hot water,refined liquids,fuel water heater,ALL,BC,,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+20020,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef,,,,
+bld_res heating,refined liquids,fuel furnace,1990,BC,0.0015,25,15,0.0007,,,,
+bld_res heating,biomass,wood furnace,1990,BC,0.1035,25,15,0.0517,,,,
+bld_res hot water,refined liquids,fuel water heater,1990,BC,0.0015,25,15,0.0007,,,,
+bld_comm heating,refined liquids,fuel boiler,1990,BC,0.0024,25,15,0.0012,,,,
+bld_comm heating,biomass,biomass boiler,1990,BC,0.0497,25,15,0.0249,,,,
+bld_comm hot water,refined liquids,fuel water heater,1990,BC,0.0024,25,15,0.0012,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+20000,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,
+bld_res heating,refined liquids,fuel furnace,ALL,OC,,,,,,,,
+bld_res heating,biomass,wood furnace,ALL,OC,,,,,,,,
+bld_res hot water,refined liquids,fuel water heater,ALL,OC,,,,,,,,
+bld_comm heating,refined liquids,fuel boiler,ALL,OC,,,,,,,,
+bld_comm heating,biomass,biomass boiler,ALL,OC,,,,,,,,
+bld_comm hot water,refined liquids,fuel water heater,ALL,OC,,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+20020,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef,,,,
+bld_res heating,refined liquids,fuel furnace,1990,OC,0.0008,25,15,0.0004,,,,
+bld_res heating,biomass,wood furnace,1990,OC,0.5684,25,15,0.2842,,,,
+bld_res hot water,refined liquids,fuel water heater,1990,OC,0.0008,25,15,0.0004,,,,
+bld_comm heating,refined liquids,fuel boiler,1990,OC,0.0012,25,15,0.0006,,,,
+bld_comm heating,biomass,biomass boiler,1990,OC,0.2735,25,15,0.1367,,,,
+bld_comm hot water,refined liquids,fuel water heater,1990,OC,0.0012,25,15,0.0006,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+20000,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,
+bld_res heating,gas,gas furnace,ALL,NH3,,,,,,,,
+bld_res heating,refined liquids,fuel furnace,ALL,NH3,,,,,,,,
+bld_res heating,biomass,wood furnace,ALL,NH3,,,,,,,,
+bld_res hot water,gas,gas water heater,ALL,NH3,,,,,,,,
+bld_res hot water,refined liquids,fuel water heater,ALL,NH3,,,,,,,,
+bld_comm heating,gas,gas furnace,ALL,NH3,,,,,,,,
+bld_comm heating,refined liquids,fuel boiler,ALL,NH3,,,,,,,,
+bld_comm heating,biomass,biomass boiler,ALL,NH3,,,,,,,,
+bld_comm hot water,gas,gas water heater,ALL,NH3,,,,,,,,
+bld_comm hot water,refined liquids,fuel water heater,ALL,NH3,,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+20020,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef,,,,
+bld_res heating,gas,gas furnace,1990,NH3,0.0013,25,15,0.0007,,,,
+bld_res heating,refined liquids,fuel furnace,1990,NH3,0.0013,25,15,0.0007,,,,
+bld_res heating,biomass,wood furnace,1990,NH3,0.0013,25,15,0.0007,,,,
+bld_res hot water,gas,gas water heater,1990,NH3,0.0013,25,15,0.0007,,,,
+bld_res hot water,refined liquids,fuel water heater,1990,NH3,0.0013,25,15,0.0007,,,,
+bld_comm heating,gas,gas furnace,1990,NH3,0.0023,25,15,0.0012,,,,
+bld_comm heating,refined liquids,fuel boiler,1990,NH3,0.0038,25,15,0.0019,,,,
+bld_comm heating,biomass,biomass boiler,1990,NH3,0.0000,25,15,0.0000,,,,
+bld_comm hot water,gas,gas water heater,1990,NH3,0.0023,25,15,0.0012,,,,
+bld_comm hot water,refined liquids,fuel water heater,1990,NH3,0.0038,25,15,0.0019,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
 20001,,,,,,,,,,,,
-
+,,,,,,,,,,,,
 supplysector,subsector,technology,period,generic-ghg,output-driver,,,,,,,
-residential cooling service,electricity,AC,ALL,HFC134a,,,,,,,,
-commercial cooling service,electricity,AC,ALL,HFC134a,,,,,,,,
-commercial cooling service,electricity,AC,ALL,HFC125,,,,,,,,
-
+bld_res cooling,electricity,air conditioning,ALL,HFC134a,,,,,,,,
+bld_comm cooling,electricity,air conditioning,ALL,HFC134a,,,,,,,,
+bld_comm cooling,electricity,air conditioning,ALL,HFC125,,,,,,,,
+,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
 20005,,,,,,,,,,,,
 ,,,,emissions-unit,,,,,,,,
 supplysector,subsector,technology,generic-ghg,1975,1990,2005,2020,2035,2050,2065,2080,2095
-residential cooling service,electricity,AC,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
-commercial cooling service,electricity,AC,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
-commercial cooling service,electricity,AC,HFC125,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
-
+bld_res cooling,electricity,air conditioning,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
+bld_comm cooling,electricity,air conditioning,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
+bld_comm cooling,electricity,air conditioning,HFC125,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
+,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
 20010,,,,,,,,,,,,
-
+,,,,,,,,,,,,
 supplysector,subsector,technology,period,generic-ghg,input-emissions,,,,,,,
-residential cooling service,electricity,AC,1990,HFC134a,0,,,,,,,
-commercial cooling service,electricity,AC,1990,HFC134a,0,,,,,,,
-commercial cooling service,electricity,AC,1990,HFC125,0,,,,,,,
-residential cooling service,electricity,AC,2005,HFC134a,6.898306448,,,,,,,
-commercial cooling service,electricity,AC,2005,HFC134a,3.139884331,,,,,,,
-commercial cooling service,electricity,AC,2005,HFC125,0.705386678,,,,,,,
-residential cooling service,electricity,AC,2020,HFC134a,42.29667185,,,,,,,
-commercial cooling service,electricity,AC,2020,HFC134a,10.70481829,,,,,,,
-commercial cooling service,electricity,AC,2020,HFC125,2.404877193,,,,
-
-INPUT_TABLE,,,,,,,,,
-Variable ID,,,,,,,,,
-20070,,,,,,,,,
-,,,,,reduction,,,,
-supplysector,subsector,technology,period,generic-ghg,0,15,30,45,60
-residential cooling service,electricity,AC,2020,HFC134a,0.038,0.077,0.077,0.077,0.077
-commercial cooling service,electricity,AC,2020,HFC134a,0.038,0.077,0.077,0.077,0.077
-commercial cooling service,electricity,AC,2020,HFC125,0.038,0.077,0.077,0.077,0.077
+bld_res cooling,electricity,air conditioning,1990,HFC134a,0,,,,,,,
+bld_comm cooling,electricity,air conditioning,1990,HFC134a,0,,,,,,,
+bld_comm cooling,electricity,air conditioning,1990,HFC125,0,,,,,,,
+bld_res cooling,electricity,air conditioning,2005,HFC134a,6.898306448,,,,,,,
+bld_comm cooling,electricity,air conditioning,2005,HFC134a,3.139884331,,,,,,,
+bld_comm cooling,electricity,air conditioning,2005,HFC125,0.705386678,,,,,,,
+bld_res cooling,electricity,air conditioning,2020,HFC134a,42.29667185,,,,,,,
+bld_comm cooling,electricity,air conditioning,2020,HFC134a,10.70481829,,,,,,,
+bld_comm cooling,electricity,air conditioning,2020,HFC125,2.404877193,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+20070,,,,,,,,,,,,
+,,,,,reduction,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,0,15,30,45,60,,,
+bld_res cooling,electricity,air conditioning,2020,HFC134a,0.038,0.077,0.077,0.077,0.077,,,
+bld_comm cooling,electricity,air conditioning,2020,HFC134a,0.038,0.077,0.077,0.077,0.077,,,
+bld_comm cooling,electricity,air conditioning,2020,HFC125,0.038,0.077,0.077,0.077,0.077,,,

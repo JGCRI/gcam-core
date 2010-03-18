@@ -1,85 +1,100 @@
-Input drivers,,,,,,
-INPUT_TABLE,,,,,,
-Variable ID,,,,,,
-10000,,,,,,
-
-region,supplysector,subsector,technology,period,generic-ghg,input-driver
-ALL,electricity,coal,Coal (existing),ALL,NH3,
-ALL,electricity,coal,Coal (conv pul),ALL,NH3,
-ALL,electricity,gas,Gas (existing),ALL,NH3,
-ALL,electricity,gas,Gas (peak load conv),ALL,NH3,
-ALL,electricity,gas,Gas (CC),ALL,NH3,
-ALL,electricity,gas,Gas (CC)_CCS,ALL,NH3,
-ALL,electricity,oil,Oil (existing),ALL,NH3,
-ALL,electricity,oil,Oil (peak load conv),ALL,NH3,
-ALL,building,gas,gas,ALL,NH3,
-ALL,building,biomass,biomass,ALL,NH3,
-ALL,building,refined liquids,refined liquids,ALL,NH3,
-ALL,building,trad biomass,trad biomass,ALL,NH3,
-ALL,industry,energy-use,gas,ALL,NH3,
-ALL,industry,energy-use,coal,ALL,NH3,
-ALL,industry,energy-use,refined liquids,ALL,NH3,
-ALL,transportation,road,refined liquids,ALL,NH3,
-
-Output drivers,,,,,,
-INPUT_TABLE,,,,,,
-Variable ID,,,,,,
-10001,,,,,,
-
-region,supplysector,subsector,technology,period,generic-ghg,output-driver
-ALL,industry,industrial processes,solvents,ALL,NH3,
-ALL,industry,industrial processes,other industrial processes,ALL,NH3,
-
-Emissions unit,,,,,,,,,,,,,
-Default value. Table not read in,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,
-10005,,,,,,,,,,,,,
-,,,,,emissions-unit,,,,,,,,
-region,supplysector,subsector,technology,generic-ghg,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,electricity,coal,Coal (existing),NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
-ALL,electricity,coal,Coal (conv pul),NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
-ALL,electricity,gas,Gas (existing),NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
-ALL,electricity,gas,Gas (peak load conv),NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
-ALL,electricity,gas,Gas (CC),NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
-ALL,electricity,gas,Gas (CC)_CCS,NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
-ALL,electricity,oil,Oil (existing),NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
-ALL,electricity,oil,Oil (peak load conv),NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
-ALL,building,gas,gas,NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
-ALL,building,biomass,biomass,NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg
+Input drivers,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+10000,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,,,,,,
+ALL,electricity,coal,Coal (existing),ALL,NH3,,,,,,,,,,,,,
+ALL,electricity,coal,Coal (conv pul),ALL,NH3,,,,,,,,,,,,,
+ALL,electricity,gas,Gas (existing),ALL,NH3,,,,,,,,,,,,,
+ALL,electricity,gas,Gas (peak load conv),ALL,NH3,,,,,,,,,,,,,
+ALL,electricity,gas,Gas (CC),ALL,NH3,,,,,,,,,,,,,
+ALL,electricity,gas,Gas (CC)_CCS,ALL,NH3,,,,,,,,,,,,,
+ALL,electricity,oil,Oil (existing),ALL,NH3,,,,,,,,,,,,,
+ALL,electricity,oil,Oil (peak load conv),ALL,NH3,,,,,,,,,,,,,
+ALL,building,gas,gas,ALL,NH3,,,,,,,,,,,,,
+ALL,building,biomass,biomass,ALL,NH3,,,,,,,,,,,,,
+ALL,building,refined liquids,refined liquids,ALL,NH3,,,,,,,,,,,,,
+ALL,building,trad biomass,trad biomass,ALL,NH3,,,,,,,,,,,,,
+ALL,industrial energy use,gas,gas,ALL,NH3,,,,,,,,,,,,,
+ALL,industrial energy use,coal,coal,ALL,NH3,,,,,,,,,,,,,
+ALL,industrial energy use,refined liquids,refined liquids,ALL,NH3,,,,,,,,,,,,,
+ALL,industrial energy use,gas,gas cogen,ALL,NH3,,,,,,,,,,,,,
+ALL,industrial energy use,coal,coal cogen,ALL,NH3,,,,,,,,,,,,,
+ALL,industrial energy use,refined liquids,refined liquids cogen,ALL,NH3,,,,,,,,,,,,,
+ALL,process heat cement,gas,gas,ALL,NH3,,,,,,,,,,,,,
+ALL,process heat cement,coal,coal,ALL,NH3,,,,,,,,,,,,,
+ALL,process heat cement,refined liquids,refined liquids,ALL,NH3,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Output drivers,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+10001,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,period,generic-ghg,output-driver,,,,,,,,,,,,
+ALL,industrial processes,solvents,solvents,ALL,NH3,,,,,,,,,,,,,
+ALL,industrial processes,other industrial processes,other industrial processes,ALL,NH3,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Emissions unit,,,,,,,,,,,,,,,,,,
+Default value. Table not read in,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+10005,,,,,,,,,,,,,,,,,,
+,,,,,emissions-unit,,,,,,,,,,,,,
+region,supplysector,subsector,technology,generic-ghg,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,,,
+ALL,electricity,coal,Coal (existing),NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
+ALL,electricity,coal,Coal (conv pul),NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
+ALL,electricity,gas,Gas (existing),NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
+ALL,electricity,gas,Gas (peak load conv),NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
+ALL,electricity,gas,Gas (CC),NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
+ALL,electricity,gas,Gas (CC)_CCS,NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
+ALL,electricity,oil,Oil (existing),NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
+ALL,electricity,oil,Oil (peak load conv),NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
+ALL,building,gas,gas,NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
+ALL,building,biomass,biomass,NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
 ALL,building,refined liquids,refined liquids,NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
 ALL,building,trad biomass,trad biomass,NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
-ALL,industry,energy-use,gas,NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
-ALL,industry,energy-use,coal,NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
-ALL,industry,energy-use,refined liquids,NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
-ALL,transportation,road,refined liquids,NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
-ALL,industry,industrial processes,solvents,NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
-ALL,industry,industrial processes,other industrial processes,NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
-
+ALL,industrial energy use,gas,gas,NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
+ALL,industrial energy use,coal,coal,NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
+ALL,industrial energy use,refined liquids,refined liquids,NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
+ALL,industrial energy use,gas,gas cogen,NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
+ALL,industrial energy use,coal,coal cogen,NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
+ALL,industrial energy use,refined liquids,refined liquids cogen,NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
+ALL,process heat cement,gas,gas,NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
+ALL,process heat cement,coal,coal,NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
+ALL,process heat cement,refined liquids,refined liquids,NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
+ALL,industrial processes,solvents,solvents,NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
+ALL,industrial processes,other industrial processes,other industrial processes,NH3,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,Tg,,,,,
+,,,,,,,,,,,,,,,,,,
 Uncontrolled emissions coefficient,,,,,,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,,,,,,
 10015,,,,,,,,,,,,,,,,,,
 ,,,,,uncontrolled-emiss-coef,,,,,,,,,,,,,
 supplysector,subsector,technology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
-electricity,coal,Coal (existing),1990,NH3,3.01833E-05,3.25449E-05,9.34914E-05,1.03832E-05,3.77996E-05,1.46049E-05,6.82724E-06,2.80058E-06,6.04456E-06,6.49612E-06,3.99588E-06,9.5999E-06,4.52352E-06,4.80827E-06
-electricity,coal,Coal (conv pul),1990,NH3,3.01833E-05,3.25449E-05,9.34914E-05,1.03832E-05,3.77996E-05,1.46049E-05,6.82724E-06,2.80058E-06,6.04456E-06,6.49612E-06,3.99588E-06,9.5999E-06,4.52352E-06,4.80827E-06
-electricity,gas,Gas (existing),1990,NH3,0.000553313,0.000596605,0.001713861,0.000190342,0.000692933,0.000267734,0.000125155,5.13395E-05,0.000110807,0.000119085,7.32515E-05,0.000175983,8.2924E-05,8.8144E-05
-electricity,gas,Gas (peak load conv),1990,NH3,0.000553313,0.000596605,0.001713861,0.000190342,0.000692933,0.000267734,0.000125155,5.13395E-05,0.000110807,0.000119085,7.32515E-05,0.000175983,8.2924E-05,8.8144E-05
-electricity,gas,Gas (CC),1990,NH3,0.000553313,0.000596605,0.001713861,0.000190342,0.000692933,0.000267734,0.000125155,5.13395E-05,0.000110807,0.000119085,7.32515E-05,0.000175983,8.2924E-05,8.8144E-05
-electricity,gas,Gas (CC)_CCS,1990,NH3,0.000553313,0.000596605,0.001713861,0.000190342,0.000692933,0.000267734,0.000125155,5.13395E-05,0.000110807,0.000119085,7.32515E-05,0.000175983,8.2924E-05,8.8144E-05
-electricity,oil,Oil (existing),1990,NH3,0.003077752,0.003318563,0.009533198,0.00105876,0.003854375,0.001489244,0.000696165,0.000285572,0.000616356,0.000662401,0.000407455,0.00097889,0.000461257,0.000490293
-electricity,oil,Oil (peak load conv),1990,NH3,0.003077752,0.003318563,0.009533198,0.00105876,0.003854375,0.001489244,0.000696165,0.000285572,0.000616356,0.000662401,0.000407455,0.00097889,0.000461257,0.000490293
-building,gas,gas,1990,NH3,0.000439026,0.000437996,0.000869983,0.000643748,0.000423805,0.000767393,0.000363053,0.000376036,0.000291815,0.000320752,0.000276336,0.000373032,0.000910534,0.000306469
-building,biomass,biomass,1990,NH3,0.012683458,0.012653704,0.025133828,0.018597888,0.012243743,0.022170017,0.005282046,0.010863702,0.017903168,0.025965547,0.037422151,0.010776916,0.026305342,0.039019308
-building,refined liquids,refined liquids,1990,NH3,0.000846856,0.000844869,0.001678148,0.001241753,0.000817496,0.001480259,0.000700309,0.000725353,0.000562894,0.000618712,0.000533036,0.000719559,0.001756368,0.000591161
-building,trad biomass,trad biomass,1990,NH3,0,0,0,0,0,0,0.01059493,0,0.006732209,0.00387498,0.006002691,0,0,0.007390203
-industry,energy-use,gas,1990,NH3,0.000385574,0.000611466,0.000396928,0.000251928,0.000341988,0.000445241,0.000991673,0.000217528,0.000773836,0.000426336,0.000472007,0.000533642,0.000179976,0.001490613
-industry,energy-use,coal,1990,NH3,7.0115E-05,0.000111193,7.21798E-05,4.58121E-05,6.21891E-05,8.09652E-05,0.000180332,3.95567E-05,0.000140719,7.75275E-05,8.58325E-05,9.70407E-05,3.2728E-05,0.000271062
-industry,energy-use,refined liquids,1990,NH3,0.00018422,0.000292147,0.000189645,0.000120367,0.000163395,0.000212728,0.000473803,0.000103931,0.000369725,0.000203695,0.000225516,0.000254964,8.59894E-05,0.000712187
-transportation,road,refined liquids,1990,NH3,0.016187698,0.028239081,0.01080015,0.015498578,0.007720715,0.00190069,0.001262675,0.002439768,0.001290278,0.003143668,0.000815625,0.005937281,0.003668457,0.000737043
-industry,industrial processes,solvents,1990,NH3,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-industry,industrial processes,other industrial processes,1990,NH3,22.46102427,5.532482406,16.34010779,2.543644386,1.199862351,32.08916549,20.53163012,2.637816005,5.65837082,9.083909925,5.247458947,6.349242348,0.334397818,9.459111235
-
+electricity,coal,Coal (existing),1990,NH3,3.22298E-05,1.71629E-06,7.79386E-05,7.57721E-06,0,9.69689E-06,1.22564E-05,3.46539E-06,8.12524E-10,6.55643E-08,5.12509E-08,5.95304E-06,0,7.76532E-10
+electricity,coal,Coal (conv pul),1990,NH3,3.22298E-05,1.71629E-06,7.79386E-05,7.57721E-06,0,9.69689E-06,1.22564E-05,3.46539E-06,8.12524E-10,6.55643E-08,5.12509E-08,5.95304E-06,0,7.76532E-10
+electricity,gas,Gas (existing),1990,NH3,0.000644266,3.43082E-05,0.001557972,0.000151466,0,0.000193838,0.000245003,6.92723E-05,1.62421E-08,1.31061E-06,1.02449E-06,0.000119,0,1.55227E-08
+electricity,gas,Gas (peak load conv),1990,NH3,0.000644266,3.43082E-05,0.001557972,0.000151466,0,0.000193838,0.000245003,6.92723E-05,1.62421E-08,1.31061E-06,1.02449E-06,0.000119,0,1.55227E-08
+electricity,gas,Gas (CC),1990,NH3,0.000644266,3.43082E-05,0.001557972,0.000151466,0,0.000193838,0.000245003,6.92723E-05,1.62421E-08,1.31061E-06,1.02449E-06,0.000119,0,1.55227E-08
+electricity,gas,Gas (CC)_CCS,1990,NH3,0.000644266,3.43082E-05,0.001557972,0.000151466,0,0.000193838,0.000245003,6.92723E-05,1.62421E-08,1.31061E-06,1.02449E-06,0.000119,0,1.55227E-08
+electricity,oil,Oil (existing),1990,NH3,0.003822237,0.000203541,0.009242989,0.000898605,0,0.001149985,0.001453528,0.000410972,9.63597E-08,7.77548E-06,6.078E-06,0.00070599,0,9.20914E-08
+electricity,oil,Oil (peak load conv),1990,NH3,0.003822237,0.000203541,0.009242989,0.000898605,0,0.001149985,0.001453528,0.000410972,9.63597E-08,7.77548E-06,6.078E-06,0.00070599,0,9.20914E-08
+building,gas,gas,1990,NH3,0.000433395,0.00033368,0.000685054,0.000634455,0.000494163,0.000548575,0.020900843,0.000281817,0.001913406,0.002134388,0.004232241,0.000706021,0.000594127,0.005554658
+building,biomass,biomass,1990,NH3,0.012599883,0.009700899,0.019916224,0.018445184,0.014366566,0.015948455,0.006123508,0.008193132,0.017959493,0.042436778,0.036358488,0.020525788,0.017272762,0.03293425
+building,refined liquids,refined liquids,1990,NH3,0.000836352,0.000643924,0.001321994,0.00122435,0.000953621,0.001058623,0.040333765,0.000543842,0.003692428,0.004118872,0.00816724,0.001362456,0.001146527,0.010719198
+building,trad biomass,trad biomass,1990,NH3,0,0,0,0,0,0,0.003959396,0,0.006536188,0.001423363,0.005633493,0,0,0.005928104
+industrial energy use,gas,gas,1990,NH3,0.00042773,0.000678651,0.000357839,0.000184887,0.000272618,0.000318714,0.000950687,0.000249129,0.000956806,0.000520323,0.000651592,0.000692806,0.000239097,0.001838955
+industrial energy use,coal,coal,1990,NH3,5.87232E-05,9.31723E-05,4.91279E-05,2.53833E-05,3.74279E-05,4.37564E-05,0.00013052,3.4203E-05,0.00013136,7.14354E-05,8.94574E-05,9.51157E-05,3.28258E-05,0.000252471
+industrial energy use,refined liquids,refined liquids,1990,NH3,0.00034473,0.000546961,0.000288402,0.000149011,0.000219717,0.000256869,0.00076621,0.000200786,0.000771142,0.000419356,0.000525153,0.00055837,0.000192701,0.001482113
+industrial energy use,gas,gas cogen,1990,NH3,0.00042773,0.000678651,0.000357839,0.000184887,0.000272618,0.000318714,0.000950687,0.000249129,0.000956806,0.000520323,0.000651592,0.000692806,0.000239097,0.001838955
+industrial energy use,coal,coal cogen,1990,NH3,5.87232E-05,9.31723E-05,4.91279E-05,2.53833E-05,3.74279E-05,4.37564E-05,0.00013052,3.4203E-05,0.00013136,7.14354E-05,8.94574E-05,9.51157E-05,3.28258E-05,0.000252471
+industrial energy use,refined liquids,refined liquids cogen,1990,NH3,0.00034473,0.000546961,0.000288402,0.000149011,0.000219717,0.000256869,0.00076621,0.000200786,0.000771142,0.000419356,0.000525153,0.00055837,0.000192701,0.001482113
+process heat cement,gas,gas,1990,NH3,0.00042773,0.000678651,0.000357839,0.000184887,0.000272618,0.000318714,0.000950687,0.000249129,0.000956806,0.000520323,0.000651592,0.000692806,0.000239097,0.001838955
+process heat cement,coal,coal,1990,NH3,5.87232E-05,9.31723E-05,4.91279E-05,2.53833E-05,3.74279E-05,4.37564E-05,0.00013052,3.4203E-05,0.00013136,7.14354E-05,8.94574E-05,9.51157E-05,3.28258E-05,0.000252471
+process heat cement,refined liquids,refined liquids,1990,NH3,0.00034473,0.000546961,0.000288402,0.000149011,0.000219717,0.000256869,0.00076621,0.000200786,0.000771142,0.000419356,0.000525153,0.00055837,0.000192701,0.001482113
+industrial processes,solvents,solvents,1990,NH3,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+industrial processes,other industrial processes,other industrial processes,1990,NH3,22.21984619,5.486741675,15.02489922,2.247084215,0.975264592,14.7687856,13.79299701,2.426053738,4.724126371,10.05826017,6.71778069,7.178159806,0.50303588,6.840410391
+,,,,,,,,,,,,,,,,,,
 per-capita GDP at mid-point of control curve,,,,,,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,,,,,,
@@ -98,13 +113,18 @@ building,gas,gas,1990,NH3,27.7,21.4,13.3,24.5,16.0,12.0,12.0,12.0,12.0,12.0,12.0
 building,biomass,biomass,1990,NH3,27.7,21.4,13.3,24.5,16.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.0,12.0
 building,refined liquids,refined liquids,1990,NH3,27.7,21.4,13.3,24.5,16.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.0,12.0
 building,trad biomass,trad biomass,1990,NH3,27.7,21.4,13.3,24.5,16.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.0,12.0
-industry,energy-use,gas,1990,NH3,27.7,21.4,13.3,24.5,16.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.0,12.0
-industry,energy-use,coal,1990,NH3,27.7,21.4,13.3,24.5,16.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.0,12.0
-industry,energy-use,refined liquids,1990,NH3,27.7,21.4,13.3,24.5,16.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.0,12.0
-transportation,road,refined liquids,1990,NH3,27.7,21.4,13.3,24.5,16.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.0,12.0
-industry,industrial processes,solvents,1990,NH3,27.7,21.4,13.3,24.5,16.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.0,12.0
-industry,industrial processes,other industrial processes,1990,NH3,27.7,21.4,13.3,24.5,16.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.0,12.0
-
+industrial energy use,gas,gas,1990,NH3,27.7,21.4,13.3,24.5,16.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.0,12.0
+industrial energy use,coal,coal,1990,NH3,27.7,21.4,13.3,24.5,16.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.0,12.0
+industrial energy use,refined liquids,refined liquids,1990,NH3,27.7,21.4,13.3,24.5,16.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.0,12.0
+industrial energy use,gas,gas cogen,1990,NH3,27.7,21.4,13.3,24.5,16.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.0,12.0
+industrial energy use,coal,coal cogen,1990,NH3,27.7,21.4,13.3,24.5,16.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.0,12.0
+industrial energy use,refined liquids,refined liquids cogen,1990,NH3,27.7,21.4,13.3,24.5,16.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.0,12.0
+process heat cement,gas,gas,1990,NH3,27.7,21.4,13.3,24.5,16.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.0,12.0
+process heat cement,coal,coal,1990,NH3,27.7,21.4,13.3,24.5,16.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.0,12.0
+process heat cement,refined liquids,refined liquids,1990,NH3,27.7,21.4,13.3,24.5,16.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.0,12.0
+industrial processes,solvents,solvents,1990,NH3,27.7,21.4,13.3,24.5,16.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.0,12.0
+industrial processes,other industrial processes,other industrial processes,1990,NH3,27.7,21.4,13.3,24.5,16.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.0,12.0
+,,,,,,,,,,,,,,,,,,
 GDP range from 10% to 90% of maximum control value,,,,,,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,,,,,,
@@ -123,13 +143,18 @@ building,gas,gas,1990,NH3,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,
 building,biomass,biomass,1990,NH3,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
 building,refined liquids,refined liquids,1990,NH3,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
 building,trad biomass,trad biomass,1990,NH3,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
-industry,energy-use,gas,1990,NH3,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
-industry,energy-use,coal,1990,NH3,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
-industry,energy-use,refined liquids,1990,NH3,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
-transportation,road,refined liquids,1990,NH3,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
-industry,industrial processes,solvents,1990,NH3,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
-industry,industrial processes,other industrial processes,1990,NH3,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
-
+industrial energy use,gas,gas,1990,NH3,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+industrial energy use,coal,coal,1990,NH3,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+industrial energy use,refined liquids,refined liquids,1990,NH3,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+industrial energy use,gas,gas cogen,1990,NH3,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+industrial energy use,coal,coal cogen,1990,NH3,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+industrial energy use,refined liquids,refined liquids cogen,1990,NH3,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+process heat cement,gas,gas,1990,NH3,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+process heat cement,coal,coal,1990,NH3,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+process heat cement,refined liquids,refined liquids,1990,NH3,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+industrial processes,solvents,solvents,1990,NH3,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+industrial processes,other industrial processes,other industrial processes,1990,NH3,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+,,,,,,,,,,,,,,,,,,
 Diffusional lowering of gdp-mid-control over time,,,,,,,,,,,,,,,,,,
 not reading this table in,,,,,,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,,,,,,
@@ -148,34 +173,44 @@ building,gas,gas,1990,NH3,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 building,biomass,biomass,1990,NH3,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 building,refined liquids,refined liquids,1990,NH3,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 building,trad biomass,trad biomass,1990,NH3,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-industry,energy-use,gas,1990,NH3,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-industry,energy-use,coal,1990,NH3,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-industry,energy-use,refined liquids,1990,NH3,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-transportation,road,refined liquids,1990,NH3,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-industry,industrial processes,solvents,1990,NH3,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-industry,industrial processes,other industrial processes,1990,NH3,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-
+industrial energy use,gas,gas,1990,NH3,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+industrial energy use,coal,coal,1990,NH3,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+industrial energy use,refined liquids,refined liquids,1990,NH3,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+industrial energy use,gas,gas cogen,1990,NH3,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+industrial energy use,coal,coal cogen,1990,NH3,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+industrial energy use,refined liquids,refined liquids cogen,1990,NH3,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+process heat cement,gas,gas,1990,NH3,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+process heat cement,coal,coal,1990,NH3,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+process heat cement,refined liquids,refined liquids,1990,NH3,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+industrial processes,solvents,solvents,1990,NH3,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+industrial processes,other industrial processes,other industrial processes,1990,NH3,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+,,,,,,,,,,,,,,,,,,
 Final emissions coefficient,,,,,,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,,,,,,
 10050,,,,,,,,,,,,,,,,,,
 ,,,,,final-emiss-coef,,,,,,,,,,,,,
 supplysector,subsector,technology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
-electricity,coal,Coal (existing),1990,NH3,1.50916E-05,1.62725E-05,4.67457E-05,5.19159E-06,1.88998E-05,7.30246E-06,3.41362E-06,1.40029E-06,3.02228E-06,3.24806E-06,1.99794E-06,4.79995E-06,2.26176E-06,2.40413E-06
-electricity,coal,Coal (conv pul),1990,NH3,1.50916E-05,1.62725E-05,4.67457E-05,5.19159E-06,1.88998E-05,7.30246E-06,3.41362E-06,1.40029E-06,3.02228E-06,3.24806E-06,1.99794E-06,4.79995E-06,2.26176E-06,2.40413E-06
-electricity,gas,Gas (existing),1990,NH3,0.000276656,0.000298303,0.000856931,9.5171E-05,0.000346466,0.000133867,6.25776E-05,2.56698E-05,5.54037E-05,5.95426E-05,3.66258E-05,8.79915E-05,4.1462E-05,4.4072E-05
-electricity,gas,Gas (peak load conv),1990,NH3,0.000276656,0.000298303,0.000856931,9.5171E-05,0.000346466,0.000133867,6.25776E-05,2.56698E-05,5.54037E-05,5.95426E-05,3.66258E-05,8.79915E-05,4.1462E-05,4.4072E-05
-electricity,gas,Gas (CC),1990,NH3,0.000276656,0.000298303,0.000856931,9.5171E-05,0.000346466,0.000133867,6.25776E-05,2.56698E-05,5.54037E-05,5.95426E-05,3.66258E-05,8.79915E-05,4.1462E-05,4.4072E-05
-electricity,gas,Gas (CC)_CCS,1990,NH3,0.000276656,0.000298303,0.000856931,9.5171E-05,0.000346466,0.000133867,6.25776E-05,2.56698E-05,5.54037E-05,5.95426E-05,3.66258E-05,8.79915E-05,4.1462E-05,4.4072E-05
-electricity,oil,Oil (existing),1990,NH3,0.001538876,0.001659282,0.004766599,0.00052938,0.001927187,0.000744622,0.000348082,0.000142786,0.000308178,0.0003312,0.000203727,0.000489445,0.000230629,0.000245147
-electricity,oil,Oil (peak load conv),1990,NH3,0.001538876,0.001659282,0.004766599,0.00052938,0.001927187,0.000744622,0.000348082,0.000142786,0.000308178,0.0003312,0.000203727,0.000489445,0.000230629,0.000245147
-building,gas,gas,1990,NH3,0.000219513,0.000218998,0.000434991,0.000321874,0.000211903,0.000383697,0.000181527,0.000188018,0.000145907,0.000160376,0.000138168,0.000186516,0.000455267,0.000153234
-building,biomass,biomass,1990,NH3,0.006341729,0.006326852,0.012566914,0.009298944,0.006121872,0.011085008,0.002641023,0.005431851,0.008951584,0.012982774,0.018711076,0.005388458,0.013152671,0.019509654
-building,refined liquids,refined liquids,1990,NH3,0.000423428,0.000422434,0.000839074,0.000620877,0.000408748,0.000740129,0.000350155,0.000362677,0.000281447,0.000309356,0.000266518,0.000359779,0.000878184,0.000295581
-building,trad biomass,trad biomass,1990,NH3,-1,-1,-1,-1,-1,-1,0.005297465,-1,0.003366104,0.00193749,0.003001346,-1,-1,0.003695102
-industry,energy-use,gas,1990,NH3,0.000192787,0.000305733,0.000198464,0.000125964,0.000170994,0.00022262,0.000495836,0.000108764,0.000386918,0.000213168,0.000236003,0.000266821,8.99882E-05,0.000745306
-industry,energy-use,coal,1990,NH3,3.50575E-05,5.55963E-05,3.60899E-05,2.29061E-05,3.10945E-05,4.04826E-05,9.01658E-05,1.97783E-05,7.03595E-05,3.87637E-05,4.29163E-05,4.85203E-05,1.6364E-05,0.000135531
-industry,energy-use,refined liquids,1990,NH3,9.211E-05,0.000146074,9.48226E-05,6.01833E-05,8.16977E-05,0.000106364,0.000236901,5.19655E-05,0.000184862,0.000101848,0.000112758,0.000127482,4.29947E-05,0.000356094
-transportation,road,refined liquids,1990,NH3,0.008093849,0.014119541,0.005400075,0.007749289,0.003860357,0.000950345,0.000631338,0.001219884,0.000645139,0.001571834,0.000407812,0.00296864,0.001834228,0.000368521
-industry,industrial processes,solvents,1990,NH3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
-industry,industrial processes,other industrial processes,1990,NH3,11.23051214,2.766241203,8.170053897,1.271822193,0.599931176,16.04458274,10.26581506,1.318908002,2.82918541,4.541954962,2.623729474,3.174621174,0.167198909,4.729555617
+electricity,coal,Coal (existing),1990,NH3,1.61149E-05,8.58147E-07,3.89693E-05,3.78861E-06,-1,4.84845E-06,6.12821E-06,1.7327E-06,4.06262E-10,3.27821E-08,2.56254E-08,2.97652E-06,-1,3.88266E-10
+electricity,coal,Coal (conv pul),1990,NH3,1.61149E-05,8.58147E-07,3.89693E-05,3.78861E-06,-1,4.84845E-06,6.12821E-06,1.7327E-06,4.06262E-10,3.27821E-08,2.56254E-08,2.97652E-06,-1,3.88266E-10
+electricity,gas,Gas (existing),1990,NH3,0.000322133,1.71541E-05,0.000778986,7.57332E-05,-1,9.69191E-05,0.000122501,3.46361E-05,8.12106E-09,6.55306E-07,5.12245E-07,5.94998E-05,-1,7.76134E-09
+electricity,gas,Gas (peak load conv),1990,NH3,0.000322133,1.71541E-05,0.000778986,7.57332E-05,-1,9.69191E-05,0.000122501,3.46361E-05,8.12106E-09,6.55306E-07,5.12245E-07,5.94998E-05,-1,7.76134E-09
+electricity,gas,Gas (CC),1990,NH3,0.000322133,1.71541E-05,0.000778986,7.57332E-05,-1,9.69191E-05,0.000122501,3.46361E-05,8.12106E-09,6.55306E-07,5.12245E-07,5.94998E-05,-1,7.76134E-09
+electricity,gas,Gas (CC)_CCS,1990,NH3,0.000322133,1.71541E-05,0.000778986,7.57332E-05,-1,9.69191E-05,0.000122501,3.46361E-05,8.12106E-09,6.55306E-07,5.12245E-07,5.94998E-05,-1,7.76134E-09
+electricity,oil,Oil (existing),1990,NH3,0.001911119,0.00010177,0.004621495,0.000449303,-1,0.000574992,0.000726764,0.000205486,4.81799E-08,3.88774E-06,3.039E-06,0.000352995,-1,4.60457E-08
+electricity,oil,Oil (peak load conv),1990,NH3,0.001911119,0.00010177,0.004621495,0.000449303,-1,0.000574992,0.000726764,0.000205486,4.81799E-08,3.88774E-06,3.039E-06,0.000352995,-1,4.60457E-08
+building,gas,gas,1990,NH3,0.000216698,0.00016684,0.000342527,0.000317227,0.000247082,0.000274288,0.010450421,0.000140909,0.000956703,0.001067194,0.00211612,0.00035301,0.000297064,0.002777329
+building,biomass,biomass,1990,NH3,0.006299942,0.00485045,0.009958112,0.009222592,0.007183283,0.007974227,0.003061754,0.004096566,0.008979747,0.021218389,0.018179244,0.010262894,0.008636381,0.016467125
+building,refined liquids,refined liquids,1990,NH3,0.000418176,0.000321962,0.000660997,0.000612175,0.00047681,0.000529311,0.020166882,0.000271921,0.001846214,0.002059436,0.00408362,0.000681228,0.000573264,0.005359599
+building,trad biomass,trad biomass,1990,NH3,-1,-1,-1,-1,-1,-1,0.001979698,-1,0.003268094,0.000711682,0.002816747,-1,-1,0.002964052
+industrial energy use,gas,gas,1990,NH3,0.000213865,0.000339325,0.000178919,9.24436E-05,0.000136309,0.000159357,0.000475344,0.000124564,0.000478403,0.000260161,0.000325796,0.000346403,0.000119549,0.000919478
+industrial energy use,coal,coal,1990,NH3,2.93616E-05,4.65862E-05,2.45639E-05,1.26916E-05,1.87139E-05,2.18782E-05,6.52602E-05,1.71015E-05,6.56802E-05,3.57177E-05,4.47287E-05,4.75579E-05,1.64129E-05,0.000126236
+industrial energy use,refined liquids,refined liquids,1990,NH3,0.000172365,0.000273481,0.000144201,7.45053E-05,0.000109859,0.000128434,0.000383105,0.000100393,0.000385571,0.000209678,0.000262576,0.000279185,9.63506E-05,0.000741057
+industrial energy use,gas,gas cogen,1990,NH3,0.000213865,0.000339325,0.000178919,9.24436E-05,0.000136309,0.000159357,0.000475344,0.000124564,0.000478403,0.000260161,0.000325796,0.000346403,0.000119549,0.000919478
+industrial energy use,coal,coal cogen,1990,NH3,2.93616E-05,4.65862E-05,2.45639E-05,1.26916E-05,1.87139E-05,2.18782E-05,6.52602E-05,1.71015E-05,6.56802E-05,3.57177E-05,4.47287E-05,4.75579E-05,1.64129E-05,0.000126236
+industrial energy use,refined liquids,refined liquids cogen,1990,NH3,0.000172365,0.000273481,0.000144201,7.45053E-05,0.000109859,0.000128434,0.000383105,0.000100393,0.000385571,0.000209678,0.000262576,0.000279185,9.63506E-05,0.000741057
+process heat cement,gas,gas,1990,NH3,0.000213865,0.000339325,0.000178919,9.24436E-05,0.000136309,0.000159357,0.000475344,0.000124564,0.000478403,0.000260161,0.000325796,0.000346403,0.000119549,0.000919478
+process heat cement,coal,coal,1990,NH3,2.93616E-05,4.65862E-05,2.45639E-05,1.26916E-05,1.87139E-05,2.18782E-05,6.52602E-05,1.71015E-05,6.56802E-05,3.57177E-05,4.47287E-05,4.75579E-05,1.64129E-05,0.000126236
+process heat cement,refined liquids,refined liquids,1990,NH3,0.000172365,0.000273481,0.000144201,7.45053E-05,0.000109859,0.000128434,0.000383105,0.000100393,0.000385571,0.000209678,0.000262576,0.000279185,9.63506E-05,0.000741057
+industrial processes,solvents,solvents,1990,NH3,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1,-1
+industrial processes,other industrial processes,other industrial processes,1990,NH3,11.1099231,2.743370838,7.51244961,1.123542108,0.487632296,7.384392799,6.896498503,1.213026869,2.362063186,5.029130083,3.358890345,3.589079903,0.25151794,3.420205195

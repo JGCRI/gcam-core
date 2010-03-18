@@ -1,8 +1,17 @@
+"Delete ""industrial processes"" supplysector",,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+199,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+supplysector,,,,,,,,,,,,,,
+industrial processes,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
 INPUT DRIVEN EMISSIONS,,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,,
 20000,,,,,,,,,,,,,,
-
+,,,,,,,,,,,,,,
 supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,,,
 boilers general,biomass,biomass conv,ALL,CH4,,,,,,,,,,
 boilers general,coal,coal conv,ALL,CH4,,,,,,,,,,
@@ -14,781 +23,709 @@ boilers general,gas,gas cogen,ALL,CH4,,,,,,,,,,
 boilers general,refined liquids,refined liquids cogen,ALL,CH4,,,,,,,,,,
 boilers pulp paper and wood,biomass,biomass conv,ALL,CH4,,,,,,,,,,
 boilers pulp paper and wood,coal,coal conv,ALL,CH4,,,,,,,,,,
-boilers pulp paper and wood,gas,gas conv,ALL,CH4
-boilers pulp paper and wood,refined liquids,refined liquids conv,ALL,CH4
-boilers pulp paper and wood,biomass,biomass cogen,ALL,CH4
-boilers pulp paper and wood,coal,coal cogen,ALL,CH4
-boilers pulp paper and wood,gas,gas cogen,ALL,CH4
-boilers pulp paper and wood,refined liquids,refined liquids cogen,ALL,CH4
-process heat general,biomass,biomass conv,ALL,CH4
-process heat general,coal,coal conv,ALL,CH4
-process heat general,gas,gas conv,ALL,CH4
-process heat general,refined liquids,refined liquids conv,ALL,CH4
-process heat general,biomass,biomass cogen,ALL,CH4
-process heat general,coal,coal cogen,ALL,CH4
-process heat general,gas,gas cogen,ALL,CH4
-process heat general,refined liquids,refined liquids cogen,ALL,CH4
-process heat primary metals,biomass,biomass conv,ALL,CH4
-process heat primary metals,coal,coal conv,ALL,CH4
-process heat primary metals,gas,gas conv,ALL,CH4,
-process heat primary metals,refined liquids,refined liquids conv,ALL,CH4,
-process heat primary metals,biomass,biomass cogen,ALL,CH4,
-process heat primary metals,coal,coal cogen,ALL,CH4,
-process heat primary metals,gas,gas cogen,ALL,CH4,
-process heat primary metals,refined liquids,refined liquids cogen,ALL,CH4,
-process heat cement,biomass,biomass,ALL,CH4,
-process heat cement,gas,gas,ALL,CH4,
-process heat cement,coal,coal,ALL,CH4,
-process heat cement,refined liquids,refined liquids,ALL,CH4,
-
-INPUT_TABLE,,,,,
-Variable ID,,,,,
-20015,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef
-boilers general,biomass,biomass conv,1990,CH4,0.0455
-boilers general,coal,coal conv,1990,CH4,0.0079
-boilers general,gas,gas conv,1990,CH4,0.0098
-boilers general,refined liquids,refined liquids conv,1990,CH4,0.0648
-boilers general,biomass,biomass cogen,1990,CH4,0.0455
-boilers general,coal,coal cogen,1990,CH4,0.0079
-boilers general,gas,gas cogen,1990,CH4,0.0098
-boilers general,refined liquids,refined liquids cogen,1990,CH4,0.0648
-boilers pulp paper and wood,biomass,biomass conv,1990,CH4,0.0455
-boilers pulp paper and wood,coal,coal conv,1990,CH4,0.0079
-boilers pulp paper and wood,gas,gas conv,1990,CH4,0.0098
-boilers pulp paper and wood,refined liquids,refined liquids conv,1990,CH4,0.0648
-boilers pulp paper and wood,biomass,biomass cogen,1990,CH4,0.0455
-boilers pulp paper and wood,coal,coal cogen,1990,CH4,0.0079
-boilers pulp paper and wood,gas,gas cogen,1990,CH4,0.0098
-boilers pulp paper and wood,refined liquids,refined liquids cogen,1990,CH4,0.0648
-process heat general,biomass,biomass conv,1990,CH4,0.0455
-process heat general,coal,coal conv,1990,CH4,0.0079
-process heat general,gas,gas conv,1990,CH4,0.0098
-process heat general,refined liquids,refined liquids conv,1990,CH4,0.0648
-process heat general,biomass,biomass cogen,1990,CH4,0.0455
-process heat general,coal,coal cogen,1990,CH4,0.0079
-process heat general,gas,gas cogen,1990,CH4,0.0098
-process heat general,refined liquids,refined liquids cogen,1990,CH4,0.0648
-process heat primary metals,biomass,biomass conv,1990,CH4,0.0455
-process heat primary metals,coal,coal conv,1990,CH4,0.0079
-process heat primary metals,gas,gas conv,1990,CH4,0.0098
-process heat primary metals,refined liquids,refined liquids conv,1990,CH4,0.0648
-process heat primary metals,biomass,biomass cogen,1990,CH4,0.0455
-process heat primary metals,coal,coal cogen,1990,CH4,0.0079
-process heat primary metals,gas,gas cogen,1990,CH4,0.0098
-process heat primary metals,refined liquids,refined liquids cogen,1990,CH4,0.0648
-process heat cement,biomass,biomass,1990,CH4,0.0455
-process heat cement,gas,gas,1990,CH4,0.0098
-process heat cement,coal,coal,1990,CH4,0.0079
-process heat cement,refined liquids,refined liquids,1990,CH4,0.0648
-
-
-INPUT_TABLE,,,,,
-Variable ID,,,,,
-20000,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,input-driver
-boilers general,biomass,biomass conv,ALL,N2O,
-boilers general,coal,coal conv,ALL,N2O,
-boilers general,gas,gas conv,ALL,N2O,
-boilers general,refined liquids,refined liquids conv,ALL,N2O,
-boilers general,biomass,biomass cogen,ALL,N2O,
-boilers general,coal,coal cogen,ALL,N2O
-boilers general,gas,gas cogen,ALL,N2O
-boilers general,refined liquids,refined liquids cogen,ALL,N2O
-boilers pulp paper and wood,biomass,biomass conv,ALL,N2O
-boilers pulp paper and wood,coal,coal conv,ALL,N2O
-boilers pulp paper and wood,gas,gas conv,ALL,N2O
-boilers pulp paper and wood,refined liquids,refined liquids conv,ALL,N2O
-boilers pulp paper and wood,biomass,biomass cogen,ALL,N2O
-boilers pulp paper and wood,coal,coal cogen,ALL,N2O
-boilers pulp paper and wood,gas,gas cogen,ALL,N2O
-boilers pulp paper and wood,refined liquids,refined liquids cogen,ALL,N2O
-process heat general,biomass,biomass conv,ALL,N2O
-process heat general,coal,coal conv,ALL,N2O
-process heat general,gas,gas conv,ALL,N2O
-process heat general,refined liquids,refined liquids conv,ALL,N2O
-process heat general,biomass,biomass cogen,ALL,N2O
-process heat general,coal,coal cogen,ALL,N2O
-process heat general,gas,gas cogen,ALL,N2O
-process heat general,refined liquids,refined liquids cogen,ALL,N2O
-process heat primary metals,biomass,biomass conv,ALL,N2O
-process heat primary metals,coal,coal conv,ALL,N2O
-process heat primary metals,gas,gas conv,ALL,N2O
-process heat primary metals,refined liquids,refined liquids conv,ALL,N2O
-process heat primary metals,biomass,biomass cogen,ALL,N2O
-process heat primary metals,coal,coal cogen,ALL,N2O
-process heat primary metals,gas,gas cogen,ALL,N2O
-process heat primary metals,refined liquids,refined liquids cogen,ALL,N2O
-process heat cement,biomass,biomass,ALL,N2O
-process heat cement,gas,gas,ALL,N2O
-process heat cement,coal,coal,ALL,N2O
-process heat cement,refined liquids,refined liquids,ALL,N2O
-
-INPUT_TABLE,,,,,
-Variable ID,,,,,
-20015,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef
-boilers general,biomass,biomass conv,1990,N2O,0.0111
-boilers general,coal,coal conv,1990,N2O,0.0020
-boilers general,gas,gas conv,1990,N2O,0.0004
-boilers general,refined liquids,refined liquids conv,1990,N2O,0.0377
-boilers general,biomass,biomass cogen,1990,N2O,0.0111
-boilers general,coal,coal cogen,1990,N2O,0.0020
-boilers general,gas,gas cogen,1990,N2O,0.0004
-boilers general,refined liquids,refined liquids cogen,1990,N2O,0.0377
-boilers pulp paper and wood,biomass,biomass conv,1990,N2O,0.0111
-boilers pulp paper and wood,coal,coal conv,1990,N2O,0.0020
-boilers pulp paper and wood,gas,gas conv,1990,N2O,0.0004
-boilers pulp paper and wood,refined liquids,refined liquids conv,1990,N2O,0.0377
-boilers pulp paper and wood,biomass,biomass cogen,1990,N2O,0.0111
-boilers pulp paper and wood,coal,coal cogen,1990,N2O,0.0020
-boilers pulp paper and wood,gas,gas cogen,1990,N2O,0.0004
-boilers pulp paper and wood,refined liquids,refined liquids cogen,1990,N2O,0.0377
-process heat general,biomass,biomass conv,1990,N2O,0.0111
-process heat general,coal,coal conv,1990,N2O,0.0020
-process heat general,gas,gas conv,1990,N2O,0.0004
-process heat general,refined liquids,refined liquids conv,1990,N2O,0.0377
-process heat general,biomass,biomass cogen,1990,N2O,0.0111
-process heat general,coal,coal cogen,1990,N2O,0.0020
-process heat general,gas,gas cogen,1990,N2O,0.0004
-process heat general,refined liquids,refined liquids cogen,1990,N2O,0.0377
-process heat primary metals,biomass,biomass conv,1990,N2O,0.0111
-process heat primary metals,coal,coal conv,1990,N2O,0.0020
-process heat primary metals,gas,gas conv,1990,N2O,0.0004
-process heat primary metals,refined liquids,refined liquids conv,1990,N2O,0.0377,,,,
-process heat primary metals,biomass,biomass cogen,1990,N2O,0.0111,,,,
-process heat primary metals,coal,coal cogen,1990,N2O,0.0020,,,,
-process heat primary metals,gas,gas cogen,1990,N2O,0.0004,,,,
-process heat primary metals,refined liquids,refined liquids cogen,1990,N2O,0.0377,,,,
-process heat cement,biomass,biomass,1990,N2O,0.0111,,,,
-process heat cement,gas,gas,1990,N2O,0.0004,,,,
-process heat cement,coal,coal,1990,N2O,0.0020,,,,
-process heat cement,refined liquids,refined liquids,1990,N2O,0.0377,,,,
-
-INPUT_TABLE,,,,,,,,,
-Variable ID,,,,,,,,,
-20070,,,,,,,,,
-,,,,,reduction,,,,
-supplysector,subsector,technology,period,generic-ghg,0,15,30,45,60
-chemicals,chemicals,chemicals,2020,N2O,0,0.96,0.96,0.96,0.96
-
-
-INPUT_TABLE,,,,,
-Variable ID,,,,,
-20000,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,input-driver
-boilers general,biomass,biomass conv,ALL,NOx,
-boilers general,coal,coal conv,ALL,NOx,
-boilers general,gas,gas conv,ALL,NOx,
-boilers general,refined liquids,refined liquids conv,ALL,NOx,
-boilers general,biomass,biomass cogen,ALL,NOx,
-boilers general,coal,coal cogen,ALL,NOx,
-boilers general,gas,gas cogen,ALL,NOx,
-boilers general,refined liquids,refined liquids cogen,ALL,NOx,
-boilers pulp paper and wood,biomass,biomass conv,ALL,NOx,
-boilers pulp paper and wood,coal,coal conv,ALL,NOx
-boilers pulp paper and wood,gas,gas conv,ALL,NOx
-boilers pulp paper and wood,refined liquids,refined liquids conv,ALL,NOx
-boilers pulp paper and wood,biomass,biomass cogen,ALL,NOx
-boilers pulp paper and wood,coal,coal cogen,ALL,NOx
-boilers pulp paper and wood,gas,gas cogen,ALL,NOx
-boilers pulp paper and wood,refined liquids,refined liquids cogen,ALL,NOx
-process heat general,biomass,biomass conv,ALL,NOx
-process heat general,coal,coal conv,ALL,NOx
-process heat general,gas,gas conv,ALL,NOx
-process heat general,refined liquids,refined liquids conv,ALL,NOx
-process heat general,biomass,biomass cogen,ALL,NOx
-process heat general,coal,coal cogen,ALL,NOx
-process heat general,gas,gas cogen,ALL,NOx
-process heat general,refined liquids,refined liquids cogen,ALL,NOx
-process heat primary metals,biomass,biomass conv,ALL,NOx
-process heat primary metals,coal,coal conv,ALL,NOx
-process heat primary metals,gas,gas conv,ALL,NOx
-process heat primary metals,refined liquids,refined liquids conv,ALL,NOx
-process heat primary metals,biomass,biomass cogen,ALL,NOx
-process heat primary metals,coal,coal cogen,ALL,NOx
-process heat primary metals,gas,gas cogen,ALL,NOx
-process heat primary metals,refined liquids,refined liquids cogen,ALL,NOx
-agriculture energy use,refined liquids,refined liquids,ALL,NOx
-construction energy use,refined liquids,refined liquids,ALL,NOx
-process heat cement,biomass,biomass,ALL,NOx
-process heat cement,gas,gas,ALL,NOx
-process heat cement,coal,coal,ALL,NOx
-process heat cement,refined liquids,refined liquids,ALL,NOx
-
-INPUT_TABLE,,,,
-Variable ID,,,,
-20020,,,,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef
-boilers general,biomass,biomass conv,1990,NOx,0.1655,27,25,0.0414
-boilers general,coal,coal conv,1990,NOx,0.2699,27,25,0.0675
-boilers general,gas,gas conv,1990,NOx,0.4332,27,25,0.1083
-boilers general,refined liquids,refined liquids conv,1990,NOx,3.0098,27,25,0.7524
-boilers general,biomass,biomass cogen,1990,NOx,0.1655,27,25,0.0414
-boilers general,coal,coal cogen,1990,NOx,0.2699,27,25,0.0675
-boilers general,gas,gas cogen,1990,NOx,0.4332,27,25,0.1083
-boilers general,refined liquids,refined liquids cogen,1990,NOx,3.0098,27,25,0.7524
-boilers pulp paper and wood,biomass,biomass conv,1990,NOx,0.1655,27,25,0.0414
-boilers pulp paper and wood,coal,coal conv,1990,NOx,0.2699,27,25,0.0675
-boilers pulp paper and wood,gas,gas conv,1990,NOx,0.4332,27,25,0.1083
-boilers pulp paper and wood,refined liquids,refined liquids conv,1990,NOx,3.0098,27,25,0.7524
-boilers pulp paper and wood,biomass,biomass cogen,1990,NOx,0.1655,27,25,0.0414
-boilers pulp paper and wood,coal,coal cogen,1990,NOx,0.2699,27,25,0.0675
-boilers pulp paper and wood,gas,gas cogen,1990,NOx,0.4332,27,25,0.1083
-boilers pulp paper and wood,refined liquids,refined liquids cogen,1990,NOx,3.0098,27,25,0.7524
-process heat general,biomass,biomass conv,1990,NOx,0.1655,27,25,0.0414
-process heat general,coal,coal conv,1990,NOx,0.2699,27,25,0.0675
-process heat general,gas,gas conv,1990,NOx,0.4332,27,25,0.1083
-process heat general,refined liquids,refined liquids conv,1990,NOx,3.0098,27,25,0.7524
-process heat general,biomass,biomass cogen,1990,NOx,0.1655,27,25,0.0414
-process heat general,coal,coal cogen,1990,NOx,0.2699,27,25,0.0675
-process heat general,gas,gas cogen,1990,NOx,0.4332,27,25,0.1083
-process heat general,refined liquids,refined liquids cogen,1990,NOx,3.0098,27,25,0.7524
-process heat primary metals,biomass,biomass conv,1990,NOx,0.1655,27,25,0.0414
-process heat primary metals,coal,coal conv,1990,NOx,0.2699,27,25,0.0675
-process heat primary metals,gas,gas conv,1990,NOx,0.4332,27,25,0.1083
-process heat primary metals,refined liquids,refined liquids conv,1990,NOx,3.0098,27,25,0.7524
-process heat primary metals,biomass,biomass cogen,1990,NOx,0.1655,27,25,0.0414
-process heat primary metals,coal,coal cogen,1990,NOx,0.2699,27,25,0.0675
-process heat primary metals,gas,gas cogen,1990,NOx,0.4332,27,25,0.1083
-process heat primary metals,refined liquids,refined liquids cogen,1990,NOx,3.0098,27,25,0.7524
-agriculture energy use,refined liquids,refined liquids,1990,NOx,1.0181,27,25,0.2545
-construction energy use,refined liquids,refined liquids,1990,NOx,1.2205,27,25,0.3051
-process heat cement,biomass,biomass,1990,NOx,0.1655,27,25,0.0414
-process heat cement,gas,gas,1990,NOx,0.4332,27,25,0.1083
-process heat cement,coal,coal,1990,NOx,0.2699,27,25,0.0675
-process heat cement,refined liquids,refined liquids,1990,NOx,3.0098,27,25,0.7524
-
-
-INPUT_TABLE,,,,,,,,
-Variable ID,,,,,,,,
-20000,,,,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,input-driver,,,
-boilers general,biomass,biomass conv,ALL,CO
-boilers general,coal,coal conv,ALL,CO
-boilers general,gas,gas conv,ALL,CO
-boilers general,refined liquids,refined liquids conv,ALL,CO
-boilers general,biomass,biomass cogen,ALL,CO
-boilers general,coal,coal cogen,ALL,CO
-boilers general,gas,gas cogen,ALL,CO
-boilers general,refined liquids,refined liquids cogen,ALL,CO
-boilers pulp paper and wood,biomass,biomass conv,ALL,CO
-boilers pulp paper and wood,coal,coal conv,ALL,CO
-boilers pulp paper and wood,gas,gas conv,ALL,CO
-boilers pulp paper and wood,refined liquids,refined liquids conv,ALL,CO
-boilers pulp paper and wood,biomass,biomass cogen,ALL,CO
-boilers pulp paper and wood,coal,coal cogen,ALL,CO
-boilers pulp paper and wood,gas,gas cogen,ALL,CO
-boilers pulp paper and wood,refined liquids,refined liquids cogen,ALL,CO
-process heat general,biomass,biomass conv,ALL,CO
-process heat general,coal,coal conv,ALL,CO
-process heat general,gas,gas conv,ALL,CO
-process heat general,refined liquids,refined liquids conv,ALL,CO
-process heat general,biomass,biomass cogen,ALL,CO
-process heat general,coal,coal cogen,ALL,CO
-process heat general,gas,gas cogen,ALL,CO
-process heat general,refined liquids,refined liquids cogen,ALL,CO
-process heat primary metals,biomass,biomass conv,ALL,CO
-process heat primary metals,coal,coal conv,ALL,CO
-process heat primary metals,gas,gas conv,ALL,CO
-process heat primary metals,refined liquids,refined liquids conv,ALL,CO
-process heat primary metals,biomass,biomass cogen,ALL,CO
-process heat primary metals,coal,coal cogen,ALL,CO
-process heat primary metals,gas,gas cogen,ALL,CO
-process heat primary metals,refined liquids,refined liquids cogen,ALL,CO
-agriculture energy use,refined liquids,refined liquids,ALL,CO,,,,
-construction energy use,refined liquids,refined liquids,ALL,CO,,,,
-process heat cement,biomass,biomass,ALL,CO,,,,
-process heat cement,gas,gas,ALL,CO,,,,
-process heat cement,coal,coal,ALL,CO,,,,
-process heat cement,refined liquids,refined liquids,ALL,CO,,,,
-
-INPUT_TABLE,,,,,,,,
-Variable ID,,,,,,,,
-20020,,,,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef
-boilers general,biomass,biomass conv,1990,CO,0.1564,33,20,0.0391
-boilers general,coal,coal conv,1990,CO,0.0327,33,20,0.0082
-boilers general,gas,gas conv,1990,CO,0.0735,33,20,0.0184
-boilers general,refined liquids,refined liquids conv,1990,CO,0.4349,33,20,0.1087
-boilers general,biomass,biomass cogen,1990,CO,0.1564,33,20,0.0391
-boilers general,coal,coal cogen,1990,CO,0.0327,33,20,0.0082
-boilers general,gas,gas cogen,1990,CO,0.0735,33,20,0.0184
-boilers general,refined liquids,refined liquids cogen,1990,CO,0.4349,33,20,0.1087
-boilers pulp paper and wood,biomass,biomass conv,1990,CO,0.1564,33,20,0.0391
-boilers pulp paper and wood,coal,coal conv,1990,CO,0.0327,33,20,0.0082
-boilers pulp paper and wood,gas,gas conv,1990,CO,0.0735,33,20,0.0184
-boilers pulp paper and wood,refined liquids,refined liquids conv,1990,CO,0.4349,33,20,0.1087
-boilers pulp paper and wood,biomass,biomass cogen,1990,CO,0.1564,33,20,0.0391
-boilers pulp paper and wood,coal,coal cogen,1990,CO,0.0327,33,20,0.0082
-boilers pulp paper and wood,gas,gas cogen,1990,CO,0.0735,33,20,0.0184
-boilers pulp paper and wood,refined liquids,refined liquids cogen,1990,CO,0.4349,33,20,0.1087
-process heat general,biomass,biomass conv,1990,CO,0.1564,33,20,0.0391
-process heat general,coal,coal conv,1990,CO,0.0327,33,20,0.0082
-process heat general,gas,gas conv,1990,CO,0.0735,33,20,0.0184
-process heat general,refined liquids,refined liquids conv,1990,CO,0.4349,33,20,0.1087
-process heat general,biomass,biomass cogen,1990,CO,0.1564,33,20,0.0391
-process heat general,coal,coal cogen,1990,CO,0.0327,33,20,0.0082
-process heat general,gas,gas cogen,1990,CO,0.0735,33,20,0.0184
-process heat general,refined liquids,refined liquids cogen,1990,CO,0.4349,33,20,0.1087
-process heat primary metals,biomass,biomass conv,1990,CO,0.1564,33,20,0.0391
-process heat primary metals,coal,coal conv,1990,CO,0.0327,33,20,0.0082
-process heat primary metals,gas,gas conv,1990,CO,0.0735,33,20,0.0184
-process heat primary metals,refined liquids,refined liquids conv,1990,CO,0.4349,33,20,0.1087
-process heat primary metals,biomass,biomass cogen,1990,CO,0.1564,33,20,0.0391
-process heat primary metals,coal,coal cogen,1990,CO,0.0327,33,20,0.0082
-process heat primary metals,gas,gas cogen,1990,CO,0.0735,33,20,0.0184
-process heat primary metals,refined liquids,refined liquids cogen,1990,CO,0.4349,33,20,0.1087
-agriculture energy use,refined liquids,refined liquids,1990,CO,0.5680,33,20,0.1420
-construction energy use,refined liquids,refined liquids,1990,CO,2.8824,33,20,0.7206
-process heat cement,biomass,biomass,1990,CO,0.1564,33,20,0.0391
-process heat cement,gas,gas,1990,CO,0.0735,33,20,0.0184
-process heat cement,coal,coal,1990,CO,0.0327,33,20,0.0082
-process heat cement,refined liquids,refined liquids,1990,CO,0.4349,33,20,0.1087
-
-
-INPUT_TABLE,,,,,,,,
-Variable ID,,,,,,,,
-20000,,,,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,input-driver,,,
-boilers general,biomass,biomass conv,ALL,NMVOC,,,,
-boilers general,coal,coal conv,ALL,NMVOC,,,,
-boilers general,gas,gas conv,ALL,NMVOC,,,,
-boilers general,refined liquids,refined liquids conv,ALL,NMVOC,,,,
-boilers general,biomass,biomass cogen,ALL,NMVOC,,,,
-boilers general,coal,coal cogen,ALL,NMVOC,,,,
-boilers general,gas,gas cogen,ALL,NMVOC,,,,
-boilers general,refined liquids,refined liquids cogen,ALL,NMVOC
-boilers pulp paper and wood,biomass,biomass conv,ALL,NMVOC
-boilers pulp paper and wood,coal,coal conv,ALL,NMVOC
-boilers pulp paper and wood,gas,gas conv,ALL,NMVOC
-boilers pulp paper and wood,refined liquids,refined liquids conv,ALL,NMVOC
-boilers pulp paper and wood,biomass,biomass cogen,ALL,NMVOC
-boilers pulp paper and wood,coal,coal cogen,ALL,NMVOC
-boilers pulp paper and wood,gas,gas cogen,ALL,NMVOC
-boilers pulp paper and wood,refined liquids,refined liquids cogen,ALL,NMVOC
-process heat general,biomass,biomass conv,ALL,NMVOC
-process heat general,coal,coal conv,ALL,NMVOC
-process heat general,gas,gas conv,ALL,NMVOC
-process heat general,refined liquids,refined liquids conv,ALL,NMVOC
-process heat general,biomass,biomass cogen,ALL,NMVOC
-process heat general,coal,coal cogen,ALL,NMVOC
-process heat general,gas,gas cogen,ALL,NMVOC
-process heat general,refined liquids,refined liquids cogen,ALL,NMVOC
-process heat primary metals,biomass,biomass conv,ALL,NMVOC
-process heat primary metals,coal,coal conv,ALL,NMVOC
-process heat primary metals,gas,gas conv,ALL,NMVOC
-process heat primary metals,refined liquids,refined liquids conv,ALL,NMVOC
-process heat primary metals,biomass,biomass cogen,ALL,NMVOC
-process heat primary metals,coal,coal cogen,ALL,NMVOC
-process heat primary metals,gas,gas cogen,ALL,NMVOC
-process heat primary metals,refined liquids,refined liquids cogen,ALL,NMVOC
-agriculture energy use,refined liquids,refined liquids,ALL,NMVOC
-construction energy use,refined liquids,refined liquids,ALL,NMVOC
-process heat cement,biomass,biomass,ALL,NMVOC
-process heat cement,gas,gas,ALL,NMVOC
-process heat cement,coal,coal,ALL,NMVOC
-process heat cement,refined liquids,refined liquids,ALL,NMVOC
-
-INPUT_TABLE,,,,,,,,
-Variable ID,,,,,,,,
-20020,,,,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef
-boilers general,biomass,biomass conv,1990,NMVOC,0.0467,27,25,0.0117
-boilers general,coal,coal conv,1990,NMVOC,0.0087,27,25,0.0022
-boilers general,gas,gas conv,1990,NMVOC,0.0409,27,25,0.0102
-boilers general,refined liquids,refined liquids conv,1990,NMVOC,0.2618,27,25,0.0654
-boilers general,biomass,biomass cogen,1990,NMVOC,0.0467,27,25,0.0117
-boilers general,coal,coal cogen,1990,NMVOC,0.0087,27,25,0.0022
-boilers general,gas,gas cogen,1990,NMVOC,0.0409,27,25,0.0102
-boilers general,refined liquids,refined liquids cogen,1990,NMVOC,0.2618,27,25,0.0654
-boilers pulp paper and wood,biomass,biomass conv,1990,NMVOC,0.0467,27,25,0.0117
-boilers pulp paper and wood,coal,coal conv,1990,NMVOC,0.0087,27,25,0.0022
-boilers pulp paper and wood,gas,gas conv,1990,NMVOC,0.0409,27,25,0.0102
-boilers pulp paper and wood,refined liquids,refined liquids conv,1990,NMVOC,0.2618,27,25,0.0654
-boilers pulp paper and wood,biomass,biomass cogen,1990,NMVOC,0.0467,27,25,0.0117
-boilers pulp paper and wood,coal,coal cogen,1990,NMVOC,0.0087,27,25,0.0022
-boilers pulp paper and wood,gas,gas cogen,1990,NMVOC,0.0409,27,25,0.0102
-boilers pulp paper and wood,refined liquids,refined liquids cogen,1990,NMVOC,0.2618,27,25,0.0654
-process heat general,biomass,biomass conv,1990,NMVOC,0.0467,27,25,0.0117
-process heat general,coal,coal conv,1990,NMVOC,0.0087,27,25,0.0022
-process heat general,gas,gas conv,1990,NMVOC,0.0409,27,25,0.0102
-process heat general,refined liquids,refined liquids conv,1990,NMVOC,0.2618,27,25,0.0654
-process heat general,biomass,biomass cogen,1990,NMVOC,0.0467,27,25,0.0117
-process heat general,coal,coal cogen,1990,NMVOC,0.0087,27,25,0.0022
-process heat general,gas,gas cogen,1990,NMVOC,0.0409,27,25,0.0102
-process heat general,refined liquids,refined liquids cogen,1990,NMVOC,0.2618,27,25,0.0654
-process heat primary metals,biomass,biomass conv,1990,NMVOC,0.0467,27,25,0.0117
-process heat primary metals,coal,coal conv,1990,NMVOC,0.0087,27,25,0.0022
-process heat primary metals,gas,gas conv,1990,NMVOC,0.0409,27,25,0.0102
-process heat primary metals,refined liquids,refined liquids conv,1990,NMVOC,0.2618,27,25,0.0654
-process heat primary metals,biomass,biomass cogen,1990,NMVOC,0.0467,27,25,0.0117
-process heat primary metals,coal,coal cogen,1990,NMVOC,0.0087,27,25,0.0022
-process heat primary metals,gas,gas cogen,1990,NMVOC,0.0409,27,25,0.0102
-process heat primary metals,refined liquids,refined liquids cogen,1990,NMVOC,0.2618,27,25,0.0654
-agriculture energy use,refined liquids,refined liquids,1990,NMVOC,0.2302,27,25,0.0576
-construction energy use,refined liquids,refined liquids,1990,NMVOC,0.5610,27,25,0.1402
-process heat cement,biomass,biomass,1990,NMVOC,0.0467,27,25,0.0117
-process heat cement,gas,gas,1990,NMVOC,0.0409,27,25,0.0102
-process heat cement,coal,coal,1990,NMVOC,0.0087,27,25,0.0022
-process heat cement,refined liquids,refined liquids,1990,NMVOC,0.2618,27,25,0.0654
-
-
-INPUT_TABLE,,,,,,,,
-Variable ID,,,,,,,,
-20000,,,,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,input-driver
-boilers general,biomass,biomass conv,ALL,SO2_1,
-boilers general,coal,coal conv,ALL,SO2_1,
-boilers general,gas,gas conv,ALL,SO2_1,
-boilers general,refined liquids,refined liquids conv,ALL,SO2_1,
-boilers general,biomass,biomass cogen,ALL,SO2_1,
-boilers general,coal,coal cogen,ALL,SO2_1,
-boilers general,gas,gas cogen,ALL,SO2_1,
-boilers general,refined liquids,refined liquids cogen,ALL,SO2_1,
-boilers pulp paper and wood,biomass,biomass conv,ALL,SO2_1,
-boilers pulp paper and wood,coal,coal conv,ALL,SO2_1,
-boilers pulp paper and wood,gas,gas conv,ALL,SO2_1,
-boilers pulp paper and wood,refined liquids,refined liquids conv,ALL,SO2_1,
-boilers pulp paper and wood,biomass,biomass cogen,ALL,SO2_1,
-boilers pulp paper and wood,coal,coal cogen,ALL,SO2_1,
-boilers pulp paper and wood,gas,gas cogen,ALL,SO2_1
-boilers pulp paper and wood,refined liquids,refined liquids cogen,ALL,SO2_1
-process heat general,biomass,biomass conv,ALL,SO2_1
-process heat general,coal,coal conv,ALL,SO2_1
-process heat general,gas,gas conv,ALL,SO2_1
-process heat general,refined liquids,refined liquids conv,ALL,SO2_1
-process heat general,biomass,biomass cogen,ALL,SO2_1
-process heat general,coal,coal cogen,ALL,SO2_1
-process heat general,gas,gas cogen,ALL,SO2_1
-process heat general,refined liquids,refined liquids cogen,ALL,SO2_1
-process heat primary metals,biomass,biomass conv,ALL,SO2_1
-process heat primary metals,coal,coal conv,ALL,SO2_1
-process heat primary metals,gas,gas conv,ALL,SO2_1
-process heat primary metals,refined liquids,refined liquids conv,ALL,SO2_1
-process heat primary metals,biomass,biomass cogen,ALL,SO2_1
-process heat primary metals,coal,coal cogen,ALL,SO2_1
-process heat primary metals,gas,gas cogen,ALL,SO2_1,,,,
-process heat primary metals,refined liquids,refined liquids cogen,ALL,SO2_1,,,,
-process heat cement,biomass,biomass,ALL,SO2_1,,,,
-process heat cement,gas,gas,ALL,SO2_1,,,,
-process heat cement,coal,coal,ALL,SO2_1,,,,
-process heat cement,refined liquids,refined liquids,ALL,SO2_1,,,,
-
-INPUT_TABLE,,,,,,,,
-Variable ID,,,,,,,,
-20020,,,,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef
-boilers general,biomass,biomass conv,1990,SO2_1,0.198267185,27,25,0.049566796
-boilers general,coal,coal conv,1990,SO2_1,0.880639743,27,25,0.220159936
-boilers general,gas,gas conv,1990,SO2_1,0.154694243,27,25,0.038673561
-boilers general,refined liquids,refined liquids conv,1990,SO2_1,3.36492263,27,25,0.841230657
-boilers general,biomass,biomass cogen,1990,SO2_1,0.198267185,27,25,0.049566796
-boilers general,coal,coal cogen,1990,SO2_1,0.880639743,27,25,0.220159936
-boilers general,gas,gas cogen,1990,SO2_1,0.154694243,27,25,0.038673561
-boilers general,refined liquids,refined liquids cogen,1990,SO2_1,3.36492263,27,25,0.841230657
-boilers pulp paper and wood,biomass,biomass conv,1990,SO2_1,0.198267185,27,25,0.049566796
-boilers pulp paper and wood,coal,coal conv,1990,SO2_1,0.880639743,27,25,0.220159936
-boilers pulp paper and wood,gas,gas conv,1990,SO2_1,0.154694243,27,25,0.038673561
-boilers pulp paper and wood,refined liquids,refined liquids conv,1990,SO2_1,3.36492263,27,25,0.841230657
-boilers pulp paper and wood,biomass,biomass cogen,1990,SO2_1,0.198267185,27,25,0.049566796
-boilers pulp paper and wood,coal,coal cogen,1990,SO2_1,0.880639743,27,25,0.220159936
-boilers pulp paper and wood,gas,gas cogen,1990,SO2_1,0.154694243,27,25,0.038673561
-boilers pulp paper and wood,refined liquids,refined liquids cogen,1990,SO2_1,3.36492263,27,25,0.841230657
-process heat general,biomass,biomass conv,1990,SO2_1,0.198267185,27,25,0.049566796
-process heat general,coal,coal conv,1990,SO2_1,0.880639743,27,25,0.220159936
-process heat general,gas,gas conv,1990,SO2_1,0.154694243,27,25,0.038673561
-process heat general,refined liquids,refined liquids conv,1990,SO2_1,3.36492263,27,25,0.841230657
-process heat general,biomass,biomass cogen,1990,SO2_1,0.198267185,27,25,0.049566796
-process heat general,coal,coal cogen,1990,SO2_1,0.880639743,27,25,0.220159936
-process heat general,gas,gas cogen,1990,SO2_1,0.154694243,27,25,0.038673561
-process heat general,refined liquids,refined liquids cogen,1990,SO2_1,3.36492263,27,25,0.841230657
-process heat primary metals,biomass,biomass conv,1990,SO2_1,0.198267185,27,25,0.049566796
-process heat primary metals,coal,coal conv,1990,SO2_1,0.880639743,27,25,0.220159936
-process heat primary metals,gas,gas conv,1990,SO2_1,0.154694243,27,25,0.038673561
-process heat primary metals,refined liquids,refined liquids conv,1990,SO2_1,3.36492263,27,25,0.841230657
-process heat primary metals,biomass,biomass cogen,1990,SO2_1,0.198267185,27,25,0.049566796
-process heat primary metals,coal,coal cogen,1990,SO2_1,0.880639743,27,25,0.220159936
-process heat primary metals,gas,gas cogen,1990,SO2_1,0.154694243,27,25,0.038673561
-process heat primary metals,refined liquids,refined liquids cogen,1990,SO2_1,3.36492263,27,25,0.841230657
-process heat cement,biomass,biomass,1990,SO2_1,0.228395301,27,25,0.02283953
-process heat cement,gas,gas,1990,SO2_1,0.178201139,27,25,0.017820114
-process heat cement,coal,coal,1990,SO2_1,1.014459248,27,25,0.101445925
-process heat cement,refined liquids,refined liquids,1990,SO2_1,3.87624668,27,25,0.387624668
-
-
-INPUT_TABLE,,,,,
-Variable ID,,,,,
-20000,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,input-driver
-boilers general,biomass,biomass conv,ALL,BC,
-boilers general,coal,coal conv,ALL,BC,
-boilers general,gas,gas conv,ALL,BC,
-boilers general,refined liquids,refined liquids conv,ALL,BC,
-boilers general,biomass,biomass cogen,ALL,BC,
-boilers general,coal,coal cogen,ALL,BC,
-boilers general,gas,gas cogen,ALL,BC,
-boilers general,refined liquids,refined liquids cogen,ALL,BC,
-boilers pulp paper and wood,biomass,biomass conv,ALL,BC,
-boilers pulp paper and wood,coal,coal conv,ALL,BC
-boilers pulp paper and wood,gas,gas conv,ALL,BC
-boilers pulp paper and wood,refined liquids,refined liquids conv,ALL,BC
-boilers pulp paper and wood,biomass,biomass cogen,ALL,BC
-boilers pulp paper and wood,coal,coal cogen,ALL,BC
-boilers pulp paper and wood,gas,gas cogen,ALL,BC
-boilers pulp paper and wood,refined liquids,refined liquids cogen,ALL,BC
-process heat general,biomass,biomass conv,ALL,BC
-process heat general,coal,coal conv,ALL,BC
-process heat general,gas,gas conv,ALL,BC
-process heat general,refined liquids,refined liquids conv,ALL,BC
-process heat general,biomass,biomass cogen,ALL,BC
-process heat general,coal,coal cogen,ALL,BC
-process heat general,gas,gas cogen,ALL,BC
-process heat general,refined liquids,refined liquids cogen,ALL,BC
-process heat primary metals,biomass,biomass conv,ALL,BC
-process heat primary metals,coal,coal conv,ALL,BC
-process heat primary metals,gas,gas conv,ALL,BC
-process heat primary metals,refined liquids,refined liquids conv,ALL,BC
-process heat primary metals,biomass,biomass cogen,ALL,BC
-process heat primary metals,coal,coal cogen,ALL,BC
-process heat primary metals,gas,gas cogen,ALL,BC
-process heat primary metals,refined liquids,refined liquids cogen,ALL,BC
-agriculture energy use,refined liquids,refined liquids,ALL,BC
-construction energy use,refined liquids,refined liquids,ALL,BC
-process heat cement,biomass,biomass,ALL,BC
-process heat cement,gas,gas,ALL,BC
-process heat cement,coal,coal,ALL,BC
-process heat cement,refined liquids,refined liquids,ALL,BC
-
-INPUT_TABLE,,,,
-Variable ID,,,,
-20020,,,,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef
-boilers general,biomass,biomass conv,1990,BC,0.0011,35,20,0.0006
-boilers general,coal,coal conv,1990,BC,0.0205,35,20,0.0102
-boilers general,gas,gas conv,1990,BC,0.0000,35,20,0.0000
-boilers general,refined liquids,refined liquids conv,1990,BC,0.2017,35,20,0.1009
-boilers general,biomass,biomass cogen,1990,BC,0.0011,35,20,0.0006
-boilers general,coal,coal cogen,1990,BC,0.0205,35,20,0.0102
-boilers general,gas,gas cogen,1990,BC,0.0000,35,20,0.0000
-boilers general,refined liquids,refined liquids cogen,1990,BC,0.2017,35,20,0.1009
-boilers pulp paper and wood,biomass,biomass conv,1990,BC,0.0011,35,20,0.0006
-boilers pulp paper and wood,coal,coal conv,1990,BC,0.0205,35,20,0.0102
-boilers pulp paper and wood,gas,gas conv,1990,BC,0.0000,35,20,0.0000
-boilers pulp paper and wood,refined liquids,refined liquids conv,1990,BC,0.2017,35,20,0.1009
-boilers pulp paper and wood,biomass,biomass cogen,1990,BC,0.0011,35,20,0.0006
-boilers pulp paper and wood,coal,coal cogen,1990,BC,0.0205,35,20,0.0102
-boilers pulp paper and wood,gas,gas cogen,1990,BC,0.0000,35,20,0.0000
-boilers pulp paper and wood,refined liquids,refined liquids cogen,1990,BC,0.2017,35,20,0.1009
-process heat general,biomass,biomass conv,1990,BC,0.0011,35,20,0.0006
-process heat general,coal,coal conv,1990,BC,0.0205,35,20,0.0102
-process heat general,gas,gas conv,1990,BC,0.0000,35,20,0.0000
-process heat general,refined liquids,refined liquids conv,1990,BC,0.2017,35,20,0.1009
-process heat general,biomass,biomass cogen,1990,BC,0.0011,35,20,0.0006
-process heat general,coal,coal cogen,1990,BC,0.0205,35,20,0.0102
-process heat general,gas,gas cogen,1990,BC,0.0000,35,20,0.0000
-process heat general,refined liquids,refined liquids cogen,1990,BC,0.2017,35,20,0.1009
-process heat primary metals,biomass,biomass conv,1990,BC,0.0011,35,20,0.0006
-process heat primary metals,coal,coal conv,1990,BC,0.0205,35,20,0.0102
-process heat primary metals,gas,gas conv,1990,BC,0.0000,35,20,0.0000
-process heat primary metals,refined liquids,refined liquids conv,1990,BC,0.2017,35,20,0.1009
-process heat primary metals,biomass,biomass cogen,1990,BC,0.0011,35,20,0.0006
-process heat primary metals,coal,coal cogen,1990,BC,0.0205,35,20,0.0102
-process heat primary metals,gas,gas cogen,1990,BC,0.0000,35,20,0.0000
-process heat primary metals,refined liquids,refined liquids cogen,1990,BC,0.2017,35,20,0.1009
-agriculture energy use,refined liquids,refined liquids,1990,BC,0.0032,35,20,0.0016
-construction energy use,refined liquids,refined liquids,1990,BC,0.0032,35,20,0.0016
-process heat cement,biomass,biomass,1990,BC,0.0011,35,20,0.0006
-process heat cement,gas,gas,1990,BC,0.0000,35,20,0.0000
-process heat cement,coal,coal,1990,BC,0.0205,35,20,0.0102
-process heat cement,refined liquids,refined liquids,1990,BC,0.2017,35,20,0.1009
-
-
-INPUT_TABLE,,,,,,,,
-Variable ID,,,,,,,,
-20000,,,,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,input-driver,,,
-boilers general,biomass,biomass conv,ALL,OC
-boilers general,coal,coal conv,ALL,OC
-boilers general,gas,gas conv,ALL,OC
-boilers general,refined liquids,refined liquids conv,ALL,OC
-boilers general,biomass,biomass cogen,ALL,OC
-boilers general,coal,coal cogen,ALL,OC
-boilers general,gas,gas cogen,ALL,OC
-boilers general,refined liquids,refined liquids cogen,ALL,OC
-boilers pulp paper and wood,biomass,biomass conv,ALL,OC
-boilers pulp paper and wood,coal,coal conv,ALL,OC
-boilers pulp paper and wood,gas,gas conv,ALL,OC
-boilers pulp paper and wood,refined liquids,refined liquids conv,ALL,OC
-boilers pulp paper and wood,biomass,biomass cogen,ALL,OC
-boilers pulp paper and wood,coal,coal cogen,ALL,OC
-boilers pulp paper and wood,gas,gas cogen,ALL,OC
-boilers pulp paper and wood,refined liquids,refined liquids cogen,ALL,OC
-process heat general,biomass,biomass conv,ALL,OC
-process heat general,coal,coal conv,ALL,OC
-process heat general,gas,gas conv,ALL,OC
-process heat general,refined liquids,refined liquids conv,ALL,OC
-process heat general,biomass,biomass cogen,ALL,OC
-process heat general,coal,coal cogen,ALL,OC
-process heat general,gas,gas cogen,ALL,OC
-process heat general,refined liquids,refined liquids cogen,ALL,OC
-process heat primary metals,biomass,biomass conv,ALL,OC
-process heat primary metals,coal,coal conv,ALL,OC
-process heat primary metals,gas,gas conv,ALL,OC
-process heat primary metals,refined liquids,refined liquids conv,ALL,OC
-process heat primary metals,biomass,biomass cogen,ALL,OC
-process heat primary metals,coal,coal cogen,ALL,OC
-process heat primary metals,gas,gas cogen,ALL,OC
-process heat primary metals,refined liquids,refined liquids cogen,ALL,OC
-agriculture energy use,refined liquids,refined liquids,ALL,OC,,,,
-construction energy use,refined liquids,refined liquids,ALL,OC,,,,
-process heat cement,biomass,biomass,ALL,OC,,,,
-process heat cement,gas,gas,ALL,OC,,,,
-process heat cement,coal,coal,ALL,OC,,,,
-process heat cement,refined liquids,refined liquids,ALL,OC,,,,
-
-INPUT_TABLE,,,,,,,,
-Variable ID,,,,,,,,
-20020,,,,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef
-boilers general,biomass,biomass conv,1990,OC,0.0042,35,20,0.0021
-boilers general,coal,coal conv,1990,OC,0.0214,35,20,0.0107
-boilers general,gas,gas conv,1990,OC,0.0000,35,20,0.0000
-boilers general,refined liquids,refined liquids conv,1990,OC,0.0849,35,20,0.0425
-boilers general,biomass,biomass cogen,1990,OC,0.0042,35,20,0.0021
-boilers general,coal,coal cogen,1990,OC,0.0214,35,20,0.0107
-boilers general,gas,gas cogen,1990,OC,0.0000,35,20,0.0000
-boilers general,refined liquids,refined liquids cogen,1990,OC,0.0849,35,20,0.0425
-boilers pulp paper and wood,biomass,biomass conv,1990,OC,0.0042,35,20,0.0021
-boilers pulp paper and wood,coal,coal conv,1990,OC,0.0214,35,20,0.0107
-boilers pulp paper and wood,gas,gas conv,1990,OC,0.0000,35,20,0.0000
-boilers pulp paper and wood,refined liquids,refined liquids conv,1990,OC,0.0849,35,20,0.0425
-boilers pulp paper and wood,biomass,biomass cogen,1990,OC,0.0042,35,20,0.0021
-boilers pulp paper and wood,coal,coal cogen,1990,OC,0.0214,35,20,0.0107
-boilers pulp paper and wood,gas,gas cogen,1990,OC,0.0000,35,20,0.0000
-boilers pulp paper and wood,refined liquids,refined liquids cogen,1990,OC,0.0849,35,20,0.0425
-process heat general,biomass,biomass conv,1990,OC,0.0042,35,20,0.0021
-process heat general,coal,coal conv,1990,OC,0.0214,35,20,0.0107
-process heat general,gas,gas conv,1990,OC,0.0000,35,20,0.0000
-process heat general,refined liquids,refined liquids conv,1990,OC,0.0849,35,20,0.0425
-process heat general,biomass,biomass cogen,1990,OC,0.0042,35,20,0.0021
-process heat general,coal,coal cogen,1990,OC,0.0214,35,20,0.0107
-process heat general,gas,gas cogen,1990,OC,0.0000,35,20,0.0000
-process heat general,refined liquids,refined liquids cogen,1990,OC,0.0849,35,20,0.0425
-process heat primary metals,biomass,biomass conv,1990,OC,0.0042,35,20,0.0021
-process heat primary metals,coal,coal conv,1990,OC,0.0214,35,20,0.0107
-process heat primary metals,gas,gas conv,1990,OC,0.0000,35,20,0.0000
-process heat primary metals,refined liquids,refined liquids conv,1990,OC,0.0849,35,20,0.0425
-process heat primary metals,biomass,biomass cogen,1990,OC,0.0042,35,20,0.0021
-process heat primary metals,coal,coal cogen,1990,OC,0.0214,35,20,0.0107
-process heat primary metals,gas,gas cogen,1990,OC,0.0000,35,20,0.0000
-process heat primary metals,refined liquids,refined liquids cogen,1990,OC,0.0849,35,20,0.0425
-agriculture energy use,refined liquids,refined liquids,1990,OC,0.0008,35,20,0.0004
-construction energy use,refined liquids,refined liquids,1990,OC,0.0008,35,20,0.0004
-process heat cement,biomass,biomass,1990,OC,0.0042,35,20,0.0021
-process heat cement,gas,gas,1990,OC,0.0000,35,20,0.0000
-process heat cement,coal,coal,1990,OC,0.0214,35,20,0.0107
-process heat cement,refined liquids,refined liquids,1990,OC,0.0849,35,20,0.0425
-
-
-INPUT_TABLE,,,,,,,,
-Variable ID,,,,,,,,
-20000,,,,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,input-driver,,,
-boilers general,biomass,biomass conv,ALL,NH3,,,,
-boilers general,coal,coal conv,ALL,NH3,,,,
-boilers general,gas,gas conv,ALL,NH3,,,,
-boilers general,refined liquids,refined liquids conv,ALL,NH3,,,,
-boilers general,biomass,biomass cogen,ALL,NH3,,,,
-boilers general,coal,coal cogen,ALL,NH3,,,,
-boilers general,gas,gas cogen,ALL,NH3,,,,
-boilers general,refined liquids,refined liquids cogen,ALL,NH3
-boilers pulp paper and wood,biomass,biomass conv,ALL,NH3
-boilers pulp paper and wood,coal,coal conv,ALL,NH3
-boilers pulp paper and wood,gas,gas conv,ALL,NH3
-boilers pulp paper and wood,refined liquids,refined liquids conv,ALL,NH3
-boilers pulp paper and wood,biomass,biomass cogen,ALL,NH3
-boilers pulp paper and wood,coal,coal cogen,ALL,NH3
-boilers pulp paper and wood,gas,gas cogen,ALL,NH3
-boilers pulp paper and wood,refined liquids,refined liquids cogen,ALL,NH3
-process heat general,biomass,biomass conv,ALL,NH3
-process heat general,coal,coal conv,ALL,NH3
-process heat general,gas,gas conv,ALL,NH3
-process heat general,refined liquids,refined liquids conv,ALL,NH3
-process heat general,biomass,biomass cogen,ALL,NH3
-process heat general,coal,coal cogen,ALL,NH3
-process heat general,gas,gas cogen,ALL,NH3
-process heat general,refined liquids,refined liquids cogen,ALL,NH3
-process heat primary metals,biomass,biomass conv,ALL,NH3
-process heat primary metals,coal,coal conv,ALL,NH3
-process heat primary metals,gas,gas conv,ALL,NH3
-process heat primary metals,refined liquids,refined liquids conv,ALL,NH3
-process heat primary metals,biomass,biomass cogen,ALL,NH3
-process heat primary metals,coal,coal cogen,ALL,NH3
-process heat primary metals,gas,gas cogen,ALL,NH3
-process heat primary metals,refined liquids,refined liquids cogen,ALL,NH3
-process heat cement,biomass,biomass,ALL,NH3
-process heat cement,gas,gas,ALL,NH3
-process heat cement,coal,coal,ALL,NH3
-process heat cement,refined liquids,refined liquids,ALL,NH3
-
-INPUT_TABLE,,,,
-Variable ID,,,,
-20020,,,,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef
-boilers general,biomass,biomass conv,1990,NH3,0.0000,25,15,0.0000
-boilers general,coal,coal conv,1990,NH3,0.0074,25,15,0.0037
-boilers general,gas,gas conv,1990,NH3,0.0838,25,15,0.0419
-boilers general,refined liquids,refined liquids conv,1990,NH3,0.2038,25,15,0.1019
-boilers general,biomass,biomass cogen,1990,NH3,0.0000,25,15,0.0000
-boilers general,coal,coal cogen,1990,NH3,0.0074,25,15,0.0037
-boilers general,gas,gas cogen,1990,NH3,0.0838,25,15,0.0419
-boilers general,refined liquids,refined liquids cogen,1990,NH3,0.2038,25,15,0.1019
-boilers pulp paper and wood,biomass,biomass conv,1990,NH3,0.0000,25,15,0.0000
-boilers pulp paper and wood,coal,coal conv,1990,NH3,0.0074,25,15,0.0037
-boilers pulp paper and wood,gas,gas conv,1990,NH3,0.0838,25,15,0.0419
-boilers pulp paper and wood,refined liquids,refined liquids conv,1990,NH3,0.2038,25,15,0.1019
-boilers pulp paper and wood,biomass,biomass cogen,1990,NH3,0.0000,25,15,0.0000
-boilers pulp paper and wood,coal,coal cogen,1990,NH3,0.0074,25,15,0.0037
-boilers pulp paper and wood,gas,gas cogen,1990,NH3,0.0838,25,15,0.0419
-boilers pulp paper and wood,refined liquids,refined liquids cogen,1990,NH3,0.2038,25,15,0.1019
-process heat general,biomass,biomass conv,1990,NH3,0.0000,25,15,0.0000
-process heat general,coal,coal conv,1990,NH3,0.0074,25,15,0.0037
-process heat general,gas,gas conv,1990,NH3,0.0838,25,15,0.0419
-process heat general,refined liquids,refined liquids conv,1990,NH3,0.2038,25,15,0.1019
-process heat general,biomass,biomass cogen,1990,NH3,0.0000,25,15,0.0000
-process heat general,coal,coal cogen,1990,NH3,0.0074,25,15,0.0037
-process heat general,gas,gas cogen,1990,NH3,0.0838,25,15,0.0419
-process heat general,refined liquids,refined liquids cogen,1990,NH3,0.2038,25,15,0.1019
-process heat primary metals,biomass,biomass conv,1990,NH3,0.0000,25,15,0.0000
-process heat primary metals,coal,coal conv,1990,NH3,0.0074,25,15,0.0037
-process heat primary metals,gas,gas conv,1990,NH3,0.0838,25,15,0.0419
-process heat primary metals,refined liquids,refined liquids conv,1990,NH3,0.2038,25,15,0.1019
-process heat primary metals,biomass,biomass cogen,1990,NH3,0.0000,25,15,0.0000
-process heat primary metals,coal,coal cogen,1990,NH3,0.0074,25,15,0.0037,,,,,,
-process heat primary metals,gas,gas cogen,1990,NH3,0.0838,25,15,0.0419,,,,,,
-process heat primary metals,refined liquids,refined liquids cogen,1990,NH3,0.2038,25,15,0.1019,,,,,,
-process heat cement,biomass,biomass,1990,NH3,0.0000,25,15,0.0000,,,,,,
-process heat cement,gas,gas,1990,NH3,0.0838,25,15,0.0419,,,,,,
-process heat cement,coal,coal,1990,NH3,0.0074,25,15,0.0037,,,,,,
-process heat cement,refined liquids,refined liquids,1990,NH3,0.2038,25,15,0.1019,,,,,,
+boilers pulp paper and wood,gas,gas conv,ALL,CH4,,,,,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids conv,ALL,CH4,,,,,,,,,,
+boilers pulp paper and wood,biomass,biomass cogen,ALL,CH4,,,,,,,,,,
+boilers pulp paper and wood,coal,coal cogen,ALL,CH4,,,,,,,,,,
+boilers pulp paper and wood,gas,gas cogen,ALL,CH4,,,,,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids cogen,ALL,CH4,,,,,,,,,,
+process heat general,biomass,biomass conv,ALL,CH4,,,,,,,,,,
+process heat general,coal,coal conv,ALL,CH4,,,,,,,,,,
+process heat general,gas,gas conv,ALL,CH4,,,,,,,,,,
+process heat general,refined liquids,refined liquids conv,ALL,CH4,,,,,,,,,,
+process heat general,biomass,biomass cogen,ALL,CH4,,,,,,,,,,
+process heat general,coal,coal cogen,ALL,CH4,,,,,,,,,,
+process heat general,gas,gas cogen,ALL,CH4,,,,,,,,,,
+process heat general,refined liquids,refined liquids cogen,ALL,CH4,,,,,,,,,,
+process heat primary metals,biomass,biomass conv,ALL,CH4,,,,,,,,,,
+process heat primary metals,coal,coal conv,ALL,CH4,,,,,,,,,,
+process heat primary metals,gas,gas conv,ALL,CH4,,,,,,,,,,
+process heat primary metals,refined liquids,refined liquids conv,ALL,CH4,,,,,,,,,,
+process heat primary metals,biomass,biomass cogen,ALL,CH4,,,,,,,,,,
+process heat primary metals,coal,coal cogen,ALL,CH4,,,,,,,,,,
+process heat primary metals,gas,gas cogen,ALL,CH4,,,,,,,,,,
+process heat primary metals,refined liquids,refined liquids cogen,ALL,CH4,,,,,,,,,,
+,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+20015,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,,,,,,,,,
+boilers general,biomass,biomass conv,1990,CH4,0.0314,,,,,,,,,
+boilers general,coal,coal conv,1990,CH4,0.0088,,,,,,,,,
+boilers general,gas,gas conv,1990,CH4,0.0083,,,,,,,,,
+boilers general,refined liquids,refined liquids conv,1990,CH4,0.0452,,,,,,,,,
+boilers general,biomass,biomass cogen,1990,CH4,0.0314,,,,,,,,,
+boilers general,coal,coal cogen,1990,CH4,0.0088,,,,,,,,,
+boilers general,gas,gas cogen,1990,CH4,0.0083,,,,,,,,,
+boilers general,refined liquids,refined liquids cogen,1990,CH4,0.0452,,,,,,,,,
+boilers pulp paper and wood,biomass,biomass conv,1990,CH4,0.0314,,,,,,,,,
+boilers pulp paper and wood,coal,coal conv,1990,CH4,0.0088,,,,,,,,,
+boilers pulp paper and wood,gas,gas conv,1990,CH4,0.0083,,,,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids conv,1990,CH4,0.0452,,,,,,,,,
+boilers pulp paper and wood,biomass,biomass cogen,1990,CH4,0.0314,,,,,,,,,
+boilers pulp paper and wood,coal,coal cogen,1990,CH4,0.0088,,,,,,,,,
+boilers pulp paper and wood,gas,gas cogen,1990,CH4,0.0083,,,,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids cogen,1990,CH4,0.0452,,,,,,,,,
+process heat general,biomass,biomass conv,1990,CH4,0.0314,,,,,,,,,
+process heat general,coal,coal conv,1990,CH4,0.0088,,,,,,,,,
+process heat general,gas,gas conv,1990,CH4,0.0083,,,,,,,,,
+process heat general,refined liquids,refined liquids conv,1990,CH4,0.0452,,,,,,,,,
+process heat general,biomass,biomass cogen,1990,CH4,0.0314,,,,,,,,,
+process heat general,coal,coal cogen,1990,CH4,0.0088,,,,,,,,,
+process heat general,gas,gas cogen,1990,CH4,0.0083,,,,,,,,,
+process heat general,refined liquids,refined liquids cogen,1990,CH4,0.0452,,,,,,,,,
+process heat primary metals,biomass,biomass conv,1990,CH4,0.0314,,,,,,,,,
+process heat primary metals,coal,coal conv,1990,CH4,0.0088,,,,,,,,,
+process heat primary metals,gas,gas conv,1990,CH4,0.0083,,,,,,,,,
+process heat primary metals,refined liquids,refined liquids conv,1990,CH4,0.0452,,,,,,,,,
+process heat primary metals,biomass,biomass cogen,1990,CH4,0.0314,,,,,,,,,
+process heat primary metals,coal,coal cogen,1990,CH4,0.0088,,,,,,,,,
+process heat primary metals,gas,gas cogen,1990,CH4,0.0083,,,,,,,,,
+process heat primary metals,refined liquids,refined liquids cogen,1990,CH4,0.0452,,,,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+20000,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,,,
+boilers general,biomass,biomass conv,ALL,N2O,,,,,,,,,,
+boilers general,coal,coal conv,ALL,N2O,,,,,,,,,,
+boilers general,gas,gas conv,ALL,N2O,,,,,,,,,,
+boilers general,refined liquids,refined liquids conv,ALL,N2O,,,,,,,,,,
+boilers general,biomass,biomass cogen,ALL,N2O,,,,,,,,,,
+boilers general,coal,coal cogen,ALL,N2O,,,,,,,,,,
+boilers general,gas,gas cogen,ALL,N2O,,,,,,,,,,
+boilers general,refined liquids,refined liquids cogen,ALL,N2O,,,,,,,,,,
+boilers pulp paper and wood,biomass,biomass conv,ALL,N2O,,,,,,,,,,
+boilers pulp paper and wood,coal,coal conv,ALL,N2O,,,,,,,,,,
+boilers pulp paper and wood,gas,gas conv,ALL,N2O,,,,,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids conv,ALL,N2O,,,,,,,,,,
+boilers pulp paper and wood,biomass,biomass cogen,ALL,N2O,,,,,,,,,,
+boilers pulp paper and wood,coal,coal cogen,ALL,N2O,,,,,,,,,,
+boilers pulp paper and wood,gas,gas cogen,ALL,N2O,,,,,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids cogen,ALL,N2O,,,,,,,,,,
+process heat general,biomass,biomass conv,ALL,N2O,,,,,,,,,,
+process heat general,coal,coal conv,ALL,N2O,,,,,,,,,,
+process heat general,gas,gas conv,ALL,N2O,,,,,,,,,,
+process heat general,refined liquids,refined liquids conv,ALL,N2O,,,,,,,,,,
+process heat general,biomass,biomass cogen,ALL,N2O,,,,,,,,,,
+process heat general,coal,coal cogen,ALL,N2O,,,,,,,,,,
+process heat general,gas,gas cogen,ALL,N2O,,,,,,,,,,
+process heat general,refined liquids,refined liquids cogen,ALL,N2O,,,,,,,,,,
+process heat primary metals,biomass,biomass conv,ALL,N2O,,,,,,,,,,
+process heat primary metals,coal,coal conv,ALL,N2O,,,,,,,,,,
+process heat primary metals,gas,gas conv,ALL,N2O,,,,,,,,,,
+process heat primary metals,refined liquids,refined liquids conv,ALL,N2O,,,,,,,,,,
+process heat primary metals,biomass,biomass cogen,ALL,N2O,,,,,,,,,,
+process heat primary metals,coal,coal cogen,ALL,N2O,,,,,,,,,,
+process heat primary metals,gas,gas cogen,ALL,N2O,,,,,,,,,,
+process heat primary metals,refined liquids,refined liquids cogen,ALL,N2O,,,,,,,,,,
+,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+20015,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,,,,,,,,,
+boilers general,biomass,biomass conv,1990,N2O,0.0074,,,,,,,,,
+boilers general,coal,coal conv,1990,N2O,0.0022,,,,,,,,,
+boilers general,gas,gas conv,1990,N2O,0.0003,,,,,,,,,
+boilers general,refined liquids,refined liquids conv,1990,N2O,0.0254,,,,,,,,,
+boilers general,biomass,biomass cogen,1990,N2O,0.0074,,,,,,,,,
+boilers general,coal,coal cogen,1990,N2O,0.0022,,,,,,,,,
+boilers general,gas,gas cogen,1990,N2O,0.0003,,,,,,,,,
+boilers general,refined liquids,refined liquids cogen,1990,N2O,0.0254,,,,,,,,,
+boilers pulp paper and wood,biomass,biomass conv,1990,N2O,0.0074,,,,,,,,,
+boilers pulp paper and wood,coal,coal conv,1990,N2O,0.0022,,,,,,,,,
+boilers pulp paper and wood,gas,gas conv,1990,N2O,0.0003,,,,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids conv,1990,N2O,0.0254,,,,,,,,,
+boilers pulp paper and wood,biomass,biomass cogen,1990,N2O,0.0074,,,,,,,,,
+boilers pulp paper and wood,coal,coal cogen,1990,N2O,0.0022,,,,,,,,,
+boilers pulp paper and wood,gas,gas cogen,1990,N2O,0.0003,,,,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids cogen,1990,N2O,0.0254,,,,,,,,,
+process heat general,biomass,biomass conv,1990,N2O,0.0074,,,,,,,,,
+process heat general,coal,coal conv,1990,N2O,0.0022,,,,,,,,,
+process heat general,gas,gas conv,1990,N2O,0.0003,,,,,,,,,
+process heat general,refined liquids,refined liquids conv,1990,N2O,0.0254,,,,,,,,,
+process heat general,biomass,biomass cogen,1990,N2O,0.0074,,,,,,,,,
+process heat general,coal,coal cogen,1990,N2O,0.0022,,,,,,,,,
+process heat general,gas,gas cogen,1990,N2O,0.0003,,,,,,,,,
+process heat general,refined liquids,refined liquids cogen,1990,N2O,0.0254,,,,,,,,,
+process heat primary metals,biomass,biomass conv,1990,N2O,0.0074,,,,,,,,,
+process heat primary metals,coal,coal conv,1990,N2O,0.0022,,,,,,,,,
+process heat primary metals,gas,gas conv,1990,N2O,0.0003,,,,,,,,,
+process heat primary metals,refined liquids,refined liquids conv,1990,N2O,0.0254,,,,,,,,,
+process heat primary metals,biomass,biomass cogen,1990,N2O,0.0074,,,,,,,,,
+process heat primary metals,coal,coal cogen,1990,N2O,0.0022,,,,,,,,,
+process heat primary metals,gas,gas cogen,1990,N2O,0.0003,,,,,,,,,
+process heat primary metals,refined liquids,refined liquids cogen,1990,N2O,0.0254,,,,,,,,,
+,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+20070,,,,,,,,,,,,,,
+,,,,,reduction,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,0,15,30,45,60,,,,,
+chemicals,chemicals,chemicals,2020,N2O,0,0.96,0.96,0.96,0.96,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+20000,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,,,
+boilers general,biomass,biomass conv,ALL,NOx,,,,,,,,,,
+boilers general,coal,coal conv,ALL,NOx,,,,,,,,,,
+boilers general,gas,gas conv,ALL,NOx,,,,,,,,,,
+boilers general,refined liquids,refined liquids conv,ALL,NOx,,,,,,,,,,
+boilers general,biomass,biomass cogen,ALL,NOx,,,,,,,,,,
+boilers general,coal,coal cogen,ALL,NOx,,,,,,,,,,
+boilers general,gas,gas cogen,ALL,NOx,,,,,,,,,,
+boilers general,refined liquids,refined liquids cogen,ALL,NOx,,,,,,,,,,
+boilers pulp paper and wood,biomass,biomass conv,ALL,NOx,,,,,,,,,,
+boilers pulp paper and wood,coal,coal conv,ALL,NOx,,,,,,,,,,
+boilers pulp paper and wood,gas,gas conv,ALL,NOx,,,,,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids conv,ALL,NOx,,,,,,,,,,
+boilers pulp paper and wood,biomass,biomass cogen,ALL,NOx,,,,,,,,,,
+boilers pulp paper and wood,coal,coal cogen,ALL,NOx,,,,,,,,,,
+boilers pulp paper and wood,gas,gas cogen,ALL,NOx,,,,,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids cogen,ALL,NOx,,,,,,,,,,
+process heat general,biomass,biomass conv,ALL,NOx,,,,,,,,,,
+process heat general,coal,coal conv,ALL,NOx,,,,,,,,,,
+process heat general,gas,gas conv,ALL,NOx,,,,,,,,,,
+process heat general,refined liquids,refined liquids conv,ALL,NOx,,,,,,,,,,
+process heat general,biomass,biomass cogen,ALL,NOx,,,,,,,,,,
+process heat general,coal,coal cogen,ALL,NOx,,,,,,,,,,
+process heat general,gas,gas cogen,ALL,NOx,,,,,,,,,,
+process heat general,refined liquids,refined liquids cogen,ALL,NOx,,,,,,,,,,
+process heat primary metals,biomass,biomass conv,ALL,NOx,,,,,,,,,,
+process heat primary metals,coal,coal conv,ALL,NOx,,,,,,,,,,
+process heat primary metals,gas,gas conv,ALL,NOx,,,,,,,,,,
+process heat primary metals,refined liquids,refined liquids conv,ALL,NOx,,,,,,,,,,
+process heat primary metals,biomass,biomass cogen,ALL,NOx,,,,,,,,,,
+process heat primary metals,coal,coal cogen,ALL,NOx,,,,,,,,,,
+process heat primary metals,gas,gas cogen,ALL,NOx,,,,,,,,,,
+process heat primary metals,refined liquids,refined liquids cogen,ALL,NOx,,,,,,,,,,
+agriculture energy use,refined liquids,refined liquids,ALL,NOx,,,,,,,,,,
+construction energy use,refined liquids,refined liquids,ALL,NOx,,,,,,,,,,
+,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+20020,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef,,,,,,
+boilers general,biomass,biomass conv,1990,NOx,0.1142,27,25,0.0286,,,,,,
+boilers general,coal,coal conv,1990,NOx,0.3044,27,25,0.0761,,,,,,
+boilers general,gas,gas conv,1990,NOx,0.3662,27,25,0.0915,,,,,,
+boilers general,refined liquids,refined liquids conv,1990,NOx,2.1032,27,25,0.5258,,,,,,
+boilers general,biomass,biomass cogen,1990,NOx,0.1142,27,25,0.0286,,,,,,
+boilers general,coal,coal cogen,1990,NOx,0.3044,27,25,0.0761,,,,,,
+boilers general,gas,gas cogen,1990,NOx,0.3662,27,25,0.0915,,,,,,
+boilers general,refined liquids,refined liquids cogen,1990,NOx,2.1032,27,25,0.5258,,,,,,
+boilers pulp paper and wood,biomass,biomass conv,1990,NOx,0.1142,27,25,0.0286,,,,,,
+boilers pulp paper and wood,coal,coal conv,1990,NOx,0.3044,27,25,0.0761,,,,,,
+boilers pulp paper and wood,gas,gas conv,1990,NOx,0.3662,27,25,0.0915,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids conv,1990,NOx,2.1032,27,25,0.5258,,,,,,
+boilers pulp paper and wood,biomass,biomass cogen,1990,NOx,0.1142,27,25,0.0286,,,,,,
+boilers pulp paper and wood,coal,coal cogen,1990,NOx,0.3044,27,25,0.0761,,,,,,
+boilers pulp paper and wood,gas,gas cogen,1990,NOx,0.3662,27,25,0.0915,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids cogen,1990,NOx,2.1032,27,25,0.5258,,,,,,
+process heat general,biomass,biomass conv,1990,NOx,0.1142,27,25,0.0286,,,,,,
+process heat general,coal,coal conv,1990,NOx,0.3044,27,25,0.0761,,,,,,
+process heat general,gas,gas conv,1990,NOx,0.3662,27,25,0.0915,,,,,,
+process heat general,refined liquids,refined liquids conv,1990,NOx,2.1032,27,25,0.5258,,,,,,
+process heat general,biomass,biomass cogen,1990,NOx,0.1142,27,25,0.0286,,,,,,
+process heat general,coal,coal cogen,1990,NOx,0.3044,27,25,0.0761,,,,,,
+process heat general,gas,gas cogen,1990,NOx,0.3662,27,25,0.0915,,,,,,
+process heat general,refined liquids,refined liquids cogen,1990,NOx,2.1032,27,25,0.5258,,,,,,
+process heat primary metals,biomass,biomass conv,1990,NOx,0.1142,27,25,0.0286,,,,,,
+process heat primary metals,coal,coal conv,1990,NOx,0.3044,27,25,0.0761,,,,,,
+process heat primary metals,gas,gas conv,1990,NOx,0.3662,27,25,0.0915,,,,,,
+process heat primary metals,refined liquids,refined liquids conv,1990,NOx,2.1032,27,25,0.5258,,,,,,
+process heat primary metals,biomass,biomass cogen,1990,NOx,0.1142,27,25,0.0286,,,,,,
+process heat primary metals,coal,coal cogen,1990,NOx,0.3044,27,25,0.0761,,,,,,
+process heat primary metals,gas,gas cogen,1990,NOx,0.3662,27,25,0.0915,,,,,,
+process heat primary metals,refined liquids,refined liquids cogen,1990,NOx,2.1032,27,25,0.5258,,,,,,
+agriculture energy use,refined liquids,refined liquids,1990,NOx,1.0185,27,25,0.2546,,,,,,
+construction energy use,refined liquids,refined liquids,1990,NOx,0.9966,27,25,0.2491,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+20000,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,,,
+boilers general,biomass,biomass conv,ALL,CO,,,,,,,,,,
+boilers general,coal,coal conv,ALL,CO,,,,,,,,,,
+boilers general,gas,gas conv,ALL,CO,,,,,,,,,,
+boilers general,refined liquids,refined liquids conv,ALL,CO,,,,,,,,,,
+boilers general,biomass,biomass cogen,ALL,CO,,,,,,,,,,
+boilers general,coal,coal cogen,ALL,CO,,,,,,,,,,
+boilers general,gas,gas cogen,ALL,CO,,,,,,,,,,
+boilers general,refined liquids,refined liquids cogen,ALL,CO,,,,,,,,,,
+boilers pulp paper and wood,biomass,biomass conv,ALL,CO,,,,,,,,,,
+boilers pulp paper and wood,coal,coal conv,ALL,CO,,,,,,,,,,
+boilers pulp paper and wood,gas,gas conv,ALL,CO,,,,,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids conv,ALL,CO,,,,,,,,,,
+boilers pulp paper and wood,biomass,biomass cogen,ALL,CO,,,,,,,,,,
+boilers pulp paper and wood,coal,coal cogen,ALL,CO,,,,,,,,,,
+boilers pulp paper and wood,gas,gas cogen,ALL,CO,,,,,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids cogen,ALL,CO,,,,,,,,,,
+process heat general,biomass,biomass conv,ALL,CO,,,,,,,,,,
+process heat general,coal,coal conv,ALL,CO,,,,,,,,,,
+process heat general,gas,gas conv,ALL,CO,,,,,,,,,,
+process heat general,refined liquids,refined liquids conv,ALL,CO,,,,,,,,,,
+process heat general,biomass,biomass cogen,ALL,CO,,,,,,,,,,
+process heat general,coal,coal cogen,ALL,CO,,,,,,,,,,
+process heat general,gas,gas cogen,ALL,CO,,,,,,,,,,
+process heat general,refined liquids,refined liquids cogen,ALL,CO,,,,,,,,,,
+process heat primary metals,biomass,biomass conv,ALL,CO,,,,,,,,,,
+process heat primary metals,coal,coal conv,ALL,CO,,,,,,,,,,
+process heat primary metals,gas,gas conv,ALL,CO,,,,,,,,,,
+process heat primary metals,refined liquids,refined liquids conv,ALL,CO,,,,,,,,,,
+process heat primary metals,biomass,biomass cogen,ALL,CO,,,,,,,,,,
+process heat primary metals,coal,coal cogen,ALL,CO,,,,,,,,,,
+process heat primary metals,gas,gas cogen,ALL,CO,,,,,,,,,,
+process heat primary metals,refined liquids,refined liquids cogen,ALL,CO,,,,,,,,,,
+agriculture energy use,refined liquids,refined liquids,ALL,CO,,,,,,,,,,
+construction energy use,refined liquids,refined liquids,ALL,CO,,,,,,,,,,
+,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+20020,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef,,,,,,
+boilers general,biomass,biomass conv,1990,CO,0.1070,33,20,0.0267,,,,,,
+boilers general,coal,coal conv,1990,CO,0.0366,33,20,0.0092,,,,,,
+boilers general,gas,gas conv,1990,CO,0.0616,33,20,0.0154,,,,,,
+boilers general,refined liquids,refined liquids conv,1990,CO,0.3012,33,20,0.0753,,,,,,
+boilers general,biomass,biomass cogen,1990,CO,0.1070,33,20,0.0267,,,,,,
+boilers general,coal,coal cogen,1990,CO,0.0366,33,20,0.0092,,,,,,
+boilers general,gas,gas cogen,1990,CO,0.0616,33,20,0.0154,,,,,,
+boilers general,refined liquids,refined liquids cogen,1990,CO,0.3012,33,20,0.0753,,,,,,
+boilers pulp paper and wood,biomass,biomass conv,1990,CO,0.1070,33,20,0.0267,,,,,,
+boilers pulp paper and wood,coal,coal conv,1990,CO,0.0366,33,20,0.0092,,,,,,
+boilers pulp paper and wood,gas,gas conv,1990,CO,0.0616,33,20,0.0154,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids conv,1990,CO,0.3012,33,20,0.0753,,,,,,
+boilers pulp paper and wood,biomass,biomass cogen,1990,CO,0.1070,33,20,0.0267,,,,,,
+boilers pulp paper and wood,coal,coal cogen,1990,CO,0.0366,33,20,0.0092,,,,,,
+boilers pulp paper and wood,gas,gas cogen,1990,CO,0.0616,33,20,0.0154,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids cogen,1990,CO,0.3012,33,20,0.0753,,,,,,
+process heat general,biomass,biomass conv,1990,CO,0.1070,33,20,0.0267,,,,,,
+process heat general,coal,coal conv,1990,CO,0.0366,33,20,0.0092,,,,,,
+process heat general,gas,gas conv,1990,CO,0.0616,33,20,0.0154,,,,,,
+process heat general,refined liquids,refined liquids conv,1990,CO,0.3012,33,20,0.0753,,,,,,
+process heat general,biomass,biomass cogen,1990,CO,0.1070,33,20,0.0267,,,,,,
+process heat general,coal,coal cogen,1990,CO,0.0366,33,20,0.0092,,,,,,
+process heat general,gas,gas cogen,1990,CO,0.0616,33,20,0.0154,,,,,,
+process heat general,refined liquids,refined liquids cogen,1990,CO,0.3012,33,20,0.0753,,,,,,
+process heat primary metals,biomass,biomass conv,1990,CO,0.1070,33,20,0.0267,,,,,,
+process heat primary metals,coal,coal conv,1990,CO,0.0366,33,20,0.0092,,,,,,
+process heat primary metals,gas,gas conv,1990,CO,0.0616,33,20,0.0154,,,,,,
+process heat primary metals,refined liquids,refined liquids conv,1990,CO,0.3012,33,20,0.0753,,,,,,
+process heat primary metals,biomass,biomass cogen,1990,CO,0.1070,33,20,0.0267,,,,,,
+process heat primary metals,coal,coal cogen,1990,CO,0.0366,33,20,0.0092,,,,,,
+process heat primary metals,gas,gas cogen,1990,CO,0.0616,33,20,0.0154,,,,,,
+process heat primary metals,refined liquids,refined liquids cogen,1990,CO,0.3012,33,20,0.0753,,,,,,
+agriculture energy use,refined liquids,refined liquids,1990,CO,0.5631,33,20,0.1408,,,,,,
+construction energy use,refined liquids,refined liquids,1990,CO,2.3324,33,20,0.5831,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+20000,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,,,
+boilers general,biomass,biomass conv,ALL,NMVOC,,,,,,,,,,
+boilers general,coal,coal conv,ALL,NMVOC,,,,,,,,,,
+boilers general,gas,gas conv,ALL,NMVOC,,,,,,,,,,
+boilers general,refined liquids,refined liquids conv,ALL,NMVOC,,,,,,,,,,
+boilers general,biomass,biomass cogen,ALL,NMVOC,,,,,,,,,,
+boilers general,coal,coal cogen,ALL,NMVOC,,,,,,,,,,
+boilers general,gas,gas cogen,ALL,NMVOC,,,,,,,,,,
+boilers general,refined liquids,refined liquids cogen,ALL,NMVOC,,,,,,,,,,
+boilers pulp paper and wood,biomass,biomass conv,ALL,NMVOC,,,,,,,,,,
+boilers pulp paper and wood,coal,coal conv,ALL,NMVOC,,,,,,,,,,
+boilers pulp paper and wood,gas,gas conv,ALL,NMVOC,,,,,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids conv,ALL,NMVOC,,,,,,,,,,
+boilers pulp paper and wood,biomass,biomass cogen,ALL,NMVOC,,,,,,,,,,
+boilers pulp paper and wood,coal,coal cogen,ALL,NMVOC,,,,,,,,,,
+boilers pulp paper and wood,gas,gas cogen,ALL,NMVOC,,,,,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids cogen,ALL,NMVOC,,,,,,,,,,
+process heat general,biomass,biomass conv,ALL,NMVOC,,,,,,,,,,
+process heat general,coal,coal conv,ALL,NMVOC,,,,,,,,,,
+process heat general,gas,gas conv,ALL,NMVOC,,,,,,,,,,
+process heat general,refined liquids,refined liquids conv,ALL,NMVOC,,,,,,,,,,
+process heat general,biomass,biomass cogen,ALL,NMVOC,,,,,,,,,,
+process heat general,coal,coal cogen,ALL,NMVOC,,,,,,,,,,
+process heat general,gas,gas cogen,ALL,NMVOC,,,,,,,,,,
+process heat general,refined liquids,refined liquids cogen,ALL,NMVOC,,,,,,,,,,
+process heat primary metals,biomass,biomass conv,ALL,NMVOC,,,,,,,,,,
+process heat primary metals,coal,coal conv,ALL,NMVOC,,,,,,,,,,
+process heat primary metals,gas,gas conv,ALL,NMVOC,,,,,,,,,,
+process heat primary metals,refined liquids,refined liquids conv,ALL,NMVOC,,,,,,,,,,
+process heat primary metals,biomass,biomass cogen,ALL,NMVOC,,,,,,,,,,
+process heat primary metals,coal,coal cogen,ALL,NMVOC,,,,,,,,,,
+process heat primary metals,gas,gas cogen,ALL,NMVOC,,,,,,,,,,
+process heat primary metals,refined liquids,refined liquids cogen,ALL,NMVOC,,,,,,,,,,
+agriculture energy use,refined liquids,refined liquids,ALL,NMVOC,,,,,,,,,,
+construction energy use,refined liquids,refined liquids,ALL,NMVOC,,,,,,,,,,
+,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+20020,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef,,,,,,
+boilers general,biomass,biomass conv,1990,NMVOC,0.0107,27,25,0.0027,,,,,,
+boilers general,coal,coal conv,1990,NMVOC,0.0033,27,25,0.0008,,,,,,
+boilers general,gas,gas conv,1990,NMVOC,0.0115,27,25,0.0029,,,,,,
+boilers general,refined liquids,refined liquids conv,1990,NMVOC,0.0610,27,25,0.0152,,,,,,
+boilers general,biomass,biomass cogen,1990,NMVOC,0.0107,27,25,0.0027,,,,,,
+boilers general,coal,coal cogen,1990,NMVOC,0.0033,27,25,0.0008,,,,,,
+boilers general,gas,gas cogen,1990,NMVOC,0.0115,27,25,0.0029,,,,,,
+boilers general,refined liquids,refined liquids cogen,1990,NMVOC,0.0610,27,25,0.0152,,,,,,
+boilers pulp paper and wood,biomass,biomass conv,1990,NMVOC,0.0107,27,25,0.0027,,,,,,
+boilers pulp paper and wood,coal,coal conv,1990,NMVOC,0.0033,27,25,0.0008,,,,,,
+boilers pulp paper and wood,gas,gas conv,1990,NMVOC,0.0115,27,25,0.0029,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids conv,1990,NMVOC,0.0610,27,25,0.0152,,,,,,
+boilers pulp paper and wood,biomass,biomass cogen,1990,NMVOC,0.0107,27,25,0.0027,,,,,,
+boilers pulp paper and wood,coal,coal cogen,1990,NMVOC,0.0033,27,25,0.0008,,,,,,
+boilers pulp paper and wood,gas,gas cogen,1990,NMVOC,0.0115,27,25,0.0029,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids cogen,1990,NMVOC,0.0610,27,25,0.0152,,,,,,
+process heat general,biomass,biomass conv,1990,NMVOC,0.0107,27,25,0.0027,,,,,,
+process heat general,coal,coal conv,1990,NMVOC,0.0033,27,25,0.0008,,,,,,
+process heat general,gas,gas conv,1990,NMVOC,0.0115,27,25,0.0029,,,,,,
+process heat general,refined liquids,refined liquids conv,1990,NMVOC,0.0610,27,25,0.0152,,,,,,
+process heat general,biomass,biomass cogen,1990,NMVOC,0.0107,27,25,0.0027,,,,,,
+process heat general,coal,coal cogen,1990,NMVOC,0.0033,27,25,0.0008,,,,,,
+process heat general,gas,gas cogen,1990,NMVOC,0.0115,27,25,0.0029,,,,,,
+process heat general,refined liquids,refined liquids cogen,1990,NMVOC,0.0610,27,25,0.0152,,,,,,
+process heat primary metals,biomass,biomass conv,1990,NMVOC,0.0107,27,25,0.0027,,,,,,
+process heat primary metals,coal,coal conv,1990,NMVOC,0.0033,27,25,0.0008,,,,,,
+process heat primary metals,gas,gas conv,1990,NMVOC,0.0115,27,25,0.0029,,,,,,
+process heat primary metals,refined liquids,refined liquids conv,1990,NMVOC,0.0610,27,25,0.0152,,,,,,
+process heat primary metals,biomass,biomass cogen,1990,NMVOC,0.0107,27,25,0.0027,,,,,,
+process heat primary metals,coal,coal cogen,1990,NMVOC,0.0033,27,25,0.0008,,,,,,
+process heat primary metals,gas,gas cogen,1990,NMVOC,0.0115,27,25,0.0029,,,,,,
+process heat primary metals,refined liquids,refined liquids cogen,1990,NMVOC,0.0610,27,25,0.0152,,,,,,
+agriculture energy use,refined liquids,refined liquids,1990,NMVOC,0.0768,27,25,0.0192,,,,,,
+construction energy use,refined liquids,refined liquids,1990,NMVOC,0.1527,27,25,0.0382,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+20000,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,,,
+boilers general,biomass,biomass conv,ALL,SO2_1,,,,,,,,,,
+boilers general,coal,coal conv,ALL,SO2_1,,,,,,,,,,
+boilers general,gas,gas conv,ALL,SO2_1,,,,,,,,,,
+boilers general,refined liquids,refined liquids conv,ALL,SO2_1,,,,,,,,,,
+boilers general,biomass,biomass cogen,ALL,SO2_1,,,,,,,,,,
+boilers general,coal,coal cogen,ALL,SO2_1,,,,,,,,,,
+boilers general,gas,gas cogen,ALL,SO2_1,,,,,,,,,,
+boilers general,refined liquids,refined liquids cogen,ALL,SO2_1,,,,,,,,,,
+boilers pulp paper and wood,biomass,biomass conv,ALL,SO2_1,,,,,,,,,,
+boilers pulp paper and wood,coal,coal conv,ALL,SO2_1,,,,,,,,,,
+boilers pulp paper and wood,gas,gas conv,ALL,SO2_1,,,,,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids conv,ALL,SO2_1,,,,,,,,,,
+boilers pulp paper and wood,biomass,biomass cogen,ALL,SO2_1,,,,,,,,,,
+boilers pulp paper and wood,coal,coal cogen,ALL,SO2_1,,,,,,,,,,
+boilers pulp paper and wood,gas,gas cogen,ALL,SO2_1,,,,,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids cogen,ALL,SO2_1,,,,,,,,,,
+process heat general,biomass,biomass conv,ALL,SO2_1,,,,,,,,,,
+process heat general,coal,coal conv,ALL,SO2_1,,,,,,,,,,
+process heat general,gas,gas conv,ALL,SO2_1,,,,,,,,,,
+process heat general,refined liquids,refined liquids conv,ALL,SO2_1,,,,,,,,,,
+process heat general,biomass,biomass cogen,ALL,SO2_1,,,,,,,,,,
+process heat general,coal,coal cogen,ALL,SO2_1,,,,,,,,,,
+process heat general,gas,gas cogen,ALL,SO2_1,,,,,,,,,,
+process heat general,refined liquids,refined liquids cogen,ALL,SO2_1,,,,,,,,,,
+process heat primary metals,biomass,biomass conv,ALL,SO2_1,,,,,,,,,,
+process heat primary metals,coal,coal conv,ALL,SO2_1,,,,,,,,,,
+process heat primary metals,gas,gas conv,ALL,SO2_1,,,,,,,,,,
+process heat primary metals,refined liquids,refined liquids conv,ALL,SO2_1,,,,,,,,,,
+process heat primary metals,biomass,biomass cogen,ALL,SO2_1,,,,,,,,,,
+process heat primary metals,coal,coal cogen,ALL,SO2_1,,,,,,,,,,
+process heat primary metals,gas,gas cogen,ALL,SO2_1,,,,,,,,,,
+process heat primary metals,refined liquids,refined liquids cogen,ALL,SO2_1,,,,,,,,,,
+,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+20020,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef,,,,,,
+boilers general,biomass,biomass conv,1990,SO2_1,0.136911251,27,25,0.034227813,,,,,,
+boilers general,coal,coal conv,1990,SO2_1,0.993815015,27,25,0.248453754,,,,,,
+boilers general,gas,gas conv,1990,SO2_1,0.130799061,27,25,0.032699765,,,,,,
+boilers general,refined liquids,refined liquids conv,1990,SO2_1,2.352342267,27,25,0.588085567,,,,,,
+boilers general,biomass,biomass cogen,1990,SO2_1,0.136911251,27,25,0.034227813,,,,,,
+boilers general,coal,coal cogen,1990,SO2_1,0.993815015,27,25,0.248453754,,,,,,
+boilers general,gas,gas cogen,1990,SO2_1,0.130799061,27,25,0.032699765,,,,,,
+boilers general,refined liquids,refined liquids cogen,1990,SO2_1,2.352342267,27,25,0.588085567,,,,,,
+boilers pulp paper and wood,biomass,biomass conv,1990,SO2_1,0.136911251,27,25,0.034227813,,,,,,
+boilers pulp paper and wood,coal,coal conv,1990,SO2_1,0.993815015,27,25,0.248453754,,,,,,
+boilers pulp paper and wood,gas,gas conv,1990,SO2_1,0.130799061,27,25,0.032699765,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids conv,1990,SO2_1,2.352342267,27,25,0.588085567,,,,,,
+boilers pulp paper and wood,biomass,biomass cogen,1990,SO2_1,0.136911251,27,25,0.034227813,,,,,,
+boilers pulp paper and wood,coal,coal cogen,1990,SO2_1,0.993815015,27,25,0.248453754,,,,,,
+boilers pulp paper and wood,gas,gas cogen,1990,SO2_1,0.130799061,27,25,0.032699765,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids cogen,1990,SO2_1,2.352342267,27,25,0.588085567,,,,,,
+process heat general,biomass,biomass conv,1990,SO2_1,0.136911251,27,25,0.034227813,,,,,,
+process heat general,coal,coal conv,1990,SO2_1,0.993815015,27,25,0.248453754,,,,,,
+process heat general,gas,gas conv,1990,SO2_1,0.130799061,27,25,0.032699765,,,,,,
+process heat general,refined liquids,refined liquids conv,1990,SO2_1,2.352342267,27,25,0.588085567,,,,,,
+process heat general,biomass,biomass cogen,1990,SO2_1,0.136911251,27,25,0.034227813,,,,,,
+process heat general,coal,coal cogen,1990,SO2_1,0.993815015,27,25,0.248453754,,,,,,
+process heat general,gas,gas cogen,1990,SO2_1,0.130799061,27,25,0.032699765,,,,,,
+process heat general,refined liquids,refined liquids cogen,1990,SO2_1,2.352342267,27,25,0.588085567,,,,,,
+process heat primary metals,biomass,biomass conv,1990,SO2_1,0.136911251,27,25,0.034227813,,,,,,
+process heat primary metals,coal,coal conv,1990,SO2_1,0.993815015,27,25,0.248453754,,,,,,
+process heat primary metals,gas,gas conv,1990,SO2_1,0.130799061,27,25,0.032699765,,,,,,
+process heat primary metals,refined liquids,refined liquids conv,1990,SO2_1,2.352342267,27,25,0.588085567,,,,,,
+process heat primary metals,biomass,biomass cogen,1990,SO2_1,0.136911251,27,25,0.034227813,,,,,,
+process heat primary metals,coal,coal cogen,1990,SO2_1,0.993815015,27,25,0.248453754,,,,,,
+process heat primary metals,gas,gas cogen,1990,SO2_1,0.130799061,27,25,0.032699765,,,,,,
+process heat primary metals,refined liquids,refined liquids cogen,1990,SO2_1,2.352342267,27,25,0.588085567,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+20000,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,,,
+boilers general,biomass,biomass conv,ALL,BC,,,,,,,,,,
+boilers general,coal,coal conv,ALL,BC,,,,,,,,,,
+boilers general,gas,gas conv,ALL,BC,,,,,,,,,,
+boilers general,refined liquids,refined liquids conv,ALL,BC,,,,,,,,,,
+boilers general,biomass,biomass cogen,ALL,BC,,,,,,,,,,
+boilers general,coal,coal cogen,ALL,BC,,,,,,,,,,
+boilers general,gas,gas cogen,ALL,BC,,,,,,,,,,
+boilers general,refined liquids,refined liquids cogen,ALL,BC,,,,,,,,,,
+boilers pulp paper and wood,biomass,biomass conv,ALL,BC,,,,,,,,,,
+boilers pulp paper and wood,coal,coal conv,ALL,BC,,,,,,,,,,
+boilers pulp paper and wood,gas,gas conv,ALL,BC,,,,,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids conv,ALL,BC,,,,,,,,,,
+boilers pulp paper and wood,biomass,biomass cogen,ALL,BC,,,,,,,,,,
+boilers pulp paper and wood,coal,coal cogen,ALL,BC,,,,,,,,,,
+boilers pulp paper and wood,gas,gas cogen,ALL,BC,,,,,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids cogen,ALL,BC,,,,,,,,,,
+process heat general,biomass,biomass conv,ALL,BC,,,,,,,,,,
+process heat general,coal,coal conv,ALL,BC,,,,,,,,,,
+process heat general,gas,gas conv,ALL,BC,,,,,,,,,,
+process heat general,refined liquids,refined liquids conv,ALL,BC,,,,,,,,,,
+process heat general,biomass,biomass cogen,ALL,BC,,,,,,,,,,
+process heat general,coal,coal cogen,ALL,BC,,,,,,,,,,
+process heat general,gas,gas cogen,ALL,BC,,,,,,,,,,
+process heat general,refined liquids,refined liquids cogen,ALL,BC,,,,,,,,,,
+process heat primary metals,biomass,biomass conv,ALL,BC,,,,,,,,,,
+process heat primary metals,coal,coal conv,ALL,BC,,,,,,,,,,
+process heat primary metals,gas,gas conv,ALL,BC,,,,,,,,,,
+process heat primary metals,refined liquids,refined liquids conv,ALL,BC,,,,,,,,,,
+process heat primary metals,biomass,biomass cogen,ALL,BC,,,,,,,,,,
+process heat primary metals,coal,coal cogen,ALL,BC,,,,,,,,,,
+process heat primary metals,gas,gas cogen,ALL,BC,,,,,,,,,,
+process heat primary metals,refined liquids,refined liquids cogen,ALL,BC,,,,,,,,,,
+agriculture energy use,refined liquids,refined liquids,ALL,BC,,,,,,,,,,
+construction energy use,refined liquids,refined liquids,ALL,BC,,,,,,,,,,
+,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+20020,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef,,,,,,
+boilers general,biomass,biomass conv,1990,BC,0.0008,35,20,0.0004,,,,,,
+boilers general,coal,coal conv,1990,BC,0.0231,35,20,0.0116,,,,,,
+boilers general,gas,gas conv,1990,BC,0.0000,35,20,0.0000,,,,,,
+boilers general,refined liquids,refined liquids conv,1990,BC,0.0255,35,20,0.0128,,,,,,
+boilers general,biomass,biomass cogen,1990,BC,0.0008,35,20,0.0004,,,,,,
+boilers general,coal,coal cogen,1990,BC,0.0231,35,20,0.0116,,,,,,
+boilers general,gas,gas cogen,1990,BC,0.0000,35,20,0.0000,,,,,,
+boilers general,refined liquids,refined liquids cogen,1990,BC,0.0255,35,20,0.0128,,,,,,
+boilers pulp paper and wood,biomass,biomass conv,1990,BC,0.0008,35,20,0.0004,,,,,,
+boilers pulp paper and wood,coal,coal conv,1990,BC,0.0231,35,20,0.0116,,,,,,
+boilers pulp paper and wood,gas,gas conv,1990,BC,0.0000,35,20,0.0000,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids conv,1990,BC,0.0255,35,20,0.0128,,,,,,
+boilers pulp paper and wood,biomass,biomass cogen,1990,BC,0.0008,35,20,0.0004,,,,,,
+boilers pulp paper and wood,coal,coal cogen,1990,BC,0.0231,35,20,0.0116,,,,,,
+boilers pulp paper and wood,gas,gas cogen,1990,BC,0.0000,35,20,0.0000,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids cogen,1990,BC,0.0255,35,20,0.0128,,,,,,
+process heat general,biomass,biomass conv,1990,BC,0.0008,35,20,0.0004,,,,,,
+process heat general,coal,coal conv,1990,BC,0.0231,35,20,0.0116,,,,,,
+process heat general,gas,gas conv,1990,BC,0.0000,35,20,0.0000,,,,,,
+process heat general,refined liquids,refined liquids conv,1990,BC,0.0255,35,20,0.0128,,,,,,
+process heat general,biomass,biomass cogen,1990,BC,0.0008,35,20,0.0004,,,,,,
+process heat general,coal,coal cogen,1990,BC,0.0231,35,20,0.0116,,,,,,
+process heat general,gas,gas cogen,1990,BC,0.0000,35,20,0.0000,,,,,,
+process heat general,refined liquids,refined liquids cogen,1990,BC,0.0255,35,20,0.0128,,,,,,
+process heat primary metals,biomass,biomass conv,1990,BC,0.0008,35,20,0.0004,,,,,,
+process heat primary metals,coal,coal conv,1990,BC,0.0231,35,20,0.0116,,,,,,
+process heat primary metals,gas,gas conv,1990,BC,0.0000,35,20,0.0000,,,,,,
+process heat primary metals,refined liquids,refined liquids conv,1990,BC,0.0255,35,20,0.0128,,,,,,
+process heat primary metals,biomass,biomass cogen,1990,BC,0.0008,35,20,0.0004,,,,,,
+process heat primary metals,coal,coal cogen,1990,BC,0.0231,35,20,0.0116,,,,,,
+process heat primary metals,gas,gas cogen,1990,BC,0.0000,35,20,0.0000,,,,,,
+process heat primary metals,refined liquids,refined liquids cogen,1990,BC,0.0255,35,20,0.0128,,,,,,
+agriculture energy use,refined liquids,refined liquids,1990,BC,0.0255,35,20,0.0128,,,,,,
+construction energy use,refined liquids,refined liquids,1990,BC,0.0255,35,20,0.0128,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+20000,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,,,
+boilers general,biomass,biomass conv,ALL,OC,,,,,,,,,,
+boilers general,coal,coal conv,ALL,OC,,,,,,,,,,
+boilers general,gas,gas conv,ALL,OC,,,,,,,,,,
+boilers general,refined liquids,refined liquids conv,ALL,OC,,,,,,,,,,
+boilers general,biomass,biomass cogen,ALL,OC,,,,,,,,,,
+boilers general,coal,coal cogen,ALL,OC,,,,,,,,,,
+boilers general,gas,gas cogen,ALL,OC,,,,,,,,,,
+boilers general,refined liquids,refined liquids cogen,ALL,OC,,,,,,,,,,
+boilers pulp paper and wood,biomass,biomass conv,ALL,OC,,,,,,,,,,
+boilers pulp paper and wood,coal,coal conv,ALL,OC,,,,,,,,,,
+boilers pulp paper and wood,gas,gas conv,ALL,OC,,,,,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids conv,ALL,OC,,,,,,,,,,
+boilers pulp paper and wood,biomass,biomass cogen,ALL,OC,,,,,,,,,,
+boilers pulp paper and wood,coal,coal cogen,ALL,OC,,,,,,,,,,
+boilers pulp paper and wood,gas,gas cogen,ALL,OC,,,,,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids cogen,ALL,OC,,,,,,,,,,
+process heat general,biomass,biomass conv,ALL,OC,,,,,,,,,,
+process heat general,coal,coal conv,ALL,OC,,,,,,,,,,
+process heat general,gas,gas conv,ALL,OC,,,,,,,,,,
+process heat general,refined liquids,refined liquids conv,ALL,OC,,,,,,,,,,
+process heat general,biomass,biomass cogen,ALL,OC,,,,,,,,,,
+process heat general,coal,coal cogen,ALL,OC,,,,,,,,,,
+process heat general,gas,gas cogen,ALL,OC,,,,,,,,,,
+process heat general,refined liquids,refined liquids cogen,ALL,OC,,,,,,,,,,
+process heat primary metals,biomass,biomass conv,ALL,OC,,,,,,,,,,
+process heat primary metals,coal,coal conv,ALL,OC,,,,,,,,,,
+process heat primary metals,gas,gas conv,ALL,OC,,,,,,,,,,
+process heat primary metals,refined liquids,refined liquids conv,ALL,OC,,,,,,,,,,
+process heat primary metals,biomass,biomass cogen,ALL,OC,,,,,,,,,,
+process heat primary metals,coal,coal cogen,ALL,OC,,,,,,,,,,
+process heat primary metals,gas,gas cogen,ALL,OC,,,,,,,,,,
+process heat primary metals,refined liquids,refined liquids cogen,ALL,OC,,,,,,,,,,
+agriculture energy use,refined liquids,refined liquids,ALL,OC,,,,,,,,,,
+construction energy use,refined liquids,refined liquids,ALL,OC,,,,,,,,,,
+,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+20020,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef,,,,,,
+boilers general,biomass,biomass conv,1990,OC,0.0029,35,20,0.0015,,,,,,
+boilers general,coal,coal conv,1990,OC,0.0242,35,20,0.0121,,,,,,
+boilers general,gas,gas conv,1990,OC,0.0000,35,20,0.0000,,,,,,
+boilers general,refined liquids,refined liquids conv,1990,OC,0.0107,35,20,0.0054,,,,,,
+boilers general,biomass,biomass cogen,1990,OC,0.0029,35,20,0.0015,,,,,,
+boilers general,coal,coal cogen,1990,OC,0.0242,35,20,0.0121,,,,,,
+boilers general,gas,gas cogen,1990,OC,0.0000,35,20,0.0000,,,,,,
+boilers general,refined liquids,refined liquids cogen,1990,OC,0.0107,35,20,0.0054,,,,,,
+boilers pulp paper and wood,biomass,biomass conv,1990,OC,0.0029,35,20,0.0015,,,,,,
+boilers pulp paper and wood,coal,coal conv,1990,OC,0.0242,35,20,0.0121,,,,,,
+boilers pulp paper and wood,gas,gas conv,1990,OC,0.0000,35,20,0.0000,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids conv,1990,OC,0.0107,35,20,0.0054,,,,,,
+boilers pulp paper and wood,biomass,biomass cogen,1990,OC,0.0029,35,20,0.0015,,,,,,
+boilers pulp paper and wood,coal,coal cogen,1990,OC,0.0242,35,20,0.0121,,,,,,
+boilers pulp paper and wood,gas,gas cogen,1990,OC,0.0000,35,20,0.0000,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids cogen,1990,OC,0.0107,35,20,0.0054,,,,,,
+process heat general,biomass,biomass conv,1990,OC,0.0029,35,20,0.0015,,,,,,
+process heat general,coal,coal conv,1990,OC,0.0242,35,20,0.0121,,,,,,
+process heat general,gas,gas conv,1990,OC,0.0000,35,20,0.0000,,,,,,
+process heat general,refined liquids,refined liquids conv,1990,OC,0.0107,35,20,0.0054,,,,,,
+process heat general,biomass,biomass cogen,1990,OC,0.0029,35,20,0.0015,,,,,,
+process heat general,coal,coal cogen,1990,OC,0.0242,35,20,0.0121,,,,,,
+process heat general,gas,gas cogen,1990,OC,0.0000,35,20,0.0000,,,,,,
+process heat general,refined liquids,refined liquids cogen,1990,OC,0.0107,35,20,0.0054,,,,,,
+process heat primary metals,biomass,biomass conv,1990,OC,0.0029,35,20,0.0015,,,,,,
+process heat primary metals,coal,coal conv,1990,OC,0.0242,35,20,0.0121,,,,,,
+process heat primary metals,gas,gas conv,1990,OC,0.0000,35,20,0.0000,,,,,,
+process heat primary metals,refined liquids,refined liquids conv,1990,OC,0.0107,35,20,0.0054,,,,,,
+process heat primary metals,biomass,biomass cogen,1990,OC,0.0029,35,20,0.0015,,,,,,
+process heat primary metals,coal,coal cogen,1990,OC,0.0242,35,20,0.0121,,,,,,
+process heat primary metals,gas,gas cogen,1990,OC,0.0000,35,20,0.0000,,,,,,
+process heat primary metals,refined liquids,refined liquids cogen,1990,OC,0.0107,35,20,0.0054,,,,,,
+agriculture energy use,refined liquids,refined liquids,1990,OC,0.0107,35,20,0.0054,,,,,,
+construction energy use,refined liquids,refined liquids,1990,OC,0.0107,35,20,0.0054,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+20000,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,,,
+boilers general,biomass,biomass conv,ALL,NH3,,,,,,,,,,
+boilers general,coal,coal conv,ALL,NH3,,,,,,,,,,
+boilers general,gas,gas conv,ALL,NH3,,,,,,,,,,
+boilers general,refined liquids,refined liquids conv,ALL,NH3,,,,,,,,,,
+boilers general,biomass,biomass cogen,ALL,NH3,,,,,,,,,,
+boilers general,coal,coal cogen,ALL,NH3,,,,,,,,,,
+boilers general,gas,gas cogen,ALL,NH3,,,,,,,,,,
+boilers general,refined liquids,refined liquids cogen,ALL,NH3,,,,,,,,,,
+boilers pulp paper and wood,biomass,biomass conv,ALL,NH3,,,,,,,,,,
+boilers pulp paper and wood,coal,coal conv,ALL,NH3,,,,,,,,,,
+boilers pulp paper and wood,gas,gas conv,ALL,NH3,,,,,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids conv,ALL,NH3,,,,,,,,,,
+boilers pulp paper and wood,biomass,biomass cogen,ALL,NH3,,,,,,,,,,
+boilers pulp paper and wood,coal,coal cogen,ALL,NH3,,,,,,,,,,
+boilers pulp paper and wood,gas,gas cogen,ALL,NH3,,,,,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids cogen,ALL,NH3,,,,,,,,,,
+process heat general,biomass,biomass conv,ALL,NH3,,,,,,,,,,
+process heat general,coal,coal conv,ALL,NH3,,,,,,,,,,
+process heat general,gas,gas conv,ALL,NH3,,,,,,,,,,
+process heat general,refined liquids,refined liquids conv,ALL,NH3,,,,,,,,,,
+process heat general,biomass,biomass cogen,ALL,NH3,,,,,,,,,,
+process heat general,coal,coal cogen,ALL,NH3,,,,,,,,,,
+process heat general,gas,gas cogen,ALL,NH3,,,,,,,,,,
+process heat general,refined liquids,refined liquids cogen,ALL,NH3,,,,,,,,,,
+process heat primary metals,biomass,biomass conv,ALL,NH3,,,,,,,,,,
+process heat primary metals,coal,coal conv,ALL,NH3,,,,,,,,,,
+process heat primary metals,gas,gas conv,ALL,NH3,,,,,,,,,,
+process heat primary metals,refined liquids,refined liquids conv,ALL,NH3,,,,,,,,,,
+process heat primary metals,biomass,biomass cogen,ALL,NH3,,,,,,,,,,
+process heat primary metals,coal,coal cogen,ALL,NH3,,,,,,,,,,
+process heat primary metals,gas,gas cogen,ALL,NH3,,,,,,,,,,
+process heat primary metals,refined liquids,refined liquids cogen,ALL,NH3,,,,,,,,,,
+,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+20020,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef,,,,,,
+boilers general,biomass,biomass conv,1990,NH3,0.0000,25,15,0.0000,,,,,,
+boilers general,coal,coal conv,1990,NH3,0.0001,25,15,0.0000,,,,,,
+boilers general,gas,gas conv,1990,NH3,0.0006,25,15,0.0003,,,,,,
+boilers general,refined liquids,refined liquids conv,1990,NH3,0.0012,25,15,0.0006,,,,,,
+boilers general,biomass,biomass cogen,1990,NH3,0.0000,25,15,0.0000,,,,,,
+boilers general,coal,coal cogen,1990,NH3,0.0001,25,15,0.0000,,,,,,
+boilers general,gas,gas cogen,1990,NH3,0.0006,25,15,0.0003,,,,,,
+boilers general,refined liquids,refined liquids cogen,1990,NH3,0.0012,25,15,0.0006,,,,,,
+boilers pulp paper and wood,biomass,biomass conv,1990,NH3,0.0000,25,15,0.0000,,,,,,
+boilers pulp paper and wood,coal,coal conv,1990,NH3,0.0001,25,15,0.0000,,,,,,
+boilers pulp paper and wood,gas,gas conv,1990,NH3,0.0006,25,15,0.0003,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids conv,1990,NH3,0.0012,25,15,0.0006,,,,,,
+boilers pulp paper and wood,biomass,biomass cogen,1990,NH3,0.0000,25,15,0.0000,,,,,,
+boilers pulp paper and wood,coal,coal cogen,1990,NH3,0.0001,25,15,0.0000,,,,,,
+boilers pulp paper and wood,gas,gas cogen,1990,NH3,0.0006,25,15,0.0003,,,,,,
+boilers pulp paper and wood,refined liquids,refined liquids cogen,1990,NH3,0.0012,25,15,0.0006,,,,,,
+process heat general,biomass,biomass conv,1990,NH3,0.0000,25,15,0.0000,,,,,,
+process heat general,coal,coal conv,1990,NH3,0.0001,25,15,0.0000,,,,,,
+process heat general,gas,gas conv,1990,NH3,0.0006,25,15,0.0003,,,,,,
+process heat general,refined liquids,refined liquids conv,1990,NH3,0.0012,25,15,0.0006,,,,,,
+process heat general,biomass,biomass cogen,1990,NH3,0.0000,25,15,0.0000,,,,,,
+process heat general,coal,coal cogen,1990,NH3,0.0001,25,15,0.0000,,,,,,
+process heat general,gas,gas cogen,1990,NH3,0.0006,25,15,0.0003,,,,,,
+process heat general,refined liquids,refined liquids cogen,1990,NH3,0.0012,25,15,0.0006,,,,,,
+process heat primary metals,biomass,biomass conv,1990,NH3,0.0000,25,15,0.0000,,,,,,
+process heat primary metals,coal,coal conv,1990,NH3,0.0001,25,15,0.0000,,,,,,
+process heat primary metals,gas,gas conv,1990,NH3,0.0006,25,15,0.0003,,,,,,
+process heat primary metals,refined liquids,refined liquids conv,1990,NH3,0.0012,25,15,0.0006,,,,,,
+process heat primary metals,biomass,biomass cogen,1990,NH3,0.0000,25,15,0.0000,,,,,,
+process heat primary metals,coal,coal cogen,1990,NH3,0.0001,25,15,0.0000,,,,,,
+process heat primary metals,gas,gas cogen,1990,NH3,0.0006,25,15,0.0003,,,,,,
+process heat primary metals,refined liquids,refined liquids cogen,1990,NH3,0.0012,25,15,0.0006,,,,,,
 ,,,,,,,,,,,,,,
 OUTPUT DRIVEN EMISSIONS,,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,,
@@ -798,156 +735,156 @@ Variable ID,,,,,,,,,,,,,,
 supplysector,subsector,technology,period,generic-ghg,output-driver,,,,,,,,,
 chemicals,chemicals,chemicals,ALL,CH4,,,,,,,,,,
 iron and steel,iron and steel,iron and steel,ALL,CH4,,,,,,,,,,
-chemicals,chemicals,chemicals,ALL,N2O,,,,
-chemicals,chemicals,chemicals,ALL,NOx,,,,
-food processing,food processing,food processing,ALL,NOx,,,,
-iron and steel,iron and steel,iron and steel,ALL,NOx,,,,
-other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,ALL,NOx,,,,
-other manufacturing,other manufacturing,other manufacturing,ALL,NOx,,,,
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,ALL,NOx,,,,
-pulp paper and wood,pulp paper and wood,pulp paper and wood,ALL,NOx,,,,
-chemicals,chemicals,chemicals,ALL,CO,,,,
-food processing,food processing,food processing,ALL,CO,,,,
-iron and steel,iron and steel,iron and steel,ALL,CO,,,,
-other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,ALL,CO,,,,
-other manufacturing,other manufacturing,other manufacturing,ALL,CO,,,,
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,ALL,CO,,,,
-pulp paper and wood,pulp paper and wood,pulp paper and wood,ALL,CO,,,,
-chemicals,chemicals,chemicals,ALL,NMVOC,,,,
-food processing,food processing,food processing,ALL,NMVOC,,,,
-iron and steel,iron and steel,iron and steel,ALL,NMVOC,,,,
-other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,ALL,NMVOC,,,,
-other manufacturing,other manufacturing,other manufacturing,ALL,NMVOC,,,,
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,ALL,NMVOC,,,,
-pulp paper and wood,pulp paper and wood,pulp paper and wood,ALL,NMVOC,,,,
-agriculture,agriculture,agriculture,ALL,NMVOC,,,,
-construction,construction,construction,ALL,NMVOC,,,,
-chemicals,chemicals,chemicals,ALL,SO2_1,,,,
-iron and steel,iron and steel,iron and steel,ALL,SO2_1,,,,
-other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,ALL,SO2_1,,,,
-other manufacturing,other manufacturing,other manufacturing,ALL,SO2_1,,,,
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,ALL,SO2_1,,,,
-pulp paper and wood,pulp paper and wood,pulp paper and wood,ALL,SO2_1,,,,
-cement,cement (conv),cement (conv),ALL,SO2_1,,,,
-chemicals,chemicals,chemicals,ALL,NH3,,,,
-other manufacturing,other manufacturing,other manufacturing,ALL,NH3,,,,
-,,,,,,,,
-INPUT_TABLE,,,,,,,,
-Variable ID,,,,,,,,
-20015,,,,,,,,
-,,,,,,,,
-supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,,,
-chemicals,chemicals,chemicals,1990,CH4,0.008152583,,,
-iron and steel,iron and steel,iron and steel,1990,CH4,0.049314669,,,
-chemicals,chemicals,chemicals,1990,N2O,0.021045464,,,
-,,,,,,,,
-INPUT_TABLE,,,,,,,,
-Variable ID,,,,,,,,
-20020,,,,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef
-chemicals,chemicals,chemicals,1990,NOx,0.021693496,27,25,0.00216935
-food processing,food processing,food processing,1990,NOx,0.011725728,27,25,0.001172573
-iron and steel,iron and steel,iron and steel,1990,NOx,0.086422039,27,25,0.008642204
-other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,1990,NOx,0.810630292,27,25,0.081063029
-other manufacturing,other manufacturing,other manufacturing,1990,NOx,0.010957429,27,25,0.001095743
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,1990,NOx,0.026059774,27,25,0.002605977
-pulp paper and wood,pulp paper and wood,pulp paper and wood,1990,NOx,0.070408682,27,25,0.007040868
-chemicals,chemicals,chemicals,1990,CO,0.05650408,27,25,0.005650408
-food processing,food processing,food processing,1990,CO,0.01226666,27,25,0.001226666
-iron and steel,iron and steel,iron and steel,1990,CO,0.504591159,27,25,0.050459116
-other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,1990,CO,0.311423993,27,25,0.031142399
-other manufacturing,other manufacturing,other manufacturing,1990,CO,0.010293232,27,25,0.001029323
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,1990,CO,0.929503176,27,25,0.092950318
-pulp paper and wood,pulp paper and wood,pulp paper and wood,1990,CO,0.142490791,27,25,0.014249079
-chemicals,chemicals,chemicals,1990,NMVOC,1.181085709,27,25,0.118108571
-food processing,food processing,food processing,1990,NMVOC,0.26570591,27,25,0.026570591
-iron and steel,iron and steel,iron and steel,1990,NMVOC,0.064037308,27,25,0.006403731
-other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,1990,NMVOC,0.114898237,27,25,0.011489824
-other manufacturing,other manufacturing,other manufacturing,1990,NMVOC,0.146460425,27,25,0.014646042
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,1990,NMVOC,0.10582733,27,25,0.010582733
-pulp paper and wood,pulp paper and wood,pulp paper and wood,1990,NMVOC,0.390288772,27,25,0.039028877
-agriculture,agriculture,agriculture,1990,NMVOC,1.489430317,27,25,0.148943032
-construction,construction,construction,1990,NMVOC,0.246303912,27,25,0.024630391
-chemicals,chemicals,chemicals,1990,SO2_1,0.085114464,27,25,0.008511446
-iron and steel,iron and steel,iron and steel,1990,SO2_1,0.267606837,22,12,0.053521367
-other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,1990,SO2_1,0.348966619,22,12,0.069793324
-other manufacturing,other manufacturing,other manufacturing,1990,SO2_1,0.033859702,26,15,0.008464926
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,1990,SO2_1,0.7331702,26,15,0.18329255
-pulp paper and wood,pulp paper and wood,pulp paper and wood,1990,SO2_1,0.090130719,26,25,0.02253268
-cement,cement (conv),cement (conv),1990,SO2_1,1.725807147,35,25,0.604032501
-chemicals,chemicals,chemicals,1990,NH3,0.468313441,25,15,0.11707836
-other manufacturing,other manufacturing,other manufacturing,1990,NH3,0.517040581,25,15,0.129260145
-,,,,,,,,
-,,,,,,,,
-INPUT_TABLE,,,,,,,,
-Variable ID,,,,,,,,
-20001,,,,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,output-driver,,,
-chemicals,chemicals,chemicals,ALL,SF6,,,,
-chemicals,chemicals,chemicals,ALL,HFC134a,,,,
-chemicals,chemicals,chemicals,ALL,CF4,,,,
-food processing,food processing,food processing,ALL,HFC134a,,,,
-food processing,food processing,food processing,ALL,HFC125,,,,
-other manufacturing,other manufacturing,other manufacturing,ALL,C2F6,,,,
-other manufacturing,other manufacturing,other manufacturing,ALL,HFC245fa,,,,
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,ALL,CF4,,,,
-
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-20005,,,,,,,,,,,,
-,,,,emissions-unit,,,,,,,,
-supplysector,subsector,technology,generic-ghg,1975,1990,2005,2020,2035,2050,2065,2080,2095
-chemicals,chemicals,chemicals,SF6,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
-chemicals,chemicals,chemicals,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
-chemicals,chemicals,chemicals,CF4,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
-food processing,food processing,food processing,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
-food processing,food processing,food processing,HFC125,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
-other manufacturing,other manufacturing,other manufacturing,C2F6,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
-other manufacturing,other manufacturing,other manufacturing,HFC245fa,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,CF4,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg
-
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-20010,,,,,
-
-supplysector,subsector,technology,period,generic-ghg,input-emissions
-chemicals,chemicals,chemicals,1990,SF6,1.575810811
-chemicals,chemicals,chemicals,1990,HFC134a,0
-chemicals,chemicals,chemicals,1990,CF4,0
-food processing,food processing,food processing,1990,HFC134a,0
-food processing,food processing,food processing,1990,HFC125,0
-other manufacturing,other manufacturing,other manufacturing,1990,C2F6,0.246498599
-other manufacturing,other manufacturing,other manufacturing,1990,HFC245fa,0
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,1990,CF4,3.6315379
-chemicals,chemicals,chemicals,2005,SF6,0.849069843
-chemicals,chemicals,chemicals,2005,HFC134a,14.74638896
-chemicals,chemicals,chemicals,2005,CF4,1.573117504
-food processing,food processing,food processing,2005,HFC134a,11.13990372
-food processing,food processing,food processing,2005,HFC125,4.387704894
-other manufacturing,other manufacturing,other manufacturing,2005,C2F6,0.505206922
-other manufacturing,other manufacturing,other manufacturing,2005,HFC245fa,9.920312357
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,2005,CF4,1.980695587
-chemicals,chemicals,chemicals,2020,SF6,0.047701216
-chemicals,chemicals,chemicals,2020,HFC134a,20.07091497
-chemicals,chemicals,chemicals,2020,CF4,2.141128092
-food processing,food processing,food processing,2020,HFC134a,36.68057911
-food processing,food processing,food processing,2020,HFC125,14.44748183
-other manufacturing,other manufacturing,other manufacturing,2020,C2F6,0.373421583
-other manufacturing,other manufacturing,other manufacturing,2020,HFC245fa,38.8177769
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,2020,CF4,1.320967153
-
-INPUT_TABLE,,,,,
-Variable ID,,,,,
-20070,,,,,
-,,,,,reduction
-supplysector,subsector,technology,period,generic-ghg,0,15,30,45,60
-chemicals,chemicals,chemicals,2020,SF6,0.00,0.25,0.25,0.25,0.25
-chemicals,chemicals,chemicals,2020,HFC134a,0.18,0.26,0.26,0.26,0.26
-chemicals,chemicals,chemicals,2020,CF4,0.18,0.26,0.26,0.26,0.26
-food processing,food processing,food processing,2020,HFC134a,0.04,0.08,0.08,0.08,0.08
-food processing,food processing,food processing,2020,HFC125,0.04,0.08,0.08,0.08,0.08
-other manufacturing,other manufacturing,other manufacturing,2020,C2F6,0.57,0.71,0.89,0.94,0.94
-other manufacturing,other manufacturing,other manufacturing,2020,HFC245fa,0.03,0.04,0.04,0.06,0.06
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,2020,CF4,0.06,0.58,0.64,0.64,0.64
+chemicals,chemicals,chemicals,ALL,N2O,,,,,,,,,,
+chemicals,chemicals,chemicals,ALL,NOx,,,,,,,,,,
+food processing,food processing,food processing,ALL,NOx,,,,,,,,,,
+iron and steel,iron and steel,iron and steel,ALL,NOx,,,,,,,,,,
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,ALL,NOx,,,,,,,,,,
+other manufacturing,other manufacturing,other manufacturing,ALL,NOx,,,,,,,,,,
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,ALL,NOx,,,,,,,,,,
+pulp paper and wood,pulp paper and wood,pulp paper and wood,ALL,NOx,,,,,,,,,,
+chemicals,chemicals,chemicals,ALL,CO,,,,,,,,,,
+food processing,food processing,food processing,ALL,CO,,,,,,,,,,
+iron and steel,iron and steel,iron and steel,ALL,CO,,,,,,,,,,
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,ALL,CO,,,,,,,,,,
+other manufacturing,other manufacturing,other manufacturing,ALL,CO,,,,,,,,,,
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,ALL,CO,,,,,,,,,,
+pulp paper and wood,pulp paper and wood,pulp paper and wood,ALL,CO,,,,,,,,,,
+chemicals,chemicals,chemicals,ALL,NMVOC,,,,,,,,,,
+food processing,food processing,food processing,ALL,NMVOC,,,,,,,,,,
+iron and steel,iron and steel,iron and steel,ALL,NMVOC,,,,,,,,,,
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,ALL,NMVOC,,,,,,,,,,
+other manufacturing,other manufacturing,other manufacturing,ALL,NMVOC,,,,,,,,,,
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,ALL,NMVOC,,,,,,,,,,
+pulp paper and wood,pulp paper and wood,pulp paper and wood,ALL,NMVOC,,,,,,,,,,
+agriculture,agriculture,agriculture,ALL,NMVOC,,,,,,,,,,
+construction,construction,construction,ALL,NMVOC,,,,,,,,,,
+chemicals,chemicals,chemicals,ALL,SO2_1,,,,,,,,,,
+iron and steel,iron and steel,iron and steel,ALL,SO2_1,,,,,,,,,,
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,ALL,SO2_1,,,,,,,,,,
+other manufacturing,other manufacturing,other manufacturing,ALL,SO2_1,,,,,,,,,,
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,ALL,SO2_1,,,,,,,,,,
+pulp paper and wood,pulp paper and wood,pulp paper and wood,ALL,SO2_1,,,,,,,,,,
+cement,cement (conv),cement (conv),ALL,SO2_1,,,,,,,,,,
+chemicals,chemicals,chemicals,ALL,NH3,,,,,,,,,,
+other manufacturing,other manufacturing,other manufacturing,ALL,NH3,,,,,,,,,,
+,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+20015,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,,,,,,,,,
+chemicals,chemicals,chemicals,1990,CH4,0.007722431,,,,,,,,,
+iron and steel,iron and steel,iron and steel,1990,CH4,0.039350524,,,,,,,,,
+chemicals,chemicals,chemicals,1990,N2O,0.019212607,,,,,,,,,
+,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+20020,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,final-emiss-coef,,,,,,
+chemicals,chemicals,chemicals,1990,NOx,0.02058357,27,25,0.002058357,,,,,,
+food processing,food processing,food processing,1990,NOx,0.011578167,27,25,0.001157817,,,,,,
+iron and steel,iron and steel,iron and steel,1990,NOx,0.069076648,27,25,0.006907665,,,,,,
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,1990,NOx,0.708134028,27,25,0.070813403,,,,,,
+other manufacturing,other manufacturing,other manufacturing,1990,NOx,0.010627243,27,25,0.001062724,,,,,,
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,1990,NOx,0.024867462,27,25,0.002486746,,,,,,
+pulp paper and wood,pulp paper and wood,pulp paper and wood,1990,NOx,0.061906101,27,25,0.00619061,,,,,,
+chemicals,chemicals,chemicals,1990,CO,0.053131394,27,25,0.005313139,,,,,,
+food processing,food processing,food processing,1990,CO,0.012003464,27,25,0.001200346,,,,,,
+iron and steel,iron and steel,iron and steel,1990,CO,0.399693082,27,25,0.039969308,,,,,,
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,1990,CO,0.269603146,27,25,0.026960315,,,,,,
+other manufacturing,other manufacturing,other manufacturing,1990,CO,0.009893364,27,25,0.000989336,,,,,,
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,1990,CO,0.879006205,27,25,0.087900621,,,,,,
+pulp paper and wood,pulp paper and wood,pulp paper and wood,1990,CO,0.124157879,27,25,0.012415788,,,,,,
+chemicals,chemicals,chemicals,1990,NMVOC,0.373521131,27,25,0.037352113,,,,,,
+food processing,food processing,food processing,1990,NMVOC,0.087446781,27,25,0.008744678,,,,,,
+iron and steel,iron and steel,iron and steel,1990,NMVOC,0.017060133,27,25,0.001706013,,,,,,
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,1990,NMVOC,0.033454043,27,25,0.003345404,,,,,,
+other manufacturing,other manufacturing,other manufacturing,1990,NMVOC,0.047345081,27,25,0.004734508,,,,,,
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,1990,NMVOC,0.033659004,27,25,0.0033659,,,,,,
+pulp paper and wood,pulp paper and wood,pulp paper and wood,1990,NMVOC,0.114376263,27,25,0.011437626,,,,,,
+agriculture,agriculture,agriculture,1990,NMVOC,0.496619384,27,25,0.049661938,,,,,,
+construction,construction,construction,1990,NMVOC,0.074989666,27,25,0.007498967,,,,,,
+chemicals,chemicals,chemicals,1990,SO2_1,0.080794266,27,25,0.008079427,,,,,,
+iron and steel,iron and steel,iron and steel,1990,SO2_1,0.21398827,22,12,0.042797654,,,,,,
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,1990,SO2_1,0.304973807,22,12,0.060994761,,,,,,
+other manufacturing,other manufacturing,other manufacturing,1990,SO2_1,0.032853461,26,15,0.008213365,,,,,,
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,1990,SO2_1,0.699925211,26,15,0.174981303,,,,,,
+pulp paper and wood,pulp paper and wood,pulp paper and wood,1990,SO2_1,0.079280447,26,25,0.019820112,,,,,,
+cement,cement (conv),cement (conv),1990,SO2_1,1.727186165,35,25,0.604515158,,,,,,
+chemicals,chemicals,chemicals,1990,NH3,0.003788489,25,15,0.000947122,,,,,,
+other manufacturing,other manufacturing,other manufacturing,1990,NH3,0.004275381,25,15,0.001068845,,,,,,
+,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+20001,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,output-driver,,,,,,,,,
+chemicals,chemicals,chemicals,ALL,SF6,,,,,,,,,,
+chemicals,chemicals,chemicals,ALL,HFC134a,,,,,,,,,,
+chemicals,chemicals,chemicals,ALL,CF4,,,,,,,,,,
+food processing,food processing,food processing,ALL,HFC134a,,,,,,,,,,
+food processing,food processing,food processing,ALL,HFC125,,,,,,,,,,
+other manufacturing,other manufacturing,other manufacturing,ALL,C2F6,,,,,,,,,,
+other manufacturing,other manufacturing,other manufacturing,ALL,HFC245fa,,,,,,,,,,
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,ALL,CF4,,,,,,,,,,
+,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+20005,,,,,,,,,,,,,,
+,,,,emissions-unit,,,,,,,,,,
+supplysector,subsector,technology,generic-ghg,1975,1990,2005,2020,2035,2050,2065,2080,2095,,
+chemicals,chemicals,chemicals,SF6,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,,
+chemicals,chemicals,chemicals,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,,
+chemicals,chemicals,chemicals,CF4,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,,
+food processing,food processing,food processing,HFC134a,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,,
+food processing,food processing,food processing,HFC125,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,,
+other manufacturing,other manufacturing,other manufacturing,C2F6,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,,
+other manufacturing,other manufacturing,other manufacturing,HFC245fa,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,,
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,CF4,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,Gg,,
+,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+20010,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,input-emissions,,,,,,,,,
+chemicals,chemicals,chemicals,1990,SF6,1.575810811,,,,,,,,,
+chemicals,chemicals,chemicals,1990,HFC134a,0,,,,,,,,,
+chemicals,chemicals,chemicals,1990,CF4,0,,,,,,,,,
+food processing,food processing,food processing,1990,HFC134a,0,,,,,,,,,
+food processing,food processing,food processing,1990,HFC125,0,,,,,,,,,
+other manufacturing,other manufacturing,other manufacturing,1990,C2F6,0.246498599,,,,,,,,,
+other manufacturing,other manufacturing,other manufacturing,1990,HFC245fa,0,,,,,,,,,
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,1990,CF4,3.6315379,,,,,,,,,
+chemicals,chemicals,chemicals,2005,SF6,0.849069843,,,,,,,,,
+chemicals,chemicals,chemicals,2005,HFC134a,14.74638896,,,,,,,,,
+chemicals,chemicals,chemicals,2005,CF4,1.573117504,,,,,,,,,
+food processing,food processing,food processing,2005,HFC134a,11.13990372,,,,,,,,,
+food processing,food processing,food processing,2005,HFC125,4.387704894,,,,,,,,,
+other manufacturing,other manufacturing,other manufacturing,2005,C2F6,0.505206922,,,,,,,,,
+other manufacturing,other manufacturing,other manufacturing,2005,HFC245fa,9.920312357,,,,,,,,,
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,2005,CF4,1.980695587,,,,,,,,,
+chemicals,chemicals,chemicals,2020,SF6,0.047701216,,,,,,,,,
+chemicals,chemicals,chemicals,2020,HFC134a,20.07091497,,,,,,,,,
+chemicals,chemicals,chemicals,2020,CF4,2.141128092,,,,,,,,,
+food processing,food processing,food processing,2020,HFC134a,36.68057911,,,,,,,,,
+food processing,food processing,food processing,2020,HFC125,14.44748183,,,,,,,,,
+other manufacturing,other manufacturing,other manufacturing,2020,C2F6,0.373421583,,,,,,,,,
+other manufacturing,other manufacturing,other manufacturing,2020,HFC245fa,38.8177769,,,,,,,,,
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,2020,CF4,1.320967153,,,,,,,,,
+,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,
+20070,,,,,,,,,,,,,,
+,,,,,reduction,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,0,15,30,45,60,,,,,
+chemicals,chemicals,chemicals,2020,SF6,0.00,0.25,0.25,0.25,0.25,,,,,
+chemicals,chemicals,chemicals,2020,HFC134a,0.18,0.26,0.26,0.26,0.26,,,,,
+chemicals,chemicals,chemicals,2020,CF4,0.18,0.26,0.26,0.26,0.26,,,,,
+food processing,food processing,food processing,2020,HFC134a,0.04,0.08,0.08,0.08,0.08,,,,,
+food processing,food processing,food processing,2020,HFC125,0.04,0.08,0.08,0.08,0.08,,,,,
+other manufacturing,other manufacturing,other manufacturing,2020,C2F6,0.57,0.71,0.89,0.94,0.94,,,,,
+other manufacturing,other manufacturing,other manufacturing,2020,HFC245fa,0.03,0.04,0.04,0.06,0.06,,,,,
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,2020,CF4,0.06,0.58,0.64,0.64,0.64,,,,,

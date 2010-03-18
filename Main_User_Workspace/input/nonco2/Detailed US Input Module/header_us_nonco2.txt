@@ -1,4 +1,7 @@
 
+
+199,region/+{name;delete=1}supplysector,scenario,scenario/world,world/{name=USA}region
+
 20000,region/+{name;nocreate=1}supplysector,supplysector/+{name;nocreate=1}subsector,subsector/+{name;nocreate=1}technology,@technology/period,period/+{name}generic-ghg,{year=1975}period/../generic-ghg/input-driver,{year=1990}period/.../generic-ghg/input-driver,{year=2005}period/../generic-ghg/input-driver,{year=2020}period/../generic-ghg/input-driver,{year=2035}period/../generic-ghg/input-driver,{year=2050}period/../generic-ghg/input-driver,{year=2065}period/../generic-ghg/input-driver,{year=2080}period/../generic-ghg/input-driver,{year=2095}period/../generic-ghg/input-driver,scenario,scenario/world,world/{name=USA}region
 
 20001,region/+{name;nocreate=1}supplysector,supplysector/+{name;nocreate=1}subsector,subsector/+{name;nocreate=1}technology,@technology/period,period/+{name}generic-ghg,{year=1975}period/../generic-ghg/output-driver,{year=1990}period/.../generic-ghg/output-driver,{year=2005}period/../generic-ghg/output-driver,{year=2020}period/../generic-ghg/output-driver,{year=2035}period/../generic-ghg/output-driver,{year=2050}period/../generic-ghg/output-driver,{year=2065}period/../generic-ghg/output-driver,{year=2080}period/../generic-ghg/output-driver,{year=2095}period/../generic-ghg/output-driver,scenario,scenario/world,world/{name=USA}region
