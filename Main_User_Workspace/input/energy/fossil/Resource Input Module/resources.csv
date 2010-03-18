@@ -1,59 +1,59 @@
 RESOURCE PRODUCTION,,,,,,,
 Note: This is scaled so that global supply matches global demand,,,,,,,
-
+,,,,,,,
 INPUT_TABLE,,,,,,,
 Variable ID,,,,,,,
 1,,,,,,,
-
+,,,,,,,
 region,depresource,subresource,1975,1990,2005,severanceTax,environCost
-Africa,crude oil,crude oil,10.47,13.62,20.37,0,0
-Australia_NZ,crude oil,crude oil,0.89,1.29,1.05,0,0
-Canada,crude oil,crude oil,3.56,3.93,6.16,0,0
-China,crude oil,crude oil,3.28,5.89,8.39,0,0
-Eastern Europe,crude oil,crude oil,0.80,0.65,0.46,0,0
-Former Soviet Union,crude oil,crude oil,20.65,24.33,24.05,0,0
-India,crude oil,crude oil,0.36,1.48,1.55,0,0
-Japan,crude oil,crude oil,0.00,0.00,0.00,0,0
-Korea,crude oil,crude oil,0.00,0.00,0.00,0,0
-Latin America,crude oil,crude oil,10.04,16.39,23.73,0,0
-Middle East,crude oil,crude oil,41.98,35.38,51.85,0,0
-Southeast Asia,crude oil,crude oil,3.42,5.26,5.11,0,0
-USA,crude oil,crude oil,20.31,18.08,13.48,0,0
-Western Europe,crude oil,crude oil,1.22,8.75,11.24,0,0
-Africa,natural gas,natural gas,0.44,2.48,6.57,0,0
-Australia_NZ,natural gas,natural gas,0.19,0.86,1.58,0,0
-Canada,natural gas,natural gas,2.54,3.62,6.32,0,0
-China,natural gas,natural gas,0.31,0.52,2.00,0,0
-Eastern Europe,natural gas,natural gas,1.57,1.31,0.77,0,0
-Former Soviet Union,natural gas,natural gas,10.00,26.79,27.06,0,0
-India,natural gas,natural gas,0.04,0.40,0.98,0,0
-Japan,natural gas,natural gas,0.09,0.08,0.12,0,0
-Korea,natural gas,natural gas,0.00,0.00,0.00,0,0
-Latin America,natural gas,natural gas,1.42,3.14,6.11,0,0
-Middle East,natural gas,natural gas,1.00,3.13,10.30,0,0
-Southeast Asia,natural gas,natural gas,0.57,3.56,7.90,0,0
-USA,natural gas,natural gas,18.63,17.13,17.39,0,0
-Western Europe,natural gas,natural gas,5.68,6.42,10.19,0,0
-Africa,coal,coal,1.78,4.31,5.85,0,0
-Australia_NZ,coal,coal,1.93,4.41,8.55,0,0
-Canada,coal,coal,0.61,1.56,1.31,0,0
-China,coal,coal,10.92,22.79,48.76,0,0
-Eastern Europe,coal,coal,7.01,6.87,4.88,0,0
-Former Soviet Union,coal,coal,14.34,13.64,8.92,0,0
-India,coal,coal,2.00,4.29,7.67,0,0
-Japan,coal,coal,0.56,0.19,0.00,0,0
-Korea,coal,coal,0.35,0.31,0.05,0,0
-Latin America,coal,coal,0.28,0.92,2.13,0,0
-Middle East,coal,coal,0.02,0.02,0.04,0,0
-Southeast Asia,coal,coal,0.12,0.53,4.33,0,0
-USA,coal,coal,15.21,22.12,23.23,0,0
-Western Europe,coal,coal,10.64,9.06,4.05,0,0
-
-
+Africa,crude oil,crude oil,10.47374075,13.6682222,20.39842011,0,0
+Australia_NZ,crude oil,crude oil,0.888522696,1.299056133,1.054165588,0,0
+Canada,crude oil,crude oil,3.557607696,3.947144997,6.170972429,0,0
+China,crude oil,crude oil,3.284418996,5.914009228,8.406454716,0,0
+Eastern Europe,crude oil,crude oil,0.804368016,0.650576233,0.462481826,0,0
+Former Soviet Union,crude oil,crude oil,20.6502187,24.40669212,24.08404451,0,0
+India,crude oil,crude oil,0.361488312,1.481017907,1.554566738,0,0
+Japan,crude oil,crude oil,0,0,0,0,0
+Korea,crude oil,crude oil,0,0,0,0,0
+Latin America,crude oil,crude oil,10.04082563,16.44276192,23.76306957,0,0
+Middle East,crude oil,crude oil,41.97941075,35.49952631,51.9264549,0,0
+Southeast Asia,crude oil,crude oil,3.41705682,5.277897697,5.118648398,0,0
+USA,crude oil,crude oil,20.31263701,18.13567725,13.49994912,0,0
+Western Europe,crude oil,crude oil,1.22191758,8.778355887,11.25643095,0,0
+Africa,natural gas,natural gas,0.442837836,2.528149841,6.691200954,0,0
+Australia_NZ,natural gas,natural gas,0.189829512,0.876749908,1.613059238,0,0
+Canada,natural gas,natural gas,2.540424636,3.691855032,6.435194945,0,0
+China,natural gas,natural gas,0.310325616,0.533762676,2.039192915,0,0
+Eastern Europe,natural gas,natural gas,1.56858462,1.334552606,0.780507145,0,0
+Former Soviet Union,natural gas,natural gas,10.00360498,27.31832644,27.53887844,0,0
+India,natural gas,natural gas,0.037136916,0.409942075,0.995829543,0,0
+Japan,natural gas,natural gas,0.089932464,0.079920569,0.119461117,0,0
+Korea,natural gas,natural gas,0,0,0,0,0
+Latin America,natural gas,natural gas,1.41848784,3.199907866,6.218953615,0,0
+Middle East,natural gas,natural gas,0.995788512,3.189735399,10.48530274,0,0
+Southeast Asia,natural gas,natural gas,0.567478872,3.628402186,8.044745535,0,0
+USA,natural gas,natural gas,18.62778496,17.46979431,17.70355278,0,0
+Western Europe,natural gas,natural gas,5.681236392,6.547775095,10.37490563,0,0
+Africa,coal,coal,1.778720112,4.367702011,5.892735098,0,0
+Australia_NZ,coal,coal,1.927100304,4.472842071,8.623816476,0,0
+Canada,coal,coal,0.611314668,1.577974646,1.318863875,0,0
+China,coal,coal,10.91942561,23.1140458,49.15357054,0,0
+Eastern Europe,coal,coal,7.007279688,6.969741677,4.91482574,0,0
+Former Soviet Union,coal,coal,14.34171593,13.83575792,8.989178256,0,0
+India,coal,coal,1.995763824,4.355885716,7.732743842,0,0
+Japan,coal,coal,0.555295284,0.187729305,0,0,0
+Korea,coal,coal,0.346206492,0.315170541,0.050391866,0,0
+Latin America,coal,coal,0.276035724,0.937855996,2.14663536,0,0
+Middle East,coal,coal,0.024409044,0.02263403,0.035656188,0,0
+Southeast Asia,coal,coal,0.123845544,0.53809909,4.363794426,0,0
+USA,coal,coal,15.20955583,22.43211244,23.41951574,0,0
+Western Europe,coal,coal,10.64205011,9.18463126,4.078876992,0,0
+,,,,,,,
+,,,,,,,
 INPUT_TABLE,,,,,,,
 Variable ID,,,,,,,
 2,,,,,,,
-
+,,,,,,,
 region,depresource,1975,1990,2005,,,
 Africa,crude oil,1.84,1.37,1.64,,,
 Australia_NZ,crude oil,1.84,1.37,1.64,,,
@@ -62,38 +62,38 @@ China,crude oil,1.84,1.37,1.64,,,
 Eastern Europe,crude oil,1.84,1.37,1.64,,,
 Former Soviet Union,crude oil,1.84,1.37,1.64,,,
 India,crude oil,1.84,1.37,1.64,,,
-Japan,crude oil,1.84,1.37,1.64
-Korea,crude oil,1.84,1.37,1.64
-Latin America,crude oil,1.84,1.37,1.64
-Middle East,crude oil,1.84,1.37,1.64
-Southeast Asia,crude oil,1.84,1.37,1.64
-USA,crude oil,1.84,1.37,1.64
-Western Europe,crude oil,1.84,1.37,1.64
-Africa,natural gas,0.65,0.81,0.98
-Australia_NZ,natural gas,0.65,0.81,0.98
-Canada,natural gas,0.65,0.81,0.98
-China,natural gas,0.65,0.81,0.98
-Eastern Europe,natural gas,0.65,0.81,0.98
-Former Soviet Union,natural gas,0.65,0.81,0.98
-India,natural gas,0.65,0.81,0.98
-Japan,natural gas,0.65,0.81,0.98
-Korea,natural gas,0.65,0.81,0.98
-Latin America,natural gas,0.65,0.81,0.98
-Middle East,natural gas,0.65,0.81,0.98
-Southeast Asia,natural gas,0.65,0.81,0.98
-USA,natural gas,0.65,0.81,0.98
-Western Europe,natural gas,0.65,0.81,0.98
-Africa,coal,0.40,0.43,0.44
-Australia_NZ,coal,0.40,0.43,0.44
-Canada,coal,0.40,0.43,0.44
-China,coal,0.40,0.43,0.44
-Eastern Europe,coal,0.40,0.43,0.44
-Former Soviet Union,coal,0.40,0.43,0.44
-India,coal,0.40,0.43,0.44
-Japan,coal,0.40,0.43,0.44
-Korea,coal,0.40,0.43,0.44
-Latin America,coal,0.40,0.43,0.44
-Middle East,coal,0.40,0.43,0.44
-Southeast Asia,coal,0.40,0.43,0.44
-USA,coal,0.40,0.43,0.44
-Western Europe,coal,0.40,0.43,0.44
+Japan,crude oil,1.84,1.37,1.64,,,
+Korea,crude oil,1.84,1.37,1.64,,,
+Latin America,crude oil,1.84,1.37,1.64,,,
+Middle East,crude oil,1.84,1.37,1.64,,,
+Southeast Asia,crude oil,1.84,1.37,1.64,,,
+USA,crude oil,1.84,1.37,1.64,,,
+Western Europe,crude oil,1.84,1.37,1.64,,,
+Africa,natural gas,0.65,0.81,0.98,,,
+Australia_NZ,natural gas,0.65,0.81,0.98,,,
+Canada,natural gas,0.65,0.81,0.98,,,
+China,natural gas,0.65,0.81,0.98,,,
+Eastern Europe,natural gas,0.65,0.81,0.98,,,
+Former Soviet Union,natural gas,0.65,0.81,0.98,,,
+India,natural gas,0.65,0.81,0.98,,,
+Japan,natural gas,0.65,0.81,0.98,,,
+Korea,natural gas,0.65,0.81,0.98,,,
+Latin America,natural gas,0.65,0.81,0.98,,,
+Middle East,natural gas,0.65,0.81,0.98,,,
+Southeast Asia,natural gas,0.65,0.81,0.98,,,
+USA,natural gas,0.65,0.81,0.98,,,
+Western Europe,natural gas,0.65,0.81,0.98,,,
+Africa,coal,0.40,0.43,0.44,,,
+Australia_NZ,coal,0.40,0.43,0.44,,,
+Canada,coal,0.40,0.43,0.44,,,
+China,coal,0.40,0.43,0.44,,,
+Eastern Europe,coal,0.40,0.43,0.44,,,
+Former Soviet Union,coal,0.40,0.43,0.44,,,
+India,coal,0.40,0.43,0.44,,,
+Japan,coal,0.40,0.43,0.44,,,
+Korea,coal,0.40,0.43,0.44,,,
+Latin America,coal,0.40,0.43,0.44,,,
+Middle East,coal,0.40,0.43,0.44,,,
+Southeast Asia,coal,0.40,0.43,0.44,,,
+USA,coal,0.40,0.43,0.44,,,
+Western Europe,coal,0.40,0.43,0.44,,,

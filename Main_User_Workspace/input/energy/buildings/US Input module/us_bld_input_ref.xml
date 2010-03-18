@@ -965,7 +965,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="delivered biomass">
                         <efficiency>0.400</efficiency>
-                        <calibrated-value>0.3926</calibrated-value>
+                        <calibrated-value>0.3919</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -1069,7 +1069,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.814</efficiency>
-                        <calibrated-value>3.4237</calibrated-value>
+                        <calibrated-value>3.4241</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -1135,7 +1135,7 @@
                      <CO2 name="CO2"/>
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="delivered gas">
-                        <efficiency>1.004</efficiency>
+                        <efficiency>0.970</efficiency>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -1161,7 +1161,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.000</efficiency>
-                        <calibrated-value>0.2384</calibrated-value>
+                        <calibrated-value>0.3316</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -1173,7 +1173,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.000</efficiency>
-                        <calibrated-value>0.1860</calibrated-value>
+                        <calibrated-value>0.2967</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -1260,7 +1260,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.584</efficiency>
-                        <calibrated-value>0.1696</calibrated-value>
+                        <calibrated-value>0.0765</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -1272,7 +1272,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.095</efficiency>
-                        <calibrated-value>0.1578</calibrated-value>
+                        <calibrated-value>0.0479</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -1475,7 +1475,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.259</efficiency>
-                        <calibrated-value>0.4543</calibrated-value>
+                        <calibrated-value>0.4545</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -1487,7 +1487,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.918</efficiency>
-                        <calibrated-value>0.9095</calibrated-value>
+                        <calibrated-value>0.9117</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -1603,7 +1603,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.560</efficiency>
-                        <calibrated-value>1.0371</calibrated-value>
+                        <calibrated-value>1.0372</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -1730,7 +1730,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.847</efficiency>
-                        <calibrated-value>0.3338</calibrated-value>
+                        <calibrated-value>0.3339</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -1747,7 +1747,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.888</efficiency>
-                        <calibrated-value>0.4232</calibrated-value>
+                        <calibrated-value>0.4242</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -2164,7 +2164,7 @@
                      <logitexp>-2</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.021</efficiency>
-                        <calibrated-value>0.5822</calibrated-value>
+                        <calibrated-value>0.5824</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -2181,7 +2181,7 @@
                      <logitexp>-2</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.021</efficiency>
-                        <calibrated-value>0.7243</calibrated-value>
+                        <calibrated-value>0.7261</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -2320,7 +2320,7 @@
                      <logitexp>-2</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.120</efficiency>
-                        <calibrated-value>0.0805</calibrated-value>
+                        <calibrated-value>0.0807</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -2737,7 +2737,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.709</efficiency>
-                        <calibrated-value>0.8715</calibrated-value>
+                        <calibrated-value>0.8718</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -2754,7 +2754,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.000</efficiency>
-                        <calibrated-value>1.0664</calibrated-value>
+                        <calibrated-value>1.0690</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -3032,7 +3032,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.000</efficiency>
-                        <calibrated-value>0.2874</calibrated-value>
+                        <calibrated-value>0.2875</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -3049,7 +3049,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.000</efficiency>
-                        <calibrated-value>0.4691</calibrated-value>
+                        <calibrated-value>0.4703</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -3327,7 +3327,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.000</efficiency>
-                        <calibrated-value>0.3173</calibrated-value>
+                        <calibrated-value>0.3175</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -3344,7 +3344,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.000</efficiency>
-                        <calibrated-value>1.1186</calibrated-value>
+                        <calibrated-value>1.1213</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -3634,7 +3634,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="delivered biomass">
                         <efficiency>0.650</efficiency>
-                        <calibrated-value>0.1121</calibrated-value>
+                        <calibrated-value>0.1119</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -3726,7 +3726,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.700</efficiency>
-                        <calibrated-value>1.0922</calibrated-value>
+                        <calibrated-value>1.0923</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -3738,7 +3738,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.728</efficiency>
-                        <calibrated-value>1.2411</calibrated-value>
+                        <calibrated-value>1.2413</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -3842,7 +3842,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.000</efficiency>
-                        <calibrated-value>0.0727</calibrated-value>
+                        <calibrated-value>0.0728</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -3941,7 +3941,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>3.100</efficiency>
-                        <calibrated-value>0.0851</calibrated-value>
+                        <calibrated-value>0.0853</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -4248,7 +4248,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.400</efficiency>
-                        <calibrated-value>0.5285</calibrated-value>
+                        <calibrated-value>0.5287</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -4260,7 +4260,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.730</efficiency>
-                        <calibrated-value>0.5811</calibrated-value>
+                        <calibrated-value>0.5825</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -4503,7 +4503,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.970</efficiency>
-                        <calibrated-value>0.1576</calibrated-value>
+                        <calibrated-value>0.1577</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -4520,7 +4520,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.983</efficiency>
-                        <calibrated-value>0.1772</calibrated-value>
+                        <calibrated-value>0.1776</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -4937,7 +4937,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.850</efficiency>
-                        <calibrated-value>0.1576</calibrated-value>
+                        <calibrated-value>0.1577</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -4954,7 +4954,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.850</efficiency>
-                        <calibrated-value>0.2075</calibrated-value>
+                        <calibrated-value>0.2080</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -5249,7 +5249,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.713</efficiency>
-                        <calibrated-value>0.0439</calibrated-value>
+                        <calibrated-value>0.0440</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -5383,7 +5383,7 @@
                      <logitexp>-2</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.021</efficiency>
-                        <calibrated-value>0.3382</calibrated-value>
+                        <calibrated-value>0.3384</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -5400,7 +5400,7 @@
                      <logitexp>-2</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.021</efficiency>
-                        <calibrated-value>0.4112</calibrated-value>
+                        <calibrated-value>0.4122</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -5522,7 +5522,7 @@
                      <logitexp>-2</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.120</efficiency>
-                        <calibrated-value>0.7187</calibrated-value>
+                        <calibrated-value>0.7190</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -5539,7 +5539,7 @@
                      <logitexp>-2</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.120</efficiency>
-                        <calibrated-value>0.8738</calibrated-value>
+                        <calibrated-value>0.8760</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -5829,7 +5829,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.964</efficiency>
-                        <calibrated-value>0.2555</calibrated-value>
+                        <calibrated-value>0.2562</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -5980,7 +5980,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.000</efficiency>
-                        <calibrated-value>0.6248</calibrated-value>
+                        <calibrated-value>0.6263</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -6258,7 +6258,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.000</efficiency>
-                        <calibrated-value>0.6119</calibrated-value>
+                        <calibrated-value>0.6121</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">
@@ -6275,7 +6275,7 @@
                      <logitexp>-6</logitexp>
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.000</efficiency>
-                        <calibrated-value>1.4849</calibrated-value>
+                        <calibrated-value>1.4885</calibrated-value>
                      </minicam-energy-input>
                      <sharewt>1</sharewt>
                      <minicam-non-energy-input name="non-energy">

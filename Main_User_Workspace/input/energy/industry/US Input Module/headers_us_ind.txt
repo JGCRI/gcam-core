@@ -1,5 +1,7 @@
 
-10,region/+{name;delete=1}supplysector,region/+{name;delete=1}energy-final-demand,scenario,scenario/world,world/{name=USA}region
+10,region/+{name;delete=1}supplysector,scenario,scenario/world,world/{name=USA}region
+
+11,region/+{name;delete=1}energy-final-demand,scenario,scenario/world,world/{name=USA}region
 
 30,region/+{name}energy-final-demand,energy-final-demand/+perCapitaBased,energy-final-demand/+{year=1990}base-service,energy-final-demand/+{year=2005}base-service,energy-final-demand/final-energy-consumer,scenario,scenario/world,world/{name=USA}region
 

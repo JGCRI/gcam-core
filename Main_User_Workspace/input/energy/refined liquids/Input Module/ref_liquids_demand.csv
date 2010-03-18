@@ -1,163 +1,120 @@
-Delete old supplysectors and technologies,,
-"Delete ""oil"" subsector of buildings and transportation",,
-INPUT_TABLE,,
-Variable_ID,,
-300,,
-
-region,supplysector,subsector
-ALL,building,oil
-ALL,transportation,oil
-
-
-"Delete ""oil"" technologies of industry",,
-INPUT_TABLE,,
-Variable_ID,,
-3000,,
-
-region,supplysector,subsector,technology
-ALL,industry,energy-use,oil
-ALL,industry,non-energy use oil,oil
-
-
-Scale years,,,
-INPUT_TABLE,,,
-Variable ID,,,
-200,,,
-
-region,supplysector,subsector,scaleYear
-ALL,building,refined liquids,2005
-ALL,transportation,refined liquids,2005
-
-
-Set bld and trn refined liquids logit exponents,,,
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
-202,,,,,,,,,,,
-,,,logitexp,,,,,,,,
-region,supplysector,subsector,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,building,refined liquids,-3,-3,-3,-3,-3,-3,-3,-3,-3
-ALL,transportation,refined liquids,-13,-13,-13,-13,-13,-13,-13,-13,-13
-
-Specify end-use sector technology attributes,,,,,,,,,,,
-Ref liquids: building techs,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
-4000,,,,,,,,,,,
-,,,,,,,,,minicam-non-energy-input,,
-region,supplysector,subsector,technology,period,sharewt,logitexp,minicam-energy-input,efficiency,input-cost,,
-ALL,building,refined liquids,refined liquids,1975,1,-6,refined liquids enduse,0.598802,4.98,,
-ALL,building,refined liquids,refined liquids,1990,1,-6,refined liquids enduse,0.598802,4.98
-ALL,building,refined liquids,refined liquids,2005,1,-6,refined liquids enduse,0.598802,4.98
-ALL,building,refined liquids,refined liquids,2020,1,-6,refined liquids enduse,0.598802,4.98
-ALL,building,refined liquids,refined liquids,2035,1,-6,refined liquids enduse,0.598802,4.98
-ALL,building,refined liquids,refined liquids,2050,1,-6,refined liquids enduse,0.598802,4.98
-ALL,building,refined liquids,refined liquids,2065,1,-6,refined liquids enduse,0.598802,4.98
-ALL,building,refined liquids,refined liquids,2080,1,-6,refined liquids enduse,0.598802,4.98
-ALL,building,refined liquids,refined liquids,2095,1,-6,refined liquids enduse,0.598802,4.98
-ALL,transportation,refined liquids,refined liquids,1975,1,-6,refined liquids enduse,0.33333,98.88
-ALL,transportation,refined liquids,refined liquids,1990,1,-6,refined liquids enduse,0.33333,98.88
-ALL,transportation,refined liquids,refined liquids,2005,1,-6,refined liquids enduse,0.33333,98.88
-ALL,transportation,refined liquids,refined liquids,2020,1,-6,refined liquids enduse,0.33333,98.88
-ALL,transportation,refined liquids,refined liquids,2035,1,-6,refined liquids enduse,0.33333,98.88
-ALL,transportation,refined liquids,refined liquids,2050,1,-6,refined liquids enduse,0.33333,98.88
-ALL,transportation,refined liquids,refined liquids,2065,1,-6,refined liquids enduse,0.33333,98.88
-ALL,transportation,refined liquids,refined liquids,2080,1,-6,refined liquids enduse,0.33333,98.88
-ALL,transportation,refined liquids,refined liquids,2095,1,-6,refined liquids enduse,0.33333,98.88
-
-Ref liquids: industry techs,,,,,,,,,
-INPUT_TABLE,,,,,,,,,
-Variable ID,,,,,,,,,
-4000,,,,,,,,,
-,,,,,,,,,minicam-non-energy-input
-region,supplysector,subsector,technology,period,sharewt,logitexp,minicam-energy-input,efficiency,input-cost
-ALL,industry,energy-use,refined liquids,1975,1,-2,refined liquids industrial,0.520833,0.41
-ALL,industry,energy-use,refined liquids,1990,1,-2,refined liquids industrial,0.520833,0.41
-ALL,industry,energy-use,refined liquids,2005,1,-2,refined liquids industrial,0.520833,0.41
-ALL,industry,energy-use,refined liquids,2020,1,-2,refined liquids industrial,0.520833,0.41
-ALL,industry,energy-use,refined liquids,2035,1,-2,refined liquids industrial,0.520833,0.41
-ALL,industry,energy-use,refined liquids,2050,1,-2,refined liquids industrial,0.520833,0.41
-ALL,industry,energy-use,refined liquids,2065,1,-2,refined liquids industrial,0.520833,0.41
-ALL,industry,energy-use,refined liquids,2080,1,-2,refined liquids industrial,0.520833,0.41
-ALL,industry,energy-use,refined liquids,2095,1,-2,refined liquids industrial,0.520833,0.41
-ALL,industry,non-energy use oil,feedstocks,1975,1,-6,refined liquids industrial,0.520833,0.1
-ALL,industry,non-energy use oil,feedstocks,1990,1,-6,refined liquids industrial,0.520833,0.1
-ALL,industry,non-energy use oil,feedstocks,2005,1,-6,refined liquids industrial,0.520833,0.1
-ALL,industry,non-energy use oil,feedstocks,2020,1,-6,refined liquids industrial,0.520833,0.1
-ALL,industry,non-energy use oil,feedstocks,2035,1,-6,refined liquids industrial,0.520833,0.1
-ALL,industry,non-energy use oil,feedstocks,2050,1,-6,refined liquids industrial,0.520833,0.1
-ALL,industry,non-energy use oil,feedstocks,2065,1,-6,refined liquids industrial,0.520833,0.1
-ALL,industry,non-energy use oil,feedstocks,2080,1,-6,refined liquids industrial,0.520833,0.1
-ALL,industry,non-energy use oil,feedstocks,2095,1,-6,refined liquids industrial,0.520833,0.1
-
-Feedstock sequestration,,,,,,,,,
-INPUT_TABLE,,,,,,,,,
-Variable ID,,,,,,,,,
-4001,,,,,,,,,
-,,,,,non-energy-use-capture-component,,,,
-region,supplysector,subsector,technology,period,remove-fraction,target-gas
-ALL,industry,non-energy use oil,feedstocks,ALL,1,CO2
-
-
-Adjust electricity sector,,,,,,
-Delete existing oil technology. Necessary to remove profit shutdown decider.,,,,,,
-INPUT_TABLE,,,,,,
-Variable_ID,,,,,,
-3000,,,,,,
-
-region,supplysector,subsector,technology,,,
-ALL,electricity,oil,Oil (existing),,,
-
-"Delete ""refined oil"" energy input to all other techs in oil subsector",,,,,,
-INPUT_TABLE,,,,,,
-Variable ID,,,,,,
-30000,,,,delete,,,,,,,,
-,,,,minicam-energy-input,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,electricity,oil,Oil (peak load conv),refined oil,refined oil,refined oil,refined oil,refined oil,refined oil,refined oil,refined oil,refined oil
-ALL,electricity,oil,Oil (base load conv),refined oil,refined oil,refined oil,refined oil,refined oil,refined oil,refined oil,refined oil,refined oil
-ALL,electricity,oil,Oil (IGCC),refined oil,refined oil,refined oil,refined oil,refined oil,refined oil,refined oil,refined oil,refined oil
-ALL,electricity,oil,Oil (IGCC)_CCS,refined oil,refined oil,refined oil,refined oil,refined oil,refined oil,refined oil,refined oil,refined oil
-
-Reset tech attributes of existing oil vintage,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-4000,,,,,,,,,,,,
-,,,,,,,,,minicam-non-energy-input,,,
-region,supplysector,subsector,technology,period,sharewt,logitexp,minicam-energy-input,efficiency,input-cost,,,
-ALL,electricity,oil,Oil (existing),1975,1,-10,refined liquids electricity,0.377,2.0528,,efficiencies will be over-written by calibration input file,
-ALL,electricity,oil,Oil (existing),1990,1,-10,refined liquids electricity,0.377,2.0528,,,
-ALL,electricity,oil,Oil (existing),2005,1,-10,refined liquids electricity,0.377,2
-ALL,electricity,oil,Oil (existing),2020,0,-10,refined liquids electricity,0.377,1
-ALL,electricity,oil,Oil (existing),2035,0,-10,refined liquids electricity,0.377,1
-ALL,electricity,oil,Oil (existing),2050,0,-10,refined liquids electricity,0.377,1
-ALL,electricity,oil,Oil (existing),2065,0,-10,refined liquids electricity,0.377,1
-ALL,electricity,oil,Oil (existing),2080,0,-10,refined liquids electricity,0.377,1
-ALL,electricity,oil,Oil (existing),2095,0,-10,refined liquids electricity,0.377,1
-
-Set lifetime and phased shutdown decider.,,,,,,,,,
-INPUT_TABLE,,,,,,,,,
-Variable ID,,,,,,,,,
-4005,,,,,,,,,
-,,,,,,phased-shutdown-decider,,output relative to 2005,
-region,supplysector,subsector,technology,period,lifetime,shutdown-rate,,2020,2035
-USA,electricity,oil,Oil (existing),2005,45,0.05,,48%,23%
-Canada,electricity,oil,Oil (existing),2005,45,0.05,,48%,23%
-Western Europe,electricity,oil,Oil (existing),2005,45,0.05,,48%,23%
-Japan,electricity,oil,Oil (existing),2005,45,0.05,,48%,23%
-Australia_NZ,electricity,oil,Oil (existing),2005,45,0.05,,48%,23%
-Former Soviet Union,electricity,oil,Oil (existing),2005,45,0.05,,48%,23%
-China,electricity,oil,Oil (existing),2005,45,0.05,,48%,23%
-Middle East,electricity,oil,Oil (existing),2005,45,0.05,,48%,23%
-Africa,electricity,oil,Oil (existing),2005,45,0.05,,48%,23%
-Latin America,electricity,oil,Oil (existing),2005,45,0.05,,48%,23%
-Southeast Asia,electricity,oil,Oil (existing),2005,45,0.05,,48%,23%
-Eastern Europe,electricity,oil,Oil (existing),2005,45,0.05,,48%,23%
-Korea,electricity,oil,Oil (existing),2005,45,0.05,,48%,23%
-India,electricity,oil,Oil (existing),2005,45,0.05,,48%,23%
-
-Reset future efficiencies of elec generation techs (base years eff's set in caldata workbook),,,,,,,,,
-INPUT_TABLE,,,,,,,,,
-Variable_ID,,,,,,,,,
+Delete old supplysectors and technologies,,,,,,,,,,,,,,,
+"Delete ""oil"" subsector of buildings and transportation",,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,
+Variable_ID,,,,,,,,,,,,,,,
+300,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+region,supplysector,subsector,,,,,,,,,,,,,
+ALL,building,oil,,,,,,,,,,,,,
+ALL,transportation,oil,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+Scale years,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,
+200,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+region,supplysector,subsector,scaleYear,,,,,,,,,,,,
+ALL,building,refined liquids,2005,,,,,,,,,,,,
+ALL,transportation,refined liquids,2005,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+Set bld and trn refined liquids logit exponents,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,
+202,,,,,,,,,,,,,,,
+,,,logitexp,,,,,,,,,,,,
+region,supplysector,subsector,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,,
+ALL,building,refined liquids,-3,-3,-3,-3,-3,-3,-3,-3,-3,,,,
+ALL,transportation,refined liquids,-13,-13,-13,-13,-13,-13,-13,-13,-13,,,,
+,,,,,,,,,,,,,,,
+Specify end-use sector technology attributes,,,,,,,,,,,,,,,
+Ref liquids: building techs,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,
+4000,,,,,,,,,,,,,,,
+,,,,,,,,,minicam-non-energy-input,,,,,,
+region,supplysector,subsector,technology,period,sharewt,logitexp,minicam-energy-input,efficiency,input-cost,,,,,,
+ALL,building,refined liquids,refined liquids,1975,1,-6,refined liquids enduse,0.598802,4.98,,,,,,
+ALL,building,refined liquids,refined liquids,1990,1,-6,refined liquids enduse,0.598802,4.98,,,,,,
+ALL,building,refined liquids,refined liquids,2005,1,-6,refined liquids enduse,0.598802,4.98,,,,,,
+ALL,building,refined liquids,refined liquids,2020,1,-6,refined liquids enduse,0.598802,4.98,,,,,,
+ALL,building,refined liquids,refined liquids,2035,1,-6,refined liquids enduse,0.598802,4.98,,,,,,
+ALL,building,refined liquids,refined liquids,2050,1,-6,refined liquids enduse,0.598802,4.98,,,,,,
+ALL,building,refined liquids,refined liquids,2065,1,-6,refined liquids enduse,0.598802,4.98,,,,,,
+ALL,building,refined liquids,refined liquids,2080,1,-6,refined liquids enduse,0.598802,4.98,,,,,,
+ALL,building,refined liquids,refined liquids,2095,1,-6,refined liquids enduse,0.598802,4.98,,,,,,
+ALL,transportation,refined liquids,refined liquids,1975,1,-6,refined liquids enduse,0.33333,98.88,,,,,,
+ALL,transportation,refined liquids,refined liquids,1990,1,-6,refined liquids enduse,0.33333,98.88,,,,,,
+ALL,transportation,refined liquids,refined liquids,2005,1,-6,refined liquids enduse,0.33333,98.88,,,,,,
+ALL,transportation,refined liquids,refined liquids,2020,1,-6,refined liquids enduse,0.33333,98.88,,,,,,
+ALL,transportation,refined liquids,refined liquids,2035,1,-6,refined liquids enduse,0.33333,98.88,,,,,,
+ALL,transportation,refined liquids,refined liquids,2050,1,-6,refined liquids enduse,0.33333,98.88,,,,,,
+ALL,transportation,refined liquids,refined liquids,2065,1,-6,refined liquids enduse,0.33333,98.88,,,,,,
+ALL,transportation,refined liquids,refined liquids,2080,1,-6,refined liquids enduse,0.33333,98.88,,,,,,
+ALL,transportation,refined liquids,refined liquids,2095,1,-6,refined liquids enduse,0.33333,98.88,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+Adjust electricity sector,,,,,,,,,,,,,,,
+Delete existing oil technology. Necessary to remove profit shutdown decider.,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,
+Variable_ID,,,,,,,,,,,,,,,
+3000,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,,,,,,,,,,,,
+ALL,electricity,oil,Oil (existing),,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+"Delete ""refined oil"" energy input to all other techs in oil subsector",,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,
+30000,,,,delete,,,,,,,,,,,
+,,,,minicam-energy-input,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,
+ALL,electricity,oil,Oil (peak load conv),refined oil,refined oil,refined oil,refined oil,refined oil,refined oil,refined oil,refined oil,refined oil,,,
+ALL,electricity,oil,Oil (base load conv),refined oil,refined oil,refined oil,refined oil,refined oil,refined oil,refined oil,refined oil,refined oil,,,
+ALL,electricity,oil,Oil (IGCC),refined oil,refined oil,refined oil,refined oil,refined oil,refined oil,refined oil,refined oil,refined oil,,,
+ALL,electricity,oil,Oil (IGCC)_CCS,refined oil,refined oil,refined oil,refined oil,refined oil,refined oil,refined oil,refined oil,refined oil,,,
+,,,,,,,,,,,,,,,
+Reset tech attributes of existing oil vintage,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,
+4000,,,,,,,,,,,,,,,
+,,,,,,,,,minicam-non-energy-input,,,,,,
+region,supplysector,subsector,technology,period,sharewt,logitexp,minicam-energy-input,efficiency,input-cost,,,,,,
+ALL,electricity,oil,Oil (existing),1975,1,-10,refined liquids electricity,0.377,2.0528,,efficiencies will be over-written by calibration input file,,,,
+ALL,electricity,oil,Oil (existing),1990,1,-10,refined liquids electricity,0.377,2.0528,,,,,,
+ALL,electricity,oil,Oil (existing),2005,1,-10,refined liquids electricity,0.377,2,,,,,,
+ALL,electricity,oil,Oil (existing),2020,0,-10,refined liquids electricity,0.377,1,,,,,,
+ALL,electricity,oil,Oil (existing),2035,0,-10,refined liquids electricity,0.377,1,,,,,,
+ALL,electricity,oil,Oil (existing),2050,0,-10,refined liquids electricity,0.377,1,,,,,,
+ALL,electricity,oil,Oil (existing),2065,0,-10,refined liquids electricity,0.377,1,,,,,,
+ALL,electricity,oil,Oil (existing),2080,0,-10,refined liquids electricity,0.377,1,,,,,,
+ALL,electricity,oil,Oil (existing),2095,0,-10,refined liquids electricity,0.377,1,,,,,,
+,,,,,,,,,,,,,,,
+Set lifetime and phased shutdown decider.,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,
+4005,,,,,,,,,,,,,,,
+,,,,,,phased-shutdown-decider,,output relative to 2005,,,,,,,
+region,supplysector,subsector,technology,period,lifetime,shutdown-rate,,2020,2035,,,,,,
+USA,electricity,oil,Oil (existing),2005,45,0.05,,48%,23%,,,,,,
+Canada,electricity,oil,Oil (existing),2005,45,0.05,,48%,23%,,,,,,
+Western Europe,electricity,oil,Oil (existing),2005,45,0.05,,48%,23%,,,,,,
+Japan,electricity,oil,Oil (existing),2005,45,0.05,,48%,23%,,,,,,
+Australia_NZ,electricity,oil,Oil (existing),2005,45,0.05,,48%,23%,,,,,,
+Former Soviet Union,electricity,oil,Oil (existing),2005,45,0.05,,48%,23%,,,,,,
+China,electricity,oil,Oil (existing),2005,45,0.05,,48%,23%,,,,,,
+Middle East,electricity,oil,Oil (existing),2005,45,0.05,,48%,23%,,,,,,
+Africa,electricity,oil,Oil (existing),2005,45,0.05,,48%,23%,,,,,,
+Latin America,electricity,oil,Oil (existing),2005,45,0.05,,48%,23%,,,,,,
+Southeast Asia,electricity,oil,Oil (existing),2005,45,0.05,,48%,23%,,,,,,
+Eastern Europe,electricity,oil,Oil (existing),2005,45,0.05,,48%,23%,,,,,,
+Korea,electricity,oil,Oil (existing),2005,45,0.05,,48%,23%,,,,,,
+India,electricity,oil,Oil (existing),2005,45,0.05,,48%,23%,,,,,,
+,,,,,,,,,,,,,,,
+Reset future efficiencies of elec generation techs (base years eff's set in caldata workbook),,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,
+Variable_ID,,,,,,,,,,,,,,,
 40000,,,,,,,,,,,,,,,
 ,,,,,efficiency,,,,,,,,,,
 region,supplysector,subsector,technology,minicam-energy-input,1975,1990,2005,2020,2035,2050,2065,2080,2095,,
@@ -165,9 +122,9 @@ ALL,electricity,oil,Oil (peak load conv),refined liquids electricity,1,1,0.377,0
 ALL,electricity,oil,Oil (base load conv),refined liquids electricity,1,1,0.377,0.397,0.403,0.409,0.415,0.421,0.428,existing tech efficiencies set to values in CCSP input file,
 ALL,electricity,oil,Oil (IGCC),refined liquids electricity,1,1,0.426,0.491,0.494,0.496,0.498,0.5,0.5,,may be over-written in fossil_elec_input file
 ALL,electricity,oil,Oil (IGCC)_CCS,refined liquids electricity,1,1,0.426,0.491,0.494,0.496,0.498,0.5,0.5,,
-
-
-
-
-
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,

@@ -1,0 +1,1041 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+         <supplysector name="industrial energy use">
+            <subsector name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <minicam-energy-input name="delivered biomass">
+                        <calibrated-value>0.405090833</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered biomass">
+                        <calibrated-value>0.853589207</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <minicam-energy-input name="delivered coal">
+                        <calibrated-value>1.947131889</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered coal">
+                        <calibrated-value>1.077391018</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_ind">
+                        <calibrated-value>3.242294697</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_ind">
+                        <calibrated-value>3.412016286</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <minicam-energy-input name="wholesale gas">
+                        <calibrated-value>5.474183961</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="wholesale gas">
+                        <calibrated-value>5.384264711</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids">
+               <technology name="refined liquids">
+                  <period year="1990">
+                     <minicam-energy-input name="refined liquids industrial">
+                        <calibrated-value>2.572735476</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="refined liquids industrial">
+                        <calibrated-value>2.154177984</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Canada">
+         <supplysector name="industrial energy use">
+            <subsector name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <minicam-energy-input name="delivered biomass">
+                        <calibrated-value>0.225402493</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered biomass">
+                        <calibrated-value>0.336188004</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <minicam-energy-input name="delivered coal">
+                        <calibrated-value>0.106056658</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered coal">
+                        <calibrated-value>0.124878063</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_ind">
+                        <calibrated-value>0.672880668</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_ind">
+                        <calibrated-value>0.918303176</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <minicam-energy-input name="wholesale gas">
+                        <calibrated-value>1.08462425</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="wholesale gas">
+                        <calibrated-value>1.416353787</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids">
+               <technology name="refined liquids">
+                  <period year="1990">
+                     <minicam-energy-input name="refined liquids industrial">
+                        <calibrated-value>0.387862188</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="refined liquids industrial">
+                        <calibrated-value>0.391700366</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Western Europe">
+         <supplysector name="industrial energy use">
+            <subsector name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <minicam-energy-input name="delivered biomass">
+                        <calibrated-value>0.317713132</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered biomass">
+                        <calibrated-value>0.266981562</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <minicam-energy-input name="delivered coal">
+                        <calibrated-value>2.999079297</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered coal">
+                        <calibrated-value>1.874834636</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_ind">
+                        <calibrated-value>3.488051565</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_ind">
+                        <calibrated-value>4.287840577</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <minicam-energy-input name="wholesale gas">
+                        <calibrated-value>3.329125005</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="wholesale gas">
+                        <calibrated-value>4.152379025</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids">
+               <technology name="refined liquids">
+                  <period year="1990">
+                     <minicam-energy-input name="refined liquids industrial">
+                        <calibrated-value>2.675001498</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="refined liquids industrial">
+                        <calibrated-value>2.554924089</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Japan">
+         <supplysector name="industrial energy use">
+            <subsector name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <minicam-energy-input name="delivered biomass">
+                        <calibrated-value>0.058607665</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered biomass">
+                        <calibrated-value>0.063667395</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <minicam-energy-input name="delivered coal">
+                        <calibrated-value>1.593046919</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered coal">
+                        <calibrated-value>1.55198934</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_ind">
+                        <calibrated-value>1.199666205</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_ind">
+                        <calibrated-value>1.235699483</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <minicam-energy-input name="wholesale gas">
+                        <calibrated-value>0.368610059</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="wholesale gas">
+                        <calibrated-value>0.48190068</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids">
+               <technology name="refined liquids">
+                  <period year="1990">
+                     <minicam-energy-input name="refined liquids industrial">
+                        <calibrated-value>2.012684172</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="refined liquids industrial">
+                        <calibrated-value>1.739186344</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Australia_NZ">
+         <supplysector name="industrial energy use">
+            <subsector name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <minicam-energy-input name="delivered biomass">
+                        <calibrated-value>0.093119766</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered biomass">
+                        <calibrated-value>0.14035305</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <minicam-energy-input name="delivered coal">
+                        <calibrated-value>0.232505131</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered coal">
+                        <calibrated-value>0.186641584</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_ind">
+                        <calibrated-value>0.274680199</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_ind">
+                        <calibrated-value>0.42191961</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <minicam-energy-input name="wholesale gas">
+                        <calibrated-value>0.425396677</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="wholesale gas">
+                        <calibrated-value>0.409690739</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids">
+               <technology name="refined liquids">
+                  <period year="1990">
+                     <minicam-energy-input name="refined liquids industrial">
+                        <calibrated-value>0.192601174</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="refined liquids industrial">
+                        <calibrated-value>0.312109193</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Former Soviet Union">
+         <supplysector name="industrial energy use">
+            <subsector name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <minicam-energy-input name="delivered biomass">
+                        <calibrated-value>0.049419634</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered biomass">
+                        <calibrated-value>0.163135175</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <minicam-energy-input name="delivered coal">
+                        <calibrated-value>4.056856263</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered coal">
+                        <calibrated-value>2.553618992</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_ind">
+                        <calibrated-value>3.92965347</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_ind">
+                        <calibrated-value>2.431977647</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <minicam-energy-input name="wholesale gas">
+                        <calibrated-value>3.66205754</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="wholesale gas">
+                        <calibrated-value>5.002552715</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids">
+               <technology name="refined liquids">
+                  <period year="1990">
+                     <minicam-energy-input name="refined liquids industrial">
+                        <calibrated-value>3.44921228</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="refined liquids industrial">
+                        <calibrated-value>1.547197836</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="China">
+         <supplysector name="industrial energy use">
+            <subsector name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <minicam-energy-input name="delivered biomass">
+                        <calibrated-value>0.000184219</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered biomass">
+                        <calibrated-value>0.066707598</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <minicam-energy-input name="delivered coal">
+                        <calibrated-value>9.675854994</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered coal">
+                        <calibrated-value>15.8624483</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_ind">
+                        <calibrated-value>1.493003941</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_ind">
+                        <calibrated-value>5.169665584</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <minicam-energy-input name="wholesale gas">
+                        <calibrated-value>0.450991456</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="wholesale gas">
+                        <calibrated-value>1.242488715</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids">
+               <technology name="refined liquids">
+                  <period year="1990">
+                     <minicam-energy-input name="refined liquids industrial">
+                        <calibrated-value>1.560014969</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="refined liquids industrial">
+                        <calibrated-value>3.161571411</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Middle East">
+         <supplysector name="industrial energy use">
+            <subsector name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <minicam-energy-input name="delivered biomass">
+                        <calibrated-value>0.004656503</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered biomass">
+                        <calibrated-value>0.001521261</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <minicam-energy-input name="delivered coal">
+                        <calibrated-value>0.027791978</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered coal">
+                        <calibrated-value>0.051476706</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_ind">
+                        <calibrated-value>0.131540926</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_ind">
+                        <calibrated-value>0.408327836</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <minicam-energy-input name="wholesale gas">
+                        <calibrated-value>0.883705363</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="wholesale gas">
+                        <calibrated-value>1.903491368</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids">
+               <technology name="refined liquids">
+                  <period year="1990">
+                     <minicam-energy-input name="refined liquids industrial">
+                        <calibrated-value>0.964590264</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="refined liquids industrial">
+                        <calibrated-value>1.393348245</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Africa">
+         <supplysector name="industrial energy use">
+            <subsector name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <minicam-energy-input name="delivered biomass">
+                        <calibrated-value>0.303200604</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered biomass">
+                        <calibrated-value>3.053829891</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <minicam-energy-input name="delivered coal">
+                        <calibrated-value>0.72272175</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered coal">
+                        <calibrated-value>0.607482717</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_ind">
+                        <calibrated-value>0.5479937</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_ind">
+                        <calibrated-value>0.792539613</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <minicam-energy-input name="wholesale gas">
+                        <calibrated-value>0.567462447</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="wholesale gas">
+                        <calibrated-value>0.965992244</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids">
+               <technology name="refined liquids">
+                  <period year="1990">
+                     <minicam-energy-input name="refined liquids industrial">
+                        <calibrated-value>0.604162715</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="refined liquids industrial">
+                        <calibrated-value>0.638040343</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Latin America">
+         <supplysector name="industrial energy use">
+            <subsector name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <minicam-energy-input name="delivered biomass">
+                        <calibrated-value>2.027975641</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered biomass">
+                        <calibrated-value>2.403663626</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <minicam-energy-input name="delivered coal">
+                        <calibrated-value>0.470762627</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered coal">
+                        <calibrated-value>0.546346489</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_ind">
+                        <calibrated-value>0.942192732</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_ind">
+                        <calibrated-value>1.684577565</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <minicam-energy-input name="wholesale gas">
+                        <calibrated-value>1.724644746</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="wholesale gas">
+                        <calibrated-value>2.547975061</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids">
+               <technology name="refined liquids">
+                  <period year="1990">
+                     <minicam-energy-input name="refined liquids industrial">
+                        <calibrated-value>1.527478538</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="refined liquids industrial">
+                        <calibrated-value>1.830052717</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Southeast Asia">
+         <supplysector name="industrial energy use">
+            <subsector name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <minicam-energy-input name="delivered biomass">
+                        <calibrated-value>1.226787703</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered biomass">
+                        <calibrated-value>1.501690176</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <minicam-energy-input name="delivered coal">
+                        <calibrated-value>0.161861537</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered coal">
+                        <calibrated-value>0.787872201</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_ind">
+                        <calibrated-value>0.450176906</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_ind">
+                        <calibrated-value>1.073615022</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <minicam-energy-input name="wholesale gas">
+                        <calibrated-value>0.717277011</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="wholesale gas">
+                        <calibrated-value>1.759805373</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids">
+               <technology name="refined liquids">
+                  <period year="1990">
+                     <minicam-energy-input name="refined liquids industrial">
+                        <calibrated-value>1.153730851</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="refined liquids industrial">
+                        <calibrated-value>1.558807725</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Eastern Europe">
+         <supplysector name="industrial energy use">
+            <subsector name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <minicam-energy-input name="delivered biomass">
+                        <calibrated-value>0.05120368</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered biomass">
+                        <calibrated-value>0.121214127</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <minicam-energy-input name="delivered coal">
+                        <calibrated-value>1.882145315</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered coal">
+                        <calibrated-value>0.783543372</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_ind">
+                        <calibrated-value>0.758776233</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_ind">
+                        <calibrated-value>0.657940971</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <minicam-energy-input name="wholesale gas">
+                        <calibrated-value>1.343797549</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="wholesale gas">
+                        <calibrated-value>0.596286803</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids">
+               <technology name="refined liquids">
+                  <period year="1990">
+                     <minicam-energy-input name="refined liquids industrial">
+                        <calibrated-value>0.851541268</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="refined liquids industrial">
+                        <calibrated-value>0.432640991</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Korea">
+         <supplysector name="industrial energy use">
+            <subsector name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <minicam-energy-input name="delivered biomass">
+                        <calibrated-value>0.0001</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered biomass">
+                        <calibrated-value>0.050996431</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <minicam-energy-input name="delivered coal">
+                        <calibrated-value>0.366039613</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered coal">
+                        <calibrated-value>0.338928279</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_ind">
+                        <calibrated-value>0.199356585</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_ind">
+                        <calibrated-value>0.66605415</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <minicam-energy-input name="wholesale gas">
+                        <calibrated-value>0.004161679</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="wholesale gas">
+                        <calibrated-value>0.223071076</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids">
+               <technology name="refined liquids">
+                  <period year="1990">
+                     <minicam-energy-input name="refined liquids industrial">
+                        <calibrated-value>0.495797238</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="refined liquids industrial">
+                        <calibrated-value>0.368197053</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="India">
+         <supplysector name="industrial energy use">
+            <subsector name="biomass">
+               <technology name="biomass">
+                  <period year="1990">
+                     <minicam-energy-input name="delivered biomass">
+                        <calibrated-value>0</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered biomass">
+                        <calibrated-value>1.134748742</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal">
+               <technology name="coal">
+                  <period year="1990">
+                     <minicam-energy-input name="delivered coal">
+                        <calibrated-value>1.301083165</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="delivered coal">
+                        <calibrated-value>1.439379463</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1990">
+                     <minicam-energy-input name="elect_td_ind">
+                        <calibrated-value>0.533935898</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="elect_td_ind">
+                        <calibrated-value>1.049576941</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas">
+               <technology name="gas">
+                  <period year="1990">
+                     <minicam-energy-input name="wholesale gas">
+                        <calibrated-value>0.041197431</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="wholesale gas">
+                        <calibrated-value>0.301784713</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="refined liquids">
+               <technology name="refined liquids">
+                  <period year="1990">
+                     <minicam-energy-input name="refined liquids industrial">
+                        <calibrated-value>0.454262932</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="refined liquids industrial">
+                        <calibrated-value>1.042798072</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+   </world>
+</scenario>

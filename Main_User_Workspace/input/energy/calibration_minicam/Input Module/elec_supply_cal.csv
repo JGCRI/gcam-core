@@ -1,299 +1,182 @@
-Notes,,,,,,,,,
-"Replaced technology names to match names in GTSP version (e.g., ""Existing"")",,,,,,,,,
-Remove hydro and nuclear efficiency - leave model assumption as is.,,,,,,,,,
-Remove duplicate calinput values for oil and gas.  Also efficiencies (though they would not hurt),,,,,,,,,
-"Hydro and Nuclear are in new table, fixedoutput, rather than calibrated. Since IEA hydro efficiencies were about 1, fixedoutput = what was in for calinput.",,,,,,,,,
-,"for nuclear, computed fixedoutput based on input and read in efficiencies",,,,,,,,
-Removed Geo for now,,,,,,,,,
-"FSU was still zero, I typed in 1990 values from GTSP input file",,,,,,,,,
-China efficiencies were way off.  I typed in old values,,,,,,,,Fix output of hydro and nuclear,
-9/20/2006,,,,,,,,1,"1 = yes, 0 = calibrate output"
-replaced 0 efficiencies with a very low number,,,,10/19/2007,,,,,
-put in calinputtables for solar and wind,,,,gpk,,,,,
-9/21/2006,,,,Updated to new IEA data (2005 values),,,,,
-put in IEA SOL/WIND into wind,,,,Solar and wind are calculated with detailed IEA database for 1990 and 2005,,,,,
-FSU is fake,FSU is now real,,,hydro includes geothermal,,,,,
-,,,,removed 2000 data b/c it isn't used for calibration,,,,,
-Input Values,,,,elec calibration assumes all energy to CHP is to electricity,,,,,,,,,
-INPUT_TABLE,,,,there is no fuel input credit given for heat produced,,,,,,,,,
-Variable ID,,,,,,,,,,,,,
-22,,,,,,,,,,Global,Total,2033.642631,2072.482673
-,,,,,,,,lookuptags,,,,output,
-Region,supplysector,subsector,technology,minicam-energy-input,1990,2005,,,,Region,technology,output1990,output2005
-Africa,electricity,biomass,Biomass (existing),regional biomass,0.000083736,0.02344608,,AfricaBiomass (existing),,Africa,Biomass (existing),0.0000108,0.0022968
-Africa,electricity,coal,Coal (existing),regional coal,1.638629784,2.462759496,,AfricaCoal (existing),,Africa,Coal (existing),0.5924232,0.9033372
-Africa,electricity,gas,Gas (existing),wholesale gas,0.466242048,1.45135422,,AfricaGas (existing),,Africa,Gas (existing),0.1544976,0.5368968
-Africa,electricity,oil,Oil (existing),refined liquids electricity,0.466744464,0.708908976,,AfricaOil (existing),,Africa,Oil (existing),0.1553544,0.2115036
-Australia_NZ,electricity,biomass,Biomass (existing),regional biomass,0.033745608,0.058489596,,Australia_NZBiomass (existing),,Australia_NZ,Biomass (existing),0.003636,0.0097596
-Australia_NZ,electricity,coal,Coal (existing),regional coal,1.214674416,2.117097288,,Australia_NZCoal (existing),,Australia_NZ,Coal (existing),0.4307184,0.744858
-Australia_NZ,electricity,gas,Gas (existing),wholesale gas,0.1967796,0.400174344,,Australia_NZGas (existing),,Australia_NZ,Gas (existing),0.079362,0.1395612
-Australia_NZ,electricity,oil,Oil (existing),refined liquids electricity,0.036592632,0.023906628,,Australia_NZOil (existing),,Australia_NZ,Oil (existing),0.0151704,0.006948
-Canada,electricity,biomass,Biomass (existing),regional biomass,0.037388124,0.08813214,,CanadaBiomass (existing),,Canada,Biomass (existing),0.0139356,0.032598
-Canada,electricity,coal,Coal (existing),regional coal,0.836187696,0.990680616,,CanadaCoal (existing),,Canada,Coal (existing),0.295992,0.3822768
-Canada,electricity,gas,Gas (existing),wholesale gas,0.078251292,0.335069604,,CanadaGas (existing),,Canada,Gas (existing),0.0347544,0.1307664
-Canada,electricity,oil,Oil (existing),refined liquids electricity,0.158972796,0.17500824,,CanadaOil (existing),,Canada,Oil (existing),0.0592848,0.0699912
-China,electricity,biomass,Biomass (existing),regional biomass,0,0.036048348,,ChinaBiomass (existing),,China,Biomass (existing),0,0.0090144
-China,electricity,coal,Coal (existing),regional coal,5.77192248,22.36132199,,ChinaCoal (existing),,China,Coal (existing),1.6526376,7.1768232
-China,electricity,gas,Gas (existing),wholesale gas,0.025706952,0.3119166,,ChinaGas (existing),,China,Gas (existing),0.0099684,0.1170612
-China,electricity,oil,Oil (existing),refined liquids electricity,0.556467588,0.698651316,,ChinaOil (existing),,China,Oil (existing),0.1855008,0.2336076
-Eastern Europe,electricity,biomass,Biomass (existing),regional biomass,0.017207748,0.057945312,,Eastern EuropeBiomass (existing),,Eastern Europe,Biomass (existing),0.0010836,0.016506
-Eastern Europe,electricity,coal,Coal (existing),regional coal,3.77670294,3.289108212,,Eastern EuropeCoal (existing),,Eastern Europe,Coal (existing),1.0205856,1.0525824
-Eastern Europe,electricity,gas,Gas (existing),wholesale gas,0.612989388,0.430737984,,Eastern EuropeGas (existing),,Eastern Europe,Gas (existing),0.1287144,0.1296792
-Eastern Europe,electricity,oil,Oil (existing),refined liquids electricity,0.479053656,0.109317348,,Eastern EuropeOil (existing),,Eastern Europe,Oil (existing),0.0901476,0.0329724
-Former Soviet Union,electricity,biomass,Biomass (existing),regional biomass,0.005191632,0.074776248,,Former Soviet UnionBiomass (existing),,Former Soviet Union,Biomass (existing),0.0001332,0.0099
-Former Soviet Union,electricity,coal,Coal (existing),regional coal,5.424459948,3.957823908,,Former Soviet UnionCoal (existing),,Former Soviet Union,Coal (existing),1.2934656,0.9907056
-Former Soviet Union,electricity,gas,Gas (existing),wholesale gas,8.98319808,7.808633208,,Former Soviet UnionGas (existing),,Former Soviet Union,Gas (existing),2.3911416,2.085264
-Former Soviet Union,electricity,oil,Oil (existing),refined liquids electricity,3.534998976,0.534779964,,Former Soviet UnionOil (existing),,Former Soviet Union,Oil (existing),0.8674668,0.1521216
-India,electricity,biomass,Biomass (existing),regional biomass,0,0.045803592,,IndiaBiomass (existing),,India,Biomass (existing),0,0.0068652
-India,electricity,coal,Coal (existing),regional coal,2.430353664,6.511143888,,IndiaCoal (existing),,India,Coal (existing),0.6897708,1.727838
-India,electricity,gas,Gas (existing),wholesale gas,0.144905148,0.536705892,,IndiaGas (existing),,India,Gas (existing),0.0358488,0.22491
-India,electricity,oil,Oil (existing),refined liquids electricity,0.150431724,0.343778148,,IndiaOil (existing),,India,Oil (existing),0.0361728,0.1123992
-Japan,electricity,biomass,Biomass (existing),regional biomass,0.09504036,0.155288412,,JapanBiomass (existing),,Japan,Biomass (existing),0.0383868,0.070344
-Japan,electricity,coal,Coal (existing),regional coal,1.072532556,2.637097848,,JapanCoal (existing),,Japan,Coal (existing),0.4207572,1.1135916
-Japan,electricity,gas,Gas (existing),wholesale gas,1.393701984,1.841019696,,JapanGas (existing),,Japan,Gas (existing),0.5980788,0.8329824
-Japan,electricity,oil,Oil (existing),refined liquids electricity,2.041441812,1.097402148,,JapanOil (existing),,Japan,Oil (existing),0.8991,0.5255568
-Korea,electricity,biomass,Biomass (existing),regional biomass,0,0.006447672,,KoreaBiomass (existing),,Korea,Biomass (existing),0,0.0010584
-Korea,electricity,coal,Coal (existing),regional coal,0.24932394,1.384867836,,KoreaCoal (existing),,Korea,Coal (existing),0.0635796,0.5356476
-Korea,electricity,gas,Gas (existing),wholesale gas,0.085285116,0.458622072,,KoreaGas (existing),,Korea,Gas (existing),0.0345744,0.2237544
-Korea,electricity,oil,Oil (existing),refined liquids electricity,0.178943832,0.19343016,,KoreaOil (existing),,Korea,Oil (existing),0.0678852,0.0935712
-Latin America,electricity,biomass,Biomass (existing),regional biomass,0.08310798,0.260293356,,Latin AmericaBiomass (existing),,Latin America,Biomass (existing),0.0236592,0.0788328
-Latin America,electricity,coal,Coal (existing),regional coal,0.26397774,0.632960424,,Latin AmericaCoal (existing),,Latin America,Coal (existing),0.0826848,0.2187864
-Latin America,electricity,gas,Gas (existing),wholesale gas,0.713179512,1.893229092,,Latin AmericaGas (existing),,Latin America,Gas (existing),0.2132352,0.7518996
-Latin America,electricity,oil,Oil (existing),refined liquids electricity,1.273164012,1.692178956,,Latin AmericaOil (existing),,Latin America,Oil (existing),0.4351572,0.5896512
-Middle East,electricity,biomass,Biomass (existing),regional biomass,0,0,,Middle EastBiomass (existing),,Middle East,Biomass (existing),0,0
-Middle East,electricity,coal,Coal (existing),regional coal,0.09985518,0.319620312,,Middle EastCoal (existing),,Middle East,Coal (existing),0.0376848,0.1275228
-Middle East,electricity,gas,Gas (existing),wholesale gas,1.320684192,4.084809552,,Middle EastGas (existing),,Middle East,Gas (existing),0.3743856,1.2351312
-Middle East,electricity,oil,Oil (existing),refined liquids electricity,1.195247664,2.45848896,,Middle EastOil (existing),,Middle East,Oil (existing),0.4089168,0.8649288
-Southeast Asia,electricity,biomass,Biomass (existing),regional biomass,0,0.078795576,,Southeast AsiaBiomass (existing),,Southeast Asia,Biomass (existing),0,0.0224136
-Southeast Asia,electricity,coal,Coal (existing),regional coal,0.788500044,2.7852687,,Southeast AsiaCoal (existing),,Southeast Asia,Coal (existing),0.2901204,0.9238824
-Southeast Asia,electricity,gas,Gas (existing),wholesale gas,0.49948524,2.826341208,,Southeast AsiaGas (existing),,Southeast Asia,Gas (existing),0.1657944,1.1987244
-Southeast Asia,electricity,oil,Oil (existing),refined liquids electricity,1.053273276,1.075086504,,Southeast AsiaOil (existing),,Southeast Asia,Oil (existing),0.365328,0.425052
-USA,electricity,biomass,Biomass (existing),regional biomass,1.660568616,0.9116757,,USABiomass (existing),,USA,Biomass (existing),0.3109032,0.256374
-USA,electricity,coal,Coal (existing),regional coal,16.38667465,21.17884406,,USACoal (existing),,USA,Coal (existing),6.1187328,7.7541444
-USA,electricity,gas,Gas (existing),wholesale gas,3.757066848,6.473295216,,USAGas (existing),,USA,Gas (existing),1.3740084,2.8181844
-USA,electricity,oil,Oil (existing),refined liquids electricity,1.141196076,1.413212472,,USAOil (existing),,USA,Oil (existing),0.4703364,0.5087412
-Western Europe,electricity,biomass,Biomass (existing),regional biomass,0.238103316,1.060558308,,Western EuropeBiomass (existing),,Western Europe,Biomass (existing),0.0547488,0.2965428
-Western Europe,electricity,coal,Coal (existing),regional coal,8.442179784,7.35432354,,Western EuropeCoal (existing),,Western Europe,Coal (existing),2.9565072,2.81061
-Western Europe,electricity,gas,Gas (existing),wholesale gas,1.461946824,5.282778636,,Western EuropeGas (existing),,Western Europe,Gas (existing),0.5751684,2.5177788
-Western Europe,electricity,oil,Oil (existing),refined liquids electricity,1.870411032,1.342036872,,Western EuropeOil (existing),,Western Europe,Oil (existing),0.7224768,0.49482
-,,,,,,,,,,USA,hydro,0.9833472,0.9808092
-Efficiencies,,,,,,,,,,Canada,hydro,1.0682532,1.308654
-INPUT_TABLE,,,,,,,,,,Western Europe,hydro,1.5793632,1.7148312
-Variable ID,,,,,,,,,,Japan,hydro,0.321498,0.2815596
-1011,,,,,,,,,,Australia_NZ,hydro,0.1349568,0.1409616
-,,,,,,,,,,Former Soviet Union,hydro,0.8317908,0.8752284
-Region,supplysector,subsector,technology,minicam-energy-input,1990,2005,,,,China,hydro,0.5316804,1.5539292
-Africa,electricity,biomass,Biomass (existing),regional biomass,0.128976784,0.097960938,,AfricaBiomass (existing),,Middle East,hydro,0.04293,0.076302
-Africa,electricity,coal,Coal (existing),regional coal,0.361535721,0.366798789,,AfricaCoal (existing),,Africa,hydro,0.2027592,0.3267648
-Africa,electricity,gas,Gas (existing),wholesale gas,0.331367796,0.369928163,,AfricaGas (existing),,Latin America,hydro,1.3955832,2.3288436
-Africa,electricity,oil,Oil (existing),refined liquids electricity,0.332846797,0.298350856,,AfricaOil (existing),,Southeast Asia,hydro,0.207252,0.3074832
-Australia_NZ,electricity,biomass,Biomass (existing),regional biomass,0.107747355,0.166860445,,Australia_NZBiomass (existing),,Eastern Europe,hydro,0.1459728,0.2451996
-Australia_NZ,electricity,coal,Coal (existing),regional coal,0.354595762,0.35182984,,Australia_NZCoal (existing),,Korea,hydro,0.0228996,0.0132228
-Australia_NZ,electricity,gas,Gas (existing),wholesale gas,0.403304001,0.348750993,,Australia_NZGas (existing),,India,hydro,0.2579616,0.3599964
-Australia_NZ,electricity,oil,Oil (existing),refined liquids electricity,0.414575262,0.290630699,,Australia_NZOil (existing),,USA,Gen_II_LWR,2.2017204,2.9186136
-Canada,electricity,biomass,Biomass (existing),regional biomass,0.372727982,0.369876415,,CanadaBiomass (existing),,Canada,Gen_II_LWR,0.2626812,0.331344
-Canada,electricity,coal,Coal (existing),regional coal,0.353977942,0.385872898,,CanadaCoal (existing),,Western Europe,Gen_II_LWR,2.6777772,3.3275592
-Canada,electricity,gas,Gas (existing),wholesale gas,0.444138354,0.390266376,,CanadaGas (existing),,Japan,Gen_II_LWR,0.7281792,1.097118
-Canada,electricity,oil,Oil (existing),refined liquids electricity,0.372924183,0.399930883,,CanadaOil (existing),,Australia_NZ,Gen_II_LWR,0,0
-China,electricity,biomass,Biomass (existing),regional biomass,0.001,0.250064164,,ChinaBiomass (existing),,Former Soviet Union,Gen_II_LWR,0.7614612,0.8947404
-China,electricity,coal,Coal (existing),regional coal,0.286323596,0.320948073,,ChinaCoal (existing),,China,Gen_II_LWR,0,0.1911168
-China,electricity,gas,Gas (existing),wholesale gas,0.387770592,0.375296473,,ChinaGas (existing),,Middle East,Gen_II_LWR,0,0
-China,electricity,oil,Oil (existing),refined liquids electricity,0.333354186,0.334369369,,ChinaOil (existing),,Africa,Gen_II_LWR,0.0304164,0.0406548
-Eastern Europe,electricity,biomass,Biomass (existing),regional biomass,0.062971633,0.284854796,,Eastern EuropeBiomass (existing),,Latin America,Gen_II_LWR,0.044838,0.0991188
-Eastern Europe,electricity,coal,Coal (existing),regional coal,0.270231897,0.320020605,,Eastern EuropeCoal (existing),,Southeast Asia,Gen_II_LWR,0.1193724,0.1528416
-Eastern Europe,electricity,gas,Gas (existing),wholesale gas,0.209978186,0.301062838,,Eastern EuropeGas (existing),,Eastern Europe,Gen_II_LWR,0.2075004,0.3109716
-Eastern Europe,electricity,oil,Oil (existing),refined liquids electricity,0.188178503,0.301620928,,Eastern EuropeOil (existing),,Korea,Gen_II_LWR,0.1903932,0.5284044
-Former Soviet Union,electricity,biomass,Biomass (existing),regional biomass,0.025656672,0.132394982,,Former Soviet UnionBiomass (existing),,India,Gen_II_LWR,0.0221076,0.0623268
-Former Soviet Union,electricity,coal,Coal (existing),regional coal,0.238450576,0.250315735,,Former Soviet UnionCoal (existing),,Africa,PV,0,0.002212889
-Former Soviet Union,electricity,gas,Gas (existing),wholesale gas,0.266179325,0.267045966,,Former Soviet UnionGas (existing),,Australia_NZ,PV,0,0.000202498
-Former Soviet Union,electricity,oil,Oil (existing),refined liquids electricity,0.245393791,0.284456431,,Former Soviet UnionOil (existing),,Canada,PV,0.0000936,0.00017281
-India,electricity,biomass,Biomass (existing),regional biomass,0.001,0.149883441,,IndiaBiomass (existing),,China,PV,0,0
-India,electricity,coal,Coal (existing),regional coal,0.28381499,0.265366275,,IndiaCoal (existing),,Eastern Europe,PV,0,2.72589E-06
-India,electricity,gas,Gas (existing),wholesale gas,0.247394937,0.419056327,,IndiaGas (existing),,Former Soviet Union,PV,0,0.000614789
-India,electricity,oil,Oil (existing),refined liquids electricity,0.240459918,0.326952718,,IndiaOil (existing),,India,PV,9.99913E-09,1.441E-05
-Japan,electricity,biomass,Biomass (existing),regional biomass,0.403899985,0.452989371,,JapanBiomass (existing),,Japan,PV,0.0000036,7.20999E-06
-Japan,electricity,coal,Coal (existing),regional coal,0.392302497,0.422279212,,JapanCoal (existing),,Korea,PV,0.0000036,0.000166717
-Japan,electricity,gas,Gas (existing),wholesale gas,0.429129618,0.452457082,,JapanGas (existing),,Latin America,PV,0,0.001015405
-Japan,electricity,oil,Oil (existing),refined liquids electricity,0.440424015,0.478909943,,JapanOil (existing),,Middle East,PV,9.9723E-09,9.99802E-09
-Korea,electricity,biomass,Biomass (existing),regional biomass,0.001,0.164152271,,KoreaBiomass (existing),,Southeast Asia,PV,0,9.98613E-09
-Korea,electricity,coal,Coal (existing),regional coal,0.255008003,0.386786079,,KoreaCoal (existing),,USA,PV,0.002397608,0.004532409
-Korea,electricity,gas,Gas (existing),wholesale gas,0.405397819,0.487884063,,KoreaGas (existing),,Western Europe,PV,0.002202741,0.032282853
-Korea,electricity,oil,Oil (existing),refined liquids electricity,0.379365968,0.483746692,,KoreaOil (existing),,Africa,wind,0,0.002715511
-Latin America,electricity,biomass,Biomass (existing),regional biomass,0.284680244,0.302861361,,Latin AmericaBiomass (existing),,Australia_NZ,wind,0,0.005226302
-Latin America,electricity,coal,Coal (existing),regional coal,0.313226411,0.345655734,,Latin AmericaCoal (existing),,Canada,wind,0,0.00529559
-Latin America,electricity,gas,Gas (existing),wholesale gas,0.298992324,0.397151936,,Latin AmericaGas (existing),,China,wind,0,0
-Latin America,electricity,oil,Oil (existing),refined liquids electricity,0.341791942,0.348456762,,Latin AmericaOil (existing),,Eastern Europe,wind,0,0.000663274
-Middle East,electricity,biomass,Biomass (existing),regional biomass,0.001,0.001,,Middle EastBiomass (existing),,Former Soviet Union,wind,0,0.000458011
-Middle East,electricity,coal,Coal (existing),regional coal,0.377394543,0.398982152,,Middle EastCoal (existing),,India,wind,0.00011519,0.02219759
-Middle East,electricity,gas,Gas (existing),wholesale gas,0.28347852,0.302371796,,Middle EastGas (existing),,Japan,wind,0,0.00631439
-Middle East,electricity,oil,Oil (existing),refined liquids electricity,0.342118887,0.351813172,,Middle EastOil (existing),,Korea,wind,0,0.000355283
-Southeast Asia,electricity,biomass,Biomass (existing),regional biomass,0.001,0.284452518,,Southeast AsiaBiomass (existing),,Latin America,wind,0,0.000503795
-Southeast Asia,electricity,coal,Coal (existing),regional coal,0.367939612,0.33170315,,Southeast AsiaCoal (existing),,Middle East,wind,3.59003E-06,5.039E-05
-Southeast Asia,electricity,gas,Gas (existing),wholesale gas,0.331930529,0.424125862,,Southeast AsiaGas (existing),,Southeast Asia,wind,0,7.19001E-06
-Southeast Asia,electricity,oil,Oil (existing),refined liquids electricity,0.346850156,0.395365395,,Southeast AsiaOil (existing),,USA,wind,0.011037592,0.064371591
-USA,electricity,biomass,Biomass (existing),regional biomass,0.187226952,0.281211839,,USABiomass (existing),,Western Europe,wind,0.002934459,0.252815547
-USA,electricity,coal,Coal (existing),regional coal,0.373396856,0.366126894,,USACoal (existing),,Africa,geothermal,0.0011736,0.0031932
-USA,electricity,gas,Gas (existing),wholesale gas,0.365713056,0.435355457,,USAGas (existing),,Australia_NZ,geothermal,0.0079776,0.0102672
-USA,electricity,oil,Oil (existing),refined liquids electricity,0.412143373,0.359989181,,USAOil (existing),,Canada,geothermal,0,0
-Western Europe,electricity,biomass,Biomass (existing),regional biomass,0.229937159,0.279610086,,Western EuropeBiomass (existing),,China,geothermal,0,0
-Western Europe,electricity,coal,Coal (existing),regional coal,0.350206614,0.382171111,,Western EuropeCoal (existing),,Eastern Europe,geothermal,0,0
-Western Europe,electricity,gas,Gas (existing),wholesale gas,0.393426348,0.476601231,,Western EuropeGas (existing),,Former Soviet Union,geothermal,0.0001008,0.001476
-Western Europe,electricity,oil,Oil (existing),refined liquids electricity,0.386266327,0.3687082,,Western EuropeOil (existing),,India,geothermal,0,0
-,,,,,,,,,,Japan,geothermal,0.0062676,0.0116136
-,,,,,,,,,,Korea,geothermal,0,0
-,,,,,,,,,,Latin America,geothermal,0.0213444,0.0351684
-,,,,,,,,,,Middle East,geothermal,0,0
-,,,,,,,,,,Southeast Asia,geothermal,0.0236268,0.0594288
-,,,,,,,,,,USA,geothermal,0.0576432,0.0604008
-,,,,,,,,,,Western Europe,geothermal,0.0129816,0.0257364
-,,,,,,,,,,Global,Nonfossil,2006.302643,2027.943102
-
-Hydro,,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,
-44,,,,,,,,,,,,,
-,,,,fixedOutput,,,,,,,,,
-Region,supplysector,subsector,technology,1990,2005,,,,,,,,
-Africa,electricity,hydro,hydro,0.2027592,0.3267648,,,Africahydro,,,,,
-Australia_NZ,electricity,hydro,hydro,0.1349568,0.1409616,,,Australia_NZhydro,,,,,
-Canada,electricity,hydro,hydro,1.0682532,1.308654,,,Canadahydro,,,,,
-China,electricity,hydro,hydro,0.5316804,1.5539292,,,Chinahydro,,,,,
-Eastern Europe,electricity,hydro,hydro,0.1459728,0.2451996,,,Eastern Europehydro,
-Former Soviet Union,electricity,hydro,hydro,0.8317908,0.8752284,,,Former Soviet Unionhydro,
-India,electricity,hydro,hydro,0.2579616,0.3599964,,,Indiahydro,
-Japan,electricity,hydro,hydro,0.321498,0.2815596,,,Japanhydro,
-Korea,electricity,hydro,hydro,0.0228996,0.0132228,,,Koreahydro,
-Latin America,electricity,hydro,hydro,1.3955832,2.3288436,,,Latin Americahydro,
-Middle East,electricity,hydro,hydro,0.04293,0.076302,,,Middle Easthydro,
-Southeast Asia,electricity,hydro,hydro,0.207252,0.3074832,,,Southeast Asiahydro,
-USA,electricity,hydro,hydro,0.9833472,0.9808092,,,USAhydro,
-Western Europe,electricity,hydro,hydro,1.5793632,1.7148312,,,Western Europehydro,
-,,,,,,,,,
-,,,,,,,,,
-Nuclear,,,,,,,,,
-INPUT_TABLE,,,,,,,,,
-Variable ID,,,,,,,,,
-44,,,,,,,,,
-,,,,fixedOutput,,,,,
-Region,supplysector,subsector,technology,1990,2005,,,,
-Africa,electricity,nuclear,Gen_II_LWR,0.0304164,0.0406548,,,AfricaGen_II_LWR,
-Australia_NZ,electricity,nuclear,Gen_II_LWR,0,0,,,Australia_NZGen_II_LWR,
-Canada,electricity,nuclear,Gen_II_LWR,0.2626812,0.331344,,,CanadaGen_II_LWR,
-China,electricity,nuclear,Gen_II_LWR,0,0.1911168,,,ChinaGen_II_LWR,
-Eastern Europe,electricity,nuclear,Gen_II_LWR,0.2075004,0.3109716,,,Eastern EuropeGen_II_LWR,
-Former Soviet Union,electricity,nuclear,Gen_II_LWR,0.7614612,0.8947404,,,Former Soviet UnionGen_II_LWR,
-India,electricity,nuclear,Gen_II_LWR,0.0221076,0.0623268,,,IndiaGen_II_LWR,
-Japan,electricity,nuclear,Gen_II_LWR,0.7281792,1.097118,,,JapanGen_II_LWR,
-Korea,electricity,nuclear,Gen_II_LWR,0.1903932,0.5284044,,,KoreaGen_II_LWR,
-Latin America,electricity,nuclear,Gen_II_LWR,0.044838,0.0991188,,,Latin AmericaGen_II_LWR,
-Middle East,electricity,nuclear,Gen_II_LWR,0,0,,,Middle EastGen_II_LWR,
-Southeast Asia,electricity,nuclear,Gen_II_LWR,0.1193724,0.1528416,,,Southeast AsiaGen_II_LWR,
-USA,electricity,nuclear,Gen_II_LWR,2.2017204,2.9186136,,,USAGen_II_LWR,
-Western Europe,electricity,nuclear,Gen_II_LWR,2.6777772,3.3275592,,,Western EuropeGen_II_LWR,
-
-
-calinput table for solar and wind,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,
-Variable ID,,,,,,,,,,
-22,,,,,"set up so that 1990 value can be subtracted from 2005, if 1990 techs have lifetime of >15",,,,,
-,,,,,calibrated-value,calibrated-value,,,actual electricity produced,
-Region,supplysector,subsector,technology,minicam-energy-input,1990,2005,,calinput1990,2005,
-Africa,electricity,solar,PV,SolarAndAuxiliary,0,0.002212884,,0,0.002212884,Africawind
-Australia_NZ,electricity,solar,PV,SolarAndAuxiliary,0,0.000202489,,0,0.000202489,Australia_NZwind
-Canada,electricity,solar,PV,SolarAndAuxiliary,0,0.0001728,,0.0000936,0.0001728,Canadawind
-China,electricity,solar,PV,SolarAndAuxiliary,0,0,,0,0,Chinawind
-Eastern Europe,electricity,solar,PV,SolarAndAuxiliary,0,0,,0,2.71837E-06,Eastern Europewind
-Former Soviet Union,electricity,solar,PV,SolarAndAuxiliary,0,0.000307393,,0,0.000307393,Former Soviet Unionwind
-India,electricity,solar,PV,SolarAndAuxiliary,0,0,,0,1.44E-05,Indiawind
-Japan,electricity,solar,PV,SolarAndAuxiliary,0,0,,0.0000036,7.2E-06,Japanwind
-Korea,electricity,solar,PV,SolarAndAuxiliary,0,0.000166712,,0.0000036,0.000166712,Koreawind
-Latin America,electricity,solar,PV,SolarAndAuxiliary,0,0.001015404,,0,0.001015404,Latin Americawind
-Middle East,electricity,solar,PV,SolarAndAuxiliary,0,0,,0,0,Middle Eastwind
-Southeast Asia,electricity,solar,PV,SolarAndAuxiliary,0,0,,0,0,Southeast Asiawind
-USA,electricity,solar,PV,SolarAndAuxiliary,0.0023976,0.0045324,,0.0023976,0.0045324,USAwind
-Western Europe,electricity,solar,PV,SolarAndAuxiliary,0.002202735,0.032282844,,0.002202735,0.032282844,Western Europewind
-Africa,electricity,wind,wind,WindandAuxiliary,0,0.002715516,,0,0.002715516,Africawind
-Australia_NZ,electricity,wind,wind,WindandAuxiliary,0,0.005226311,,0,0.005226311,Australia_NZwind
-Canada,electricity,wind,wind,WindandAuxiliary,0,0.0052956,,0,0.0052956,Canadawind
-China,electricity,wind,wind,WindandAuxiliary,0,0,,0,0,Chinawind
-Eastern Europe,electricity,wind,wind,WindandAuxiliary,0,0.000663282,,0,0.000663282,Eastern Europewind
-Former Soviet Union,electricity,wind,wind,WindandAuxiliary,0,0.000229007,,0,0.000229007,Former Soviet Unionwind
-India,electricity,wind,wind,WindandAuxiliary,0.0001152,0.0221976,,0.0001152,0.0221976,Indiawind
-Japan,electricity,wind,wind,WindandAuxiliary,0,0.0063144,,0,0.0063144,Japanwind
-Korea,electricity,wind,wind,WindandAuxiliary,0,0.000355288,,0,0.000355288,Koreawind
-Latin America,electricity,wind,wind,WindandAuxiliary,0,0.000503796,,0,0.000503796,Latin Americawind
-Middle East,electricity,wind,wind,WindandAuxiliary,0,0,,0.0000036,0.0000504,Middle Eastwind
-Southeast Asia,electricity,wind,wind,WindandAuxiliary,0,0,,0,0.0000072,Southeast Asiawind
-USA,electricity,wind,wind,WindandAuxiliary,0.0110376,0.0643716,,0.0110376,0.0643716,USAwind
-Western Europe,electricity,wind,wind,WindandAuxiliary,0.002934465,0.252815556,,0.002934465,0.252815556,Western Europewind
-Africa,electricity,geothermal,geothermal,geothermal,0.011736,0.031932,,0.011736,0.031932,Africageothermal
-Australia_NZ,electricity,geothermal,geothermal,geothermal,0.079776,0.102672,,0.079776,0.102672,Australia_NZgeothermal
-Canada,electricity,geothermal,geothermal,geothermal,0,0,,0,0,Canadageothermal
-China,electricity,geothermal,geothermal,geothermal,0,0,,0,0,Chinageothermal
-Eastern Europe,electricity,geothermal,geothermal,geothermal,0,0,,0,0,Eastern Europegeothermal
-Former Soviet Union,electricity,geothermal,geothermal,geothermal,0.001008,0.01476,,0.001008,0.01476,Former Soviet Uniongeothermal
-India,electricity,geothermal,geothermal,geothermal,0,0,,0,0,Indiageothermal
-Japan,electricity,geothermal,geothermal,geothermal,0.062676,0.116136,,0.062676,0.116136,Japangeothermal
-Korea,electricity,geothermal,geothermal,geothermal,0,0,,0,0,Koreageothermal
-Latin America,electricity,geothermal,geothermal,geothermal,0.213444,0.351684,,0.213444,0.351684,Latin Americageothermal
-Middle East,electricity,geothermal,geothermal,geothermal,0,0,,0,0,Middle Eastgeothermal
-Southeast Asia,electricity,geothermal,geothermal,geothermal,0.236268,0.594288,,0.236268,0.594288,Southeast Asiageothermal
-USA,electricity,geothermal,geothermal,geothermal,0.576432,0.604008,,0.576432,0.604008,USAgeothermal
-Western Europe,electricity,geothermal,geothermal,geothermal,0.129816,0.257364,,0.129816,0.257364,Western Europegeothermal
-
-Efficiency (assume 10%),,,,,,,,,,
-INPUT_TABLE,,,IEA does have eff data but it isn't clear what inter-regional/inter-annual variance comes from,,,,,,,
-Variable ID,,,"Resource data is assigned according to recovered energy, not energy input",,,,,,,
-1011,,,,,,,,,,
-
-Region,supplysector,subsector,technology,minicam-energy-input,1990,2005,,,,
-Africa,electricity,geothermal,geothermal,geothermal,0.1,0.1,,,,
-Australia_NZ,electricity,geothermal,geothermal,geothermal,0.1,0.1,,,,
-Canada,electricity,geothermal,geothermal,geothermal,0.1,0.1,,,,
-China,electricity,geothermal,geothermal,geothermal,0.1,0.1,,,,
-Eastern Europe,electricity,geothermal,geothermal,geothermal,0.1,0.1,,,,
-Former Soviet Union,electricity,geothermal,geothermal,geothermal,0.1,0.1,,,,
-India,electricity,geothermal,geothermal,geothermal,0.1,0.1,,,,
-Japan,electricity,geothermal,geothermal,geothermal,0.1,0.1,,
-Korea,electricity,geothermal,geothermal,geothermal,0.1,0.1,,
-Latin America,electricity,geothermal,geothermal,geothermal,0.1,0.1,,
-Middle East,electricity,geothermal,geothermal,geothermal,0.1,0.1,,
-Southeast Asia,electricity,geothermal,geothermal,geothermal,0.1,0.1,,
-USA,electricity,geothermal,geothermal,geothermal,0.1,0.1,,
-Western Europe,electricity,geothermal,geothermal,geothermal,0.1,0.1,,
-,,,,,,,,
-
-reset fixed output from CCSP,,,,,,,,
-table not read,,,,,,,,
-Variable ID,,,,,,,,
-44,,,,,,,,
-,,,,fixedOutput,fixedOutput,,,
-region,supplysector,subsector,technology,1990,2005,,,
-Africa,electricity,hydro,hydro,-1,-1,,,
-Australia_NZ,electricity,hydro,hydro,-1,-1
-Canada,electricity,hydro,hydro,-1,-1
-China,electricity,hydro,hydro,-1,-1
-Eastern Europe,electricity,hydro,hydro,-1,-1
-Former Soviet Union,electricity,hydro,hydro,-1,-1
-India,electricity,hydro,hydro,-1,-1
-Japan,electricity,hydro,hydro,-1,-1
-Korea,electricity,hydro,hydro,-1,-1
-Latin America,electricity,hydro,hydro,-1,-1
-Middle East,electricity,hydro,hydro,-1,-1
-Southeast Asia,electricity,hydro,hydro,-1,-1
-USA,electricity,hydro,hydro,-1,-1
-Western Europe,electricity,hydro,hydro,-1,-1
-Africa,electricity,nuclear,Gen_II_LWR,-1,-1
-Australia_NZ,electricity,nuclear,Gen_II_LWR,-1,-1
-Canada,electricity,nuclear,Gen_II_LWR,-1,-1
-China,electricity,nuclear,Gen_II_LWR,-1,-1
-Eastern Europe,electricity,nuclear,Gen_II_LWR,-1,-1
-Former Soviet Union,electricity,nuclear,Gen_II_LWR,-1,-1
-India,electricity,nuclear,Gen_II_LWR,-1,-1
-Japan,electricity,nuclear,Gen_II_LWR,-1,-1
-Korea,electricity,nuclear,Gen_II_LWR,-1,-1
-Latin America,electricity,nuclear,Gen_II_LWR,-1,-1
-Middle East,electricity,nuclear,Gen_II_LWR,-1,-1
-Southeast Asia,electricity,nuclear,Gen_II_LWR,-1,-1
-USA,electricity,nuclear,Gen_II_LWR,-1,-1
-Western Europe,electricity,nuclear,Gen_II_LWR,-1,-1
+"Base year electricity technology inputs, outputs, IO coefficients, and shareweights",,,,,,,,,,,,,,,,
+Calibrate inputs to fossil/bio electric technologies,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,
+22,,,,,,,,,,,,,not read,,,
+,,,,,calibrated-value,,efficiency,,subsector sharewt,,tech sharewt,,output,,,
+region,supplysector,subsector,technology,minicam-energy-input,1990,2005,1990,2005,1990,2005,1990,2005,1990,2005,region ID,lookup
+USA,electricity,biomass,Biomass (existing),regional biomass,0.393266124,0.497647235,0.201216416,0.222316517,1,1,1,1,0.0791316,0.1106352,1,1regional biomass
+USA,electricity,coal,Coal (existing),regional coal,16.20149249,20.99668896,0.372116162,0.365795732,1,1,1,1,6.0288372,7.6804992,1,1regional coal
+USA,electricity,gas,Gas (existing),wholesale gas,2.765544685,5.829683573,0.371084946,0.440761487,1,1,1,1,1.026252,2.5695,1,1wholesale gas
+USA,electricity,oil,Oil (existing),refined liquids electricity,1.14121701,1.210558792,0.394972031,0.375800335,1,1,1,1,0.4507488,0.4549284,1,1refined liquids electricity
+Canada,electricity,biomass,Biomass (existing),regional biomass,0.037111795,0.08007255,0.373272161,0.374240611,1,1,1,1,0.0138528,0.0299664,2,2regional biomass
+Canada,electricity,coal,Coal (existing),regional coal,0.835915554,0.988139228,0.353981211,0.385939946,1,1,1,1,0.2958984,0.3813624,2,2regional coal
+Canada,electricity,gas,Gas (existing),wholesale gas,0.078741148,0.345658021,0.443615582,0.388570181,1,1,1,1,0.0349308,0.1343124,2,2wholesale gas
+Canada,electricity,oil,Oil (existing),refined liquids electricity,0.15898117,0.174978932,0.372904541,0.399997869,1,1,1,1,0.0592848,0.0699912,2,2refined liquids electricity
+Western Europe,electricity,biomass,Biomass (existing),regional biomass,0.12686004,0.617389715,0.220040921,0.264051046,1,1,1,1,0.0279144,0.1630224,3,3regional biomass
+Western Europe,electricity,coal,Coal (existing),regional coal,8.310714264,7.236812624,0.347387037,0.382527688,1,1,1,1,2.8870344,2.7682812,3,3regional coal
+Western Europe,electricity,gas,Gas (existing),wholesale gas,1.393295864,4.570541154,0.379495851,0.481467014,1,1,1,1,0.52875,2.2005648,3,3wholesale gas
+Western Europe,electricity,oil,Oil (existing),refined liquids electricity,1.68297637,1.024874212,0.379727257,0.382612808,1,1,1,1,0.639072,0.39213,3,3refined liquids electricity
+Japan,electricity,biomass,Biomass (existing),regional biomass,0.095031986,0.155309346,0.403935574,0.452928313,1,1,1,1,0.0383868,0.070344,4,4regional biomass
+Japan,electricity,coal,Coal (existing),regional coal,1.005807524,2.56578827,0.389869424,0.421020087,1,1,1,1,0.3921336,1.0802484,4,4regional coal
+Japan,electricity,gas,Gas (existing),wholesale gas,1.460393521,1.91230834,0.429132553,0.453026106,1,1,1,1,0.6267024,0.8663256,4,4wholesale gas
+Japan,electricity,oil,Oil (existing),refined liquids electricity,2.041479493,1.097385401,0.440415886,0.478917252,1,1,1,1,0.8991,0.5255568,4,4refined liquids electricity
+Australia_NZ,electricity,biomass,Biomass (existing),regional biomass,0,0.005384225,1,0.112996768,0,1,0,1,0,0.0006084,5,5regional biomass
+Australia_NZ,electricity,coal,Coal (existing),regional coal,1.210906296,2.103427386,0.355128387,0.353072326,1,1,1,1,0.4300272,0.742662,5,5regional coal
+Australia_NZ,electricity,gas,Gas (existing),wholesale gas,0.197118731,0.356108274,0.40271972,0.345575795,1,1,1,1,0.0793836,0.1230624,5,5wholesale gas
+Australia_NZ,electricity,oil,Oil (existing),refined liquids electricity,0.036617753,0.017739472,0.414290852,0.391668938,1,1,1,1,0.0151704,0.006948,5,5refined liquids electricity
+Former Soviet Union,electricity,biomass,Biomass (existing),regional biomass,0.005200006,0.001276974,0.025615357,0.016914988,1,1,1,1,0.0001332,0.0000216,6,6regional biomass
+Former Soviet Union,electricity,coal,Coal (existing),regional coal,5.367963269,3.596243486,0.237415186,0.262861289,1,1,1,1,1.274436,0.9453132,6,6regional coal
+Former Soviet Union,electricity,gas,Gas (existing),wholesale gas,8.832297434,7.122207348,0.26810415,0.278946891,1,1,1,1,2.3679756,1.9867176,6,6wholesale gas
+Former Soviet Union,electricity,oil,Oil (existing),refined liquids electricity,3.447733504,0.442105146,0.258976745,0.31682237,1,1,1,1,0.8928828,0.1400688,6,6refined liquids electricity
+China,electricity,biomass,Biomass (existing),regional biomass,0,0.036048348,1,0.250064164,0,1,0,1,0,0.0090144,7,7regional biomass
+China,electricity,coal,Coal (existing),regional coal,5.758997828,22.2914736,0.286290436,0.321013017,1,1,1,1,1.648746,7.1558532,7,7regional coal
+China,electricity,gas,Gas (existing),wholesale gas,0.038648351,0.381815226,0.358618148,0.361513084,1,1,1,1,0.01386,0.1380312,7,7wholesale gas
+China,electricity,oil,Oil (existing),refined liquids electricity,0.556475962,0.698634569,0.33334917,0.334377385,1,1,1,1,0.1855008,0.2336076,7,7refined liquids electricity
+Middle East,electricity,biomass,Biomass (existing),regional biomass,0,0,1,1,0,0,0,0,0,0,8,8regional biomass
+Middle East,electricity,coal,Coal (existing),regional coal,0.099846806,0.319591004,0.377426193,0.39901874,1,1,1,1,0.0376848,0.1275228,8,8regional coal
+Middle East,electricity,gas,Gas (existing),wholesale gas,1.32063395,4.08483886,0.283489304,0.302369626,1,1,1,1,0.3743856,1.2351312,8,8wholesale gas
+Middle East,electricity,oil,Oil (existing),refined liquids electricity,1.195293719,2.458589443,0.342105705,0.351798794,1,1,1,1,0.4089168,0.8649288,8,8refined liquids electricity
+Africa,electricity,biomass,Biomass (existing),regional biomass,0.000083736,0.023450267,0.128976784,0.097943449,1,1,1,1,0.0000108,0.0022968,9,9regional biomass
+Africa,electricity,coal,Coal (existing),regional coal,1.638625597,2.46279299,0.361536644,0.3667938,1,1,1,1,0.5924232,0.9033372,9,9regional coal
+Africa,electricity,gas,Gas (existing),wholesale gas,0.466229488,1.451362594,0.331376724,0.369926028,1,1,1,1,0.1544976,0.5368968,9,9wholesale gas
+Africa,electricity,oil,Oil (existing),refined liquids electricity,0.466761211,0.70902202,0.332834855,0.298303288,1,1,1,1,0.1553544,0.2115036,9,9refined liquids electricity
+Latin America,electricity,biomass,Biomass (existing),regional biomass,0.08309542,0.259929104,0.284723275,0.302994927,1,1,1,1,0.0236592,0.0787572,10,10regional biomass
+Latin America,electricity,coal,Coal (existing),regional coal,0.258614449,0.621258318,0.310646216,0.34564173,1,1,1,1,0.0803376,0.2147328,10,10regional coal
+Latin America,electricity,gas,Gas (existing),wholesale gas,0.718530242,1.90532057,0.298960277,0.39567074,1,1,1,1,0.214812,0.7538796,10,10wholesale gas
+Latin America,electricity,oil,Oil (existing),refined liquids electricity,1.273126331,1.692283626,0.341802058,0.34843521,1,1,1,1,0.4351572,0.5896512,10,10refined liquids electricity
+Southeast Asia,electricity,biomass,Biomass (existing),regional biomass,0,0.078799763,1,0.284437404,0,1,0,1,0,0.0224136,11,11regional biomass
+Southeast Asia,electricity,coal,Coal (existing),regional coal,0.783588928,2.778774973,0.36339564,0.329616471,1,1,1,1,0.2847528,0.91593,11,11regional coal
+Southeast Asia,electricity,gas,Gas (existing),wholesale gas,0.504429851,2.83280144,0.328676821,0.423158638,1,1,1,1,0.1657944,1.1987244,11,11wholesale gas
+Southeast Asia,electricity,oil,Oil (existing),refined liquids electricity,1.053273276,1.075082317,0.346850156,0.395366934,1,1,1,1,0.365328,0.425052,11,11refined liquids electricity
+Eastern Europe,electricity,biomass,Biomass (existing),regional biomass,0.001155557,0.035813887,0.143307538,0.273916091,1,1,1,1,0.0001656,0.00981,12,12regional biomass
+Eastern Europe,electricity,coal,Coal (existing),regional coal,3.264368411,3.122628484,0.294979205,0.319428201,1,1,1,1,0.9629208,0.9974556,12,12regional coal
+Eastern Europe,electricity,gas,Gas (existing),wholesale gas,0.603116914,0.402263557,0.19581875,0.288992622,1,1,1,1,0.1181016,0.1162512,12,12wholesale gas
+Eastern Europe,electricity,oil,Oil (existing),refined liquids electricity,0.408740537,0.078402017,0.18585678,0.261544292,1,1,1,1,0.0759672,0.0205056,12,12refined liquids electricity
+Korea,electricity,biomass,Biomass (existing),regional biomass,0,0.000427054,1,0.379343483,0,1,0,1,0,0.000162,13,13regional biomass
+Korea,electricity,coal,Coal (existing),regional coal,0.163435925,1.227733045,0.259257566,0.393130414,1,1,1,1,0.042372,0.4826592,13,13regional coal
+Korea,electricity,gas,Gas (existing),wholesale gas,0.085272556,0.436712548,0.405457533,0.487869655,1,1,1,1,0.0345744,0.2130588,13,13wholesale gas
+Korea,electricity,oil,Oil (existing),refined liquids electricity,0.178960579,0.193400852,0.379330467,0.391661149,1,1,1,1,0.0678852,0.0757476,13,13refined liquids electricity
+India,electricity,biomass,Biomass (existing),regional biomass,0,0.045791032,1,0.149924554,0,1,0,1,0,0.0068652,14,14regional biomass
+India,electricity,coal,Coal (existing),regional coal,2.430374598,6.511131328,0.283812545,0.265366787,1,1,1,1,0.6897708,1.727838,14,14regional coal
+India,electricity,gas,Gas (existing),wholesale gas,0.144930269,0.536684958,0.247352056,0.419072673,1,1,1,1,0.0358488,0.22491,14,14wholesale gas
+India,electricity,oil,Oil (existing),refined liquids electricity,0.150435911,0.343769774,0.240453226,0.326960682,1,1,1,1,0.0361728,0.1123992,14,14refined liquids electricity
+,,,,,,,,,,,,,,,,
+Fix output for hydro and nuclear,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,
+44,,,,,,,,,,,,,,,,
+,,,,fixedOutput,,,,,,,,,,,,
+region,supplysector,subsector,technology,1990,2005,,,,,,,,,,region ID,
+USA,electricity,hydro,hydro,0.9833472,0.98181,,,,,,,,,,1,
+Canada,electricity,hydro,hydro,1.0683468,1.3087656,,,,,,,,,,2,
+Western Europe,electricity,hydro,hydro,1.5816528,1.7218944,,,,,,,,,,3,
+Japan,electricity,hydro,hydro,0.321498,0.2815596,,,,,,,,,,4,
+Australia_NZ,electricity,hydro,hydro,0.1349568,0.1409616,,,,,,,,,,5,
+Former Soviet Union,electricity,hydro,hydro,0.8373888,0.8816112,,,,,,,,,,6,
+China,electricity,hydro,hydro,0.5316804,1.5539292,,,,,,,,,,7,
+Middle East,electricity,hydro,hydro,0.04293,0.076302,,,,,,,,,,8,
+Africa,electricity,hydro,hydro,0.2027592,0.3267648,,,,,,,,,,9,
+Latin America,electricity,hydro,hydro,1.3955832,2.3288436,,,,,,,,,,10,
+Southeast Asia,electricity,hydro,hydro,0.207252,0.3074832,,,,,,,,,,11,
+Eastern Europe,electricity,hydro,hydro,0.1459728,0.2451996,,,,,,,,,,12,
+Korea,electricity,hydro,hydro,0.0228996,0.0132228,,,,,,,,,,13,
+India,electricity,hydro,hydro,0.2579616,0.3599964,,,,,,,,,,14,
+USA,electricity,nuclear,Gen_II_LWR,2.2013028,2.9186136,,,,,,,,,,1,
+Canada,electricity,nuclear,Gen_II_LWR,0.2626812,0.331344,,,,,,,,,,2,
+Western Europe,electricity,nuclear,Gen_II_LWR,2.6777772,3.3275592,,,,,,,,,,3,
+Japan,electricity,nuclear,Gen_II_LWR,0.7281792,1.097118,,,,,,,,,,4,
+Australia_NZ,electricity,nuclear,Gen_II_LWR,0,0,,,,,,,,,,5,
+Former Soviet Union,electricity,nuclear,Gen_II_LWR,0.7614612,0.904518,,,,,,,,,,6,
+China,electricity,nuclear,Gen_II_LWR,0,0.1911168,,,,,,,,,,7,
+Middle East,electricity,nuclear,Gen_II_LWR,0,0,,,,,,,,,,8,
+Africa,electricity,nuclear,Gen_II_LWR,0.0304164,0.0406548,,,,,,,,,,9,
+Latin America,electricity,nuclear,Gen_II_LWR,0.044838,0.0991188,,,,,,,,,,10,
+Southeast Asia,electricity,nuclear,Gen_II_LWR,0.1193724,0.1528416,,,,,,,,,,11,
+Eastern Europe,electricity,nuclear,Gen_II_LWR,0.2075004,0.3109716,,,,,,,,,,12,
+Korea,electricity,nuclear,Gen_II_LWR,0.1903932,0.5284044,,,,,,,,,,13,
+India,electricity,nuclear,Gen_II_LWR,0.0221076,0.0623268,,,,,,,,,,14,
+,,,,,,,,,,,,,,,,
+Calibrate output from renewables,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,
+23,,,,CalDataOutput,,,,,,,,,,,,
+,,,,calOutputValue,,subsector sharewt,,tech sharewt,,,,,,,,
+region,supplysector,subsector,technology,1990,2005,1990,2005,1990,2005,,,,,,region ID,
+USA,electricity,solar,PV,0.0023976,0.0022032,1,1,1,1,,,,,,1,
+Canada,electricity,solar,PV,0,0.0000612,0,1,0,1,,,,,,2,
+Western Europe,electricity,solar,PV,0.0000468,0.005436,1,1,1,1,,,,,,3,
+Japan,electricity,solar,PV,0.0000036,0.0000072,1,1,1,1,,,,,,4,
+Australia_NZ,electricity,solar,PV,0,0.0000396,0,1,0,1,,,,,,5,
+Former Soviet Union,electricity,solar,PV,0,0,0,0,0,0,,,,,,6,
+China,electricity,solar,PV,0,0,0,0,0,0,,,,,,7,
+Middle East,electricity,solar,PV,0,0,0,0,0,0,,,,,,8,
+Africa,electricity,solar,PV,0,0.0019332,0,1,0,1,,,,,,9,
+Latin America,electricity,solar,PV,0,0.000126,0,1,0,1,,,,,,10,
+Southeast Asia,electricity,solar,PV,0,0,0,0,0,0,,,,,,11,
+Eastern Europe,electricity,solar,PV,0,0,0,0,0,0,,,,,,12,
+Korea,electricity,solar,PV,0.0000036,0.000054,1,1,1,1,,,,,,13,
+India,electricity,solar,PV,0,0.0000144,0,1,0,1,,,,,,14,
+USA,electricity,wind,wind,0.0110376,0.0643716,1,1,1,1,,,,,,1,
+Canada,electricity,wind,wind,0,0.0052956,0,1,0,1,,,,,,2,
+Western Europe,electricity,wind,wind,0.0028008,0.2548476,1,1,1,1,,,,,,3,
+Japan,electricity,wind,wind,0,0.0063144,0,1,0,1,,,,,,4,
+Australia_NZ,electricity,wind,wind,0,0.0053892,0,1,0,1,,,,,,5,
+Former Soviet Union,electricity,wind,wind,0,0.0005364,0,1,0,1,,,,,,6,
+China,electricity,wind,wind,0,0,0,0,0,0,,,,,,7,
+Middle East,electricity,wind,wind,0.0000036,0.0000504,1,1,1,1,,,,,,8,
+Africa,electricity,wind,wind,0,0.0029952,0,1,0,1,,,,,,9,
+Latin America,electricity,wind,wind,0,0.0013932,0,1,0,1,,,,,,10,
+Southeast Asia,electricity,wind,wind,0,0.0000072,0,1,0,1,,,,,,11,
+Eastern Europe,electricity,wind,wind,0,0.000666,0,1,0,1,,,,,,12,
+Korea,electricity,wind,wind,0,0.000468,0,1,0,1,,,,,,13,
+India,electricity,wind,wind,0.0001152,0.0221976,1,1,1,1,,,,,,14,
+USA,electricity,geothermal,geothermal,0.0576432,0.0604008,1,1,1,1,,,,,,1,
+Canada,electricity,geothermal,geothermal,0,0,0,0,0,0,,,,,,2,
+Western Europe,electricity,geothermal,geothermal,0.0129816,0.0257364,1,1,1,1,,,,,,3,
+Japan,electricity,geothermal,geothermal,0.0062676,0.0116136,1,1,1,1,,,,,,4,
+Australia_NZ,electricity,geothermal,geothermal,0.0079776,0.01017,1,1,1,1,,,,,,5,
+Former Soviet Union,electricity,geothermal,geothermal,0.0001008,0.001476,1,1,1,1,,,,,,6,
+China,electricity,geothermal,geothermal,0,0,0,0,0,0,,,,,,7,
+Middle East,electricity,geothermal,geothermal,0,0,0,0,0,0,,,,,,8,
+Africa,electricity,geothermal,geothermal,0.0011736,0.0031932,1,1,1,1,,,,,,9,
+Latin America,electricity,geothermal,geothermal,0.0213444,0.0351684,1,1,1,1,,,,,,10,
+Southeast Asia,electricity,geothermal,geothermal,0.0236268,0.0594288,1,1,1,1,,,,,,11,
+Eastern Europe,electricity,geothermal,geothermal,0,0,0,0,0,0,,,,,,12,
+Korea,electricity,geothermal,geothermal,0,0,0,0,0,0,,,,,,13,
+India,electricity,geothermal,geothermal,0,0,0,0,0,0,,,,,,14,
+,,,,,,,,,,,,,,,,
+Remove current calibrated values for renewables,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,
+25,,,,,,,,,,,,,,,,
+,,,,,calibrated-value,,,,,,,,,,,
+region,supplysector,subsector,technology,minicam-energy-input,1990,2005,,,,,,,,,,
+USA,electricity,solar,PV,SolarAndAuxiliary,-1,-1,,,,,,,,,1,
+Canada,electricity,solar,PV,SolarAndAuxiliary,-1,-1,,,,,,,,,2,
+Western Europe,electricity,solar,PV,SolarAndAuxiliary,-1,-1,,,,,,,,,3,
+Japan,electricity,solar,PV,SolarAndAuxiliary,-1,-1,,,,,,,,,4,
+Australia_NZ,electricity,solar,PV,SolarAndAuxiliary,-1,-1,,,,,,,,,5,
+Former Soviet Union,electricity,solar,PV,SolarAndAuxiliary,-1,-1,,,,,,,,,6,
+China,electricity,solar,PV,SolarAndAuxiliary,-1,-1,,,,,,,,,7,
+Middle East,electricity,solar,PV,SolarAndAuxiliary,-1,-1,,,,,,,,,8,
+Africa,electricity,solar,PV,SolarAndAuxiliary,-1,-1,,,,,,,,,9,
+Latin America,electricity,solar,PV,SolarAndAuxiliary,-1,-1,,,,,,,,,10,
+Southeast Asia,electricity,solar,PV,SolarAndAuxiliary,-1,-1,,,,,,,,,11,
+Eastern Europe,electricity,solar,PV,SolarAndAuxiliary,-1,-1,,,,,,,,,12,
+Korea,electricity,solar,PV,SolarAndAuxiliary,-1,-1,,,,,,,,,13,
+India,electricity,solar,PV,SolarAndAuxiliary,-1,-1,,,,,,,,,14,
+USA,electricity,wind,wind,WindandAuxiliary,-1,-1,,,,,,,,,1,
+Canada,electricity,wind,wind,WindandAuxiliary,-1,-1,,,,,,,,,2,
+Western Europe,electricity,wind,wind,WindandAuxiliary,-1,-1,,,,,,,,,3,
+Japan,electricity,wind,wind,WindandAuxiliary,-1,-1,,,,,,,,,4,
+Australia_NZ,electricity,wind,wind,WindandAuxiliary,-1,-1,,,,,,,,,5,
+Former Soviet Union,electricity,wind,wind,WindandAuxiliary,-1,-1,,,,,,,,,6,
+China,electricity,wind,wind,WindandAuxiliary,-1,-1,,,,,,,,,7,
+Middle East,electricity,wind,wind,WindandAuxiliary,-1,-1,,,,,,,,,8,
+Africa,electricity,wind,wind,WindandAuxiliary,-1,-1,,,,,,,,,9,
+Latin America,electricity,wind,wind,WindandAuxiliary,-1,-1,,,,,,,,,10,
+Southeast Asia,electricity,wind,wind,WindandAuxiliary,-1,-1,,,,,,,,,11,
+Eastern Europe,electricity,wind,wind,WindandAuxiliary,-1,-1,,,,,,,,,12,
+Korea,electricity,wind,wind,WindandAuxiliary,-1,-1,,,,,,,,,13,
+India,electricity,wind,wind,WindandAuxiliary,-1,-1,,,,,,,,,14,

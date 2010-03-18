@@ -145,7 +145,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.3225</coefficient>
+                        <coefficient>1.322502853</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -154,7 +154,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.3028</coefficient>
+                        <coefficient>1.302803574</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -163,7 +163,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2834</coefficient>
+                        <coefficient>1.283397723</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -172,7 +172,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2643</coefficient>
+                        <coefficient>1.264280932</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -181,7 +181,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2454</coefficient>
+                        <coefficient>1.245448894</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -190,7 +190,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2269</coefficient>
+                        <coefficient>1.226897368</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -213,7 +213,7 @@
                <technology name="coal gasification">
                   <period year="1975">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -222,7 +222,7 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -231,7 +231,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -240,7 +240,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3059</coefficient>
+                        <coefficient>1.305876848</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -249,7 +249,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2864</coefficient>
+                        <coefficient>1.28642522</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -258,7 +258,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2673</coefficient>
+                        <coefficient>1.267263333</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -267,7 +267,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2484</coefficient>
+                        <coefficient>1.248386871</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -276,7 +276,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2298</coefficient>
+                        <coefficient>1.229791582</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -285,7 +285,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2115</coefficient>
+                        <coefficient>1.211473279</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -304,7 +304,7 @@
                <technology name="gas pipeline">
                   <period year="1975">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.03636398</coefficient>
+                        <coefficient>1</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -313,7 +313,7 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.03636398</coefficient>
+                        <coefficient>1.036297707</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -322,7 +322,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.027520993</coefficient>
+                        <coefficient>1.0268067</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -331,7 +331,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.027520993</coefficient>
+                        <coefficient>1.0268067</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -340,7 +340,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.027520993</coefficient>
+                        <coefficient>1.0268067</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -349,7 +349,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.027520993</coefficient>
+                        <coefficient>1.0268067</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -358,7 +358,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.027520993</coefficient>
+                        <coefficient>1.0268067</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -367,7 +367,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.027520993</coefficient>
+                        <coefficient>1.0268067</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -376,7 +376,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.027520993</coefficient>
+                        <coefficient>1.0268067</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -717,7 +717,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.3225</coefficient>
+                        <coefficient>1.322502853</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -726,7 +726,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.3028</coefficient>
+                        <coefficient>1.302803574</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -735,7 +735,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2834</coefficient>
+                        <coefficient>1.283397723</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -744,7 +744,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2643</coefficient>
+                        <coefficient>1.264280932</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -753,7 +753,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2454</coefficient>
+                        <coefficient>1.245448894</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -762,7 +762,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2269</coefficient>
+                        <coefficient>1.226897368</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -785,7 +785,7 @@
                <technology name="coal gasification">
                   <period year="1975">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -794,7 +794,7 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -803,7 +803,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -812,7 +812,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3059</coefficient>
+                        <coefficient>1.305876848</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -821,7 +821,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2864</coefficient>
+                        <coefficient>1.28642522</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -830,7 +830,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2673</coefficient>
+                        <coefficient>1.267263333</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -839,7 +839,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2484</coefficient>
+                        <coefficient>1.248386871</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -848,7 +848,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2298</coefficient>
+                        <coefficient>1.229791582</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -857,7 +857,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2115</coefficient>
+                        <coefficient>1.211473279</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -876,7 +876,7 @@
                <technology name="gas pipeline">
                   <period year="1975">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.055139971</coefficient>
+                        <coefficient>1</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -885,7 +885,7 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.055139971</coefficient>
+                        <coefficient>1.054491069</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -894,7 +894,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.055751957</coefficient>
+                        <coefficient>1.058936877</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -903,7 +903,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.055751957</coefficient>
+                        <coefficient>1.058936877</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -912,7 +912,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.055751957</coefficient>
+                        <coefficient>1.058936877</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -921,7 +921,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.055751957</coefficient>
+                        <coefficient>1.058936877</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -930,7 +930,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.055751957</coefficient>
+                        <coefficient>1.058936877</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -939,7 +939,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.055751957</coefficient>
+                        <coefficient>1.058936877</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -948,7 +948,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.055751957</coefficient>
+                        <coefficient>1.058936877</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1289,7 +1289,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.3225</coefficient>
+                        <coefficient>1.322502853</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1298,7 +1298,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.3028</coefficient>
+                        <coefficient>1.302803574</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1307,7 +1307,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2834</coefficient>
+                        <coefficient>1.283397723</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1316,7 +1316,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2643</coefficient>
+                        <coefficient>1.264280932</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1325,7 +1325,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2454</coefficient>
+                        <coefficient>1.245448894</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1334,7 +1334,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2269</coefficient>
+                        <coefficient>1.226897368</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1357,7 +1357,7 @@
                <technology name="coal gasification">
                   <period year="1975">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1366,7 +1366,7 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1375,7 +1375,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1384,7 +1384,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3059</coefficient>
+                        <coefficient>1.305876848</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1393,7 +1393,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2864</coefficient>
+                        <coefficient>1.28642522</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1402,7 +1402,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2673</coefficient>
+                        <coefficient>1.267263333</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1411,7 +1411,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2484</coefficient>
+                        <coefficient>1.248386871</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1420,7 +1420,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2298</coefficient>
+                        <coefficient>1.229791582</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1429,7 +1429,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2115</coefficient>
+                        <coefficient>1.211473279</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1448,7 +1448,7 @@
                <technology name="gas pipeline">
                   <period year="1975">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.000417947</coefficient>
+                        <coefficient>1</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1457,7 +1457,7 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.000417947</coefficient>
+                        <coefficient>1.011936812</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1466,7 +1466,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.000855834</coefficient>
+                        <coefficient>1.007157838</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1475,7 +1475,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.000855834</coefficient>
+                        <coefficient>1.007157838</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1484,7 +1484,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.000855834</coefficient>
+                        <coefficient>1.007157838</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1493,7 +1493,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.000855834</coefficient>
+                        <coefficient>1.007157838</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1502,7 +1502,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.000855834</coefficient>
+                        <coefficient>1.007157838</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1511,7 +1511,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.000855834</coefficient>
+                        <coefficient>1.007157838</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1520,7 +1520,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.000855834</coefficient>
+                        <coefficient>1.007157838</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1861,7 +1861,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.3225</coefficient>
+                        <coefficient>1.322502853</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1870,7 +1870,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.3028</coefficient>
+                        <coefficient>1.302803574</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1879,7 +1879,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2834</coefficient>
+                        <coefficient>1.283397723</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1888,7 +1888,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2643</coefficient>
+                        <coefficient>1.264280932</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1897,7 +1897,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2454</coefficient>
+                        <coefficient>1.245448894</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1906,7 +1906,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2269</coefficient>
+                        <coefficient>1.226897368</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1929,7 +1929,7 @@
                <technology name="coal gasification">
                   <period year="1975">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1938,7 +1938,7 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1947,7 +1947,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1956,7 +1956,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3059</coefficient>
+                        <coefficient>1.305876848</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1965,7 +1965,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2864</coefficient>
+                        <coefficient>1.28642522</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1974,7 +1974,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2673</coefficient>
+                        <coefficient>1.267263333</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1983,7 +1983,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2484</coefficient>
+                        <coefficient>1.248386871</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -1992,7 +1992,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2298</coefficient>
+                        <coefficient>1.229791582</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -2001,7 +2001,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2115</coefficient>
+                        <coefficient>1.211473279</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -2433,7 +2433,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.3225</coefficient>
+                        <coefficient>1.322502853</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -2442,7 +2442,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.3028</coefficient>
+                        <coefficient>1.302803574</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -2451,7 +2451,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2834</coefficient>
+                        <coefficient>1.283397723</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -2460,7 +2460,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2643</coefficient>
+                        <coefficient>1.264280932</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -2469,7 +2469,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2454</coefficient>
+                        <coefficient>1.245448894</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -2478,7 +2478,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2269</coefficient>
+                        <coefficient>1.226897368</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -2501,7 +2501,7 @@
                <technology name="coal gasification">
                   <period year="1975">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -2510,7 +2510,7 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -2519,7 +2519,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -2528,7 +2528,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3059</coefficient>
+                        <coefficient>1.305876848</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -2537,7 +2537,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2864</coefficient>
+                        <coefficient>1.28642522</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -2546,7 +2546,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2673</coefficient>
+                        <coefficient>1.267263333</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -2555,7 +2555,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2484</coefficient>
+                        <coefficient>1.248386871</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -2564,7 +2564,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2298</coefficient>
+                        <coefficient>1.229791582</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -2573,7 +2573,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2115</coefficient>
+                        <coefficient>1.211473279</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -2610,7 +2610,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.012072823</coefficient>
+                        <coefficient>1.012282463</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -2619,7 +2619,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.012072823</coefficient>
+                        <coefficient>1.012282463</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -2628,7 +2628,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.012072823</coefficient>
+                        <coefficient>1.012282463</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -2637,7 +2637,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.012072823</coefficient>
+                        <coefficient>1.012282463</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -2646,7 +2646,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.012072823</coefficient>
+                        <coefficient>1.012282463</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -2655,7 +2655,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.012072823</coefficient>
+                        <coefficient>1.012282463</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -2664,7 +2664,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.012072823</coefficient>
+                        <coefficient>1.012282463</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3005,7 +3005,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.3225</coefficient>
+                        <coefficient>1.322502853</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3014,7 +3014,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.3028</coefficient>
+                        <coefficient>1.302803574</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3023,7 +3023,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2834</coefficient>
+                        <coefficient>1.283397723</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3032,7 +3032,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2643</coefficient>
+                        <coefficient>1.264280932</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3041,7 +3041,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2454</coefficient>
+                        <coefficient>1.245448894</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3050,7 +3050,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2269</coefficient>
+                        <coefficient>1.226897368</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3073,7 +3073,7 @@
                <technology name="coal gasification">
                   <period year="1975">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3082,7 +3082,7 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3091,7 +3091,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3100,7 +3100,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3059</coefficient>
+                        <coefficient>1.305876848</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3109,7 +3109,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2864</coefficient>
+                        <coefficient>1.28642522</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3118,7 +3118,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2673</coefficient>
+                        <coefficient>1.267263333</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3127,7 +3127,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2484</coefficient>
+                        <coefficient>1.248386871</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3136,7 +3136,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2298</coefficient>
+                        <coefficient>1.229791582</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3145,7 +3145,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2115</coefficient>
+                        <coefficient>1.211473279</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3164,7 +3164,7 @@
                <technology name="gas pipeline">
                   <period year="1975">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.062118961</coefficient>
+                        <coefficient>1</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3173,7 +3173,7 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.062118961</coefficient>
+                        <coefficient>1.085247915</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3182,7 +3182,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.079787399</coefficient>
+                        <coefficient>1.100453126</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3191,7 +3191,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.079787399</coefficient>
+                        <coefficient>1.100453126</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3200,7 +3200,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.079787399</coefficient>
+                        <coefficient>1.100453126</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3209,7 +3209,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.079787399</coefficient>
+                        <coefficient>1.100453126</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3218,7 +3218,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.079787399</coefficient>
+                        <coefficient>1.100453126</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3227,7 +3227,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.079787399</coefficient>
+                        <coefficient>1.100453126</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3236,7 +3236,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.079787399</coefficient>
+                        <coefficient>1.100453126</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3577,7 +3577,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.3225</coefficient>
+                        <coefficient>1.322502853</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3586,7 +3586,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.3028</coefficient>
+                        <coefficient>1.302803574</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3595,7 +3595,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2834</coefficient>
+                        <coefficient>1.283397723</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3604,7 +3604,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2643</coefficient>
+                        <coefficient>1.264280932</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3613,7 +3613,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2454</coefficient>
+                        <coefficient>1.245448894</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3622,7 +3622,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2269</coefficient>
+                        <coefficient>1.226897368</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3645,7 +3645,7 @@
                <technology name="coal gasification">
                   <period year="1975">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3654,7 +3654,7 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3663,7 +3663,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3672,7 +3672,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3059</coefficient>
+                        <coefficient>1.305876848</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3681,7 +3681,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2864</coefficient>
+                        <coefficient>1.28642522</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3690,7 +3690,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2673</coefficient>
+                        <coefficient>1.267263333</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3699,7 +3699,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2484</coefficient>
+                        <coefficient>1.248386871</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3708,7 +3708,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2298</coefficient>
+                        <coefficient>1.229791582</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3717,7 +3717,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2115</coefficient>
+                        <coefficient>1.211473279</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3736,7 +3736,7 @@
                <technology name="gas pipeline">
                   <period year="1975">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.003291278</coefficient>
+                        <coefficient>1</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3745,7 +3745,7 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.003291278</coefficient>
+                        <coefficient>1.015892986</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3754,7 +3754,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.000199814</coefficient>
+                        <coefficient>1.013160809</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3763,7 +3763,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.000199814</coefficient>
+                        <coefficient>1.013160809</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3772,7 +3772,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.000199814</coefficient>
+                        <coefficient>1.013160809</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3781,7 +3781,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.000199814</coefficient>
+                        <coefficient>1.013160809</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3790,7 +3790,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.000199814</coefficient>
+                        <coefficient>1.013160809</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3799,7 +3799,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.000199814</coefficient>
+                        <coefficient>1.013160809</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -3808,7 +3808,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.000199814</coefficient>
+                        <coefficient>1.013160809</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4149,7 +4149,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.3225</coefficient>
+                        <coefficient>1.322502853</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4158,7 +4158,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.3028</coefficient>
+                        <coefficient>1.302803574</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4167,7 +4167,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2834</coefficient>
+                        <coefficient>1.283397723</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4176,7 +4176,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2643</coefficient>
+                        <coefficient>1.264280932</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4185,7 +4185,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2454</coefficient>
+                        <coefficient>1.245448894</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4194,7 +4194,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2269</coefficient>
+                        <coefficient>1.226897368</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4217,7 +4217,7 @@
                <technology name="coal gasification">
                   <period year="1975">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4226,7 +4226,7 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4235,7 +4235,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4244,7 +4244,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3059</coefficient>
+                        <coefficient>1.305876848</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4253,7 +4253,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2864</coefficient>
+                        <coefficient>1.28642522</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4262,7 +4262,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2673</coefficient>
+                        <coefficient>1.267263333</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4271,7 +4271,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2484</coefficient>
+                        <coefficient>1.248386871</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4280,7 +4280,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2298</coefficient>
+                        <coefficient>1.229791582</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4289,7 +4289,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2115</coefficient>
+                        <coefficient>1.211473279</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4317,7 +4317,7 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1</coefficient>
+                        <coefficient>1.017703658</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4326,7 +4326,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1</coefficient>
+                        <coefficient>1.019022859</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4335,7 +4335,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1</coefficient>
+                        <coefficient>1.019022859</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4344,7 +4344,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1</coefficient>
+                        <coefficient>1.019022859</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4353,7 +4353,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1</coefficient>
+                        <coefficient>1.019022859</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4362,7 +4362,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1</coefficient>
+                        <coefficient>1.019022859</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4371,7 +4371,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1</coefficient>
+                        <coefficient>1.019022859</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4380,7 +4380,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1</coefficient>
+                        <coefficient>1.019022859</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4721,7 +4721,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.3225</coefficient>
+                        <coefficient>1.322502853</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4730,7 +4730,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.3028</coefficient>
+                        <coefficient>1.302803574</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4739,7 +4739,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2834</coefficient>
+                        <coefficient>1.283397723</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4748,7 +4748,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2643</coefficient>
+                        <coefficient>1.264280932</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4757,7 +4757,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2454</coefficient>
+                        <coefficient>1.245448894</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4766,7 +4766,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2269</coefficient>
+                        <coefficient>1.226897368</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4789,7 +4789,7 @@
                <technology name="coal gasification">
                   <period year="1975">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4798,7 +4798,7 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4807,7 +4807,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4816,7 +4816,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3059</coefficient>
+                        <coefficient>1.305876848</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4825,7 +4825,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2864</coefficient>
+                        <coefficient>1.28642522</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4834,7 +4834,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2673</coefficient>
+                        <coefficient>1.267263333</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4843,7 +4843,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2484</coefficient>
+                        <coefficient>1.248386871</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4852,7 +4852,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2298</coefficient>
+                        <coefficient>1.229791582</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4861,7 +4861,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2115</coefficient>
+                        <coefficient>1.211473279</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4880,7 +4880,7 @@
                <technology name="gas pipeline">
                   <period year="1975">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.010699912</coefficient>
+                        <coefficient>1</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4889,7 +4889,7 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.010699912</coefficient>
+                        <coefficient>1.027163096</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4898,7 +4898,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.018366549</coefficient>
+                        <coefficient>1.030485239</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4907,7 +4907,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.018366549</coefficient>
+                        <coefficient>1.030485239</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4916,7 +4916,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.018366549</coefficient>
+                        <coefficient>1.030485239</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4925,7 +4925,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.018366549</coefficient>
+                        <coefficient>1.030485239</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4934,7 +4934,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.018366549</coefficient>
+                        <coefficient>1.030485239</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4943,7 +4943,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.018366549</coefficient>
+                        <coefficient>1.030485239</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -4952,7 +4952,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.018366549</coefficient>
+                        <coefficient>1.030485239</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5293,7 +5293,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.3225</coefficient>
+                        <coefficient>1.322502853</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5302,7 +5302,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.3028</coefficient>
+                        <coefficient>1.302803574</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5311,7 +5311,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2834</coefficient>
+                        <coefficient>1.283397723</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5320,7 +5320,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2643</coefficient>
+                        <coefficient>1.264280932</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5329,7 +5329,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2454</coefficient>
+                        <coefficient>1.245448894</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5338,7 +5338,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2269</coefficient>
+                        <coefficient>1.226897368</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5361,7 +5361,7 @@
                <technology name="coal gasification">
                   <period year="1975">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5370,7 +5370,7 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5379,7 +5379,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5388,7 +5388,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3059</coefficient>
+                        <coefficient>1.305876848</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5397,7 +5397,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2864</coefficient>
+                        <coefficient>1.28642522</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5406,7 +5406,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2673</coefficient>
+                        <coefficient>1.267263333</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5415,7 +5415,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2484</coefficient>
+                        <coefficient>1.248386871</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5424,7 +5424,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2298</coefficient>
+                        <coefficient>1.229791582</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5433,7 +5433,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2115</coefficient>
+                        <coefficient>1.211473279</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5461,7 +5461,7 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1</coefficient>
+                        <coefficient>1.004920101</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5470,7 +5470,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.011139788</coefficient>
+                        <coefficient>1.017904634</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5479,7 +5479,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.011139788</coefficient>
+                        <coefficient>1.017904634</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5488,7 +5488,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.011139788</coefficient>
+                        <coefficient>1.017904634</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5497,7 +5497,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.011139788</coefficient>
+                        <coefficient>1.017904634</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5506,7 +5506,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.011139788</coefficient>
+                        <coefficient>1.017904634</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5515,7 +5515,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.011139788</coefficient>
+                        <coefficient>1.017904634</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5524,7 +5524,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.011139788</coefficient>
+                        <coefficient>1.017904634</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5865,7 +5865,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.3225</coefficient>
+                        <coefficient>1.322502853</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5874,7 +5874,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.3028</coefficient>
+                        <coefficient>1.302803574</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5883,7 +5883,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2834</coefficient>
+                        <coefficient>1.283397723</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5892,7 +5892,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2643</coefficient>
+                        <coefficient>1.264280932</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5901,7 +5901,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2454</coefficient>
+                        <coefficient>1.245448894</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5910,7 +5910,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2269</coefficient>
+                        <coefficient>1.226897368</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5933,7 +5933,7 @@
                <technology name="coal gasification">
                   <period year="1975">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5942,7 +5942,7 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5951,7 +5951,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5960,7 +5960,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3059</coefficient>
+                        <coefficient>1.305876848</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5969,7 +5969,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2864</coefficient>
+                        <coefficient>1.28642522</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5978,7 +5978,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2673</coefficient>
+                        <coefficient>1.267263333</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5987,7 +5987,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2484</coefficient>
+                        <coefficient>1.248386871</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -5996,7 +5996,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2298</coefficient>
+                        <coefficient>1.229791582</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6005,7 +6005,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2115</coefficient>
+                        <coefficient>1.211473279</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6033,7 +6033,7 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1</coefficient>
+                        <coefficient>1.178961256</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6042,7 +6042,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.006136015</coefficient>
+                        <coefficient>1.062155096</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6051,7 +6051,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.006136015</coefficient>
+                        <coefficient>1.062155096</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6060,7 +6060,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.006136015</coefficient>
+                        <coefficient>1.062155096</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6069,7 +6069,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.006136015</coefficient>
+                        <coefficient>1.062155096</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6078,7 +6078,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.006136015</coefficient>
+                        <coefficient>1.062155096</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6087,7 +6087,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.006136015</coefficient>
+                        <coefficient>1.062155096</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6096,7 +6096,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.006136015</coefficient>
+                        <coefficient>1.062155096</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6437,7 +6437,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.3225</coefficient>
+                        <coefficient>1.322502853</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6446,7 +6446,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.3028</coefficient>
+                        <coefficient>1.302803574</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6455,7 +6455,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2834</coefficient>
+                        <coefficient>1.283397723</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6464,7 +6464,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2643</coefficient>
+                        <coefficient>1.264280932</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6473,7 +6473,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2454</coefficient>
+                        <coefficient>1.245448894</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6482,7 +6482,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2269</coefficient>
+                        <coefficient>1.226897368</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6505,7 +6505,7 @@
                <technology name="coal gasification">
                   <period year="1975">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6514,7 +6514,7 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6523,7 +6523,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6532,7 +6532,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3059</coefficient>
+                        <coefficient>1.305876848</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6541,7 +6541,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2864</coefficient>
+                        <coefficient>1.28642522</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6550,7 +6550,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2673</coefficient>
+                        <coefficient>1.267263333</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6559,7 +6559,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2484</coefficient>
+                        <coefficient>1.248386871</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6568,7 +6568,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2298</coefficient>
+                        <coefficient>1.229791582</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6577,7 +6577,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2115</coefficient>
+                        <coefficient>1.211473279</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6605,7 +6605,7 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1</coefficient>
+                        <coefficient>1.009794365</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6614,7 +6614,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.018692378</coefficient>
+                        <coefficient>1.040664058</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6623,7 +6623,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.018692378</coefficient>
+                        <coefficient>1.040664058</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6632,7 +6632,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.018692378</coefficient>
+                        <coefficient>1.040664058</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6641,7 +6641,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.018692378</coefficient>
+                        <coefficient>1.040664058</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6650,7 +6650,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.018692378</coefficient>
+                        <coefficient>1.040664058</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6659,7 +6659,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.018692378</coefficient>
+                        <coefficient>1.040664058</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -6668,7 +6668,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="gas processing">
-                        <coefficient>1.018692378</coefficient>
+                        <coefficient>1.040664058</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7009,7 +7009,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.3225</coefficient>
+                        <coefficient>1.322502853</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7018,7 +7018,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.3028</coefficient>
+                        <coefficient>1.302803574</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7027,7 +7027,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2834</coefficient>
+                        <coefficient>1.283397723</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7036,7 +7036,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2643</coefficient>
+                        <coefficient>1.264280932</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7045,7 +7045,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2454</coefficient>
+                        <coefficient>1.245448894</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7054,7 +7054,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2269</coefficient>
+                        <coefficient>1.226897368</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7077,7 +7077,7 @@
                <technology name="coal gasification">
                   <period year="1975">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7086,7 +7086,7 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7095,7 +7095,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7104,7 +7104,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3059</coefficient>
+                        <coefficient>1.305876848</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7113,7 +7113,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2864</coefficient>
+                        <coefficient>1.28642522</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7122,7 +7122,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2673</coefficient>
+                        <coefficient>1.267263333</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7131,7 +7131,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2484</coefficient>
+                        <coefficient>1.248386871</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7140,7 +7140,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2298</coefficient>
+                        <coefficient>1.229791582</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7149,7 +7149,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2115</coefficient>
+                        <coefficient>1.211473279</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7581,7 +7581,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.3225</coefficient>
+                        <coefficient>1.322502853</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7590,7 +7590,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.3028</coefficient>
+                        <coefficient>1.302803574</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7599,7 +7599,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2834</coefficient>
+                        <coefficient>1.283397723</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7608,7 +7608,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2643</coefficient>
+                        <coefficient>1.264280932</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7617,7 +7617,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2454</coefficient>
+                        <coefficient>1.245448894</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7626,7 +7626,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional biomass">
-                        <coefficient>1.2269</coefficient>
+                        <coefficient>1.226897368</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7649,7 +7649,7 @@
                <technology name="coal gasification">
                   <period year="1975">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7658,7 +7658,7 @@
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7667,7 +7667,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3256</coefficient>
+                        <coefficient>1.325622598</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7676,7 +7676,7 @@
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.3059</coefficient>
+                        <coefficient>1.305876848</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7685,7 +7685,7 @@
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2864</coefficient>
+                        <coefficient>1.28642522</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7694,7 +7694,7 @@
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2673</coefficient>
+                        <coefficient>1.267263333</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7703,7 +7703,7 @@
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2484</coefficient>
+                        <coefficient>1.248386871</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7712,7 +7712,7 @@
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2298</coefficient>
+                        <coefficient>1.229791582</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
@@ -7721,7 +7721,7 @@
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="regional coal">
-                        <coefficient>1.2115</coefficient>
+                        <coefficient>1.211473279</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">

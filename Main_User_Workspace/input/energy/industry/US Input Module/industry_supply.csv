@@ -3,8 +3,17 @@ INPUT_TABLE,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,
 10,,,,,,,,,,,,,
 ,,,,,,,,,,,,,
-supplysector,energy-final-demand,,,,,,,,,,,,
-industry,industry,,,,,,,,,,,,
+supplysector,,,,,,,,,,,,,
+industry,,,,,,,,,,,,,
+industrial energy use,,,,,,,,,,,,,
+industrial feedstocks,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+11,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+energy-final-demand,,,,,,,,,,,,,
+industry,,,,,,,,,,,,,
 ,,,,,,,,,,,,,
 ,,,,,,,,,,,,,
 set unit tags for industries,,,,,,,,,,,,,
@@ -47,16 +56,16 @@ Variable ID,,,,,,,,,,,,,
 1010,,,CalDataOutput,,,,,,,,,,
 ,,,calOutputValue,,,,,,,,,,
 supplysector,subsector,technology,1990,2005,,,,,,,,,
-chemicals,chemicals,chemicals,6.4005,7.5463,,,,,,,,,
-food processing,food processing,food processing,1.0382,0.8896,,,,,,,,,
-iron and steel,iron and steel,iron and steel,1.3624,1.0667,,,,,,,,,
-other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,0.6740,0.5880,,,,,,,,,
-other manufacturing,other manufacturing,other manufacturing,1.7576,1.7316,,,,,,,,,
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,0.4501,0.4818,,,,,,,,,
-pulp paper and wood,pulp paper and wood,pulp paper and wood,1.6648,1.9855,,,,,,,,,
-agriculture,agriculture,agriculture,0.6107,0.6855,,,,,,,,,
-construction,construction,construction,2.5751,1.9786,,,,,,,,,
-mining,mining,mining,1.2609,1.0207,,,,,,,,,
+chemicals,chemicals,chemicals,6.83679,7.95786,,,,,,,,,
+food processing,food processing,food processing,1.01805,0.93559,,,,,,,,,
+iron and steel,iron and steel,iron and steel,1.74915,1.33492,,,,,,,,,
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,0.75831,0.68669,,,,,,,,,
+other manufacturing,other manufacturing,other manufacturing,1.83180,1.83839,,,,,,,,,
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,0.48197,0.51570,,,,,,,,,
+pulp paper and wood,pulp paper and wood,pulp paper and wood,2.12040,2.18200,,,,,,,,,
+agriculture,agriculture,agriculture,0.61073,0.68546,,,,,,,,,
+construction,construction,construction,2.35149,2.39722,,,,,,,,,
+mining,mining,mining,1.30392,1.21133,,,,,,,,,
 ,,,,,,,,,,,,,
 Set coefficients for industry supply,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,
@@ -64,46 +73,46 @@ Variable ID,,,,,,,,,,,,,
 1015,,,,,,,,,,,,,
 ,,,,coefficient,,,,,,,,,
 supplysector,subsector,technology,minicam-energy-input,1990,2005,2020,2035,2050,2065,2080,2095,,lookup for adv table
-chemicals,chemicals,chemicals,boilers general,0.1756,0.1167,0.1108,0.1051,0.0997,0.0946,0.0898,0.0852,,chemicalsboilers general
-chemicals,chemicals,chemicals,process heat general,0.0999,0.0769,0.0729,0.0692,0.0656,0.0623,0.0591,0.0561,,chemicalsprocess heat general
-chemicals,chemicals,chemicals,machine drive,0.0607,0.0536,0.0508,0.0482,0.0457,0.0434,0.0412,0.0391,,chemicalsmachine drive
-chemicals,chemicals,chemicals,electrochemical,0.0173,0.0154,0.0146,0.0138,0.0131,0.0124,0.0118,0.0112,,chemicalselectrochemical
-chemicals,chemicals,chemicals,other end uses,0.0443,0.0371,0.0352,0.0334,0.0317,0.0300,0.0285,0.0270,,chemicalsother end uses
-chemicals,chemicals,chemicals,feedstocks chemicals,0.6022,0.7004,0.6645,0.6305,0.5982,0.5675,0.5384,0.5109,,chemicalsfeedstocks chemicals
-food processing,food processing,food processing,boilers general,0.5243,0.4642,0.4404,0.4178,0.3964,0.3761,0.3568,0.3386,,food processingboilers general
-food processing,food processing,food processing,process heat general,0.1991,0.2199,0.2086,0.1979,0.1878,0.1781,0.1690,0.1604,,food processingprocess heat general
-food processing,food processing,food processing,machine drive,0.1272,0.1528,0.1449,0.1375,0.1305,0.1238,0.1174,0.1114,,food processingmachine drive
-food processing,food processing,food processing,other end uses,0.1493,0.1632,0.1549,0.1469,0.1394,0.1323,0.1255,0.1191,,food processingother end uses
-iron and steel,iron and steel,iron and steel,boilers general,0.0310,0.0370,0.0351,0.0333,0.0316,0.0300,0.0284,0.0270,,iron and steelboilers general
-iron and steel,iron and steel,iron and steel,process heat primary metals,0.7922,0.7352,0.6975,0.6618,0.6279,0.5957,0.5652,0.5362,,iron and steelprocess heat primary metals
-iron and steel,iron and steel,iron and steel,machine drive,0.0858,0.1139,0.1081,0.1025,0.0973,0.0923,0.0876,0.0831,,iron and steelmachine drive
-iron and steel,iron and steel,iron and steel,electrochemical,0.0067,0.0090,0.0085,0.0081,0.0077,0.0073,0.0069,0.0066,,iron and steelelectrochemical
-iron and steel,iron and steel,iron and steel,other end uses,0.0573,0.0691,0.0655,0.0622,0.0590,0.0560,0.0531,0.0504,,iron and steelother end uses
-iron and steel,iron and steel,iron and steel,feedstocks primary metals,0.0221,0.0314,0.0298,0.0283,0.0268,0.0255,0.0242,0.0229,,iron and steelfeedstocks primary metals
-iron and steel,iron and steel,iron and steel,limestone feedstocks,0.0050,0.0045,0.0043,0.0040,0.0038,0.0036,0.0034,0.0033,,iron and steellimestone feedstocks
-other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,boilers general,0.0161,0.0177,0.0168,0.0160,0.0152,0.0144,0.0136,0.0129,,other nonmetallic mineralsboilers general
-other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,process heat general,0.6589,0.6410,0.6082,0.5770,0.5475,0.5194,0.4928,0.4675,,other nonmetallic mineralsprocess heat general
-other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,machine drive,0.0747,0.0840,0.0797,0.0756,0.0717,0.0680,0.0646,0.0612,,other nonmetallic mineralsmachine drive
-other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,other end uses,0.1672,0.1422,0.1349,0.1280,0.1214,0.1152,0.1093,0.1037,,other nonmetallic mineralsother end uses
-other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,limestone feedstocks,0.0832,0.1151,0.1092,0.1036,0.0983,0.0932,0.0885,0.0839,,other nonmetallic mineralslimestone feedstocks
-other manufacturing,other manufacturing,other manufacturing,boilers general,0.1511,0.1327,0.1259,0.1194,0.1133,0.1075,0.1020,0.0968,,other manufacturingboilers general
-other manufacturing,other manufacturing,other manufacturing,process heat general,0.2452,0.2456,0.2330,0.2211,0.2097,0.1990,0.1888,0.1791,,other manufacturingprocess heat general
-other manufacturing,other manufacturing,other manufacturing,machine drive,0.2178,0.2311,0.2192,0.2080,0.1973,0.1872,0.1776,0.1685,,other manufacturingmachine drive
-other manufacturing,other manufacturing,other manufacturing,electrochemical,0.0042,0.0044,0.0042,0.0040,0.0038,0.0036,0.0034,0.0032,,other manufacturingelectrochemical
-other manufacturing,other manufacturing,other manufacturing,other end uses,0.3818,0.3862,0.3665,0.3477,0.3299,0.3130,0.2969,0.2817,,other manufacturingother end uses
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,boilers general,0.0777,0.0597,0.0566,0.0537,0.0510,0.0484,0.0459,0.0435,,aluminum and nonferrous metalsboilers general
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,process heat primary metals,0.3110,0.2844,0.2699,0.2560,0.2429,0.2305,0.2187,0.2075,,aluminum and nonferrous metalsprocess heat primary metals
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,machine drive,0.0887,0.0861,0.0817,0.0775,0.0735,0.0698,0.0662,0.0628,,aluminum and nonferrous metalsmachine drive
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,electrochemical,0.3011,0.2943,0.2792,0.2649,0.2513,0.2384,0.2262,0.2146,,aluminum and nonferrous metalselectrochemical
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,other end uses,0.0337,0.0296,0.0281,0.0267,0.0253,0.0240,0.0228,0.0216,,aluminum and nonferrous metalsother end uses
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,feedstocks primary metals,0.1870,0.2452,0.2326,0.2207,0.2094,0.1987,0.1885,0.1788,,aluminum and nonferrous metalsfeedstocks primary metals
-aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,limestone feedstocks,0.0008,0.0007,0.0007,0.0006,0.0006,0.0006,0.0005,0.0005,,aluminum and nonferrous metalslimestone feedstocks
-pulp paper and wood,pulp paper and wood,pulp paper and wood,boilers pulp paper and wood,0.4929,0.5719,0.5426,0.5148,0.4884,0.4634,0.4396,0.4171,,pulp paper and woodboilers pulp paper and wood
-pulp paper and wood,pulp paper and wood,pulp paper and wood,process heat general,0.1473,0.1335,0.1267,0.1202,0.1140,0.1082,0.1027,0.0974,,pulp paper and woodprocess heat general
-pulp paper and wood,pulp paper and wood,pulp paper and wood,machine drive,0.2263,0.1962,0.1862,0.1766,0.1676,0.1590,0.1508,0.1431,,pulp paper and woodmachine drive
-pulp paper and wood,pulp paper and wood,pulp paper and wood,electrochemical,0.0038,0.0034,0.0032,0.0030,0.0029,0.0027,0.0026,0.0025,,pulp paper and woodelectrochemical
-pulp paper and wood,pulp paper and wood,pulp paper and wood,other end uses,0.1297,0.0950,0.0901,0.0855,0.0811,0.0770,0.0730,0.0693,,pulp paper and woodother end uses
-agriculture,agriculture,agriculture,agriculture energy use,1.0000,1.0000,0.9488,0.9002,0.8540,0.8103,0.7688,0.7294,,agricultureagriculture energy use
-construction,construction,construction,construction energy use,0.6647,0.3793,0.3599,0.3414,0.3239,0.3073,0.2916,0.2767,,constructionconstruction energy use
-construction,construction,construction,feedstocks construction,0.3353,0.6207,0.5889,0.5587,0.5301,0.5029,0.4772,0.4527,,constructionfeedstocks construction
-mining,mining,mining,mining energy use,1.0000,1.0000,0.9488,0.9002,0.8540,0.8103,0.7688,0.7294,,miningmining energy use
+chemicals,chemicals,chemicals,boilers general,0.21406,0.14478,0.13736,0.13032,0.12365,0.11731,0.11130,0.10560,,chemicalsboilers general
+chemicals,chemicals,chemicals,process heat general,0.10092,0.08362,0.07934,0.07527,0.07142,0.06776,0.06429,0.06099,,chemicalsprocess heat general
+chemicals,chemicals,chemicals,machine drive,0.05955,0.05362,0.05088,0.04827,0.04580,0.04345,0.04122,0.03911,,chemicalsmachine drive
+chemicals,chemicals,chemicals,electrochemical,0.01695,0.01532,0.01454,0.01379,0.01309,0.01242,0.01178,0.01118,,chemicalselectrochemical
+chemicals,chemicals,chemicals,other end uses,0.04479,0.03848,0.03651,0.03464,0.03287,0.03118,0.02958,0.02807,,chemicalsother end uses
+chemicals,chemicals,chemicals,feedstocks chemicals,0.56374,0.66417,0.63014,0.59786,0.56723,0.53817,0.51060,0.48444,,chemicalsfeedstocks chemicals
+food processing,food processing,food processing,boilers general,0.48851,0.43999,0.41745,0.39606,0.37577,0.35652,0.33826,0.32093,,food processingboilers general
+food processing,food processing,food processing,process heat general,0.22086,0.23577,0.22369,0.21223,0.20136,0.19104,0.18126,0.17197,,food processingprocess heat general
+food processing,food processing,food processing,machine drive,0.13541,0.15390,0.14601,0.13853,0.13143,0.12470,0.11831,0.11225,,food processingmachine drive
+food processing,food processing,food processing,other end uses,0.15522,0.17034,0.16161,0.15333,0.14547,0.13802,0.13095,0.12424,,food processingother end uses
+iron and steel,iron and steel,iron and steel,boilers general,0.01366,0.01761,0.01670,0.01585,0.01504,0.01427,0.01354,0.01284,,iron and steelboilers general
+iron and steel,iron and steel,iron and steel,process heat primary metals,0.84094,0.78843,0.74804,0.70971,0.67335,0.63885,0.60612,0.57507,,iron and steelprocess heat primary metals
+iron and steel,iron and steel,iron and steel,machine drive,0.06981,0.09599,0.09108,0.08641,0.08198,0.07778,0.07380,0.07002,,iron and steelmachine drive
+iron and steel,iron and steel,iron and steel,electrochemical,0.00547,0.00755,0.00716,0.00680,0.00645,0.00612,0.00580,0.00551,,iron and steelelectrochemical
+iron and steel,iron and steel,iron and steel,other end uses,0.04899,0.06173,0.05857,0.05557,0.05272,0.05002,0.04746,0.04503,,iron and steelother end uses
+iron and steel,iron and steel,iron and steel,feedstocks primary metals,0.01722,0.02510,0.02382,0.02260,0.02144,0.02034,0.01930,0.01831,,iron and steelfeedstocks primary metals
+iron and steel,iron and steel,iron and steel,limestone feedstocks,0.00391,0.00358,0.00340,0.00323,0.00306,0.00290,0.00276,0.00261,,iron and steellimestone feedstocks
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,boilers general,0.01212,0.01316,0.01249,0.01185,0.01124,0.01067,0.01012,0.00960,,other nonmetallic mineralsboilers general
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,process heat general,0.69886,0.66197,0.62806,0.59588,0.56535,0.53639,0.50891,0.48283,,other nonmetallic mineralsprocess heat general
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,machine drive,0.06820,0.07741,0.07344,0.06968,0.06611,0.06272,0.05951,0.05646,,other nonmetallic mineralsmachine drive
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,other end uses,0.14692,0.14891,0.14128,0.13405,0.12718,0.12066,0.11448,0.10862,,other nonmetallic mineralsother end uses
+other nonmetallic minerals,other nonmetallic minerals,other nonmetallic minerals,limestone feedstocks,0.07391,0.09854,0.09349,0.08870,0.08416,0.07985,0.07576,0.07187,,other nonmetallic mineralslimestone feedstocks
+other manufacturing,other manufacturing,other manufacturing,boilers general,0.12465,0.11004,0.10440,0.09906,0.09398,0.08917,0.08460,0.08026,,other manufacturingboilers general
+other manufacturing,other manufacturing,other manufacturing,process heat general,0.26145,0.26046,0.24711,0.23445,0.22244,0.21104,0.20023,0.18997,,other manufacturingprocess heat general
+other manufacturing,other manufacturing,other manufacturing,machine drive,0.21862,0.22909,0.21735,0.20622,0.19565,0.18563,0.17612,0.16709,,other manufacturingmachine drive
+other manufacturing,other manufacturing,other manufacturing,electrochemical,0.00418,0.00439,0.00416,0.00395,0.00375,0.00355,0.00337,0.00320,,other manufacturingelectrochemical
+other manufacturing,other manufacturing,other manufacturing,other end uses,0.39110,0.39603,0.37574,0.35649,0.33822,0.32089,0.30445,0.28886,,other manufacturingother end uses
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,boilers general,0.00000,0.00000,0.00000,0.00000,0.00000,0.00000,0.00000,0.00000,,aluminum and nonferrous metalsboilers general
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,process heat primary metals,0.41165,0.36574,0.34701,0.32923,0.31236,0.29636,0.28117,0.26677,,aluminum and nonferrous metalsprocess heat primary metals
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,machine drive,0.08698,0.08507,0.08071,0.07657,0.07265,0.06893,0.06540,0.06205,,aluminum and nonferrous metalsmachine drive
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,electrochemical,0.29405,0.28921,0.27439,0.26033,0.24700,0.23434,0.22234,0.21094,,aluminum and nonferrous metalselectrochemical
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,other end uses,0.03195,0.03025,0.02870,0.02723,0.02584,0.02451,0.02326,0.02206,,aluminum and nonferrous metalsother end uses
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,feedstocks primary metals,0.17465,0.22907,0.21733,0.20620,0.19563,0.18561,0.17610,0.16708,,aluminum and nonferrous metalsfeedstocks primary metals
+aluminum and nonferrous metals,aluminum and nonferrous metals,aluminum and nonferrous metals,limestone feedstocks,0.00071,0.00066,0.00063,0.00060,0.00057,0.00054,0.00051,0.00048,,aluminum and nonferrous metalslimestone feedstocks
+pulp paper and wood,pulp paper and wood,pulp paper and wood,boilers pulp paper and wood,0.58459,0.58565,0.55565,0.52718,0.50017,0.47455,0.45023,0.42717,,pulp paper and woodboilers pulp paper and wood
+pulp paper and wood,pulp paper and wood,pulp paper and wood,process heat general,0.12168,0.12368,0.11734,0.11133,0.10563,0.10022,0.09508,0.09021,,pulp paper and woodprocess heat general
+pulp paper and wood,pulp paper and wood,pulp paper and wood,machine drive,0.18618,0.18879,0.17911,0.16994,0.16123,0.15297,0.14513,0.13770,,pulp paper and woodmachine drive
+pulp paper and wood,pulp paper and wood,pulp paper and wood,electrochemical,0.00316,0.00323,0.00307,0.00291,0.00276,0.00262,0.00249,0.00236,,pulp paper and woodelectrochemical
+pulp paper and wood,pulp paper and wood,pulp paper and wood,other end uses,0.10438,0.09865,0.09359,0.08880,0.08425,0.07993,0.07584,0.07195,,pulp paper and woodother end uses
+agriculture,agriculture,agriculture,agriculture energy use,1.00000,1.00000,0.94877,0.90016,0.85404,0.81029,0.76877,0.72939,,agricultureagriculture energy use
+construction,construction,construction,construction energy use,0.63283,0.48770,0.46271,0.43901,0.41651,0.39517,0.37493,0.35572,,constructionconstruction energy use
+construction,construction,construction,feedstocks construction,0.36717,0.51230,0.48606,0.46115,0.43753,0.41511,0.39384,0.37367,,constructionfeedstocks construction
+mining,mining,mining,mining energy use,1.00000,1.00000,0.94877,0.90016,0.85404,0.81029,0.76877,0.72939,,miningmining energy use

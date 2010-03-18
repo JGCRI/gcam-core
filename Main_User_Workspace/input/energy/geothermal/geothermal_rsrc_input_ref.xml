@@ -49,7 +49,7 @@
             <market>Western Europe</market>
             <price year="1975">0.45</price>
             <sub-renewable-resource name="hydrothermal">
-               <annualprod year="1975">0.127</annualprod>
+               <annualprod year="1975">0.130</annualprod>
                <maxSubResource>3.546</maxSubResource>
                <grade name="grade 1">
                   <extractioncost>0.064</extractioncost>
@@ -229,7 +229,7 @@
             <market>Eastern Europe</market>
             <price year="1975">0.45</price>
             <sub-renewable-resource name="hydrothermal">
-               <annualprod year="1975">0.003</annualprod>
+               <annualprod year="1975">0.000</annualprod>
                <maxSubResource>0.709</maxSubResource>
                <grade name="grade 1">
                   <extractioncost>0.064</extractioncost>

@@ -2223,7 +2223,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -2239,7 +2239,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -2255,7 +2255,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.047</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -2271,7 +2271,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.039</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -2287,7 +2287,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.031</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -2303,7 +2303,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.024</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -2319,7 +2319,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.016</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -2332,7 +2332,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -2345,7 +2345,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -4664,7 +4664,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -4680,7 +4680,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -4696,7 +4696,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.047</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -4712,7 +4712,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.039</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -4728,7 +4728,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.031</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -4744,7 +4744,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.024</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -4760,7 +4760,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.016</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -4773,7 +4773,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -4786,7 +4786,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -7105,7 +7105,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -7121,7 +7121,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -7137,7 +7137,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.047</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -7153,7 +7153,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.039</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -7169,7 +7169,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.031</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -7185,7 +7185,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.024</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -7201,7 +7201,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.016</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -7214,7 +7214,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -7227,7 +7227,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -9546,7 +9546,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -9562,7 +9562,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -9578,7 +9578,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.047</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -9594,7 +9594,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.039</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -9610,7 +9610,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.031</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -9626,7 +9626,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.024</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -9642,7 +9642,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.016</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -9655,7 +9655,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -9668,7 +9668,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -11987,7 +11987,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -12003,7 +12003,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -12019,7 +12019,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.047</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -12035,7 +12035,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.039</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -12051,7 +12051,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.031</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -12067,7 +12067,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.024</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -12083,7 +12083,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.016</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -12096,7 +12096,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -12109,7 +12109,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -14428,7 +14428,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -14444,7 +14444,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -14460,7 +14460,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.047</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -14476,7 +14476,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.039</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -14492,7 +14492,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.031</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -14508,7 +14508,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.024</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -14524,7 +14524,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.016</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -14537,7 +14537,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -14550,7 +14550,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -16869,7 +16869,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -16885,7 +16885,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -16901,7 +16901,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.047</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -16917,7 +16917,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.039</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -16933,7 +16933,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.031</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -16949,7 +16949,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.024</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -16965,7 +16965,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.016</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -16978,7 +16978,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -16991,7 +16991,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -19310,7 +19310,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -19326,7 +19326,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -19342,7 +19342,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.047</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -19358,7 +19358,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.039</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -19374,7 +19374,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.031</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -19390,7 +19390,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.024</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -19406,7 +19406,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.016</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -19419,7 +19419,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -19432,7 +19432,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -21751,7 +21751,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -21767,7 +21767,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -21783,7 +21783,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.047</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -21799,7 +21799,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.039</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -21815,7 +21815,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.031</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -21831,7 +21831,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.024</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -21847,7 +21847,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.016</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -21860,7 +21860,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -21873,7 +21873,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -24192,7 +24192,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -24208,7 +24208,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -24224,7 +24224,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.047</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -24240,7 +24240,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.039</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -24256,7 +24256,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.031</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -24272,7 +24272,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.024</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -24288,7 +24288,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.016</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -24301,7 +24301,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -24314,7 +24314,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -26633,7 +26633,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -26649,7 +26649,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -26665,7 +26665,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.047</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -26681,7 +26681,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.039</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -26697,7 +26697,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.031</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -26713,7 +26713,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.024</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -26729,7 +26729,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.016</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -26742,7 +26742,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -26755,7 +26755,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -29074,7 +29074,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -29090,7 +29090,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -29106,7 +29106,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.047</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -29122,7 +29122,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.039</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -29138,7 +29138,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.031</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -29154,7 +29154,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.024</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -29170,7 +29170,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.016</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -29183,7 +29183,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -29196,7 +29196,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -31515,7 +31515,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -31531,7 +31531,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -31547,7 +31547,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.047</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -31563,7 +31563,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.039</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -31579,7 +31579,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.031</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -31595,7 +31595,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.024</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -31611,7 +31611,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.016</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -31624,7 +31624,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -31637,7 +31637,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -33952,7 +33952,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -33968,7 +33968,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -33984,7 +33984,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.047</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -34000,7 +34000,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.039</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -34016,7 +34016,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.031</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -34032,7 +34032,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.024</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -34048,7 +34048,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.016</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -34061,7 +34061,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
@@ -34074,7 +34074,7 @@
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.055</coefficient>
                      </minicam-energy-input>
-                     <minicam-energy-input name="regional natural gas">
+                     <minicam-energy-input name="wholesale gas">
                         <coefficient>0.018</coefficient>
                      </minicam-energy-input>
                      <minicam-non-energy-input name="non-energy">
