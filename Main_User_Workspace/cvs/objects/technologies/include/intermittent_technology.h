@@ -43,7 +43,7 @@
 * \file intermittent_technology.h
 * \ingroup Objects
 * \brief The IntermittentTechnology class header file.
-* \author Marshall Wise
+* \author Marshall Wise, Sonny Kim
 */
 
 #include <string>
@@ -142,6 +142,12 @@ protected:
     //! Name of the electricity sector which this Technology will supply.
     std::string mElectricSectorName; 
 
+    //! Name of trial market associated with this Intermittent Technology.
+    std::string mTrialMarketName ;
+
+    //! Name of trial market readin for this Intermittent Technology.
+    std::string mTrialMarketNameParsed ;
+
     typedef std::vector<IInput*>::iterator InputIterator;
 
     //! Cached input containing the resource.
@@ -159,6 +165,9 @@ protected:
     //! Backup capacity factor read in at the Sector level.
     Value mBackupCapacityFactor;
 
+    //! Backup capital cost.
+    Value mBackupCapitalCost;
+
     //! Backup cost read in at the Sector level.
     Value mBackupCost;
 
@@ -166,7 +175,11 @@ protected:
     Value mElecReserveMargin;
 
     //! Average grid capacity factor read in at the Sector level.
+    //todo dynamically calculate average grid capacity factor
     Value mAveGridCapacityFactor;
+
+    //! Trial market price updated with solution price.
+    Value mTrialMarketPrice;
 
     void setCoefficients( const std::string& aRegionName,
                           const std::string& aSectorName,

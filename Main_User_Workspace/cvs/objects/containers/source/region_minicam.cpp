@@ -71,7 +71,6 @@
 #include "sectors/include/ag_sector.h"
 #include "sectors/include/building_final_demand.h"
 #include "sectors/include/export_sector.h"
-#include "sectors/include/interm_supply_sector.h"
 
 #include "resources/include/resource.h"
 
@@ -174,10 +173,6 @@ bool RegionMiniCAM::XMLDerivedClassParse( const std::string& nodeName, const xer
     }
     else if( nodeName == SupplySector::getXMLNameStatic() ){
         parseContainerNode( curr, supplySector, supplySectorNameMap, new SupplySector( name ) );
-    }
-    // Intermittent supply sector is contained in supplySector
-    else if( nodeName == IntermittentSupplySector::getXMLNameStatic() ){
-        parseContainerNode( curr, supplySector, supplySectorNameMap, new IntermittentSupplySector( name ) );
     }
     else if( nodeName == ExportSector::getXMLNameStatic() ){
         parseContainerNode( curr, supplySector, supplySectorNameMap, new ExportSector( name ) );

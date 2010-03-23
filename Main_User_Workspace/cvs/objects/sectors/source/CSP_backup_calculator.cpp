@@ -159,12 +159,12 @@ void CSPBackupCalculator::initCalc( const IInfo* aTechInfo ) {
 }
 
 double CSPBackupCalculator::getMarginalBackupCapacity( const string& aSector,
-                                                                 const string& aElectricSector,
-                                                                 const string& aResource,
-                                                                 const string& aRegion,
-                                                                 const double aReserveMargin,
-                                                                 const double aAverageGridCapacityFactor,
-                                                                 const int aPeriod ) const
+                                                       const string& aElectricSector,
+                                                       const string& aResource,
+                                                       const string& aRegion,
+                                                       const double aReserveMargin,
+                                                       const double aAverageGridCapacityFactor,
+                                                       const int aPeriod ) const
 {    
     //! Marginal backup calculation is used for marginal cost of backup capacity
     //! and used in the cost of backup for share equations. 
@@ -173,14 +173,13 @@ double CSPBackupCalculator::getMarginalBackupCapacity( const string& aSector,
 
     return 0.0;
 }
-
 double CSPBackupCalculator::getAverageBackupCapacity( const string& aSector,
-                                                                const string& aElectricSector,
-                                                                const string& aResource,
-                                                                const string& aRegion,
-                                                                const double aReserveMargin,
-                                                                const double aAverageGridCapacityFactor,
-                                                                const int aPeriod ) const
+                                                      const string& aElectricSector,
+                                                      const string& aResource,
+                                                      const string& aRegion,
+                                                      const double aReserveMargin,
+                                                      const double aAverageGridCapacityFactor,
+                                                      const int aPeriod ) const
 {
     //! Average backup is needed for CSP since it is used to compute the amount
     //! of energy used by the backup technology.
@@ -223,7 +222,6 @@ double CSPBackupCalculator::getAverageBackupCapacity( const string& aSector,
                                                  mBackupFraction );
 }
 
-
 /*!
  * \brief Calculate the share of the intermittent resource within the
  *        electricity sector.
@@ -243,39 +241,15 @@ double CSPBackupCalculator::getAverageBackupCapacity( const string& aSector,
  *         sector.
  */
 double CSPBackupCalculator::calcIntermittentShare( const string& aSector,
-                                                             const string& aElectricSector,
-                                                             const string& aResource,
-                                                             const string& aRegion,
-                                                             const double aReserveMargin,
-                                                             const double aAverageGridCapacityFactor,
-                                                             const int aPeriod ) const
+                                                   const string& aElectricSector,
+                                                   const string& aResource,
+                                                   const string& aRegion,
+                                                   const double aReserveMargin,
+                                                   const double aAverageGridCapacityFactor,
+                                                   const int aPeriod ) const
 {
     //! Note that the CSP backup is based on share of energy, not capacity, 
     //! so capacity factor and conversions to capacity not used.
     
-    Marketplace* marketplace = scenario->getMarketplace();
-    // Get trial amount of overall regional electricity supplied.
-    double elecSupply = marketplace->getStoredSupply( aElectricSector, aRegion, aPeriod );
-    
-    // Electricity supply must be positive unless it is period 0 where the trial
-    // supply market has not been setup. 
-    assert( elecSupply >= 0 || aPeriod == 0 );
-    
-    double elecShare = 0;
-    if( elecSupply > util::getVerySmallNumber() && mMaxSectorLoadServed > 0 ) {
-        // Get amount of energy produced by the sector.
-        double sectorSupply = SectorUtils::getTrialSupply( aRegion, aSector,
-                                                           aPeriod );
-
-        // Calculate the share based on ratio of CSP supply over total elec supply times
-        // fraction of total that is peak and intermediate. Since these are trial
-        // values the share may exceed 1.
-        elecShare = min( sectorSupply / ( elecSupply * mMaxSectorLoadServed ), 1.0 );
-
-        // Share of electricity must be between 0 and 1 inclusive.
-        assert( elecShare >= 0 && elecShare <= 1 );
-    }
-    return elecShare;
+    return SectorUtils::getTrialSupply( aRegion, aSector, aPeriod ) / mMaxSectorLoadServed;
 }
-
-

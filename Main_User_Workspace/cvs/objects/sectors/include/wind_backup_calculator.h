@@ -42,7 +42,7 @@
  * \file wind_backup_calculator.h
  * \ingroup Objects
  * \brief The wind backup calculator class header file.
- * \author Marshall Wise, Josh Lurz
+ * \author Marshall Wise, Josh Lurz, Sonny Kim
  */
 
 #include <string>
@@ -136,9 +136,10 @@ protected:
                             const double aAverageGridCapacityFactor,
                             const int aPeriod ) const;
 
-    double getSectorCapacity( const std::string& aRegion,
-                              const std::string& aSector,
-                              const std::string& aResource,
+    double getSectorCapacity( const std::string& aRegionName,
+                              const std::string& aSectorName,
+                              const std::string& aDependentSectorName,
+                              const std::string& aResourceName,
                               const int aPeriod ) const;
 
     WindBackupCalculator();

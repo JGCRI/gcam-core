@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.10"
-	Name="objects"
+	Name="objects-main"
 	ProjectGUID="{C6E84727-E04B-48EC-B119-EE4A2C0DB34B}"
 	Keyword="Win32Proj">
 	<Platforms>
@@ -21,7 +21,7 @@
 				AdditionalOptions="/WL"
 				Optimization="0"
 				FavorSizeOrSpeed="1"
-				AdditionalIncludeDirectories="&quot;..\..\..\..\libs\xerces-c-src_2_7_0\src&quot;;&quot;..\..\..\..\libs\boost-lib\&quot;;&quot;..\..\..\..\libs\dbxml\include&quot;;&quot;..\..\..\..\libs\mtl-2.1.2-21&quot;;..\.."
+				AdditionalIncludeDirectories="&quot;..\..\..\..\libs\xerces-c-src_2_7_0\src&quot;;&quot;..\..\..\..\libs\boost-lib\&quot;;..\..\..\..\libs\dbxml2.3.10\include;&quot;..\..\..\..\libs\mtl-2.1.2-21&quot;;..\.."
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_AFXDLL"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
@@ -38,9 +38,9 @@
 				AdditionalDependencies="libdb45d.lib libdbxml23d.lib ddao36D.lib xerces-c_2D.lib magiccd.lib aglud.lib xqilla10d.lib"
 				OutputFile="$(OutDir)/../Objects-Main-D.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="..\..\..\..\libs\access;..\..\..\..\libs\dbxml\lib;&quot;..\..\..\..\libs\xerces-c-src_2_7_0\lib&quot;;..\..\..\..\libs\magicclib\lib;..\..\..\..\libs\AgLib\lib"
+				AdditionalLibraryDirectories="..\..\..\..\libs\access;..\..\..\..\libs\dbxml2.3.10\lib;&quot;..\..\..\..\libs\xerces-c-src_2_7_0\lib&quot;;..\..\..\..\libs\magicclib\lib;..\..\..\..\libs\AgLib\lib"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="$(OutDir)/Objects-Main-Scratch.pdb"
+				ProgramDatabaseFile="$(OutDir)/CIAM-Scratch.pdb"
 				SubSystem="1"
 				TargetMachine="1"/>
 			<Tool
@@ -48,7 +48,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
-				Name="VCPreBuildEventTool"/>
+			Name="VCPreBuildEventTool"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -76,7 +76,7 @@
 				Optimization="2"
 				InlineFunctionExpansion="1"
 				OmitFramePointers="TRUE"
-				AdditionalIncludeDirectories="&quot;..\..\..\..\libs\xerces-c-src_2_7_0\src&quot;;&quot;..\..\..\..\libs\boost-lib\&quot;;..\..\..\..\libs\dbxml\include;&quot;..\..\..\..\libs\mtl-2.1.2-21&quot;;..\.."
+				AdditionalIncludeDirectories="&quot;..\..\..\..\libs\xerces-c-src_2_7_0\src&quot;;&quot;..\..\..\..\libs\boost-lib&quot;;..\..\..\..\libs\dbxml2.3.10\include;&quot;..\..\..\..\libs\mtl-2.1.2-21&quot;;..\.."
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_AFXDLL"
 				StringPooling="TRUE"
 				MinimalRebuild="TRUE"
@@ -95,7 +95,7 @@
 				OutputFile="$(OutDir)/../Objects-Main.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="..\..\..\..\libs\access;..\..\..\..\libs\dbxml\lib;&quot;..\..\..\..\libs\xerces-c-src_2_7_0\lib&quot;;..\..\..\..\libs\AgLib\lib;..\..\..\..\libs\magicclib\lib"
+				AdditionalLibraryDirectories="..\..\..\..\libs\access;..\..\..\..\libs\dbxml2.3.10\lib;&quot;..\..\..\..\libs\xerces-c-src_2_7_0\lib&quot;;..\..\..\..\libs\AgLib\lib;..\..\..\..\libs\magicclib\lib"
 				GenerateDebugInformation="TRUE"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -403,9 +403,6 @@
 				</File>
 				<File
 					RelativePath="..\..\sectors\source\forest_supply_subsector.cpp">
-				</File>
-				<File
-					RelativePath="..\..\sectors\source\interm_supply_sector.cpp">
 				</File>
 				<File
 					RelativePath="..\..\sectors\source\more_sector_info.cpp">
@@ -1389,9 +1386,6 @@
 				</File>
 				<File
 					RelativePath="..\..\sectors\include\ibackup_calculator.h">
-				</File>
-				<File
-					RelativePath="..\..\sectors\include\interm_supply_sector.h">
 				</File>
 				<File
 					RelativePath="..\..\sectors\include\more_sector_info.h">

@@ -42,12 +42,14 @@
  * \file sector_utils.h
  * \ingroup Objects
  * \brief The SectorUtils class header file.
- * \author Josh Lurz
+ * \author Josh Lurz, Sonny Kim
  */
 
 #include <string>
 #include <vector>
 #include "util/base/include/hash_map.h"
+
+class IInfo;
 
 /*! 
  * \ingroup Objects
@@ -57,20 +59,21 @@
  */
 class SectorUtils {
 public:
-    static bool createTrialSupplyMarket( const std::string& aRegion,
-                                         const std::string& aSector );
+    static bool createTrialSupplyMarket( const std::string& aRegionName,
+                                         const std::string& aSectorName,
+                                         const IInfo* aTechnologyInfo);
 
-    static void setTrialSupply( const std::string& aRegion,
-                                const std::string& aSector,
-                                const double aSupply,
-                                const int aPeriod );
-
-    static double getTrialSupply( const std::string& aRegion,
-                                  const std::string& aSector,
+    static void addToTrialDemand( const std::string& aRegionName,
+                                  const std::string& aSectorName,
+                                  const double aSupply,
                                   const int aPeriod );
 
-    static void askToCreateTrialSupply( const std::string& aRegion,
-                                        const std::string& aSector );
+    static double getTrialSupply( const std::string& aRegionName,
+                                  const std::string& aSectorName,
+                                  const int aPeriod );
+
+    static void askToCreateTrialSupply( const std::string& aRegionName,
+                                        const std::string& aSectorName );
 
     static double calcFixedOutputScaleFactor( const double aMarketDemand,
                                               const double aFixedOutput );
@@ -90,14 +93,14 @@ public:
     static bool isFinalEnergySector( const std::string& aRegionName,
                                      const std::string& aSectorName );
 
-    static double getVariance( const std::string& aResource,
-                               const std::string& aRegion,
+    static double getVariance( const std::string& aResourceName,
+                               const std::string& aRegionName,
                                const int aPeriod );
 
     static int getDemandNormPeriod( const int aPeriod );
 
-    static double getCapacityFactor( const std::string& aResource,
-                                     const std::string& aRegion,
+    static double getCapacityFactor( const std::string& aResourceName,
+                                     const std::string& aRegionName,
                                      const int aPeriod );
     
     static double convertEnergyToCapacity( const double aCapacityFactor,
@@ -106,7 +109,7 @@ public:
     static double convertCapacityToEnergy( const double aCapacityFactor,
                                            const double aCapacity );
 
-    static const std::string getTrialMarketName( const std::string& aSector );
+    static const std::string getTrialMarketName( const std::string& aSectorName );
 
 protected:
 

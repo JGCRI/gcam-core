@@ -176,15 +176,6 @@ void Sector::XMLParse( const DOMNode* node ){
             continue;
         }
         else if( nodeName == "price" ){
-            /*
-            // Check if the output year is the base year.
-            if( XMLHelper<int>::getAttr( curr, "year" ) == modeltime->getStartYear() ){
-                mBasePrice = XMLHelper<double>::getValue( curr );
-            }
-            else {
-                // Warning?
-            }
-            */
             XMLHelper<double>::insertValueIntoVector( curr, mPrice, modeltime );
             mBasePrice = mPrice[ 0 ];
         }
@@ -267,7 +258,9 @@ void Sector::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mOutputUnit, "output-unit", aOut, aTabs );
     XMLWriteElement( mInputUnit, "input-unit", aOut, aTabs );
     XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
+    aOut.precision( 10 );
     XMLWriteVector( mPrice, "price", aOut, aTabs, modeltime );
+    aOut.precision( -1 );
 
     XMLWriteElementCheckDefault( mBaseOutput, "output", aOut, aTabs, 0.0, modeltime->getper_to_yr( 0 ) );
     if( !mKeywordMap.empty() ) {
@@ -364,7 +357,12 @@ void Sector::completeInit( const IInfo* aRegionInfo, DependencyFinder* aDepFinde
                            ILandAllocator* aLandAllocator, const GlobalTechnologyDatabase* aGlobalTechDB )
 {
     // Allocate the sector info.
-    mSectorInfo.reset( InfoFactory::constructInfo( aRegionInfo, regionName + "-" + name ) );
+    // Do not reset if mSectorInfo contains information from derived sector classes.
+    // This assumes that info from derived sector contains region info (parent).
+    if( !mSectorInfo.get() ){
+        mSectorInfo.reset( InfoFactory::constructInfo( aRegionInfo, regionName + "-" + name ) );
+    }
+
     // Set output and price unit of sector into sector info.
     mSectorInfo->setString( "output-unit", mOutputUnit );
     mSectorInfo->setString( "input-unit", mInputUnit );

@@ -53,7 +53,7 @@ class DependencyFinder;
 /*! 
 * \ingroup Objects
 * \brief This class represents a single supply sector.
-* \author James Blackwood
+* \author James Blackwood, Sonny Kim
 */
 class SupplySector: public Sector
 {
@@ -121,9 +121,10 @@ protected:
     std::auto_ptr<FinalEnergySupplier> mFinalEnergySupplier;
 
     //! Whether the sector has a trial supply market.
-    bool mHasTrialSupply;
+    bool mHasTrialSupplyMarket;
     //! Trial supply market prices
     std::vector<double> mPriceTrialSupplyMarket;
+
 private:
     const static std::string XML_NAME; //!< node name for toXML methods 
 };

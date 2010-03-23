@@ -66,6 +66,7 @@
 #include "functions/include/function_manager.h"
 #include "util/base/include/ivisitor.h"
 #include "containers/include/iinfo.h"
+#include "containers/include/info_factory.h"
 
 #include "technologies/include/ioutput.h"
 #include "technologies/include/output_factory.h"
@@ -365,6 +366,9 @@ void Technology::completeInit( const string& aRegionName,
                                ILandAllocator* aLandAllocator,
                                const GlobalTechnologyDatabase* aGlobalTechDB )
 {
+    // Inititalize the technology info object
+    mTechnologyInfo.reset( InfoFactory::constructInfo( aSubsectorInfo, mName ) );
+
     /*! \pre There must be at least one input. */
    // assert( !mInputs.empty() ); //sjs remove this for now since ag techs don't have any inputs at present
     // Check for an unset or invalid year.
@@ -492,7 +496,9 @@ void Technology::toInputXML( ostream& out,
 {
     XMLWriteOpeningTag( getXMLNameStatic2D(), out, tabs, "", year );
     // write the xml for the class members.
+    out.precision( 10 );
     XMLWriteElementCheckDefault( mShareWeight, "sharewt", out, tabs, 1.0 );
+    out.precision( -1 );
     const Modeltime* modeltime = scenario->getModeltime();
     XMLWriteElementCheckDefault( mLifetimeYears, "lifetime", out, tabs, modeltime->gettimestep( modeltime->getyr_to_per( year ) ) );
     XMLWriteElementCheckDefault( mLogitExp, "logitexp", out, tabs, getLogitExpDefault() );
@@ -777,8 +783,10 @@ double Technology::calcSecondaryValue( const string& aRegionName,
 void Technology::postCalc( const string& aRegionName,
                            const int aPeriod )
 {
-    for( unsigned int i = 0; i < mOutputs.size(); ++i ) {
-        mOutputs[ i ]->postCalc( aRegionName, aPeriod );
+    if( mProductionState[ aPeriod ]->isOperating() ) {
+        for( unsigned int i = 0; i < mOutputs.size(); ++i ) {
+            mOutputs[ i ]->postCalc( aRegionName, aPeriod );
+        }
     }
 }
 

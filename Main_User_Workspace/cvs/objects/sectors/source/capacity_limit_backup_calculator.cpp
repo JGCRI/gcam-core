@@ -36,7 +36,7 @@
  * \file capacity_limit_backup_calculator.cpp
  * \ingroup Objects
  * \brief CapacityLimitBackupCalculator class source file.
- * \author Josh Lurz
+ * \author Josh Lurz, Sonny Kim
  */
 
 #include "util/base/include/definitions.h"
@@ -58,11 +58,9 @@ using namespace xercesc;
 /*!
  * \brief Constructor.
  */
-CapacityLimitBackupCalculator::CapacityLimitBackupCalculator(): mCapacityLimit( 1 )
+CapacityLimitBackupCalculator::CapacityLimitBackupCalculator()
+: mCapacityLimit( 1.0 ), mFmax( 1.0 ), mC ( 5.0 ), mTau ( 0.1 )
 {
-    mFmax = 1.0;
-    mC = 5.0;
-    mTau  = 0.1;
 }
 
 // Documentation is inherited.
@@ -135,10 +133,10 @@ bool CapacityLimitBackupCalculator::XMLParse( const xercesc::DOMNode* node ){
 // Documentation is inherited.
 void CapacityLimitBackupCalculator::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-    XMLWriteElement( mCapacityLimit, "capacity-limit", aOut, aTabs );
-    XMLWriteElement( mFmax, "fmax", aOut, aTabs );
-    XMLWriteElement( mC, "c", aOut, aTabs );
-    XMLWriteElement( mTau, "tau", aOut, aTabs );
+    XMLWriteElementCheckDefault( mCapacityLimit, "capacity-limit", aOut, aTabs, 1.0 );
+    XMLWriteElementCheckDefault( mFmax, "fmax", aOut, aTabs, 1.0 );
+    XMLWriteElementCheckDefault( mC, "c", aOut, aTabs, 5.0 );
+    XMLWriteElementCheckDefault( mTau, "tau", aOut, aTabs, 0.1 );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
@@ -182,8 +180,7 @@ double CapacityLimitBackupCalculator::getMarginalBackupCapacity( const string& a
                                                                aPeriod );
  
     // Get resource capacity factor.
-    double resourceCapacityFactor =
-          SectorUtils::getCapacityFactor( aResource, aRegion, aPeriod );
+    double resourceCapacityFactor = SectorUtils::getCapacityFactor( aResource, aRegion, aPeriod );
  
 
     // This is confusing but mathematically correct.  The marginal backupCapacityFraction is in units of 
@@ -192,8 +189,7 @@ double CapacityLimitBackupCalculator::getMarginalBackupCapacity( const string& a
     // using the resource capacity factor, which is the same as multiplying by
     // the conversion from energy to capacity as done here. Units returned here are GW/EJ.
    
-    return SectorUtils::convertEnergyToCapacity( resourceCapacityFactor,
-                                                 marginalBackup );
+    return SectorUtils::convertEnergyToCapacity( resourceCapacityFactor, marginalBackup );
 }
 
 double CapacityLimitBackupCalculator::getAverageBackupCapacity( const string& aSector,
@@ -227,8 +223,6 @@ double CapacityLimitBackupCalculator::getAverageBackupCapacity( const string& aS
 
     double totalBackup = mFmax * mTau / mC * ( log ( 1.0 + exp( mC * ( xmid - elecShare ) / mTau ) )
                          - mC * ( xmid - elecShare ) / mTau );
-
-    
     // MAW believes this calculation of average backup is correct, but future generations should
     // feel free to re-visit it. The S-curve backup function is 
     // already the marginal fraction of backup required as a function of the intermittent sector 
@@ -241,8 +235,7 @@ double CapacityLimitBackupCalculator::getAverageBackupCapacity( const string& aS
     double averageBackup = totalBackup / elecShare;
 
    // Get resource capacity factor.
-    double resourceCapacityFactor =
-          SectorUtils::getCapacityFactor( aResource, aRegion, aPeriod );
+    double resourceCapacityFactor = SectorUtils::getCapacityFactor( aResource, aRegion, aPeriod );
  
     // This is confusing but mathematically correct.  The averagebackupFraction is in units of 
     // GW per GW.  The denominator (intermittent sector capacity GW)needs to be converted to energy, 
@@ -250,8 +243,7 @@ double CapacityLimitBackupCalculator::getAverageBackupCapacity( const string& aS
     // using the resource capacity factor, which is the same as multiplying by
     // the conversion from energy to capacity as done here. Units returned here are GW/EJ.
    
-    return SectorUtils::convertEnergyToCapacity( resourceCapacityFactor,
-                                                 averageBackup );
+    return SectorUtils::convertEnergyToCapacity( resourceCapacityFactor, averageBackup );
 }
 
 /*!
@@ -341,51 +333,10 @@ double CapacityLimitBackupCalculator::calcIntermittentShare( const string& aSect
                                                              const double aAverageGridCapacityFactor,
                                                              const int aPeriod ) const
 {
-    // Get trial amount (stored supply) of overall regional electricity supplied.
-    const Marketplace* marketplace = scenario->getMarketplace();
-    double elecSupply = marketplace->getStoredSupply( aElectricSector, aRegion, aPeriod );
-    
-    // Electricity supply must be positive unless it is period 0 where the trial
-    // supply market has not been setup. 
-    assert( elecSupply >= 0 || aPeriod == 0 );
-    
-    // Calculate the electric sector capacity.
-    double elecSupplyCapacity = util::getLargeNumber();
-    if( aAverageGridCapacityFactor > 0 ){
-        elecSupplyCapacity = elecSupply / aAverageGridCapacityFactor;
-    }
-    else {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "No grid capacity factor found for " << aElectricSector
-                << "." << endl;
-    }
+    assert( SectorUtils::getCapacityFactor( aResource, aRegion, aPeriod ) > 0 );
 
-    double elecShare = 0;
-    if( elecSupplyCapacity > 0 ) {
-        // Get trial amount of energy produced by the sector.
-        double sectorSupply = SectorUtils::getTrialSupply( aRegion, aSector,
-                                                           aPeriod );
-        
-        // Get resource capacity factor.
-        double resourceCapacityFactor =
-            SectorUtils::getCapacityFactor( aResource, aRegion, aPeriod );
-       
-        // Using average capacity factor for resource, translate the energy the
-        // sector supplied in electricity or energy terms into EJ. Note that the
-        // actual capacity would have conversions for hours per year and EJ to
-        // KWH, but these would cancel out in the share calculation below.
-        double sectorSupplyCapacity = util::getLargeNumber();
-        if( resourceCapacityFactor > 0 ){
-            sectorSupplyCapacity = sectorSupply / resourceCapacityFactor;
-        }
-
-        // Calculate the shared based on this parameter. Since these are trial
-        // values the share may exceed 1.
-        elecShare = min( sectorSupplyCapacity / elecSupplyCapacity, 1.0 );
-
-        // Share of electricity must be between 0 and 1 inclusive.
-        assert( elecShare >= 0 && elecShare <= 1 );
-    }
-    return elecShare;
+    double capacityShare = SectorUtils::getTrialSupply( aRegion, aSector, aPeriod ) * 
+                           aAverageGridCapacityFactor / 
+                           SectorUtils::getCapacityFactor( aResource, aRegion, aPeriod );
+    return capacityShare;
 }

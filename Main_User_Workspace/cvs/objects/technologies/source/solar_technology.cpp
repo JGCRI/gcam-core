@@ -297,20 +297,11 @@ void SolarTechnology::completeInit(
 */
 double SolarTechnology::getSolarPenetration( const int aPeriod ) const
 {
-   const double elecCapacity   = 1;
-   const double sectorCapacity = 1;
-
    // Compute the CSP penetration level
    double SolarPenetration = 0;
-   if ( aPeriod > 0 && mMaxSectorLoadServed > 0 )
-   {
-      Marketplace* marketplace = scenario->getMarketplace();
-      double elecSupply   = marketplace->getStoredSupply( mElectricSectorName, mRegionName, aPeriod );
-      if ( elecSupply > 0 )
-      {
-         double sectorSupply = SectorUtils::getTrialSupply( mRegionName, mSectorName, aPeriod );
-         SolarPenetration = ( sectorSupply / ( elecSupply * mMaxSectorLoadServed ) ) * ( elecCapacity / sectorCapacity );
-      }
+   if ( aPeriod > 0 && mMaxSectorLoadServed > 0 ){
+      SolarPenetration = SectorUtils::getTrialSupply( mRegionName, mTrialMarketName, aPeriod )
+                         / mMaxSectorLoadServed;
    }
 
    return SolarPenetration;
@@ -569,9 +560,3 @@ bool SolarTechnology::XMLDerivedClassParse(
 }
 
 // end of solar_technology.cpp ***********************************************
-
-
-
-
-
-

@@ -36,7 +36,7 @@
 * \file supply_sector.cpp
 * \ingroup Objects
 * \brief SupplySector class source file.
-* \author James Blackwood
+* \author James Blackwood, Sonny Kim
 */
 
 #include "util/base/include/definitions.h"
@@ -71,16 +71,102 @@ const string SupplySector::XML_NAME = "supplysector";
 /* \brief Constructor
 * \param aRegionName The name of the region.
 */
-SupplySector::SupplySector( const string& aRegionName )
-: Sector ( aRegionName ),
-mHasTrialSupply( false ),
+SupplySector::SupplySector( const string& aRegionName ):
+Sector( aRegionName ),mHasTrialSupplyMarket( false ),
 mBiomassAdder( scenario->getModeltime()->getmaxper() )
 {
-    // resize vectors
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    //  Price vector for the trial marekts if created
-    mPriceTrialSupplyMarket.resize( maxper );
+    // Resize price vector for the trial markets that may or maynot be created.
+    // Note, vector initialized to null by default (i.e. trial quantity is null).
+    mPriceTrialSupplyMarket.resize( scenario->getModeltime()->getmaxper() );
+}
+
+/*! \brief Get the XML node name for output to XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* This function may be virtual to be overridden by derived class pointers.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME.
+*/
+const string& SupplySector::getXMLName() const {
+    return XML_NAME;
+}
+
+/*! \brief Get the XML node name in static form for comparison when parsing XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* The "==" operator that is used when parsing, required this second function to return static.
+* \note A function cannot be static and virtual.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME as a static.
+*/
+const std::string& SupplySector::getXMLNameStatic() {
+    return XML_NAME;
+}
+
+/*! \brief Parses any child nodes specific to derived classes
+*
+* Method parses any input data from child nodes that are specific to the classes derived from this class. Since Sector is the generic base class, there are no values here.
+*
+* \author Josh Lurz, Steve Smith, Sonny Kim
+* \param nodeName name of current node
+* \param curr pointer to the current node in the XML input tree
+*/
+bool SupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
+    // Temporary hack for CCTP.
+    if( nodeName == "biomass-price-adder" ){
+        XMLHelper<double>::insertValueIntoVector( curr, mBiomassAdder, scenario->getModeltime() );
+    }
+    else if( nodeName == "has-trial-supply-market" ){
+        mHasTrialSupplyMarket = XMLHelper<bool>::getValue( curr );
+    }
+    else if( nodeName == "price-trial-supply" ){
+        XMLHelper<double>::insertValueIntoVector( curr, mPriceTrialSupplyMarket, scenario->getModeltime() );
+    }
+    else {
+        return false;
+    }
+    return true;
+}
+
+/*! \brief XML output stream for derived classes
+*
+* Function writes output due to any variables specific to derived classes to XML.
+* This function is called by toInputXML in the base Sector class.
+*
+* \author Steve Smith, Josh Lurz, Sonny Kim
+* \param out reference to the output stream
+* \param tabs A tabs object responsible for printing the correct number of tabs. 
+*/
+void SupplySector::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {  
+
+    // Temporary CCTP hack.
+    aOut.precision( 10 );
+    XMLWriteVector( mBiomassAdder, "biomass-price-adder", aOut, aTabs, scenario->getModeltime(), 0.0 );
+    if( mHasTrialSupplyMarket ){
+        XMLWriteElement( mHasTrialSupplyMarket, "has-trial-supply-market", aOut, aTabs );
+        XMLWriteVector( mPriceTrialSupplyMarket, "price-trial-supply", aOut, aTabs, scenario->getModeltime(), 0.0 );
+    }
+    aOut.precision( -1 );
+}
+
+/*! \brief XML debugging output stream for derived classes
+*
+* Function writes output due to any variables specific to derived classes to XML.
+* This function is called by toInputXML in the base Sector class.
+*
+* \author Steve Smith, Josh Lurz, Sonny Kim
+* \param out reference to the output stream
+* \param tabs A tabs object responsible for printing the correct number of tabs. 
+*/
+void SupplySector::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
+
+    XMLWriteElement( mBiomassAdder[ aPeriod ], "biomass-price-adder", aOut, aTabs );
+    if( mHasTrialSupplyMarket ){
+        XMLWriteElement( mHasTrialSupplyMarket, "has-trial-supply-market", aOut, aTabs );
+        XMLWriteElement( mPriceTrialSupplyMarket[ aPeriod ], "price-trial-supply", aOut, aTabs );
+    }
 }
 
 /*! \brief Complete the initialization of the supply sector.
@@ -129,6 +215,15 @@ void SupplySector::setMarket() {
         marketInfo->setString( "price-unit", mPriceUnit );
         marketInfo->setString( "output-unit", mOutputUnit );
     }
+    // Create trial supply market.
+    if( mHasTrialSupplyMarket ){
+        if( SectorUtils::createTrialSupplyMarket(regionName,name,
+            marketplace->getMarketInfo(name,regionName,0,true)) ){
+            // Initialize "prices" (quantities) for trial supply market
+            marketplace->setPriceVector( SectorUtils::getTrialMarketName(name),
+                regionName, mPriceTrialSupplyMarket );
+        }
+    }
 }
 
 /*! \brief Initialize the SupplySector.
@@ -151,26 +246,6 @@ void SupplySector::initCalc( NationalAccount* aNationalAccount,
     if( aPeriod == 1 ){
         if( SectorUtils::isFinalEnergySector( regionName, name ) ){
             mFinalEnergySupplier.reset( new FinalEnergySupplier( name ) );
-        }
-        if( !mHasTrialSupply ){
-            // Always look for the flag in period 0.
-            const IInfo* sectorInfo = marketplace->getMarketInfo( name, regionName, 0, true );
-            // The sector's market info must exist.
-            assert( sectorInfo );
-            // Set the trial supply to true if the marketinfo has a request. 
-            mHasTrialSupply = sectorInfo->getBoolean( "create-trial-supply", false );
-        }
-
-        // Create the trial supply market if requested.
-        if( mHasTrialSupply ){
-            SectorUtils::createTrialSupplyMarket( regionName, name );
-        }
-    }
-
-    if( aPeriod > 0 && mHasTrialSupply ){
-        if( mPriceTrialSupplyMarket[ aPeriod ] != 0 ){
-            marketplace->setPrice( SectorUtils::getTrialMarketName( name ), regionName,
-                mPriceTrialSupplyMarket[ aPeriod ], aPeriod, true );
         }
     }
 }
@@ -296,6 +371,11 @@ void SupplySector::supply( const GDP* aGDP, const int aPeriod ) {
                                               aPeriod );
     }
 
+    // Add demand to trial supply market.
+    if( mHasTrialSupplyMarket ){
+        SectorUtils::addToTrialDemand( regionName, name, marketDemand, aPeriod );
+    }
+
 	const static bool debugChecking = Configuration::getInstance()->getBool( "debugChecking" );
 	if ( debugChecking ) {
 		// If the model is working correctly this should never give an error
@@ -312,93 +392,6 @@ void SupplySector::supply( const GDP* aGDP, const int aPeriod ) {
 			mainLog << "S: " << mrksupply << " D: " << marketDemand << " Fixed-Supply: " << getFixedOutput( aPeriod ) << endl;
 		}
 	}
-
-	// Set the trial supply if the market exists.
-	if( mHasTrialSupply ){
-		SectorUtils::setTrialSupply( regionName, name, getOutput( aPeriod ), aPeriod );
-	}
-}
-
-/*! \brief Get the XML node name for output to XML.
-*
-* This public function accesses the private constant string, XML_NAME.
-* This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overridden by derived class pointers.
-* \author Josh Lurz, James Blackwood
-* \return The constant XML_NAME.
-*/
-const string& SupplySector::getXMLName() const {
-    return XML_NAME;
-}
-
-/*! \brief Get the XML node name in static form for comparison when parsing XML.
-*
-* This public function accesses the private constant string, XML_NAME.
-* This way the tag is always consistent for both read-in and output and can be easily changed.
-* The "==" operator that is used when parsing, required this second function to return static.
-* \note A function cannot be static and virtual.
-* \author Josh Lurz, James Blackwood
-* \return The constant XML_NAME as a static.
-*/
-const std::string& SupplySector::getXMLNameStatic() {
-    return XML_NAME;
-}
-
-/*! \brief Parses any child nodes specific to derived classes
-*
-* Method parses any input data from child nodes that are specific to the classes derived from this class. Since Sector is the generic base class, there are no values here.
-*
-* \author Josh Lurz, Steve Smith
-* \param nodeName name of current node
-* \param curr pointer to the current node in the XML input tree
-*/
-bool SupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
-    // Temporary hack for CCTP.
-    if( nodeName == "biomass-price-adder" ){
-        XMLHelper<double>::insertValueIntoVector( curr, mBiomassAdder, scenario->getModeltime() );
-    }
-    else if( nodeName == "price-trial-supply" ){
-        XMLHelper<double>::insertValueIntoVector( curr, mPriceTrialSupplyMarket, scenario->getModeltime() );
-    }
-    else {
-        return false;
-    }
-    return true;
-}
-
-/*! \brief XML output stream for derived classes
-*
-* Function writes output due to any variables specific to derived classes to XML.
-* This function is called by toInputXML in the base Sector class.
-*
-* \author Steve Smith, Josh Lurz, Sonny Kim
-* \param out reference to the output stream
-* \param tabs A tabs object responsible for printing the correct number of tabs. 
-*/
-void SupplySector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {  
-
-    // Temporary CCTP hack.
-    XMLWriteVector( mBiomassAdder, "biomass-price-adder", out, tabs, scenario->getModeltime(), 0.0 );
-    if( mHasTrialSupply ){
-        XMLWriteVector( mPriceTrialSupplyMarket, "price-trial-supply", out, tabs, scenario->getModeltime(), 0.0 );
-    }
-}
-
-/*! \brief XML debugging output stream for derived classes
-*
-* Function writes output due to any variables specific to derived classes to XML.
-* This function is called by toInputXML in the base Sector class.
-*
-* \author Steve Smith, Josh Lurz, Sonny Kim
-* \param out reference to the output stream
-* \param tabs A tabs object responsible for printing the correct number of tabs. 
-*/
-void SupplySector::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* tabs ) const {
-
-    XMLWriteElement( mBiomassAdder[ aPeriod ], "biomass-price-adder", aOut, tabs );
-    if( mHasTrialSupply ){
-        XMLWriteElement( mPriceTrialSupplyMarket[ aPeriod ], "price-trial-supply", aOut, tabs );
-    }
 }
 
 /*!
@@ -450,12 +443,12 @@ void SupplySector::FinalEnergySupplier::setFinalEnergy( const string& aRegionNam
 */
 void SupplySector::postCalc( const int aPeriod ){
     Sector::postCalc( aPeriod );
-    // If trial market exists, get solved trial "prices" and set to member
-    // price vector
-    if( aPeriod > 0 && mHasTrialSupply ){
-        string trialMarketName = SectorUtils::getTrialMarketName( name );
-        mPriceTrialSupplyMarket[ aPeriod ] = 
-            scenario->getMarketplace()->getPrice( trialMarketName, regionName, aPeriod, true );
+    // If trial supply market exists, get solved trial "prices" and set to member
+    // price vector.
+    if( aPeriod > 0 && mHasTrialSupplyMarket ){
+        mPriceTrialSupplyMarket[ aPeriod ] = scenario->getMarketplace()->getPrice(
+            SectorUtils::getTrialMarketName(name),
+            regionName, aPeriod, true );
     }
 }
 
@@ -552,4 +545,3 @@ void SupplySector::dbOutput( const GDP* aGDP,
         subsec[ i ]->csvOutputFile( aGDP, aIndEmissCalc );
     }
 }
-

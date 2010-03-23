@@ -292,6 +292,8 @@ protected:
     //! Vector of output objects representing the outputs of the technology.
     std::vector<IOutput*> mOutputs;
 
+    std::auto_ptr<IInfo> mTechnologyInfo; //!< The technology's information store.
+
     // These member variables are ordered by decreasing size to optimize memory
     // usage. When adding a new variable add it to the section with the
     // variables type.

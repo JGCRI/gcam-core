@@ -36,7 +36,7 @@
  * \file sector_utils.cpp
  * \ingroup Objects
  * \brief The SectorUtils class source file.
- * \author Josh Lurz
+ * \author Josh Lurz, Sonny Kim
  */
 
 #include "util/base/include/definitions.h"
@@ -66,37 +66,38 @@ typedef HashMap<string, string>::const_iterator NameIterator;
  * \details Sets up a trial value market for the given good in the given region.
  *          The trial market will be solved for all periods after the base
  *          period.
- * \author Josh Lurz
- * \param aRegion Region in which to create the market.
- * \param aSector Name of the sector for which to create the market.
+ * \author Josh Lurz, Sonny Kim
+ * \param aRegionName Name of the region in which to create the market.
+ * \param aSectorName Name of the sector for which to create the market.
+ * \param aTechnologyInfo Technology Info object for passing information from
+ *        technology to SectorUtil and market.
  * \return Whether the market was created and did not already exist.
  */
-bool SectorUtils::createTrialSupplyMarket( const string& aRegion,
-                                           const string& aSector )
+bool SectorUtils::createTrialSupplyMarket( const string& aRegionName,
+                                           const string& aSectorName,
+                                           const IInfo* aTechnologyInfo )
 {
     // Add the trial market name to the cached list of trial names.
-    const string trialName = getTrialMarketName( aSector );
-    sTrialMarketNames.insert( make_pair( aSector, trialName ) );
+    const string trialName = getTrialMarketName( aSectorName );
+    sTrialMarketNames.insert( make_pair( aSectorName, trialName ) );
 
     // Create the additional market.
     Marketplace* marketplace = scenario->getMarketplace();
-    bool isNewMarket = marketplace->createMarket( aRegion,
-                                                  aRegion,
+    bool isNewMarket = marketplace->createMarket( aRegionName,
+                                                  aRegionName,
                                                   trialName,
                                                   IMarketType::TRIAL_VALUE );
+
     // Set price and output units for period 0 market info
-    // Get marketInfo for sector to set marketInfo for trial sector.
-    // Sector and it's trial market must have same output units
-    const IInfo* marketInfoSupplySector = marketplace->getMarketInfo( aSector, aRegion, 0, true );
-    const string outputUnitStr = marketInfoSupplySector->getString( "output-unit", true );
+    const string outputUnitStr = aTechnologyInfo->getString( "output-unit", true );
     // no operating trial market for base period, although vector always contains base period
-    IInfo* marketInfoTrialSupplySector = marketplace->getMarketInfo( trialName, aRegion, 0, true );
+    IInfo* marketInfoTrialSupplySector = marketplace->getMarketInfo( trialName, aRegionName, 0, true );
     marketInfoTrialSupplySector->setString( "price-unit", outputUnitStr );
     marketInfoTrialSupplySector->setString( "output-unit", outputUnitStr );
 
     // Set the market to solve.
     for( int per = 1; per < scenario->getModeltime()->getmaxper(); ++per ){
-        marketplace->setMarketToSolve( trialName, aRegion, per );
+        marketplace->setMarketToSolve( trialName, aRegionName, per );
     }
     return isNewMarket;
 }
@@ -111,10 +112,10 @@ bool SectorUtils::createTrialSupplyMarket( const string& aRegion,
  * \param aSupply Known value of supply for the iteration.
  * \param aPeriod Model period.
  */
-void SectorUtils::setTrialSupply( const string& aRegion,
-                                  const string& aSector,
-                                  const double aSupply,
-                                  const int aPeriod )
+void SectorUtils::addToTrialDemand( const string& aRegionName,
+                                    const string& aSectorName,
+                                    const double aSupply,
+                                    const int aPeriod )
 {
     // Market is not created until period 1.
     if( aPeriod == 0 ){
@@ -122,16 +123,15 @@ void SectorUtils::setTrialSupply( const string& aRegion,
     }
 
     // Locate the trial market name.
-    NameIterator trialName = sTrialMarketNames.find( aSector );
+    NameIterator trialName = sTrialMarketNames.find( aSectorName );
     
     // Check if the market existed.
     assert( trialName != sTrialMarketNames.end() );
 
     // Demand is the known value of the trial market. Trial markets do not solve
     // well when the value of one side is zero.
-    scenario->getMarketplace()->addToDemand( trialName->second,
-                                             aRegion, aSupply, aPeriod,
-                                             true );
+    scenario->getMarketplace()->addToDemand( trialName->second, aRegionName, aSupply,
+                                             aPeriod, true );
 }
 
 /*!
@@ -144,8 +144,8 @@ void SectorUtils::setTrialSupply( const string& aRegion,
  * \param aPeriod Model period.
  * \return Trial value of supply, -1 if the market does not exist.
  */
-double SectorUtils::getTrialSupply( const string& aRegion,
-                                    const string& aSector,
+double SectorUtils::getTrialSupply( const string& aRegionName,
+                                    const string& aSectorName,
                                     const int aPeriod )
 {
     // Market is not created yet in period 0.
@@ -154,7 +154,7 @@ double SectorUtils::getTrialSupply( const string& aRegion,
     }
 
     // Locate the trial market name.
-    NameIterator trialName = sTrialMarketNames.find( aSector );
+    NameIterator trialName = sTrialMarketNames.find( aSectorName );
     
     // Check if the market existed.
     if( trialName == sTrialMarketNames.end() ){
@@ -164,8 +164,7 @@ double SectorUtils::getTrialSupply( const string& aRegion,
     // Get the trial value of supply from the marketplace, which is stored as
     // the price.
     double trialPrice = scenario->getMarketplace()->getPrice( trialName->second,
-                                                              aRegion,
-                                                              aPeriod );
+                                                              aRegionName, aPeriod );
     
     // The market should have existed if the trial market name search succeeded.
     assert( trialPrice != Marketplace::NO_MARKET_PRICE );
@@ -183,14 +182,14 @@ double SectorUtils::getTrialSupply( const string& aRegion,
  * \param aSector Sector which should create a trial supply market.
  * \todo Find a more elegant way to do this.
  */
-void SectorUtils::askToCreateTrialSupply( const string& aRegion,
-                                          const string& aSector )
+void SectorUtils::askToCreateTrialSupply( const string& aRegionName,
+                                          const string& aSectorName )
 {
     // Get the market info for the sector.
     Marketplace* marketplace = scenario->getMarketplace();
 
     // Always set the flag in period 0.
-    IInfo* sectorInfo = marketplace->getMarketInfo( aSector, aRegion, 0, true );
+    IInfo* sectorInfo = marketplace->getMarketInfo( aSectorName, aRegionName, 0, true );
 
     // If the market does not exist the sector info will not exist. The
     // marketplace will print a warning.
@@ -290,8 +289,8 @@ int SectorUtils::getDemandNormPeriod( const int aPeriod ){
  * \param aSector Sector name.
  * \return The name of the trial supply market for the sector.
  */
-const string SectorUtils::getTrialMarketName( const string& aSector ){
-    return aSector + "-trial-supply";
+const string SectorUtils::getTrialMarketName( const string& aSectorName ){
+    return aSectorName + "-trial-supply";
 }
 
 /*!
@@ -304,13 +303,13 @@ const string SectorUtils::getTrialMarketName( const string& aSector ){
  * \param aPeriod Model period.
  * \return The resource variance.
  */
-double SectorUtils::getVariance( const string& aResource,
-                                 const string& aRegion,
+double SectorUtils::getVariance( const string& aResourceName,
+                                 const string& aRegionName,
                                  const int aPeriod )
 {
     const Marketplace* marketplace = scenario->getMarketplace();
     const IInfo* resourceInfo =
-        marketplace->getMarketInfo( aResource, aRegion, aPeriod, true );
+        marketplace->getMarketInfo( aResourceName, aRegionName, aPeriod, true );
 
     double variance = resourceInfo ? 
                       resourceInfo->getDouble( "resourceVariance", true ) : 0;
@@ -329,17 +328,18 @@ double SectorUtils::getVariance( const string& aResource,
  * \param aPeriod Model period.
  * \return The resource capacity factor.
  */
-double SectorUtils::getCapacityFactor( const string& aResource,
-                                       const string& aRegion,
+double SectorUtils::getCapacityFactor( const string& aResourceName,
+                                       const string& aRegionName,
                                        const int aPeriod )
 {
     // Get resource capacity factor from market info for the sector.
     const Marketplace* marketplace = scenario->getMarketplace();
     const IInfo* resourceInfo =
-        marketplace->getMarketInfo( aResource, aRegion, aPeriod, true );
+        marketplace->getMarketInfo( aResourceName, aRegionName, aPeriod, true );
 
     double resourceCapacityFactor = resourceInfo ?
-           resourceInfo->getDouble( "resourceCapacityFactor", true ) : 0;
+        resourceInfo->getDouble( "resourceCapacityFactor", true ) :
+        util::getLargeNumber();
     
     // Resource capacity factor must be between 0 and 1 inclusive.
     assert( resourceCapacityFactor >= 0 && resourceCapacityFactor <= 1 );
@@ -446,8 +446,7 @@ bool SectorUtils::isFinalEnergySector( const string& aRegionName,
                                        const string& aSectorName )
 {
     const IInfo* sectorInfo =
-        scenario->getMarketplace()->getMarketInfo( aSectorName, aRegionName, 0,
-                                                   true );
+        scenario->getMarketplace()->getMarketInfo( aSectorName, aRegionName, 0, true );
 
     assert( sectorInfo );
 

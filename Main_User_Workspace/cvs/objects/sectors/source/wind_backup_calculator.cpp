@@ -36,7 +36,7 @@
  * \file wind_backup_calculator.cpp
  * \ingroup Objects
  * \brief WindBackupCalculator class source file.
- * \author Marshall Wise, Josh Lurz
+ * \author Marshall Wise, Josh Lurz, Sonny Kim
  */
 
 #include "util/base/include/definitions.h"
@@ -143,8 +143,7 @@ double WindBackupCalculator::getAverageBackupCapacity( const string& aSector,
     // using the resource capacity factor, which is the same as multiplying by
     // the conversion from energy to capacity as done here. Units returned here are GW/EJ.
 
-    return SectorUtils::convertEnergyToCapacity( resourceCapacityFactor,
-                                                 backupFraction );
+    return backupFraction;
 }
 
 double WindBackupCalculator::getMarginalBackupCapacity( const string& aSector,
@@ -162,45 +161,25 @@ double WindBackupCalculator::getMarginalBackupCapacity( const string& aSector,
     assert( !aRegion.empty() );
     assert( aReserveMargin >= 0 );
     assert( aAverageGridCapacityFactor > 0 );
-
-    // Get trial amount (stored supply) of overall regional electricity supplied.
-    const Marketplace* marketplace = scenario->getMarketplace();
-    double elecSupply = marketplace->getStoredSupply( aElectricSector, aRegion, aPeriod );
-
-    if( elecSupply < util::getSmallNumber() ){
-        return 0;
-    }
-
-    double reserveTotal = getReserveTotal( aElectricSector,
-        aRegion,
-        aReserveMargin,
-        aAverageGridCapacityFactor,
-        aPeriod );
-
-    double reserveTotalSquared  = pow( reserveTotal, 2 );
-
-    double sectorCapacity = getSectorCapacity( aRegion, aSector, aResource, aPeriod );
-    if( sectorCapacity < util::getVerySmallNumber() ){
-        return 0;
-    }
-
-    double sectorCapacitySquared = pow( sectorCapacity, 2 );
+    
+    const double EJ_PER_GWH = 3.6E-6;
+    const double HOURS_PER_YEAR = 8760;
+    const double UC = 1 / (EJ_PER_GWH * HOURS_PER_YEAR); // [GWe/EJ]
 
     double variance = SectorUtils::getVariance( aResource, aRegion, aPeriod );
     double resourceCapacityFactor = SectorUtils::getCapacityFactor( aResource, aRegion, aPeriod );
-
+    double trialCapacityShare = SectorUtils::getTrialSupply( aRegion, aSector, aPeriod )
+                              * ( aAverageGridCapacityFactor / resourceCapacityFactor );
+    
     // Compute terms for Winds operating reserve due to intermittency formula
     // This is the derivative of the total backup capacity equation.
     //TODO  We need to get the documentation on this derivative, which was done
     // by Stephen Herwig for Josh Lurz. Otherwise, might simplify this and use average
     // for cost as an approximation.
-    double backupCapacity = ( variance * sectorCapacity )
-                            / ( ( aReserveMargin * elecSupply )
-                            * sqrt( 1.0 + variance * sectorCapacitySquared / reserveTotalSquared )
-                            * resourceCapacityFactor / aAverageGridCapacityFactor );
-
-    assert( backupCapacity >= 0 && util::isValidNumber( backupCapacity ) );
+    double backupCapacity = variance * trialCapacityShare * UC / aReserveMargin / resourceCapacityFactor
+                          / sqrt( 1.0 + variance / pow( aReserveMargin, 2 ) * pow( trialCapacityShare, 2 ) );
     
+    assert( backupCapacity >= 0 && util::isValidNumber( backupCapacity ) );
     // return value has units of GW/EJ
     return backupCapacity;
 }
@@ -225,12 +204,12 @@ double WindBackupCalculator::getMarginalBackupCapacity( const string& aSector,
  *         GW/GW).
  */
 double WindBackupCalculator::getBackupCapacityFraction( const string& aSector,
-                                                       const string& aElectricSector,
-                                                       const string& aResource,
-                                                       const string& aRegion,
-                                                       const double aReserveMargin,
-                                                       const double aAverageGridCapacityFactor,
-                                                       const int aPeriod ) const
+                                                        const string& aElectricSector,
+                                                        const string& aResource,
+                                                        const string& aRegion,
+                                                        const double aReserveMargin,
+                                                        const double aAverageGridCapacityFactor,
+                                                        const int aPeriod ) const
 {
     // Preconditions
     assert( !aSector.empty() );
@@ -240,34 +219,18 @@ double WindBackupCalculator::getBackupCapacityFraction( const string& aSector,
     assert( aReserveMargin >= 0 );
     assert( aAverageGridCapacityFactor > 0 );
 
-    double reserveTotal = getReserveTotal( aElectricSector,
-        aRegion,
-        aReserveMargin,
-        aAverageGridCapacityFactor,
-        aPeriod );
-    
-    if( reserveTotal < util::getSmallNumber() ){
-        return 0;
-    }
-
-    double reserveTotalSquared  = pow( reserveTotal, 2 );
-
-    double sectorSupplyCapacity = getSectorCapacity( aRegion, aSector, aResource, aPeriod );
-    
-    double sectorSupplySquared = pow( sectorSupplyCapacity, 2 );
+    const double EJ_PER_GWH = 3.6E-6;
+    const double HOURS_PER_YEAR = 8760;
+    const double UC = 1 / (EJ_PER_GWH * HOURS_PER_YEAR); // [GWe/EJ]
 
     double variance = SectorUtils::getVariance( aResource, aRegion, aPeriod );
+    double resourceCapacityFactor = SectorUtils::getCapacityFactor( aResource, aRegion, aPeriod );
+    double trialCapacityShare = SectorUtils::getTrialSupply( aRegion, aSector, aPeriod )
+                              * ( aAverageGridCapacityFactor / resourceCapacityFactor );
 
     // Compute terms for Winds operating reserve due to intermittency formula
-    double backupCapacityFraction = reserveTotal * 
-        ( pow( ( 1.0 + variance * sectorSupplySquared / reserveTotalSquared ), 0.5 ) - 1.0 );
-
-    assert( backupCapacityFraction >= 0 && util::isValidNumber( backupCapacityFraction ) );
-    
-    // Derivative per unit of intermittent resource supply.
-    if ( sectorSupplyCapacity > util::getVerySmallNumber() ) {
-        backupCapacityFraction /= sectorSupplyCapacity;
-    }
+    double backupCapacityFraction = aReserveMargin * UC / resourceCapacityFactor / trialCapacityShare *
+        ( pow( ( 1.0 + variance / pow( aReserveMargin, 2 ) * pow( trialCapacityShare, 2) ), 0.5 ) - 1.0 );
 
     // Backup capacity fraction is positive.
     assert( util::isValidNumber( backupCapacityFraction ) && backupCapacityFraction >= 0 );
@@ -280,9 +243,9 @@ double WindBackupCalculator::getReserveTotal( const string& aElectricSector,
                                               const double aAverageGridCapacityFactor,
                                               const int aPeriod ) const
 {
-    // Get trial amount (stored supply) of overall regional electricity supplied.
+    // Get current regional electricity supplied.
     const Marketplace* marketplace = scenario->getMarketplace();
-    double elecSupply = marketplace->getStoredSupply( aElectricSector, aRegion, aPeriod );
+    double elecSupply = marketplace->getDemand( aElectricSector, aRegion, aPeriod );
 
     // Electricity supply must be positive unless it is period 0 where the trial
     // supply market has not been setup. 
@@ -297,22 +260,25 @@ double WindBackupCalculator::getReserveTotal( const string& aElectricSector,
     // and the total regional electric capacity (which is converted from
     // electric supply in Energy units to capacity units using its average
     // capacity factor).
-    return aReserveMargin
-           * SectorUtils::convertEnergyToCapacity( aAverageGridCapacityFactor, elecSupply );
+    return aReserveMargin * SectorUtils::convertEnergyToCapacity( aAverageGridCapacityFactor, elecSupply );
 }
 
-double WindBackupCalculator::getSectorCapacity( const string& aRegion,
-                                                const string& aSector,
-                                                const string& aResource,
+double WindBackupCalculator::getSectorCapacity( const string& aRegionName,
+                                                const string& aSectorName,
+                                                const string& aDependentSectorName,
+                                                const string& aResourceName,
                                                 const int aPeriod ) const
 {
     // Get trial amount of energy produced by the sector.
-    double sectorSupply = SectorUtils::getTrialSupply( aRegion, aSector, aPeriod );
+    double sectorOutputRatio = SectorUtils::getTrialSupply( aRegionName, aSectorName, aPeriod );
+    double sectorSupply = sectorOutputRatio * scenario->getMarketplace()->getDemand( aDependentSectorName,
+                                              aRegionName, aPeriod );
+
     if( sectorSupply < util::getSmallNumber() ){
         return 0;
     }
 
-    double resourceCapacityFactor = SectorUtils::getCapacityFactor( aResource, aRegion, aPeriod );
+    double resourceCapacityFactor = SectorUtils::getCapacityFactor( aResourceName, aRegionName, aPeriod );
     if( resourceCapacityFactor < util::getSmallNumber() ){
         return 0;
     }
