@@ -2,8 +2,8 @@
 <scenario>
    <world>
       <region name="USA">
-         <renewresource name="Distributed_Solar">
-            <smooth-renewable-subresource name="Distributed_solar">
+         <renewresource name="distributed_solar">
+            <smooth-renewable-subresource name="distributed_solar">
                <techChange year="1975">0</techChange>
                <techChange year="1990">0</techChange>
                <techChange year="2005">0</techChange>
@@ -15,14 +15,9 @@
                <techChange year="2095">0.0044</techChange>
             </smooth-renewable-subresource>
          </renewresource>
-         <intermittent-supplysector name="Solar_roofs">
-            <subsector name="Solar_roofs">
-               <intermittent-technology name="Rooftop_PV">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>60.92</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
+         <supplysector name="elect_td_bld">
+            <subsector name="rooftop_pv">
+               <intermittent-technology name="rooftop_pv">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>60.92</input-cost>
@@ -65,11 +60,11 @@
                   </period>
                </intermittent-technology>
             </subsector>
-         </intermittent-supplysector>
+         </supplysector>
       </region>
       <region name="Canada">
-         <renewresource name="Distributed_Solar">
-            <smooth-renewable-subresource name="Distributed_solar">
+         <renewresource name="distributed_solar">
+            <smooth-renewable-subresource name="distributed_solar">
                <techChange year="1975">0</techChange>
                <techChange year="1990">0</techChange>
                <techChange year="2005">0</techChange>
@@ -81,14 +76,9 @@
                <techChange year="2095">0.0044</techChange>
             </smooth-renewable-subresource>
          </renewresource>
-         <intermittent-supplysector name="Solar_roofs">
-            <subsector name="Solar_roofs">
-               <intermittent-technology name="Rooftop_PV">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>75.09</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
+         <supplysector name="elect_td_bld">
+            <subsector name="rooftop_pv">
+               <intermittent-technology name="rooftop_pv">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>75.09</input-cost>
@@ -131,11 +121,11 @@
                   </period>
                </intermittent-technology>
             </subsector>
-         </intermittent-supplysector>
+         </supplysector>
       </region>
       <region name="Western Europe">
-         <renewresource name="Distributed_Solar">
-            <smooth-renewable-subresource name="Distributed_solar">
+         <renewresource name="distributed_solar">
+            <smooth-renewable-subresource name="distributed_solar">
                <techChange year="1975">0</techChange>
                <techChange year="1990">0</techChange>
                <techChange year="2005">0</techChange>
@@ -147,14 +137,9 @@
                <techChange year="2095">0.0044</techChange>
             </smooth-renewable-subresource>
          </renewresource>
-         <intermittent-supplysector name="Solar_roofs">
-            <subsector name="Solar_roofs">
-               <intermittent-technology name="Rooftop_PV">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>73.01</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
+         <supplysector name="elect_td_bld">
+            <subsector name="rooftop_pv">
+               <intermittent-technology name="rooftop_pv">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>73.01</input-cost>
@@ -197,11 +182,11 @@
                   </period>
                </intermittent-technology>
             </subsector>
-         </intermittent-supplysector>
+         </supplysector>
       </region>
       <region name="Japan">
-         <renewresource name="Distributed_Solar">
-            <smooth-renewable-subresource name="Distributed_solar">
+         <renewresource name="distributed_solar">
+            <smooth-renewable-subresource name="distributed_solar">
                <techChange year="1975">0</techChange>
                <techChange year="1990">0</techChange>
                <techChange year="2005">0</techChange>
@@ -213,14 +198,9 @@
                <techChange year="2095">0.0044</techChange>
             </smooth-renewable-subresource>
          </renewresource>
-         <intermittent-supplysector name="Solar_roofs">
-            <subsector name="Solar_roofs">
-               <intermittent-technology name="Rooftop_PV">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>65.57</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
+         <supplysector name="elect_td_bld">
+            <subsector name="rooftop_pv">
+               <intermittent-technology name="rooftop_pv">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>65.57</input-cost>
@@ -263,11 +243,11 @@
                   </period>
                </intermittent-technology>
             </subsector>
-         </intermittent-supplysector>
+         </supplysector>
       </region>
       <region name="Australia_NZ">
-         <renewresource name="Distributed_Solar">
-            <smooth-renewable-subresource name="Distributed_solar">
+         <renewresource name="distributed_solar">
+            <smooth-renewable-subresource name="distributed_solar">
                <techChange year="1975">0</techChange>
                <techChange year="1990">0</techChange>
                <techChange year="2005">0</techChange>
@@ -279,14 +259,9 @@
                <techChange year="2095">0.0044</techChange>
             </smooth-renewable-subresource>
          </renewresource>
-         <intermittent-supplysector name="Solar_roofs">
-            <subsector name="Solar_roofs">
-               <intermittent-technology name="Rooftop_PV">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>52.35</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
+         <supplysector name="elect_td_bld">
+            <subsector name="rooftop_pv">
+               <intermittent-technology name="rooftop_pv">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>52.35</input-cost>
@@ -329,11 +304,11 @@
                   </period>
                </intermittent-technology>
             </subsector>
-         </intermittent-supplysector>
+         </supplysector>
       </region>
       <region name="Former Soviet Union">
-         <renewresource name="Distributed_Solar">
-            <smooth-renewable-subresource name="Distributed_solar">
+         <renewresource name="distributed_solar">
+            <smooth-renewable-subresource name="distributed_solar">
                <techChange year="1975">0</techChange>
                <techChange year="1990">0</techChange>
                <techChange year="2005">0</techChange>
@@ -345,14 +320,9 @@
                <techChange year="2095">0.0044</techChange>
             </smooth-renewable-subresource>
          </renewresource>
-         <intermittent-supplysector name="Solar_roofs">
-            <subsector name="Solar_roofs">
-               <intermittent-technology name="Rooftop_PV">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>76.13</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
+         <supplysector name="elect_td_bld">
+            <subsector name="rooftop_pv">
+               <intermittent-technology name="rooftop_pv">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>76.13</input-cost>
@@ -395,11 +365,11 @@
                   </period>
                </intermittent-technology>
             </subsector>
-         </intermittent-supplysector>
+         </supplysector>
       </region>
       <region name="China">
-         <renewresource name="Distributed_Solar">
-            <smooth-renewable-subresource name="Distributed_solar">
+         <renewresource name="distributed_solar">
+            <smooth-renewable-subresource name="distributed_solar">
                <techChange year="1975">0</techChange>
                <techChange year="1990">0</techChange>
                <techChange year="2005">0</techChange>
@@ -411,14 +381,9 @@
                <techChange year="2095">0.0044</techChange>
             </smooth-renewable-subresource>
          </renewresource>
-         <intermittent-supplysector name="Solar_roofs">
-            <subsector name="Solar_roofs">
-               <intermittent-technology name="Rooftop_PV">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>61.89</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
+         <supplysector name="elect_td_bld">
+            <subsector name="rooftop_pv">
+               <intermittent-technology name="rooftop_pv">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>61.89</input-cost>
@@ -461,11 +426,11 @@
                   </period>
                </intermittent-technology>
             </subsector>
-         </intermittent-supplysector>
+         </supplysector>
       </region>
       <region name="Middle East">
-         <renewresource name="Distributed_Solar">
-            <smooth-renewable-subresource name="Distributed_solar">
+         <renewresource name="distributed_solar">
+            <smooth-renewable-subresource name="distributed_solar">
                <techChange year="1975">0</techChange>
                <techChange year="1990">0</techChange>
                <techChange year="2005">0</techChange>
@@ -477,14 +442,9 @@
                <techChange year="2095">0.0044</techChange>
             </smooth-renewable-subresource>
          </renewresource>
-         <intermittent-supplysector name="Solar_roofs">
-            <subsector name="Solar_roofs">
-               <intermittent-technology name="Rooftop_PV">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>45.96</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
+         <supplysector name="elect_td_bld">
+            <subsector name="rooftop_pv">
+               <intermittent-technology name="rooftop_pv">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>45.96</input-cost>
@@ -527,11 +487,11 @@
                   </period>
                </intermittent-technology>
             </subsector>
-         </intermittent-supplysector>
+         </supplysector>
       </region>
       <region name="Africa">
-         <renewresource name="Distributed_Solar">
-            <smooth-renewable-subresource name="Distributed_solar">
+         <renewresource name="distributed_solar">
+            <smooth-renewable-subresource name="distributed_solar">
                <techChange year="1975">0</techChange>
                <techChange year="1990">0</techChange>
                <techChange year="2005">0</techChange>
@@ -543,14 +503,9 @@
                <techChange year="2095">0.0044</techChange>
             </smooth-renewable-subresource>
          </renewresource>
-         <intermittent-supplysector name="Solar_roofs">
-            <subsector name="Solar_roofs">
-               <intermittent-technology name="Rooftop_PV">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>45.55</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
+         <supplysector name="elect_td_bld">
+            <subsector name="rooftop_pv">
+               <intermittent-technology name="rooftop_pv">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>45.55</input-cost>
@@ -593,11 +548,11 @@
                   </period>
                </intermittent-technology>
             </subsector>
-         </intermittent-supplysector>
+         </supplysector>
       </region>
       <region name="Latin America">
-         <renewresource name="Distributed_Solar">
-            <smooth-renewable-subresource name="Distributed_solar">
+         <renewresource name="distributed_solar">
+            <smooth-renewable-subresource name="distributed_solar">
                <techChange year="1975">0</techChange>
                <techChange year="1990">0</techChange>
                <techChange year="2005">0</techChange>
@@ -609,14 +564,9 @@
                <techChange year="2095">0.0044</techChange>
             </smooth-renewable-subresource>
          </renewresource>
-         <intermittent-supplysector name="Solar_roofs">
-            <subsector name="Solar_roofs">
-               <intermittent-technology name="Rooftop_PV">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>49.94</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
+         <supplysector name="elect_td_bld">
+            <subsector name="rooftop_pv">
+               <intermittent-technology name="rooftop_pv">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>49.94</input-cost>
@@ -659,11 +609,11 @@
                   </period>
                </intermittent-technology>
             </subsector>
-         </intermittent-supplysector>
+         </supplysector>
       </region>
       <region name="Southeast Asia">
-         <renewresource name="Distributed_Solar">
-            <smooth-renewable-subresource name="Distributed_solar">
+         <renewresource name="distributed_solar">
+            <smooth-renewable-subresource name="distributed_solar">
                <techChange year="1975">0</techChange>
                <techChange year="1990">0</techChange>
                <techChange year="2005">0</techChange>
@@ -675,14 +625,9 @@
                <techChange year="2095">0.0044</techChange>
             </smooth-renewable-subresource>
          </renewresource>
-         <intermittent-supplysector name="Solar_roofs">
-            <subsector name="Solar_roofs">
-               <intermittent-technology name="Rooftop_PV">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>50.04</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
+         <supplysector name="elect_td_bld">
+            <subsector name="rooftop_pv">
+               <intermittent-technology name="rooftop_pv">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>50.04</input-cost>
@@ -725,11 +670,11 @@
                   </period>
                </intermittent-technology>
             </subsector>
-         </intermittent-supplysector>
+         </supplysector>
       </region>
       <region name="Eastern Europe">
-         <renewresource name="Distributed_Solar">
-            <smooth-renewable-subresource name="Distributed_solar">
+         <renewresource name="distributed_solar">
+            <smooth-renewable-subresource name="distributed_solar">
                <techChange year="1975">0</techChange>
                <techChange year="1990">0</techChange>
                <techChange year="2005">0</techChange>
@@ -741,14 +686,9 @@
                <techChange year="2095">0.0044</techChange>
             </smooth-renewable-subresource>
          </renewresource>
-         <intermittent-supplysector name="Solar_roofs">
-            <subsector name="Solar_roofs">
-               <intermittent-technology name="Rooftop_PV">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>75.35</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
+         <supplysector name="elect_td_bld">
+            <subsector name="rooftop_pv">
+               <intermittent-technology name="rooftop_pv">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>75.35</input-cost>
@@ -791,11 +731,11 @@
                   </period>
                </intermittent-technology>
             </subsector>
-         </intermittent-supplysector>
+         </supplysector>
       </region>
       <region name="Korea">
-         <renewresource name="Distributed_Solar">
-            <smooth-renewable-subresource name="Distributed_solar">
+         <renewresource name="distributed_solar">
+            <smooth-renewable-subresource name="distributed_solar">
                <techChange year="1975">0</techChange>
                <techChange year="1990">0</techChange>
                <techChange year="2005">0</techChange>
@@ -807,14 +747,9 @@
                <techChange year="2095">0.0044</techChange>
             </smooth-renewable-subresource>
          </renewresource>
-         <intermittent-supplysector name="Solar_roofs">
-            <subsector name="Solar_roofs">
-               <intermittent-technology name="Rooftop_PV">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>61.24</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
+         <supplysector name="elect_td_bld">
+            <subsector name="rooftop_pv">
+               <intermittent-technology name="rooftop_pv">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>61.24</input-cost>
@@ -857,11 +792,11 @@
                   </period>
                </intermittent-technology>
             </subsector>
-         </intermittent-supplysector>
+         </supplysector>
       </region>
       <region name="India">
-         <renewresource name="Distributed_Solar">
-            <smooth-renewable-subresource name="Distributed_solar">
+         <renewresource name="distributed_solar">
+            <smooth-renewable-subresource name="distributed_solar">
                <techChange year="1975">0</techChange>
                <techChange year="1990">0</techChange>
                <techChange year="2005">0</techChange>
@@ -873,14 +808,9 @@
                <techChange year="2095">0.0044</techChange>
             </smooth-renewable-subresource>
          </renewresource>
-         <intermittent-supplysector name="Solar_roofs">
-            <subsector name="Solar_roofs">
-               <intermittent-technology name="Rooftop_PV">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>50.71</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
+         <supplysector name="elect_td_bld">
+            <subsector name="rooftop_pv">
+               <intermittent-technology name="rooftop_pv">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>50.71</input-cost>
@@ -923,7 +853,7 @@
                   </period>
                </intermittent-technology>
             </subsector>
-         </intermittent-supplysector>
+         </supplysector>
       </region>
    </world>
 </scenario>

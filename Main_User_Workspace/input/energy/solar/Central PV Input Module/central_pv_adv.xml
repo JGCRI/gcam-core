@@ -2,139 +2,116 @@
 <scenario>
    <world>
       <region name="USA">
-         <intermittent-supplysector name="SolarAndAuxiliary">
+         <supplysector name="electricity">
             <subsector name="solar">
                <intermittent-technology name="PV">
                   <period year="1975">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
+                        <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
+                        <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-               </intermittent-technology>
-            </subsector>
-         </intermittent-supplysector>
-         <supplysector name="electricity">
-            <subsector name="solar">
-               <technology name="PV">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>49.78</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
-                  <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>49.78</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>49.78</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>24.44</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>14.02</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>9.41</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>7.34</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>6.35</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>5.84</input-cost>
                      </minicam-non-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <technology name="PV_storage">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>61.97</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>61.97</input-cost>
@@ -147,32 +124,32 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>32.93</input-cost>
+                        <input-cost>61.97</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>20.13</input-cost>
+                        <input-cost>32.93</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>14.55</input-cost>
+                        <input-cost>20.13</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.88</input-cost>
+                        <input-cost>14.55</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>10.55</input-cost>
+                        <input-cost>11.88</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>9.87</input-cost>
+                        <input-cost>10.55</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -180,139 +157,116 @@
          </supplysector>
       </region>
       <region name="Canada">
-         <intermittent-supplysector name="SolarAndAuxiliary">
+         <supplysector name="electricity">
             <subsector name="solar">
                <intermittent-technology name="PV">
                   <period year="1975">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
+                        <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
+                        <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-               </intermittent-technology>
-            </subsector>
-         </intermittent-supplysector>
-         <supplysector name="electricity">
-            <subsector name="solar">
-               <technology name="PV">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>61.36</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
-                  <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>61.36</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>61.36</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>30.13</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>17.29</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.60</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>9.04</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>7.83</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>7.20</input-cost>
                      </minicam-non-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <technology name="PV_storage">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>76.38</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>76.38</input-cost>
@@ -325,32 +279,32 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.59</input-cost>
+                        <input-cost>76.38</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>24.81</input-cost>
+                        <input-cost>40.59</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>17.93</input-cost>
+                        <input-cost>24.81</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>14.64</input-cost>
+                        <input-cost>17.93</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>13.00</input-cost>
+                        <input-cost>14.64</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>12.17</input-cost>
+                        <input-cost>13.00</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -358,139 +312,116 @@
          </supplysector>
       </region>
       <region name="Western Europe">
-         <intermittent-supplysector name="SolarAndAuxiliary">
+         <supplysector name="electricity">
             <subsector name="solar">
                <intermittent-technology name="PV">
                   <period year="1975">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
+                        <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
+                        <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-               </intermittent-technology>
-            </subsector>
-         </intermittent-supplysector>
-         <supplysector name="electricity">
-            <subsector name="solar">
-               <technology name="PV">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>73.53</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
-                  <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>73.53</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>73.53</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>36.10</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.72</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>13.90</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>10.84</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>9.38</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>8.63</input-cost>
                      </minicam-non-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <technology name="PV_storage">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>91.54</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>91.54</input-cost>
@@ -503,32 +434,32 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>48.64</input-cost>
+                        <input-cost>91.54</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>29.73</input-cost>
+                        <input-cost>48.64</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>21.49</input-cost>
+                        <input-cost>29.73</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>17.55</input-cost>
+                        <input-cost>21.49</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>15.58</input-cost>
+                        <input-cost>17.55</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>14.58</input-cost>
+                        <input-cost>15.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -536,139 +467,116 @@
          </supplysector>
       </region>
       <region name="Japan">
-         <intermittent-supplysector name="SolarAndAuxiliary">
+         <supplysector name="electricity">
             <subsector name="solar">
                <intermittent-technology name="PV">
                   <period year="1975">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
+                        <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
+                        <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-               </intermittent-technology>
-            </subsector>
-         </intermittent-supplysector>
-         <supplysector name="electricity">
-            <subsector name="solar">
-               <technology name="PV">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>79.14</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
-                  <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>79.14</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>79.14</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>38.86</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>22.30</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>14.96</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.66</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>10.10</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>9.29</input-cost>
                      </minicam-non-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <technology name="PV_storage">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>98.51</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>98.51</input-cost>
@@ -681,32 +589,32 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>52.35</input-cost>
+                        <input-cost>98.51</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>31.99</input-cost>
+                        <input-cost>52.35</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>23.13</input-cost>
+                        <input-cost>31.99</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>18.89</input-cost>
+                        <input-cost>23.13</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>16.77</input-cost>
+                        <input-cost>18.89</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>15.69</input-cost>
+                        <input-cost>16.77</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -714,139 +622,116 @@
          </supplysector>
       </region>
       <region name="Former Soviet Union">
-         <intermittent-supplysector name="SolarAndAuxiliary">
+         <supplysector name="electricity">
             <subsector name="solar">
                <intermittent-technology name="PV">
                   <period year="1975">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
+                        <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
+                        <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-               </intermittent-technology>
-            </subsector>
-         </intermittent-supplysector>
-         <supplysector name="electricity">
-            <subsector name="solar">
-               <technology name="PV">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>84.97</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
-                  <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>84.97</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>84.97</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>41.72</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>23.94</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>16.07</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>12.52</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>10.84</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>9.97</input-cost>
                      </minicam-non-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <technology name="PV_storage">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>105.77</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>105.77</input-cost>
@@ -859,32 +744,32 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>56.21</input-cost>
+                        <input-cost>105.77</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>34.35</input-cost>
+                        <input-cost>56.21</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>24.83</input-cost>
+                        <input-cost>34.35</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>20.28</input-cost>
+                        <input-cost>24.83</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>18.00</input-cost>
+                        <input-cost>20.28</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>16.85</input-cost>
+                        <input-cost>18.00</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -892,139 +777,116 @@
          </supplysector>
       </region>
       <region name="Australia_NZ">
-         <intermittent-supplysector name="SolarAndAuxiliary">
+         <supplysector name="electricity">
             <subsector name="solar">
                <intermittent-technology name="PV">
                   <period year="1975">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
+                        <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
+                        <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-               </intermittent-technology>
-            </subsector>
-         </intermittent-supplysector>
-         <supplysector name="electricity">
-            <subsector name="solar">
-               <technology name="PV">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>68.00</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
-                  <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>68.00</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>68.00</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>33.39</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.16</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>12.86</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>10.02</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>8.68</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>7.98</input-cost>
                      </minicam-non-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <technology name="PV_storage">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>84.65</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>84.65</input-cost>
@@ -1037,32 +899,32 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>44.98</input-cost>
+                        <input-cost>84.65</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>27.49</input-cost>
+                        <input-cost>44.98</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>19.87</input-cost>
+                        <input-cost>27.49</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>16.23</input-cost>
+                        <input-cost>19.87</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>14.41</input-cost>
+                        <input-cost>16.23</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>13.48</input-cost>
+                        <input-cost>14.41</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -1070,139 +932,116 @@
          </supplysector>
       </region>
       <region name="China">
-         <intermittent-supplysector name="SolarAndAuxiliary">
+         <supplysector name="electricity">
             <subsector name="solar">
                <intermittent-technology name="PV">
                   <period year="1975">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
+                        <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
+                        <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-               </intermittent-technology>
-            </subsector>
-         </intermittent-supplysector>
-         <supplysector name="electricity">
-            <subsector name="solar">
-               <technology name="PV">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>86.32</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
-                  <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>86.32</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>86.32</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>42.38</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>24.32</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>16.32</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>12.72</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.02</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>10.13</input-cost>
                      </minicam-non-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <technology name="PV_storage">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>107.45</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>107.45</input-cost>
@@ -1215,32 +1054,32 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>57.10</input-cost>
+                        <input-cost>107.45</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>34.90</input-cost>
+                        <input-cost>57.10</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>25.23</input-cost>
+                        <input-cost>34.90</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>20.60</input-cost>
+                        <input-cost>25.23</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>18.29</input-cost>
+                        <input-cost>20.60</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>17.11</input-cost>
+                        <input-cost>18.29</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -1248,139 +1087,116 @@
          </supplysector>
       </region>
       <region name="Middle East">
-         <intermittent-supplysector name="SolarAndAuxiliary">
+         <supplysector name="electricity">
             <subsector name="solar">
                <intermittent-technology name="PV">
                   <period year="1975">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
+                        <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
+                        <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-               </intermittent-technology>
-            </subsector>
-         </intermittent-supplysector>
-         <supplysector name="electricity">
-            <subsector name="solar">
-               <technology name="PV">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>65.12</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
-                  <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>65.12</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>65.12</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>31.97</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>18.35</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>12.31</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>9.60</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>8.31</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>7.64</input-cost>
                      </minicam-non-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <technology name="PV_storage">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>81.06</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>81.06</input-cost>
@@ -1393,32 +1209,32 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>43.08</input-cost>
+                        <input-cost>81.06</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>26.33</input-cost>
+                        <input-cost>43.08</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>19.03</input-cost>
+                        <input-cost>26.33</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>15.54</input-cost>
+                        <input-cost>19.03</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>13.80</input-cost>
+                        <input-cost>15.54</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>12.91</input-cost>
+                        <input-cost>13.80</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -1426,139 +1242,116 @@
          </supplysector>
       </region>
       <region name="Africa">
-         <intermittent-supplysector name="SolarAndAuxiliary">
+         <supplysector name="electricity">
             <subsector name="solar">
                <intermittent-technology name="PV">
                   <period year="1975">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
+                        <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
+                        <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-               </intermittent-technology>
-            </subsector>
-         </intermittent-supplysector>
-         <supplysector name="electricity">
-            <subsector name="solar">
-               <technology name="PV">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>48.69</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
-                  <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>48.69</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>48.69</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>23.90</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>13.72</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>9.21</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>7.18</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>6.21</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>5.71</input-cost>
                      </minicam-non-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <technology name="PV_storage">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>60.61</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>60.61</input-cost>
@@ -1571,32 +1364,32 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>32.21</input-cost>
+                        <input-cost>60.61</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>19.68</input-cost>
+                        <input-cost>32.21</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>14.23</input-cost>
+                        <input-cost>19.68</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.62</input-cost>
+                        <input-cost>14.23</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>10.32</input-cost>
+                        <input-cost>11.62</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>9.65</input-cost>
+                        <input-cost>10.32</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -1604,139 +1397,116 @@
          </supplysector>
       </region>
       <region name="Latin America">
-         <intermittent-supplysector name="SolarAndAuxiliary">
+         <supplysector name="electricity">
             <subsector name="solar">
                <intermittent-technology name="PV">
                   <period year="1975">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
+                        <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
+                        <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-               </intermittent-technology>
-            </subsector>
-         </intermittent-supplysector>
-         <supplysector name="electricity">
-            <subsector name="solar">
-               <technology name="PV">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>39.91</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
-                  <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>39.91</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>39.91</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.59</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.24</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>7.55</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>5.88</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>5.09</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.68</input-cost>
                      </minicam-non-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <technology name="PV_storage">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>49.68</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>49.68</input-cost>
@@ -1749,32 +1519,32 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>26.40</input-cost>
+                        <input-cost>49.68</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>16.13</input-cost>
+                        <input-cost>26.40</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.66</input-cost>
+                        <input-cost>16.13</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>9.52</input-cost>
+                        <input-cost>11.66</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>8.46</input-cost>
+                        <input-cost>9.52</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.91</input-cost>
+                        <input-cost>8.46</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -1782,139 +1552,116 @@
          </supplysector>
       </region>
       <region name="Southeast Asia">
-         <intermittent-supplysector name="SolarAndAuxiliary">
+         <supplysector name="electricity">
             <subsector name="solar">
                <intermittent-technology name="PV">
                   <period year="1975">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
+                        <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
+                        <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-               </intermittent-technology>
-            </subsector>
-         </intermittent-supplysector>
-         <supplysector name="electricity">
-            <subsector name="solar">
-               <technology name="PV">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>32.78</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
-                  <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>32.78</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>32.78</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>16.10</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>9.24</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>6.20</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.83</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.18</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.85</input-cost>
                      </minicam-non-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <technology name="PV_storage">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.81</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>40.81</input-cost>
@@ -1927,32 +1674,32 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>21.68</input-cost>
+                        <input-cost>40.81</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>13.25</input-cost>
+                        <input-cost>21.68</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>9.58</input-cost>
+                        <input-cost>13.25</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.82</input-cost>
+                        <input-cost>9.58</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>6.95</input-cost>
+                        <input-cost>7.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>6.50</input-cost>
+                        <input-cost>6.95</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -1960,139 +1707,116 @@
          </supplysector>
       </region>
       <region name="Eastern Europe">
-         <intermittent-supplysector name="SolarAndAuxiliary">
+         <supplysector name="electricity">
             <subsector name="solar">
                <intermittent-technology name="PV">
                   <period year="1975">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
+                        <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
+                        <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-               </intermittent-technology>
-            </subsector>
-         </intermittent-supplysector>
-         <supplysector name="electricity">
-            <subsector name="solar">
-               <technology name="PV">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.54</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
-                  <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>40.54</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>40.54</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.91</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.42</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>7.67</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>5.98</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>5.17</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.76</input-cost>
                      </minicam-non-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <technology name="PV_storage">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>50.47</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>50.47</input-cost>
@@ -2105,32 +1829,32 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>26.82</input-cost>
+                        <input-cost>50.47</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>16.39</input-cost>
+                        <input-cost>26.82</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.85</input-cost>
+                        <input-cost>16.39</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>9.68</input-cost>
+                        <input-cost>11.85</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>8.59</input-cost>
+                        <input-cost>9.68</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>8.04</input-cost>
+                        <input-cost>8.59</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -2138,139 +1862,116 @@
          </supplysector>
       </region>
       <region name="Korea">
-         <intermittent-supplysector name="SolarAndAuxiliary">
+         <supplysector name="electricity">
             <subsector name="solar">
                <intermittent-technology name="PV">
                   <period year="1975">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
+                        <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
+                        <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-               </intermittent-technology>
-            </subsector>
-         </intermittent-supplysector>
-         <supplysector name="electricity">
-            <subsector name="solar">
-               <technology name="PV">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>40.76</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
-                  <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>40.76</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>40.76</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.01</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.48</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>7.71</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>6.01</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>5.20</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.78</input-cost>
                      </minicam-non-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <technology name="PV_storage">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>50.73</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>50.73</input-cost>
@@ -2283,32 +1984,32 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>26.96</input-cost>
+                        <input-cost>50.73</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>16.48</input-cost>
+                        <input-cost>26.96</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>11.91</input-cost>
+                        <input-cost>16.48</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>9.73</input-cost>
+                        <input-cost>11.91</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>8.64</input-cost>
+                        <input-cost>9.73</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>8.08</input-cost>
+                        <input-cost>8.64</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>
@@ -2316,139 +2017,116 @@
          </supplysector>
       </region>
       <region name="India">
-         <intermittent-supplysector name="SolarAndAuxiliary">
+         <supplysector name="electricity">
             <subsector name="solar">
                <intermittent-technology name="PV">
                   <period year="1975">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
+                        <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
                      <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
+                        <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.2</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.4</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-               </intermittent-technology>
-            </subsector>
-         </intermittent-supplysector>
-         <supplysector name="electricity">
-            <subsector name="solar">
-               <technology name="PV">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>33.92</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
-                  <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>33.92</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2005">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>33.92</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>16.66</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>9.56</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>6.41</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>5.00</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.33</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.4</capacity-limit>
+                     </capacity-limit-backup-calculator>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.98</input-cost>
                      </minicam-non-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <technology name="PV_storage">
-                  <period year="1975">
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>42.23</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>42.23</input-cost>
@@ -2461,32 +2139,32 @@
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>22.44</input-cost>
+                        <input-cost>42.23</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>13.72</input-cost>
+                        <input-cost>22.44</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>9.91</input-cost>
+                        <input-cost>13.72</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>8.10</input-cost>
+                        <input-cost>9.91</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>7.19</input-cost>
+                        <input-cost>8.10</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
-                        <input-cost>6.73</input-cost>
+                        <input-cost>7.19</input-cost>
                      </minicam-non-energy-input>
                   </period>
                </technology>

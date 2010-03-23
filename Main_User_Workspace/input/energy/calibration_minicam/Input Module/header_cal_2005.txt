@@ -5,6 +5,8 @@
 
 23,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,{year=1990}period/../CalDataOutput/+calOutputValue,{year=2005}period/../CalDataOutput/+calOutputValue,subsector/+{year=1990}sharewt,subsector/+{year=2005}sharewt,{year=1990}period/+sharewt,{year=2005}period/+sharewt,scenario/world,scenario,@period/CalDataOutput,@technology/period
 
+24,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}intermittent-technology,{year=1990}period/../CalDataOutput/+calOutputValue,{year=2005}period/../CalDataOutput/+calOutputValue,subsector/+{year=1990}sharewt,subsector/+{year=2005}sharewt,{year=1990}period/+sharewt,{year=2005}period/+sharewt,scenario/world,scenario,@period/CalDataOutput,@intermittent-technology/period
+
 25,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,period/+{name}minicam-energy-input,{year=1990}period/../minicam-energy-input/+calibrated-value,{year=2005}period/../minicam-energy-input/+calibrated-value,scenario/world,scenario,@technology/period
 
 44,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,{year=1990}period/+fixedOutput,{year=2005}period/+fixedOutput,scenario,scenario/world,@technology/period

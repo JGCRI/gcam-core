@@ -2,13 +2,13 @@
 <scenario>
    <world>
       <region name="USA">
-         <PrimaryFuelCO2Coef name="Distributed_Solar">0</PrimaryFuelCO2Coef>
-         <renewresource name="Distributed_Solar">
+         <PrimaryFuelCO2Coef name="distributed_solar">0</PrimaryFuelCO2Coef>
+         <renewresource name="distributed_solar">
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>USA</market>
             <price year="1975">10</price>
-            <smooth-renewable-subresource name="Distributed_solar">
+            <smooth-renewable-subresource name="distributed_solar">
                <environCost fillout="1" year="1975">0</environCost>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <gdpSupplyElast>0.1</gdpSupplyElast>
@@ -29,13 +29,13 @@
          </renewresource>
       </region>
       <region name="Canada">
-         <PrimaryFuelCO2Coef name="Distributed_Solar">0</PrimaryFuelCO2Coef>
-         <renewresource name="Distributed_Solar">
+         <PrimaryFuelCO2Coef name="distributed_solar">0</PrimaryFuelCO2Coef>
+         <renewresource name="distributed_solar">
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>Canada</market>
             <price year="1975">10</price>
-            <smooth-renewable-subresource name="Distributed_solar">
+            <smooth-renewable-subresource name="distributed_solar">
                <environCost fillout="1" year="1975">0</environCost>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <gdpSupplyElast>0.1</gdpSupplyElast>
@@ -56,13 +56,13 @@
          </renewresource>
       </region>
       <region name="Western Europe">
-         <PrimaryFuelCO2Coef name="Distributed_Solar">0</PrimaryFuelCO2Coef>
-         <renewresource name="Distributed_Solar">
+         <PrimaryFuelCO2Coef name="distributed_solar">0</PrimaryFuelCO2Coef>
+         <renewresource name="distributed_solar">
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>Western Europe</market>
             <price year="1975">10</price>
-            <smooth-renewable-subresource name="Distributed_solar">
+            <smooth-renewable-subresource name="distributed_solar">
                <environCost fillout="1" year="1975">0</environCost>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <gdpSupplyElast>0.1</gdpSupplyElast>
@@ -83,13 +83,13 @@
          </renewresource>
       </region>
       <region name="Japan">
-         <PrimaryFuelCO2Coef name="Distributed_Solar">0</PrimaryFuelCO2Coef>
-         <renewresource name="Distributed_Solar">
+         <PrimaryFuelCO2Coef name="distributed_solar">0</PrimaryFuelCO2Coef>
+         <renewresource name="distributed_solar">
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>Japan</market>
             <price year="1975">10</price>
-            <smooth-renewable-subresource name="Distributed_solar">
+            <smooth-renewable-subresource name="distributed_solar">
                <environCost fillout="1" year="1975">0</environCost>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <gdpSupplyElast>0.1</gdpSupplyElast>
@@ -110,13 +110,13 @@
          </renewresource>
       </region>
       <region name="Australia_NZ">
-         <PrimaryFuelCO2Coef name="Distributed_Solar">0</PrimaryFuelCO2Coef>
-         <renewresource name="Distributed_Solar">
+         <PrimaryFuelCO2Coef name="distributed_solar">0</PrimaryFuelCO2Coef>
+         <renewresource name="distributed_solar">
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>Australia_NZ</market>
             <price year="1975">10</price>
-            <smooth-renewable-subresource name="Distributed_solar">
+            <smooth-renewable-subresource name="distributed_solar">
                <environCost fillout="1" year="1975">0</environCost>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <gdpSupplyElast>0.1</gdpSupplyElast>
@@ -137,13 +137,13 @@
          </renewresource>
       </region>
       <region name="Former Soviet Union">
-         <PrimaryFuelCO2Coef name="Distributed_Solar">0</PrimaryFuelCO2Coef>
-         <renewresource name="Distributed_Solar">
+         <PrimaryFuelCO2Coef name="distributed_solar">0</PrimaryFuelCO2Coef>
+         <renewresource name="distributed_solar">
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>Former Soviet Union</market>
             <price year="1975">10</price>
-            <smooth-renewable-subresource name="Distributed_solar">
+            <smooth-renewable-subresource name="distributed_solar">
                <environCost fillout="1" year="1975">0</environCost>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <gdpSupplyElast>0.1</gdpSupplyElast>
@@ -164,13 +164,13 @@
          </renewresource>
       </region>
       <region name="China">
-         <PrimaryFuelCO2Coef name="Distributed_Solar">0</PrimaryFuelCO2Coef>
-         <renewresource name="Distributed_Solar">
+         <PrimaryFuelCO2Coef name="distributed_solar">0</PrimaryFuelCO2Coef>
+         <renewresource name="distributed_solar">
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>China</market>
             <price year="1975">10</price>
-            <smooth-renewable-subresource name="Distributed_solar">
+            <smooth-renewable-subresource name="distributed_solar">
                <environCost fillout="1" year="1975">0</environCost>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <gdpSupplyElast>0.1</gdpSupplyElast>
@@ -191,13 +191,13 @@
          </renewresource>
       </region>
       <region name="Middle East">
-         <PrimaryFuelCO2Coef name="Distributed_Solar">0</PrimaryFuelCO2Coef>
-         <renewresource name="Distributed_Solar">
+         <PrimaryFuelCO2Coef name="distributed_solar">0</PrimaryFuelCO2Coef>
+         <renewresource name="distributed_solar">
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>Middle East</market>
             <price year="1975">10</price>
-            <smooth-renewable-subresource name="Distributed_solar">
+            <smooth-renewable-subresource name="distributed_solar">
                <environCost fillout="1" year="1975">0</environCost>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <gdpSupplyElast>0.1</gdpSupplyElast>
@@ -218,13 +218,13 @@
          </renewresource>
       </region>
       <region name="Africa">
-         <PrimaryFuelCO2Coef name="Distributed_Solar">0</PrimaryFuelCO2Coef>
-         <renewresource name="Distributed_Solar">
+         <PrimaryFuelCO2Coef name="distributed_solar">0</PrimaryFuelCO2Coef>
+         <renewresource name="distributed_solar">
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>Africa</market>
             <price year="1975">10</price>
-            <smooth-renewable-subresource name="Distributed_solar">
+            <smooth-renewable-subresource name="distributed_solar">
                <environCost fillout="1" year="1975">0</environCost>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <gdpSupplyElast>0.1</gdpSupplyElast>
@@ -245,13 +245,13 @@
          </renewresource>
       </region>
       <region name="Latin America">
-         <PrimaryFuelCO2Coef name="Distributed_Solar">0</PrimaryFuelCO2Coef>
-         <renewresource name="Distributed_Solar">
+         <PrimaryFuelCO2Coef name="distributed_solar">0</PrimaryFuelCO2Coef>
+         <renewresource name="distributed_solar">
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>Latin America</market>
             <price year="1975">10</price>
-            <smooth-renewable-subresource name="Distributed_solar">
+            <smooth-renewable-subresource name="distributed_solar">
                <environCost fillout="1" year="1975">0</environCost>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <gdpSupplyElast>0.1</gdpSupplyElast>
@@ -272,13 +272,13 @@
          </renewresource>
       </region>
       <region name="Southeast Asia">
-         <PrimaryFuelCO2Coef name="Distributed_Solar">0</PrimaryFuelCO2Coef>
-         <renewresource name="Distributed_Solar">
+         <PrimaryFuelCO2Coef name="distributed_solar">0</PrimaryFuelCO2Coef>
+         <renewresource name="distributed_solar">
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>Southeast Asia</market>
             <price year="1975">10</price>
-            <smooth-renewable-subresource name="Distributed_solar">
+            <smooth-renewable-subresource name="distributed_solar">
                <environCost fillout="1" year="1975">0</environCost>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <gdpSupplyElast>0.1</gdpSupplyElast>
@@ -299,13 +299,13 @@
          </renewresource>
       </region>
       <region name="Eastern Europe">
-         <PrimaryFuelCO2Coef name="Distributed_Solar">0</PrimaryFuelCO2Coef>
-         <renewresource name="Distributed_Solar">
+         <PrimaryFuelCO2Coef name="distributed_solar">0</PrimaryFuelCO2Coef>
+         <renewresource name="distributed_solar">
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>Eastern Europe</market>
             <price year="1975">10</price>
-            <smooth-renewable-subresource name="Distributed_solar">
+            <smooth-renewable-subresource name="distributed_solar">
                <environCost fillout="1" year="1975">0</environCost>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <gdpSupplyElast>0.1</gdpSupplyElast>
@@ -326,13 +326,13 @@
          </renewresource>
       </region>
       <region name="Korea">
-         <PrimaryFuelCO2Coef name="Distributed_Solar">0</PrimaryFuelCO2Coef>
-         <renewresource name="Distributed_Solar">
+         <PrimaryFuelCO2Coef name="distributed_solar">0</PrimaryFuelCO2Coef>
+         <renewresource name="distributed_solar">
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>Korea</market>
             <price year="1975">10</price>
-            <smooth-renewable-subresource name="Distributed_solar">
+            <smooth-renewable-subresource name="distributed_solar">
                <environCost fillout="1" year="1975">0</environCost>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <gdpSupplyElast>0.1</gdpSupplyElast>
@@ -353,13 +353,13 @@
          </renewresource>
       </region>
       <region name="India">
-         <PrimaryFuelCO2Coef name="Distributed_Solar">0</PrimaryFuelCO2Coef>
-         <renewresource name="Distributed_Solar">
+         <PrimaryFuelCO2Coef name="distributed_solar">0</PrimaryFuelCO2Coef>
+         <renewresource name="distributed_solar">
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>India</market>
             <price year="1975">10</price>
-            <smooth-renewable-subresource name="Distributed_solar">
+            <smooth-renewable-subresource name="distributed_solar">
                <environCost fillout="1" year="1975">0</environCost>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <gdpSupplyElast>0.1</gdpSupplyElast>

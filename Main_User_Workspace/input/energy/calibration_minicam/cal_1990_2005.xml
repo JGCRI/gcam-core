@@ -364,50 +364,38 @@
                </technology>
             </subsector>
             <subsector name="solar">
-               <technology name="PV">
+               <intermittent-technology name="PV">
                   <period year="1990">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.0023976</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="SolarAndAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.0022032</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="SolarAndAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
             </subsector>
             <subsector name="wind">
-               <technology name="wind">
+               <intermittent-technology name="wind">
                   <period year="1990">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.0110376</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="WindandAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.0643716</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="WindandAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
             </subsector>
@@ -1503,50 +1491,38 @@
                </technology>
             </subsector>
             <subsector name="solar">
-               <technology name="PV">
+               <intermittent-technology name="PV">
                   <period year="1990">
                      <sharewt>0</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="SolarAndAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.0000612</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="SolarAndAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">1</sharewt>
             </subsector>
             <subsector name="wind">
-               <technology name="wind">
+               <intermittent-technology name="wind">
                   <period year="1990">
                      <sharewt>0</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="WindandAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.0052956</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="WindandAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">1</sharewt>
             </subsector>
@@ -2642,50 +2618,38 @@
                </technology>
             </subsector>
             <subsector name="solar">
-               <technology name="PV">
+               <intermittent-technology name="PV">
                   <period year="1990">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.0000468</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="SolarAndAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.005436</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="SolarAndAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
             </subsector>
             <subsector name="wind">
-               <technology name="wind">
+               <intermittent-technology name="wind">
                   <period year="1990">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.0028008</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="WindandAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.2548476</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="WindandAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
             </subsector>
@@ -3781,50 +3745,38 @@
                </technology>
             </subsector>
             <subsector name="solar">
-               <technology name="PV">
+               <intermittent-technology name="PV">
                   <period year="1990">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.0000036</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="SolarAndAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.0000072</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="SolarAndAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
             </subsector>
             <subsector name="wind">
-               <technology name="wind">
+               <intermittent-technology name="wind">
                   <period year="1990">
                      <sharewt>0</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="WindandAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.0063144</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="WindandAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">1</sharewt>
             </subsector>
@@ -4920,50 +4872,38 @@
                </technology>
             </subsector>
             <subsector name="solar">
-               <technology name="PV">
+               <intermittent-technology name="PV">
                   <period year="1990">
                      <sharewt>0</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="SolarAndAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.0000396</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="SolarAndAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">1</sharewt>
             </subsector>
             <subsector name="wind">
-               <technology name="wind">
+               <intermittent-technology name="wind">
                   <period year="1990">
                      <sharewt>0</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="WindandAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.0053892</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="WindandAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">1</sharewt>
             </subsector>
@@ -6059,50 +5999,38 @@
                </technology>
             </subsector>
             <subsector name="solar">
-               <technology name="PV">
+               <intermittent-technology name="PV">
                   <period year="1990">
                      <sharewt>0</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="SolarAndAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <sharewt>0</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="SolarAndAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
             </subsector>
             <subsector name="wind">
-               <technology name="wind">
+               <intermittent-technology name="wind">
                   <period year="1990">
                      <sharewt>0</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="WindandAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.0005364</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="WindandAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">1</sharewt>
             </subsector>
@@ -7198,50 +7126,38 @@
                </technology>
             </subsector>
             <subsector name="solar">
-               <technology name="PV">
+               <intermittent-technology name="PV">
                   <period year="1990">
                      <sharewt>0</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="SolarAndAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <sharewt>0</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="SolarAndAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
             </subsector>
             <subsector name="wind">
-               <technology name="wind">
+               <intermittent-technology name="wind">
                   <period year="1990">
                      <sharewt>0</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="WindandAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <sharewt>0</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="WindandAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
             </subsector>
@@ -8355,50 +8271,38 @@
                </technology>
             </subsector>
             <subsector name="solar">
-               <technology name="PV">
+               <intermittent-technology name="PV">
                   <period year="1990">
                      <sharewt>0</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="SolarAndAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <sharewt>0</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="SolarAndAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
             </subsector>
             <subsector name="wind">
-               <technology name="wind">
+               <intermittent-technology name="wind">
                   <period year="1990">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.0000036</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="WindandAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.0000504</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="WindandAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
             </subsector>
@@ -9494,50 +9398,38 @@
                </technology>
             </subsector>
             <subsector name="solar">
-               <technology name="PV">
+               <intermittent-technology name="PV">
                   <period year="1990">
                      <sharewt>0</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="SolarAndAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.0019332</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="SolarAndAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">1</sharewt>
             </subsector>
             <subsector name="wind">
-               <technology name="wind">
+               <intermittent-technology name="wind">
                   <period year="1990">
                      <sharewt>0</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="WindandAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.0029952</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="WindandAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">1</sharewt>
             </subsector>
@@ -10651,50 +10543,38 @@
                </technology>
             </subsector>
             <subsector name="solar">
-               <technology name="PV">
+               <intermittent-technology name="PV">
                   <period year="1990">
                      <sharewt>0</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="SolarAndAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.000126</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="SolarAndAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">1</sharewt>
             </subsector>
             <subsector name="wind">
-               <technology name="wind">
+               <intermittent-technology name="wind">
                   <period year="1990">
                      <sharewt>0</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="WindandAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.0013932</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="WindandAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">1</sharewt>
             </subsector>
@@ -11808,50 +11688,38 @@
                </technology>
             </subsector>
             <subsector name="solar">
-               <technology name="PV">
+               <intermittent-technology name="PV">
                   <period year="1990">
                      <sharewt>0</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="SolarAndAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <sharewt>0</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="SolarAndAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
             </subsector>
             <subsector name="wind">
-               <technology name="wind">
+               <intermittent-technology name="wind">
                   <period year="1990">
                      <sharewt>0</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="WindandAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.0000072</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="WindandAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">1</sharewt>
             </subsector>
@@ -12965,50 +12833,38 @@
                </technology>
             </subsector>
             <subsector name="solar">
-               <technology name="PV">
+               <intermittent-technology name="PV">
                   <period year="1990">
                      <sharewt>0</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="SolarAndAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <sharewt>0</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="SolarAndAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">0</sharewt>
             </subsector>
             <subsector name="wind">
-               <technology name="wind">
+               <intermittent-technology name="wind">
                   <period year="1990">
                      <sharewt>0</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="WindandAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.000666</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="WindandAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">1</sharewt>
             </subsector>
@@ -14104,50 +13960,38 @@
                </technology>
             </subsector>
             <subsector name="solar">
-               <technology name="PV">
+               <intermittent-technology name="PV">
                   <period year="1990">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.0000036</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="SolarAndAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.000054</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="SolarAndAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
             </subsector>
             <subsector name="wind">
-               <technology name="wind">
+               <intermittent-technology name="wind">
                   <period year="1990">
                      <sharewt>0</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="WindandAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.000468</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="WindandAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">1</sharewt>
             </subsector>
@@ -15243,50 +15087,38 @@
                </technology>
             </subsector>
             <subsector name="solar">
-               <technology name="PV">
+               <intermittent-technology name="PV">
                   <period year="1990">
                      <sharewt>0</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="SolarAndAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.0000144</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="SolarAndAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <sharewt year="1990">0</sharewt>
                <sharewt year="2005">1</sharewt>
             </subsector>
             <subsector name="wind">
-               <technology name="wind">
+               <intermittent-technology name="wind">
                   <period year="1990">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.0001152</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="WindandAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <sharewt>1</sharewt>
                      <CalDataOutput>
                         <calOutputValue>0.0221976</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="WindandAuxiliary">
-                        <calibrated-value>-1</calibrated-value>
-                     </minicam-energy-input>
                   </period>
-               </technology>
+               </intermittent-technology>
                <sharewt year="1990">1</sharewt>
                <sharewt year="2005">1</sharewt>
             </subsector>

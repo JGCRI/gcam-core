@@ -1,178 +1,186 @@
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
-10,,,,,,,,,,,
-,,,price,,,,,,,,
-region,unlimited-resource,capacity-factor,1975,1990,2005,2020,2035,2050,2065,2080,2095
-Africa,global solar resource,0.3,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
-
-
-Reset intermittent supplysector efficiencies to 1,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
-1000,,,,,,,,,,,
-,,,,,,,capacity-limit-backup-calculator,,,,
-region,intermittent-supplysector,subsector,technology,period,minicam-energy-input,efficiency,capacity-limit,,,,
-ALL,SolarAndAuxiliary,solar,PV,1975,global solar resource,1,0.2,,,,
-ALL,SolarAndAuxiliary,solar,PV,1990,global solar resource,1,0.2,,
-ALL,SolarAndAuxiliary,solar,PV,2005,global solar resource,1,0.2,,
-ALL,SolarAndAuxiliary,solar,PV,2020,global solar resource,1,0.2,,
-ALL,SolarAndAuxiliary,solar,PV,2035,global solar resource,1,0.2,,
-ALL,SolarAndAuxiliary,solar,PV,2050,global solar resource,1,0.2,,
-ALL,SolarAndAuxiliary,solar,PV,2065,global solar resource,1,0.2,,
-ALL,SolarAndAuxiliary,solar,PV,2080,global solar resource,1,0.2,,
-ALL,SolarAndAuxiliary,solar,PV,2095,global solar resource,1,0.2,,
-
-
-INPUT_TABLE,,,,,,,,,
-Variable ID,,,,,,,,,
-1100,,,,,,,,,
-,,,,sharewt,,,,,
-region,supplysector,subsector,scaleYear,2020,2035,2050,2065,2080,2095
-USA,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
-Canada,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
-Western Europe,electricity,solar,2020,0.5,0.5,0.5,0.5,0.5,0.5
-Japan,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
-Australia_NZ,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
-Former Soviet Union,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
-China,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
-Middle East,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
-Africa,electricity,solar,2020,0.5,0.5,0.5,0.5,0.5,0.5
-Latin America,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
-Southeast Asia,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
-Eastern Europe,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
-Korea,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
-India,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5
-,,,,,,,,,
-PV technology definition,,,,,,,,,
-INPUT_TABLE,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
-1101,,,,,,,,,,,,
+10,,,,,,,,,,,,
+,,,price,,,,,,,,,
+region,unlimited-resource,capacity-factor,1975,1990,2005,2020,2035,2050,2065,2080,2095,
+Africa,global solar resource,0.3,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,
+,,,,,,,,,,,,
+Delete intermittent supplysector,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+19,,,,,,,,,,,,
+,,,,,,,,,,,,
+region,intermittent-supplysector,,,,,,,,,,,
+ALL,SolarAndAuxiliary,,,,,,,,,,,
+,,,,,,,,,,,,
+Subsector shareweights,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+100,,,,,,,,,,,,
+,,,,sharewt,,,,,,,,
+region,supplysector,subsector,scaleYear,2020,2035,2050,2065,2080,2095,,,
+USA,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5,,,
+Canada,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5,,,
+Western Europe,electricity,solar,2020,0.5,0.5,0.5,0.5,0.5,0.5,,,
+Japan,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5,,,
+Australia_NZ,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5,,,
+Former Soviet Union,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5,,,
+China,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5,,,
+Middle East,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5,,,
+Africa,electricity,solar,2020,0.5,0.5,0.5,0.5,0.5,0.5,,,
+Latin America,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5,,,
+Southeast Asia,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5,,,
+Eastern Europe,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5,,,
+Korea,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5,,,
+India,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5,,,
+,,,,,,,,,,,,
+Intermittent technology energy inputs and efficiencies,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+1000,,,,,,,,,,,,
+,,,,,,,,,,,,
+region,supplysector,subsector,intermittent-technology,period,minicam-energy-input,efficiency,,,,,,
+ALL,electricity,solar,PV,1975,global solar resource,1,,,,,,
+ALL,electricity,solar,PV,1990,global solar resource,1,,,,,,
+ALL,electricity,solar,PV,2005,global solar resource,1,,,,,,
+ALL,electricity,solar,PV,2020,global solar resource,1,,,,,,
+ALL,electricity,solar,PV,2035,global solar resource,1,,,,,,
+ALL,electricity,solar,PV,2050,global solar resource,1,,,,,,
+ALL,electricity,solar,PV,2065,global solar resource,1,,,,,,
+ALL,electricity,solar,PV,2080,global solar resource,1,,,,,,
+ALL,electricity,solar,PV,2095,global solar resource,1,,,,,,
+ALL,electricity,solar,PV,1975,backup_electricity,1,,,,,,
+ALL,electricity,solar,PV,1990,backup_electricity,1,,,,,,
+ALL,electricity,solar,PV,2005,backup_electricity,1,,,,,,
+ALL,electricity,solar,PV,2020,backup_electricity,1,,,,,,
+ALL,electricity,solar,PV,2035,backup_electricity,1,,,,,,
+ALL,electricity,solar,PV,2050,backup_electricity,1,,,,,,
+ALL,electricity,solar,PV,2065,backup_electricity,1,,,,,,
+ALL,electricity,solar,PV,2080,backup_electricity,1,,,,,,
+ALL,electricity,solar,PV,2095,backup_electricity,1,,,,,,
+,,,,,,,,,,,,
+"Intermittent tech capacity limit, trial market, and electric market",,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+1001,,,,,,,,,,,,
+,,,,,capacity-limit-backup-calculator,,,,,,,
+region,supplysector,subsector,intermittent-technology,period,capacity-limit,trial-market-name,electric-sector-name,backup-capital-cost,backup-capacity-factor,,,
+ALL,electricity,solar,PV,1975,0.25,renewable,electricity,30,0.05,,,
+ALL,electricity,solar,PV,1990,0.25,renewable,electricity,30,0.05,,,
+ALL,electricity,solar,PV,2005,0.25,renewable,electricity,30,0.05,,,
+ALL,electricity,solar,PV,2020,0.25,renewable,electricity,30,0.05,,,
+ALL,electricity,solar,PV,2035,0.25,renewable,electricity,30,0.05,,,
+ALL,electricity,solar,PV,2050,0.25,renewable,electricity,30,0.05,,,
+ALL,electricity,solar,PV,2065,0.25,renewable,electricity,30,0.05,,,
+ALL,electricity,solar,PV,2080,0.25,renewable,electricity,30,0.05,,,
+ALL,electricity,solar,PV,2095,0.25,renewable,electricity,30,0.05,,,
+,,,,,,,,,,,,
+Intermittent tech lifetime,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+1002,,,,,,,,,,,,
 ,,,,lifetime,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-USA,electricity,solar,PV,-1,-1,30,30,30,30,30,30,30
-Canada,electricity,solar,PV,-1,-1,30,30,30,30,30,30,30
-Western Europe,electricity,solar,PV,-1,-1,30,30,30,30,30,30,30
-Japan,electricity,solar,PV,-1,-1,30,30,30,30,30,30,30
-Australia_NZ,electricity,solar,PV,-1,-1,30,30,30,30,30,30,30
-Former Soviet Union,electricity,solar,PV,-1,-1,30,30,30,30,30,30,30
-China,electricity,solar,PV,-1,-1,30,30,30,30,30,30,30
-Middle East,electricity,solar,PV,-1,-1,30,30,30,30,30,30,30
-Africa,electricity,solar,PV,-1,-1,30,30,30,30,30,30,30
-Latin America,electricity,solar,PV,-1,-1,30,30,30,30,30,30,30
-Southeast Asia,electricity,solar,PV,-1,-1,30,30,30,30,30,30,30
-Eastern Europe,electricity,solar,PV,-1,-1,30,30,30,30,30,30,30
-Korea,electricity,solar,PV,-1,-1,30,30,30,30,30,30,30
-India,electricity,solar,PV,-1,-1,30,30,30,30,30,30,30
-
-
+region,supplysector,subsector,intermittent-technology,1990,2005,2020,2035,2050,2065,2080,2095,
+USA,electricity,solar,PV,15,30,30,30,30,30,30,30,
+Canada,electricity,solar,PV,15,30,30,30,30,30,30,30,
+Western Europe,electricity,solar,PV,15,30,30,30,30,30,30,30,
+Japan,electricity,solar,PV,15,30,30,30,30,30,30,30,
+Australia_NZ,electricity,solar,PV,15,30,30,30,30,30,30,30,
+Former Soviet Union,electricity,solar,PV,15,30,30,30,30,30,30,30,
+China,electricity,solar,PV,15,30,30,30,30,30,30,30,
+Middle East,electricity,solar,PV,15,30,30,30,30,30,30,30,
+Africa,electricity,solar,PV,15,30,30,30,30,30,30,30,
+Latin America,electricity,solar,PV,15,30,30,30,30,30,30,30,
+Southeast Asia,electricity,solar,PV,15,30,30,30,30,30,30,30,
+Eastern Europe,electricity,solar,PV,15,30,30,30,30,30,30,30,
+Korea,electricity,solar,PV,15,30,30,30,30,30,30,30,
+India,electricity,solar,PV,15,30,30,30,30,30,30,30,
+,,,,,,,,,,,,
+Intermittent tech cost,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+1003,,,,,,,,,,,,
+,,,,input-cost,,,,,,,,
+region,supplysector,subsector,intermittent-technology,1990,2005,2020,2035,2050,2065,2080,2095,
+USA,electricity,solar,PV,49.78,49.78,31.92,21.95,16.34,13.09,11.30,10.51,
+Canada,electricity,solar,PV,61.36,61.36,39.34,27.05,20.14,16.13,13.93,12.96,
+Western Europe,electricity,solar,PV,73.53,73.53,47.15,32.42,24.14,19.33,16.69,15.53,
+Japan,electricity,solar,PV,79.14,79.14,50.74,34.89,25.98,20.81,17.96,16.72,
+Australia_NZ,electricity,solar,PV,68.00,68.00,43.60,29.98,22.32,17.88,15.43,14.36,
+Former Soviet Union,electricity,solar,PV,84.97,84.97,54.48,37.47,27.90,22.34,19.29,17.95,
+China,electricity,solar,PV,86.32,86.32,55.35,38.06,28.34,22.69,19.59,18.23,
+Middle East,electricity,solar,PV,65.12,65.12,41.76,28.71,21.38,17.12,14.78,13.75,
+Africa,electricity,solar,PV,48.69,48.69,31.22,21.47,15.98,12.80,11.05,10.28,
+Latin America,electricity,solar,PV,39.91,39.91,25.59,17.60,13.10,10.49,9.06,8.43,
+Southeast Asia,electricity,solar,PV,32.78,32.78,21.02,14.45,10.76,8.62,7.44,6.92,
+Eastern Europe,electricity,solar,PV,40.54,40.54,26.00,17.88,13.31,10.66,9.20,8.56,
+Korea,electricity,solar,PV,40.76,40.76,26.13,17.97,13.38,10.72,9.25,8.61,
+India,electricity,solar,PV,33.92,33.92,21.75,14.96,11.14,8.92,7.70,7.17,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
+PV with storage technology definition,,,,,,,,,,,,
+Energy input and efficiency,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+1100,,,,,,,,,,,,
+,,,,,,,,,,,,
+region,supplysector,subsector,technology,period,minicam-energy-input,efficiency,,,,,,
+ALL,electricity,solar,PV_storage,1975,global solar resource,0.96,,,,,,
+ALL,electricity,solar,PV_storage,1990,global solar resource,0.96,,,,,,
+ALL,electricity,solar,PV_storage,2005,global solar resource,0.96,,,,,,
+ALL,electricity,solar,PV_storage,2020,global solar resource,0.96,,,,,,
+ALL,electricity,solar,PV_storage,2035,global solar resource,0.96,,,,,,
+ALL,electricity,solar,PV_storage,2050,global solar resource,0.96,,,,,,
+ALL,electricity,solar,PV_storage,2065,global solar resource,0.96,,,,,,
+ALL,electricity,solar,PV_storage,2080,global solar resource,0.96,,,,,,
+ALL,electricity,solar,PV_storage,2095,global solar resource,0.96,,,,,,
+,,,,,,,,,,,,
+Lifetime,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
 1102,,,,,,,,,,,,
-,,,,input-cost,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-USA,electricity,solar,PV,49.78,49.78,49.78,31.92,21.95,16.34,13.09,11.30,10.51
-Canada,electricity,solar,PV,61.36,61.36,61.36,39.34,27.05,20.14,16.13,13.93,12.96
-Western Europe,electricity,solar,PV,73.53,73.53,73.53,47.15,32.42,24.14,19.33,16.69,15.53
-Japan,electricity,solar,PV,79.14,79.14,79.14,50.74,34.89,25.98,20.81,17.96,16.72
-Australia_NZ,electricity,solar,PV,68.00,68.00,68.00,43.60,29.98,22.32,17.88,15.43,14.36
-Former Soviet Union,electricity,solar,PV,84.97,84.97,84.97,54.48,37.47,27.90,22.34,19.29,17.95
-China,electricity,solar,PV,86.32,86.32,86.32,55.35,38.06,28.34,22.69,19.59,18.23
-Middle East,electricity,solar,PV,65.12,65.12,65.12,41.76,28.71,21.38,17.12,14.78,13.75,
-Africa,electricity,solar,PV,48.69,48.69,48.69,31.22,21.47,15.98,12.80,11.05,10.28,
-Latin America,electricity,solar,PV,39.91,39.91,39.91,25.59,17.60,13.10,10.49,9.06,8.43,
-Southeast Asia,electricity,solar,PV,32.78,32.78,32.78,21.02,14.45,10.76,8.62,7.44,6.92,
-Eastern Europe,electricity,solar,PV,40.54,40.54,40.54,26.00,17.88,13.31,10.66,9.20,8.56,
-Korea,electricity,solar,PV,40.76,40.76,40.76,26.13,17.97,13.38,10.72,9.25,8.61,
-India,electricity,solar,PV,33.92,33.92,33.92,21.75,14.96,11.14,8.92,7.70,7.17,
-,,,,,,,,,,,,,
-,,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,
-1103,,,,,,,,,,,,,
-,,,,,efficiency,,,,,,,,
-region,supplysector,subsector,technology,minicam-energy-input,1975,1990,2005,2020,2035,2050,2065,2080,2095
-USA,electricity,solar,PV,SolarAndAuxiliary,1,1,1,1,1,1,1,1,1
-Canada,electricity,solar,PV,SolarAndAuxiliary,1,1,1,1,1,1,1,1,1
-Western Europe,electricity,solar,PV,SolarAndAuxiliary,1,1,1,1,1,1,1,1,1
-Japan,electricity,solar,PV,SolarAndAuxiliary,1,1,1,1,1,1,1,1,1
-Australia_NZ,electricity,solar,PV,SolarAndAuxiliary,1,1,1,1,1,1,1,1,1
-Former Soviet Union,electricity,solar,PV,SolarAndAuxiliary,1,1,1,1,1,1,1,1,1
-China,electricity,solar,PV,SolarAndAuxiliary,1,1,1,1,1,1,1,1,1
-Middle East,electricity,solar,PV,SolarAndAuxiliary,1,1,1,1,1,1,1,1,1
-Africa,electricity,solar,PV,SolarAndAuxiliary,1,1,1,1,1,1,1,1,1
-Latin America,electricity,solar,PV,SolarAndAuxiliary,1,1,1,1,1,1,1,1,1
-Southeast Asia,electricity,solar,PV,SolarAndAuxiliary,1,1,1,1,1,1,1,1,1
-Eastern Europe,electricity,solar,PV,SolarAndAuxiliary,1,1,1,1,1,1,1,1,1
-Korea,electricity,solar,PV,SolarAndAuxiliary,1,1,1,1,1,1,1,1,1
-India,electricity,solar,PV,SolarAndAuxiliary,1,1,1,1,1,1,1,1,1
-
-
-PV with storage technology definition,,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-1101,,,,,,,,,,,,
 ,,,,lifetime,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-USA,electricity,solar,PV_storage,-1,-1,30,30,30,30,30,30,30
-Canada,electricity,solar,PV_storage,-1,-1,30,30,30,30,30,30,30
-Western Europe,electricity,solar,PV_storage,-1,-1,30,30,30,30,30,30,30
-Japan,electricity,solar,PV_storage,-1,-1,30,30,30,30,30,30,30
-Australia_NZ,electricity,solar,PV_storage,-1,-1,30,30,30,30,30,30,30
-Former Soviet Union,electricity,solar,PV_storage,-1,-1,30,30,30,30,30,30,30
-China,electricity,solar,PV_storage,-1,-1,30,30,30,30,30,30,30
-Middle East,electricity,solar,PV_storage,-1,-1,30,30,30,30,30,30,30
-Africa,electricity,solar,PV_storage,-1,-1,30,30,30,30,30,30,30
-Latin America,electricity,solar,PV_storage,-1,-1,30,30,30,30,30,30,30
-Southeast Asia,electricity,solar,PV_storage,-1,-1,30,30,30,30,30,30,30
-Eastern Europe,electricity,solar,PV_storage,-1,-1,30,30,30,30,30,30,30
-Korea,electricity,solar,PV_storage,-1,-1,30,30,30,30,30,30,30
-India,electricity,solar,PV_storage,-1,-1,30,30,30,30,30,30,30
-
-
+region,supplysector,subsector,technology,1990,2005,2020,2035,2050,2065,2080,2095,
+USA,electricity,solar,PV_storage,15,30,30,30,30,30,30,30,
+Canada,electricity,solar,PV_storage,15,30,30,30,30,30,30,30,
+Western Europe,electricity,solar,PV_storage,15,30,30,30,30,30,30,30,
+Japan,electricity,solar,PV_storage,15,30,30,30,30,30,30,30,
+Australia_NZ,electricity,solar,PV_storage,15,30,30,30,30,30,30,30,
+Former Soviet Union,electricity,solar,PV_storage,15,30,30,30,30,30,30,30,
+China,electricity,solar,PV_storage,15,30,30,30,30,30,30,30,
+Middle East,electricity,solar,PV_storage,15,30,30,30,30,30,30,30,
+Africa,electricity,solar,PV_storage,15,30,30,30,30,30,30,30,
+Latin America,electricity,solar,PV_storage,15,30,30,30,30,30,30,30,
+Southeast Asia,electricity,solar,PV_storage,15,30,30,30,30,30,30,30,
+Eastern Europe,electricity,solar,PV_storage,15,30,30,30,30,30,30,30,
+Korea,electricity,solar,PV_storage,15,30,30,30,30,30,30,30,
+India,electricity,solar,PV_storage,15,30,30,30,30,30,30,30,
+,,,,,,,,,,,,
+Cost,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
-1102,,,,,,,,,,,,
+1103,,,,,,,,,,,,
 ,,,,input-cost,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-USA,electricity,solar,PV_storage,61.97,61.97,61.97,41.95,30.63,24.23,20.57,18.45,17.39
-Canada,electricity,solar,PV_storage,76.38,76.38,76.38,51.70,37.76,29.86,25.36,22.75,21.44
-Western Europe,electricity,solar,PV_storage,91.54,91.54,91.54,61.96,45.25,35.79,30.39,27.26,25.69
-Japan,electricity,solar,PV_storage,98.51,98.51,98.51,66.68,48.70,38.52,32.71,29.34,27.65
-Australia_NZ,electricity,solar,PV_storage,84.65,84.65,84.65,57.30,41.85,33.10,28.11,25.21,23.76
-Former Soviet Union,electricity,solar,PV_storage,105.77,105.77,105.77,71.60,52.29,41.36,35.12,31.50,29.69
-China,electricity,solar,PV_storage,107.45,107.45,107.45,72.73,53.11,42.01,35.67,32.00,30.16
-Middle East,electricity,solar,PV_storage,81.06,81.06,81.06,54.87,40.07,31.70,26.91,24.14,22.75,
-Africa,electricity,solar,PV_storage,60.61,60.61,60.61,41.03,29.96,23.70,20.12,18.05,17.01,
-Latin America,electricity,solar,PV_storage,49.68,49.68,49.68,33.63,24.56,19.42,16.49,14.79,13.94,
-Southeast Asia,electricity,solar,PV_storage,40.81,40.81,40.81,27.62,20.17,15.96,13.55,12.15,11.45,
-Eastern Europe,electricity,solar,PV_storage,50.47,50.47,50.47,34.16,24.95,19.73,16.76,15.03,14.16,
-Korea,electricity,solar,PV_storage,50.73,50.73,50.73,34.34,25.08,19.84,16.84,15.11,14.24,
-India,electricity,solar,PV_storage,42.23,42.23,42.23,28.59,20.88,16.51,14.02,12.58,11.85,
-
-
-INPUT_TABLE,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,
-1103,,,,,,,,,,,,,
-,,,,,efficiency,,,,,,,,
-region,supplysector,subsector,technology,minicam-energy-input,1975,1990,2005,2020,2035,2050,2065,2080,2095
-USA,electricity,solar,PV_storage,global solar resource,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96
-Canada,electricity,solar,PV_storage,global solar resource,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96
-Western Europe,electricity,solar,PV_storage,global solar resource,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96
-Japan,electricity,solar,PV_storage,global solar resource,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96
-Australia_NZ,electricity,solar,PV_storage,global solar resource,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96
-Former Soviet Union,electricity,solar,PV_storage,global solar resource,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96
-China,electricity,solar,PV_storage,global solar resource,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96
-Middle East,electricity,solar,PV_storage,global solar resource,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96
-Africa,electricity,solar,PV_storage,global solar resource,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96
-Latin America,electricity,solar,PV_storage,global solar resource,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96
-Southeast Asia,electricity,solar,PV_storage,global solar resource,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96
-Eastern Europe,electricity,solar,PV_storage,global solar resource,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96
-Korea,electricity,solar,PV_storage,global solar resource,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96
-India,electricity,solar,PV_storage,global solar resource,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96,0.96
-
-INPUT_TABLE,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,
-1104,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1990,2005,2020,2035,2050,2065,2080,2095,
+USA,electricity,solar,PV_storage,61.97,61.97,41.95,30.63,24.23,20.57,18.45,17.39,
+Canada,electricity,solar,PV_storage,76.38,76.38,51.70,37.76,29.86,25.36,22.75,21.44,
+Western Europe,electricity,solar,PV_storage,91.54,91.54,61.96,45.25,35.79,30.39,27.26,25.69,
+Japan,electricity,solar,PV_storage,98.51,98.51,66.68,48.70,38.52,32.71,29.34,27.65,
+Australia_NZ,electricity,solar,PV_storage,84.65,84.65,57.30,41.85,33.10,28.11,25.21,23.76,
+Former Soviet Union,electricity,solar,PV_storage,105.77,105.77,71.60,52.29,41.36,35.12,31.50,29.69,
+China,electricity,solar,PV_storage,107.45,107.45,72.73,53.11,42.01,35.67,32.00,30.16,
+Middle East,electricity,solar,PV_storage,81.06,81.06,54.87,40.07,31.70,26.91,24.14,22.75,
+Africa,electricity,solar,PV_storage,60.61,60.61,41.03,29.96,23.70,20.12,18.05,17.01,
+Latin America,electricity,solar,PV_storage,49.68,49.68,33.63,24.56,19.42,16.49,14.79,13.94,
+Southeast Asia,electricity,solar,PV_storage,40.81,40.81,27.62,20.17,15.96,13.55,12.15,11.45,
+Eastern Europe,electricity,solar,PV_storage,50.47,50.47,34.16,24.95,19.73,16.76,15.03,14.16,
+Korea,electricity,solar,PV_storage,50.73,50.73,34.34,25.08,19.84,16.84,15.11,14.24,
+India,electricity,solar,PV_storage,42.23,42.23,28.59,20.88,16.51,14.02,12.58,11.85,
+,,,,,,,,,,,,
+Shareweight,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+1104,,,,,,,,,,,,
 ,,,,sharewt,,,,,,,,
 region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
 USA,electricity,solar,PV_storage,0,0,0,1,1,1,1,1,1
