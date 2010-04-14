@@ -113,6 +113,7 @@ bool UnmanagedLandLeaf::XMLDerivedClassParse( const std::string& aNodeName,
     if( aNodeName == "landAllocation" ){
         XMLHelper<Value>::insertValueIntoVector( aCurr, mLandAllocation,
                                                  scenario->getModeltime() );
+        mReadinLandAllocation = mLandAllocation;
     }
     else if( aNodeName == "intrinsicRate" ){
         XMLHelper<Value>::insertValueIntoVector( aCurr, mBaseIntrinsicRate,
@@ -137,7 +138,7 @@ void UnmanagedLandLeaf::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, mName );
     const Modeltime* modeltime = scenario->getModeltime();
     XMLWriteVector( mBaseIntrinsicRate, "intrinsicRate", aOut, aTabs, modeltime, Value( 0.0 ) );
-    XMLWriteVector( mLandAllocation, "landAllocation", aOut, aTabs, modeltime );
+    XMLWriteVector( mReadinLandAllocation, "landAllocation", aOut, aTabs, modeltime );
 
     if( mLandUseHistory.get() ){
         mLandUseHistory->toInputXML( aOut, aTabs );
@@ -286,6 +287,10 @@ void UnmanagedLandLeaf::resetToCalLandAllocation( const int aPeriod ) {
       const Modeltime* modeltime = scenario->getModeltime();
       if ( modeltime->getper_to_yr( aPeriod ) <= mLandUseHistory->getMaxYear() ) {
          mLandAllocation[ aPeriod ] = mBaseLandAllocation[ aPeriod ] = mLandUseHistory->getAllocation( modeltime->getper_to_yr( aPeriod ) );
+      }
+      else {
+          // Reset land allocations in model periods to what was parsed
+          mLandAllocation[ aPeriod ] = mReadinLandAllocation[ aPeriod ];
       }
    }
 }

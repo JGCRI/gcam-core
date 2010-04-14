@@ -496,9 +496,7 @@ void Technology::toInputXML( ostream& out,
 {
     XMLWriteOpeningTag( getXMLNameStatic2D(), out, tabs, "", year );
     // write the xml for the class members.
-    out.precision( 10 );
     XMLWriteElementCheckDefault( mShareWeight, "sharewt", out, tabs, 1.0 );
-    out.precision( -1 );
     const Modeltime* modeltime = scenario->getModeltime();
     XMLWriteElementCheckDefault( mLifetimeYears, "lifetime", out, tabs, modeltime->gettimestep( modeltime->getyr_to_per( year ) ) );
     XMLWriteElementCheckDefault( mLogitExp, "logitexp", out, tabs, getLogitExpDefault() );

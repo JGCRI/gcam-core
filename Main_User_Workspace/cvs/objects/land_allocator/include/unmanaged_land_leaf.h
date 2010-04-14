@@ -106,6 +106,7 @@ protected:
     
     //! Unadjusted land value
     objects::PeriodVector<Value> mBaseLandAllocation;
+    objects::PeriodVector<Value> mReadinLandAllocation;
 
     virtual void initCarbonCycle();
     virtual const std::string& getXMLName() const;

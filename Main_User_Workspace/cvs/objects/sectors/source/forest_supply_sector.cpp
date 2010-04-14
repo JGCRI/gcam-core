@@ -61,7 +61,9 @@ extern Scenario* scenario;
 * \author James Blackwood
 */
 ForestSupplySector::ForestSupplySector( string& aRegionName )
-: FoodSupplySector( aRegionName ) {
+: FoodSupplySector( aRegionName ),
+mFutureForestPrices( scenario->getModeltime()->getmaxper() )
+{
 }
 
 //! Destructor
@@ -77,10 +79,25 @@ bool ForestSupplySector::XMLDerivedClassParse( const string& nodeName, const DOM
     if ( nodeName == ForestSupplySubsector::getXMLNameStatic() ) {
 		parseContainerNode( curr, subsec, subSectorNameMap, new ForestSupplySubsector( regionName, name ) );
 	}
+    else if( nodeName == "future-forest-price" ) {
+        const Modeltime* modeltime = scenario->getModeltime();
+        XMLHelper<double>::insertValueIntoVector( curr, mFutureForestPrices, modeltime );
+    }
     else if( !FoodSupplySector::XMLDerivedClassParse( nodeName, curr ) ) {
         return false;
     }
 	return true;
+}
+
+void ForestSupplySector::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
+    FoodSupplySector::toInputXMLDerived( aOut, aTabs );
+    XMLWriteVector( mFutureForestPrices, "future-forest-price", aOut, aTabs, scenario->getModeltime() );
+}
+
+void ForestSupplySector::postCalc( const int aPeriod ) {
+    FoodSupplySector::postCalc( aPeriod );
+    mFutureForestPrices[ aPeriod ] = 
+            scenario->getMarketplace()->getPrice( getFutureMarket(), regionName, aPeriod, true );
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -149,7 +166,7 @@ void ForestSupplySector::setMarket() {
         marketInfo->setString( "output-unit", mOutputUnit );
 
         // Set market prices to initial price vector
-        marketplace->setPriceVector( futureMarket, regionName, mPrice );
+        marketplace->setPriceVector( futureMarket, regionName, mFutureForestPrices );
         // Reset base period price to calPrice
         marketplace->setPrice( futureMarket, regionName, calPrice / CVRT90, 0 );
 

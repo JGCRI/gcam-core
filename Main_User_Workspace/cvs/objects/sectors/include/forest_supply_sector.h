@@ -59,13 +59,18 @@ public:
 	explicit ForestSupplySector( std::string& aRegionName );
 	virtual ~ForestSupplySector();
 	static const std::string& getXMLNameStatic();
+    virtual void postCalc( const int aPeriod );
 protected:
 	virtual void setMarket();
 	virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
+    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
 	virtual const std::string& getXMLName() const;
 private:
     //! Name of the market for the good.
     std::string mMarket;
+
+    //! Store solved future forest prices.
+    std::vector<double> mFutureForestPrices;
 
     const std::string getFutureMarket() const;
 };

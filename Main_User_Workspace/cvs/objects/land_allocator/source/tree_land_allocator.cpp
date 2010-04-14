@@ -164,7 +164,9 @@ void TreeLandAllocator::resetToCalibrationData( const string& aRegionName, const
 
    if ( mCalDataExists[ aPeriod ] ) {
       //sjsTEMP -- turn off for now so that managed forest data fix for c-cycle transition works
-//    resetToCalLandAllocation( aPeriod );
+      // Note that the above comment no longer applies since resetToCalLandAllocation is once
+      // again called however I assume that this will affect the carbon-cycle model.
+      resetToCalLandAllocation( aPeriod );
 
       adjustTotalLand( aPeriod );
 

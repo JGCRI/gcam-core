@@ -142,13 +142,11 @@ bool SupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNode* 
 void SupplySector::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {  
 
     // Temporary CCTP hack.
-    aOut.precision( 10 );
     XMLWriteVector( mBiomassAdder, "biomass-price-adder", aOut, aTabs, scenario->getModeltime(), 0.0 );
     if( mHasTrialSupplyMarket ){
         XMLWriteElement( mHasTrialSupplyMarket, "has-trial-supply-market", aOut, aTabs );
         XMLWriteVector( mPriceTrialSupplyMarket, "price-trial-supply", aOut, aTabs, scenario->getModeltime(), 0.0 );
     }
-    aOut.precision( -1 );
 }
 
 /*! \brief XML debugging output stream for derived classes

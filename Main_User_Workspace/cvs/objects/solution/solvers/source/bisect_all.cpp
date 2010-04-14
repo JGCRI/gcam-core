@@ -153,6 +153,11 @@ bool BisectAll::XMLParse( const DOMNode* aNode ) {
 * \param aPeriod Model period.
 */
 SolverComponent::ReturnCode BisectAll::solve( SolutionInfoSet& aSolutionSet, const int aPeriod ) {
+    // If all markets are solved, then return with success code.
+    if( aSolutionSet.isAllSolved() ){
+        return SolverComponent::SUCCESS;
+    }
+
     // Setup Logging.
     ILogger& solverLog = ILogger::getLogger( "solver_log" );
     solverLog.setLevel( ILogger::NOTICE );

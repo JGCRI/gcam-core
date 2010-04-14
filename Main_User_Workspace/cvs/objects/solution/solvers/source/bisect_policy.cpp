@@ -139,6 +139,11 @@ bool BisectPolicy::XMLParse( const DOMNode* aNode ) {
 SolverComponent::ReturnCode BisectPolicy::solve( SolutionInfoSet& aSolutionSet, const int aPeriod ) {
     startMethod();
 
+    // If all markets are solved, then return with success code.
+    if( aSolutionSet.isAllSolved() ){
+        return SolverComponent::SUCCESS;
+    }
+
     // Constants.
     // TODO: do we really want this? it has been taken out of the other SolverComponents
     const static unsigned int MAX_ITER_NO_IMPROVEMENT = 8; // Maximum number of iterations without improvement.

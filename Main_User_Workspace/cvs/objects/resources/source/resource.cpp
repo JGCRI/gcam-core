@@ -709,12 +709,32 @@ void RenewableResource::completeInit( const string& aRegionName, const IInfo* aR
 
     Marketplace* pMarketplace = scenario->getMarketplace();
     const Modeltime* pModeltime = scenario->getModeltime();
-    // Initialize resource capacity factor for renewable resources to 0.35
-    // to avoid sequence issues and warning messages to screen.
-    // This is updated in annualsupply().
+    // Initialize resource variance and capacitity factors in this market's info
+    /*!
+     * \warning This strategy of calculating resource variance and capacity factor
+     *          is inadequate due to sequence issues.  If these values are not 
+     *          constant i.e. multiple subresources it will cause trouble when solving
+     *          and trying to reproduce a solution.  For such a case a trial value
+     *          should be utilized to directly handle the sequence issue.
+     */
+    double resourceVariance = mSubResource[ 0 ]->getVariance();
+    double resourceCapacityFactor = mSubResource[ 0 ]->getAverageCapacityFactor();
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::WARNING );
+    for( int subResource = 1; subResource < mNumSubResource; ++subResource ) {
+        if( mSubResource[ subResource ]->getVariance() != resourceVariance ) {
+            mainLog << "Non-constant resource variance in " << mName << ", region: "
+                << aRegionName << " may cause trouble finding a solution." << endl;
+        }
+        if( mSubResource[ subResource ]->getAverageCapacityFactor() != resourceCapacityFactor ) {
+            mainLog << "Non-constant resource capacity factor in " << mName << ", region: "
+                << aRegionName << " may cause trouble finding a solution." << endl;
+        }
+    }
     for( int period = 0; period < pModeltime->getmaxper(); ++period ){
         IInfo* marketInfo = pMarketplace->getMarketInfo( mName, aRegionName, period, true );
-        marketInfo->setDouble( "resourceCapacityFactor", 0.35 );
+        marketInfo->setDouble( "resourceVariance", resourceVariance );
+        marketInfo->setDouble( "resourceCapacityFactor", resourceCapacityFactor );
     }
 }    
 

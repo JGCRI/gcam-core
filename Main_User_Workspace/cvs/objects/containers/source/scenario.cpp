@@ -249,6 +249,7 @@ void Scenario::completeInit() {
 
 //! Write object to xml output stream.
 void Scenario::toInputXML( ostream& out, Tabs* tabs ) const {
+    out.precision( 10 );
     // write heading for XML input file
     out << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" << endl;
 

@@ -136,6 +136,11 @@ bool BisectOne::XMLParse( const DOMNode* aNode ) {
 * \param aPeriod Model period.
 */
 SolverComponent::ReturnCode BisectOne::solve( SolutionInfoSet& aSolutionSet, const int aPeriod ) {
+    // If all markets are solved, then return with success code.
+    if( aSolutionSet.isAllSolved() ){
+        return SolverComponent::SUCCESS;
+    }
+
     startMethod();
 
     // Setup logging.

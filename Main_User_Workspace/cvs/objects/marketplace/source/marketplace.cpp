@@ -606,22 +606,30 @@ vector<Market*> Marketplace::getMarketsToSolve( const int period ) const {
     return toSolve;
 }
 
-/*! \brief Initializes the market prices to the market prices from the previous period.
-* 
-* This function initializes each periods raw price with the raw price from the previous period.
-* This only occurs for periods greater than 0.
-* 
-* \author Sonny Kim
-* \param period Period for which to initialize prices.
-*/
+/*!
+ * \brief Conditionally initializes the market prices to the market prices from
+ *        the previous period.
+ * \details Resuse parsed prices up to the configuration parameter restart-period
+ *          which will allow users to resume the model at that period.  If the
+ *          user did not intend on restarting the model we can resuse prices up to
+ *          the final calibration year.  After which we would assume the scenario
+ *          would change significantly enough that starting from previous period's
+ *          prices would be closer to the solution. This only occurs for periods
+ *          greater than 0.
+ * \author Sonny Kim
+ * \param period Period for which to initialize prices.
+ */
 void Marketplace::init_to_last( const int period ) { 
-    // only after the starting period
-    if ( period > 0 && period <= scenario->getModeltime()->getFinalCalibrationPeriod() ) {
+    // Get the last period to allow using parsed prices, the default is the
+    // final calibration period.
+    const static int restartPeriod = Configuration::getInstance()->getInt(
+        "restart-period", scenario->getModeltime()->getFinalCalibrationPeriod() + 1 );
+    if ( period > 0 && period < restartPeriod ) {
         for ( unsigned int i = 0; i < markets.size(); i++ ) {
             markets[ i ][ period ]->set_price_to_last_if_default( markets[ i ][ period - 1 ]->getRawPrice() );
         }
     }
-    else if( period > scenario->getModeltime()->getFinalCalibrationPeriod() ){
+    else if( period >= restartPeriod ){
         for ( unsigned int i = 0; i < markets.size(); i++ ) {
             markets[ i ][ period ]->set_price_to_last( markets[ i ][ period - 1 ]->getRawPrice() );
         }

@@ -258,9 +258,7 @@ void Sector::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mOutputUnit, "output-unit", aOut, aTabs );
     XMLWriteElement( mInputUnit, "input-unit", aOut, aTabs );
     XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
-    aOut.precision( 10 );
     XMLWriteVector( mPrice, "price", aOut, aTabs, modeltime );
-    aOut.precision( -1 );
 
     XMLWriteElementCheckDefault( mBaseOutput, "output", aOut, aTabs, 0.0, modeltime->getper_to_yr( 0 ) );
     if( !mKeywordMap.empty() ) {

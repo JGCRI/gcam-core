@@ -98,9 +98,8 @@ bool FoodSupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNo
 * \param tabs A tabs object responsible for printing the correct number of tabs. 
 */
 void FoodSupplySector::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    const double CVRT90 = 2.212; // 1975 $ to 1990 $
     SupplySector::toInputXMLDerived( out, tabs );
-    XMLWriteElementCheckDefault( CVRT90*scenario->getMarketplace()->getPrice( name, regionName, 1, true ), "calPrice", out, tabs, -1.0 );
+    XMLWriteElementCheckDefault( calPrice, "calPrice", out, tabs, -1.0 );
     XMLWriteElementCheckDefault( mMarketName, "market", out, tabs, string( "" ) );
 }	
 
