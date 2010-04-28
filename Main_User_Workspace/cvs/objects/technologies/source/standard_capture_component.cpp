@@ -46,6 +46,7 @@
 #include "util/base/include/xml_helper.h"
 #include "technologies/include/standard_capture_component.h"
 #include "marketplace/include/marketplace.h"
+#include "containers/include/iinfo.h"
 #include "containers/include/scenario.h"
 #include "util/logger/include/ilogger.h"
 #include "containers/include/dependency_finder.h"
@@ -206,9 +207,20 @@ double StandardCaptureComponent::getStorageCost( const string& aRegionName,
                                                                      aRegionName,
                                                                      aPeriod, false );
 
+    // Retrieve proportional tax rate.
+    const Marketplace* marketplace = scenario->getMarketplace();
+    const IInfo* marketInfo = marketplace->getMarketInfo( "CO2", aRegionName, aPeriod, false );
+    // Note: the key includes the region name.
+    const double proportionalTaxRate = 
+        ( marketInfo && marketInfo->hasValue( "proportional-tax-rate" + aRegionName ) ) 
+        ? marketInfo->getDouble( "proportional-tax-rate" + aRegionName, true )
+        : 1.0;
+    // Adjust greenhouse gas tax with the proportional tax rate.
+    carbonMarketPrice *= proportionalTaxRate;
+
     // If there is no carbon market, return a large number to disable the
     // capture technology.
-    if( carbonMarketPrice == Marketplace::NO_MARKET_PRICE ){
+    if( carbonMarketPrice == Marketplace::NO_MARKET_PRICE || carbonMarketPrice < util::getSmallNumber() ){
         return util::getLargeNumber();
     }
 
