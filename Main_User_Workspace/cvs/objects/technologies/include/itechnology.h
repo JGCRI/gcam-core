@@ -50,6 +50,7 @@
 #include <map>
 #include <xercesc/dom/DOMNode.hpp>
 #include "util/base/include/istandard_component.h"
+#include "util/base/include/value.h"
 
 // Forward declaration
 class AGHG;
@@ -126,6 +127,7 @@ public:
     virtual double calcShare( const std::string& aRegionName,
                               const std::string& aSectorName, 
                               const GDP* aGDP,
+                              const double aLogitExp,
                               const int aPeriod ) const = 0;
     
     virtual void calcCost( const std::string& aRegionName,
@@ -169,7 +171,8 @@ public:
     virtual double getTotalGHGCost( const std::string& aRegionName, const std::string& aSectorName, 
                             const int aPeriod ) const = 0;
 
-    virtual double getShareWeight() const = 0;
+    virtual Value getShareWeight() const = 0;
+    virtual Value getParsedShareWeight() const = 0;
     virtual int getNumbGHGs()  const = 0;
     virtual void copyGHGParameters( const AGHG* prevGHG ) = 0;
 
@@ -196,8 +199,6 @@ public:
     virtual void acceptDerived( IVisitor* aVisitor, const int aPeriod ) const = 0;
 
     virtual const std::map<std::string, double> getFuelMap( const int aPeriod ) const = 0;
-
-    virtual double getLogitExp() const = 0;
 
     virtual bool isAvailable( const int aPeriod ) const = 0;
     

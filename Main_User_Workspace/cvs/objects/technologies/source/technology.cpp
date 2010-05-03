@@ -150,7 +150,6 @@ void Technology::copy( const Technology& techIn ) {
     mLifetimeYears = techIn.mLifetimeYears;
     mShareWeight = techIn.mShareWeight;
     mPMultiplier = techIn.mPMultiplier;
-    mLogitExp = techIn.mLogitExp;
     mGetGlobalTech = techIn.mGetGlobalTech;
 
     year = techIn.year;
@@ -233,8 +232,6 @@ void Technology::init()
     mProductionState.resize( modeltime->getmaxper() );
     mProductionFunction = 0;
     mPMultiplier = 1;
-    mShareWeight = 1;
-    mLogitExp = getLogitExpDefault(); 
     mFixedOutput = -1;
     mAlphaZero = 1;
     mGetGlobalTech = false;
@@ -267,11 +264,8 @@ bool Technology::XMLParse( const DOMNode* node )
         if( nodeName == "lifetime" ) {
             mLifetimeYears = XMLHelper<int>::getValue( curr );
         }
-        else if( nodeName == "sharewt" ) {
-            mShareWeight = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "logitexp" ) {
-            mLogitExp = XMLHelper<double>::getValue( curr );
+        else if( nodeName == "share-weight" ) {
+            mParsedShareWeight.set( XMLHelper<double>::getValue( curr ) );
         }
         else if( nodeName == "pMultiplier" ){
            mPMultiplier = XMLHelper<double>::getValue( curr );
@@ -433,6 +427,10 @@ void Technology::completeInit( const string& aRegionName,
     /*! \post The production function reference is initialized. */
     assert( mProductionFunction );
 
+    // initialize the working share-weight to the parsed value even
+    // if it was not set
+    mShareWeight = mParsedShareWeight;
+
     // TODO: Calibrating to zero does not work correctly so reset the shareweights
     // to zero and remove the calibration input. This could be improved.
     if( mCalValue.get() && mCalValue->getCalOutput() < util::getSmallNumber() ){
@@ -495,11 +493,13 @@ void Technology::toInputXML( ostream& out,
                              Tabs* tabs ) const
 {
     XMLWriteOpeningTag( getXMLNameStatic2D(), out, tabs, "", year );
+    
     // write the xml for the class members.
-    XMLWriteElementCheckDefault( mShareWeight, "sharewt", out, tabs, 1.0 );
+    if( mParsedShareWeight.isInited() ) {
+        XMLWriteElement( mParsedShareWeight, "share-weight", out, tabs );
+    }
     const Modeltime* modeltime = scenario->getModeltime();
     XMLWriteElementCheckDefault( mLifetimeYears, "lifetime", out, tabs, modeltime->gettimestep( modeltime->getyr_to_per( year ) ) );
-    XMLWriteElementCheckDefault( mLogitExp, "logitexp", out, tabs, getLogitExpDefault() );
     XMLWriteElementCheckDefault( mFixedOutput, "fixedOutput", out, tabs, getFixedOutputDefault() );
     XMLWriteElementCheckDefault( mPMultiplier, "pMultiplier", out, tabs, 1.0 );
     if( !mKeywordMap.empty() ) {
@@ -550,10 +550,9 @@ void Technology::toDebugXML( const int period,
     XMLWriteOpeningTag( getXMLName1D(), out, tabs, mName, year );
     // write the xml for the class members.
 
-    XMLWriteElement( mShareWeight, "sharewt", out, tabs );
+    XMLWriteElement( mShareWeight, "share-weight", out, tabs );
     XMLWriteElement( mFixedOutput, "fixedOutput", out, tabs );
     XMLWriteElement( mLifetimeYears, "lifetime", out, tabs );
-    XMLWriteElement( mLogitExp, "logitexp", out, tabs );
     XMLWriteElement( mAlphaZero, "alpha-zero", out, tabs );
     XMLWriteElement( mCosts[ period ], "cost", out, tabs );
     XMLWriteElement( mPMultiplier, "pMultiplier", out, tabs );
@@ -786,6 +785,13 @@ void Technology::postCalc( const string& aRegionName,
             mOutputs[ i ]->postCalc( aRegionName, aPeriod );
         }
     }
+
+    // make sure calibrated share weights get written out
+    if( aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() &&
+        mProductionState[ aPeriod ]->isNewInvestment() ){
+            mParsedShareWeight = mShareWeight;
+    }
+
 }
 
 /*! \brief This function calculates the sum of the Carbon Values for all GHG's
@@ -820,6 +826,7 @@ double Technology::getTotalGHGCost( const string& aRegionName,
 * \param aRegionName Region name.
 * \param aSectorName Sector name, also the name of the product.
 * \param aGDP Regional GDP container.
+* \param aLogitExp The logit exponent for this technology nest.
 * \param aPeriod Model period.
 * \todo Check to see if power function for trivial values really wastes time
 * \return The Technology share.
@@ -827,6 +834,7 @@ double Technology::getTotalGHGCost( const string& aRegionName,
 double Technology::calcShare( const string& aRegionName,
                               const string& aSectorName,
                               const GDP* aGDP,
+                              const double aLogitExp,
                               const int aPeriod ) const
 {
     // A Technology which is not operating does not have a share.
@@ -842,7 +850,7 @@ double Technology::calcShare( const string& aRegionName,
 
     // Calculate the new vintage share.
     assert( getCost( aPeriod ) > 0 );
-    double share = mShareWeight* pow( getCost( aPeriod ), mLogitExp );
+    double share = mShareWeight* pow( getCost( aPeriod ), aLogitExp );
 
     double fuelPrefElasticity = calcFuelPrefElasticity( aPeriod );
     // This is rarely used, so probably worth it to not to waste cycles on the
@@ -1066,12 +1074,22 @@ const string& Technology::getName() const
 * \author Steve Smith
 * \return share weight
 */
-double Technology::getShareWeight() const
+Value Technology::getShareWeight() const
 {
     /*! \post Share weight is a valid number and greater than or equal to zero. */
     assert( util::isValidNumber( mShareWeight ) && mShareWeight >= 0 );
 
     return mShareWeight;
+}
+
+/*!
+ * \brief Gets the share weight value which was parsed by the user.
+ * \return Parsed share weight value.
+ */
+Value Technology::getParsedShareWeight() const {
+    // The parsed share weight does not have to be valid
+
+    return mParsedShareWeight;
 }
 
 /*! \brief scale share weight for this Technology
@@ -1603,14 +1621,6 @@ bool Technology::isAllCalibrated( const int aPeriod,
     return true;
 }
 
-/*! \brief Return the default Technology logit exponential.
-* \return The default logit exponential.
-*/
-double Technology::getLogitExpDefault()
-{
-    return -6;
-}
-
 //! Set the technology year.
 void Technology::setYear( const int aYear )
 {
@@ -1689,14 +1699,6 @@ void Technology::accept( IVisitor* aVisitor, const int aPeriod ) const {
     }
 
     aVisitor->endVisitTechnology( this, aPeriod );
-}
-
-/*!
- * \brief Get the logit exponent used by this technology.
- * \return The current logit exponent.
- */
-double Technology::getLogitExp() const {
-	return mLogitExp;
 }
 
 /**

@@ -357,9 +357,10 @@ void NukeFuelTechnology::production( const string& aRegionName,
 double NukeFuelTechnology::calcShare( const string& aRegionName,
                                      const string& aSectorName,
                                      const GDP* aGDP,
+                                     const double aLogitExp,
                                      const int aPeriod ) const
 {
-    return Technology::calcShare( aRegionName, aSectorName, aGDP, aPeriod );
+    return Technology::calcShare( aRegionName, aSectorName, aGDP, aLogitExp, aPeriod );
 }
 
 

@@ -1,5 +1,5 @@
-#ifndef _FOOD_SUPPLY_SUBSECTOR_H_
-#define _FOOD_SUPPLY_SUBSECTOR_H_
+#ifndef _FIXED_INTERPOLATION_FUNCTION_H_
+#define _FIXED_INTERPOLATION_FUNCTION_H_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -38,40 +38,55 @@
  * by User.
  */
 
-
 /*! 
-* \file food_supply_subsector.h
-* \ingroup CIAM
-* \brief The FoodSupplySubsector class header file.
-* \author James Blackwood
-*/
-
+ * \file fixed_interpolation_function.h
+ * \ingroup Objects
+ * \brief Header file for the FixedInterpolationFunction class.
+ * \author Pralit Patel
+ */
 #include <xercesc/dom/DOMNode.hpp>
-#include "sectors/include/subsector.h"
+#include <string>
 
-/*! 
-* \ingroup Objects
-* \brief A class which defines a single FoodSupplySubsector of the model.
-* \details This subsector exists solely to create FoodProductionTechnologies.
-* \author James Blackwood
-*/
+#include "util/base/include/iinterpolation_function.h"
 
-class FoodSupplySubsector : public Subsector {
+class DataPoint;
+
+/*!
+ * \ingroup Objects
+ * \brief A fixed interpolation function.
+ * \details This function simply returns the y-value of the left data point
+ *          regardless of the values given for the right data point as well as
+ *          the x-value to interpolate for.  Note that no error-checking is
+ *          done by this interpolation function.
+ *          <b>XML specification for FixedInterpolationFunction</b>
+ *          - XML name: \c interpolation-function
+ *          - Contained by:
+ *          - Parsing inherited from class: None.
+ *          - Attributes:
+ *              - \c name = fixed
+ *                      The XML name attribute value which differentiates this
+ *                      IInterpolationFunction from the others.
+ *          - Elements:
+ *
+ * \author Pralit Patel
+ * \author Sonny Kim
+ */
+class FixedInterpolationFunction : public IInterpolationFunction {
 public:
-    FoodSupplySubsector( const std::string& regionName, const std::string& sectorName );
-    virtual ~FoodSupplySubsector();
-    static const std::string& getXMLNameStatic();
+    FixedInterpolationFunction();
+    ~FixedInterpolationFunction();
+    
+    static const std::string& getXMLAttrNameStatic();
+    
+    // IInterpolationFunction methods
+    virtual double interpolate( const DataPoint* aLeftPoint, const DataPoint* aRightPoint,
+        const double aXValue ) const;
+    
+    // IParsable methods
+    virtual bool XMLParse( const xercesc::DOMNode* aNode );
 
-    virtual double calcShare( const int aPeriod,
-                              const GDP* aGDP,
-                              const double aLogitExp ) const;
-protected:
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-    virtual const std::string& getXMLName() const;
-    bool isNameOfChild( const std::string& nodename ) const;
-
-    virtual ITechnology* createChild( const std::string& aTechType,
-                                      const std::string& aTechName,
-                                      const int aTechYear ) const;
+    // IRoundTrippable methods
+    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
 };
-#endif // _FOOD_SUPPLY_SUBSECTOR_H_
+
+#endif // _FIXED_INTERPOLATION_FUNCTION_H_

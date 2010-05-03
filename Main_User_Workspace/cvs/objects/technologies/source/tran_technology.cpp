@@ -288,7 +288,7 @@ void TranTechnology::calcCost( const string& aRegionName,
     // Convert cost to cost per service instead of cost per vehicle.
     // For example,  convert $/vehicle-mi into $/pass-mi or $/ton-mi 
 
-    mCosts[ aPeriod ] = techCost / mLoadFactor;
+    mCosts[ aPeriod ] = max( techCost / mLoadFactor, util::getSmallNumber() );
 }
 
 void TranTechnology::production( const string& aRegionName, const string& aSectorName,
@@ -395,9 +395,10 @@ double TranTechnology::getCalibrationOutput( const bool aHasRequiredInput,
 double TranTechnology::calcShare( const string& aRegionName,
                                   const string& aSectorName,
                                   const GDP* aGDP,
+                                  const double aLogitExp,
                                   const int aPeriod ) const
 {
-    return Technology::calcShare( aRegionName, aSectorName, aGDP, aPeriod );
+    return Technology::calcShare( aRegionName, aSectorName, aGDP, aLogitExp, aPeriod );
 }
 
 void TranTechnology::acceptDerived( IVisitor* aVisitor, const int aPeriod ) const {

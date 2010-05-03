@@ -108,6 +108,8 @@ public:
     int getper_to_yr( const int period ) const;
     int getyr_to_per( const int year ) const;
 
+    bool isModelYear( const int aYear ) const;
+
     int getFinalCalibrationPeriod() const;
 };
 

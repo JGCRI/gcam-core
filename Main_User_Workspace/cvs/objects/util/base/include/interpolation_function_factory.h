@@ -1,5 +1,5 @@
-#ifndef _FOOD_SUPPLY_SUBSECTOR_H_
-#define _FOOD_SUPPLY_SUBSECTOR_H_
+#ifndef _INTERPOLATION_FUNCTION_FACTORY_H_
+#define _INTERPOLATION_FUNCTION_FACTORY_H_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -38,40 +38,35 @@
  * by User.
  */
 
-
 /*! 
-* \file food_supply_subsector.h
-* \ingroup CIAM
-* \brief The FoodSupplySubsector class header file.
-* \author James Blackwood
-*/
-
+ * \file interpolation_function_factory.h
+ * \ingroup Objects
+ * \brief Header file for the InterpolationFunctionFactory class.
+ * \author Pralit Patel
+ */
 #include <xercesc/dom/DOMNode.hpp>
-#include "sectors/include/subsector.h"
+#include <string>
 
-/*! 
-* \ingroup Objects
-* \brief A class which defines a single FoodSupplySubsector of the model.
-* \details This subsector exists solely to create FoodProductionTechnologies.
-* \author James Blackwood
-*/
+class IInterpolationFunction;
 
-class FoodSupplySubsector : public Subsector {
+/*!
+ * \ingroup Objects
+ * \brief A factory which can be used to create instances of an interpolation function.
+ * \details There are two static methods to determine if this factory can create an
+ *          interpolation function.  The XML setup for an interpolation function is
+ *          a little different so that generating the XML tags would be easier.  The
+ *          node name will always be "interpolation-function" and the name attribute
+ *          will be used to determine which function should be created by this factory.
+ *
+ * \author Pralit Patel
+ * \author Sonny Kim
+ */
+class InterpolationFunctionFactory {
 public:
-    FoodSupplySubsector( const std::string& regionName, const std::string& sectorName );
-    virtual ~FoodSupplySubsector();
-    static const std::string& getXMLNameStatic();
-
-    virtual double calcShare( const int aPeriod,
-                              const GDP* aGDP,
-                              const double aLogitExp ) const;
-protected:
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-    virtual const std::string& getXMLName() const;
-    bool isNameOfChild( const std::string& nodename ) const;
-
-    virtual ITechnology* createChild( const std::string& aTechType,
-                                      const std::string& aTechName,
-                                      const int aTechYear ) const;
+    static bool hasInterpolationFunction( const std::string& aXMLAttrNameValue );
+    
+    static IInterpolationFunction* createAndParseFunction( const std::string& aXMLAttrNameValue,
+        const xercesc::DOMNode* aNode );
 };
-#endif // _FOOD_SUPPLY_SUBSECTOR_H_
+
+#endif // _INTERPOLATION_FUNCTION_FACTORY_H_

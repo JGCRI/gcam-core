@@ -84,7 +84,7 @@ void SetShareWeightVisitor::startVisitSubsector( const Subsector* aSubsector,
         string calibrationMrkName = "SubSec-"+mCurrentSubSectorName;
         double trialShareWeight = marketplace->getPrice( calibrationMrkName, mCurrentRegionName, aPeriod, true );
         // aSubsector is const
-        const_cast<Subsector*>(aSubsector)->shrwts[ aPeriod ] = trialShareWeight;
+        const_cast<Subsector*>(aSubsector)->mShareWeights[ aPeriod ] = trialShareWeight;
     }
 }
 

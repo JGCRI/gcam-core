@@ -211,6 +211,7 @@ public:
     virtual double calcShare( const std::string& aRegionName,
                               const std::string& aSectorName, 
                               const GDP* aGDP,
+                              const double aLogitExp,
                               const int aPeriod ) const = 0;
     
     virtual void calcCost( const std::string& aRegionName,
@@ -243,7 +244,8 @@ public:
     virtual double getTotalGHGCost( const std::string& aRegionName, const std::string& aSectorName, 
                             const int aPeriod ) const;
 
-    double getShareWeight() const;
+    Value getShareWeight() const;
+    Value getParsedShareWeight() const;
 
     virtual int getNumbGHGs() const;
 
@@ -279,8 +281,6 @@ public:
 
     bool isFixedOutputTechnology( const int aPeriod ) const;
 
-    virtual double getLogitExp() const;
-    
     virtual double calcFuelPrefElasticity( const int aPeriod ) const;
 
     virtual bool isAvailable( const int aPeriod ) const;
@@ -345,13 +345,14 @@ protected:
     const IFunction* mProductionFunction;
 
     //! Logit share weight
-    double mShareWeight;
+    Value mShareWeight;
+
+    //! The Logit share weight that was parsed by the user
+    Value mParsedShareWeight;
     
     //! Price multiplier (multiplies costs but not secondary revenue)
     double mPMultiplier;
-    
-    double mLogitExp; //!< logit exponential
-    
+
     //! Amount of fixed supply for this tech, exclusive of constraints
     double mFixedOutput;
 
@@ -367,8 +368,6 @@ protected:
 
     //! Number of years for which the vintage exists.
     int mLifetimeYears;
-    
-    static double getLogitExpDefault();
 
     static double getFixedOutputDefault();
 

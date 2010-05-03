@@ -157,9 +157,10 @@ double DefaultTechnology::getTotalInputCost( const string& aRegionName, const st
 double DefaultTechnology::calcShare( const string& aRegionName,
                                      const string& aSectorName,
                                      const GDP* aGDP,
+                                     const double aLogitExp,
                                      const int aPeriod ) const
 {
-    return Technology::calcShare( aRegionName, aSectorName, aGDP, aPeriod );
+    return Technology::calcShare( aRegionName, aSectorName, aGDP, aLogitExp, aPeriod );
 }
 
 //! Parses any input variables specific to derived classes

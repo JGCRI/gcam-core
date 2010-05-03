@@ -90,7 +90,7 @@ void CalibrateShareWeightVisitor::endVisitSector( const Sector* aSector, const i
     for( int subsectorIndex = 0; subsectorIndex < aSector->subsec.size(); ++subsectorIndex ) {
         double currCalValue = aSector->subsec[ subsectorIndex ]->getTotalCalOutputs( aPeriod );
         bool isAllFixed = aSector->subsec[ subsectorIndex ]->containsOnlyFixedOutputTechnologies( aPeriod )
-            || aSector->subsec[ subsectorIndex ]->shrwts[ aPeriod ] == 0;
+            || aSector->subsec[ subsectorIndex ]->mShareWeights[ aPeriod ] == 0;
 
         // check if the subsector is calibrated
         if( hasCalValues && currCalValue == 0 && !isAllFixed ) {
@@ -143,14 +143,14 @@ void CalibrateShareWeightVisitor::endVisitSector( const Sector* aSector, const i
             if( currShare > 0 ) {
                 double currShareWeight = ( currShare / anchorShare )
                     * pow( anchorPrice / currSubsector->getPrice( mGDP, aPeriod ),
-                          currSubsector->lexp[ aPeriod ] );
-                currSubsector->shrwts[ aPeriod ] = currShareWeight;
+                          aSector->mSubsectorLogitExp[ aPeriod ] );
+                currSubsector->mShareWeights[ aPeriod ] = currShareWeight;
             }
         }
     }
 
     mCurrentSectorName.clear();
-}	
+}
 
 void CalibrateShareWeightVisitor::startVisitSubsector( const Subsector* aSubsector, const int aPeriod ) {
     // Doing technology calibration in subsector rather than in technology because we will need access 
@@ -208,7 +208,7 @@ void CalibrateShareWeightVisitor::startVisitSubsector( const Subsector* aSubsect
     }
 
     // do calibration if we have cal values and there are more than one technologies in this nest
-    if( hasCalValues && numlCalTechs > 1 ) {	
+    if( hasCalValues && numlCalTechs > 1 ) {
         // we should have found a technology to have share weights anchored by
         assert( anchorTechIndex != -1 );
         const ITechnology* anchorTech = aSubsector->techs[ anchorTechIndex ][ aPeriod ];
@@ -224,7 +224,7 @@ void CalibrateShareWeightVisitor::startVisitSubsector( const Subsector* aSubsect
             // only set share weights for valid technologies
             if( currShare > 0 ) {
                 double currShareWeight = ( currShare / anchorShare )
-                    * pow( anchorPrice / currTech->getCost( aPeriod ), currTech->getLogitExp() );
+                    * pow( anchorPrice / currTech->getCost( aPeriod ), aSubsector->mTechLogitExp[ aPeriod ] );
                 currTech->setShareWeight( currShareWeight );
             }
         }

@@ -53,6 +53,8 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include "investment/include/iinvestable.h"
 #include "util/base/include/iround_trippable.h"
+#include "util/base/include/value.h"
+#include "util/base/include/time_vector.h"
 
 // Forward declarations
 class Summary;
@@ -72,6 +74,7 @@ class ILandAllocator;
 class Demographics;
 class IndirectEmissionsCalculator;
 class GlobalTechnologyDatabase;
+class InterpolationRule;
 
 /*! 
 * \ingroup Objects
@@ -100,6 +103,7 @@ class Subsector: public IInvestable,
 private:
     static const std::string XML_NAME; //!< node name for toXML methods
     void clear();
+    void clearInterpolationRules( std::vector<InterpolationRule*>& aInterpolationRules );
     //! A flag for convenience to know whether this Subsector created a market
     //! for calibration
     bool doCalibration;
@@ -107,14 +111,24 @@ protected:
     std::string name; //!< subsector name
     std::string regionName; //!< region name
     std::string sectorName; //!< sector name
-    int scaleYear; //!< year to scale share weights to after calibration
-    int mTechScaleYear; //!< year to scale technology share weights to after calibration
     std::auto_ptr<IInfo> mSubsectorInfo; //!< The subsector's information store.
 
     std::vector<std::vector<ITechnology*> > techs; //!< vector of technology by period
 
-    std::vector<double> shrwts; //!< subsector logit share weights
-    std::vector<double> lexp; //!< subsector logit exponential
+    //! Subsector logit share weights
+    objects::PeriodVector<Value> mShareWeights;
+    //! The original subsector logit share weights that were parsed
+    objects::PeriodVector<Value> mParsedShareWeights;
+    //! Interpolation rules for subsector share weight values.
+    std::vector<InterpolationRule*> mShareWeightInterpRules;
+    //! Interpolation rules for technology share weight values by tech name.
+    std::map<std::string, std::vector<InterpolationRule*> > mTechShareWeightInterpRules;
+    // Some typedefs to make using interpolation rules more readable.
+    typedef std::vector<InterpolationRule*>::const_iterator CInterpRuleIterator;
+    typedef std::map<std::string, std::vector<InterpolationRule*> >::iterator TechInterpRuleIterator;
+    typedef std::map<std::string, std::vector<InterpolationRule*> >::const_iterator CTechInterpRuleIterator;
+    //! Logit exponential used for the technology competition.
+    objects::PeriodVector<double> mTechLogitExp;
     std::vector<double> fuelPrefElasticity; //!< Fuel preference elasticity
 
     std::vector<double> mInvestments; //!< Investment by period.
@@ -123,11 +137,10 @@ protected:
     std::vector<BaseTechnology*> baseTechs; // for the time being
     std::map<std::string, TechnologyType*> mTechTypes; //!< Mapping from technology name to group of technology vintages.
 
-    virtual void interpolateShareWeights( const int period ); // Consistantly adjust share weights
+    void interpolateShareWeights( const int aPeriod );
     std::map<std::string,int> baseTechNameMap; //!< Map of base technology name to integer position in vector. 
     typedef std::vector<BaseTechnology*>::const_iterator CBaseTechIterator;
     typedef std::vector<BaseTechnology*>::iterator BaseTechIterator;
-    void shareWeightLinearInterpFn( const int beginPeriod,  const int endPeriod );
 
     virtual bool getCalibrationStatus( const int aPeriod ) const;
 
@@ -136,7 +149,6 @@ protected:
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {};
     void normalizeTechShareWeights( const int period );
-    void techShareWeightLinearInterpFn( const int beginPeriod,  const int endPeriod );
     void parseBaseTechHelper( const xercesc::DOMNode* curr, BaseTechnology* aNewTech );
     virtual bool isNameOfChild  ( const std::string& nodename ) const;
     
@@ -185,7 +197,7 @@ public:
 
     virtual void calcCost( const int aPeriod );
 
-    virtual double calcShare( const int period, const GDP* gdp ) const; 
+    virtual double calcShare( const int aPeriod, const GDP* aGdp, const double aLogitExp ) const; 
     virtual double getShareWeight( const int period ) const;
     virtual void scaleShareWeight( const double scaleValue, const int period );
 

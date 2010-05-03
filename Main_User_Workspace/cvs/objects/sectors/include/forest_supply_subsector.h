@@ -67,7 +67,8 @@ public:
     static const std::string& getXMLNameStatic();
 
     virtual double calcShare( const int aPeriod,
-                              const GDP* aGDP ) const;
+                              const GDP* aGDP,
+                              const double aLogitExp ) const;
 
 protected:
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );

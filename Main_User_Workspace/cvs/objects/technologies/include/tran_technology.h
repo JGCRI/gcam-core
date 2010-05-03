@@ -108,6 +108,7 @@ public:
     virtual double calcShare( const std::string& aRegionName,
         const std::string& aSectorName, 
         const GDP* aGDP,
+        const double aLogitExp,
         const int aPeriod ) const;
 
     double getCalibrationOutput( const bool aHasRequiredInput,

@@ -210,6 +210,9 @@ void FoodProductionTechnology::initCalc( const string& aRegionName,
                                          PreviousPeriodInfo& aPrevPeriodInfo,
                                          const int aPeriod )
 {
+    // food technologies do not utilize share-weights however we must initialize
+    // the value to avoid errors from shared code
+    mShareWeight.set( 1.0 );
     Technology::initCalc( aRegionName, aSectorName, aSubsectorInfo,
                           aDemographics, aPrevPeriodInfo, aPeriod );
   
@@ -428,6 +431,7 @@ void FoodProductionTechnology::setCalLandValues() {
 double FoodProductionTechnology::calcShare( const string& aRegionName,
                                             const string& aSectorName,
                                             const GDP* aGDP,
+                                            const double aLogitExp,
                                             const int aPeriod ) const
 {
     assert( mProductionState[ aPeriod ]->isNewInvestment() );

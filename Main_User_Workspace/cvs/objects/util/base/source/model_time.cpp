@@ -370,6 +370,15 @@ int Modeltime::getyr_to_per( const int year ) const {
 }
 
 /*!
+ * \brief Determine if the given year is a model year.
+ * \param aYear The year to check.
+ * \return True if aYear is a model year, false otherwise.
+ */
+bool Modeltime::isModelYear( const int aYear ) const {
+    return yearToModelPeriod.find( aYear ) != yearToModelPeriod.end();
+}
+
+/*!
  * \brief Get the final period in which base year calibration will occur.
  * \return Final period in which base year calibration will occur.
  */

@@ -87,7 +87,8 @@ extern Scenario* scenario;
 */
 Sector::Sector( const string& aRegionName )
     : regionName( aRegionName ),
-      mObjectMetaInfo()
+      mObjectMetaInfo(),
+      mSubsectorLogitExp( getDefaultSubsectorLogitExp() )
 {
     mSectorType = getDefaultSectorType();
     mBaseOutput = 0;
@@ -131,6 +132,15 @@ const string& Sector::getName() const {
 const string& Sector::getDefaultSectorType() {
     const static string DEFAULT_SECTOR_TYPE = "Energy";
     return DEFAULT_SECTOR_TYPE;
+}
+
+/*!
+ * \brief Returns the default logit exponent for the subsector
+ *        competition.
+ * \return Default logit exponent.
+ */
+double Sector::getDefaultSubsectorLogitExp() {
+    return -3;
 }
 
 /*! \brief Return the type of the sector.
@@ -230,6 +240,9 @@ void Sector::XMLParse( const DOMNode* node ){
                     XMLHelper<string>::safeTranscode( attrTemp->getNodeValue() );
             }
         }
+        else if( nodeName == "logit-exponent" ){
+            XMLHelper<double>::insertValueIntoVector( curr, mSubsectorLogitExp, modeltime );
+        }
         else if( XMLDerivedClassParse( nodeName, curr ) ){
         }
         else {
@@ -258,6 +271,7 @@ void Sector::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mOutputUnit, "output-unit", aOut, aTabs );
     XMLWriteElement( mInputUnit, "input-unit", aOut, aTabs );
     XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
+    XMLWriteVector( mSubsectorLogitExp, "logit-exponent", aOut, aTabs, modeltime, getDefaultSubsectorLogitExp() );
     XMLWriteVector( mPrice, "price", aOut, aTabs, modeltime );
 
     XMLWriteElementCheckDefault( mBaseOutput, "output", aOut, aTabs, 0.0, modeltime->getper_to_yr( 0 ) );
@@ -307,6 +321,7 @@ void Sector::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mOutputUnit, "output-unit", aOut, aTabs );
     XMLWriteElement( mInputUnit, "input-unit", aOut, aTabs );
     XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
+    XMLWriteElement( mSubsectorLogitExp[ aPeriod ], "logit-exponent", aOut, aTabs );
 
     // Write out the data in the vectors for the current period.
     XMLWriteElement( getOutput( aPeriod ), "output", aOut, aTabs );
@@ -500,7 +515,7 @@ const vector<double> Sector::calcSubsectorShares( const GDP* aGDP, const int aPe
     // Calculate unnormalized shares.
     vector<double> subsecShares( subsec.size() );
     for( unsigned int i = 0; i < subsec.size(); ++i ){
-        subsecShares[ i ] = subsec[ i ]->calcShare( aPeriod, aGDP );
+        subsecShares[ i ] = subsec[ i ]->calcShare( aPeriod, aGDP, mSubsectorLogitExp[ aPeriod ] );
     }
 
     // Normalize the shares.

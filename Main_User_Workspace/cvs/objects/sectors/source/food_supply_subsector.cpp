@@ -55,7 +55,13 @@ using namespace xercesc;
 */
 FoodSupplySubsector::FoodSupplySubsector( const string& regionName,
                                           const string& sectorName )
-										  : Subsector( regionName, sectorName ){
+                                          : Subsector( regionName, sectorName )
+{
+    // food subsectors do not utilize share-weights however we must initialize
+    // the value to avoid errors from shared code
+    for( int period = 0; period < mShareWeights.size(); ++period ) {
+        mShareWeights[ period ].set( 1.0 );
+    }
 }
 
 FoodSupplySubsector::~FoodSupplySubsector() {
@@ -129,7 +135,8 @@ const string& FoodSupplySubsector::getXMLNameStatic() {
 }
 
 double FoodSupplySubsector::calcShare( const int aPeriod,
-                                       const GDP* aGDP ) const
+                                       const GDP* aGDP,
+                                       const double aLogitExp ) const
 {
     return 1;
 }

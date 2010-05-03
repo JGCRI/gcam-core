@@ -57,6 +57,7 @@
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/inamed.h"
 #include "util/base/include/object_meta_info.h"
+#include "util/base/include/time_vector.h"
 
 // Forward declarations
 class Subsector;
@@ -131,6 +132,11 @@ protected:
 
     //! A map of a keyword to its keyword group
     std::map<std::string, std::string> mKeywordMap;
+
+    //! Logit exponential used for the subsector competition.
+    objects::PeriodVector<double> mSubsectorLogitExp;
+
+    static double getDefaultSubsectorLogitExp();
 
     void normalizeShareWeights( const int period );
     virtual void toInputXMLDerived( std::ostream& aOut, Tabs* aTabs ) const = 0;

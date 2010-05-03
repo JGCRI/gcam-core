@@ -162,6 +162,9 @@ void UnmanagedLandTechnology::initCalc( const string& aRegionName,
     // This is skiping parent class. This is bad form and can be corrected once ag classes need to be re-factored
     // TODO re-factor Ag production classes
 
+    // need to initialize the unused share-weight
+    // see FoodProductionTechnology::initCalc
+    mShareWeight.set( 1.0 );
     Technology::initCalc( aRegionName, aSectorName, aSubsectorInfo, aDemographics, aPrevPeriodInfo, aPeriod );
 
     initializeInputLocations( aRegionName,aSectorName, aPeriod );
@@ -236,6 +239,7 @@ void UnmanagedLandTechnology::completeInit( const string& aRegionName,
 double UnmanagedLandTechnology::calcShare( const string& aRegionName,
                                               const string& aSectorName,
                                               const GDP* aGDP,
+                                              const double aLogitExp,
                                               const int aPeriod ) const
 {
     assert( mProductionState[ aPeriod ]->isNewInvestment() );

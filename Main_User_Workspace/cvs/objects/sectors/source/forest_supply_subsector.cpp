@@ -54,7 +54,13 @@ using namespace xercesc;
 */
 ForestSupplySubsector::ForestSupplySubsector( const string& regionName,
                                               const string& sectorName )
-											  : Subsector( regionName, sectorName ){
+                                              : Subsector( regionName, sectorName )
+{
+    // forest subsectors do not utilize share-weights however we must initialize
+    // the value to avoid errors from shared code
+    for( int period = 0; period < mShareWeights.size(); ++period ) {
+        mShareWeights[ period ].set( 1.0 );
+    }
 }
 
 ForestSupplySubsector::~ForestSupplySubsector() {
@@ -122,7 +128,8 @@ const string& ForestSupplySubsector::getXMLNameStatic() {
 }
 
 double ForestSupplySubsector::calcShare( const int aPeriod,
-                                         const GDP* aGDP ) const
+                                         const GDP* aGDP,
+                                         const double aLogitExp ) const
 {
     return 1;
 }

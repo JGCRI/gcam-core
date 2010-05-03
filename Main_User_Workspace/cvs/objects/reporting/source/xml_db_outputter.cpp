@@ -617,9 +617,6 @@ void XMLDBOutputter::startVisitSubsector( const Subsector* aSubsector,
     // valid XML.
     const Modeltime* modeltime = scenario->getModeltime();
     for( int i = 0; i < modeltime->getmaxper(); ++i ){
-        writeItem( "share", "%", aSubsector->calcShare( i, mGDP ), i );
-    }
-    for( int i = 0; i < modeltime->getmaxper(); ++i ){
         writeItem( "share-weight", "none", aSubsector->getShareWeight( i ), i );
     }
     for( int i = 0; i < modeltime->getmaxper(); ++i ){
@@ -699,6 +696,10 @@ void XMLDBOutputter::startVisitTechnology( const Technology* aTechnology, const 
     // put the buffers on a stack so that we have the correct ordering
     mBufferStack.push( parentBuffer );
     mBufferStack.push( childBuffer );
+
+    if( !objects::isEqual<double>( aTechnology->getShareWeight(), 0.0 ) ) {
+        XMLWriteElement( aTechnology->getShareWeight(), "share-weight", *childBuffer, mTabs.get() );
+    }
 
     // children of technology go in the child buffer
     for( int curr = 0; curr <= aPeriod; ++curr ){

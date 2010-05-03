@@ -80,9 +80,11 @@
 #include "sectors/include/sector_utils.h"
 #include "investment/include/investment_utils.h"
 #include "reporting/include/indirect_emissions_calculator.h"
+#include "util/base/include/interpolation_rule.h"
 
 using namespace std;
 using namespace xercesc;
+using namespace objects;
 
 extern Scenario* scenario;
 // static initialize.
@@ -94,22 +96,20 @@ const string Subsector::XML_NAME = "subsector";
 *
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
-const double LOGIT_EXP_DEFAULT = -3;
+const double LOGIT_EXP_DEFAULT = -6;
 
 Subsector::Subsector( const string& aRegionName, const string& aSectorName ):
 regionName( aRegionName ),
 sectorName( aSectorName ),
-doCalibration( false ){
+doCalibration( false ),
+mTechLogitExp( LOGIT_EXP_DEFAULT )
+{
     // resize vectors.
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
-    shrwts.resize( maxper, 1.0 ); // default 1.0, for sectors with one tech.
-    lexp.resize( maxper, LOGIT_EXP_DEFAULT );
     summary.resize(maxper); // object containing summaries
     fuelPrefElasticity.resize( maxper );
     summary.resize( maxper );
-    scaleYear = modeltime->getEndYear(); // default year to scale share weight to after calibration
-    mTechScaleYear = modeltime->getEndYear(); // default year to scale share weight to after calibration
     mInvestments.resize( maxper );
     mFixedInvestments.resize( maxper, -1 );
 }
@@ -127,6 +127,13 @@ Subsector::~Subsector() {
 //! Deallocate the subsector memory.
 void Subsector::clear(){
     for ( vector< vector< ITechnology* > >::iterator outerIter = techs.begin(); outerIter != techs.end(); outerIter++ ) {
+        // delete technology interpolation rules which are stored at the subsector level since they apply to all
+        // periods of a technology
+        TechInterpRuleIterator techNameRuleIter = mTechShareWeightInterpRules.find( findTechName( *outerIter ) );
+        if( techNameRuleIter != mTechShareWeightInterpRules.end() ) {
+            clearInterpolationRules( techNameRuleIter->second );
+        }
+
         for( vector< ITechnology* >::iterator innerIter = outerIter->begin(); innerIter != outerIter->end(); innerIter++ ) {
             delete *innerIter;
         }
@@ -139,6 +146,17 @@ void Subsector::clear(){
     {
         delete techType->second;
     }
+    clearInterpolationRules( mShareWeightInterpRules );
+}
+
+/*!
+ * \brief A helper method to delete and clear a vector of interpolation rules.
+ */
+void Subsector::clearInterpolationRules( vector<InterpolationRule*>& aInterpolationRules ) {
+    for( CInterpRuleIterator ruleIter = aInterpolationRules.begin(); ruleIter != aInterpolationRules.end(); ++ruleIter ) {
+        delete *ruleIter;
+    }
+    aInterpolationRules.clear();
 }
 
 /*! \brief Returns sector name
@@ -172,18 +190,14 @@ void Subsector::XMLParse( const DOMNode* node ) {
         if( nodeName == "#text" ) {
             continue;
         }
-        else if( nodeName == "sharewt" ){
-            XMLHelper<double>::insertValueIntoVector( curr, shrwts, modeltime );
+        else if( nodeName == "share-weight" ){
+            XMLHelper<Value>::insertValueIntoVector( curr, mParsedShareWeights, modeltime );
         }
-        else if( nodeName == "logitexp" ){
-            XMLHelper<double>::insertValueIntoVector( curr, lexp, modeltime );
+        else if( nodeName == "logit-exponent" ){
+            XMLHelper<double>::insertValueIntoVector( curr, mTechLogitExp, modeltime );
         }
-
         else if( nodeName == "fuelprefElasticity" ){
             XMLHelper<double>::insertValueIntoVector( curr, fuelPrefElasticity, modeltime );  
-        }
-        else if( nodeName == "scaleYear" ){
-            scaleYear = XMLHelper<int>::getValue( curr );
         }
         // Fixed investment
         else if( nodeName == "FixedInvestment" ){
@@ -209,8 +223,16 @@ void Subsector::XMLParse( const DOMNode* node ) {
         else if( nodeName == ProductionTechnology::getXMLNameStatic() ) {
             parseBaseTechHelper( curr, new ProductionTechnology() );
         }
-        else if( nodeName == "techScaleYear" ){
-            mTechScaleYear = XMLHelper<int>::getValue( curr );
+        else if( nodeName == InterpolationRule::getXMLNameStatic() && XMLHelper<string>::getAttr( curr, "apply-to" ) == "share-weight" ) {
+            // if the delete flag is set then for interpolation rules that means to clear
+            // out any previously parsed rules
+            if( XMLHelper<bool>::getAttr( curr, "delete" ) ) {
+                clearInterpolationRules( mShareWeightInterpRules );
+            }
+
+            InterpolationRule* tempRule = new InterpolationRule();
+            tempRule->XMLParse( curr );
+            mShareWeightInterpRules.push_back( tempRule );
         }
         else if( isNameOfChild( nodeName ) ){
             typedef vector<vector<ITechnology*> >::iterator TechVecIterator;
@@ -259,6 +281,17 @@ void Subsector::XMLParse( const DOMNode* node ) {
                         if( childNodeName == "#text" ){
                             continue;
                         }
+                        else if( childNodeName == InterpolationRule::getXMLNameStatic() && XMLHelper<string>::getAttr( currChild, "apply-to" ) == "share-weight" ) {
+                            // if the delete flag is set then for interpolation rules that means to clear
+                            // out any previously parsed rules
+                            if( XMLHelper<bool>::getAttr( currChild, "delete" ) ) {
+                                clearInterpolationRules( mTechShareWeightInterpRules[ techName ] );
+                            }
+
+                            InterpolationRule* tempRule = new InterpolationRule();
+                            tempRule->XMLParse( currChild );
+                            mTechShareWeightInterpRules[ techName ].push_back( tempRule );
+                        }
                         else if( childNodeName == Technology::getXMLNameStatic2D() ){
                             int thisPeriod = XMLHelper<void>::getNodePeriod( currChild, modeltime );
                             // While the vector for this technology has already
@@ -295,7 +328,17 @@ void Subsector::XMLParse( const DOMNode* node ) {
                     if( childNodeName == "#text" ){
                         continue;
                     }
+                    else if( childNodeName == InterpolationRule::getXMLNameStatic() && XMLHelper<string>::getAttr( currChild, "apply-to" ) == "share-weight" ) {
+                        // if the delete flag is set then for interpolation rules that means to clear
+                        // out any previously parsed rules
+                        if( XMLHelper<bool>::getAttr( currChild, "delete" ) ) {
+                            clearInterpolationRules( mTechShareWeightInterpRules[ techName ] );
+                        }
 
+                        InterpolationRule* tempRule = new InterpolationRule();
+                        tempRule->XMLParse( currChild );
+                        mTechShareWeightInterpRules[ techName ].push_back( tempRule );
+                    }
                     // 2nd dimension of the tech XML is "period". This is the
                     // same for all derived technologies.
                     else if( childNodeName == Technology::getXMLNameStatic2D() ){
@@ -500,13 +543,21 @@ void Subsector::completeInit( const IInfo* aSectorInfo,
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
             mainLog << "Removing a technology " << findTechName( *techIter ) << " from subsector " << name 
-                    << " in sector " << sectorName << " because all periods were not filled out." << endl;
+                    << " in sector " << sectorName << " in region " << regionName
+                    << " because all periods were not filled out." << endl;
 
             // Adjust the iterator back one position before deleting. This is
             // because a deleted iterator cannot be incremented.
             techs.erase( techIter-- );
         }
     }
+
+    const Modeltime* modeltime = scenario->getModeltime();
+    for( int per = 0; per <= modeltime->getFinalCalibrationPeriod(); ++per ) {
+       if( mParsedShareWeights[ per ].isInited() ) {
+           mShareWeights[ per ] = mParsedShareWeights[ per ];
+       }
+   }
 }
 
 /*! \brief Completes the initialization of a vector of technologies.
@@ -584,13 +635,45 @@ void Subsector::toInputXML( ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     XMLWriteOpeningTag( getXMLName(), out, tabs, name );
 
-    XMLWriteElementCheckDefault( scaleYear, "scaleYear", out, tabs, modeltime->getEndYear() );
-    XMLWriteElementCheckDefault( mTechScaleYear, "techScaleYear", out, tabs, modeltime->getEndYear() );
-    
+    // TODO: create a XMLWriteVector that skips !Value.isInited() rather than a default value.
+    for( unsigned int period = 0; period < mParsedShareWeights.size(); period++ ){
+        // skip values that were not set
+        if( !mParsedShareWeights[ period ].isInited() ) {
+            continue;
+        }
+        // Determine the correct year.
+        unsigned int year = modeltime->getper_to_yr( period );
 
-    XMLWriteVector( shrwts, "sharewt", out, tabs, modeltime, 1.0 );
+        // Determine if we can use fillout.
+        unsigned int canSkip = 0;
+        for( unsigned int checkPer = period + 1; checkPer < mParsedShareWeights.size(); checkPer++ ){
+            if( util::isEqual( mParsedShareWeights[ period ], mParsedShareWeights[ checkPer ] ) ){
+                canSkip++;
+            }
+            else {
+                break;
+            }
+        }
+        if( canSkip > 0 ){
+            // Need to write out the default value because they could be cleared
+            // by an earlier fillout.
+            XMLWriteElement( mParsedShareWeights[ period ], "share-weight", out, tabs, year, "", true );
+            // If canSkip gets to last element in vector, value of i forces breakout of first FOR loop.
+            period += canSkip;
+        }
+        else {
+            // Can't skip at all or can't skip anymore.
+            // Write out default if fillout and other values are being used together,
+            // or if fillout is not used and all values are unique.
+            XMLWriteElement( mParsedShareWeights[ period ], "share-weight", out, tabs, year, "", false );
+        }
+    }
 
-    XMLWriteVector( lexp, "logitexp", out, tabs, modeltime, LOGIT_EXP_DEFAULT );
+    for( CInterpRuleIterator ruleIt = mShareWeightInterpRules.begin(); ruleIt != mShareWeightInterpRules.end(); ++ruleIt ) {
+        (*ruleIt)->toInputXML( out, tabs );
+    }
+
+    XMLWriteVector( mTechLogitExp, "logit-exponent", out, tabs, modeltime, LOGIT_EXP_DEFAULT );
     
     XMLWriteVector( fuelPrefElasticity, "fuelprefElasticity", out, tabs, modeltime, 0.0 );
 
@@ -609,6 +692,16 @@ void Subsector::toInputXML( ostream& out, Tabs* tabs ) const {
         assert( j->begin() != j->end() );
         const ITechnology* firstTech = *( j->begin() ); // Get pointer to first element in row. 
         XMLWriteOpeningTag( firstTech->getXMLName1D(), out, tabs, firstTech->getName() );
+
+        // write technology interpolation rules which are stored at the subsector level since they apply to all
+        // periods of a technology
+        CTechInterpRuleIterator techNameRuleIter = mTechShareWeightInterpRules.find( firstTech->getName() );
+        if( techNameRuleIter != mTechShareWeightInterpRules.end() ) {
+            vector<InterpolationRule*> tempTechRules = techNameRuleIter->second;
+            for( CInterpRuleIterator ruleIter = tempTechRules.begin(); ruleIter != tempTechRules.end(); ++ruleIter ) {
+                (*ruleIter)->toInputXML( out, tabs );
+            }
+        }
         
         for( vector<ITechnology*>::const_iterator k = j->begin(); k != j->end(); k++ ){
             ( *k )->toInputXML( out, tabs );
@@ -635,10 +728,8 @@ void Subsector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag( getXMLName(), out, tabs, name );
     
     // Write the data for the current period within the vector.
-    XMLWriteElement( shrwts[ period ], "sharewt", out, tabs );
-    XMLWriteElement( scaleYear, "scaleYear", out, tabs );
-    XMLWriteElement( mTechScaleYear, "techScaleYear", out, tabs );
-    XMLWriteElement( lexp[ period ], "lexp", out, tabs );
+    XMLWriteElement( mShareWeights[ period ], "share-weight", out, tabs );
+    XMLWriteElement( mTechLogitExp[ period ], "logit-exponent", out, tabs );
     XMLWriteElement( fuelPrefElasticity[ period ], "fuelprefElasticity", out, tabs );
     XMLWriteElement( getEnergyInput( period ), "input", out, tabs );
     XMLWriteElement( getOutput( period ), "output", out, tabs );
@@ -767,34 +858,33 @@ void Subsector::initCalc( NationalAccount* aNationalAccount,
     if( Configuration::getInstance()->getBool( "CalibrationActive" ) ){
         // Check for zero shareweight for subsector with calibration values
         if( getTotalCalOutputs( aPeriod ) > util::getSmallNumber() 
-            && shrwts[ aPeriod ] == 0 ) 
+            && mShareWeights[ aPeriod ] == 0 ) 
         {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::NOTICE );
             mainLog << "Resetting zero shareweight for Subsector " << getName()
                 << " in sector " << sectorName << " in region " << regionName
                 << " since calibration values are present." << endl;
-            shrwts[ aPeriod ] = 1.0;
+            mShareWeights[ aPeriod ] = 1.0;
         }
         // For subsectors with only fixed output technologies.
         if( containsOnlyFixedOutputTechnologies( aPeriod ) ){
             // Reset share weight for all periods to 0 to indicate that it does not have an 
             // impact on the results.
-            shrwts[ aPeriod ] = 0;
+            mShareWeights[ aPeriod ] = 0;
         }
         // Reinitialize share weights to 1 for competing subsector with non-zero read-in share weight
         // for calibration periods only, but only if calibration values are read in any of the technologies
         // in this subsector (as there are cases where you want to fix these shares on a pass-through sector).
-        else if( shrwts[ aPeriod ] != 0 && aPeriod <= modeltime->getFinalCalibrationPeriod() 
+        else if( mShareWeights[ aPeriod ] != 0 && aPeriod <= modeltime->getFinalCalibrationPeriod() 
                 && getTotalCalOutputs( aPeriod ) > 0.0 ){
             // Reinitialize to 1 to remove bias, calculate new share weights and
             // normalize in postCalc to anchor to dominant subsector.
-            shrwts[ aPeriod ] = 1.0;
+            mShareWeights[ aPeriod ] = 1.0;
         }
     }
 
-    // Interpolate subsector and technology share weights from calibrated value to exogenously
-    // specified terminal value if applicable.
+    // Apply share weight interpolation rules for the subsector and technologies.
     interpolateShareWeights( aPeriod );
 
    // Pass forward any emissions information
@@ -926,7 +1016,8 @@ const vector<double> Subsector::calcTechShares( const GDP* aGDP, const int aPeri
     vector<double> techShares( techs.size() );
     for( unsigned int i = 0; i < techs.size(); ++i ){
         // determine shares based on Technology costs
-        techShares[ i ] = techs[i][aPeriod]->calcShare( regionName, sectorName, aGDP, aPeriod );
+        techShares[ i ] = techs[i][aPeriod]->calcShare( regionName, sectorName, aGDP,
+            mTechLogitExp[ aPeriod ], aPeriod );
 
         // Check that Technology shares are valid.
         assert( util::isValidNumber( techShares[ i ] ) );
@@ -958,24 +1049,26 @@ void Subsector::calcCost( const int aPeriod ){
 * \details Calculates the unnormalized share for this sector. Also calculates
 *          the sector aggregate price (or cost)
 * \author Sonny Kim, Josh Lurz
-* \param period model period
-* \param gdp gdp object
+* \param aPeriod model period
+* \param aGdp gdp object
+* \param aLogitExp The logit exponent which controls the behavoir of this
+*                  subsector nest.
 * \warning There is no difference between demand and supply technologies.
 *          Control behavior with value of parameter fuelPrefElasticity
 * \return The subsector share.
 */
-double Subsector::calcShare(const int period, const GDP* gdp ) const {
-    double subsectorPrice = getPrice( gdp, period );
+double Subsector::calcShare(const int aPeriod, const GDP* aGdp, const double aLogitExp ) const {
+    double subsectorPrice = getPrice( aGdp, aPeriod );
 
     if( subsectorPrice >= util::getSmallNumber() ){
-        double scaledGdpPerCapita = gdp->getBestScaledGDPperCap( period );
+        double scaledGdpPerCapita = aGdp->getBestScaledGDPperCap( aPeriod );
         // fuelPrefElasticity = 0 for Supply Sector and has no impact
         // fuelPrefElasticity is for Demand Sector only
         // TODO: make this explicit, shk 12/15/05
         // TODO: fuelPrefElasticity should be eliminated now that the
         // Demand Sector no longer exists.  SHK 7/16/07
-        double share = shrwts[period] * pow( subsectorPrice, lexp[ period ] )
-                        * pow( scaledGdpPerCapita, fuelPrefElasticity[ period ] );
+        double share = mShareWeights[ aPeriod ] * pow( subsectorPrice, aLogitExp )
+                        * pow( scaledGdpPerCapita, fuelPrefElasticity[ aPeriod ] );
         /*! \post Share is zero or positive. */
         // Check for invalid shares.
         if( share < -util::getSmallNumber() || !util::isValidNumber( share ) ) {
@@ -1019,115 +1112,79 @@ double Subsector::getFixedOutput( const int aPeriod ) const {
     return fixedOutput;
 }
 
-/*! \brief Consistently adjust share weights for previous period after calibration 
-* If the sector share weight in the previous period was changed due to calibration, 
-* then adjust next few shares so that there is not a big jump in share weights.
-*
-* Can turn this feature off by setting the scaleYear before the calibration year (e.g., 1975, or even zero)
-*
-* If scaleYear is set to be the calibration year then share weights are kept constant
-*
-* \author Steve Smith
-* \param period Model period
-* \warning Share weights must be scaled (from sector) before this is called.
-*/
+/*!
+ * \brief Apply share weight interpolation rules for the subsector and
+ *        technologies.
+ * \details Rules will only apply in the first period after calibration.  It
+ *          is an error to have uninitialized share weights after rules have
+ *          been applied.
+ * \param aPeriod Current model period.
+ */
 void Subsector::interpolateShareWeights( const int aPeriod ) {
+    // Do not apply rules if this is not the first period after calibration.
     const Modeltime* modeltime = scenario->getModeltime();
+    if( aPeriod != ( modeltime->getFinalCalibrationPeriod() + 1 ) ) {
+        return;
+    }
 
-    // if previous period was calibrated, then adjust future share weights Only
-    // scale share weights if after the final calibration year.
-    if ( ( aPeriod > modeltime->getFinalCalibrationPeriod() ) 
-        && getCalibrationStatus( aPeriod - 1 )
-        && Configuration::getInstance()->getBool( "CalibrationActive" ) )
-    {
-        int endPeriod = 0;
-        if ( scaleYear >= modeltime->getStartYear() ) {
-            endPeriod = modeltime->getyr_to_per( scaleYear );
+    // Make sure that calibrated values get stored back into the parsed share weights vector so that
+    // they get written out.  All other parsed values will initialize the working share weights
+    for( int per = 0; per < mParsedShareWeights.size(); ++per ) {
+        if( per <= modeltime->getFinalCalibrationPeriod() ) {
+            mParsedShareWeights[ per ].set( mShareWeights[ per ] );
         }
-        if  ( endPeriod >= ( aPeriod - 1 ) ) {
-            ILogger& mainLog = ILogger::getLogger( "calibration_log" );
-            mainLog.setLevel( ILogger::DEBUG );
-            mainLog << "Interpolating share weights for subsector " << name
-                << " in sector " << sectorName << " from starting period of "
-                << aPeriod - 1 << " with scale year " << scaleYear
-                << " and starting value " << shrwts[ aPeriod - 1 ] << "." << endl;
-                // This is wrong, the period before could have calibrated to zero.
-                if ( shrwts[ aPeriod - 1 ] > 0 ) {
-                    shareWeightLinearInterpFn( aPeriod - 1, endPeriod );
+        else {
+            mShareWeights[ per ] = mParsedShareWeights[ per ];
+        }
+    }
+    for( CInterpRuleIterator ruleIt = mShareWeightInterpRules.begin(); ruleIt != mShareWeightInterpRules.end(); ++ruleIt ) {
+        (*ruleIt)->applyInterpolations( mShareWeights, mParsedShareWeights );
+    }
+    // All periods must have set a share weight value at this point, not having one is an error.
+    for( int per = modeltime->getFinalCalibrationPeriod() + 1; per < mShareWeights.size(); ++per ) {
+        if( !mShareWeights[ per ].isInited() ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "Found uninitialized share weight in subsector: " << name << " in period " << per << endl;
+            exit( 1 );
+        }
+    }
+    // Technologies must be processed at the subsector level so that we can have access to all years of a
+    // technology.
+    for( vector< vector< ITechnology* > >::const_iterator techIter = techs.begin(); techIter != techs.end(); techIter++ ){
+        // find any rules associated with the current set of technologies
+        CTechInterpRuleIterator techNameRuleIter = mTechShareWeightInterpRules.find( findTechName( *techIter ) );
+        if( techNameRuleIter != mTechShareWeightInterpRules.end() ) {
+            PeriodVector<Value> techShareWeights;
+            PeriodVector<Value> techParsedShareWeights;
+            for( vector<ITechnology*>::const_iterator techYearIter = techIter->begin(); techYearIter != techIter->end(); techYearIter++ ){
+                const int period = techYearIter - techIter->begin();
+                techParsedShareWeights[ period ] = (*techYearIter)->getParsedShareWeight();
+                if( period <= modeltime->getFinalCalibrationPeriod() ) {
+                    techShareWeights[ period ] = (*techYearIter)->getShareWeight();
                 }
-        }
-        // Interpolate technology share weights
-        techShareWeightLinearInterpFn( aPeriod - 1, modeltime->getyr_to_per( mTechScaleYear ) );
-    }
-}
-
-/*! \brief Linearly interpolate share weights between specified endpoints 
-* Utility function to linearly scale share weights between two specified points.
-*
-* \author Steve Smith
-* \param beginPeriod Period in which to begin the interpolation.
-* \param endPeriod Period in which to end the interpolation.
-*/
-void Subsector::shareWeightLinearInterpFn( const int beginPeriod,  const int endPeriod ) {
-    const Modeltime* modeltime = scenario->getModeltime();
-    double shareIncrement = 0;
-
-    int loopPeriod = endPeriod;
-    if ( endPeriod > beginPeriod ) {
-        shareIncrement = ( shrwts[ endPeriod ] - shrwts[ beginPeriod ] ) / ( endPeriod - beginPeriod );
-    } 
-    else if ( endPeriod == beginPeriod ) {
-        // If end period equals the beginning period then this is a flag to keep the weights the same, so make increment zero
-        // and loop over rest of periods
-        loopPeriod = modeltime->getmaxper();  
-        shareIncrement = 0;
-    }
-
-    for ( int period = beginPeriod + 1; period < loopPeriod; period++ ) {
-        shrwts[ period ] = shrwts[ period - 1 ] + shareIncrement;
-    }
-
-    ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
-    calibrationLog.setLevel( ILogger::DEBUG );
-    calibrationLog << "Share weights interpolated with increment " << shareIncrement 
-                   << " for subsector " << name << " in sector " << sectorName << " in region " << regionName << endl;
-}
-
-/*! \brief Linearly interpolate Technology share weights between specified endpoints 
-* Utility function to linearly scale Technology share weights between two specified points.
-*
-* \author Steve Smith
-* \param beginPeriod Period in which to begin the interpolation.
-* \param endPeriod Period in which to end the interpolation.
-* \bug shareIncrement is never initialized if endPeriod < beginPeriod
-*/
-void Subsector::techShareWeightLinearInterpFn( const int beginPeriod,  const int endPeriod ) {
-    const Modeltime* modeltime = scenario->getModeltime();
-    double shareIncrement = 0;
-
-    for( unsigned int i = 0; i < techs.size(); ++i ){
-        double beginingShareWeight = techs[ i ][ beginPeriod ]->getShareWeight();
-
-        // If begining share weight is zero, then it wasn't changed by calibration so do not scale
-        if ( beginingShareWeight > 0 ) {
-            if ( endPeriod > beginPeriod ) {
-                shareIncrement = ( techs[ i ][ endPeriod ]->getShareWeight() - beginingShareWeight );
-                shareIncrement /= endPeriod - beginPeriod;
+                else {
+                    techShareWeights[ period ] = techParsedShareWeights[ period ];
+                }
             }
-
-            int loopPeriod = endPeriod;
-            // If end period equals the begining period then this is a flag to keep the weights the same, so loop over rest of periods
-            if ( endPeriod == beginPeriod ) {
-                loopPeriod = modeltime->getmaxper();  
-                shareIncrement = 0;
+            vector<InterpolationRule*> tempTechRules = techNameRuleIter->second;
+            for( CInterpRuleIterator ruleIter = tempTechRules.begin(); ruleIter != tempTechRules.end();
+                ++ruleIter ) {
+                    (*ruleIter)->applyInterpolations( techShareWeights, techParsedShareWeights );
             }
-
-            for ( int period = beginPeriod + 1; period < loopPeriod; period++ ) {
-                techs[ i ][ period ]->setShareWeight( techs[ i ][ period - 1 ]->getShareWeight() + shareIncrement );
+            // All periods must have set a share weight value at this point, not having one is an error.
+            for( vector<ITechnology*>::const_iterator techYearIter = techIter->begin(); techYearIter != techIter->end(); techYearIter++ ){
+                const int period = techYearIter - techIter->begin();
+                // TODO: checks to make sure all periods got a valid value
+                if( period > modeltime->getFinalCalibrationPeriod() && !techShareWeights[ period ].isInited() ) {
+                    ILogger& mainLog = ILogger::getLogger( "main_log" );
+                    mainLog.setLevel( ILogger::ERROR );
+                    mainLog << "Found uninitialized share weight in tech: " << (*techYearIter)->getName()
+                            << " subsector " << name << " in period " << period << endl;
+                    exit( 1 );
+                }
+                (*techYearIter)->setShareWeight( techShareWeights[ period ] );
             }
-            ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
-            calibrationLog.setLevel( ILogger::DEBUG );
-            calibrationLog << "Shareweights interpolated for technologies in subsector " << name << " in sector " << sectorName << " in region " << regionName << endl;
         }
     }
 }
@@ -1279,7 +1336,7 @@ double Subsector::getTotalCalOutputs( const int period ) const {
 bool Subsector::allOutputFixed( const int period ) const {
     // If there is no shareweight for this subsector than it cannot produce any
     // output, and so the output must be fixed.
-    if( util::isEqual( shrwts[ period ], 0.0 ) ){
+    if( util::isEqual<Value>( mShareWeights[ period ], 0.0 ) ){
         return true;
     }
 
@@ -1323,7 +1380,7 @@ bool Subsector::containsOnlyFixedOutputTechnologies( const int aPeriod ) const {
 * \return boolean true if inputs of specified good are fixed
 */
 bool Subsector::inputsAllFixed( const int aPeriod, const string& goodName ) const {
-    if( shrwts[ aPeriod ] == 0 ){
+    if( mShareWeights[ aPeriod ] == 0 ){
         return true;
     }
 
@@ -1349,8 +1406,8 @@ bool Subsector::inputsAllFixed( const int aPeriod, const string& goodName ) cons
 */
 double Subsector::getShareWeight( const int period ) const {
     /*! \post Shareweight is valid and greater than or equal to zero. */
-    assert( util::isValidNumber( shrwts[ period ] ) && shrwts[ period ] >= 0 );
-    return shrwts[ period ];
+    assert( util::isValidNumber( mShareWeights[ period ] ) && mShareWeights[ period ] >= 0 );
+    return mShareWeights[ period ];
 }
 
 /*! \brief Scales share weight for this Subsector
@@ -1364,7 +1421,7 @@ void Subsector::scaleShareWeight( const double scaleValue, const int period ) {
     assert( scaleValue >= 0 );
 
     if ( scaleValue != 0 ) {
-        shrwts[ period ] *= scaleValue;
+        mShareWeights[ period ] *= scaleValue;
     }
 }
 
@@ -1593,7 +1650,7 @@ void Subsector::MCoutputAllSectors( const GDP* aGDP,
         }
     }
     dboutput4(regionName,"Subsec Share",sectorName,name,"100%", temp );
-    dboutput4(regionName,"Subsec Share Wts",sectorName,name,"NoUnits", shrwts );
+    dboutput4(regionName,"Subsec Share Wts",sectorName,name,"NoUnits", convertToVector( mShareWeights ) );
     // Technology share weight by Subsector-technology for each sector
     for ( unsigned int i = 0; i < techs.size(); ++i ){
         for ( unsigned int m = 0; m <  techs[ i ].size(); ++m ) {
@@ -1801,7 +1858,7 @@ double Subsector::distributeInvestment( const IDistributor* aDistributor,
     mInvestments[ aPeriod ] = aDistributor->distribute( aExpProfitRateCalc,
                                                         InvestmentUtils::getTechInvestables( baseTechs, aPeriod ),
                                                         aNationalAccount,
-                                                        lexp[ aPeriod ],
+                                                        mTechLogitExp[ aPeriod ],
                                                         aRegionName,
                                                         aSectorName,
                                                         actInvestment,
@@ -1908,7 +1965,7 @@ double Subsector::getExpectedProfitRate( const NationalAccount& aNationalAccount
                                          aNationalAccount,
                                          aRegionName,
                                          aSectorName,
-                                         lexp[ aPeriod ],
+                                         mTechLogitExp[ aPeriod ],
                                          aIsShareCalc,
                                          aIsDistributing,
                                          aPeriod );
