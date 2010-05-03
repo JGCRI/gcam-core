@@ -137,7 +137,7 @@ protected:
     std::vector<BaseTechnology*> baseTechs; // for the time being
     std::map<std::string, TechnologyType*> mTechTypes; //!< Mapping from technology name to group of technology vintages.
 
-    void interpolateShareWeights( const int aPeriod );
+    virtual void interpolateShareWeights( const int aPeriod );
     std::map<std::string,int> baseTechNameMap; //!< Map of base technology name to integer position in vector. 
     typedef std::vector<BaseTechnology*>::const_iterator CBaseTechIterator;
     typedef std::vector<BaseTechnology*>::iterator BaseTechIterator;
