@@ -133,3 +133,8 @@ double ForestSupplySubsector::calcShare( const int aPeriod,
 {
     return 1;
 }
+
+void ForestSupplySubsector::interpolateShareWeights( const int aPeriod ) {
+    // forest subsectors do not utilize share-weights so we will override
+    // this method to avoid errors from the base class
+}

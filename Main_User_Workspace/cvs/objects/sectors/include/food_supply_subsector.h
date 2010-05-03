@@ -73,5 +73,7 @@ protected:
     virtual ITechnology* createChild( const std::string& aTechType,
                                       const std::string& aTechName,
                                       const int aTechYear ) const;
+
+    virtual void interpolateShareWeights( const int aPeriod );
 };
 #endif // _FOOD_SUPPLY_SUBSECTOR_H_

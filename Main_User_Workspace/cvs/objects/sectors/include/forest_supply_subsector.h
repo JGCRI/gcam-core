@@ -77,7 +77,9 @@ protected:
 
     virtual ITechnology* createChild( const std::string& aTechType,
                                      const std::string& aTechName,
-		                             const int aTechYear ) const;
+                                     const int aTechYear ) const;
+
+    virtual void interpolateShareWeights( const int aPeriod );
 private:
 };
 #endif // _FOREST_SUPPLY_SUBSECTOR_H_

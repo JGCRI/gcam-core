@@ -140,3 +140,8 @@ double FoodSupplySubsector::calcShare( const int aPeriod,
 {
     return 1;
 }
+
+void FoodSupplySubsector::interpolateShareWeights( const int aPeriod ) {
+    // food subsectors do not utilize share-weights so we will override
+    // this method to avoid errors from the base class
+}
