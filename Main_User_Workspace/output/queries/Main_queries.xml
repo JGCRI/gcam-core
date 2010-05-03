@@ -1,0 +1,2034 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<queries>
+   <queryGroup name="Primary Energy">
+      <supplyDemandQuery title="Primary Energy Consumption (Average Fossil Efficiency Conversion)">
+         <axis1 name="fuel">input[@name]</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false"> 
+      	 	 	 declare function local:get-weighted-eff($outputs as node()*) as node()* {
+			 	 		   unordered {
+			 			     for $year in distinct-values($outputs/physical-output/@vintage)
+			 		             let $eff_unweight := sum(for $res in $outputs/physical-output[@vintage = $year]
+			 		                               let $eff_curr := $res/parent::*/following-sibling::input-energy/IO-coefficient[@vintage = $year]
+			 		                               (: where $res/physical-output/@vintage = $year :)
+			 		                               return $res div $eff_curr),
+			 			             $weight := sum(for $res in $outputs/physical-output[@vintage = $year]
+			 		                         (: where $res/physical-output/@vintage = $year :)
+			 		                         return $res),
+			 			             $eff_weighted := $eff_unweight div $weight
+			 		             return element efficiency-weighted {attribute year { $year }, text { $eff_weighted }}
+			             		}
+			 	 	 };
+			 	 	 declare function local:append-heirarchy($parent as node(), $append as node()) as node() {
+			 	 		 let $scn := $parent/ancestor::scenario,
+			 			   	  $rgn := $parent/ancestor::region
+			 			   return
+			 			   	  document { element scenario {
+			 			 	  					$scn/@*,
+			 			 						element region {
+			 			 							$rgn/@*,
+			 			 							$append
+			 			 						}
+			 			 	  				}
+			 				}
+			 	 		 (: let $new_node := element {local-name($parent)} {$parent/@*, $append} 	
+			 	 		 return
+			 	 		 if(local-name($parent) != 'scenario')
+			 	 		 then local:append-heirarchy($parent/parent::*, $new_node)
+			 	 		 else document { $new_node } :)
+			 	 	 };  
+			 	 	 declare function local:get-primary-renewable($outputs as node()*, $weighted_effs as node()*) as node()* {
+			 	 	 unordered { 	
+			 	 	 for $output in $outputs (:,
+			 	 	 $weighted_eff in $weighted_effs :)
+			 	 	 let $new_output :=  (: element tempParent { :)
+			 	 	 element input {
+			 	 		 attribute type {'input'},
+			 	 		 attribute name {$output/parent::*/following-sibling::keyword/@primary-renewable},
+			 	 		 element demand-physical {
+			 	 			 attribute vintage {$output/@vintage},
+			 	 			 attribute unit {$output/@unit},
+			 	 			 text { $output div $weighted_effs[@year=$output/@vintage] }
+			 	 		 }(: ,
+			 	 		 element keyword {
+			 	 			 attribute primary-consumption { (: if($output/parent::*/following-sibling::keyword[fn:exists(@primary-renewable)])
+			 	 						 then :) $output/parent::*/following-sibling::keyword/@primary-renewable
+			 	 						 (: else $output/parent::*/parent::*/@name :)
+			 	 		       }
+			 	 		 } :)
+			 	 	 (: } :)
+			 	 	 },
+			 	 	 $new_root := local:append-heirarchy($output/parent::*/parent::*, $new_output)
+			 	 	 (:where $output/@vintage = $weighted_eff/@year:)
+			 	 	 return $new_root//text()
+			 	 	 } 
+			 	 	 };
+			 	 	 declare function local:check-keyword($values as node()*) as node()* {
+			 	 	 	unordered {
+			 	 		for $value in $values
+			 	 		let $input := $value/parent::*/parent::*,
+			 	 		    $keyword_name :=
+			 	 		        (: if($input/following-sibling::keyword[fn:exists(@primary-consumption)])
+			 	 			then :) $input/following-sibling::keyword/@primary-consumption
+			 	 			(: else $input/@name :), 
+			 	 		    $new_parent := element {local-name($input)} {$input/@*, 
+			 	 			$value/parent::*,
+			 	 		        element keyword { attribute primary-consumption {$keyword_name} }
+			 	 		        },
+			 	 		    $new_root := local:append-heirarchy($input/parent::*, $new_parent)
+			 	 		return $new_root//text()
+			 	 		}
+			 	 	};
+			 	 
+			 	 	 declare function local:run-primary-energy($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
+			 	 	 (: unordered { :)
+			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
+			 	 	 		  then $regions
+			 	 	 		  else distinct-values(collection($collection)/scenario/world/*[@type='region']/@name)
+			 	 	 return
+			 	 	 for $scenario in $scenarios, 	    
+			 	 	 $region in $regionsG 	
+			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+			 	 	 return (: get renewables from electricity :)
+					 	 	 	local:get-primary-renewable($currTree/supplysector[@name='electricity' or @name='elect_td_bld']//keyword[fn:exists(@primary-renewable)]/preceding-sibling::output-primary/physical-output, local:get-weighted-eff($currTree/supplysector[@name='electricity']//keyword[fn:exists(@average-fossil-efficiency)]/preceding-sibling::output-primary)) 
+					 		 	| (: get renewables from H2ProdCS :)
+					 	 	 	local:get-primary-renewable($currTree/supplysector[@name='H2 Central Production'](: /*[@type='subsector' (: collapse :) and fn:not(@name='electrolysis')] :)//keyword[fn:exists(@primary-renewable)]/preceding-sibling::output-primary/physical-output, local:get-weighted-eff($currTree/supplysector[@name='H2 Central Production']//keyword[fn:exists(@average-fossil-efficiency)]/preceding-sibling::output-primary)) 
+					 	 	 	| (: get renewables from H2ProdDist :)
+					 	 	 	local:get-primary-renewable($currTree/supplysector[@name='H2 Forecourt Production'](: /*[@type='subsector' (: collapse :) and fn:not(@name='electrolysis')] :)//keyword[fn:exists(@primary-renewable)]/preceding-sibling::output-primary/physical-output, local:get-weighted-eff($currTree/supplysector[@name='H2 Forecourt Production']//keyword[fn:exists(@average-fossil-efficiency)]/preceding-sibling::output-primary)) 
+					 	 	 	| (: get the primaries :)
+	 	 						(: local:check-keyword( :) $currTree//keyword[fn:exists(@primary-consumption)]/preceding-sibling::input-energy/demand-physical/text() (: ) :)
+                                | (: get traditional biomass :)
+							    $currTree//*[@type='input' and @name='traditional biomass']/demand-physical/node()
+			 	 	 	
+			 	 	 (: } :)
+	 	 }; 
+            	 local:run-primary-energy((:scenarios:), (:regions:), (:collection:))
+            </xPath>
+         <comments/>
+         <labelRewriteList>
+            <level name="input">
+               <rewrite from="geothermal-elect" to="i geothermal"/>
+               <rewrite from="traditional biomass" to="j traditional biomass"/>
+               <rewrite from="nuclear-H2" to="e nuclear"/>
+               <rewrite from="biomass" to="d biomass"/>
+               <rewrite from="natural gas" to="b natural gas"/>
+               <rewrite from="exotic-elect" to="j breakthrough"/>
+               <rewrite from="wind-elect" to="g wind"/>
+               <rewrite from="elect_td_ind" to=""/>
+               <rewrite from="solar-elect" to="h solar"/>
+               <rewrite from="solar-H2" to="h solar"/>
+               <rewrite from="regional natural gas" to=""/>
+               <rewrite from="coal" to="c coal"/>
+               <rewrite from="crude oil" to="a oil"/>
+               <rewrite from="hydro-elect" to="f hydro"/>
+               <rewrite from="nuclear-elect" to="e nuclear"/>
+               <rewrite from="wind-H2" to="g wind"/>
+               <rewrite from="unconventional oil" to="a oil"/>
+            </level>
+         </labelRewriteList>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Primary Energy Consumption (Direct Equivalent)">
+         <axis1 name="fuel">input[@name]</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false"> 
+			 	 	 declare function local:append-heirarchy($parent as node(), $append as node()) as node() {
+			 	 		 let $scn := $parent/ancestor::scenario,
+			 			   	  $rgn := $parent/ancestor::region
+			 			   return
+			 			   	  document { element scenario {
+			 			 	  					$scn/@*,
+			 			 						element region {
+			 			 							$rgn/@*,
+			 			 							$append
+			 			 						}
+			 			 	  				}
+			 				}
+			 	 	 };  
+			 	 	 declare function local:get-primary-renewable($outputs as node()*) as node()* {
+			 	 	 unordered { 	
+			 	 	 for $output in $outputs 
+			 	 	 let $new_output :=  
+			 	 	 element input {
+			 	 		 attribute type {'input'},
+			 	 		 attribute name {$output/parent::*/following-sibling::keyword/@primary-renewable},
+			 	 		 element demand-physical {
+			 	 			 attribute vintage {$output/@vintage},
+			 	 			 attribute unit {$output/@unit},
+			 	 			 text { $output }
+			 	 		 }
+			 	 	 },
+			 	 	 $new_root := local:append-heirarchy($output/parent::*/parent::*, $new_output)
+			 	 	 return $new_root//text()
+			 	 	 } 
+			 	 	 };
+			 	 	 declare function local:run-primary-energy($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
+			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
+			 	 	 		  then $regions
+			 	 	 		  else distinct-values(collection($collection)/scenario/world/*[@type='region']/@name)
+			 	 	 return
+			 	 	 for $scenario in $scenarios, 	    
+			 	 	 $region in $regionsG 	
+			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+			 	 	 return (: get renewables from electricity :)
+					 	 	 	local:get-primary-renewable($currTree/supplysector[@name='electricity' or @name='elect_td_bld']//keyword[fn:exists(@primary-renewable)]/preceding-sibling::output-primary/physical-output)
+					 		 	| (: get renewables from H2ProdCS :)
+					 	 	 	local:get-primary-renewable($currTree/supplysector[@name='H2 Central Production'](: /*[@type='subsector' (: collapse :) and fn:not(@name='electrolysis')] :)//keyword[fn:exists(@primary-renewable)]/preceding-sibling::output-primary/physical-output)
+					 	 	 	| (: get renewables from H2ProdDist :)
+					 	 	 	local:get-primary-renewable($currTree/supplysector[@name='H2 Forecourt Production'](: /*[@type='subsector' (: collapse :) and fn:not(@name='electrolysis')] :)//keyword[fn:exists(@primary-renewable)]/preceding-sibling::output-primary/physical-output)
+					 	 	 	| (: get the primaries :)
+	 	 						$currTree//keyword[fn:exists(@primary-consumption)]/preceding-sibling::input-energy/demand-physical/text()
+                                | (: get traditional biomass :)
+							    $currTree//*[@type='input' and @name='traditional biomass']/demand-physical/node()
+			 	 	 	
+	 	 }; 
+            	 local:run-primary-energy((:scenarios:), (:regions:), (:collection:))
+            </xPath>
+         <comments/>
+         <labelRewriteList>
+            <level name="input">
+               <rewrite from="geothermal-elect" to="i geothermal"/>
+               <rewrite from="traditional biomass" to="j traditional biomass"/>
+               <rewrite from="nuclear-H2" to="e nuclear"/>
+               <rewrite from="biomass" to="d biomass"/>
+               <rewrite from="natural gas" to="b natural gas"/>
+               <rewrite from="exotic-elect" to="j breakthrough"/>
+               <rewrite from="wind-elect" to="g wind"/>
+               <rewrite from="elect_td_ind" to=""/>
+               <rewrite from="solar-elect" to="h solar"/>
+               <rewrite from="k new" to="k new"/>
+               <rewrite from="solar-H2" to="h solar"/>
+               <rewrite from="regional natural gas" to=""/>
+               <rewrite from="coal" to="c coal"/>
+               <rewrite from="crude oil" to="a oil"/>
+               <rewrite from="hydro-elect" to="f hydro"/>
+               <rewrite from="nuclear-elect" to="e nuclear"/>
+               <rewrite from="wind-H2" to="g wind"/>
+               <rewrite from="unconventional oil" to="a oil"/>
+            </level>
+         </labelRewriteList>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Resource production">
+         <axis1 name="resource">resource</axis1>
+         <axis2 name="Year">output</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='resource']//output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Regional primary energy costs">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector' and ((@name='regional crude oil' or @name='regional natural gas' or @name='regional coal' or @name='regional unconventional oil' or @name='regional biomass' or @name='nuclearFuelGenIII'))]/cost/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+   </queryGroup>
+   <queryGroup name="Electricity">
+      <supplyDemandQuery title="Electricity generation by region (incl rooftop PV and CHP)">
+         <axis1 name="region">region</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (:collapse:)]//*[@type = 'technology' (:collapse:) and not (@name='electricity_td_bld')]/*[@type='output' (:collapse:)  and (@name='electricity' or @name='elect_td_bld')]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Electricity generation by region (central only)">
+         <axis1 name="region">region</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and ((@name='electricity') )]//*[@type='output']/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Electricity generation by aggregate technology">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (: collapse :)]//*[@type='output' and (@name='electricity' or @name='elect_td_bld')]/physical-output/node()</xPath>
+         <comments/>
+         <labelRewriteList>
+            <level name="technology">
+               <rewrite from="Oil (existing)" to="e Oil"/>
+               <rewrite from="hydrogen cogen" to="n CHP"/>
+               <rewrite from="exotic" to="d Breakthrough Technology"/>
+               <rewrite from="hydro" to="i Hydro"/>
+               <rewrite from="Oil (peak load conv)" to="e Oil"/>
+               <rewrite from="Gen_II_LWR" to="g Nuclear"/>
+               <rewrite from="coal cogen" to="n CHP"/>
+               <rewrite from="Oil (base load conv)" to="e Oil"/>
+               <rewrite from="gas cogen" to="n CHP"/>
+               <rewrite from="Biomass (IGCC)" to="h Biomass"/>
+               <rewrite from="Gas (base load conv)" to="c Gas"/>
+               <rewrite from="geothermal" to="m Geothermal"/>
+               <rewrite from="Coal (conv pul)" to="a Coal"/>
+               <rewrite from="PV_storage" to="l Solar"/>
+               <rewrite from="wind_storage" to="j Wind"/>
+               <rewrite from="CSP_storage" to="l Solar"/>
+               <rewrite from="Biomass (conv)" to="h Biomass"/>
+               <rewrite from="refined liquids cogen" to="n CHP"/>
+               <rewrite from="Oil (IGCC)_CCS" to="f Oil w/CCS"/>
+               <rewrite from="biomass cogen" to="n CHP"/>
+               <rewrite from="wind" to="j Wind"/>
+               <rewrite from="Coal (existing)" to="a Coal"/>
+               <rewrite from="Gen_III" to="g Nuclear"/>
+               <rewrite from="CSP" to="l Solar"/>
+               <rewrite from="Coal (IGCC)_CCS" to="b Coal w/CCS"/>
+               <rewrite from="Gas (peak load conv)" to="c Gas"/>
+               <rewrite from="Gas (CC)" to="c Gas"/>
+               <rewrite from="Biomass (IGCC)_CCS" to="h Biomass w/CCS"/>
+               <rewrite from="Gas (CC)_CCS" to="d Gas w/CCS"/>
+               <rewrite from="Biomass (existing)" to="h Biomass"/>
+               <rewrite from="Coal (IGCC)" to="a Coal"/>
+               <rewrite from="PV" to="l Solar"/>
+               <rewrite from="Oil (IGCC)" to="e Oil"/>
+               <rewrite from="electricity_td_bld" to=""/>
+               <rewrite from="Gas (existing)" to="c Gas"/>
+            </level>
+         </labelRewriteList>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Electricity generation by technology">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (: collapse :)]//*[@type = 'technology' and not(@name='electricity_td_bld')]/*[@type='output' and (@name='electricity' or @name='elect_td_bld')]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Electricity energy consumption by technology">
+         <axis1 name="fuel">input</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and ((@name='electricity' or @name='elect_td_bld') )]//*[@type = 'technology' and not(@name='electricity_td_bld')]/*[@type='input' and not (@name='water consumption' or @name='water withdrawals')]/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Central electricity demand by demand sector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector']//*[@type='input' (:collapse:) and (@name='electricity_net_ownuse')]/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Electricity costs and prices">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector' and ((@name='electricity' or @name='elect_td_bld' or @name='elect_td_ind' or @name='elect_td_trn'))]/cost/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Electricity costs by subsector">
+         <axis1 name="subsector">subsector</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="Price" group="false" sumAll="false">*[@type = 'sector' and (@name='electricity')]/*[@type = 'subsector']/cost/text()</xPath>
+         <comments>doesn't include rooftop PV</comments>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Electricity generation costs by technology">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector' and ((@name='electricity' or @name='elect_td_bld') )]//*[@type = 'technology' and not(@name='electricity_td_bld')]/cost/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Cogeneration by region">
+         <axis1 name="region">region</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (:collapse:)]//*[@type = 'technology' (:collapse:)]/output-secondary[@name='electricity' and @type='output']/physical-output/node()</xPath>
+         <comments>all techs of the same name aggregated</comments>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Total electricity delivered">
+         <axis1 name="region">region</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and ((@name='elect_td_bld' or @name='elect_td_ind' or @name='elect_td_trn') )]//*[@type='output' (:collapse:)]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Electricity share-weights by subsector">
+         <axis1 name="subsector">subsector</axis1>
+         <axis2 name="Year">share-weight</axis2>
+         <xPath buildList="true" dataName="Price" group="false" sumAll="false">*[@type = 'sector' and (@name='electricity')]/*[@type = 'subsector']/share-weight/text()</xPath>
+         <comments>doesn't include rooftop PV</comments>
+      </supplyDemandQuery>
+   </queryGroup>
+   <queryGroup name="Refining">
+      <supplyDemandQuery title="Refined liquids production by region">
+         <axis1 name="region">region</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and ((@name='refined liquids enduse' or @name='refined liquids industrial' or @name='refined liquids electricity'))]//*[@type='output' (:collapse:)]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Refined liquids production by sector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and ((@name='refined liquids enduse' or @name='refined liquids industrial' or @name='refined liquids electricity'))]//*[@type='output' (:collapse:)]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Refined liquids production by technology">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and ((@name='refined liquids enduse' or @name='refined liquids industrial' or @name='refined liquids electricity'))]//*[@type = 'technology']/*[@type='output' (:collapse:)]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Refined liquids production by sector and technology">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and ((@name='refined liquids enduse' or @name='refined liquids industrial' or @name='refined liquids electricity'))]//*[@type = 'technology']/*[@type='output' (:collapse:)]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Refinery inputs by technology">
+         <axis1 name="fuel">input</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and ((@name='refined liquids enduse' or @name='refined liquids industrial' or @name='refined liquids electricity' or @name='regional unconventional oil') )]//*[@type = 'technology']/*[@type='input' and not(@name='unconventional oil')]/demand-physical/node()</xPath>
+         <comments>reg unconv oil inputs added to unconv oil refining</comments>
+         <labelRewriteList>
+            <level name="technology">
+               <rewrite from="regional unconventional oil" to="unconventional oil refining"/>
+            </level>
+         </labelRewriteList>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Refinery inputs by sector and technology">
+         <axis1 name="fuel">input</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and ((@name='refined liquids enduse' or @name='refined liquids industrial' or @name='refined liquids electricity' or @name='regional unconventional oil') )]//*[@type = 'technology']/*[@type='input' and not(@name='unconventional oil')]/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Refined liquids production by technology, 2020 vintage">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and ((@name='refined liquids enduse' or @name='refined liquids industrial' or @name='refined liquids electricity') )]/*[@type = 'subsector']/*[@type = 'technology' and ((@year = '2020'))]/*[@type='output'(:collapse:)]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Refined liquids costs by sector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector' and ((@name='refined liquids electricity' or @name='refined liquids enduse' or @name='refined liquids industrial'))]/cost/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Refined liquids costs by subsector">
+         <axis1 name="subsector">subsector</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="Price" group="false" sumAll="false">*[@type = 'sector' and (@name='refined liquids electricity' or @name='refined liquids enduse' or @name='refined liquids industrial')]/*[@type = 'subsector']/cost/text()</xPath>
+         <comments>doesn't include rooftop PV</comments>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Refined liquids costs by technology">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector' and ((@name='refined liquids electricity' or @name='refined liquids enduse' or @name='refined liquids industrial'))]//*[@type = 'technology']/cost/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+   </queryGroup>
+   <queryGroup name="Other Energy Transformation">
+      <supplyDemandQuery title="Hydrogen production by technology">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and ((@name='H2 Central Production' or @name='H2 Forecourt Production') )]//*[@type = 'technology']/*[@type='output' (:collapse:)]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Hydrogen energy consumption by technology">
+         <axis1 name="fuel">input</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' and ((@name='H2 Central Production' or @name='H2 Forecourt Production') )]//*[@type = 'technology']/*[@type='input']/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Hydrogen costs and prices by sector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector' and ((@name='H2 Central Production' or @name='H2 Forecourt Production' or @name='H2 Enduse' or @name='H2_td'))]/cost/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Hydrogen costs by subsector">
+         <axis1 name="subsector">subsector</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="Price" group="false" sumAll="false">*[@type = 'sector' and (@name='H2 Central Production' or @name='H2 Forecourt Production')]/*[@type = 'subsector']/cost/text()</xPath>
+         <comments>doesn't include rooftop PV</comments>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Hydrogen costs by technology">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector' and ((@name='H2 Central Production' or @name='H2 Forecourt Production'))]/*[@type = 'subsector']/*[@type = 'technology']/cost/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Gas production by technology">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and ((@name='gas processing') )]//*[@type = 'technology']/*[@type='output' (:collapse:)]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Gas processing inputs by technology">
+         <axis1 name="fuel">input</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and ((@name='gas processing') )]//*[@type = 'technology']/*[@type='input']/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Gas pipeline inputs and outputs">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and ((@name='gas processing' or @name='gas pipeline') )]//*[@type='output' (:collapse:)]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Gas costs and prices">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector' and ((@name='gas processing' or @name='wholesale gas' or @name='delivered gas'))]/cost/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Gas processing costs by technology">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector' and ((@name='gas processing'))]//*[@type = 'technology']/cost/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+   </queryGroup>
+   <queryGroup name="End-Use Sectors General">
+      <supplyDemandQuery title="Total final energy by region">
+         <axis1 name="region">region</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector'  (: collapse :) and ((@name='building' or @name='industry' or @name='transportation') or (exists(child::keyword/@final-energy)))]//*[@type='input' (: collapse :) and not(@name='trn_pass_road' or @name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks')]/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Total final energy by aggregate end-use sector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and ((@name='building' or @name='industry' or @name='transportation') or (exists(child::keyword/@final-energy)))]//*[@type='input' (: collapse :) and not(@name='trn_pass_road' or @name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks')]/demand-physical/node()</xPath>
+         <comments/>
+         <labelRewriteList>
+            <level name="sector">
+               <rewrite from="agriculture energy use" to="industry"/>
+               <rewrite from="boilers general" to="industry"/>
+               <rewrite from="bld_res lighting" to="building"/>
+               <rewrite from="trn_freight" to="transportation"/>
+               <rewrite from="machine drive" to="industry"/>
+               <rewrite from="bld_res hot water" to="building"/>
+               <rewrite from="bld_comm office" to="building"/>
+               <rewrite from="bld_comm ventilation" to="building"/>
+               <rewrite from="bld_res other" to="building"/>
+               <rewrite from="process heat primary metals" to="industry"/>
+               <rewrite from="industrial energy use" to="industry"/>
+               <rewrite from="bld_res heating" to="building"/>
+               <rewrite from="feedstocks construction" to="industry"/>
+               <rewrite from="trn_shipping_intl" to="transportation"/>
+               <rewrite from="bld_res appliances" to="building"/>
+               <rewrite from="bld_comm cooling" to="building"/>
+               <rewrite from="feedstocks chemicals" to="industry"/>
+               <rewrite from="process heat cement" to="industry"/>
+               <rewrite from="cement" to="industry"/>
+               <rewrite from="bld_comm other" to="building"/>
+               <rewrite from="bld_comm refrigeration" to="building"/>
+               <rewrite from="electrochemical" to="industry"/>
+               <rewrite from="bld_res other appliances" to="building"/>
+               <rewrite from="feedstocks primary metals" to="industry"/>
+               <rewrite from="other end uses" to="industry"/>
+               <rewrite from="trn_passenger" to="transportation"/>
+               <rewrite from="bld_comm lighting" to="building"/>
+               <rewrite from="bld_res cooling" to="building"/>
+               <rewrite from="construction energy use" to="industry"/>
+               <rewrite from="bld_comm cooking" to="building"/>
+               <rewrite from="bld_comm hot water" to="building"/>
+               <rewrite from="industrial feedstocks" to="industry"/>
+               <rewrite from="bld_comm heating" to="building"/>
+               <rewrite from="boilers pulp paper and wood" to="industry"/>
+               <rewrite from="process heat general" to="industry"/>
+               <rewrite from="mining energy use" to="industry"/>
+               <rewrite from="limestone feedstocks" to=""/>
+               <rewrite from="trn_pass_road" to="transportation"/>
+            </level>
+         </labelRewriteList>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Total final energy by detailed end-use sector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and ((@name='building' or @name='industry' or @name='transportation') or (exists(child::keyword/@final-energy)))]//*[@type='input' (: collapse :) and not(@name='trn_pass_road' or @name='limestone' or @name='process heat cement')]/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Final energy by fuel">
+         <axis1 name="input">input</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector'  (: collapse :) and ((@name='building' or @name='industry' or @name='transportation') or (exists(child::keyword/@final-energy)))]//*[@type='input' and not(@name='trn_pass_road' or @name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks')]/demand-physical/node()</xPath>
+         <comments/>
+         <labelRewriteList>
+            <level name="input">
+               <rewrite from="traditional biomass" to="7 trad biomass"/>
+               <rewrite from="H2 Enduse" to="6 hydrogen"/>
+               <rewrite from="delivered biomass" to="4 biomass"/>
+               <rewrite from="refined liquids enduse" to="1 liquids"/>
+               <rewrite from="elect_td_bld" to="5 electricity"/>
+               <rewrite from="elect_td_trn" to="5 electricity"/>
+               <rewrite from="delivered coal" to="3 coal"/>
+               <rewrite from="elect_td_ind" to="5 electricity"/>
+               <rewrite from="wholesale gas" to="2 gas"/>
+               <rewrite from="refined liquids industrial" to="1 liquids"/>
+               <rewrite from="delivered gas" to="2 gas"/>
+            </level>
+         </labelRewriteList>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Final energy by aggregate end-use sector and fuel">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and ((@name='building' or @name='industry' or @name='transportation') or (exists(child::keyword/@final-energy)))]//*[@type='input' and not(@name='trn_pass_road' or @name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks')]/demand-physical/node()</xPath>
+         <comments/>
+         <labelRewriteList>
+            <level name="sector">
+               <rewrite from="agriculture energy use" to="industry"/>
+               <rewrite from="boilers general" to="industry"/>
+               <rewrite from="bld_res lighting" to="building"/>
+               <rewrite from="trn_freight" to="transportation"/>
+               <rewrite from="machine drive" to="industry"/>
+               <rewrite from="bld_res hot water" to="building"/>
+               <rewrite from="bld_comm office" to="building"/>
+               <rewrite from="bld_comm ventilation" to="building"/>
+               <rewrite from="bld_res other" to="building"/>
+               <rewrite from="industrial energy use" to="industry"/>
+               <rewrite from="process heat primary metals" to="industry"/>
+               <rewrite from="bld_res heating" to="building"/>
+               <rewrite from="feedstocks construction" to="industry"/>
+               <rewrite from="trn_shipping_intl" to="transportation"/>
+               <rewrite from="bld_res appliances" to="building"/>
+               <rewrite from="bld_comm cooling" to="building"/>
+               <rewrite from="feedstocks chemicals" to="industry"/>
+               <rewrite from="process heat cement" to="industry"/>
+               <rewrite from="cement" to="industry"/>
+               <rewrite from="bld_comm other" to="building"/>
+               <rewrite from="bld_comm refrigeration" to="building"/>
+               <rewrite from="electrochemical" to="industry"/>
+               <rewrite from="bld_res other appliances" to="building"/>
+               <rewrite from="feedstocks primary metals" to="industry"/>
+               <rewrite from="other end uses" to="industry"/>
+               <rewrite from="trn_passenger" to="transportation"/>
+               <rewrite from="bld_comm lighting" to="building"/>
+               <rewrite from="bld_res cooling" to="building"/>
+               <rewrite from="construction energy use" to="industry"/>
+               <rewrite from="bld_comm cooking" to="building"/>
+               <rewrite from="bld_comm hot water" to="building"/>
+               <rewrite from="industrial feedstocks" to="industry"/>
+               <rewrite from="bld_comm heating" to="building"/>
+               <rewrite from="boilers pulp paper and wood" to="industry"/>
+               <rewrite from="process heat general" to="industry"/>
+               <rewrite from="mining energy use" to="industry"/>
+               <rewrite from="limestone feedstocks" to=""/>
+               <rewrite from="trn_pass_road" to="transportation"/>
+            </level>
+            <level name="input">
+               <rewrite from="traditional biomass" to="7 trad biomass"/>
+               <rewrite from="H2 Enduse" to="6 hydrogen"/>
+               <rewrite from="delivered biomass" to="4 biomass"/>
+               <rewrite from="refined liquids enduse" to="1 liquids"/>
+               <rewrite from="elect_td_bld" to="5 electricity"/>
+               <rewrite from="elect_td_trn" to="5 electricity"/>
+               <rewrite from="delivered coal" to="3 coal"/>
+               <rewrite from="elect_td_ind" to="5 electricity"/>
+               <rewrite from="wholesale gas" to="2 gas"/>
+               <rewrite from="refined liquids industrial" to="1 liquids"/>
+               <rewrite from="delivered gas" to="2 gas"/>
+            </level>
+         </labelRewriteList>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Final energy by detailed end-use sector and fuel">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and ((@name='building' or @name='industry' or @name='transportation' or @name='cement') or (exists(child::keyword/@final-energy)))]//*[@type='input' and not(@name='trn_pass_road' or @name='limestone' or @name='process heat cement')]/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Service output by detailed end-use sector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and ((@name='building' or @name='industry' or @name='transportation') or (exists(child::keyword/@final-energy)))]//*[@type='output' (: collapse :)]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Fuel prices to all end-use sectors">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector' and ((@name='wholesale gas' or @name='delivered gas' or @name='delivered coal' or @name='delivered biomass' or @name='traditional biomass' or @name='elect_td_ind' or @name='elect_td_bld' or @name='elect_td_trn' or @name='H2 Enduse' or @name='refined liquids industrial' or @name='refined liquids enduse'))]/cost/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+   </queryGroup>
+   <queryGroup name="Buildings">
+      <supplyDemandQuery title="Building total final energy by region">
+         <axis1 name="region">region</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and (@name='building' or (exists(child::keyword[@final-energy='building'])))]//*[@type='input' (:collapse:)]/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Building total final energy by service">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' and (@name='building' or (exists(child::keyword[@final-energy='building'])))]//*[@type='input' (:collapse:)]/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Building final energy by fuel">
+         <axis1 name="input">input</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and (@name='building' or (exists(child::keyword[@final-energy='building'])))]//*[@type='input']/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Building final energy by service and fuel">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' and (@name='building' or (exists(child::keyword[@final-energy='building'])))]//*[@type='input']/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Building final energy by technology and fuel">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' and (@name='building' or (exists(child::keyword[@final-energy='building'])))]//*[@type = 'technology']/*[@type='input']/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Building service output by service">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='building' or (exists(child::keyword[@final-energy='building'])))]//*[@type='output' (:collapse:) and not(@name= 'internal-gains')]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Building service output by subsector (fuel)">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='building' or (exists(child::keyword[@final-energy='building'])))]/*[@type = 'subsector']//*[@type='output' (:collapse:) and not(@name= 'internal-gains')]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Building service output by technology">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='building' or (exists(child::keyword[@final-energy='building'])))]//*[@type = 'technology']/*[@type='output' (:collapse:) and not(@name= 'internal-gains')]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Building internal gain energy by service">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector']//*[@type='output' (:collapse:) and (@name= 'internal-gains')]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Building floorspace">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='residential' or @name='commercial' or @name='bld_res_rural' or @name='bld_res_urban' or @name='bld_comm')]//*[@type = 'technology']/*[@type='output']/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Fuel prices to buildings">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector' and ((@name='delivered gas' or @name='delivered coal' or @name='traditional biomass' or @name='delivered biomass' or @name='elect_td_bld' or @name='refined liquids enduse'))]/cost/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Costs of building services">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector' and (@name='building' or (exists(child::keyword[@final-energy='building'])))]/cost/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+   </queryGroup>
+   <queryGroup name="Industry">
+      <supplyDemandQuery title="Industry total final energy by region">
+         <axis1 name="region">region</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]//*[@type='input' (:collapse:) and not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks')]/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Industry total final energy by service">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]//*[@type='input' (:collapse:) and not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks')]/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Industry final energy by fuel">
+         <axis1 name="input">input</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]//*[@type='input' and not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks')]/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Industry final energy by service and fuel">
+         <axis1 name="input">input</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]//*[@type='input' and not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks')]/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Industry final energy by collapsed technology and fuel">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]//*[@type = 'technology']/*[@type='input' (: collapse :) and not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks')]/demand-physical/node()</xPath>
+         <comments>all techs of the same name aggregated</comments>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Industry final energy by technology and fuel">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]/*[@type = 'subsector']/*[@type = 'technology']/*[@type='input' and not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks')]/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Industry feedstocks by type">
+         <axis1 name="input">input</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and (@name='industry' or @name='industrial feedstocks' or @name='feedstocks construction' or @name='feedstocks chemicals' or @name='feedstocks primary metals')]/*[@type = 'subsector' (:collapse:) and not(@name='energy-use' or @name='industrial processes')]//*[@type='input' and not (@name='industrial energy use' or @name='industrial feedstocks')]/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Industry primary output by service">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]//*[@type='output' (:collapse:) and not(@name='electricity')]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Industry primary output by collapsed technology">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]//*[@type = 'technology' and not(@name='industry')]/*[@type='output' (:collapse:) and not(@name='electricity')]/physical-output/node()</xPath>
+         <comments>all techs of the same name aggregated</comments>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Industry primary output by technology">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]//*[@type = 'technology' and not (@name='industry')]/*[@type='output' (:collapse:) and not(@name='electricity')]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Cogeneration by collapsed technology">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (:collapse:)]//*[@type = 'technology' (:collapse:)]/output-secondary[@name='electricity' and @type='output']/physical-output/node()</xPath>
+         <comments>all techs of the same name aggregated</comments>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Cogeneration by technology">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector']//*[@type = 'technology']/output-secondary[@name='electricity' and @type='output']/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Cement production by region">
+         <axis1 name="region">region</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='cement')]//*[@type='output' (:collapse:)]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Cement production by technology">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='cement')]//*[@type = 'technology']/*[@type='output']/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Inputs to cement production">
+         <axis1 name="input">input</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and (@name='cement' or @name='process heat cement')]//*[@type='input']/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Industrial output by region">
+         <axis1 name="region">region</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and (@name='industry' or @name='chemicals' or @name='food processing' or @name='iron and steel' or @name='other nonmetallic minerals' or @name='aluminum and nonferrous metals' or @name='pulp paper and wood' or @name='other manufacturing' or @name='agriculture' or @name='mining' or @name='construction')]//*[@type='output' (:collapse:)]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Industrial output by industry">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='industry' or @name='chemicals' or @name='food processing' or @name='iron and steel' or @name='other nonmetallic minerals' or @name='aluminum and nonferrous metals' or @name='pulp paper and wood' or @name='other manufacturing' or @name='agriculture' or @name='mining' or @name='construction' or @name='cement')]//*[@type='output' (:collapse:)]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Inputs to industrial production by industry">
+         <axis1 name="input">input</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='industry' or @name='chemicals' or @name='food processing' or @name='iron and steel' or @name='other nonmetallic minerals' or @name='aluminum and nonferrous metals' or @name='pulp paper and wood' or @name='other manufacturing' or @name='agriculture' or @name='mining' or @name='construction' or @name='cement')]//*[@type='input']/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Fuel prices to industry">
+         <axis1 name="fuel">sector</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector' and ((@name='wholesale gas' or @name='delivered coal' or @name='delivered biomass' or @name='H2 Enduse' or @name='elect_td_ind' or @name='refined liquids industrial'))]/cost/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Costs of industrial services">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector' and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]/cost/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Costs of industrial output">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='industry' or @name='chemicals' or @name='food processing' or @name='iron and steel' or @name='other nonmetallic minerals' or @name='aluminum and nonferrous metals' or @name='pulp paper and wood' or @name='other manufacturing' or @name='agriculture' or @name='mining' or @name='construction' or @name='cement')]/cost/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+   </queryGroup>
+   <queryGroup name="Transportation">
+      <supplyDemandQuery title="Transportation total final energy by region">
+         <axis1 name="region">region</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and (@name='transportation' or (exists(child::keyword[@final-energy='transportation'])))]//*[@type='input' (:collapse:) and not(@name='trn_pass_road')]/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Transportation total final energy by service">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' and (@name='transportation' or (exists(child::keyword[@final-energy='transportation'])))]//*[@type='input' (:collapse:) and not(@name='trn_pass_road')]/demand-physical/node()</xPath>
+         <comments>trn_pass_road assigned to trn_passenger</comments>
+         <labelRewriteList>
+            <level name="sector">
+               <rewrite from="trn_pass_road" to="trn_passenger"/>
+            </level>
+         </labelRewriteList>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Transportation total final energy by subsector (mode)">
+         <axis1 name="mode">subsector</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' and (@name='transportation' or (exists(child::keyword[@final-energy='transportation'])))]/*[@type='subsector']//*[@type='input' (:collapse:) and not(@name='trn_pass_road')]/demand-physical/node()</xPath>
+         <comments>trn_pass_road assigned to trn_passenger</comments>
+         <labelRewriteList>
+            <level name="sector">
+               <rewrite from="trn_pass_road" to="trn_passenger"/>
+            </level>
+         </labelRewriteList>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Transportation final energy by fuel">
+         <axis1 name="input">input</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and (@name='transportation' or (exists(child::keyword[@final-energy='transportation'])))]//*[@type='input' and not(@name='trn_pass_road')]/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Transportation final energy by service and fuel">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' and (@name='transportation' or (exists(child::keyword[@final-energy='transportation'])))]//*[@type='input' and not(@name='trn_pass_road')]/demand-physical/node()</xPath>
+         <comments>trn_pass_road assigned to trn_passenger</comments>
+         <labelRewriteList>
+            <level name="sector">
+               <rewrite from="trn_pass_road" to="trn_passenger"/>
+            </level>
+         </labelRewriteList>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Transportation final energy by subsector (mode) and fuel">
+         <axis1 name="mode">subsector</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' and (@name='transportation' or (exists(child::keyword[@final-energy='transportation'])))]/*[@type = 'subsector']//*[@type='input' and not(@name='trn_pass_road')]/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Transportation final energy by technology and fuel">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' and (@name='transportation' or (exists(child::keyword[@final-energy='transportation'])))]//*[@type = 'technology']/*[@type='input' and not(@name='trn_pass_road')]/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Transportation service output by service">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='transportation' or (exists(child::keyword[@final-energy='transportation'])))]//*[@type='output' and not(@name='trn_pass_road')]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Transportation service output by subsector (mode)">
+         <axis1 name="mode">subsector</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='transportation' or (exists(child::keyword[@final-energy='transportation'])))]/*[@type = 'subsector']//*[@type='output' (:collapse:)]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Transportation service output by technology">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='transportation' or (exists(child::keyword[@final-energy='transportation'])))]//*[@type = 'technology' and not(@name='road')]/*[@type='output' (:collapse:)]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Transportation load factors">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">technology</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='transportation' or (exists(child::keyword[@final-energy='transportation'])))]//*[@type = 'technology']//load-factor/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Fuel prices to transportation">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector' and ((@name='delivered gas' or @name='delivered coal' or @name='elect_td_trn' or @name='refined liquids enduse'))]/cost/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Costs of transportation services">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector' and (@name='transportation' or (exists(child::keyword[@final-energy='transportation'])))]/cost/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Costs of transportation services by mode">
+         <axis1 name="mode">subsector</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector' and (@name='transportation' or (exists(child::keyword[@final-energy='transportation'])))]/*[@type = 'subsector']/cost/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Costs of transportation services by technology">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector' and (@name='transportation' or (exists(child::keyword[@final-energy='transportation'])))]//*[@type = 'technology']/cost/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+   </queryGroup>
+   <queryGroup name="AgLU: General">
+      <query title="Land Allocation">
+         <axis1 name="land-allocation">LandLeaf</axis1>
+         <axis2 name="Year">land-allocation[@year]</axis2>
+         <xPath buildList="true" dataName="land-allocation" group="false" sumAll="false">/LandAllocatorNode[@name='root' or @type='LandAllocatorNode' (: collapse :)]//land-allocation/text()</xPath>
+         <comments/>
+      </query>
+      <supplyDemandQuery title="Harvested Forest Area">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">technology</axis2>
+         <xPath buildList="true" dataName="adj-harvested-area" group="false" sumAll="false">*[@type = 'sector']/*[@type = 'subsector']/*[@type = 'technology']/adj-harvested-area/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <query title="Land Use Change Emission">
+         <axis1 name="LandLeaf">LandLeaf</axis1>
+         <axis2 name="Year">land-use-change-emission[@year]</axis2>
+         <xPath buildList="true" dataName="land-use-change-emission" group="false" sumAll="false">/LandAllocatorNode[@name='root' or @type='LandAllocatorNode' (: collapse :)]//land-use-change-emission/text()</xPath>
+         <comments/>
+      </query>
+      <query title="Above Ground Carbon">
+         <axis1 name="LandLeaf">LandLeaf</axis1>
+         <axis2 name="Year">above-ground-carbon[@year]</axis2>
+         <xPath buildList="true" dataName="above-ground-carbon" group="false" sumAll="false">/LandAllocatorNode[@name='root' or @type='LandAllocatorNode' (: collapse :)]//above-ground-carbon/text()</xPath>
+         <comments/>
+      </query>
+      <query title="Crop Yields">
+         <axis1 name="Crop">LandLeaf</axis1>
+         <axis2 name="Year">yield[@year]</axis2>
+         <xPath buildList="true" dataName="yield" group="false" sumAll="false">/LandAllocatorNode[@type='LandAllocatorNode' (: collapse :) or @name='CropLand']//yield/node()</xPath>
+         <comments/>
+      </query>
+      <supplyDemandQuery title="Ag Production">
+         <axis1 name="sector">sector[@name]</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (exists(child::keyword/@supplysector) or local-name() = 'ForestSupplySector' or local-name() = 'FoodSupplySector' or local-name() = 'export-sector' or @name="ForestDemand")]//*[@type='output']/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Variable Cost">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">technology</axis2>
+         <xPath buildList="true" dataName="variableCost" group="false" sumAll="false">*[@type = 'sector']/*[@type = 'subsector']/*[@type = 'technology']/variableCost/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+   </queryGroup>
+   <queryGroup name="AgLU: Animals">
+      <supplyDemandQuery title="Total Inputs to Animal Production by Region">
+         <axis1 name="region">region</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' (:collapse:) and (@name='Beef' or @name='Dairy' or @name='Pork' or @name='Poultry' or @name='SheepGoat')]//*[@type='input' (:collapse:)]/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Total Inputs to Animal Production by Animal Type">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='Beef' or @name='Dairy' or @name='Pork' or @name='Poultry' or @name='SheepGoat')]//*[@type='input' (:collapse:)]/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Inputs to Animal Production by Animal and System Type">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='Beef' or @name='Dairy' or @name='Pork' or @name='Poultry' or @name='SheepGoat')]/*[@type='subsector']//*[@type='input' (:collapse:)]/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Inputs to Animal Production by Animal, System, and Feed Type">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='Beef' or @name='Dairy' or @name='Pork' or @name='Poultry' or @name='SheepGoat')]/*[@type='subsector']//*[@type='input']/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Total Animal Production by Region">
+         <axis1 name="region">region</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and (@name='Beef' or @name='Dairy' or @name='Pork' or @name='Poultry' or @name='SheepGoat')]//*[@type='output' (:collapse:)]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Animal Production by Animal Type">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='Beef' or @name='Dairy' or @name='Pork' or @name='Poultry' or @name='SheepGoat')]//*[@type='output']/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Animal Production by Animal and System Type">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='Beef' or @name='Dairy' or @name='Pork' or @name='Poultry' or @name='SheepGoat')]/*[@type='subsector']//*[@type='output']/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Animal Production by Animal, System, and Feed Type">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='Beef' or @name='Dairy' or @name='Pork' or @name='Poultry' or @name='SheepGoat')]/*[@type='subsector']/*[@type='technology']/*[@type='output']/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+   </queryGroup>
+   <queryGroup name="AgLU: Final Demands">
+      <supplyDemandQuery title="Final Demands of Agricultural Products">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (@name='BeefDemand' or @name='CornDemand' or @name='DairyDemand' or @name='MiscCropDemand' or @name='OilCropDemand' or @name='OtherGrainDemand' or @name='PorkDemand' or @name='PoultryDemand' or @name='RiceDemand' or @name='SheepGoatDemand' or @name='SugarCropDemand' or @name='WheatDemand')]//*[@type='output']/physical-output/node()</xPath>
+         <comments>Includes non-food demands</comments>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Total Regional Food Demands">
+         <axis1 name="region">region</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' (:collapse:) and (@name='BeefDemand' or @name='CornDemand' or @name='DairyDemand' or @name='MiscCropDemand' or @name='OilCropDemand' or @name='OtherGrainDemand' or @name='PorkDemand' or @name='PoultryDemand' or @name='RiceDemand' or @name='SheepGoatDemand' or @name='SugarCropDemand' or @name='WheatDemand')]/*[@type='subsector' (:collapse:) and (@name='BeefDemand' or @name='CornDemand' or @name='DairyDemand' or @name='MiscCropDemand' or @name='OilCropDemand' or @name='OtherGrainDemand' or @name='PorkDemand' or @name='PoultryDemand' or @name='RiceDemand' or @name='SheepGoatDemand' or @name='SugarCropDemand' or @name='WheatDemand')]//*[@type='output' (:collapse:)]/physical-output/node()</xPath>
+         <comments>Does not include non-food demands</comments>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Food Demands by Type">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (@name='BeefDemand' or @name='CornDemand' or @name='DairyDemand' or @name='MiscCropDemand' or @name='OilCropDemand' or @name='OtherGrainDemand' or @name='PorkDemand' or @name='PoultryDemand' or @name='RiceDemand' or @name='SheepGoatDemand' or @name='SugarCropDemand' or @name='WheatDemand')]/*[@type='subsector' (:collapse:) and (@name='BeefDemand' or @name='CornDemand' or @name='DairyDemand' or @name='MiscCropDemand' or @name='OilCropDemand' or @name='OtherGrainDemand' or @name='PorkDemand' or @name='PoultryDemand' or @name='RiceDemand' or @name='SheepGoatDemand' or @name='SugarCropDemand' or @name='WheatDemand')]//*[@type='output' (:collapse:)]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Non-Food Demands by Type">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (@name='BeefDemand' or @name='CornDemand' or @name='DairyDemand' or @name='MiscCropDemand' or @name='OilCropDemand' or @name='OtherGrainDemand' or @name='PorkDemand' or @name='PoultryDemand' or @name='RiceDemand' or @name='SheepGoatDemand' or @name='SugarCropDemand' or @name='WheatDemand')]/*[@type='subsector' (:collapse:) and not (@name='BeefDemand' or @name='CornDemand' or @name='DairyDemand' or @name='MiscCropDemand' or @name='OilCropDemand' or @name='OtherGrainDemand' or @name='PorkDemand' or @name='PoultryDemand' or @name='RiceDemand' or @name='SheepGoatDemand' or @name='SugarCropDemand' or @name='WheatDemand')]//*[@type='output' (:collapse:)]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+   </queryGroup>
+   <queryGroup name="AgLU: Biomass">
+      <query title="Land Allocation: biomass">
+         <axis1 name="LandLeaf">LandLeaf</axis1>
+         <axis2 name="Year">land-allocation[@year]</axis2>
+         <xPath buildList="false" dataName="land-allocation" group="false" sumAll="false">/LandAllocatorNode[@name='root' or @type='LandAllocatorNode' (: collapse :)]//land-allocation/text()[ancestor::*[(@type='LandLeaf' or local-name()='LandLeaf') and (@name='biomass')]]</xPath>
+         <comments/>
+      </query>
+      <supplyDemandQuery title="Biomass Production: Dedicated/Waste">
+         <axis1 name="sector">sector[@name]</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (exists(child::keyword/@supplysector) or local-name() = 'ForestSupplySector' or local-name() = 'FoodSupplySector' or local-name() = 'export-sector' or @name='ForestDemand')]//*[@type='output' and @name='biomass']/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Purpose Grown Biomass Production">
+         <axis1 name="sector">sector[@name]</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="false" dataName="output" group="false" sumAll="false">*[@type='sector' and (exists(child::keyword/@supplysector) or local-name() = 'ForestSupplySector' or local-name() = 'FoodSupplySector' or local-name() = 'export-sector')]//*[@type='output']/physical-output/node()[ancestor::*[(@type='sector') and (@name='biomass')]]</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <resourceQuery title="MSW Production">
+         <axis1 name="resource">resource</axis1>
+         <axis2 name="Year">output</axis2>
+         <xPath buildList="true" dataName="available" group="false" sumAll="false">*[@type = 'resource' and (@name='biomass')]//output/node()</xPath>
+         <comments/>
+      </resourceQuery>
+      <supplyDemandQuery title="Total Biomass Consumption">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="false" dataName="input" group="false" sumAll="false">*[@type='sector' and (exists(child::keyword/@supplysector) or local-name() = 'supplysector')]//*[@type='input']/demand-physical/node()[ancestor::*[(@type='sector') and (@name='regional biomass')]]</xPath>
+         <comments>Supply sectors only.</comments>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Purpose Grown Biomass Price">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="Price" group="false" sumAll="false">*[@type = 'sector'  and (@name='biomass')]/cost/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+   </queryGroup>
+   <queryGroup name="GHG emissions">
+      <emissionsQueryBuilder title="GHG emissions by region">
+         <axis1 name="GHG">GHG</axis1>
+         <axis2 name="Year">emissions</axis2>
+         <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector' (:collapse:) or @type = 'resource' (: collapse :)]//*[@type = 'GHG']/emissions/node()</xPath>
+         <comments/>
+      </emissionsQueryBuilder>
+      <emissionsQueryBuilder title="GHG emissions by sector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">emissions</axis2>
+         <xPath buildList="true" dataName="emissions" group="false" sumAll="false"> 
+			 	 	 declare function local:rename-resource-emiss($resources as node()*) as node()* {
+					         for $resource in $resources
+			 	 		 let $scn := $resource/ancestor::scenario,
+			 			     $rgn := $resource/ancestor::region,
+			 			     $retDoc := document { element scenario {
+									$scn/@*,
+									element region {
+										$rgn/@*,
+										element sector {
+										        attribute type { 'sector' },
+											$resource/@name,
+											element subsector {
+												attribute type { 'subsector' },
+												$resource/@name,
+												element technology {
+													attribute type { 'technology' },
+													$resource/@name,
+													$resource/*[@type='GHG']
+			 			 						}
+			 			 	  				}
+										}
+									}
+								}
+							}
+			 			 return
+						     (: TODO: bug in the XMLDB prevents us from specifying text of emissions
+						        unless we want to loose all our ancestor info we just put together,
+						        so instead I am going to hack around it :)
+						     $retDoc//text()[parent::emissions]
+			 	 	 };  
+			 	 	 declare function local:run-combine-sector-resource-emiss($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
+			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
+			 	 	 		  then $regions
+			 	 	 		  else distinct-values(collection($collection)/scenario/world/*[@type='region']/@name)
+			 	 	 return
+			 	 	 for $scenario in $scenarios, 	    
+			 	 	 $region in $regionsG 	
+			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+					 return (: rename resources as a sector/subsector/tech :)
+						local:rename-resource-emiss($currTree/*[@type='resource' and exists(child::*[@type='GHG'])])
+						| (: get the sector emissions :)
+						$currTree/*[@type = 'sector']//*[@type = 'GHG']/emissions/node()
+	 	 }; 
+            	 local:run-combine-sector-resource-emiss((:scenarios:), (:regions:), (:collection:))
+	 </xPath>
+         <comments/>
+      </emissionsQueryBuilder>
+      <emissionsQueryBuilder title="GHG emissions by subsector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">emissions</axis2>
+         <xPath buildList="true" dataName="emissions" group="false" sumAll="false"> 
+			 	 	 declare function local:rename-resource-emiss($resources as node()*) as node()* {
+					         for $resource in $resources
+			 	 		 let $scn := $resource/ancestor::scenario,
+			 			     $rgn := $resource/ancestor::region,
+			 			     $retDoc := document { element scenario {
+									$scn/@*,
+									element region {
+										$rgn/@*,
+										element sector {
+										        attribute type { 'sector' },
+											$resource/@name,
+											element subsector {
+												attribute type { 'subsector' },
+												$resource/@name,
+												element technology {
+													attribute type { 'technology' },
+													$resource/@name,
+													$resource/*[@type='GHG']
+			 			 						}
+			 			 	  				}
+										}
+									}
+								}
+							}
+			 			 return
+						     (: TODO: bug in the XMLDB prevents us from specifying text of emissions
+						        unless we want to loose all our ancestor info we just put together,
+						        so instead I am going to hack around it :)
+						     $retDoc//text()[parent::emissions]
+			 	 	 };  
+			 	 	 declare function local:run-combine-sector-resource-emiss($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
+			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
+			 	 	 		  then $regions
+			 	 	 		  else distinct-values(collection($collection)/scenario/world/*[@type='region']/@name)
+			 	 	 return
+			 	 	 for $scenario in $scenarios, 	    
+			 	 	 $region in $regionsG 	
+			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+					 return (: rename resources as a sector/subsector/tech :)
+						local:rename-resource-emiss($currTree/*[@type='resource' and exists(child::*[@type='GHG'])])
+						| (: get the sector emissions :)
+						$currTree/*[@type = 'sector' ]/*[@type='subsector']//*[@type = 'GHG']/emissions/node()
+	 	 }; 
+            	 local:run-combine-sector-resource-emiss((:scenarios:), (:regions:), (:collection:))
+	 </xPath>
+         <comments/>
+      </emissionsQueryBuilder>
+      <emissionsQueryBuilder title="GHG emissions by technology">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">emissions</axis2>
+         <xPath buildList="true" dataName="emissions" group="false" sumAll="false"> 
+			 	 	 declare function local:rename-resource-emiss($resources as node()*) as node()* {
+					         for $resource in $resources
+			 	 		 let $scn := $resource/ancestor::scenario,
+			 			     $rgn := $resource/ancestor::region,
+			 			     $retDoc := document { element scenario {
+									$scn/@*,
+									element region {
+										$rgn/@*,
+										element sector {
+										        attribute type { 'sector' },
+											$resource/@name,
+											element subsector {
+												attribute type { 'subsector' },
+												$resource/@name,
+												element technology {
+													attribute type { 'technology' },
+													$resource/@name,
+													$resource/*[@type='GHG']
+			 			 						}
+			 			 	  				}
+										}
+									}
+								}
+							}
+			 			 return
+						     (: TODO: bug in the XMLDB prevents us from specifying text of emissions
+						        unless we want to loose all our ancestor info we just put together,
+						        so instead I am going to hack around it :)
+						     $retDoc//text()[parent::emissions]
+			 	 	 };  
+			 	 	 declare function local:run-combine-sector-resource-emiss($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
+			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
+			 	 	 		  then $regions
+			 	 	 		  else distinct-values(collection($collection)/scenario/world/*[@type='region']/@name)
+			 	 	 return
+			 	 	 for $scenario in $scenarios, 	    
+			 	 	 $region in $regionsG 	
+			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+					 return (: rename resources as a sector/subsector/tech :)
+						local:rename-resource-emiss($currTree/*[@type='resource' and exists(child::*[@type='GHG'])])
+						| (: get the sector emissions :)
+						$currTree/*[@type = 'sector' ]//*[@type='technology']//*[@type = 'GHG']/emissions/node()
+	 	 }; 
+            	 local:run-combine-sector-resource-emiss((:scenarios:), (:regions:), (:collection:))
+	 </xPath>
+         <comments/>
+      </emissionsQueryBuilder>
+      <emissionsQueryBuilder title="CH4 emissions by subsector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">emissions</axis2>
+         <xPath buildList="true" dataName="emissions" group="false" sumAll="false"> 
+			 	 	 declare function local:rename-resource-emiss($resources as node()*) as node()* {
+					         for $resource in $resources
+			 	 		 let $scn := $resource/ancestor::scenario,
+			 			     $rgn := $resource/ancestor::region,
+			 			     $retDoc := document { element scenario {
+									$scn/@*,
+									element region {
+										$rgn/@*,
+										element sector {
+										        attribute type { 'sector' },
+											$resource/@name,
+											element subsector {
+												attribute type { 'subsector' },
+												$resource/@name,
+												element technology {
+													attribute type { 'technology' },
+													$resource/@name,
+													$resource/*[@type = 'GHG' and ((@name='CH4' or @name='CH4_AWB' or @name='CH4_AGR') )]
+			 			 						}
+			 			 	  				}
+										}
+									}
+								}
+							}
+			 			 return
+						     (: TODO: bug in the XMLDB prevents us from specifying text of emissions
+						        unless we want to loose all our ancestor info we just put together,
+						        so instead I am going to hack around it :)
+						     $retDoc//text()[parent::emissions]
+			 	 	 };  
+			 	 	 declare function local:run-combine-sector-resource-emiss($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
+			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
+			 	 	 		  then $regions
+			 	 	 		  else distinct-values(collection($collection)/scenario/world/*[@type='region']/@name)
+			 	 	 return
+			 	 	 for $scenario in $scenarios, 	    
+			 	 	 $region in $regionsG 	
+			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+					 return (: rename resources as a sector/subsector/tech :)
+						local:rename-resource-emiss($currTree/*[@type='resource' and exists(child::*[@type = 'GHG' and ((@name='CH4' or @name='CH4_AWB' or @name='CH4_AGR') )])])
+						| (: get the sector emissions :)
+						$currTree/*[@type = 'sector' ]/*[@type='subsector']//*[@type = 'GHG' and ((@name='CH4' or @name='CH4_AWB' or @name='CH4_AGR') )]/emissions/node()
+	 	 }; 
+            	 local:run-combine-sector-resource-emiss((:scenarios:), (:regions:), (:collection:))
+	 </xPath>
+         <comments/>
+      </emissionsQueryBuilder>
+      <emissionsQueryBuilder title="N2O emissions by subsector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">emissions</axis2>
+         <xPath buildList="true" dataName="emissions" group="false" sumAll="false"> 
+			 	 	 declare function local:rename-resource-emiss($resources as node()*) as node()* {
+					         for $resource in $resources
+			 	 		 let $scn := $resource/ancestor::scenario,
+			 			     $rgn := $resource/ancestor::region,
+			 			     $retDoc := document { element scenario {
+									$scn/@*,
+									element region {
+										$rgn/@*,
+										element sector {
+										        attribute type { 'sector' },
+											$resource/@name,
+											element subsector {
+												attribute type { 'subsector' },
+												$resource/@name,
+												element technology {
+													attribute type { 'technology' },
+													$resource/@name,
+													$resource/*[@type = 'GHG' and ((@name='N2O' or @name='N2O_AWB' or @name='N2O_AGR') )]
+			 			 						}
+			 			 	  				}
+										}
+									}
+								}
+							}
+			 			 return
+						     (: TODO: bug in the XMLDB prevents us from specifying text of emissions
+						        unless we want to loose all our ancestor info we just put together,
+						        so instead I am going to hack around it :)
+						     $retDoc//text()[parent::emissions]
+			 	 	 };  
+			 	 	 declare function local:run-combine-sector-resource-emiss($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
+			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
+			 	 	 		  then $regions
+			 	 	 		  else distinct-values(collection($collection)/scenario/world/*[@type='region']/@name)
+			 	 	 return
+			 	 	 for $scenario in $scenarios, 	    
+			 	 	 $region in $regionsG 	
+			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+					 return (: rename resources as a sector/subsector/tech :)
+						local:rename-resource-emiss($currTree/*[@type='resource' and exists(child::*[@type = 'GHG' and ((@name='N2O' or @name='N2O_AWB' or @name='N2O_AGR') )])])
+						| (: get the sector emissions :)
+						$currTree/*[@type = 'sector' ]/*[@type='subsector']//*[@type = 'GHG' and ((@name='N2O' or @name='N2O_AWB' or @name='N2O_AGR') )]/emissions/node()
+	 	 }; 
+            	 local:run-combine-sector-resource-emiss((:scenarios:), (:regions:), (:collection:))
+	 </xPath>
+         <comments/>
+      </emissionsQueryBuilder>
+      <emissionsQueryBuilder title="NOx emissions by subsector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">emissions</axis2>
+         <xPath buildList="true" dataName="emissions" group="false" sumAll="false"> 
+			 	 	 declare function local:rename-resource-emiss($resources as node()*) as node()* {
+					         for $resource in $resources
+			 	 		 let $scn := $resource/ancestor::scenario,
+			 			     $rgn := $resource/ancestor::region,
+			 			     $retDoc := document { element scenario {
+									$scn/@*,
+									element region {
+										$rgn/@*,
+										element sector {
+										        attribute type { 'sector' },
+											$resource/@name,
+											element subsector {
+												attribute type { 'subsector' },
+												$resource/@name,
+												element technology {
+													attribute type { 'technology' },
+													$resource/@name,
+													$resource/*[@type = 'GHG' and ((@name='NOx' or @name='NOx_AWB' or @name='NOx_AGR') )]
+			 			 						}
+			 			 	  				}
+										}
+									}
+								}
+							}
+			 			 return
+						     (: TODO: bug in the XMLDB prevents us from specifying text of emissions
+						        unless we want to loose all our ancestor info we just put together,
+						        so instead I am going to hack around it :)
+						     $retDoc//text()[parent::emissions]
+			 	 	 };  
+			 	 	 declare function local:run-combine-sector-resource-emiss($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
+			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
+			 	 	 		  then $regions
+			 	 	 		  else distinct-values(collection($collection)/scenario/world/*[@type='region']/@name)
+			 	 	 return
+			 	 	 for $scenario in $scenarios, 	    
+			 	 	 $region in $regionsG 	
+			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+					 return (: rename resources as a sector/subsector/tech :)
+						local:rename-resource-emiss($currTree/*[@type='resource' and exists(child::*[@type = 'GHG' and ((@name='NOx' or @name='NOx_AWB' or @name='NOx_AGR') )])])
+						| (: get the sector emissions :)
+						$currTree/*[@type = 'sector' ]/*[@type='subsector']//*[@type = 'GHG' and ((@name='NOx' or @name='NOx_AWB' or @name='NOx_AGR') )]/emissions/node()
+	 	 }; 
+            	 local:run-combine-sector-resource-emiss((:scenarios:), (:regions:), (:collection:))
+	 </xPath>
+         <comments/>
+      </emissionsQueryBuilder>
+      <emissionsQueryBuilder title="SO2 emissions by subsector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">emissions</axis2>
+         <xPath buildList="true" dataName="emissions" group="false" sumAll="false"> 
+			 	 	 declare function local:rename-resource-emiss($resources as node()*) as node()* {
+					         for $resource in $resources
+			 	 		 let $scn := $resource/ancestor::scenario,
+			 			     $rgn := $resource/ancestor::region,
+			 			     $retDoc := document { element scenario {
+									$scn/@*,
+									element region {
+										$rgn/@*,
+										element sector {
+										        attribute type { 'sector' },
+											$resource/@name,
+											element subsector {
+												attribute type { 'subsector' },
+												$resource/@name,
+												element technology {
+													attribute type { 'technology' },
+													$resource/@name,
+													$resource/*[@type = 'GHG' and ((@name='SO2_1' or @name='SO2_2' or @name='SO2_3' or @name='SO2_4' or @name='SO2_1_AWB' or @name='SO2_2_AWB' or @name='SO2_3_AWB' or @name='SO2_4_AWB') )]
+			 			 						}
+			 			 	  				}
+										}
+									}
+								}
+							}
+			 			 return
+						     (: TODO: bug in the XMLDB prevents us from specifying text of emissions
+						        unless we want to loose all our ancestor info we just put together,
+						        so instead I am going to hack around it :)
+						     $retDoc//text()[parent::emissions]
+			 	 	 };  
+			 	 	 declare function local:run-combine-sector-resource-emiss($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
+			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
+			 	 	 		  then $regions
+			 	 	 		  else distinct-values(collection($collection)/scenario/world/*[@type='region']/@name)
+			 	 	 return
+			 	 	 for $scenario in $scenarios, 	    
+			 	 	 $region in $regionsG 	
+			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+					 return (: rename resources as a sector/subsector/tech :)
+						local:rename-resource-emiss($currTree/*[@type='resource' and exists(child::*[@type = 'GHG' and ((@name='SO2_1' or @name='SO2_2' or @name='SO2_3' or @name='SO2_4' or @name='SO2_1_AWB' or @name='SO2_2_AWB' or @name='SO2_3_AWB' or @name='SO2_4_AWB') )])])
+						| (: get the sector emissions :)
+						$currTree/*[@type = 'sector' ]/*[@type='subsector']//*[@type = 'GHG' and ((@name='SO2_1' or @name='SO2_2' or @name='SO2_3' or @name='SO2_4' or @name='SO2_1_AWB' or @name='SO2_2_AWB' or @name='SO2_3_AWB' or @name='SO2_4_AWB') )]/emissions/node()
+	 	 }; 
+            	 local:run-combine-sector-resource-emiss((:scenarios:), (:regions:), (:collection:))
+	 </xPath>
+         <comments/>
+      </emissionsQueryBuilder>
+      <emissionsQueryBuilder title="BC emissions by subsector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">emissions</axis2>
+         <xPath buildList="true" dataName="emissions" group="false" sumAll="false"> 
+			 	 	 declare function local:rename-resource-emiss($resources as node()*) as node()* {
+					         for $resource in $resources
+			 	 		 let $scn := $resource/ancestor::scenario,
+			 			     $rgn := $resource/ancestor::region,
+			 			     $retDoc := document { element scenario {
+									$scn/@*,
+									element region {
+										$rgn/@*,
+										element sector {
+										        attribute type { 'sector' },
+											$resource/@name,
+											element subsector {
+												attribute type { 'subsector' },
+												$resource/@name,
+												element technology {
+													attribute type { 'technology' },
+													$resource/@name,
+													$resource/*[@type = 'GHG' and ((@name='BC' or @name='BC_AWB' or @name='BC_AGR') )]
+			 			 						}
+			 			 	  				}
+										}
+									}
+								}
+							}
+			 			 return
+						     (: TODO: bug in the XMLDB prevents us from specifying text of emissions
+						        unless we want to loose all our ancestor info we just put together,
+						        so instead I am going to hack around it :)
+						     $retDoc//text()[parent::emissions]
+			 	 	 };  
+			 	 	 declare function local:run-combine-sector-resource-emiss($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
+			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
+			 	 	 		  then $regions
+			 	 	 		  else distinct-values(collection($collection)/scenario/world/*[@type='region']/@name)
+			 	 	 return
+			 	 	 for $scenario in $scenarios, 	    
+			 	 	 $region in $regionsG 	
+			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+					 return (: rename resources as a sector/subsector/tech :)
+						local:rename-resource-emiss($currTree/*[@type='resource' and exists(child::*[@type = 'GHG' and ((@name='BC' or @name='BC_AWB' or @name='BC_AGR') )])])
+						| (: get the sector emissions :)
+						$currTree/*[@type = 'sector' ]/*[@type='subsector']//*[@type = 'GHG' and ((@name='BC' or @name='BC_AWB' or @name='BC_AGR') )]/emissions/node()
+	 	 }; 
+            	 local:run-combine-sector-resource-emiss((:scenarios:), (:regions:), (:collection:))
+	 </xPath>
+         <comments/>
+      </emissionsQueryBuilder>
+      <emissionsQueryBuilder title="OC emissions by subsector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">emissions</axis2>
+         <xPath buildList="true" dataName="emissions" group="false" sumAll="false"> 
+			 	 	 declare function local:rename-resource-emiss($resources as node()*) as node()* {
+					         for $resource in $resources
+			 	 		 let $scn := $resource/ancestor::scenario,
+			 			     $rgn := $resource/ancestor::region,
+			 			     $retDoc := document { element scenario {
+									$scn/@*,
+									element region {
+										$rgn/@*,
+										element sector {
+										        attribute type { 'sector' },
+											$resource/@name,
+											element subsector {
+												attribute type { 'subsector' },
+												$resource/@name,
+												element technology {
+													attribute type { 'technology' },
+													$resource/@name,
+													$resource/*[@type = 'GHG' and ((@name='OC' or @name='OC_AWB' or @name='OC_AGR') )]
+			 			 						}
+			 			 	  				}
+										}
+									}
+								}
+							}
+			 			 return
+						     (: TODO: bug in the XMLDB prevents us from specifying text of emissions
+						        unless we want to loose all our ancestor info we just put together,
+						        so instead I am going to hack around it :)
+						     $retDoc//text()[parent::emissions]
+			 	 	 };  
+			 	 	 declare function local:run-combine-sector-resource-emiss($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
+			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
+			 	 	 		  then $regions
+			 	 	 		  else distinct-values(collection($collection)/scenario/world/*[@type='region']/@name)
+			 	 	 return
+			 	 	 for $scenario in $scenarios, 	    
+			 	 	 $region in $regionsG 	
+			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+					 return (: rename resources as a sector/subsector/tech :)
+						local:rename-resource-emiss($currTree/*[@type='resource' and exists(child::*[@type = 'GHG' and ((@name='OC' or @name='OC_AWB' or @name='OC_AGR') )])])
+						| (: get the sector emissions :)
+						$currTree/*[@type = 'sector' ]/*[@type='subsector']//*[@type = 'GHG' and ((@name='OC' or @name='OC_AWB' or @name='OC_AGR') )]/emissions/node()
+	 	 }; 
+            	 local:run-combine-sector-resource-emiss((:scenarios:), (:regions:), (:collection:))
+	 </xPath>
+         <comments/>
+      </emissionsQueryBuilder>
+      <emissionsQueryBuilder title="CO emissions by subsector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">emissions</axis2>
+         <xPath buildList="true" dataName="emissions" group="false" sumAll="false"> 
+			 	 	 declare function local:rename-resource-emiss($resources as node()*) as node()* {
+					         for $resource in $resources
+			 	 		 let $scn := $resource/ancestor::scenario,
+			 			     $rgn := $resource/ancestor::region,
+			 			     $retDoc := document { element scenario {
+									$scn/@*,
+									element region {
+										$rgn/@*,
+										element sector {
+										        attribute type { 'sector' },
+											$resource/@name,
+											element subsector {
+												attribute type { 'subsector' },
+												$resource/@name,
+												element technology {
+													attribute type { 'technology' },
+													$resource/@name,
+													$resource/*[@type = 'GHG' and ((@name='CO' or @name='CO_AWB' or @name='CO_AGR') )]
+			 			 						}
+			 			 	  				}
+										}
+									}
+								}
+							}
+			 			 return
+						     (: TODO: bug in the XMLDB prevents us from specifying text of emissions
+						        unless we want to loose all our ancestor info we just put together,
+						        so instead I am going to hack around it :)
+						     $retDoc//text()[parent::emissions]
+			 	 	 };  
+			 	 	 declare function local:run-combine-sector-resource-emiss($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
+			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
+			 	 	 		  then $regions
+			 	 	 		  else distinct-values(collection($collection)/scenario/world/*[@type='region']/@name)
+			 	 	 return
+			 	 	 for $scenario in $scenarios, 	    
+			 	 	 $region in $regionsG 	
+			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+					 return (: rename resources as a sector/subsector/tech :)
+						local:rename-resource-emiss($currTree/*[@type='resource' and exists(child::*[@type = 'GHG' and ((@name='CO' or @name='CO_AWB' or @name='CO_AGR') )])])
+						| (: get the sector emissions :)
+						$currTree/*[@type = 'sector' ]/*[@type='subsector']//*[@type = 'GHG' and ((@name='CO' or @name='CO_AWB' or @name='CO_AGR') )]/emissions/node()
+	 	 }; 
+            	 local:run-combine-sector-resource-emiss((:scenarios:), (:regions:), (:collection:))
+	 </xPath>
+         <comments/>
+      </emissionsQueryBuilder>
+      <emissionsQueryBuilder title="NMVOC emissions by subsector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">emissions</axis2>
+         <xPath buildList="true" dataName="emissions" group="false" sumAll="false"> 
+			 	 	 declare function local:rename-resource-emiss($resources as node()*) as node()* {
+					         for $resource in $resources
+			 	 		 let $scn := $resource/ancestor::scenario,
+			 			     $rgn := $resource/ancestor::region,
+			 			     $retDoc := document { element scenario {
+									$scn/@*,
+									element region {
+										$rgn/@*,
+										element sector {
+										        attribute type { 'sector' },
+											$resource/@name,
+											element subsector {
+												attribute type { 'subsector' },
+												$resource/@name,
+												element technology {
+													attribute type { 'technology' },
+													$resource/@name,
+													$resource/*[@type = 'GHG' and ((@name='NMVOC' or @name='NMVOC_AWB' or @name='NMVOC_AGR') )]
+			 			 						}
+			 			 	  				}
+										}
+									}
+								}
+							}
+			 			 return
+						     (: TODO: bug in the XMLDB prevents us from specifying text of emissions
+						        unless we want to loose all our ancestor info we just put together,
+						        so instead I am going to hack around it :)
+						     $retDoc//text()[parent::emissions]
+			 	 	 };  
+			 	 	 declare function local:run-combine-sector-resource-emiss($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
+			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
+			 	 	 		  then $regions
+			 	 	 		  else distinct-values(collection($collection)/scenario/world/*[@type='region']/@name)
+			 	 	 return
+			 	 	 for $scenario in $scenarios, 	    
+			 	 	 $region in $regionsG 	
+			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+					 return (: rename resources as a sector/subsector/tech :)
+						local:rename-resource-emiss($currTree/*[@type='resource' and exists(child::*[@type = 'GHG' and ((@name='NMVOC' or @name='NMVOC_AWB' or @name='NMVOC_AGR') )])])
+						| (: get the sector emissions :)
+						$currTree/*[@type = 'sector' ]/*[@type='subsector']//*[@type = 'GHG' and ((@name='NMVOC' or @name='NMVOC_AWB' or @name='NMVOC_AGR') )]/emissions/node()
+	 	 }; 
+            	 local:run-combine-sector-resource-emiss((:scenarios:), (:regions:), (:collection:))
+	 </xPath>
+         <comments/>
+      </emissionsQueryBuilder>
+      <emissionsQueryBuilder title="NH3 emissions by subsector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">emissions</axis2>
+         <xPath buildList="true" dataName="emissions" group="false" sumAll="false"> 
+			 	 	 declare function local:rename-resource-emiss($resources as node()*) as node()* {
+					         for $resource in $resources
+			 	 		 let $scn := $resource/ancestor::scenario,
+			 			     $rgn := $resource/ancestor::region,
+			 			     $retDoc := document { element scenario {
+									$scn/@*,
+									element region {
+										$rgn/@*,
+										element sector {
+										        attribute type { 'sector' },
+											$resource/@name,
+											element subsector {
+												attribute type { 'subsector' },
+												$resource/@name,
+												element technology {
+													attribute type { 'technology' },
+													$resource/@name,
+													$resource/*[@type = 'GHG' and ((@name='NH3' or @name='NH3_AWB' or @name='NH3_AGR') )]
+			 			 						}
+			 			 	  				}
+										}
+									}
+								}
+							}
+			 			 return
+						     (: TODO: bug in the XMLDB prevents us from specifying text of emissions
+						        unless we want to loose all our ancestor info we just put together,
+						        so instead I am going to hack around it :)
+						     $retDoc//text()[parent::emissions]
+			 	 	 };  
+			 	 	 declare function local:run-combine-sector-resource-emiss($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
+			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
+			 	 	 		  then $regions
+			 	 	 		  else distinct-values(collection($collection)/scenario/world/*[@type='region']/@name)
+			 	 	 return
+			 	 	 for $scenario in $scenarios, 	    
+			 	 	 $region in $regionsG 	
+			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+					 return (: rename resources as a sector/subsector/tech :)
+						local:rename-resource-emiss($currTree/*[@type='resource' and exists(child::*[@type = 'GHG' and ((@name='NH3' or @name='NH3_AWB' or @name='NH3_AGR') )])])
+						| (: get the sector emissions :)
+						$currTree/*[@type = 'sector' ]/*[@type='subsector']//*[@type = 'GHG' and ((@name='NH3' or @name='NH3_AWB' or @name='NH3_AGR') )]/emissions/node()
+	 	 }; 
+            	 local:run-combine-sector-resource-emiss((:scenarios:), (:regions:), (:collection:))
+	 </xPath>
+         <comments/>
+      </emissionsQueryBuilder>
+   </queryGroup>
+   <queryGroup name="CO2">
+      <emissionsQueryBuilder title="CO2 emissions by region">
+         <axis1 name="region">region</axis1>
+         <axis2 name="Year">emissions</axis2>
+         <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector' (:collapse:)]//CO2/emissions/node()</xPath>
+         <comments/>
+      </emissionsQueryBuilder>
+      <emissionsQueryBuilder title="CO2 emissions by aggregate sector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">emissions</axis2>
+         <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector']//CO2/emissions/node()</xPath>
+         <comments/>
+         <labelRewriteList>
+            <level name="sector">
+               <rewrite from="gas pipeline" to="gas systems"/>
+               <rewrite from="backup_electricity" to="electricity"/>
+               <rewrite from="agriculture energy use" to="industry"/>
+               <rewrite from="boilers general" to="industry"/>
+               <rewrite from="bld_res lighting" to="building"/>
+               <rewrite from="H2 Central Production" to="hydrogen"/>
+               <rewrite from="trn_freight" to="transportation"/>
+               <rewrite from="machine drive" to="industry"/>
+               <rewrite from="gas processing" to="gas systems"/>
+               <rewrite from="bld_res hot water" to="building"/>
+               <rewrite from="bld_comm office" to="building"/>
+               <rewrite from="bld_comm ventilation" to="building"/>
+               <rewrite from="bld_res other" to="building"/>
+               <rewrite from="process heat primary metals" to="industry"/>
+               <rewrite from="industrial energy use" to="industry"/>
+               <rewrite from="csp_backup" to="electricity"/>
+               <rewrite from="bld_res heating" to="building"/>
+               <rewrite from="feedstocks construction" to="industry"/>
+               <rewrite from="trn_shipping_intl" to="transportation"/>
+               <rewrite from="bld_res appliances" to="building"/>
+               <rewrite from="bld_comm cooling" to="building"/>
+               <rewrite from="feedstocks chemicals" to="industry"/>
+               <rewrite from="H2 Forecourt Production" to="hydrogen"/>
+               <rewrite from="process heat cement" to="industry"/>
+               <rewrite from="cement" to="industry"/>
+               <rewrite from="bld_comm other" to="building"/>
+               <rewrite from="bld_comm refrigeration" to="building"/>
+               <rewrite from="electrochemical" to="industry"/>
+               <rewrite from="bld_res other appliances" to="building"/>
+               <rewrite from="feedstocks primary metals" to="industry"/>
+               <rewrite from="other end uses" to="industry"/>
+               <rewrite from="trn_passenger" to="transportation"/>
+               <rewrite from="bld_comm lighting" to="building"/>
+               <rewrite from="bld_res cooling" to="building"/>
+               <rewrite from="construction energy use" to="industry"/>
+               <rewrite from="bld_comm cooking" to="building"/>
+               <rewrite from="bld_comm hot water" to="building"/>
+               <rewrite from="industrial feedstocks" to="industry"/>
+               <rewrite from="bld_comm heating" to="building"/>
+               <rewrite from="boilers pulp paper and wood" to="industry"/>
+               <rewrite from="process heat general" to="industry"/>
+               <rewrite from="mining energy use" to="industry"/>
+               <rewrite from="limestone feedstocks" to=""/>
+               <rewrite from="trn_pass_road" to="transportation"/>
+            </level>
+         </labelRewriteList>
+      </emissionsQueryBuilder>
+      <emissionsQueryBuilder title="CO2 emissions by sector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">emissions</axis2>
+         <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector']//CO2/emissions/node()</xPath>
+         <comments/>
+      </emissionsQueryBuilder>
+      <supplyDemandQuery title="Biomass consumption by aggregate sector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (exists(child::keyword/@supplysector) or local-name() = 'supplysector')]//*[@type='input' and (@name='regional biomass' or @name='delivered biomass' or @name='refined liquids enduse' or @name='refined liquids industrial' or @name='gas processing' or @name='wholesale gas' or @name='delivered gas' or @name='H2 Central Production' or @name='H2_td' or @name='H2 Enduse')]/demand-physical/node()</xPath>
+         <comments>Supply sectors only</comments>
+         <labelRewriteList>
+            <level name="sector">
+               <rewrite from="gas pipeline" to="gas systems"/>
+               <rewrite from="backup_electricity" to="electricity"/>
+               <rewrite from="agriculture energy use" to="industry"/>
+               <rewrite from="boilers general" to="industry"/>
+               <rewrite from="bld_res lighting" to="building"/>
+               <rewrite from="H2 Central Production" to="hydrogen"/>
+               <rewrite from="trn_freight" to="transportation"/>
+               <rewrite from="machine drive" to="industry"/>
+               <rewrite from="gas processing" to="gas systems"/>
+               <rewrite from="bld_res hot water" to="building"/>
+               <rewrite from="bld_comm office" to="building"/>
+               <rewrite from="bld_comm ventilation" to="building"/>
+               <rewrite from="bld_res other" to="building"/>
+               <rewrite from="process heat primary metals" to="industry"/>
+               <rewrite from="industrial energy use" to="industry"/>
+               <rewrite from="csp_backup" to="electricity"/>
+               <rewrite from="bld_res heating" to="building"/>
+               <rewrite from="feedstocks construction" to="industry"/>
+               <rewrite from="trn_shipping_intl" to="transportation"/>
+               <rewrite from="bld_res appliances" to="building"/>
+               <rewrite from="bld_comm cooling" to="building"/>
+               <rewrite from="feedstocks chemicals" to="industry"/>
+               <rewrite from="H2 Forecourt Production" to="hydrogen"/>
+               <rewrite from="process heat cement" to="industry"/>
+               <rewrite from="cement" to="industry"/>
+               <rewrite from="bld_comm other" to="building"/>
+               <rewrite from="bld_comm refrigeration" to="building"/>
+               <rewrite from="electrochemical" to="industry"/>
+               <rewrite from="bld_res other appliances" to="building"/>
+               <rewrite from="feedstocks primary metals" to="industry"/>
+               <rewrite from="other end uses" to="industry"/>
+               <rewrite from="trn_passenger" to="transportation"/>
+               <rewrite from="bld_comm lighting" to="building"/>
+               <rewrite from="bld_res cooling" to="building"/>
+               <rewrite from="construction energy use" to="industry"/>
+               <rewrite from="bld_comm cooking" to="building"/>
+               <rewrite from="bld_comm hot water" to="building"/>
+               <rewrite from="industrial feedstocks" to="industry"/>
+               <rewrite from="bld_comm heating" to="building"/>
+               <rewrite from="boilers pulp paper and wood" to="industry"/>
+               <rewrite from="process heat general" to="industry"/>
+               <rewrite from="mining energy use" to="industry"/>
+               <rewrite from="limestone feedstocks" to=""/>
+               <rewrite from="trn_pass_road" to="transportation"/>
+            </level>
+         </labelRewriteList>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Biomass consumption by sector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (exists(child::keyword/@supplysector) or local-name() = 'supplysector')]//*[@type='input' and (@name='regional biomass' or @name='delivered biomass' or @name='refined liquids enduse' or @name='refined liquids industrial' or @name='gas processing' or @name='wholesale gas' or @name='delivered gas' or @name='H2 Central Production' or @name='H2_td' or @name='H2 Enduse')]/demand-physical/node()</xPath>
+         <comments>Supply sectors only</comments>
+      </supplyDemandQuery>
+      <emissionsQueryBuilder title="CO2 emissions by subsector">
+         <axis1 name="subsector">subsector</axis1>
+         <axis2 name="Year">emissions</axis2>
+         <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector' ]/*[@type='subsector']//CO2/emissions/node()</xPath>
+         <comments/>
+      </emissionsQueryBuilder>
+      <emissionsQueryBuilder title="CO2 emissions by technology">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">emissions</axis2>
+         <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector' ]/*[@type='subsector']/*[@type='technology']//CO2/emissions/node()</xPath>
+         <comments/>
+      </emissionsQueryBuilder>
+      <emissionsQueryBuilder title="CO2 sequestration by sector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">emissions-sequestered</axis2>
+         <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector' ]//CO2/emissions-sequestered/node()</xPath>
+         <comments/>
+         <labelRewriteList>
+            <level name="sector">
+               <rewrite from="backup_electricity" to="electricity"/>
+               <rewrite from="csp_backup" to="electricity"/>
+            </level>
+         </labelRewriteList>
+      </emissionsQueryBuilder>
+      <emissionsQueryBuilder title="CO2 sequestration by subsector">
+         <axis1 name="subsector">subsector</axis1>
+         <axis2 name="Year">emissions-sequestered</axis2>
+         <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector' ]/*[@type='subsector']//CO2/emissions-sequestered/node()</xPath>
+         <comments/>
+      </emissionsQueryBuilder>
+      <marketQuery title="CO2 prices">
+         <axis1 name="market">market</axis1>
+         <axis2 name="Year">market</axis2>
+         <xPath buildList="true" dataName="price" group="false" sumAll="false">Marketplace/market[true() and contains(@name,'CO2')]/price/node()</xPath>
+         <comments/>
+      </marketQuery>
+   </queryGroup>
+   <queryGroup name="Climate">
+      <ClimateQuery title="CO2 concentrations">
+         <axis1 name="CO2-concentration">none</axis1>
+         <axis2 name="Year">CO2-concentration[@year]</axis2>
+         <xPath buildList="true" dataName="CO2-concentration" group="false" sumAll="false">climate-model/CO2-concentration/text()</xPath>
+         <comments/>
+      </ClimateQuery>
+      <ClimateQuery title="Climate forcing">
+         <axis1 name="forcing-total">none</axis1>
+         <axis2 name="Year">forcing-total[@year]</axis2>
+         <xPath buildList="true" dataName="forcing-total" group="false" sumAll="false">climate-model/forcing-total/text()</xPath>
+         <comments/>
+      </ClimateQuery>
+      <ClimateQuery title="Global mean temperature">
+         <axis1 name="temperature">none</axis1>
+         <axis2 name="Year">global-mean-temperature[@year]</axis2>
+         <xPath buildList="true" dataName="global-mean-temperature" group="false" sumAll="false">climate-model/global-mean-temperature/text()</xPath>
+         <comments/>
+      </ClimateQuery>
+   </queryGroup>
+   <queryGroup name="Policy Costs">
+      <costCurveQuery title="Policy Cost By Period">
+         <axis1 name="Region">Curve</axis1>
+         <axis2 name="Year">DataPoint</axis2>
+         <xPath buildList="true" dataName="Cost" group="false" sumAll="false">PointSet/DataPoint/y/text()</xPath>
+         <comments/>
+      </costCurveQuery>
+      <costCurveQuery title="Undiscounted policy cost">
+         <axis1 name="UndiscountedCost">UndiscountedCost</axis1>
+         <axis2 name="Region">UndiscountedCost</axis2>
+         <xPath buildList="true" dataName="Undiscounted Cost" group="false" sumAll="false">/text()</xPath>
+         <comments/>
+      </costCurveQuery>
+      <costCurveQuery title="Discounted policy cost">
+         <axis1 name="DiscountedCost">DiscountedCost</axis1>
+         <axis2 name="Region">DiscountedCost</axis2>
+         <xPath buildList="true" dataName="Discounted Cost" group="false" sumAll="false">/text()</xPath>
+         <comments/>
+      </costCurveQuery>
+   </queryGroup>
+   <queryGroup name="Markets and Prices General">
+      <marketQuery title="Prices for all markets">
+         <axis1 name="market">market</axis1>
+         <axis2 name="Year">market</axis2>
+         <xPath buildList="true" dataName="price" group="false" sumAll="false">Marketplace/market[true()]/price/node()</xPath>
+         <comments/>
+      </marketQuery>
+      <supplyDemandQuery title="Prices by sector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="Price" group="false" sumAll="false">*[@type = 'sector']/cost/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Prices by subsector">
+         <axis1 name="subsector">subsector</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="Price" group="false" sumAll="false">*[@type = 'sector']/*[@type = 'subsector']/cost/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Prices by technology">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">technology</axis2>
+         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector']/*[@type = 'subsector']/*[@type = 'technology']/cost/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Prices: technology fuel cost">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">price-paid[@vintage]</axis2>
+         <xPath buildList="true" dataName="fuel cost" group="false" sumAll="false">*[@type = 'sector']/*[@type = 'subsector']/*[@type = 'technology']/*[@type='input' and @name!='non-energy']/price-paid/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Prices: technology non-energy cost">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">price-paid[@vintage]</axis2>
+         <xPath buildList="true" dataName="non energy cost" group="false" sumAll="false">*[@type = 'sector']/*[@type = 'subsector']/*[@type = 'technology']/*[@type='input' (: collapse :) and @name='non-energy']/price-paid/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+   </queryGroup>
+   <queryGroup name="Socioeconomics">
+      <demographicsQuery title="Population by region">
+         <axis1 name="region">region</axis1>
+         <axis2 name="Year">populationMiniCAM</axis2>
+         <xPath buildList="true" dataName="total-population" group="false" sumAll="false">demographics/populationMiniCAM/total-population/node()</xPath>
+         <comments/>
+      </demographicsQuery>
+      <gdpQueryBuilder title="GDP MER by region">
+         <axis1 name="Region">region</axis1>
+         <axis2 name="Year">gdp-mer</axis2>
+         <xPath buildList="true" dataName="gdp-mer" group="false" sumAll="false">GDP/gdp-mer/text()</xPath>
+         <comments/>
+      </gdpQueryBuilder>
+      <gdpQueryBuilder title="GDP per capita PPP by region">
+         <axis1 name="Region">region</axis1>
+         <axis2 name="Year">gdp-per-capita-ppp</axis2>
+         <xPath buildList="true" dataName="gdp-per-capita-ppp" group="false" sumAll="false">GDP/gdp-per-capita-ppp/text()</xPath>
+         <comments/>
+      </gdpQueryBuilder>
+      <gdpQueryBuilder title="GDP per capita MER by region">
+         <axis1 name="Region">region</axis1>
+         <axis2 name="Year">gdp-per-capita-mer</axis2>
+         <xPath buildList="true" dataName="gdp-per-capita-mer" group="false" sumAll="false">GDP/gdp-per-capita-mer/text()</xPath>
+         <comments/>
+      </gdpQueryBuilder>
+   </queryGroup>
+   <queryGroup name="General">
+      <supplyDemandQuery title="Energy consumption by sector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector']//*[@type='input']/demand-physical[@unit='EJ']/node()</xPath>
+         <comments>Supply sectors only.</comments>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Energy consumption by subsector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector']/*[@type='subsector']//*[@type='input']/demand-physical[@unit='EJ']/node()</xPath>
+         <comments>Supply sectors only.</comments>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Energy consumption by technology">
+         <axis1 name="input">input</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector']//*[@type='technology']/*[@type='input']/demand-physical[@unit='EJ']/node()</xPath>
+         <comments>Supply sectors only.</comments>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Service output by sector">
+         <axis1 name="sector">sector[@name]</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector']//*[@type='output']/physical-output[@unit='EJ']/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Service output by subsector">
+         <axis1 name="sector">sector[@name]</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector']/*[@type='subsector']//*[@type='output']/physical-output[@unit='EJ']/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Service output by technology">
+         <axis1 name="sector">sector[@name]</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector']/*[@type='subsector']/*[@type='technology']/*[@type='output']/physical-output[@unit='EJ']/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+   </queryGroup>
+</queries>
