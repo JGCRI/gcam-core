@@ -1,279 +1,329 @@
-Forest Supply and Demand,
-Rotation period,
-INPUT_TABLE,
-Variable ID,
-3,
-
-region,rotationPeriod
-USA,45
-Canada,45
-Western Europe,45
-Japan,45
-Australia_NZ,45
-Former Soviet Union,45
-China,45
-Middle East,45
-Africa,45
-Latin America,45,,,,
-Southeast Asia,45,,,,
-Eastern Europe,45,,,,
-Korea,45,,,,
-India,45,,,,
-
-
-"Unit tags, sector type, market",,,,,
-INPUT_TABLE,,,,,
-Variable ID,,,,,
-30,,,,,
-
-region,ForestSupplySector,output-unit,input-unit,price-unit,sectorType
-ALL,Forest,m^3/yr,000Ha,$/forestser,ForestSupply
-
-
-Market,,,,
-INPUT_TABLE,,,,
-Variable ID,,,,
-31,,,,
-,,,1975,from model output
-region,ForestSupplySector,market,price,
-USA,Forest,global,192.134,
-Canada,Forest,global,192.134,
-Western Europe,Forest,global,192.134,
-Japan,Forest,global,192.134,
-Australia_NZ,Forest,global,192.134,
-Former Soviet Union,Forest,global,192.134,
-China,Forest,global,192.134,
-Middle East,Forest,global,192.134,
-Africa,Forest,global,192.134,
-Latin America,Forest,global,192.134,
-Southeast Asia,Forest,global,192.134
-Eastern Europe,Forest,global,192.134
-Korea,Forest,global,192.134
-India,Forest,global,192.134
-
-
-Cal Price,,,
-INPUT_TABLE,,,
-Variable ID,,,
-32,,,
-
-region,ForestSupplySector,calPrice,
-USA,Forest,425,
-Canada,Forest,425,
-Western Europe,Forest,425,
-Japan,Forest,425,
-Australia_NZ,Forest,425
-Former Soviet Union,Forest,425
-China,Forest,425
-Middle East,Forest,425
-Africa,Forest,425
-Latin America,Forest,425
-Southeast Asia,Forest,425
-Eastern Europe,Forest,425
-Korea,Forest,425
-India,Forest,425
-
-
-landType,,
-INPUT_TABLE,,
-Variable ID,,
-3000,,
-,,,,landType,,,,,,,,
-region,ForestSupplySector,ForestSupplySubsector,ForestProductionTechnology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,Forest,Forest,Forest,ForestLand,ForestLand,ForestLand,ForestLand,ForestLand,ForestLand,ForestLand,ForestLand,ForestLand
-
-
-Cal Output (production),,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-3001,,,,m^3/yr,m^3/yr,,,,,,,
-,,,,1975,1990,2005,,,,,,
-region,ForestSupplySector,ForestSupplySubsector,ForestProductionTechnology,calOutputValue,calOutputValue,calOutputValue,,,,,,
-USA,Forest,Forest,Forest,304723008,510100000,467347350,,,2865.97636,,,
-Canada,Forest,Forest,Forest,115511000,162127000,211501300,,,,,,
-Western Europe,Forest,Forest,Forest,224580000,315038700,358926219,,,,,,
-Japan,Forest,Forest,Forest,34888999,29403000,16276067,,,,,,
-Australia_NZ,Forest,Forest,Forest,22968000,32755312,50938000,,,,,,
-Former Soviet Union,Forest,Forest,Forest,395100000,386400000,234341200
-China,Forest,Forest,Forest,458534617,607241182,650658663
-Middle East,Forest,Forest,Forest,5197651,1854543,1695687
-Africa,Forest,Forest,Forest,362730393,495463018,628149838
-Latin America,Forest,Forest,Forest,251305544,356498506,463791435
-Southeast Asia,Forest,Forest,Forest,381758241,371223707,321689344
-Eastern Europe,Forest,Forest,Forest,125317000,88985000,114089189
-Korea,Forest,Forest,Forest,3683297,3872618,4814989
-India,Forest,Forest,Forest,226255672,300646233,328677293
-
-
-Cal Yield,,,,,,
-INPUT_TABLE,,,,,,
-Variable ID,,,,,,
-3002,,,,m^3/kHa,,
-,,,,1975,1990,2005
-region,ForestSupplySector,ForestSupplySubsector,ForestProductionTechnology,calYield,calYield,calYield
-USA,Forest,Forest,Forest,177985,177985,177985
-Canada,Forest,Forest,Forest,189449,189449,189449
-Western Europe,Forest,Forest,Forest,181730,181730,181730
-Japan,Forest,Forest,Forest,170471,170471,170471
-Australia_NZ,Forest,Forest,Forest,182014,182014,182014
-Former Soviet Union,Forest,Forest,Forest,190325,190325,190325
-China,Forest,Forest,Forest,191588,191588,191588
-Middle East,Forest,Forest,Forest,170192,170192,170192
-Africa,Forest,Forest,Forest,357027,357027,357027
-Latin America,Forest,Forest,Forest,340290,340290,340290
-Southeast Asia,Forest,Forest,Forest,339367,339367,339367
-Eastern Europe,Forest,Forest,Forest,170944,170944,170944
-Korea,Forest,Forest,Forest,172294,172294,172294
-India,Forest,Forest,Forest,322863,322863,322863
-
-
-Future Production,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,
-Variable ID,,,,,,,,,,
-3003,,,,,,,,,,
-,,,,1975,1990,2005,,,,
-region,ForestSupplySector,ForestSupplySubsector,ForestProductionTechnology,futureProduction,futureProduction,futureProduction,,,,
-USA,Forest,Forest,Forest,487979838,487961152,470268133,,,,
-Canada,Forest,Forest,Forest,277721631,345581750,412450425,,,,
-Western Europe,Forest,Forest,Forest,359721373,341749570,308349703,,,,
-Japan,Forest,Forest,Forest,16814904,16599824,15747070,,,,
-Australia_NZ,Forest,Forest,Forest,61550701,71527841,80608902,,,,
-Former Soviet Union,Forest,Forest,Forest,311033329,390183643,468644512,,,,
-China,Forest,Forest,Forest,703333617,731882539,738774849,,,,
-Middle East,Forest,Forest,Forest,1829734,1900283,1913995,,,,
-Africa,Forest,Forest,Forest,821518497,1019119379,1213368840,,,,
-Latin America,Forest,Forest,Forest,561610798,653873286,738123620,,,,,,
-Southeast Asia,Forest,Forest,Forest,326868783,316090901,292035789,,,,,,
-Eastern Europe,Forest,Forest,Forest,122193455,125848747,125567235,,,,,,
-Korea,Forest,Forest,Forest,5100092,5186437,5099621,,,,,,
-India,Forest,Forest,Forest,320123228,292591171,249787829,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-agProdChange,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-3004,,Forest agProdChange must be the same in all periods,,,,,,,,,,
-,,,,agProdChange,,,,,,,,
-region,ForestSupplySector,ForestSupplySubsector,ForestProductionTechnology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-USA,Forest,Forest,Forest,0,0,0,0,0,0,0,0,0
-Canada,Forest,Forest,Forest,0,0,0,0,0,0,0,0,0
-Western Europe,Forest,Forest,Forest,0,0,0,0,0,0,0,0,0
-Japan,Forest,Forest,Forest,0,0,0,0,0,0,0,0,0
-Australia_NZ,Forest,Forest,Forest,0,0,0,0,0,0,0,0,0
-Former Soviet Union,Forest,Forest,Forest,0,0,0,0,0,0,0,0,0
-China,Forest,Forest,Forest,0,0,0,0,0,0,0,0,0
-Middle East,Forest,Forest,Forest,0,0,0,0,0,0,0,0,0
-Africa,Forest,Forest,Forest,0,0,0,0,0,0,0,0,0
-Latin America,Forest,Forest,Forest,0,0,0,0,0,0,0,0,0
-Southeast Asia,Forest,Forest,Forest,0,0,0,0,0,0,0,0,0
-Eastern Europe,Forest,Forest,Forest,0,0,0,0,0,0,0,0,0
-Korea,Forest,Forest,Forest,0,0,0,0,0,0,0,0,0
-India,Forest,Forest,Forest,0,0,0,0,0,0,0,0,0
-
-add CO2 tag,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-3010,,,,,,,,,,,,
-,,,,CO2,,,,,,,,
-region,ForestSupplySector,ForestSupplySubsector,ForestProductionTechnology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,Forest,Forest,Forest,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-
-
-Forest Demand Sector assumptions,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-40,,,,,,,,,,,,
-,,base-service,,,2020 fillout,2020 fillout,,,,,,
-region,ForestDemandSector,1975,1990,2005,price-elasticity,income-elasticity,,,,,,
-USA,ForestDemand,432490276,432490276,616251360,-0.8,0,,,,,,
-Canada,ForestDemand,31065753,31065753,45050618,-0.8,0,,,,,,
-Western Europe,ForestDemand,162479186,162479186,211914456,-0.8,0,,,,,,
-Japan,ForestDemand,637071997,637071997,700086724,-0.8,0,,,,,,
-Australia_NZ,ForestDemand,88287560,88287560,111950384,-0.8,0,,,,,,
-Former Soviet Union,ForestDemand,375697589,375697589,179113908,-0.8,0.05,,,,,,,
-China,ForestDemand,311700422,311700422,328095354,-0.8,0.2,,,,,,,
-Middle East,ForestDemand,57007250,57007250,26907367,-0.8,0.2,,,,,,,
-Africa,ForestDemand,13921850,13921850,11032989,-0.8,0.2,,,,,,,
-Latin America,ForestDemand,365082336,365082336,455726371,-0.8,0.2,,,,,,,
-Southeast Asia,ForestDemand,2304389,2304389,2255596,-0.8,0.2,,,,,,,
-Eastern Europe,ForestDemand,367556335,367556335,308830342,-0.8,0,,,,,,,
-Korea,ForestDemand,488680243,488680243,461163501,-0.8,0.2,,,,,,,
-India,ForestDemand,328263632,328263632,394517604,-0.8,0.2,,,,,,,
-
-
-"Forest Demand Supplysector: unit tags, sectortype, market",,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,
-55,,,,,,,,,,,,,
-,,,,,,,,,,,,,
-region,supplysector,output-unit,input-unit,price-unit,sectorType,,,,,,,,
-ALL,ForestDemand,m^3/yr,m^3/yr,$/forestser,forestDemand,,,,,,,,
-ALL,FutureForestDemand,m^3/yr,m^3/yr,$/forestser,forestDemand,,,,,,,,
-,,,,,,,,,,,,,
-,,,,,,,,,,,,,
-Efficiency,,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,
-5006,,,,,,,,,,,,,
-,,,,efficiency,,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input
-USA,ForestDemand,Forest,Forest,1,1,1,1,1,1,1,1,1,Forest
-Canada,ForestDemand,Forest,Forest,1,1,1,1,1,1,1,1,1,Forest
-Western Europe,ForestDemand,Forest,Forest,1,1,1,1,1,1,1,1,1,Forest
-Japan,ForestDemand,Forest,Forest,1,1,1,1,1,1,1,1,1,Forest
-Australia_NZ,ForestDemand,Forest,Forest,1,1,1,1,1,1,1,1,1,Forest
-Former Soviet Union,ForestDemand,Forest,Forest,1,1,1,1,1,1,1,1,1,Forest
-China,ForestDemand,Forest,Forest,1,1,1,1,1,1,1,1,1,Forest
-Middle East,ForestDemand,Forest,Forest,1,1,1,1,1,1,1,1,1,Forest
-Africa,ForestDemand,Forest,Forest,1,1,1,1,1,1,1,1,1,Forest
-Latin America,ForestDemand,Forest,Forest,1,1,1,1,1,1,1,1,1,Forest
-Southeast Asia,ForestDemand,Forest,Forest,1,1,1,1,1,1,1,1,1,Forest
-Eastern Europe,ForestDemand,Forest,Forest,1,1,1,1,1,1,1,1,1,Forest
-Korea,ForestDemand,Forest,Forest,1,1,1,1,1,1,1,1,1,Forest
-India,ForestDemand,Forest,Forest,1,1,1,1,1,1,1,1,1,Forest
-USA,FutureForestDemand,FutureForest,FutureForest,1,1,1,1,1,1,1,1,1,FutureForest
-Canada,FutureForestDemand,FutureForest,FutureForest,1,1,1,1,1,1,1,1,1,FutureForest
-Western Europe,FutureForestDemand,FutureForest,FutureForest,1,1,1,1,1,1,1,1,1,FutureForest
-Japan,FutureForestDemand,FutureForest,FutureForest,1,1,1,1,1,1,1,1,1,FutureForest
-Australia_NZ,FutureForestDemand,FutureForest,FutureForest,1,1,1,1,1,1,1,1,1,FutureForest
-Former Soviet Union,FutureForestDemand,FutureForest,FutureForest,1,1,1,1,1,1,1,1,1,FutureForest
-China,FutureForestDemand,FutureForest,FutureForest,1,1,1,1,1,1,1,1,1,FutureForest
-Middle East,FutureForestDemand,FutureForest,FutureForest,1,1,1,1,1,1,1,1,1,FutureForest
-Africa,FutureForestDemand,FutureForest,FutureForest,1,1,1,1,1,1,1,1,1,FutureForest
-Latin America,FutureForestDemand,FutureForest,FutureForest,1,1,1,1,1,1,1,1,1,FutureForest
-Southeast Asia,FutureForestDemand,FutureForest,FutureForest,1,1,1,1,1,1,1,1,1,FutureForest
-Eastern Europe,FutureForestDemand,FutureForest,FutureForest,1,1,1,1,1,1,1,1,1,FutureForest
-Korea,FutureForestDemand,FutureForest,FutureForest,1,1,1,1,1,1,1,1,1,FutureForest
-India,FutureForestDemand,FutureForest,FutureForest,1,1,1,1,1,1,1,1,1,FutureForest
-,,,,,,,,,,,,,
-,,,,,,,,,,,,,
-Calibrated demand,,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,
-5005,,,,,,,,,,,OLD Demand,,
-,,,,,,,,,,,,,
-region,supplysector,subsector,technology,1990,2005,minicam-energy-input,1975,,,,1975,1990,2005
-USA,ForestDemand,Forest,Forest,432490276,616251360,Forest,316790466,,,,276823308,405780243,421725064
-Canada,ForestDemand,Forest,Forest,31065753,45050618,Forest,22399300,,,,113124400,156310186,197337000,,
-Western Europe,ForestDemand,Forest,Forest,162479186,211914456,Forest,116907400,,,,209056200,294158359,338575464,,
-Japan,ForestDemand,Forest,Forest,637071997,700086724,Forest,477637951,,,,69784700,56904250,26796300,,
-Australia_NZ,ForestDemand,Forest,Forest,88287560,111950384,Forest,123904800,,,,20940300,27470441,40668418,,
-Former Soviet Union,ForestDemand,Forest,Forest,375697589,179113908,Forest,379215500,,,,297015500,294597589,120860472,,
-China,ForestDemand,Forest,Forest,311700422,328095354,Forest,232883938,,,,76506500,104970767,132592937,,
-Middle East,ForestDemand,Forest,Forest,57007250,26907367,Forest,70519599,,,,4900700,1454598,1128886,,
-Africa,ForestDemand,Forest,Forest,13921850,11032989,Forest,8863697,,,,35801150,51154500,65619226,,
-Latin America,ForestDemand,Forest,Forest,365082336,455726371,Forest,258684631,,,,59994599,118372416,183828091,,
-Southeast Asia,ForestDemand,Forest,Forest,2304389,2255596,Forest,5730092,,,,32100200,82407622,73842647,,
-Eastern Europe,ForestDemand,Forest,Forest,367556335,308830342,Forest,366354541,,,,67301700,57565361,75219011,,
-Korea,ForestDemand,Forest,Forest,488680243,461163501,Forest,292965308,,,,6088400,11188232,8630000,,
-India,ForestDemand,Forest,Forest,328263632,394517604,Forest,239696200,,,,16281000,25698748,27833270,,
-,,,,,,,,,,,,,,,
-,,,,,,,,,,,,,,,
-add CO2 tag,,,,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,,,
-5010,,,,,,,,,,,,,,,
-,,,,CO2,,,,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,
-ALL,ForestDemand,Forest,Forest,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,
-ALL,FutureForestDemand,FutureForest,FutureForest,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,
+Forest Supply and Demand,,,,,,,,,,,,,,,,,,,,
+Rotation period,,,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,,,
+3,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+region,rotationPeriod,,,,,,,,,,,,,,,,,,,
+USA,45,,,,,,,,,,,,,,,,,,,
+Canada,45,,,,,,,,,,,,,,,,,,,
+Western Europe,45,,,,,,,,,,,,,,,,,,,
+Japan,45,,,,,,,,,,,,,,,,,,,
+Australia_NZ,45,,,,,,,,,,,,,,,,,,,
+Former Soviet Union,45,,,,,,,,,,,,,,,,,,,
+China,45,,,,,,,,,,,,,,,,,,,
+Middle East,45,,,,,,,,,,,,,,,,,,,
+Africa,45,,,,,,,,,,,,,,,,,,,
+Latin America,45,,,,,,,,,,,,,,,,,,,
+Southeast Asia,45,,,,,,,,,,,,,,,,,,,
+Eastern Europe,45,,,,,,,,,,,,,,,,,,,
+Korea,45,,,,,,,,,,,,,,,,,,,
+India,45,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+"Unit tags, sector type, market",,,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,,,
+30,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+region,ForestSupplySector,output-unit,input-unit,price-unit,sectorType,,,,,,,,,,,,,,,
+ALL,Forest,m^3/yr,000Ha,$/forestser,ForestSupply,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+Market,,,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,,,
+31,,,,,,,,,,,,,,,,,,,,
+,,,1975,from model output,,,,,,,,,,,,,,,,
+region,ForestSupplySector,market,price,,,,,,,,,,,,,,,,,
+USA,Forest,global,192.134,,,,,,,,,,,,,,,,,
+Canada,Forest,global,192.134,,,,,,,,,,,,,,,,,
+Western Europe,Forest,global,192.134,,,,,,,,,,,,,,,,,
+Japan,Forest,global,192.134,,,,,,,,,,,,,,,,,
+Australia_NZ,Forest,global,192.134,,,,,,,,,,,,,,,,,
+Former Soviet Union,Forest,global,192.134,,,,,,,,,,,,,,,,,
+China,Forest,global,192.134,,,,,,,,,,,,,,,,,
+Middle East,Forest,global,192.134,,,,,,,,,,,,,,,,,
+Africa,Forest,global,192.134,,,,,,,,,,,,,,,,,
+Latin America,Forest,global,192.134,,,,,,,,,,,,,,,,,
+Southeast Asia,Forest,global,192.134,,,,,,,,,,,,,,,,,
+Eastern Europe,Forest,global,192.134,,,,,,,,,,,,,,,,,
+Korea,Forest,global,192.134,,,,,,,,,,,,,,,,,
+India,Forest,global,192.134,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+Cal Price,,,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,,,
+32,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+region,ForestSupplySector,calPrice,,,,,,,,,,,,,,,,,,
+USA,Forest,425,,,,,,,,,,,,,,,,,,
+Canada,Forest,425,,,,,,,,,,,,,,,,,,
+Western Europe,Forest,425,,,,,,,,,,,,,,,,,,
+Japan,Forest,425,,,,,,,,,,,,,,,,,,
+Australia_NZ,Forest,425,,,,,,,,,,,,,,,,,,
+Former Soviet Union,Forest,425,,,,,,,,,,,,,,,,,,
+China,Forest,425,,,,,,,,,,,,,,,,,,
+Middle East,Forest,425,,,,,,,,,,,,,,,,,,
+Africa,Forest,425,,,,,,,,,,,,,,,,,,
+Latin America,Forest,425,,,,,,,,,,,,,,,,,,
+Southeast Asia,Forest,425,,,,,,,,,,,,,,,,,,
+Eastern Europe,Forest,425,,,,,,,,,,,,,,,,,,
+Korea,Forest,425,,,,,,,,,,,,,,,,,,
+India,Forest,425,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+landType,,,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,,,
+3000,,,,,,,,,,,,,,,,,,,,
+,,,,landType,,,,,,,,,,,,,,,,
+region,ForestSupplySector,ForestSupplySubsector,ForestProductionTechnology,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,,,,,,
+ALL,Forest,Forest,Forest,ForestLand,ForestLand,ForestLand,ForestLand,ForestLand,ForestLand,ForestLand,ForestLand,ForestLand,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+Cal Output (production),,,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,,,
+3001,,,,m^3/yr,m^3/yr,,,,,,,,,,,,,,,
+,,,,1975,1990,2005,,,,,,,,,,,,,,
+region,ForestSupplySector,ForestSupplySubsector,ForestProductionTechnology,calOutputValue,calOutputValue,calOutputValue,,,,,,,,,,,,,,
+USA,Forest,Forest,Forest,304723008,510100000,467347350,,,2865.97636,,,,,,,,,,,
+Canada,Forest,Forest,Forest,115511000,162127000,211501300,,,,,,,,,,,,,,
+Western Europe,Forest,Forest,Forest,224580000,315038700,358926219,,,,,,,,,,,,,,
+Japan,Forest,Forest,Forest,34888999,29403000,16276067,,,,,,,,,,,,,,
+Australia_NZ,Forest,Forest,Forest,22968000,32755312,50938000,,,,,,,,,,,,,,
+Former Soviet Union,Forest,Forest,Forest,395100000,386400000,234341200,,,,,,,,,,,,,,
+China,Forest,Forest,Forest,458534617,607241182,650658663,,,,,,,,,,,,,,
+Middle East,Forest,Forest,Forest,5197651,1854543,1695687,,,,,,,,,,,,,,
+Africa,Forest,Forest,Forest,362730393,495463018,628149838,,,,,,,,,,,,,,
+Latin America,Forest,Forest,Forest,251305544,356498506,463791435,,,,,,,,,,,,,,
+Southeast Asia,Forest,Forest,Forest,381758241,371223707,321689344,,,,,,,,,,,,,,
+Eastern Europe,Forest,Forest,Forest,125317000,88985000,114089189,,,,,,,,,,,,,,
+Korea,Forest,Forest,Forest,3683297,3872618,4814989,,,,,,,,,,,,,,
+India,Forest,Forest,Forest,226255672,300646233,328677293,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+Cal Yield,,,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,,,
+3002,,,,m^3/kHa,,,,,,,,,,,,,,,,
+,,,,1975,1990,2005,,,,,,,,,,,,,,
+region,ForestSupplySector,ForestSupplySubsector,ForestProductionTechnology,calYield,calYield,calYield,,,,,,,,,,,,,,
+USA,Forest,Forest,Forest,177985,177985,177985,,,,,,,,,,,,,,
+Canada,Forest,Forest,Forest,189449,189449,189449,,,,,,,,,,,,,,
+Western Europe,Forest,Forest,Forest,181730,181730,181730,,,,,,,,,,,,,,
+Japan,Forest,Forest,Forest,170471,170471,170471,,,,,,,,,,,,,,
+Australia_NZ,Forest,Forest,Forest,182014,182014,182014,,,,,,,,,,,,,,
+Former Soviet Union,Forest,Forest,Forest,190325,190325,190325,,,,,,,,,,,,,,
+China,Forest,Forest,Forest,191588,191588,191588,,,,,,,,,,,,,,
+Middle East,Forest,Forest,Forest,170192,170192,170192,,,,,,,,,,,,,,
+Africa,Forest,Forest,Forest,357027,357027,357027,,,,,,,,,,,,,,
+Latin America,Forest,Forest,Forest,340290,340290,340290,,,,,,,,,,,,,,
+Southeast Asia,Forest,Forest,Forest,339367,339367,339367,,,,,,,,,,,,,,
+Eastern Europe,Forest,Forest,Forest,170944,170944,170944,,,,,,,,,,,,,,
+Korea,Forest,Forest,Forest,172294,172294,172294,,,,,,,,,,,,,,
+India,Forest,Forest,Forest,322863,322863,322863,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+Future Production,,,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,,,
+3003,,,,,,,,,,,,,,,,,,,,
+,,,,1975,1990,2005,,,,,,,,,,,,,,
+region,ForestSupplySector,ForestSupplySubsector,ForestProductionTechnology,futureProduction,futureProduction,futureProduction,,,,,,,,,,,,,,
+USA,Forest,Forest,Forest,487979838,487961152,470268133,,,,,,,,,,,,,,
+Canada,Forest,Forest,Forest,277721631,345581750,412450425,,,,,,,,,,,,,,
+Western Europe,Forest,Forest,Forest,359721373,341749570,308349703,,,,,,,,,,,,,,
+Japan,Forest,Forest,Forest,16814904,16599824,15747070,,,,,,,,,,,,,,
+Australia_NZ,Forest,Forest,Forest,61550701,71527841,80608902,,,,,,,,,,,,,,
+Former Soviet Union,Forest,Forest,Forest,311033329,390183643,468644512,,,,,,,,,,,,,,
+China,Forest,Forest,Forest,703333617,731882539,738774849,,,,,,,,,,,,,,
+Middle East,Forest,Forest,Forest,1829734,1900283,1913995,,,,,,,,,,,,,,
+Africa,Forest,Forest,Forest,821518497,1019119379,1213368840,,,,,,,,,,,,,,
+Latin America,Forest,Forest,Forest,561610798,653873286,738123620,,,,,,,,,,,,,,
+Southeast Asia,Forest,Forest,Forest,326868783,316090901,292035789,,,,,,,,,,,,,,
+Eastern Europe,Forest,Forest,Forest,122193455,125848747,125567235,,,,,,,,,,,,,,
+Korea,Forest,Forest,Forest,5100092,5186437,5099621,,,,,,,,,,,,,,
+India,Forest,Forest,Forest,320123228,292591171,249787829,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+agProdChange,,,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,,,
+3004,,Forest agProdChange must be the same in all periods,,,,,,,,,,,,,,,,,,
+,,,,agProdChange,,,,,,,,,,,,,,,,
+region,ForestSupplySector,ForestSupplySubsector,ForestProductionTechnology,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,,,,,,
+USA,Forest,Forest,Forest,0,0,0,0,0,0,0,0,0,,,,,,,,
+Canada,Forest,Forest,Forest,0,0,0,0,0,0,0,0,0,,,,,,,,
+Western Europe,Forest,Forest,Forest,0,0,0,0,0,0,0,0,0,,,,,,,,
+Japan,Forest,Forest,Forest,0,0,0,0,0,0,0,0,0,,,,,,,,
+Australia_NZ,Forest,Forest,Forest,0,0,0,0,0,0,0,0,0,,,,,,,,
+Former Soviet Union,Forest,Forest,Forest,0,0,0,0,0,0,0,0,0,,,,,,,,
+China,Forest,Forest,Forest,0,0,0,0,0,0,0,0,0,,,,,,,,
+Middle East,Forest,Forest,Forest,0,0,0,0,0,0,0,0,0,,,,,,,,
+Africa,Forest,Forest,Forest,0,0,0,0,0,0,0,0,0,,,,,,,,
+Latin America,Forest,Forest,Forest,0,0,0,0,0,0,0,0,0,,,,,,,,
+Southeast Asia,Forest,Forest,Forest,0,0,0,0,0,0,0,0,0,,,,,,,,
+Eastern Europe,Forest,Forest,Forest,0,0,0,0,0,0,0,0,0,,,,,,,,
+Korea,Forest,Forest,Forest,0,0,0,0,0,0,0,0,0,,,,,,,,
+India,Forest,Forest,Forest,0,0,0,0,0,0,0,0,0,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+add CO2 tag,,,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,,,
+3010,,,,,,,,,,,,,,,,,,,,
+,,,,CO2,,,,,,,,,,,,,,,,
+region,ForestSupplySector,ForestSupplySubsector,ForestProductionTechnology,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,,,,,,
+ALL,Forest,Forest,Forest,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+Forest Demand Sector assumptions,,,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,,,
+40,,,,,,,,,,,,,,,,,,,,
+,,base-service,,,2020 fillout,2020 fillout,,,,,,,,,,,,,,
+region,ForestDemandSector,1975,1990,2005,price-elasticity,income-elasticity,,,,,,,,,,,,,,
+USA,ForestDemand,432490276,432490276,616251360,-0.8,0,,,,,,,,,,,,,,
+Canada,ForestDemand,31065753,31065753,45050618,-0.8,0,,,,,,,,,,,,,,
+Western Europe,ForestDemand,162479186,162479186,211914456,-0.8,0,,,,,,,,,,,,,,
+Japan,ForestDemand,637071997,637071997,700086724,-0.8,0,,,,,,,,,,,,,,
+Australia_NZ,ForestDemand,88287560,88287560,111950384,-0.8,0,,,,,,,,,,,,,,
+Former Soviet Union,ForestDemand,375697589,375697589,179113908,-0.8,0.05,,,,,,,,,,,,,,
+China,ForestDemand,311700422,311700422,328095354,-0.8,0.2,,,,,,,,,,,,,,
+Middle East,ForestDemand,57007250,57007250,26907367,-0.8,0.2,,,,,,,,,,,,,,
+Africa,ForestDemand,13921850,13921850,11032989,-0.8,0.2,,,,,,,,,,,,,,
+Latin America,ForestDemand,365082336,365082336,455726371,-0.8,0.2,,,,,,,,,,,,,,
+Southeast Asia,ForestDemand,2304389,2304389,2255596,-0.8,0.2,,,,,,,,,,,,,,
+Eastern Europe,ForestDemand,367556335,367556335,308830342,-0.8,0,,,,,,,,,,,,,,
+Korea,ForestDemand,488680243,488680243,461163501,-0.8,0.2,,,,,,,,,,,,,,
+India,ForestDemand,328263632,328263632,394517604,-0.8,0.2,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+"Forest Demand Supplysector: unit tags, sectortype, market",,,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,,,
+55,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+region,supplysector,output-unit,input-unit,price-unit,sectorType,,,,,,,,,,,,,,,
+ALL,ForestDemand,m^3/yr,m^3/yr,$/forestser,forestDemand,,,,,,,,,,,,,,,
+ALL,FutureForestDemand,m^3/yr,m^3/yr,$/forestser,forestDemand,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+Forest Demand subsector shareweights and scaling,,,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,,,
+501,,,,,,,,,,,,,,,,,,,,
+,,,share-weight,interpolation-rule,,,,,,,,,,,,,,,,
+region,supplysector,subsector,1975 fillout,apply-to,from-year,to-year,interpolation-function,,,,,,,,,,,,,
+USA,ForestDemand,Forest,1,share-weight,1975,1990,linear,,,,,,,,,,,,,
+Canada,ForestDemand,Forest,1,share-weight,1975,1990,linear,,,,,,,,,,,,,
+Western Europe,ForestDemand,Forest,1,share-weight,1975,1990,linear,,,,,,,,,,,,,
+Japan,ForestDemand,Forest,1,share-weight,1975,1990,linear,,,,,,,,,,,,,
+Australia_NZ,ForestDemand,Forest,1,share-weight,1975,1990,linear,,,,,,,,,,,,,
+Former Soviet Union,ForestDemand,Forest,1,share-weight,1975,1990,linear,,,,,,,,,,,,,
+China,ForestDemand,Forest,1,share-weight,1975,1990,linear,,,,,,,,,,,,,
+Middle East,ForestDemand,Forest,1,share-weight,1975,1990,linear,,,,,,,,,,,,,
+Africa,ForestDemand,Forest,1,share-weight,1975,1990,linear,,,,,,,,,,,,,
+Latin America,ForestDemand,Forest,1,share-weight,1975,1990,linear,,,,,,,,,,,,,
+Southeast Asia,ForestDemand,Forest,1,share-weight,1975,1990,linear,,,,,,,,,,,,,
+Eastern Europe,ForestDemand,Forest,1,share-weight,1975,1990,linear,,,,,,,,,,,,,
+Korea,ForestDemand,Forest,1,share-weight,1975,1990,linear,,,,,,,,,,,,,
+India,ForestDemand,Forest,1,share-weight,1975,1990,linear,,,,,,,,,,,,,
+USA,FutureForestDemand,FutureForest,1,share-weight,1975,1990,linear,,,,,,,,,,,,,
+Canada,FutureForestDemand,FutureForest,1,share-weight,1975,1990,linear,,,,,,,,,,,,,
+Western Europe,FutureForestDemand,FutureForest,1,share-weight,1975,1990,linear,,,,,,,,,,,,,
+Japan,FutureForestDemand,FutureForest,1,share-weight,1975,1990,linear,,,,,,,,,,,,,
+Australia_NZ,FutureForestDemand,FutureForest,1,share-weight,1975,1990,linear,,,,,,,,,,,,,
+Former Soviet Union,FutureForestDemand,FutureForest,1,share-weight,1975,1990,linear,,,,,,,,,,,,,
+China,FutureForestDemand,FutureForest,1,share-weight,1975,1990,linear,,,,,,,,,,,,,
+Middle East,FutureForestDemand,FutureForest,1,share-weight,1975,1990,linear,,,,,,,,,,,,,
+Africa,FutureForestDemand,FutureForest,1,share-weight,1975,1990,linear,,,,,,,,,,,,,
+Latin America,FutureForestDemand,FutureForest,1,share-weight,1975,1990,linear,,,,,,,,,,,,,
+Southeast Asia,FutureForestDemand,FutureForest,1,share-weight,1975,1990,linear,,,,,,,,,,,,,
+Eastern Europe,FutureForestDemand,FutureForest,1,share-weight,1975,1990,linear,,,,,,,,,,,,,
+Korea,FutureForestDemand,FutureForest,1,share-weight,1975,1990,linear,,,,,,,,,,,,,
+India,FutureForestDemand,FutureForest,1,share-weight,1975,1990,linear,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+Efficiency,,,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,,,
+5006,,,,,,,,,,,,,,,,,,,,
+,,,,efficiency,,,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input,,,,,,,
+USA,ForestDemand,Forest,Forest,1,1,1,1,1,1,1,1,1,Forest,,,,,,,
+Canada,ForestDemand,Forest,Forest,1,1,1,1,1,1,1,1,1,Forest,,,,,,,
+Western Europe,ForestDemand,Forest,Forest,1,1,1,1,1,1,1,1,1,Forest,,,,,,,
+Japan,ForestDemand,Forest,Forest,1,1,1,1,1,1,1,1,1,Forest,,,,,,,
+Australia_NZ,ForestDemand,Forest,Forest,1,1,1,1,1,1,1,1,1,Forest,,,,,,,
+Former Soviet Union,ForestDemand,Forest,Forest,1,1,1,1,1,1,1,1,1,Forest,,,,,,,
+China,ForestDemand,Forest,Forest,1,1,1,1,1,1,1,1,1,Forest,,,,,,,
+Middle East,ForestDemand,Forest,Forest,1,1,1,1,1,1,1,1,1,Forest,,,,,,,
+Africa,ForestDemand,Forest,Forest,1,1,1,1,1,1,1,1,1,Forest,,,,,,,
+Latin America,ForestDemand,Forest,Forest,1,1,1,1,1,1,1,1,1,Forest,,,,,,,
+Southeast Asia,ForestDemand,Forest,Forest,1,1,1,1,1,1,1,1,1,Forest,,,,,,,
+Eastern Europe,ForestDemand,Forest,Forest,1,1,1,1,1,1,1,1,1,Forest,,,,,,,
+Korea,ForestDemand,Forest,Forest,1,1,1,1,1,1,1,1,1,Forest,,,,,,,
+India,ForestDemand,Forest,Forest,1,1,1,1,1,1,1,1,1,Forest,,,,,,,
+USA,FutureForestDemand,FutureForest,FutureForest,1,1,1,1,1,1,1,1,1,FutureForest,,,,,,,
+Canada,FutureForestDemand,FutureForest,FutureForest,1,1,1,1,1,1,1,1,1,FutureForest,,,,,,,
+Western Europe,FutureForestDemand,FutureForest,FutureForest,1,1,1,1,1,1,1,1,1,FutureForest,,,,,,,
+Japan,FutureForestDemand,FutureForest,FutureForest,1,1,1,1,1,1,1,1,1,FutureForest,,,,,,,
+Australia_NZ,FutureForestDemand,FutureForest,FutureForest,1,1,1,1,1,1,1,1,1,FutureForest,,,,,,,
+Former Soviet Union,FutureForestDemand,FutureForest,FutureForest,1,1,1,1,1,1,1,1,1,FutureForest,,,,,,,
+China,FutureForestDemand,FutureForest,FutureForest,1,1,1,1,1,1,1,1,1,FutureForest,,,,,,,
+Middle East,FutureForestDemand,FutureForest,FutureForest,1,1,1,1,1,1,1,1,1,FutureForest,,,,,,,
+Africa,FutureForestDemand,FutureForest,FutureForest,1,1,1,1,1,1,1,1,1,FutureForest,,,,,,,
+Latin America,FutureForestDemand,FutureForest,FutureForest,1,1,1,1,1,1,1,1,1,FutureForest,,,,,,,
+Southeast Asia,FutureForestDemand,FutureForest,FutureForest,1,1,1,1,1,1,1,1,1,FutureForest,,,,,,,
+Eastern Europe,FutureForestDemand,FutureForest,FutureForest,1,1,1,1,1,1,1,1,1,FutureForest,,,,,,,
+Korea,FutureForestDemand,FutureForest,FutureForest,1,1,1,1,1,1,1,1,1,FutureForest,,,,,,,
+India,FutureForestDemand,FutureForest,FutureForest,1,1,1,1,1,1,1,1,1,FutureForest,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+Calibrated demand,,,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,,,
+5000,,,,,,,,,,,,,,,,,,OLD Demand,,
+,,,,,calibrated-value,calibrated-value,share-weight,,,,,,,,,,,,,
+region,supplysector,subsector,technology,minicam-energy-input,1990,2005,1975,1990,2005,2020,2035,2050,2065,2080,2095,,1975,1975,1990,2005
+USA,ForestDemand,Forest,Forest,Forest,432490276,616251360,1,1,1,1,1,1,1,1,1,,316790466,276823308,405780243,421725064
+Canada,ForestDemand,Forest,Forest,Forest,31065753,45050618,1,1,1,1,1,1,1,1,1,,22399300,113124400,156310186,197337000
+Western Europe,ForestDemand,Forest,Forest,Forest,162479186,211914456,1,1,1,1,1,1,1,1,1,,116907400,209056200,294158359,338575464
+Japan,ForestDemand,Forest,Forest,Forest,637071997,700086724,1,1,1,1,1,1,1,1,1,,477637951,69784700,56904250,26796300
+Australia_NZ,ForestDemand,Forest,Forest,Forest,88287560,111950384,1,1,1,1,1,1,1,1,1,,123904800,20940300,27470441,40668418
+Former Soviet Union,ForestDemand,Forest,Forest,Forest,375697589,179113908,1,1,1,1,1,1,1,1,1,,379215500,297015500,294597589,120860472
+China,ForestDemand,Forest,Forest,Forest,311700422,328095354,1,1,1,1,1,1,1,1,1,,232883938,76506500,104970767,132592937
+Middle East,ForestDemand,Forest,Forest,Forest,57007250,26907367,1,1,1,1,1,1,1,1,1,,70519599,4900700,1454598,1128886
+Africa,ForestDemand,Forest,Forest,Forest,13921850,11032989,1,1,1,1,1,1,1,1,1,,8863697,35801150,51154500,65619226
+Latin America,ForestDemand,Forest,Forest,Forest,365082336,455726371,1,1,1,1,1,1,1,1,1,,258684631,59994599,118372416,183828091
+Southeast Asia,ForestDemand,Forest,Forest,Forest,2304389,2255596,1,1,1,1,1,1,1,1,1,,5730092,32100200,82407622,73842647
+Eastern Europe,ForestDemand,Forest,Forest,Forest,367556335,308830342,1,1,1,1,1,1,1,1,1,,366354541,67301700,57565361,75219011
+Korea,ForestDemand,Forest,Forest,Forest,488680243,461163501,1,1,1,1,1,1,1,1,1,,292965308,6088400,11188232,8630000
+India,ForestDemand,Forest,Forest,Forest,328263632,394517604,1,1,1,1,1,1,1,1,1,,239696200,16281000,25698748,27833270
+USA,FutureForestDemand,FutureForest,FutureForest,FutureForest,-1,-1,1,1,1,1,1,1,1,1,1,,,,,
+Canada,FutureForestDemand,FutureForest,FutureForest,FutureForest,-1,-1,1,1,1,1,1,1,1,1,1,,,,,
+Western Europe,FutureForestDemand,FutureForest,FutureForest,FutureForest,-1,-1,1,1,1,1,1,1,1,1,1,,,,,
+Japan,FutureForestDemand,FutureForest,FutureForest,FutureForest,-1,-1,1,1,1,1,1,1,1,1,1,,,,,
+Australia_NZ,FutureForestDemand,FutureForest,FutureForest,FutureForest,-1,-1,1,1,1,1,1,1,1,1,1,,,,,
+Former Soviet Union,FutureForestDemand,FutureForest,FutureForest,FutureForest,-1,-1,1,1,1,1,1,1,1,1,1,,,,,
+China,FutureForestDemand,FutureForest,FutureForest,FutureForest,-1,-1,1,1,1,1,1,1,1,1,1,,,,,
+Middle East,FutureForestDemand,FutureForest,FutureForest,FutureForest,-1,-1,1,1,1,1,1,1,1,1,1,,,,,
+Africa,FutureForestDemand,FutureForest,FutureForest,FutureForest,-1,-1,1,1,1,1,1,1,1,1,1,,,,,
+Latin America,FutureForestDemand,FutureForest,FutureForest,FutureForest,-1,-1,1,1,1,1,1,1,1,1,1,,,,,
+Southeast Asia,FutureForestDemand,FutureForest,FutureForest,FutureForest,-1,-1,1,1,1,1,1,1,1,1,1,,,,,
+Eastern Europe,FutureForestDemand,FutureForest,FutureForest,FutureForest,-1,-1,1,1,1,1,1,1,1,1,1,,,,,
+Korea,FutureForestDemand,FutureForest,FutureForest,FutureForest,-1,-1,1,1,1,1,1,1,1,1,1,,,,,
+India,FutureForestDemand,FutureForest,FutureForest,FutureForest,-1,-1,1,1,1,1,1,1,1,1,1,,,,,
+,,,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,,,
+add CO2 tag,,,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,,,
+5010,,,,,,,,,,,,,,,,,,,,
+,,,,CO2,,,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,,,,,,
+ALL,ForestDemand,Forest,Forest,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,,,
+ALL,FutureForestDemand,FutureForest,FutureForest,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,,,

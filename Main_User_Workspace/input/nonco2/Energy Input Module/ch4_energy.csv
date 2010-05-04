@@ -7,11 +7,13 @@ region,supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,,
 ALL,regional natural gas,regional natural gas,regional natural gas,ALL,CH4,,,,,,,,,,,,,
 ALL,regional crude oil,regional crude oil,regional crude oil,ALL,CH4,,,,,,,,,,,,,
 ALL,regional unconventional oil,regional unconventional oil,regional unconventional oil,ALL,CH4,,,,,,,,,,,,,
-ALL,refined liquids industrial,biomass liquids,biomass liquids,ALL,CH4,,,,,,,,,,,,,
+ALL,refined liquids industrial,biomass liquids-ethanol,biomass liquids-ethanol,ALL,CH4,,,,,,,,,,,,,
+ALL,refined liquids industrial,biomass liquids-FT,biomass liquids-FT,ALL,CH4,,,,,,,,,,,,,
 ALL,refined liquids industrial,unconventional oil refining,unconventional oil refining,ALL,CH4,,,,,,,,,,,,,
 ALL,refined liquids industrial,coal to liquids,coal to liquids,ALL,CH4,,,,,,,,,,,,,
 ALL,refined liquids industrial,gas to liquids,gas to liquids,ALL,CH4,,,,,,,,,,,,,
-ALL,refined liquids enduse,biomass liquids,biomass liquids,ALL,CH4,,,,,,,,,,,,,
+ALL,refined liquids enduse,biomass liquids-ethanol,biomass liquids-ethanol,ALL,CH4,,,,,,,,,,,,,
+ALL,refined liquids enduse,biomass liquids-FT,biomass liquids-FT,ALL,CH4,,,,,,,,,,,,,
 ALL,refined liquids enduse,unconventional oil refining,unconventional oil refining,ALL,CH4,,,,,,,,,,,,,
 ALL,refined liquids enduse,coal to liquids,coal to liquids,ALL,CH4,,,,,,,,,,,,,
 ALL,refined liquids enduse,gas to liquids,gas to liquids,ALL,CH4,,,,,,,,,,,,,
@@ -83,11 +85,13 @@ supplysector,subsector,technology,period,generic-ghg,USA,Canada,Western Europe,J
 regional natural gas,regional natural gas,regional natural gas,1990,CH4,0.056101347,0.072298831,0.026588743,0.013935539,0.02002565,0.091477657,0.115789544,0.218674422,0.052646812,0.079916263,0.127736672,0.147490072,0.064341058,0.149608261
 regional crude oil,regional crude oil,regional crude oil,1990,CH4,0.000467576,0.001030788,0.000354561,1.40384E-05,0.001973488,0.000667372,0.001133687,0.000579411,0.001844175,0.001751281,0.001603708,0.001902249,0.004647843,0.001262154
 regional unconventional oil,regional unconventional oil,regional unconventional oil,1990,CH4,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3,0.3
-refined liquids industrial,biomass liquids,biomass liquids,1990,CH4,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
+refined liquids industrial,biomass liquids-ethanol,biomass liquids-ethanol,1990,CH4,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
+refined liquids industrial,biomass liquids-FT,biomass liquids-FT,1990,CH4,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
 refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,CH4,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
 refined liquids industrial,coal to liquids,coal to liquids,1990,CH4,0.000494256,0.000494256,0.000494256,0.000494256,0.000494256,0.000494256,0.000494256,0.000494256,0.000494256,0.000494256,0.000494256,0.000494256,0.000494256,0.000494256
 refined liquids industrial,gas to liquids,gas to liquids,1990,CH4,0.000425892,0.000425892,0.000425892,0.000425892,0.000425892,0.000425892,0.000425892,0.000425892,0.000425892,0.000425892,0.000425892,0.000425892,0.000425892,0.000425892
-refined liquids enduse,biomass liquids,biomass liquids,1990,CH4,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
+refined liquids enduse,biomass liquids-ethanol,biomass liquids-ethanol,1990,CH4,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
+refined liquids enduse,biomass liquids-FT,biomass liquids-FT,1990,CH4,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
 refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,CH4,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
 refined liquids enduse,coal to liquids,coal to liquids,1990,CH4,0.000494256,0.000494256,0.000494256,0.000494256,0.000494256,0.000494256,0.000494256,0.000494256,0.000494256,0.000494256,0.000494256,0.000494256,0.000494256,0.000494256
 refined liquids enduse,gas to liquids,gas to liquids,1990,CH4,0.000425892,0.000425892,0.000425892,0.000425892,0.000425892,0.000425892,0.000425892,0.000425892,0.000425892,0.000425892,0.000425892,0.000425892,0.000425892,0.000425892
@@ -151,11 +155,13 @@ supplysector,subsector,technology,period,generic-ghg,USA,Canada,Western Europe,J
 regional natural gas,regional natural gas,regional natural gas,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
 regional crude oil,regional crude oil,regional crude oil,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
 regional unconventional oil,regional unconventional oil,regional unconventional oil,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
-refined liquids industrial,biomass liquids,biomass liquids,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
+refined liquids industrial,biomass liquids-ethanol,biomass liquids-ethanol,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
+refined liquids industrial,biomass liquids-FT,biomass liquids-FT,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
 refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
 refined liquids industrial,coal to liquids,coal to liquids,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
 refined liquids industrial,gas to liquids,gas to liquids,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
-refined liquids enduse,biomass liquids,biomass liquids,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
+refined liquids enduse,biomass liquids-ethanol,biomass liquids-ethanol,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
+refined liquids enduse,biomass liquids-FT,biomass liquids-FT,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
 refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
 refined liquids enduse,coal to liquids,coal to liquids,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
 refined liquids enduse,gas to liquids,gas to liquids,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
@@ -210,11 +216,13 @@ supplysector,subsector,technology,period,generic-ghg,USA,Canada,Western Europe,J
 regional natural gas,regional natural gas,regional natural gas,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
 regional crude oil,regional crude oil,regional crude oil,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
 regional unconventional oil,regional unconventional oil,regional unconventional oil,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
-refined liquids industrial,biomass liquids,biomass liquids,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
+refined liquids industrial,biomass liquids-ethanol,biomass liquids-ethanol,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
+refined liquids industrial,biomass liquids-FT,biomass liquids-FT,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
 refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
 refined liquids industrial,coal to liquids,coal to liquids,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
 refined liquids industrial,gas to liquids,gas to liquids,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
-refined liquids enduse,biomass liquids,biomass liquids,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
+refined liquids enduse,biomass liquids-ethanol,biomass liquids-ethanol,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
+refined liquids enduse,biomass liquids-FT,biomass liquids-FT,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
 refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
 refined liquids enduse,coal to liquids,coal to liquids,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
 refined liquids enduse,gas to liquids,gas to liquids,1990,CH4,27.7,21.4,15.0,24.5,16.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0,15.0
@@ -269,11 +277,13 @@ supplysector,subsector,technology,period,generic-ghg,USA,Canada,Western Europe,J
 regional natural gas,regional natural gas,regional natural gas,1990,CH4,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 regional crude oil,regional crude oil,regional crude oil,1990,CH4,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 regional unconventional oil,regional unconventional oil,regional unconventional oil,1990,CH4,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-refined liquids industrial,biomass liquids,biomass liquids,1990,CH4,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+refined liquids industrial,biomass liquids-ethanol,biomass liquids-ethanol,1990,CH4,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+refined liquids industrial,biomass liquids-FT,biomass liquids-FT,1990,CH4,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,CH4,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 refined liquids industrial,coal to liquids,coal to liquids,1990,CH4,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 refined liquids industrial,gas to liquids,gas to liquids,1990,CH4,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-refined liquids enduse,biomass liquids,biomass liquids,1990,CH4,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+refined liquids enduse,biomass liquids-ethanol,biomass liquids-ethanol,1990,CH4,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+refined liquids enduse,biomass liquids-FT,biomass liquids-FT,1990,CH4,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,CH4,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 refined liquids enduse,coal to liquids,coal to liquids,1990,CH4,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 refined liquids enduse,gas to liquids,gas to liquids,1990,CH4,0,0,0,0,0,0,0,0,0,0,0,0,0,0
@@ -328,11 +338,13 @@ supplysector,subsector,technology,period,generic-ghg,USA,Canada,Western Europe,J
 regional natural gas,regional natural gas,regional natural gas,1990,CH4,0.056101347,0.072298831,0.026588743,0.013935539,0.02002565,0.091477657,0.115789544,0.218674422,0.052646812,0.079916263,0.127736672,0.147490072,0.064341058,0.149608261
 regional crude oil,regional crude oil,regional crude oil,1990,CH4,0.000467576,0.001030788,0.000354561,1.40384E-05,0.001973488,0.000667372,0.001133687,0.000579411,0.001844175,0.001751281,0.001603708,0.001902249,0.004647843,0.001262154
 regional unconventional oil,regional unconventional oil,regional unconventional oil,1990,CH4,0.21,0.21,0.21,0.21,0.21,0.21,0.21,0.21,0.21,0.21,0.21,0.21,0.21,0.21
-refined liquids industrial,biomass liquids,biomass liquids,1990,CH4,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007
+refined liquids industrial,biomass liquids-ethanol,biomass liquids-ethanol,1990,CH4,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007
+refined liquids industrial,biomass liquids-FT,biomass liquids-FT,1990,CH4,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007
 refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,CH4,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007
 refined liquids industrial,coal to liquids,coal to liquids,1990,CH4,0.00034598,0.00034598,0.00034598,0.00034598,0.00034598,0.00034598,0.00034598,0.00034598,0.00034598,0.00034598,0.00034598,0.00034598,0.00034598,0.00034598
 refined liquids industrial,gas to liquids,gas to liquids,1990,CH4,0.000298124,0.000298124,0.000298124,0.000298124,0.000298124,0.000298124,0.000298124,0.000298124,0.000298124,0.000298124,0.000298124,0.000298124,0.000298124,0.000298124
-refined liquids enduse,biomass liquids,biomass liquids,1990,CH4,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007
+refined liquids enduse,biomass liquids-ethanol,biomass liquids-ethanol,1990,CH4,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007
+refined liquids enduse,biomass liquids-FT,biomass liquids-FT,1990,CH4,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007
 refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,CH4,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007,0.0007
 refined liquids enduse,coal to liquids,coal to liquids,1990,CH4,0.00034598,0.00034598,0.00034598,0.00034598,0.00034598,0.00034598,0.00034598,0.00034598,0.00034598,0.00034598,0.00034598,0.00034598,0.00034598,0.00034598
 refined liquids enduse,gas to liquids,gas to liquids,1990,CH4,0.000298124,0.000298124,0.000298124,0.000298124,0.000298124,0.000298124,0.000298124,0.000298124,0.000298124,0.000298124,0.000298124,0.000298124,0.000298124,0.000298124

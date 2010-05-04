@@ -1124,66 +1124,66 @@
                <technology name="iron and steel">
                   <period year="1990">
                      <minicam-energy-input name="feedstocks primary metals">
-                        <coefficient>0.016249293</coefficient>
+                        <coefficient>0.017217633</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat primary metals">
-                        <coefficient>0.848216795</coefficient>
+                        <coefficient>0.840938337</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="feedstocks primary metals">
-                        <coefficient>0.022623424</coefficient>
+                        <coefficient>0.025102683</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat primary metals">
-                        <coefficient>0.806444189</coefficient>
+                        <coefficient>0.788430934</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="feedstocks primary metals">
-                        <coefficient>0.011976866</coefficient>
+                        <coefficient>0.013289389</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat primary metals">
-                        <coefficient>0.78039024</coefficient>
+                        <coefficient>0.759458661</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="feedstocks primary metals">
-                        <coefficient>0.006340566</coefficient>
+                        <coefficient>0.007035417</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat primary metals">
-                        <coefficient>0.75517802</coefficient>
+                        <coefficient>0.731551025</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="feedstocks primary metals">
-                        <coefficient>0.003892122</coefficient>
+                        <coefficient>0.004318653</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat primary metals">
-                        <coefficient>0.727182503</coefficient>
+                        <coefficient>0.702005469</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="feedstocks primary metals">
-                        <coefficient>0.002766244</coefficient>
+                        <coefficient>0.003069391</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat primary metals">
-                        <coefficient>0.696776285</coefficient>
+                        <coefficient>0.671106339</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="feedstocks primary metals">
-                        <coefficient>0.00227313</coefficient>
+                        <coefficient>0.002522238</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat primary metals">
-                        <coefficient>0.664352322</coefficient>
+                        <coefficient>0.639141098</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="feedstocks primary metals">
-                        <coefficient>0.00215667</coefficient>
+                        <coefficient>0.002393016</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat primary metals">
-                        <coefficient>0.630315523</coefficient>
+                        <coefficient>0.606395947</coefficient>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -1194,114 +1194,114 @@
                <technology name="pulp paper and wood">
                   <period year="1990">
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.181708416</coefficient>
+                        <coefficient>0.186181356</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="boilers pulp paper and wood">
-                        <coefficient>0.594137342</coefficient>
+                        <coefficient>0.584591249</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat general">
-                        <coefficient>0.119926785</coefficient>
+                        <coefficient>0.121684245</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.10114398</coefficient>
+                        <coefficient>0.104381848</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.182574854</coefficient>
+                        <coefficient>0.188785754</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="boilers pulp paper and wood">
-                        <coefficient>0.598511424</coefficient>
+                        <coefficient>0.585652562</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat general">
-                        <coefficient>0.121223244</coefficient>
+                        <coefficient>0.123681359</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.094567029</coefficient>
+                        <coefficient>0.098647464</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.165254167</coefficient>
+                        <coefficient>0.170550705</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="boilers pulp paper and wood">
-                        <coefficient>0.514125948</coefficient>
+                        <coefficient>0.494376133</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat general">
-                        <coefficient>0.111333948</coefficient>
+                        <coefficient>0.112886709</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.086852326</coefficient>
+                        <coefficient>0.09003772</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.149576675</coefficient>
+                        <coefficient>0.154077002</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="boilers pulp paper and wood">
-                        <coefficient>0.441638171</coefficient>
+                        <coefficient>0.417325521</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat general">
-                        <coefficient>0.102251412</coefficient>
+                        <coefficient>0.103034193</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.079766982</coefficient>
+                        <coefficient>0.082179416</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.136991423</coefficient>
+                        <coefficient>0.140911828</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="boilers pulp paper and wood">
-                        <coefficient>0.388938683</coefficient>
+                        <coefficient>0.362756347</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat general">
-                        <coefficient>0.094676752</coefficient>
+                        <coefficient>0.094957496</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.073857941</coefficient>
+                        <coefficient>0.075737494</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.126951226</coefficient>
+                        <coefficient>0.130460205</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="boilers pulp paper and wood">
-                        <coefficient>0.351152042</coefficient>
+                        <coefficient>0.324678044</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat general">
-                        <coefficient>0.088378739</coefficient>
+                        <coefficient>0.088365703</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.068944821</coefficient>
+                        <coefficient>0.070479922</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.11903932</coefficient>
+                        <coefficient>0.122271517</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="boilers pulp paper and wood">
-                        <coefficient>0.325005648</coefficient>
+                        <coefficient>0.299201625</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat general">
-                        <coefficient>0.083172692</coefficient>
+                        <coefficient>0.083031351</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.064883549</coefficient>
+                        <coefficient>0.066225277</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.112940572</coefficient>
+                        <coefficient>0.116007174</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="boilers pulp paper and wood">
-                        <coefficient>0.308354616</coefficient>
+                        <coefficient>0.283872612</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat general">
-                        <coefficient>0.0789115</coefficient>
+                        <coefficient>0.078777401</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.061559367</coefficient>
+                        <coefficient>0.062832354</coefficient>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -1312,162 +1312,162 @@
                <technology name="chemicals">
                   <period year="1990">
                      <minicam-energy-input name="boilers general">
-                        <coefficient>0.216147412</coefficient>
+                        <coefficient>0.214058565</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat general">
-                        <coefficient>0.100741528</coefficient>
+                        <coefficient>0.100916587</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.060008459</coefficient>
+                        <coefficient>0.059547881</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="electrochemical">
-                        <coefficient>0.017088294</coefficient>
+                        <coefficient>0.016948005</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.045059195</coefficient>
+                        <coefficient>0.044793435</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="feedstocks chemicals">
-                        <coefficient>0.560955111</coefficient>
+                        <coefficient>0.563735527</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="boilers general">
-                        <coefficient>0.147713147</coefficient>
+                        <coefficient>0.144777683</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat general">
-                        <coefficient>0.083517658</coefficient>
+                        <coefficient>0.083623992</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.054193864</coefficient>
+                        <coefficient>0.053623203</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="electrochemical">
-                        <coefficient>0.015495459</coefficient>
+                        <coefficient>0.015322617</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.038833952</coefficient>
+                        <coefficient>0.038482783</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="feedstocks chemicals">
-                        <coefficient>0.66024592</coefficient>
+                        <coefficient>0.664169723</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="boilers general">
-                        <coefficient>0.126825181</coefficient>
+                        <coefficient>0.124181643</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat general">
-                        <coefficient>0.071707511</coefficient>
+                        <coefficient>0.071727662</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.046530365</coefficient>
+                        <coefficient>0.045994778</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="electrochemical">
-                        <coefficient>0.013304262</coefficient>
+                        <coefficient>0.013142825</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.033342482</coefficient>
+                        <coefficient>0.033008231</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="feedstocks chemicals">
-                        <coefficient>0.566881217</coefficient>
+                        <coefficient>0.569685091</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="boilers general">
-                        <coefficient>0.108890961</coefficient>
+                        <coefficient>0.106515591</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat general">
-                        <coefficient>0.061567425</coefficient>
+                        <coefficient>0.061523702</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.039950553</coefficient>
+                        <coefficient>0.039451572</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="electrochemical">
-                        <coefficient>0.01142292</coefficient>
+                        <coefficient>0.01127313</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.028627556</coefficient>
+                        <coefficient>0.028312487</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="feedstocks chemicals">
-                        <coefficient>0.486719121</coefficient>
+                        <coefficient>0.488641821</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="boilers general">
-                        <coefficient>0.095862462</coefficient>
+                        <coefficient>0.093701716</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat general">
-                        <coefficient>0.054201054</coefficient>
+                        <coefficient>0.054122372</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.035170581</coefficient>
+                        <coefficient>0.03470553</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="electrochemical">
-                        <coefficient>0.010056199</coefficient>
+                        <coefficient>0.009916967</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.025202349</coefficient>
+                        <coefficient>0.024906482</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="feedstocks chemicals">
-                        <coefficient>0.428484536</coefficient>
+                        <coefficient>0.429857986</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="boilers general">
-                        <coefficient>0.08652819</coefficient>
+                        <coefficient>0.084536065</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat general">
-                        <coefficient>0.048923416</coefficient>
+                        <coefficient>0.048828266</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.031745969</coefficient>
+                        <coefficient>0.031310727</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="electrochemical">
-                        <coefficient>0.009077012</coefficient>
+                        <coefficient>0.008946916</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.022748358</coefficient>
+                        <coefficient>0.022470197</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="feedstocks chemicals">
-                        <coefficient>0.386762353</coefficient>
+                        <coefficient>0.387810425</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="boilers general">
-                        <coefficient>0.08007573</coefficient>
+                        <coefficient>0.078212868</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat general">
-                        <coefficient>0.045275167</coefficient>
+                        <coefficient>0.04517597</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.029378653</coefficient>
+                        <coefficient>0.028968722</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="electrochemical">
-                        <coefficient>0.008400134</coefficient>
+                        <coefficient>0.008277697</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.021051999</coefficient>
+                        <coefficient>0.020789453</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="feedstocks chemicals">
-                        <coefficient>0.357921248</coefficient>
+                        <coefficient>0.35880267</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="boilers general">
-                        <coefficient>0.075973205</coefficient>
+                        <coefficient>0.074205784</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat general">
-                        <coefficient>0.042955582</coefficient>
+                        <coefficient>0.042861467</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.027873494</coefficient>
+                        <coefficient>0.027484566</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="electrochemical">
-                        <coefficient>0.007969769</coefficient>
+                        <coefficient>0.007853605</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.019973441</coefficient>
+                        <coefficient>0.019724346</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="feedstocks chemicals">
-                        <coefficient>0.339583849</coefficient>
+                        <coefficient>0.340420113</coefficient>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -1481,22 +1481,22 @@
                         <coefficient>0</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat primary metals">
-                        <coefficient>0.410190479</coefficient>
+                        <coefficient>0.411649324</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.087473989</coefficient>
+                        <coefficient>0.086982484</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="electrochemical">
-                        <coefficient>0.296005313</coefficient>
+                        <coefficient>0.294053515</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.032116133</coefficient>
+                        <coefficient>0.031951846</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="feedstocks primary metals">
-                        <coefficient>0.173509653</coefficient>
+                        <coefficient>0.174653754</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="limestone feedstocks">
-                        <coefficient>0.000704433</coefficient>
+                        <coefficient>0.000709078</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
@@ -1504,22 +1504,22 @@
                         <coefficient>0</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat primary metals">
-                        <coefficient>0.364271964</coefficient>
+                        <coefficient>0.365743921</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.085710489</coefficient>
+                        <coefficient>0.085066852</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="electrochemical">
-                        <coefficient>0.291740882</coefficient>
+                        <coefficient>0.289209035</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.030475298</coefficient>
+                        <coefficient>0.030251232</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="feedstocks primary metals">
-                        <coefficient>0.227144222</coefficient>
+                        <coefficient>0.229066255</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="limestone feedstocks">
-                        <coefficient>0.000657145</coefficient>
+                        <coefficient>0.000662706</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2020">
@@ -1527,22 +1527,22 @@
                         <coefficient>0</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat primary metals">
-                        <coefficient>0.338098749</coefficient>
+                        <coefficient>0.339464944</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.079552126</coefficient>
+                        <coefficient>0.078954735</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="electrochemical">
-                        <coefficient>0.270779079</coefficient>
+                        <coefficient>0.268429147</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.028285625</coefficient>
+                        <coefficient>0.028077658</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="feedstocks primary metals">
-                        <coefficient>0.210823739</coefficient>
+                        <coefficient>0.212607672</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="limestone feedstocks">
-                        <coefficient>0.000609929</coefficient>
+                        <coefficient>0.00061509</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
@@ -1550,22 +1550,22 @@
                         <coefficient>0</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat primary metals">
-                        <coefficient>0.313806098</coefficient>
+                        <coefficient>0.315074132</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.073836245</coefficient>
+                        <coefficient>0.073281777</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="electrochemical">
-                        <coefficient>0.251323398</coefficient>
+                        <coefficient>0.24914231</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.026253281</coefficient>
+                        <coefficient>0.026060257</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="feedstocks primary metals">
-                        <coefficient>0.195675894</coefficient>
+                        <coefficient>0.19733165</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="limestone feedstocks">
-                        <coefficient>0.000566105</coefficient>
+                        <coefficient>0.000570895</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
@@ -1573,22 +1573,22 @@
                         <coefficient>0</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat primary metals">
-                        <coefficient>0.292863965</coefficient>
+                        <coefficient>0.294047375</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.068908717</coefficient>
+                        <coefficient>0.068391252</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="electrochemical">
-                        <coefficient>0.234551104</coefficient>
+                        <coefficient>0.232515574</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.024501245</coefficient>
+                        <coefficient>0.024321102</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="feedstocks primary metals">
-                        <coefficient>0.182617287</coefficient>
+                        <coefficient>0.184162545</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="limestone feedstocks">
-                        <coefficient>0.000528325</coefficient>
+                        <coefficient>0.000532796</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
@@ -1596,22 +1596,22 @@
                         <coefficient>0</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat primary metals">
-                        <coefficient>0.274825082</coefficient>
+                        <coefficient>0.2759356</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.064664302</coefficient>
+                        <coefficient>0.06417871</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="electrochemical">
-                        <coefficient>0.220103987</coefficient>
+                        <coefficient>0.218193834</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.022992097</coefficient>
+                        <coefficient>0.02282305</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="feedstocks primary metals">
-                        <coefficient>0.17136902</coefficient>
+                        <coefficient>0.172819098</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="limestone feedstocks">
-                        <coefficient>0.000495783</coefficient>
+                        <coefficient>0.000499979</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
@@ -1619,22 +1619,22 @@
                         <coefficient>0</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat primary metals">
-                        <coefficient>0.259317478</coefficient>
+                        <coefficient>0.260365333</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.061015477</coefficient>
+                        <coefficient>0.060557286</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="electrochemical">
-                        <coefficient>0.20768414</coefficient>
+                        <coefficient>0.205881772</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.021694717</coefficient>
+                        <coefficient>0.02153521</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="feedstocks primary metals">
-                        <coefficient>0.16169915</coefficient>
+                        <coefficient>0.163067404</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="limestone feedstocks">
-                        <coefficient>0.000467808</coefficient>
+                        <coefficient>0.000471766</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
@@ -1642,22 +1642,22 @@
                         <coefficient>0</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat primary metals">
-                        <coefficient>0.246031851</coefficient>
+                        <coefficient>0.247026021</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.057889468</coefficient>
+                        <coefficient>0.057454751</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="electrochemical">
-                        <coefficient>0.197043847</coefficient>
+                        <coefficient>0.19533382</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.020583231</coefficient>
+                        <coefficient>0.020431895</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="feedstocks primary metals">
-                        <coefficient>0.153414808</coefficient>
+                        <coefficient>0.154712963</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="limestone feedstocks">
-                        <coefficient>0.00044384</coefficient>
+                        <coefficient>0.000447596</coefficient>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -1668,138 +1668,138 @@
                <technology name="other manufacturing">
                   <period year="1990">
                      <minicam-energy-input name="boilers general">
-                        <coefficient>0.126416202</coefficient>
+                        <coefficient>0.12464814</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat general">
-                        <coefficient>0.260219649</coefficient>
+                        <coefficient>0.261454468</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.21917115</coefficient>
+                        <coefficient>0.2186198</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="electrochemical">
-                        <coefficient>0.004193145</coefficient>
+                        <coefficient>0.00418212</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.389999854</coefficient>
+                        <coefficient>0.391095472</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="boilers general">
-                        <coefficient>0.112744431</coefficient>
+                        <coefficient>0.110042087</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat general">
-                        <coefficient>0.258777928</coefficient>
+                        <coefficient>0.26045672</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.22965856</coefficient>
+                        <coefficient>0.229089414</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="electrochemical">
-                        <coefficient>0.004396771</coefficient>
+                        <coefficient>0.004385277</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.394422311</coefficient>
+                        <coefficient>0.396026502</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="boilers general">
-                        <coefficient>0.103792724</coefficient>
+                        <coefficient>0.101304941</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat general">
-                        <coefficient>0.238231422</coefficient>
+                        <coefficient>0.23977692</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.21142408</coefficient>
+                        <coefficient>0.210900124</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="electrochemical">
-                        <coefficient>0.004047675</coefficient>
+                        <coefficient>0.004037094</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.363105883</coefficient>
+                        <coefficient>0.364582704</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="boilers general">
-                        <coefficient>0.095551767</coefficient>
+                        <coefficient>0.09326151</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat general">
-                        <coefficient>0.219316272</coefficient>
+                        <coefficient>0.220739061</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.194637385</coefficient>
+                        <coefficient>0.19415503</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="electrochemical">
-                        <coefficient>0.003726297</coefficient>
+                        <coefficient>0.003716556</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.334275923</coefficient>
+                        <coefficient>0.335635488</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="boilers general">
-                        <coefficient>0.088630854</coefficient>
+                        <coefficient>0.086506482</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat general">
-                        <coefficient>0.203430968</coefficient>
+                        <coefficient>0.204750703</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.180539598</coefficient>
+                        <coefficient>0.180092181</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="electrochemical">
-                        <coefficient>0.003456398</coefficient>
+                        <coefficient>0.003447362</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.310063973</coefficient>
+                        <coefficient>0.311325063</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="boilers general">
-                        <coefficient>0.082833097</coefficient>
+                        <coefficient>0.08084769</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat general">
-                        <coefficient>0.190123601</coefficient>
+                        <coefficient>0.191357006</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.168729662</coefficient>
+                        <coefficient>0.168311512</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="electrochemical">
-                        <coefficient>0.003230299</coefficient>
+                        <coefficient>0.003221854</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.289781245</coefficient>
+                        <coefficient>0.290959841</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="boilers general">
-                        <coefficient>0.077999887</coefficient>
+                        <coefficient>0.076130327</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat general">
-                        <coefficient>0.179030122</coefficient>
+                        <coefficient>0.180191559</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.158884493</coefficient>
+                        <coefficient>0.158490742</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="electrochemical">
-                        <coefficient>0.003041815</coefficient>
+                        <coefficient>0.003033863</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.272872865</coefficient>
+                        <coefficient>0.273982691</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="boilers general">
-                        <coefficient>0.074003715</coefficient>
+                        <coefficient>0.072229938</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="process heat general">
-                        <coefficient>0.169857862</coefficient>
+                        <coefficient>0.170959795</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="machine drive">
-                        <coefficient>0.150744355</coefficient>
+                        <coefficient>0.150370777</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="electrochemical">
-                        <coefficient>0.002885973</coefficient>
+                        <coefficient>0.002878429</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="other end uses">
-                        <coefficient>0.258892754</coefficient>
+                        <coefficient>0.259945721</coefficient>
                      </minicam-energy-input>
                   </period>
                </technology>

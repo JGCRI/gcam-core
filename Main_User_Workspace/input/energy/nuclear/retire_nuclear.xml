@@ -4,9 +4,7 @@
       <region name="USA">
          <supplysector name="electricity">
             <subsector name="nuclear">
-               <sharewt fillout="1" year="2020">0</sharewt>
-               <scaleYear>2020</scaleYear>
-               <techScaleYear>1975</techScaleYear>
+               <share-weight fillout="1" year="2020">0</share-weight>
                <technology name="Gen_II_LWR">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -20,68 +18,66 @@
                   <period year="2020">
                      <lifetime>-1</lifetime>
                      <fixedOutput>1.9457424</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0.6485808</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                </technology>
                <technology name="Gen_III">
                   <period year="2020">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                </technology>
             </subsector>
          </supplysector>
          <supplysector name="H2 Central Production">
             <subsector name="nuclear">
-               <sharewt fillout="1" year="2020">0</sharewt>
+               <share-weight fillout="1" year="2020">0</share-weight>
             </subsector>
          </supplysector>
       </region>
       <region name="Canada">
          <supplysector name="electricity">
             <subsector name="nuclear">
-               <sharewt fillout="1" year="2020">0</sharewt>
-               <scaleYear>2020</scaleYear>
-               <techScaleYear>1975</techScaleYear>
+               <share-weight fillout="1" year="2020">0</share-weight>
                <technology name="Gen_II_LWR">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -95,68 +91,66 @@
                   <period year="2020">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0.220896</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0.073632</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                </technology>
                <technology name="Gen_III">
                   <period year="2020">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                </technology>
             </subsector>
          </supplysector>
          <supplysector name="H2 Central Production">
             <subsector name="nuclear">
-               <sharewt fillout="1" year="2020">0</sharewt>
+               <share-weight fillout="1" year="2020">0</share-weight>
             </subsector>
          </supplysector>
       </region>
       <region name="Western Europe">
          <supplysector name="electricity">
             <subsector name="nuclear">
-               <sharewt fillout="1" year="2020">0</sharewt>
-               <scaleYear>2020</scaleYear>
-               <techScaleYear>1975</techScaleYear>
+               <share-weight fillout="1" year="2020">0</share-weight>
                <technology name="Gen_II_LWR">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -170,68 +164,66 @@
                   <period year="2020">
                      <lifetime>-1</lifetime>
                      <fixedOutput>2.2183728</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0.7394576</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                </technology>
                <technology name="Gen_III">
                   <period year="2020">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                </technology>
             </subsector>
          </supplysector>
          <supplysector name="H2 Central Production">
             <subsector name="nuclear">
-               <sharewt fillout="1" year="2020">0</sharewt>
+               <share-weight fillout="1" year="2020">0</share-weight>
             </subsector>
          </supplysector>
       </region>
       <region name="Japan">
          <supplysector name="electricity">
             <subsector name="nuclear">
-               <sharewt fillout="1" year="2020">0</sharewt>
-               <scaleYear>2020</scaleYear>
-               <techScaleYear>1975</techScaleYear>
+               <share-weight fillout="1" year="2020">0</share-weight>
                <technology name="Gen_II_LWR">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -245,68 +237,66 @@
                   <period year="2020">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0.731412</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0.243804</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                </technology>
                <technology name="Gen_III">
                   <period year="2020">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                </technology>
             </subsector>
          </supplysector>
          <supplysector name="H2 Central Production">
             <subsector name="nuclear">
-               <sharewt fillout="1" year="2020">0</sharewt>
+               <share-weight fillout="1" year="2020">0</share-weight>
             </subsector>
          </supplysector>
       </region>
       <region name="Australia_NZ">
          <supplysector name="electricity">
             <subsector name="nuclear">
-               <sharewt fillout="1" year="2020">0</sharewt>
-               <scaleYear>2020</scaleYear>
-               <techScaleYear>1975</techScaleYear>
+               <share-weight fillout="1" year="2020">0</share-weight>
                <technology name="Gen_II_LWR">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -320,68 +310,66 @@
                   <period year="2020">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                </technology>
                <technology name="Gen_III">
                   <period year="2020">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                </technology>
             </subsector>
          </supplysector>
          <supplysector name="H2 Central Production">
             <subsector name="nuclear">
-               <sharewt fillout="1" year="2020">0</sharewt>
+               <share-weight fillout="1" year="2020">0</share-weight>
             </subsector>
          </supplysector>
       </region>
       <region name="Former Soviet Union">
          <supplysector name="electricity">
             <subsector name="nuclear">
-               <sharewt fillout="1" year="2020">0</sharewt>
-               <scaleYear>2020</scaleYear>
-               <techScaleYear>1975</techScaleYear>
+               <share-weight fillout="1" year="2020">0</share-weight>
                <technology name="Gen_II_LWR">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -395,68 +383,66 @@
                   <period year="2020">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0.5964936</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0.1988312</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                </technology>
                <technology name="Gen_III">
                   <period year="2020">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                </technology>
             </subsector>
          </supplysector>
          <supplysector name="H2 Central Production">
             <subsector name="nuclear">
-               <sharewt fillout="1" year="2020">0</sharewt>
+               <share-weight fillout="1" year="2020">0</share-weight>
             </subsector>
          </supplysector>
       </region>
       <region name="China">
          <supplysector name="electricity">
             <subsector name="nuclear">
-               <sharewt fillout="1" year="2020">0</sharewt>
-               <scaleYear>2020</scaleYear>
-               <techScaleYear>1975</techScaleYear>
+               <share-weight fillout="1" year="2020">0</share-weight>
                <technology name="Gen_II_LWR">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -470,68 +456,66 @@
                   <period year="2020">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0.1274112</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0.0424704</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                </technology>
                <technology name="Gen_III">
                   <period year="2020">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                </technology>
             </subsector>
          </supplysector>
          <supplysector name="H2 Central Production">
             <subsector name="nuclear">
-               <sharewt fillout="1" year="2020">0</sharewt>
+               <share-weight fillout="1" year="2020">0</share-weight>
             </subsector>
          </supplysector>
       </region>
       <region name="Middle East">
          <supplysector name="electricity">
             <subsector name="nuclear">
-               <sharewt fillout="1" year="2020">0</sharewt>
-               <scaleYear>2020</scaleYear>
-               <techScaleYear>1975</techScaleYear>
+               <share-weight fillout="1" year="2020">0</share-weight>
                <technology name="Gen_II_LWR">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -545,68 +529,66 @@
                   <period year="2020">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                </technology>
                <technology name="Gen_III">
                   <period year="2020">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                </technology>
             </subsector>
          </supplysector>
          <supplysector name="H2 Central Production">
             <subsector name="nuclear">
-               <sharewt fillout="1" year="2020">0</sharewt>
+               <share-weight fillout="1" year="2020">0</share-weight>
             </subsector>
          </supplysector>
       </region>
       <region name="Africa">
          <supplysector name="electricity">
             <subsector name="nuclear">
-               <sharewt fillout="1" year="2020">0</sharewt>
-               <scaleYear>2020</scaleYear>
-               <techScaleYear>1975</techScaleYear>
+               <share-weight fillout="1" year="2020">0</share-weight>
                <technology name="Gen_II_LWR">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -620,68 +602,66 @@
                   <period year="2020">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0.0271032</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0.0090344</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                </technology>
                <technology name="Gen_III">
                   <period year="2020">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                </technology>
             </subsector>
          </supplysector>
          <supplysector name="H2 Central Production">
             <subsector name="nuclear">
-               <sharewt fillout="1" year="2020">0</sharewt>
+               <share-weight fillout="1" year="2020">0</share-weight>
             </subsector>
          </supplysector>
       </region>
       <region name="Latin America">
          <supplysector name="electricity">
             <subsector name="nuclear">
-               <sharewt fillout="1" year="2020">0</sharewt>
-               <scaleYear>2020</scaleYear>
-               <techScaleYear>1975</techScaleYear>
+               <share-weight fillout="1" year="2020">0</share-weight>
                <technology name="Gen_II_LWR">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -695,68 +675,66 @@
                   <period year="2020">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0.0660792</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0.0220264</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                </technology>
                <technology name="Gen_III">
                   <period year="2020">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                </technology>
             </subsector>
          </supplysector>
          <supplysector name="H2 Central Production">
             <subsector name="nuclear">
-               <sharewt fillout="1" year="2020">0</sharewt>
+               <share-weight fillout="1" year="2020">0</share-weight>
             </subsector>
          </supplysector>
       </region>
       <region name="Southeast Asia">
          <supplysector name="electricity">
             <subsector name="nuclear">
-               <sharewt fillout="1" year="2020">0</sharewt>
-               <scaleYear>2020</scaleYear>
-               <techScaleYear>1975</techScaleYear>
+               <share-weight fillout="1" year="2020">0</share-weight>
                <technology name="Gen_II_LWR">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -770,68 +748,66 @@
                   <period year="2020">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0.1018944</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0.0339648</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                </technology>
                <technology name="Gen_III">
                   <period year="2020">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                </technology>
             </subsector>
          </supplysector>
          <supplysector name="H2 Central Production">
             <subsector name="nuclear">
-               <sharewt fillout="1" year="2020">0</sharewt>
+               <share-weight fillout="1" year="2020">0</share-weight>
             </subsector>
          </supplysector>
       </region>
       <region name="Eastern Europe">
          <supplysector name="electricity">
             <subsector name="nuclear">
-               <sharewt fillout="1" year="2020">0</sharewt>
-               <scaleYear>2020</scaleYear>
-               <techScaleYear>1975</techScaleYear>
+               <share-weight fillout="1" year="2020">0</share-weight>
                <technology name="Gen_II_LWR">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -845,68 +821,66 @@
                   <period year="2020">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0.2073144</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0.0691048</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                </technology>
                <technology name="Gen_III">
                   <period year="2020">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                </technology>
             </subsector>
          </supplysector>
          <supplysector name="H2 Central Production">
             <subsector name="nuclear">
-               <sharewt fillout="1" year="2020">0</sharewt>
+               <share-weight fillout="1" year="2020">0</share-weight>
             </subsector>
          </supplysector>
       </region>
       <region name="Korea">
          <supplysector name="electricity">
             <subsector name="nuclear">
-               <sharewt fillout="1" year="2020">0</sharewt>
-               <scaleYear>2020</scaleYear>
-               <techScaleYear>1975</techScaleYear>
+               <share-weight fillout="1" year="2020">0</share-weight>
                <technology name="Gen_II_LWR">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -920,68 +894,66 @@
                   <period year="2020">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0.3522696</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0.1174232</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                </technology>
                <technology name="Gen_III">
                   <period year="2020">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                </technology>
             </subsector>
          </supplysector>
          <supplysector name="H2 Central Production">
             <subsector name="nuclear">
-               <sharewt fillout="1" year="2020">0</sharewt>
+               <share-weight fillout="1" year="2020">0</share-weight>
             </subsector>
          </supplysector>
       </region>
       <region name="India">
          <supplysector name="electricity">
             <subsector name="nuclear">
-               <sharewt fillout="1" year="2020">0</sharewt>
-               <scaleYear>2020</scaleYear>
-               <techScaleYear>1975</techScaleYear>
+               <share-weight fillout="1" year="2020">0</share-weight>
                <technology name="Gen_II_LWR">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -995,59 +967,59 @@
                   <period year="2020">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0.0415512</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0.0138504</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
                      <lifetime>-1</lifetime>
                      <fixedOutput>0</fixedOutput>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                </technology>
                <technology name="Gen_III">
                   <period year="2020">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2035">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2050">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2065">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2080">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2095">
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                </technology>
             </subsector>
          </supplysector>
          <supplysector name="H2 Central Production">
             <subsector name="nuclear">
-               <sharewt fillout="1" year="2020">0</sharewt>
+               <share-weight fillout="1" year="2020">0</share-weight>
             </subsector>
          </supplysector>
       </region>

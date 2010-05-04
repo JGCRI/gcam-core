@@ -10,12 +10,3 @@
 505,world/+{name}region,region/+{name}renewresource,renewresource/+{name}sub-renewable-resource,sub-renewable-resource/+maxSubResource,scenario,scenario/world
 
 506,world/+{name}region,region/+{name}renewresource,renewresource/+{name}sub-renewable-resource,sub-renewable-resource/+{year=1975}annualprod,scenario,scenario/world
-
-
-600,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{year=1990;fillout=1}fuelprefElasticity,scenario,scenario/world
-
-601,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{year=1975;fillout=1}sharewt,scenario/world,scenario
-
-602,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+scaleYear,scenario/world,scenario
-
-6000,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,{year=1975}period/../minicam-energy-input/+efficiency,{year=1990}period/../minicam-energy-input/+efficiency,{year=2005}period/../minicam-energy-input/+efficiency,{year=2020}period/../minicam-energy-input/+efficiency,{year=2035}period/../minicam-energy-input/+efficiency,{year=2050}period/../minicam-energy-input/+efficiency,{year=2065}period/../minicam-energy-input/+efficiency,{year=2080}period/../minicam-energy-input/+efficiency,{year=2095}period/../minicam-energy-input/+efficiency,@period/+{name}minicam-energy-input,@technology/period,{year=1975}period/{name=CO2}CO2,{year=1990}period/{name=CO2}CO2,{year=2005}period/{name=CO2}CO2,{year=2020}period/{name=CO2}CO2,{year=2035}period/{name=CO2}CO2,{year=2050}period/{name=CO2}CO2,{year=2065}period/{name=CO2}CO2,{year=2080}period/{name=CO2}CO2,{year=2095}period/{name=CO2}CO2,scenario/world,scenario

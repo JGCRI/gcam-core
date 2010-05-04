@@ -3,9 +3,9 @@
 
 20,world/+{name}region,region/+{name}renewresource,renewresource/+output-unit,renewresource/+price-unit,renewresource/+market,renewresource/+{year=1975}price,scenario,scenario/world
 
-100,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{year=1975;fillout=1}logitexp,subsector/+{year=1975;fillout=1}fuelprefElasticity,subsector/+{year=1975;fillout=1}FixedInvestment,scenario,scenario/world
+101,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{apply-to}interpolation-rule,subsector/+{from-year}interpolation-rule,subsector/+{to-year}interpolation-rule,interpolation-rule/+{name}interpolation-function,scenario/world,scenario
 
-101,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+scaleYear,subsector/+{year=1975}sharewt,subsector/+{year=1990}sharewt,subsector/+{year=2005}sharewt,subsector/+{year=2020}sharewt,subsector/+{year=2035}sharewt,subsector/+{year=2050}sharewt,subsector/+{year=2065}sharewt,subsector/+{year=2080}sharewt,subsector/+{year=2095}sharewt,scenario/world,scenario
+102,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{year=1975}share-weight,subsector/+{year=1990}share-weight,subsector/+{year=2005}share-weight,subsector/+{year=2020}share-weight,subsector/+{year=2035}share-weight,subsector/+{year=2050}share-weight,subsector/+{year=2065}share-weight,subsector/+{year=2080}share-weight,subsector/+{year=2095}share-weight,scenario/world,scenario
 
 200,world/+{name}region,region/+{name}renewresource,renewresource/+{name}smooth-renewable-subresource,smooth-renewable-subresource/+{year=1975;fillout=1}environCost,smooth-renewable-subresource/+{year=1975;fillout=1}severanceTax,smooth-renewable-subresource/+gdpSupplyElast,smooth-renewable-subresource/+subResourceCapacityFactor,scenario,scenario/world
 
@@ -30,11 +30,11 @@
 
 1003,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,{year=1990}period/../minicam-energy-input/+calibrated-value,{year=2005}period/../minicam-energy-input/+calibrated-value,@period/+{name}minicam-energy-input,@technology/period,scenario/world,scenario
 
-1004,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,technology/+{year}period,period/+sharewt,scenario/world,scenario
+1004,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,{year=1975}period/+share-weight,{year=1990}period/+share-weight,{year=2005}period/+share-weight,{year=2020}period/+share-weight,{year=2035}period/+share-weight,{year=2050}period/+share-weight,{year=2065}period/+share-weight,{year=2080}period/+share-weight,{year=2095}period/+share-weight,scenario/world,scenario,@technology/period
 
 1010,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,{year=1990}period/+fixedOutput,{year=2005}period/+fixedOutput,{year=2020}period/+fixedOutput,{year=2035}period/+fixedOutput,{year=2050}period/+fixedOutput,{year=2065}period/+fixedOutput,{year=2080}period/+fixedOutput,{year=2095}period/+fixedOutput,scenario,scenario/world,@technology/period
 
-1011,scenario,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,technology/+{year}period,period/+sharewt,scenario,scenario/world,world/{name=USA}region,world/{name=Canada}region,world/{name=Western Europe}region,world/{name=Japan}region,world/{name=Australia_NZ}region,world/{name=Former Soviet Union}region,world/{name=China}region,world/{name=Middle East}region,world/{name=Africa}region,world/{name=Latin America}region,world/{name=Southeast Asia}region,world/{name=Eastern Europe}region,world/{name=Korea}region,world/{name=India}region
+1011,scenario,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,technology/+{year}period,period/+share-weight,scenario,scenario/world,world/{name=USA}region,world/{name=Canada}region,world/{name=Western Europe}region,world/{name=Japan}region,world/{name=Australia_NZ}region,world/{name=Former Soviet Union}region,world/{name=China}region,world/{name=Middle East}region,world/{name=Africa}region,world/{name=Latin America}region,world/{name=Southeast Asia}region,world/{name=Eastern Europe}region,world/{name=Korea}region,world/{name=India}region
 
 1012,scenario,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,technology/+{year}period,period/+{name}renewable-input,period/{name=CO2}CO2,scenario,scenario/world,world/{name=USA}region,world/{name=Canada}region,world/{name=Western Europe}region,world/{name=Japan}region,world/{name=Australia_NZ}region,world/{name=Former Soviet Union}region,world/{name=China}region,world/{name=Middle East}region,world/{name=Africa}region,world/{name=Latin America}region,world/{name=Southeast Asia}region,world/{name=Eastern Europe}region,world/{name=Korea}region,world/{name=India}region
 

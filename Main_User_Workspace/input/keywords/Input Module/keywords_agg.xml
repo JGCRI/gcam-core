@@ -826,8 +826,8 @@
             </subsector>
          </supplysector>
          <supplysector name="elect_td_bld" nocreate="1">
-            <subsector name="electricity_td_bld" nocreate="1">
-               <technology name="solar_roofs" nocreate="1">
+            <subsector name="rooftop_pv" nocreate="1">
+               <technology name="rooftop_pv" nocreate="1">
                   <period year="1975">
                      <keyword primary-renewable="solar-elect"/>
                   </period>
@@ -1936,8 +1936,8 @@
             </subsector>
          </supplysector>
          <supplysector name="elect_td_bld" nocreate="1">
-            <subsector name="electricity_td_bld" nocreate="1">
-               <technology name="solar_roofs" nocreate="1">
+            <subsector name="rooftop_pv" nocreate="1">
+               <technology name="rooftop_pv" nocreate="1">
                   <period year="1975">
                      <keyword primary-renewable="solar-elect"/>
                   </period>
@@ -3046,8 +3046,8 @@
             </subsector>
          </supplysector>
          <supplysector name="elect_td_bld" nocreate="1">
-            <subsector name="electricity_td_bld" nocreate="1">
-               <technology name="solar_roofs" nocreate="1">
+            <subsector name="rooftop_pv" nocreate="1">
+               <technology name="rooftop_pv" nocreate="1">
                   <period year="1975">
                      <keyword primary-renewable="solar-elect"/>
                   </period>
@@ -4156,8 +4156,8 @@
             </subsector>
          </supplysector>
          <supplysector name="elect_td_bld" nocreate="1">
-            <subsector name="electricity_td_bld" nocreate="1">
-               <technology name="solar_roofs" nocreate="1">
+            <subsector name="rooftop_pv" nocreate="1">
+               <technology name="rooftop_pv" nocreate="1">
                   <period year="1975">
                      <keyword primary-renewable="solar-elect"/>
                   </period>
@@ -5266,8 +5266,8 @@
             </subsector>
          </supplysector>
          <supplysector name="elect_td_bld" nocreate="1">
-            <subsector name="electricity_td_bld" nocreate="1">
-               <technology name="solar_roofs" nocreate="1">
+            <subsector name="rooftop_pv" nocreate="1">
+               <technology name="rooftop_pv" nocreate="1">
                   <period year="1975">
                      <keyword primary-renewable="solar-elect"/>
                   </period>
@@ -6376,8 +6376,8 @@
             </subsector>
          </supplysector>
          <supplysector name="elect_td_bld" nocreate="1">
-            <subsector name="electricity_td_bld" nocreate="1">
-               <technology name="solar_roofs" nocreate="1">
+            <subsector name="rooftop_pv" nocreate="1">
+               <technology name="rooftop_pv" nocreate="1">
                   <period year="1975">
                      <keyword primary-renewable="solar-elect"/>
                   </period>
@@ -7486,8 +7486,8 @@
             </subsector>
          </supplysector>
          <supplysector name="elect_td_bld" nocreate="1">
-            <subsector name="electricity_td_bld" nocreate="1">
-               <technology name="solar_roofs" nocreate="1">
+            <subsector name="rooftop_pv" nocreate="1">
+               <technology name="rooftop_pv" nocreate="1">
                   <period year="1975">
                      <keyword primary-renewable="solar-elect"/>
                   </period>
@@ -8596,8 +8596,8 @@
             </subsector>
          </supplysector>
          <supplysector name="elect_td_bld" nocreate="1">
-            <subsector name="electricity_td_bld" nocreate="1">
-               <technology name="solar_roofs" nocreate="1">
+            <subsector name="rooftop_pv" nocreate="1">
+               <technology name="rooftop_pv" nocreate="1">
                   <period year="1975">
                      <keyword primary-renewable="solar-elect"/>
                   </period>
@@ -9706,8 +9706,8 @@
             </subsector>
          </supplysector>
          <supplysector name="elect_td_bld" nocreate="1">
-            <subsector name="electricity_td_bld" nocreate="1">
-               <technology name="solar_roofs" nocreate="1">
+            <subsector name="rooftop_pv" nocreate="1">
+               <technology name="rooftop_pv" nocreate="1">
                   <period year="1975">
                      <keyword primary-renewable="solar-elect"/>
                   </period>
@@ -10816,8 +10816,8 @@
             </subsector>
          </supplysector>
          <supplysector name="elect_td_bld" nocreate="1">
-            <subsector name="electricity_td_bld" nocreate="1">
-               <technology name="solar_roofs" nocreate="1">
+            <subsector name="rooftop_pv" nocreate="1">
+               <technology name="rooftop_pv" nocreate="1">
                   <period year="1975">
                      <keyword primary-renewable="solar-elect"/>
                   </period>
@@ -11926,8 +11926,8 @@
             </subsector>
          </supplysector>
          <supplysector name="elect_td_bld" nocreate="1">
-            <subsector name="electricity_td_bld" nocreate="1">
-               <technology name="solar_roofs" nocreate="1">
+            <subsector name="rooftop_pv" nocreate="1">
+               <technology name="rooftop_pv" nocreate="1">
                   <period year="1975">
                      <keyword primary-renewable="solar-elect"/>
                   </period>
@@ -13036,8 +13036,8 @@
             </subsector>
          </supplysector>
          <supplysector name="elect_td_bld" nocreate="1">
-            <subsector name="electricity_td_bld" nocreate="1">
-               <technology name="solar_roofs" nocreate="1">
+            <subsector name="rooftop_pv" nocreate="1">
+               <technology name="rooftop_pv" nocreate="1">
                   <period year="1975">
                      <keyword primary-renewable="solar-elect"/>
                   </period>
@@ -14146,8 +14146,8 @@
             </subsector>
          </supplysector>
          <supplysector name="elect_td_bld" nocreate="1">
-            <subsector name="electricity_td_bld" nocreate="1">
-               <technology name="solar_roofs" nocreate="1">
+            <subsector name="rooftop_pv" nocreate="1">
+               <technology name="rooftop_pv" nocreate="1">
                   <period year="1975">
                      <keyword primary-renewable="solar-elect"/>
                   </period>
@@ -15256,8 +15256,8 @@
             </subsector>
          </supplysector>
          <supplysector name="elect_td_bld" nocreate="1">
-            <subsector name="electricity_td_bld" nocreate="1">
-               <technology name="solar_roofs" nocreate="1">
+            <subsector name="rooftop_pv" nocreate="1">
+               <technology name="rooftop_pv" nocreate="1">
                   <period year="1975">
                      <keyword primary-renewable="solar-elect"/>
                   </period>

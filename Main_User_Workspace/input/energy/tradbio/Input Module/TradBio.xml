@@ -19,12 +19,6 @@
                <maxSubResource>8.1</maxSubResource>
             </sub-renewable-resource>
          </renewresource>
-         <supplysector name="building">
-            <subsector name="trad biomass">
-               <fuelprefElasticity fillout="1" year="1990">-1.5</fuelprefElasticity>
-               <scaleYear>2005</scaleYear>
-            </subsector>
-         </supplysector>
       </region>
       <region name="China">
          <renewresource name="traditional biomass">
@@ -44,12 +38,6 @@
                <maxSubResource>10.3</maxSubResource>
             </sub-renewable-resource>
          </renewresource>
-         <supplysector name="building">
-            <subsector name="trad biomass">
-               <fuelprefElasticity fillout="1" year="1990">-1</fuelprefElasticity>
-               <scaleYear>2005</scaleYear>
-            </subsector>
-         </supplysector>
       </region>
       <region name="India">
          <renewresource name="traditional biomass">
@@ -69,12 +57,6 @@
                <maxSubResource>5.2</maxSubResource>
             </sub-renewable-resource>
          </renewresource>
-         <supplysector name="building">
-            <subsector name="trad biomass">
-               <fuelprefElasticity fillout="1" year="1990">-1.25</fuelprefElasticity>
-               <scaleYear>2005</scaleYear>
-            </subsector>
-         </supplysector>
       </region>
       <region name="Latin America">
          <renewresource name="traditional biomass">
@@ -94,12 +76,6 @@
                <maxSubResource>1.1</maxSubResource>
             </sub-renewable-resource>
          </renewresource>
-         <supplysector name="building">
-            <subsector name="trad biomass">
-               <fuelprefElasticity fillout="1" year="1990">-1.5</fuelprefElasticity>
-               <scaleYear>2005</scaleYear>
-            </subsector>
-         </supplysector>
       </region>
       <region name="Southeast Asia">
          <renewresource name="traditional biomass">
@@ -119,12 +95,6 @@
                <maxSubResource>4.5</maxSubResource>
             </sub-renewable-resource>
          </renewresource>
-         <supplysector name="building">
-            <subsector name="trad biomass">
-               <fuelprefElasticity fillout="1" year="1990">-1</fuelprefElasticity>
-               <scaleYear>2005</scaleYear>
-            </subsector>
-         </supplysector>
       </region>
       <region name="Australia_NZ">
          <renewresource name="traditional biomass">
@@ -145,67 +115,6 @@
                <maxSubResource>0.1</maxSubResource>
             </sub-renewable-resource>
          </renewresource>
-         <supplysector name="building">
-            <subsector name="trad biomass">
-               <sharewt fillout="1" year="1975">0</sharewt>
-               <technology name="trad biomass">
-                  <period year="1975">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="1990">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
       </region>
       <region name="Canada">
          <renewresource name="traditional biomass">
@@ -226,67 +135,6 @@
                <maxSubResource>0.1</maxSubResource>
             </sub-renewable-resource>
          </renewresource>
-         <supplysector name="building">
-            <subsector name="trad biomass">
-               <sharewt fillout="1" year="1975">0</sharewt>
-               <technology name="trad biomass">
-                  <period year="1975">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="1990">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
       </region>
       <region name="Eastern Europe">
          <renewresource name="traditional biomass">
@@ -307,67 +155,6 @@
                <maxSubResource>0.1</maxSubResource>
             </sub-renewable-resource>
          </renewresource>
-         <supplysector name="building">
-            <subsector name="trad biomass">
-               <sharewt fillout="1" year="1975">0</sharewt>
-               <technology name="trad biomass">
-                  <period year="1975">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="1990">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
       </region>
       <region name="Former Soviet Union">
          <renewresource name="traditional biomass">
@@ -388,67 +175,6 @@
                <maxSubResource>0.1</maxSubResource>
             </sub-renewable-resource>
          </renewresource>
-         <supplysector name="building">
-            <subsector name="trad biomass">
-               <sharewt fillout="1" year="1975">0</sharewt>
-               <technology name="trad biomass">
-                  <period year="1975">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="1990">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
       </region>
       <region name="Japan">
          <renewresource name="traditional biomass">
@@ -469,67 +195,6 @@
                <maxSubResource>0.1</maxSubResource>
             </sub-renewable-resource>
          </renewresource>
-         <supplysector name="building">
-            <subsector name="trad biomass">
-               <sharewt fillout="1" year="1975">0</sharewt>
-               <technology name="trad biomass">
-                  <period year="1975">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="1990">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
       </region>
       <region name="Korea">
          <renewresource name="traditional biomass">
@@ -550,67 +215,6 @@
                <maxSubResource>0.1</maxSubResource>
             </sub-renewable-resource>
          </renewresource>
-         <supplysector name="building">
-            <subsector name="trad biomass">
-               <sharewt fillout="1" year="1975">0</sharewt>
-               <technology name="trad biomass">
-                  <period year="1975">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="1990">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
       </region>
       <region name="Middle East">
          <renewresource name="traditional biomass">
@@ -631,67 +235,6 @@
                <maxSubResource>0.1</maxSubResource>
             </sub-renewable-resource>
          </renewresource>
-         <supplysector name="building">
-            <subsector name="trad biomass">
-               <sharewt fillout="1" year="1975">0</sharewt>
-               <technology name="trad biomass">
-                  <period year="1975">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="1990">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
       </region>
       <region name="USA">
          <renewresource name="traditional biomass">
@@ -712,67 +255,6 @@
                <maxSubResource>0.1</maxSubResource>
             </sub-renewable-resource>
          </renewresource>
-         <supplysector name="building">
-            <subsector name="trad biomass">
-               <sharewt fillout="1" year="1975">0</sharewt>
-               <technology name="trad biomass">
-                  <period year="1975">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="1990">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
       </region>
       <region name="Western Europe">
          <renewresource name="traditional biomass">
@@ -793,67 +275,6 @@
                <maxSubResource>0.1</maxSubResource>
             </sub-renewable-resource>
          </renewresource>
-         <supplysector name="building">
-            <subsector name="trad biomass">
-               <sharewt fillout="1" year="1975">0</sharewt>
-               <technology name="trad biomass">
-                  <period year="1975">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="1990">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input name="traditional biomass">
-                        <efficiency>0.4</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
       </region>
    </world>
 </scenario>

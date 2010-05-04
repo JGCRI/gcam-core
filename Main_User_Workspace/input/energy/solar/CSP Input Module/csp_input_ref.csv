@@ -60,11 +60,11 @@ Eastern Europe,electricity,solar,CSP,19.58,19.58,18.16,16.85,15.63,14.49,13.44,1
 Korea,electricity,solar,CSP,15.91,15.91,14.76,13.69,12.70,11.78,10.93,10.14,
 India,electricity,solar,CSP,13.18,13.18,12.22,11.34,10.52,9.76,9.05,8.39,
 ,,,,,,,,,,,,
-CSP technology: sharewt,,,,,,,,,,,,
+CSP technology: share-weight,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
 1003,,,,,,,,,,,,
-,,,,sharewt,,,,,,,,
+,,,,share-weight,,,,,,,,
 region,supplysector,subsector,intermittent-technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
 USA,electricity,solar,CSP,0,0,0,1,1,1,1,1,1
 Canada,electricity,solar,CSP,0,0,0,1,1,1,1,1,1
@@ -81,6 +81,15 @@ Eastern Europe,electricity,solar,CSP,0,0,0,1,1,1,1,1,1
 Korea,electricity,solar,CSP,0,0,0,1,1,1,1,1,1
 India,electricity,solar,CSP,0,0,0,1,1,1,1,1,1
 ,,,,,,,,,,,,
+Backup subsector shareweights,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+100,,,,,,,,,,,,
+,,,share-weight,,,,,,,,,
+region,supplysector,subsector,1975 fillout,,,,,,,,,
+ALL,csp_backup,gas,1,,,,,,,,,
+,,,,,,,,,,,,
+,,,,,,,,,,,,
 Backup technology: all input parameters,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
@@ -96,6 +105,27 @@ ALL,csp_backup,gas,CSP Gas Hybrid Mode,2050,wholesale gas,0.339,non-energy,0,,,,
 ALL,csp_backup,gas,CSP Gas Hybrid Mode,2065,wholesale gas,0.345,non-energy,0,,,,
 ALL,csp_backup,gas,CSP Gas Hybrid Mode,2080,wholesale gas,0.351,non-energy,0,,,,
 ALL,csp_backup,gas,CSP Gas Hybrid Mode,2095,wholesale gas,0.358,non-energy,0,,,,
+,,,,,,,,,,,,
+Technology-level shareweights,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+1103,,,,,,,,,,,,
+,,,,share-weight,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,csp_backup,gas,CSP Gas Hybrid Mode,1,1,1,1,1,1,1,1,1
+Canada,csp_backup,gas,CSP Gas Hybrid Mode,1,1,1,1,1,1,1,1,1
+Western Europe,csp_backup,gas,CSP Gas Hybrid Mode,1,1,1,1,1,1,1,1,1
+Japan,csp_backup,gas,CSP Gas Hybrid Mode,1,1,1,1,1,1,1,1,1
+Australia_NZ,csp_backup,gas,CSP Gas Hybrid Mode,1,1,1,1,1,1,1,1,1
+Former Soviet Union,csp_backup,gas,CSP Gas Hybrid Mode,1,1,1,1,1,1,1,1,1
+China,csp_backup,gas,CSP Gas Hybrid Mode,1,1,1,1,1,1,1,1,1
+Middle East,csp_backup,gas,CSP Gas Hybrid Mode,1,1,1,1,1,1,1,1,1
+Africa,csp_backup,gas,CSP Gas Hybrid Mode,1,1,1,1,1,1,1,1,1
+Latin America,csp_backup,gas,CSP Gas Hybrid Mode,1,1,1,1,1,1,1,1,1
+Southeast Asia,csp_backup,gas,CSP Gas Hybrid Mode,1,1,1,1,1,1,1,1,1
+Eastern Europe,csp_backup,gas,CSP Gas Hybrid Mode,1,1,1,1,1,1,1,1,1
+Korea,csp_backup,gas,CSP Gas Hybrid Mode,1,1,1,1,1,1,1,1,1
+India,csp_backup,gas,CSP Gas Hybrid Mode,1,1,1,1,1,1,1,1,1
 ,,,,,,,,,,,,
 CSP with storage technology,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,
@@ -134,11 +164,11 @@ Eastern Europe,electricity,solar,CSP_storage,15.74,15.74,14.60,13.54,12.56,11.65
 Korea,electricity,solar,CSP_storage,12.79,12.79,11.86,11.01,10.21,9.47,8.78,8.15,
 India,electricity,solar,CSP_storage,10.59,10.59,9.82,9.11,8.45,7.84,7.27,6.75,
 ,,,,,,,,,,,,
-CSP with storage technology: sharewt,,,,,,,,,,,,
+CSP with storage technology: share-weight,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
 1103,,,,,,,,,,,,
-,,,,sharewt,,,,,,,,
+,,,,share-weight,,,,,,,,
 region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
 USA,electricity,solar,CSP_storage,0,0,0,0.1,0.9,1,1,1,1
 Canada,electricity,solar,CSP_storage,0,0,0,0.1,0.9,1,1,1,1

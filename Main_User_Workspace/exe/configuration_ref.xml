@@ -7,7 +7,7 @@
 		<Value name="bugOutFileName">bugoutfile.csv</Value>
 		<Value name="logOutFileName">logfile.csv</Value>
 		<Value name="climatFileName">gas.emk</Value>
-		<Value name="xmlInputFileName">../cvs/objects/model_data/base/core_model_input_2009-11-17.xml</Value>
+		<Value name="xmlInputFileName">../cvs/objects/model_data/base/core_model_input_2010-05-03.xml</Value>
 		<Value name="xmlOutputFileName">../output/output.xml</Value>
 		<Value name="xmlDebugFileName">debug.xml</Value>
 		<Value name="sdCurveFileName">sdcurve.csv</Value>
@@ -21,6 +21,8 @@
 		<Value name="dependencyGraphName">DependencyGraph</Value>
 		<Value name="policy-target-file">../input/policy_target.xml</Value>
 		<Value name="BatchFileName">batch_emf.xml</Value>
+		<Value name="ObjectSGMFileName">ObjectSGMout.csv</Value>
+		<Value name="ObjectSGMGenFileName">ObjectSGMGen.csv</Value>
 	</Files>
 	<ScenarioComponents>
 		<Value name="del_gen_bio">../input/aglu/smoothwastebio.xml</Value>
@@ -39,12 +41,10 @@
 		<Value name="ind_aeei">../input/energy/socioeconomics/agg_industry_aeei_ref.xml</Value>
 		<Value name="resources">../input/energy/fossil/resources.xml</Value>
 		<Value name="gas">../input/energy/fossil/gas_processing_input.xml</Value>
-		<Value name="liquids">../input/energy/refined liquids/ref_liquids_demand.xml</Value>
 		<Value name="liquids">../input/energy/refined liquids/ref_liquids_supply.xml</Value>
 		<Value name="liquids">../input/energy/refined liquids/ref_liquids_ccs.xml</Value>
 		<Value name="h2">../input/energy/hydrogen/h2_input_ref_bioccs.xml</Value>
 		<Value name="delete">../input/energy/electric sector/delete_elec_solar_wind.xml</Value>
-		<Value name="cal">../input/energy/calibration_minicam/cal_1990_2005.xml</Value>
 		<Value name="elec_fossil_bio">../input/energy/electric sector/fossil_elec_input_bioccs.xml</Value>
 		<Value name="elec_nuclear">../input/energy/nuclear/nuclear_input_ref.xml</Value>
 		<Value name="elec_hydro">../input/energy/electric sector/hydro_input.xml</Value>
@@ -58,6 +58,7 @@
 		<Value name="bld">../input/energy/buildings/global_bld_input_ref.xml</Value>
 		<Value name="bld_tradbio">../input/energy/tradbio/tradbio.xml</Value>
 		<Value name="ind">../input/energy/industry/global_ind_input_ref.xml</Value>
+		<Value name="cal">../input/energy/calibration_minicam/cal_1990_2005.xml</Value>
 		<Value name="ind_cement">../input/energy/cement/cement_input_ref.xml</Value>
 		<Value name="trn">../input/energy/transportation/global_det_trn_input_ref.xml</Value>
 		<Value name="ind_cal_adj">../input/energy/industry/ind_cal_adj_cement.xml</Value>
@@ -71,7 +72,7 @@
 		<Value name="solver_config">../input/solution/cal_solver_config.xml</Value>
 	</ScenarioComponents>
 	<Strings>
-		<Value name="scenarioName">Newcal</Value>
+		<Value name="scenarioName">Main</Value>
 	</Strings>
 	<Bools>
 		<Value name="debugChecking">0</Value>
@@ -91,7 +92,7 @@
 		<Value name="PrintSectorDependencies">1</Value>
 		<Value name="ShowNullPaths">0</Value>
 		<Value name="PrintPrices">1</Value>
-		<Value name="createCostCurve">0</Value>
+		<Value name="createCostCurve">1</Value>
 		<Value name="estimateCosts">0</Value>
 		<Value name="find-path">0</Value>
 	</Bools>

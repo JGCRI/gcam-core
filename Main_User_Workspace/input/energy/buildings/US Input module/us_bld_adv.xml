@@ -165,46 +165,55 @@
                      <minicam-energy-input name="delivered gas">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.694</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.814</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.864</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.970</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.970</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.970</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.970</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.970</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>
@@ -214,11 +223,13 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.584</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>5.782</input-cost>
                      </minicam-non-energy-input>
@@ -227,6 +238,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.095</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>5.782</input-cost>
                      </minicam-non-energy-input>
@@ -235,6 +247,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.929</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>7.088</input-cost>
                      </minicam-non-energy-input>
@@ -243,6 +256,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>3.222</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>6.982</input-cost>
                      </minicam-non-energy-input>
@@ -251,6 +265,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>3.271</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>6.878</input-cost>
                      </minicam-non-energy-input>
@@ -259,6 +274,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>3.320</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>6.776</input-cost>
                      </minicam-non-energy-input>
@@ -267,6 +283,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>3.370</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>6.675</input-cost>
                      </minicam-non-energy-input>
@@ -275,6 +292,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>3.421</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>6.575</input-cost>
                      </minicam-non-energy-input>
@@ -289,46 +307,55 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.259</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.918</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>3.762</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>4.518</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>5.274</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>5.476</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>5.685</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>5.901</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>
@@ -340,46 +367,55 @@
                      <minicam-energy-input name="delivered gas">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.521</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.560</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.628</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.744</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.860</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.873</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.886</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.900</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>
@@ -389,46 +425,55 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.847</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.888</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.948</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.990</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.990</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.990</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.990</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.990</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
                <technology name="electric heat pump water heater">
@@ -436,11 +481,13 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.200</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>9.336</input-cost>
                      </minicam-non-energy-input>
@@ -449,6 +496,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.200</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>9.336</input-cost>
                      </minicam-non-energy-input>
@@ -457,6 +505,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.475</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>9.805</input-cost>
                      </minicam-non-energy-input>
@@ -465,6 +514,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.513</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>8.992</input-cost>
                      </minicam-non-energy-input>
@@ -473,6 +523,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.551</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>8.661</input-cost>
                      </minicam-non-energy-input>
@@ -481,6 +532,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.589</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>8.341</input-cost>
                      </minicam-non-energy-input>
@@ -489,6 +541,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.628</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>8.034</input-cost>
                      </minicam-non-energy-input>
@@ -497,6 +550,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.668</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>7.738</input-cost>
                      </minicam-non-energy-input>
@@ -511,11 +565,13 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.000</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>238.673</input-cost>
                      </minicam-non-energy-input>
@@ -524,6 +580,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.000</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>238.673</input-cost>
                      </minicam-non-energy-input>
@@ -532,6 +589,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.234</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>78.054</input-cost>
                      </minicam-non-energy-input>
@@ -540,6 +598,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.252</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>76.892</input-cost>
                      </minicam-non-energy-input>
@@ -548,6 +607,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.272</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>75.746</input-cost>
                      </minicam-non-energy-input>
@@ -556,6 +616,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.293</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>74.618</input-cost>
                      </minicam-non-energy-input>
@@ -564,6 +625,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.316</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>73.506</input-cost>
                      </minicam-non-energy-input>
@@ -572,6 +634,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.341</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>72.412</input-cost>
                      </minicam-non-energy-input>
@@ -586,46 +649,55 @@
                      <minicam-energy-input name="delivered gas">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.990</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>1.000</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>1.446</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>1.861</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>2.005</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>2.161</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>2.329</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>2.510</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>
@@ -635,46 +707,55 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.709</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.000</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.229</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.365</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.472</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.586</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.709</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.842</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>
@@ -686,46 +767,55 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.000</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.000</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.015</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.030</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.046</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.062</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.078</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.094</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>
@@ -737,46 +827,55 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.000</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.000</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.119</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.251</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.400</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.566</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.751</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.959</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>
@@ -788,46 +887,55 @@
                      <minicam-energy-input name="delivered gas">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.700</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.728</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.795</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.855</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.868</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.881</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.894</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.908</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>
@@ -837,11 +945,13 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>3.000</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.366</input-cost>
                      </minicam-non-energy-input>
@@ -850,6 +960,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>3.100</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.366</input-cost>
                      </minicam-non-energy-input>
@@ -858,6 +969,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>3.516</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.539</input-cost>
                      </minicam-non-energy-input>
@@ -866,6 +978,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>4.102</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.486</input-cost>
                      </minicam-non-energy-input>
@@ -874,6 +987,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>4.164</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.434</input-cost>
                      </minicam-non-energy-input>
@@ -882,6 +996,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>4.227</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.383</input-cost>
                      </minicam-non-energy-input>
@@ -890,6 +1005,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>4.291</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.332</input-cost>
                      </minicam-non-energy-input>
@@ -898,6 +1014,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>4.355</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.283</input-cost>
                      </minicam-non-energy-input>
@@ -912,46 +1029,55 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.400</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.730</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>3.956</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>4.518</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>5.274</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>5.476</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>5.685</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>5.901</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>
@@ -963,46 +1089,55 @@
                      <minicam-energy-input name="delivered gas">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.800</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.816</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.860</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.940</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.950</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.950</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.950</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="delivered gas">
                         <efficiency>0.950</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>
@@ -1012,11 +1147,13 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.000</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>5.872</input-cost>
                      </minicam-non-energy-input>
@@ -1025,6 +1162,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.000</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>5.872</input-cost>
                      </minicam-non-energy-input>
@@ -1033,6 +1171,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.400</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>6.223</input-cost>
                      </minicam-non-energy-input>
@@ -1041,6 +1180,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.436</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>6.131</input-cost>
                      </minicam-non-energy-input>
@@ -1049,6 +1189,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.529</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>6.039</input-cost>
                      </minicam-non-energy-input>
@@ -1057,6 +1198,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.626</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>5.949</input-cost>
                      </minicam-non-energy-input>
@@ -1065,6 +1207,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.726</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>5.861</input-cost>
                      </minicam-non-energy-input>
@@ -1073,6 +1216,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.830</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>5.774</input-cost>
                      </minicam-non-energy-input>
@@ -1087,46 +1231,55 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.850</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.850</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.920</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.920</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.934</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.948</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.962</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.977</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>
@@ -1138,46 +1291,55 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.722</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.713</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.800</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.900</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.900</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.900</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.900</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.900</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>
@@ -1189,11 +1351,13 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.000</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>105.917</input-cost>
                      </minicam-non-energy-input>
@@ -1202,6 +1366,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.000</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>105.917</input-cost>
                      </minicam-non-energy-input>
@@ -1210,6 +1375,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.234</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.756</input-cost>
                      </minicam-non-energy-input>
@@ -1218,6 +1384,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.252</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.447</input-cost>
                      </minicam-non-energy-input>
@@ -1226,6 +1393,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.272</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.142</input-cost>
                      </minicam-non-energy-input>
@@ -1234,6 +1402,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.293</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.842</input-cost>
                      </minicam-non-energy-input>
@@ -1242,6 +1411,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.316</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.547</input-cost>
                      </minicam-non-energy-input>
@@ -1250,6 +1420,7 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>0.341</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.256</input-cost>
                      </minicam-non-energy-input>
@@ -1264,46 +1435,55 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.396</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.964</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>2.600</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>3.094</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>3.141</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>3.188</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>3.236</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>3.285</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>
@@ -1315,46 +1495,55 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.000</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.000</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.241</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.540</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.599</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.660</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.723</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.789</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>
@@ -1366,46 +1555,55 @@
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.000</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.000</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.000</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.119</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.251</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.400</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.566</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="elect_td_bld">
                         <efficiency>1.751</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>

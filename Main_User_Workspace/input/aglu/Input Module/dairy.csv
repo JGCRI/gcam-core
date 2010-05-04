@@ -1,1258 +1,1150 @@
-Dairy Supply,,,,,
-Units and sector type,,,,,
-INPUT_TABLE,,,,,
-Variable ID,,,,,
-70,,,,,
-
-region,supplysector,output-unit,input-unit,price-unit,sectorType
-ALL,Dairy,Gcal,Gcal,1975$/Gcal,AnimalSupply
-
-
-Scale Year,,,,,
-INPUT_TABLE,,,,,
-Variable ID,,,,,
-700,,,,,
-Source Inputs,,,,,
-region,supplysector,subsector,scaleYear,,
-USA,Dairy,Mixed,2005
-Canada,Dairy,Mixed,2005
-Western Europe,Dairy,Mixed,2005
-Japan,Dairy,Mixed,2005
-Australia_NZ,Dairy,Mixed,2005
-Former Soviet Union,Dairy,Mixed,2005
-China,Dairy,Mixed,2005
-Middle East,Dairy,Mixed,2005
-Africa,Dairy,Mixed,2005
-Latin America,Dairy,Mixed,2005
-Southeast Asia,Dairy,Mixed,2005
-Eastern Europe,Dairy,Mixed,2005
-Korea,Dairy,Mixed,2005
-India,Dairy,Mixed,2005
-USA,Dairy,Pastoral,2005
-Canada,Dairy,Pastoral,2005
-Western Europe,Dairy,Pastoral,2005
-Japan,Dairy,Pastoral,2005
-Australia_NZ,Dairy,Pastoral,2005
-Former Soviet Union,Dairy,Pastoral,2005
-China,Dairy,Pastoral,2005
-Middle East,Dairy,Pastoral,2005
-Africa,Dairy,Pastoral,2005
-Latin America,Dairy,Pastoral,2005
-Southeast Asia,Dairy,Pastoral,2005
-Eastern Europe,Dairy,Pastoral,2005
-Korea,Dairy,Pastoral,2005
-India,Dairy,Pastoral,2005
-
-
-Tech Scale Year,,,
-INPUT_TABLE,,,
-Variable ID,,,
-701,,,
-Source Inputs,,,
-region,supplysector,subsector,techScaleYear
-USA,Dairy,Mixed,2005
-Canada,Dairy,Mixed,2005
-Western Europe,Dairy,Mixed,2005
-Japan,Dairy,Mixed,2005
-Australia_NZ,Dairy,Mixed,2005
-Former Soviet Union,Dairy,Mixed,2005
-China,Dairy,Mixed,2005
-Middle East,Dairy,Mixed,2005
-Africa,Dairy,Mixed,2005
-Latin America,Dairy,Mixed,2005
-Southeast Asia,Dairy,Mixed,2005
-Eastern Europe,Dairy,Mixed,2005
-Korea,Dairy,Mixed,2005
-India,Dairy,Mixed,2005
-USA,Dairy,Pastoral,2005
-Canada,Dairy,Pastoral,2005
-Western Europe,Dairy,Pastoral,2005
-Japan,Dairy,Pastoral,2005
-Australia_NZ,Dairy,Pastoral,2005
-Former Soviet Union,Dairy,Pastoral,2005
-China,Dairy,Pastoral,2005
-Middle East,Dairy,Pastoral,2005
-Africa,Dairy,Pastoral,2005
-Latin America,Dairy,Pastoral,2005
-Southeast Asia,Dairy,Pastoral,2005
-Eastern Europe,Dairy,Pastoral,2005
-Korea,Dairy,Pastoral,2005
-India,Dairy,Pastoral,2005
-
-
-Subsector Logit Exponent,,,
-INPUT_TABLE,,,
-Variable ID,,,
-702,,,
-Source Inputs,,,
-region,supplysector,subsector,logitexp
-USA,Dairy,Mixed,-3
-Canada,Dairy,Mixed,-3
-Western Europe,Dairy,Mixed,-3
-Japan,Dairy,Mixed,-3
-Australia_NZ,Dairy,Mixed,-3
-Former Soviet Union,Dairy,Mixed,-3
-China,Dairy,Mixed,-3
-Middle East,Dairy,Mixed,-3
-Africa,Dairy,Mixed,-3
-Latin America,Dairy,Mixed,-3
-Southeast Asia,Dairy,Mixed,-3
-Eastern Europe,Dairy,Mixed,-3
-Korea,Dairy,Mixed,-3
-India,Dairy,Mixed,-3
-USA,Dairy,Pastoral,-3
-Canada,Dairy,Pastoral,-3
-Western Europe,Dairy,Pastoral,-3
-Japan,Dairy,Pastoral,-3
-Australia_NZ,Dairy,Pastoral,-3
-Former Soviet Union,Dairy,Pastoral,-3
-China,Dairy,Pastoral,-3
-Middle East,Dairy,Pastoral,-3
-Africa,Dairy,Pastoral,-3
-Latin America,Dairy,Pastoral,-3
-Southeast Asia,Dairy,Pastoral,-3,,,,,,,,,,
-Eastern Europe,Dairy,Pastoral,-3,,,,,,,,,,
-Korea,Dairy,Pastoral,-3,,,,,,,,,,
-India,Dairy,Pastoral,-3,,,,,,,,,,
-
-Efficiency: Mixed,,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,
-7001,,,,minicam-energy-input,,,,,,,,,
-,,,,efficiency,,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input
-USA,Dairy,Mixed,Corn,0.30901,0.30901,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,Corn
-Canada,Dairy,Mixed,Corn,0.30003,0.30003,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,Corn
-Western Europe,Dairy,Mixed,Corn,0.29759,0.29759,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,Corn
-Japan,Dairy,Mixed,Corn,0.25571,0.25571,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,Corn
-Australia_NZ,Dairy,Mixed,Corn,0.42949,0.42949,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,Corn
-Former Soviet Union,Dairy,Mixed,Corn,0.22998,0.22998,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,Corn
-China,Dairy,Mixed,Corn,0.13182,0.13182,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,Corn
-Middle East,Dairy,Mixed,Corn,0.28158,0.28158,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,Corn
-Africa,Dairy,Mixed,Corn,0.11146,0.11146,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,Corn
-Latin America,Dairy,Mixed,Corn,0.15957,0.15957,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,Corn
-Southeast Asia,Dairy,Mixed,Corn,0.17413,0.17413,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,Corn
-Eastern Europe,Dairy,Mixed,Corn,0.28041,0.28041,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,Corn
-Korea,Dairy,Mixed,Corn,0.33987,0.33987,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,Corn
-India,Dairy,Mixed,Corn,0.18762,0.18762,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,Corn
-USA,Dairy,Mixed,FodderCrop,0.30901,0.30901,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,FodderCrop
-Canada,Dairy,Mixed,FodderCrop,0.30003,0.30003,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,FodderCrop
-Western Europe,Dairy,Mixed,FodderCrop,0.29759,0.29759,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,FodderCrop
-Japan,Dairy,Mixed,FodderCrop,0.25571,0.25571,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,FodderCrop
-Australia_NZ,Dairy,Mixed,FodderCrop,0.42949,0.42949,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,FodderCrop
-Former Soviet Union,Dairy,Mixed,FodderCrop,0.22998,0.22998,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,FodderCrop
-China,Dairy,Mixed,FodderCrop,0.13182,0.13182,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,FodderCrop
-Middle East,Dairy,Mixed,FodderCrop,0.28158,0.28158,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,FodderCrop
-Africa,Dairy,Mixed,FodderCrop,0.11146,0.11146,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,FodderCrop
-Latin America,Dairy,Mixed,FodderCrop,0.15957,0.15957,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,FodderCrop
-Southeast Asia,Dairy,Mixed,FodderCrop,0.17413,0.17413,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,FodderCrop
-Eastern Europe,Dairy,Mixed,FodderCrop,0.28041,0.28041,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,FodderCrop
-Korea,Dairy,Mixed,FodderCrop,0.33987,0.33987,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,FodderCrop
-India,Dairy,Mixed,FodderCrop,0.18762,0.18762,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,FodderCrop
-USA,Dairy,Mixed,MiscCrop,0.30901,0.30901,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,MiscCrop
-Canada,Dairy,Mixed,MiscCrop,0.30003,0.30003,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,MiscCrop
-Western Europe,Dairy,Mixed,MiscCrop,0.29759,0.29759,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,MiscCrop
-Japan,Dairy,Mixed,MiscCrop,0.25571,0.25571,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,MiscCrop
-Australia_NZ,Dairy,Mixed,MiscCrop,0.42949,0.42949,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,MiscCrop
-Former Soviet Union,Dairy,Mixed,MiscCrop,0.22998,0.22998,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,MiscCrop
-China,Dairy,Mixed,MiscCrop,0.13182,0.13182,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,MiscCrop
-Middle East,Dairy,Mixed,MiscCrop,0.28158,0.28158,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,MiscCrop
-Africa,Dairy,Mixed,MiscCrop,0.11146,0.11146,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,MiscCrop
-Latin America,Dairy,Mixed,MiscCrop,0.15957,0.15957,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,MiscCrop
-Southeast Asia,Dairy,Mixed,MiscCrop,0.17413,0.17413,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,MiscCrop
-Eastern Europe,Dairy,Mixed,MiscCrop,0.28041,0.28041,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,MiscCrop
-Korea,Dairy,Mixed,MiscCrop,0.33987,0.33987,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,MiscCrop
-India,Dairy,Mixed,MiscCrop,0.18762,0.18762,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,MiscCrop
-USA,Dairy,Mixed,OilCrop,0.30901,0.30901,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,OilCrop
-Canada,Dairy,Mixed,OilCrop,0.30003,0.30003,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,OilCrop
-Western Europe,Dairy,Mixed,OilCrop,0.29759,0.29759,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,OilCrop
-Japan,Dairy,Mixed,OilCrop,0.25571,0.25571,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,OilCrop
-Australia_NZ,Dairy,Mixed,OilCrop,0.42949,0.42949,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,OilCrop
-Former Soviet Union,Dairy,Mixed,OilCrop,0.22998,0.22998,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,OilCrop
-China,Dairy,Mixed,OilCrop,0.13182,0.13182,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,OilCrop
-Middle East,Dairy,Mixed,OilCrop,0.28158,0.28158,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,OilCrop
-Africa,Dairy,Mixed,OilCrop,0.11146,0.11146,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,OilCrop
-Latin America,Dairy,Mixed,OilCrop,0.15957,0.15957,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,OilCrop
-Southeast Asia,Dairy,Mixed,OilCrop,0.17413,0.17413,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,OilCrop
-Eastern Europe,Dairy,Mixed,OilCrop,0.28041,0.28041,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,OilCrop
-Korea,Dairy,Mixed,OilCrop,0.33987,0.33987,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,OilCrop
-India,Dairy,Mixed,OilCrop,0.18762,0.18762,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,OilCrop
-USA,Dairy,Mixed,OtherGrain,0.30901,0.30901,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,OtherGrain
-Canada,Dairy,Mixed,OtherGrain,0.30003,0.30003,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,OtherGrain
-Western Europe,Dairy,Mixed,OtherGrain,0.29759,0.29759,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,OtherGrain
-Japan,Dairy,Mixed,OtherGrain,0.25571,0.25571,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,OtherGrain
-Australia_NZ,Dairy,Mixed,OtherGrain,0.42949,0.42949,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,OtherGrain
-Former Soviet Union,Dairy,Mixed,OtherGrain,0.22998,0.22998,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,OtherGrain
-China,Dairy,Mixed,OtherGrain,0.13182,0.13182,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,OtherGrain
-Middle East,Dairy,Mixed,OtherGrain,0.28158,0.28158,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,OtherGrain
-Africa,Dairy,Mixed,OtherGrain,0.11146,0.11146,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,OtherGrain
-Latin America,Dairy,Mixed,OtherGrain,0.15957,0.15957,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,OtherGrain
-Southeast Asia,Dairy,Mixed,OtherGrain,0.17413,0.17413,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,OtherGrain
-Eastern Europe,Dairy,Mixed,OtherGrain,0.28041,0.28041,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,OtherGrain
-Korea,Dairy,Mixed,OtherGrain,0.33987,0.33987,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,OtherGrain
-India,Dairy,Mixed,OtherGrain,0.18762,0.18762,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,OtherGrain
-USA,Dairy,Mixed,Rice,0.30901,0.30901,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,Rice
-Canada,Dairy,Mixed,Rice,0.30003,0.30003,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,Rice
-Western Europe,Dairy,Mixed,Rice,0.29759,0.29759,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,Rice
-Japan,Dairy,Mixed,Rice,0.25571,0.25571,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,Rice
-Australia_NZ,Dairy,Mixed,Rice,0.42949,0.42949,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,Rice
-Former Soviet Union,Dairy,Mixed,Rice,0.22998,0.22998,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,Rice
-China,Dairy,Mixed,Rice,0.13182,0.13182,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,Rice
-Middle East,Dairy,Mixed,Rice,0.28158,0.28158,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,Rice
-Africa,Dairy,Mixed,Rice,0.11146,0.11146,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,Rice
-Latin America,Dairy,Mixed,Rice,0.15957,0.15957,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,Rice
-Southeast Asia,Dairy,Mixed,Rice,0.17413,0.17413,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,Rice
-Eastern Europe,Dairy,Mixed,Rice,0.28041,0.28041,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,Rice
-Korea,Dairy,Mixed,Rice,0.33987,0.33987,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,Rice
-India,Dairy,Mixed,Rice,0.18762,0.18762,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,Rice
-USA,Dairy,Mixed,SugarCrop,0.30901,0.30901,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,SugarCrop
-Canada,Dairy,Mixed,SugarCrop,0.30003,0.30003,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,SugarCrop
-Western Europe,Dairy,Mixed,SugarCrop,0.29759,0.29759,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,SugarCrop
-Japan,Dairy,Mixed,SugarCrop,0.25571,0.25571,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,SugarCrop
-Australia_NZ,Dairy,Mixed,SugarCrop,0.42949,0.42949,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,SugarCrop
-Former Soviet Union,Dairy,Mixed,SugarCrop,0.22998,0.22998,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,SugarCrop
-China,Dairy,Mixed,SugarCrop,0.13182,0.13182,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,SugarCrop
-Middle East,Dairy,Mixed,SugarCrop,0.28158,0.28158,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,SugarCrop
-Africa,Dairy,Mixed,SugarCrop,0.11146,0.11146,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,SugarCrop
-Latin America,Dairy,Mixed,SugarCrop,0.15957,0.15957,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,SugarCrop
-Southeast Asia,Dairy,Mixed,SugarCrop,0.17413,0.17413,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,SugarCrop
-Eastern Europe,Dairy,Mixed,SugarCrop,0.28041,0.28041,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,SugarCrop
-Korea,Dairy,Mixed,SugarCrop,0.33987,0.33987,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,SugarCrop
-India,Dairy,Mixed,SugarCrop,0.18762,0.18762,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,SugarCrop
-USA,Dairy,Mixed,Wheat,0.30901,0.30901,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,Wheat
-Canada,Dairy,Mixed,Wheat,0.30003,0.30003,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,Wheat
-Western Europe,Dairy,Mixed,Wheat,0.29759,0.29759,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,Wheat
-Japan,Dairy,Mixed,Wheat,0.25571,0.25571,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,Wheat
-Australia_NZ,Dairy,Mixed,Wheat,0.42949,0.42949,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,Wheat
-Former Soviet Union,Dairy,Mixed,Wheat,0.22998,0.22998,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,Wheat
-China,Dairy,Mixed,Wheat,0.13182,0.13182,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,Wheat
-Middle East,Dairy,Mixed,Wheat,0.28158,0.28158,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,Wheat
-Africa,Dairy,Mixed,Wheat,0.11146,0.11146,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,Wheat
-Latin America,Dairy,Mixed,Wheat,0.15957,0.15957,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,Wheat
-Southeast Asia,Dairy,Mixed,Wheat,0.17413,0.17413,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,Wheat
-Eastern Europe,Dairy,Mixed,Wheat,0.28041,0.28041,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,Wheat
-Korea,Dairy,Mixed,Wheat,0.33987,0.33987,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,Wheat
-India,Dairy,Mixed,Wheat,0.18762,0.18762,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,Wheat
-USA,Dairy,Mixed,Pasture,0.30901,0.30901,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,Pasture
-Canada,Dairy,Mixed,Pasture,0.30003,0.30003,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,Pasture
-Western Europe,Dairy,Mixed,Pasture,0.29759,0.29759,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,Pasture
-Japan,Dairy,Mixed,Pasture,0.25571,0.25571,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,Pasture
-Australia_NZ,Dairy,Mixed,Pasture,0.42949,0.42949,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,Pasture
-Former Soviet Union,Dairy,Mixed,Pasture,0.22998,0.22998,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,Pasture
-China,Dairy,Mixed,Pasture,0.13182,0.13182,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,Pasture
-Middle East,Dairy,Mixed,Pasture,0.28158,0.28158,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,Pasture
-Africa,Dairy,Mixed,Pasture,0.11146,0.11146,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,Pasture
-Latin America,Dairy,Mixed,Pasture,0.15957,0.15957,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,Pasture
-Southeast Asia,Dairy,Mixed,Pasture,0.17413,0.17413,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,Pasture
-Eastern Europe,Dairy,Mixed,Pasture,0.28041,0.28041,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,Pasture
-Korea,Dairy,Mixed,Pasture,0.33987,0.33987,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,Pasture
-India,Dairy,Mixed,Pasture,0.18762,0.18762,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,Pasture
-,,,,,,,,,,,,,
-,,,,,,,,,,,,,
-Efficiency: Pastoral,,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,
-7001,,,,minicam-energy-input,,,,,,,,,
-,,,,efficiency,,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input
-Australia_NZ,Dairy,Pastoral,Corn,0.19725,0.19725,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,Corn
-Africa,Dairy,Pastoral,Corn,0.06417,0.06417,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,Corn
-Australia_NZ,Dairy,Pastoral,FodderCrop,0.19725,0.19725,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,FodderCrop
-Africa,Dairy,Pastoral,FodderCrop,0.06417,0.06417,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,FodderCrop
-Australia_NZ,Dairy,Pastoral,MiscCrop,0.19725,0.19725,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,MiscCrop
-Africa,Dairy,Pastoral,MiscCrop,0.06417,0.06417,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,MiscCrop
-Australia_NZ,Dairy,Pastoral,OilCrop,0.19725,0.19725,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,OilCrop
-Africa,Dairy,Pastoral,OilCrop,0.06417,0.06417,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,OilCrop
-Australia_NZ,Dairy,Pastoral,OtherGrain,0.19725,0.19725,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,OtherGrain
-Africa,Dairy,Pastoral,OtherGrain,0.06417,0.06417,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,OtherGrain
-Australia_NZ,Dairy,Pastoral,Rice,0.19725,0.19725,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,Rice
-Africa,Dairy,Pastoral,Rice,0.06417,0.06417,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,Rice
-Australia_NZ,Dairy,Pastoral,SugarCrop,0.19725,0.19725,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,SugarCrop
-Africa,Dairy,Pastoral,SugarCrop,0.06417,0.06417,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,SugarCrop
-Australia_NZ,Dairy,Pastoral,Wheat,0.19725,0.19725,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,Wheat
-Africa,Dairy,Pastoral,Wheat,0.06417,0.06417,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,Wheat
-USA,Dairy,Pastoral,Pasture,0.21675,0.21675,0.25520,0.25520,0.25520,0.25520,0.25520,0.25520,0.25520,Pasture
-Canada,Dairy,Pastoral,Pasture,0.21385,0.21385,0.26950,0.26950,0.26950,0.26950,0.26950,0.26950,0.26950,Pasture
-Western Europe,Dairy,Pastoral,Pasture,0.17565,0.17565,0.16971,0.16971,0.16971,0.16971,0.16971,0.16971,0.16971,Pasture
-Japan,Dairy,Pastoral,Pasture,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,Pasture
-Australia_NZ,Dairy,Pastoral,Pasture,0.19725,0.19725,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,Pasture
-Former Soviet Union,Dairy,Pastoral,Pasture,0.15993,0.15993,0.15402,0.15402,0.15402,0.15402,0.15402,0.15402,0.15402,Pasture
-China,Dairy,Pastoral,Pasture,0.13191,0.13191,0.10889,0.10889,0.10889,0.10889,0.10889,0.10889,0.10889,Pasture
-Middle East,Dairy,Pastoral,Pasture,0.17037,0.17037,0.14488,0.14488,0.14488,0.14488,0.14488,0.14488,0.14488,Pasture
-Africa,Dairy,Pastoral,Pasture,0.06417,0.06417,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,Pasture
-Latin America,Dairy,Pastoral,Pasture,0.08156,0.08156,0.08998,0.08998,0.08998,0.08998,0.08998,0.08998,0.08998,Pasture
-Southeast Asia,Dairy,Pastoral,Pasture,0.10383,0.10383,0.12553,0.12553,0.12553,0.12553,0.12553,0.12553,0.12553,Pasture
-Eastern Europe,Dairy,Pastoral,Pasture,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,Pasture
-Korea,Dairy,Pastoral,Pasture,0.32010,0.32010,0.20620,0.20620,0.20620,0.20620,0.20620,0.20620,0.20620,Pasture
-India,Dairy,Pastoral,Pasture,0.10448,0.10448,0.12744,0.12744,0.12744,0.12744,0.12744,0.12744,0.12744,Pasture
-
-
-Efficiency: Scavenging,,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,
-7001,,,,minicam-energy-input,,,,,,,,,
-,,,,efficiency,,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input
-USA,Dairy,Mixed,Scavenging,0.30901,0.30901,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,Scavenging
-Canada,Dairy,Mixed,Scavenging,0.30003,0.30003,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,Scavenging
-Western Europe,Dairy,Mixed,Scavenging,0.29759,0.29759,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,Scavenging
-Japan,Dairy,Mixed,Scavenging,0.25571,0.25571,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,Scavenging
-Australia_NZ,Dairy,Mixed,Scavenging,0.42949,0.42949,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,Scavenging
-Former Soviet Union,Dairy,Mixed,Scavenging,0.22998,0.22998,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,Scavenging
-China,Dairy,Mixed,Scavenging,0.13182,0.13182,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,Scavenging
-Middle East,Dairy,Mixed,Scavenging,0.28158,0.28158,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,Scavenging
-Africa,Dairy,Mixed,Scavenging,0.11146,0.11146,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,Scavenging
-Latin America,Dairy,Mixed,Scavenging,0.15957,0.15957,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,Scavenging
-Southeast Asia,Dairy,Mixed,Scavenging,0.17413,0.17413,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,Scavenging
-Eastern Europe,Dairy,Mixed,Scavenging,0.28041,0.28041,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,Scavenging
-Korea,Dairy,Mixed,Scavenging,0.33987,0.33987,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,Scavenging
-India,Dairy,Mixed,Scavenging,0.18762,0.18762,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,Scavenging
-USA,Dairy,Pastoral,Scavenging,0.21675,0.21675,0.25520,0.25520,0.25520,0.25520,0.25520,0.25520,0.25520,Scavenging
-Canada,Dairy,Pastoral,Scavenging,0.21385,0.21385,0.26950,0.26950,0.26950,0.26950,0.26950,0.26950,0.26950,Scavenging
-Western Europe,Dairy,Pastoral,Scavenging,0.17565,0.17565,0.16971,0.16971,0.16971,0.16971,0.16971,0.16971,0.16971,Scavenging
-Japan,Dairy,Pastoral,Scavenging,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,Scavenging
-Australia_NZ,Dairy,Pastoral,Scavenging,0.19725,0.19725,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,Scavenging
-Former Soviet Union,Dairy,Pastoral,Scavenging,0.15993,0.15993,0.15402,0.15402,0.15402,0.15402,0.15402,0.15402,0.15402,Scavenging
-China,Dairy,Pastoral,Scavenging,0.13191,0.13191,0.10889,0.10889,0.10889,0.10889,0.10889,0.10889,0.10889,Scavenging
-Middle East,Dairy,Pastoral,Scavenging,0.17037,0.17037,0.14488,0.14488,0.14488,0.14488,0.14488,0.14488,0.14488,Scavenging
-Africa,Dairy,Pastoral,Scavenging,0.06417,0.06417,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,Scavenging
-Latin America,Dairy,Pastoral,Scavenging,0.08156,0.08156,0.08998,0.08998,0.08998,0.08998,0.08998,0.08998,0.08998,Scavenging
-Southeast Asia,Dairy,Pastoral,Scavenging,0.10383,0.10383,0.12553,0.12553,0.12553,0.12553,0.12553,0.12553,0.12553,Scavenging
-Eastern Europe,Dairy,Pastoral,Scavenging,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,Scavenging
-Korea,Dairy,Pastoral,Scavenging,0.32010,0.32010,0.20620,0.20620,0.20620,0.20620,0.20620,0.20620,0.20620,Scavenging
-India,Dairy,Pastoral,Scavenging,0.10448,0.10448,0.12744,0.12744,0.12744,0.12744,0.12744,0.12744,0.12744,Scavenging
-
-Calibrated inputs: mixed,,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,
-7000,,,,minicam-energy-input,,,,,,,,,
-,,,,calibrated-value,,,,,,,,,
-region,supplysector,subsector,technology,1990,2005,minicam-energy-input,,,,,,,
-USA,Dairy,Mixed,Corn,58001088,75946496,Corn,,,,,,,
-Canada,Dairy,Mixed,Corn,2648622,3124404,Corn,,,,,,,
-Western Europe,Dairy,Mixed,Corn,9995784,20043249,Corn,,,,,,,
-Japan,Dairy,Mixed,Corn,7398225,9239823,Corn,,,,,,,
-Australia_NZ,Dairy,Mixed,Corn,14098,59259,Corn,,,,,,,
-Former Soviet Union,Dairy,Mixed,Corn,8517464,6259504,Corn,,,,,,,
-China,Dairy,Mixed,Corn,869331,8632089,Corn
-Middle East,Dairy,Mixed,Corn,2140578,6976777,Corn
-Africa,Dairy,Mixed,Corn,4088336,6789380,Corn
-Latin America,Dairy,Mixed,Corn,6281872,15773529,Corn
-Southeast Asia,Dairy,Mixed,Corn,3507612,9015349,Corn
-Eastern Europe,Dairy,Mixed,Corn,8780788,15556774,Corn
-Korea,Dairy,Mixed,Corn,543194,377961,Corn
-India,Dairy,Mixed,Corn,978340,8482889,Corn
-USA,Dairy,Mixed,FodderCrop,37068590,40178391,FodderCrop
-Canada,Dairy,Mixed,FodderCrop,4050720,3283492,FodderCrop
-Western Europe,Dairy,Mixed,FodderCrop,187151128,165063563,FodderCrop
-Japan,Dairy,Mixed,FodderCrop,8012072,8556186,FodderCrop
-Australia_NZ,Dairy,Mixed,FodderCrop,1347449,1675918,FodderCrop
-Former Soviet Union,Dairy,Mixed,FodderCrop,86171981,62271519,FodderCrop
-China,Dairy,Mixed,FodderCrop,10690202,31852352,FodderCrop
-Middle East,Dairy,Mixed,FodderCrop,5136883,8380679,FodderCrop
-Africa,Dairy,Mixed,FodderCrop,31300361,45229285,FodderCrop
-Latin America,Dairy,Mixed,FodderCrop,68327284,94712743,FodderCrop
-Southeast Asia,Dairy,Mixed,FodderCrop,31409285,50919901,FodderCrop
-Eastern Europe,Dairy,Mixed,FodderCrop,38022111,24416653,FodderCrop
-Korea,Dairy,Mixed,FodderCrop,480078,1336324,FodderCrop
-India,Dairy,Mixed,FodderCrop,79743020,124316103,FodderCrop
-USA,Dairy,Mixed,MiscCrop,44623,83347,MiscCrop
-Canada,Dairy,Mixed,MiscCrop,9486,151952,MiscCrop
-Western Europe,Dairy,Mixed,MiscCrop,7205541,3241722,MiscCrop
-Japan,Dairy,Mixed,MiscCrop,54278,95432,MiscCrop
-Australia_NZ,Dairy,Mixed,MiscCrop,16897,85908,MiscCrop
-Former Soviet Union,Dairy,Mixed,MiscCrop,10023014,4140658,MiscCrop
-China,Dairy,Mixed,MiscCrop,244319,2146498,MiscCrop
-Middle East,Dairy,Mixed,MiscCrop,94787,31938,MiscCrop
-Africa,Dairy,Mixed,MiscCrop,2245123,4956042,MiscCrop
-Latin America,Dairy,Mixed,MiscCrop,1982905,3208966,MiscCrop
-Southeast Asia,Dairy,Mixed,MiscCrop,290641,497793,MiscCrop
-Eastern Europe,Dairy,Mixed,MiscCrop,1742813,998075,MiscCrop
-Korea,Dairy,Mixed,MiscCrop,97738,15880,MiscCrop
-India,Dairy,Mixed,MiscCrop,1563525,2840519,MiscCrop
-USA,Dairy,Mixed,OilCrop,773330,1523214,OilCrop
-Canada,Dairy,Mixed,OilCrop,364585,1171115,OilCrop
-Western Europe,Dairy,Mixed,OilCrop,1256742,3109475,OilCrop
-Japan,Dairy,Mixed,OilCrop,128289,171732,OilCrop
-Australia_NZ,Dairy,Mixed,OilCrop,4209,21337,OilCrop
-Former Soviet Union,Dairy,Mixed,OilCrop,1149059,1227991,OilCrop
-China,Dairy,Mixed,OilCrop,45144,475918,OilCrop
-Middle East,Dairy,Mixed,OilCrop,29535,163972,OilCrop
-Africa,Dairy,Mixed,OilCrop,7168,9058,OilCrop
-Latin America,Dairy,Mixed,OilCrop,215297,810419,OilCrop
-Southeast Asia,Dairy,Mixed,OilCrop,343208,491239,OilCrop
-Eastern Europe,Dairy,Mixed,OilCrop,38503,62561,OilCrop
-Korea,Dairy,Mixed,OilCrop,1741,1198,OilCrop
-India,Dairy,Mixed,OilCrop,1171093,2179016,OilCrop
-USA,Dairy,Mixed,OtherGrain,8211687,4249078,OtherGrain
-Canada,Dairy,Mixed,OtherGrain,4679287,5098053,OtherGrain
-Western Europe,Dairy,Mixed,OtherGrain,26120708,29063383,OtherGrain
-Japan,Dairy,Mixed,OtherGrain,2920649,2104428,OtherGrain
-Australia_NZ,Dairy,Mixed,OtherGrain,177929,1538461,OtherGrain
-Former Soviet Union,Dairy,Mixed,OtherGrain,55658806,19285564,OtherGrain
-China,Dairy,Mixed,OtherGrain,87305,341756,OtherGrain
-Middle East,Dairy,Mixed,OtherGrain,8151109,10880928,OtherGrain
-Africa,Dairy,Mixed,OtherGrain,1683196,2082095,OtherGrain
-Latin America,Dairy,Mixed,OtherGrain,2914789,4899105,OtherGrain
-Southeast Asia,Dairy,Mixed,OtherGrain,174548,193079,OtherGrain
-Eastern Europe,Dairy,Mixed,OtherGrain,9902178,12581774,OtherGrain
-Korea,Dairy,Mixed,OtherGrain,26154,2160,OtherGrain
-India,Dairy,Mixed,OtherGrain,757680,1102012,OtherGrain
-USA,Dairy,Mixed,Rice,0,0,Rice
-Canada,Dairy,Mixed,Rice,0,0,Rice
-Western Europe,Dairy,Mixed,Rice,123794,133012,Rice
-Japan,Dairy,Mixed,Rice,10690,45604,Rice
-Australia_NZ,Dairy,Mixed,Rice,0,0,Rice
-Former Soviet Union,Dairy,Mixed,Rice,0,0,Rice
-China,Dairy,Mixed,Rice,57186,197679,Rice
-Middle East,Dairy,Mixed,Rice,141501,392544,Rice
-Africa,Dairy,Mixed,Rice,169411,164488,Rice
-Latin America,Dairy,Mixed,Rice,61281,96079,Rice
-Southeast Asia,Dairy,Mixed,Rice,1207651,2372236,Rice
-Eastern Europe,Dairy,Mixed,Rice,756,6470,Rice
-Korea,Dairy,Mixed,Rice,0,0,Rice
-India,Dairy,Mixed,Rice,512117,841678,Rice
-USA,Dairy,Mixed,SugarCrop,0,0,SugarCrop
-Canada,Dairy,Mixed,SugarCrop,5970,1251,SugarCrop
-Western Europe,Dairy,Mixed,SugarCrop,998157,523215,SugarCrop
-Japan,Dairy,Mixed,SugarCrop,0,0,SugarCrop
-Australia_NZ,Dairy,Mixed,SugarCrop,0,0,SugarCrop
-Former Soviet Union,Dairy,Mixed,SugarCrop,937655,863532,SugarCrop
-China,Dairy,Mixed,SugarCrop,101789,326274,SugarCrop
-Middle East,Dairy,Mixed,SugarCrop,38339,50944,SugarCrop
-Africa,Dairy,Mixed,SugarCrop,65457,100354,SugarCrop
-Latin America,Dairy,Mixed,SugarCrop,3420658,3777945,SugarCrop
-Southeast Asia,Dairy,Mixed,SugarCrop,353856,783793,SugarCrop
-Eastern Europe,Dairy,Mixed,SugarCrop,163154,115209,SugarCrop
-Korea,Dairy,Mixed,SugarCrop,0,0,SugarCrop
-India,Dairy,Mixed,SugarCrop,1762703,2677826,SugarCrop
-USA,Dairy,Mixed,Wheat,3649222,2110171,Wheat
-Canada,Dairy,Mixed,Wheat,1481713,1218671,Wheat
-Western Europe,Dairy,Mixed,Wheat,11076079,24597085,Wheat
-Japan,Dairy,Mixed,Wheat,352081,274032,Wheat
-Australia_NZ,Dairy,Mixed,Wheat,44297,294643,Wheat
-Former Soviet Union,Dairy,Mixed,Wheat,41834106,17080236,Wheat
-China,Dairy,Mixed,Wheat,47246,110521,Wheat
-Middle East,Dairy,Mixed,Wheat,1212942,2261786,Wheat
-Africa,Dairy,Mixed,Wheat,650911,925422,Wheat
-Latin America,Dairy,Mixed,Wheat,318674,248318,Wheat
-Southeast Asia,Dairy,Mixed,Wheat,211553,375661,Wheat
-Eastern Europe,Dairy,Mixed,Wheat,6577044,6508397,Wheat
-Korea,Dairy,Mixed,Wheat,139889,69659,Wheat
-India,Dairy,Mixed,Wheat,824799,1656639,Wheat
-USA,Dairy,Mixed,Pasture,52746440,60121303,Pasture
-Canada,Dairy,Mixed,Pasture,6431100,6484788,Pasture
-Western Europe,Dairy,Mixed,Pasture,139427618,124287547,Pasture
-Japan,Dairy,Mixed,Pasture,6260467,3934962,Pasture
-Australia_NZ,Dairy,Mixed,Pasture,2243703,4431870,Pasture
-Former Soviet Union,Dairy,Mixed,Pasture,149530591,78834803,Pasture
-China,Dairy,Mixed,Pasture,8670860,38274352,Pasture
-Middle East,Dairy,Mixed,Pasture,3409157,4035077,Pasture
-Africa,Dairy,Mixed,Pasture,41369660,60246595,Pasture
-Latin America,Dairy,Mixed,Pasture,71364760,102924898,Pasture
-Southeast Asia,Dairy,Mixed,Pasture,10428765,21397820,Pasture
-Eastern Europe,Dairy,Mixed,Pasture,34192647,32438888,Pasture
-Korea,Dairy,Mixed,Pasture,745823,1455783,Pasture
-India,Dairy,Mixed,Pasture,21081643,34131122,Pasture
-
-
-Calibrated inputs: Pastoral,,,,,,
-INPUT_TABLE,,,,,,
-Variable ID,,,,,,
-7000,,,,,,
-
-region,supplysector,subsector,technology,1990,2005,minicam-energy-input
-Australia_NZ,Dairy,Pastoral,Corn,44550,0,Corn
-Africa,Dairy,Pastoral,Corn,88396,104676,Corn
-Australia_NZ,Dairy,Pastoral,FodderCrop,4257908,0,FodderCrop
-Africa,Dairy,Pastoral,FodderCrop,773464,833412,FodderCrop
-Australia_NZ,Dairy,Pastoral,MiscCrop,53393,0,MiscCrop
-Africa,Dairy,Pastoral,MiscCrop,48543,76410,MiscCrop
-Australia_NZ,Dairy,Pastoral,OilCrop,13300,0,OilCrop
-Africa,Dairy,Pastoral,OilCrop,155,140,OilCrop
-Australia_NZ,Dairy,Pastoral,OtherGrain,562251,0,OtherGrain
-Africa,Dairy,Pastoral,OtherGrain,36393,32101,OtherGrain
-Australia_NZ,Dairy,Pastoral,Rice,0,0,Rice
-Africa,Dairy,Pastoral,Rice,3663,2536,Rice
-Australia_NZ,Dairy,Pastoral,SugarCrop,0,0,SugarCrop
-Africa,Dairy,Pastoral,SugarCrop,1415,1547,SugarCrop
-Australia_NZ,Dairy,Pastoral,Wheat,139976,0,Wheat
-Africa,Dairy,Pastoral,Wheat,14074,14268,Wheat
-USA,Dairy,Pastoral,Pasture,14615714,14457080,Pasture
-Canada,Dairy,Pastoral,Pasture,1763207,1421010,Pasture
-Western Europe,Dairy,Pastoral,Pasture,409419,489428,Pasture
-Japan,Dairy,Pastoral,Pasture,0,0,Pasture
-Australia_NZ,Dairy,Pastoral,Pasture,42540280,68476064,Pasture
-Former Soviet Union,Dairy,Pastoral,Pasture,19291134,17731475,Pasture
-China,Dairy,Pastoral,Pasture,20794121,40874875,Pasture
-Middle East,Dairy,Pastoral,Pasture,999145,2334134,Pasture
-Africa,Dairy,Pastoral,Pasture,101712558,115171598,Pasture
-Latin America,Dairy,Pastoral,Pasture,82312651,104199686,Pasture
-Southeast Asia,Dairy,Pastoral,Pasture,2821585,4556206,Pasture
-Eastern Europe,Dairy,Pastoral,Pasture,0,0,Pasture
-Korea,Dairy,Pastoral,Pasture,2151645,1826547,Pasture
-India,Dairy,Pastoral,Pasture,8006575,11692998,Pasture
-,,,,,,
-,,,,,,
-Calibrated inputs: Scavenging,,,,,,
-INPUT_TABLE,,,,,,
-Variable ID,,,,,,
-7000,,,,minicam-energy-input,,
-,,,,calibrated-value,,
-region,supplysector,subsector,technology,1990,2005,minicam-energy-input
-USA,Dairy,Mixed,Scavenging,0,0,Scavenging
-Canada,Dairy,Mixed,Scavenging,0,0,Scavenging
-Western Europe,Dairy,Mixed,Scavenging,1925182,2690169,Scavenging
-Japan,Dairy,Mixed,Scavenging,0,0,Scavenging
-Australia_NZ,Dairy,Mixed,Scavenging,0,0,Scavenging
-Former Soviet Union,Dairy,Mixed,Scavenging,2011659,1952628,Scavenging
-China,Dairy,Mixed,Scavenging,1108369,4348879,Scavenging
-Middle East,Dairy,Mixed,Scavenging,871564,1375443,Scavenging
-Africa,Dairy,Mixed,Scavenging,4274251,6325352,Scavenging
-Latin America,Dairy,Mixed,Scavenging,8108738,11694723,Scavenging
-Southeast Asia,Dairy,Mixed,Scavenging,37961402,67338929,Scavenging
-Eastern Europe,Dairy,Mixed,Scavenging,4995129,0,Scavenging
-Korea,Dairy,Mixed,Scavenging,95336,165412,Scavenging
-India,Dairy,Mixed,Scavenging,107791980,174514918,Scavenging
-USA,Dairy,Pastoral,Scavenging,0,0,Scavenging
-Canada,Dairy,Pastoral,Scavenging,0,0,Scavenging
-Western Europe,Dairy,Pastoral,Scavenging,22036,26342,Scavenging
-Japan,Dairy,Pastoral,Scavenging,0,0,Scavenging
-Australia_NZ,Dairy,Pastoral,Scavenging,0,0,Scavenging
-Former Soviet Union,Dairy,Pastoral,Scavenging,1038284,954340,Scavenging
-China,Dairy,Pastoral,Scavenging,1119177,2199960,Scavenging
-Middle East,Dairy,Pastoral,Scavenging,53776,125627,Scavenging
-Africa,Dairy,Pastoral,Scavenging,5523865,6253584,Scavenging
-Latin America,Dairy,Pastoral,Scavenging,4430217,5608217,Scavenging
-Southeast Asia,Dairy,Pastoral,Scavenging,2856969,4599450,Scavenging
-Eastern Europe,Dairy,Pastoral,Scavenging,0,0,Scavenging
-Korea,Dairy,Pastoral,Scavenging,115805,98308,Scavenging,,,,,,
-India,Dairy,Pastoral,Scavenging,8187641,11957431,Scavenging,,,,,,
-
-
-
-
-Non-energy cost: Mixed,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-7002,,,,minicam-non-energy-input,,,,,,,,
-,,,,input-cost,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-USA,Dairy,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Canada,Dairy,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Western Europe,Dairy,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Japan,Dairy,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Australia_NZ,Dairy,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Former Soviet Union,Dairy,Mixed,Corn,10,10,10,10,10,10,10,10,10
-China,Dairy,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Middle East,Dairy,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Africa,Dairy,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Latin America,Dairy,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Southeast Asia,Dairy,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Eastern Europe,Dairy,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Korea,Dairy,Mixed,Corn,10,10,10,10,10,10,10,10,10
-India,Dairy,Mixed,Corn,10,10,10,10,10,10,10,10,10
-USA,Dairy,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Canada,Dairy,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Western Europe,Dairy,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Japan,Dairy,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Australia_NZ,Dairy,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Former Soviet Union,Dairy,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-China,Dairy,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Middle East,Dairy,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Africa,Dairy,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Latin America,Dairy,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Southeast Asia,Dairy,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Eastern Europe,Dairy,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Korea,Dairy,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-India,Dairy,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-USA,Dairy,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Canada,Dairy,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Western Europe,Dairy,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Japan,Dairy,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Australia_NZ,Dairy,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Former Soviet Union,Dairy,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-China,Dairy,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Middle East,Dairy,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Africa,Dairy,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Latin America,Dairy,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Southeast Asia,Dairy,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Eastern Europe,Dairy,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Korea,Dairy,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-India,Dairy,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-USA,Dairy,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Canada,Dairy,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Western Europe,Dairy,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Japan,Dairy,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Australia_NZ,Dairy,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Former Soviet Union,Dairy,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-China,Dairy,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Middle East,Dairy,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Africa,Dairy,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Latin America,Dairy,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Southeast Asia,Dairy,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Eastern Europe,Dairy,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Korea,Dairy,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-India,Dairy,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-USA,Dairy,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Canada,Dairy,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Western Europe,Dairy,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Japan,Dairy,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Australia_NZ,Dairy,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Former Soviet Union,Dairy,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-China,Dairy,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Middle East,Dairy,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Africa,Dairy,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Latin America,Dairy,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Southeast Asia,Dairy,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Eastern Europe,Dairy,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Korea,Dairy,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-India,Dairy,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-USA,Dairy,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Canada,Dairy,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Western Europe,Dairy,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Japan,Dairy,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Australia_NZ,Dairy,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Former Soviet Union,Dairy,Mixed,Rice,10,10,10,10,10,10,10,10,10
-China,Dairy,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Middle East,Dairy,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Africa,Dairy,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Latin America,Dairy,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Southeast Asia,Dairy,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Eastern Europe,Dairy,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Korea,Dairy,Mixed,Rice,10,10,10,10,10,10,10,10,10
-India,Dairy,Mixed,Rice,10,10,10,10,10,10,10,10,10
-USA,Dairy,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Canada,Dairy,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Western Europe,Dairy,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Japan,Dairy,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Australia_NZ,Dairy,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Former Soviet Union,Dairy,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-China,Dairy,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Middle East,Dairy,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Africa,Dairy,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Latin America,Dairy,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Southeast Asia,Dairy,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Eastern Europe,Dairy,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Korea,Dairy,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-India,Dairy,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-USA,Dairy,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Canada,Dairy,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Western Europe,Dairy,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Japan,Dairy,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Australia_NZ,Dairy,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Former Soviet Union,Dairy,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-China,Dairy,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Middle East,Dairy,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Africa,Dairy,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Latin America,Dairy,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Southeast Asia,Dairy,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Eastern Europe,Dairy,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Korea,Dairy,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-India,Dairy,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-USA,Dairy,Mixed,Pasture,10,10,10,10,10,10,10,10,10
-Canada,Dairy,Mixed,Pasture,10,10,10,10,10,10,10,10,10
-Western Europe,Dairy,Mixed,Pasture,10,10,10,10,10,10,10,10,10
-Japan,Dairy,Mixed,Pasture,10,10,10,10,10,10,10,10,10
-Australia_NZ,Dairy,Mixed,Pasture,10,10,10,10,10,10,10,10,10
-Former Soviet Union,Dairy,Mixed,Pasture,10,10,10,10,10,10,10,10,10
-China,Dairy,Mixed,Pasture,10,10,10,10,10,10,10,10,10
-Middle East,Dairy,Mixed,Pasture,10,10,10,10,10,10,10,10,10
-Africa,Dairy,Mixed,Pasture,10,10,10,10,10,10,10,10,10
-Latin America,Dairy,Mixed,Pasture,10,10,10,10,10,10,10,10,10
-Southeast Asia,Dairy,Mixed,Pasture,10,10,10,10,10,10,10,10,10
-Eastern Europe,Dairy,Mixed,Pasture,10,10,10,10,10,10,10,10,10
-Korea,Dairy,Mixed,Pasture,10,10,10,10,10,10,10,10,10
-India,Dairy,Mixed,Pasture,10,10,10,10,10,10,10,10,10
-
-
-Non-energy cost: Pastoral,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-7002,,,,minicam-non-energy-input,,,,,,,,
-,,,,input-cost,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-Australia_NZ,Dairy,Pastoral,Corn,10,10,10,10,10,10,10,10,10
-Africa,Dairy,Pastoral,Corn,10,10,10,10,10,10,10,10,10
-Australia_NZ,Dairy,Pastoral,FodderCrop,10,10,10,10,10,10,10,10,10
-Africa,Dairy,Pastoral,FodderCrop,10,10,10,10,10,10,10,10,10
-Australia_NZ,Dairy,Pastoral,MiscCrop,10,10,10,10,10,10,10,10,10
-Africa,Dairy,Pastoral,MiscCrop,10,10,10,10,10,10,10,10,10
-Australia_NZ,Dairy,Pastoral,OilCrop,10,10,10,10,10,10,10,10,10
-Africa,Dairy,Pastoral,OilCrop,10,10,10,10,10,10,10,10,10
-Australia_NZ,Dairy,Pastoral,OtherGrain,10,10,10,10,10,10,10,10,10
-Africa,Dairy,Pastoral,OtherGrain,10,10,10,10,10,10,10,10,10
-Australia_NZ,Dairy,Pastoral,Rice,10,10,10,10,10,10,10,10,10
-Africa,Dairy,Pastoral,Rice,10,10,10,10,10,10,10,10,10
-Australia_NZ,Dairy,Pastoral,SugarCrop,10,10,10,10,10,10,10,10,10
-Africa,Dairy,Pastoral,SugarCrop,10,10,10,10,10,10,10,10,10
-Australia_NZ,Dairy,Pastoral,Wheat,10,10,10,10,10,10,10,10,10
-Africa,Dairy,Pastoral,Wheat,10,10,10,10,10,10,10,10,10
-USA,Dairy,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
-Canada,Dairy,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
-Western Europe,Dairy,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
-Japan,Dairy,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
-Australia_NZ,Dairy,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
-Former Soviet Union,Dairy,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
-China,Dairy,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
-Middle East,Dairy,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
-Africa,Dairy,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
-Latin America,Dairy,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
-Southeast Asia,Dairy,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
-Eastern Europe,Dairy,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
-Korea,Dairy,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
-India,Dairy,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
-
-
-Non-energy cost: Scavenging,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-7002,,,,minicam-non-energy-input,,,,,,,,
-,,,,input-cost,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-USA,Dairy,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
-Canada,Dairy,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
-Western Europe,Dairy,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
-Japan,Dairy,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
-Australia_NZ,Dairy,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
-Former Soviet Union,Dairy,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
-China,Dairy,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
-Middle East,Dairy,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
-Africa,Dairy,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
-Latin America,Dairy,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
-Southeast Asia,Dairy,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
-Eastern Europe,Dairy,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
-Korea,Dairy,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
-India,Dairy,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
-USA,Dairy,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
-Canada,Dairy,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
-Western Europe,Dairy,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
-Japan,Dairy,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
-Australia_NZ,Dairy,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
-Former Soviet Union,Dairy,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
-China,Dairy,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
-Middle East,Dairy,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
-Africa,Dairy,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
-Latin America,Dairy,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
-Southeast Asia,Dairy,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
-Eastern Europe,Dairy,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
-Korea,Dairy,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
-India,Dairy,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
-
-
-Technology Logit Exponent,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-7003,,,,,,,,,,,,
-,,,,logitexp,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-USA,Dairy,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Canada,Dairy,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Western Europe,Dairy,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Japan,Dairy,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,Dairy,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Former Soviet Union,Dairy,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-China,Dairy,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Middle East,Dairy,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,Dairy,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Latin America,Dairy,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Southeast Asia,Dairy,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Eastern Europe,Dairy,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Korea,Dairy,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-India,Dairy,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-USA,Dairy,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Canada,Dairy,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Western Europe,Dairy,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Japan,Dairy,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,Dairy,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Former Soviet Union,Dairy,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-China,Dairy,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Middle East,Dairy,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,Dairy,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Latin America,Dairy,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Southeast Asia,Dairy,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Eastern Europe,Dairy,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Korea,Dairy,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-India,Dairy,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-USA,Dairy,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Canada,Dairy,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Western Europe,Dairy,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Japan,Dairy,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,Dairy,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Former Soviet Union,Dairy,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-China,Dairy,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Middle East,Dairy,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,Dairy,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Latin America,Dairy,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Southeast Asia,Dairy,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Eastern Europe,Dairy,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Korea,Dairy,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-India,Dairy,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-USA,Dairy,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Canada,Dairy,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Western Europe,Dairy,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Japan,Dairy,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,Dairy,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Former Soviet Union,Dairy,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-China,Dairy,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Middle East,Dairy,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,Dairy,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Latin America,Dairy,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Southeast Asia,Dairy,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Eastern Europe,Dairy,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Korea,Dairy,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-India,Dairy,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-USA,Dairy,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Canada,Dairy,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Western Europe,Dairy,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Japan,Dairy,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,Dairy,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Former Soviet Union,Dairy,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-China,Dairy,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Middle East,Dairy,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,Dairy,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Latin America,Dairy,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Southeast Asia,Dairy,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Eastern Europe,Dairy,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Korea,Dairy,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-India,Dairy,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-USA,Dairy,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Canada,Dairy,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Western Europe,Dairy,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Japan,Dairy,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,Dairy,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Former Soviet Union,Dairy,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-China,Dairy,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Middle East,Dairy,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,Dairy,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Latin America,Dairy,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Southeast Asia,Dairy,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Eastern Europe,Dairy,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Korea,Dairy,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-India,Dairy,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-USA,Dairy,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Canada,Dairy,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Western Europe,Dairy,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Japan,Dairy,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,Dairy,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Former Soviet Union,Dairy,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-China,Dairy,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Middle East,Dairy,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,Dairy,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Latin America,Dairy,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Southeast Asia,Dairy,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Eastern Europe,Dairy,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Korea,Dairy,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-India,Dairy,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-USA,Dairy,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Canada,Dairy,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Western Europe,Dairy,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Japan,Dairy,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,Dairy,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Former Soviet Union,Dairy,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-China,Dairy,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Middle East,Dairy,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,Dairy,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Latin America,Dairy,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Southeast Asia,Dairy,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Eastern Europe,Dairy,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Korea,Dairy,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-India,Dairy,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-USA,Dairy,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Canada,Dairy,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Western Europe,Dairy,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Japan,Dairy,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,Dairy,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Former Soviet Union,Dairy,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-China,Dairy,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Middle East,Dairy,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,Dairy,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Latin America,Dairy,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Southeast Asia,Dairy,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Eastern Europe,Dairy,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Korea,Dairy,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-India,Dairy,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-
-
-Technology Logit Exponent,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-7003,,,,,,,,,,,,
-,,,,logitexp,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-Australia_NZ,Dairy,Pastoral,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,Dairy,Pastoral,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,Dairy,Pastoral,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,Dairy,Pastoral,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,Dairy,Pastoral,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,Dairy,Pastoral,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,Dairy,Pastoral,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,Dairy,Pastoral,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,Dairy,Pastoral,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,Dairy,Pastoral,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,Dairy,Pastoral,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,Dairy,Pastoral,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,Dairy,Pastoral,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,Dairy,Pastoral,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,Dairy,Pastoral,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,Dairy,Pastoral,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-USA,Dairy,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Canada,Dairy,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Western Europe,Dairy,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Japan,Dairy,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,Dairy,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Former Soviet Union,Dairy,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-China,Dairy,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Middle East,Dairy,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,Dairy,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Latin America,Dairy,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Southeast Asia,Dairy,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Eastern Europe,Dairy,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Korea,Dairy,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-India,Dairy,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-
-
-Technology Logit Exponent: Animal Products and Scavenging,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-7003,,,,,,,,,,,,
-,,,,logitexp,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-USA,Dairy,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Canada,Dairy,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Western Europe,Dairy,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Japan,Dairy,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,Dairy,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Former Soviet Union,Dairy,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-China,Dairy,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Middle East,Dairy,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,Dairy,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Latin America,Dairy,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Southeast Asia,Dairy,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Eastern Europe,Dairy,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Korea,Dairy,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-India,Dairy,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-USA,Dairy,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Canada,Dairy,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Western Europe,Dairy,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Japan,Dairy,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,Dairy,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Former Soviet Union,Dairy,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-China,Dairy,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Middle East,Dairy,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,Dairy,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Latin America,Dairy,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Southeast Asia,Dairy,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Eastern Europe,Dairy,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Korea,Dairy,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-India,Dairy,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-
-
-Set shareweights to 0 for techs with 0 share in base years,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-7004,,,,,,,,,,,,
-,,,,sharewt,,,,,,,,
-region,supplysector,subsector,technology,1990,2005,2020,2035,2050,2065,2080,2095,
-USA,Dairy,Mixed,Rice,0,0,0,0,0,0,0,0,
-Canada,Dairy,Mixed,Rice,0,0,0,0,0,0,0,0,
-Australia_NZ,Dairy,Mixed,Rice,0,0,0,0,0,0,0,0,
-Former Soviet Union,Dairy,Mixed,Rice,0,0,0,0,0,0,0,0,
-Korea,Dairy,Mixed,Rice,0,0,0,0,0,0,0,0
-USA,Dairy,Mixed,SugarCrop,0,0,0,0,0,0,0,0
-Japan,Dairy,Mixed,SugarCrop,0,0,0,0,0,0,0,0
-Australia_NZ,Dairy,Mixed,SugarCrop,0,0,0,0,0,0,0,0
-Korea,Dairy,Mixed,SugarCrop,0,0,0,0,0,0,0,0
-Australia_NZ,Dairy,Pastoral,Corn,1,0,0,0,0,0,0,0
-Australia_NZ,Dairy,Pastoral,FodderCrop,1,0,0,0,0,0,0,0
-Australia_NZ,Dairy,Pastoral,MiscCrop,1,0,0,0,0,0,0,0
-Australia_NZ,Dairy,Pastoral,OilCrop,1,0,0,0,0,0,0,0
-Australia_NZ,Dairy,Pastoral,OtherGrain,1,0,0,0,0,0,0,0
-Australia_NZ,Dairy,Pastoral,Rice,0,0,0,0,0,0,0,0
-Australia_NZ,Dairy,Pastoral,SugarCrop,0,0,0,0,0,0,0,0
-Australia_NZ,Dairy,Pastoral,Wheat,1,0,0,0,0,0,0,0
-Japan,Dairy,Pastoral,Pasture,0,0,0,0,0,0,0,0
-Eastern Europe,Dairy,Pastoral,Pasture,0,0,0,0,0,0,0,0
-USA,Dairy,Mixed,Scavenging,0,0,0,0,0,0,0,0
-Canada,Dairy,Mixed,Scavenging,0,0,0,0,0,0,0,0
-Japan,Dairy,Mixed,Scavenging,0,0,0,0,0,0,0,0
-Australia_NZ,Dairy,Mixed,Scavenging,0,0,0,0,0,0,0,0
-Eastern Europe,Dairy,Mixed,Scavenging,1,0,0,0,0,0,0,0
-USA,Dairy,Pastoral,Scavenging,0,0,0,0,0,0,0,0
-Canada,Dairy,Pastoral,Scavenging,0,0,0,0,0,0,0,0
-Japan,Dairy,Pastoral,Scavenging,0,0,0,0,0,0,0,0
-Australia_NZ,Dairy,Pastoral,Scavenging,0,0,0,0,0,0,0,0
-Eastern Europe,Dairy,Pastoral,Scavenging,0,0,0,0,0,0,0,0
-
-
-CO2 tag,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
-7010,,,,,,,,,,,
-,,,,CO2,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,Dairy,Mixed,Corn,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,Dairy,Mixed,FodderCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,Dairy,Mixed,MiscCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,Dairy,Mixed,OilCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,Dairy,Mixed,OtherGrain,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,Dairy,Mixed,Rice,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,Dairy,Mixed,SugarCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,Dairy,Mixed,Wheat,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,Dairy,Mixed,Pasture,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,Dairy,Pastoral,Pasture,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,Dairy,Mixed,Scavenging,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,Dairy,Pastoral,Scavenging,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-
-
-CO2 tag,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-7011,,,,,,,,,,,,
-,,,,CO2,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-Australia_NZ,Dairy,Pastoral,Corn,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-Africa,Dairy,Pastoral,Corn,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-Australia_NZ,Dairy,Pastoral,FodderCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-Africa,Dairy,Pastoral,FodderCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-Australia_NZ,Dairy,Pastoral,MiscCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-Africa,Dairy,Pastoral,MiscCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-Australia_NZ,Dairy,Pastoral,OilCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-Africa,Dairy,Pastoral,OilCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-Australia_NZ,Dairy,Pastoral,OtherGrain,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-Africa,Dairy,Pastoral,OtherGrain,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-Australia_NZ,Dairy,Pastoral,Rice,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-Africa,Dairy,Pastoral,Rice,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-Australia_NZ,Dairy,Pastoral,SugarCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-Africa,Dairy,Pastoral,SugarCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-Australia_NZ,Dairy,Pastoral,Wheat,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-Africa,Dairy,Pastoral,Wheat,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-
-
-Energy-final-demand drivers: consumption of animals for food,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-62,,,,,,,,,,,,
-,,,base-service,,,price-elasticity,income-elasticity,,,,,
-region,energy-final-demand,perCapitaBased,1975,1990,2005,2020 fillout,2020,2035,2050,2065,2080,2095
-USA,DairyDemand,1,52435546,52435546,62873306,-0.5,0.01,0.006,0.002,0.002,0.002,0.002
-Canada,DairyDemand,1,6231687,6231687,6334186,-0.5,0.01,0.006,0.002,0.002,0.002,0.002
-Western Europe,DairyDemand,1,111476483,111476483,109040647,-0.5,0.01,0.006,0.002,0.002,0.002,0.002
-Japan,DairyDemand,1,6271676,6271676,6372013,-0.5,0.01,0.006,0.002,0.002,0.002,0.002
-Australia_NZ,DairyDemand,1,10709046,10709046,18869403,-0.5,0.01,0.006,0.002,0.002,0.002,0.002
-Former Soviet Union,DairyDemand,1,81266857,81266857,50267130,-0.5,0.022,0.023,0.04,0.04,0.04,0.04
-China,DairyDemand,1,5767377,5767377,23379417,-0.5,0.183,0.1175,0.052,0.052,0.052,0.052
-Middle East,DairyDemand,1,5971846,5971846,9652994,-0.5,0.091,0.0505,0.01,0.01,0.01,0.01
-Africa,DairyDemand,1,16312587,16312587,23255968,-0.5,0.2,0.105,0.01,0.01,0.01,0.01
-Latin America,DairyDemand,1,32690755,32690755,52745378,-0.5,0.2,0.105,0.01,0.01,0.01,0.01
-Southeast Asia,DairyDemand,1,15384565,15384565,30072669,-0.5,0.167,0.097,0.027,0.027,0.027,0.027
-Eastern Europe,DairyDemand,1,28478696,28478696,26309982,-0.5,0.022,0.023,0.04,0.04,0.04,0.04
-Korea,DairyDemand,1,1425272,1425272,1796208,-0.5,0.183,0.1175,0.052,0.052,0.052,0.052
-India,DairyDemand,1,41828909,41828909,74318345,-0.5,0.167,0.097,0.027,0.027,0.027,0.027
-
-
-
-Meat demand supplysectors: unit tags and sector type,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,
-50,,,,,
-,demandsector,,,,
-region,supplysector,input-unit,output-unit,price-unit,sectorType
-ALL,DairyDemand,Gcal,Gcal,1975$/Gcal,agDemand
-
-
-Meat Food Demands scale year,,,,,
-INPUT_TABLE,,,,,
-Variable ID,,,,,
-500,,,,,
-,demandsector,,,,
-region,supplysector,subsector,scaleYear,,
-USA,DairyDemand,DairyDemand,2005,,
-Canada,DairyDemand,DairyDemand,2005,,
-Western Europe,DairyDemand,DairyDemand,2005,,
-Japan,DairyDemand,DairyDemand,2005
-Australia_NZ,DairyDemand,DairyDemand,2005
-Former Soviet Union,DairyDemand,DairyDemand,2005
-China,DairyDemand,DairyDemand,2005
-Middle East,DairyDemand,DairyDemand,2005
-Africa,DairyDemand,DairyDemand,2005
-Latin America,DairyDemand,DairyDemand,2005
-Southeast Asia,DairyDemand,DairyDemand,2005
-Eastern Europe,DairyDemand,DairyDemand,2005
-Korea,DairyDemand,DairyDemand,2005
-India,DairyDemand,DairyDemand,2005
-USA,DairyDemand,DairyNonfoodDemand,2005
-Canada,DairyDemand,DairyNonfoodDemand,2005
-Western Europe,DairyDemand,DairyNonfoodDemand,2005
-Japan,DairyDemand,DairyNonfoodDemand,2005
-Australia_NZ,DairyDemand,DairyNonfoodDemand,2005
-Former Soviet Union,DairyDemand,DairyNonfoodDemand,2005,
-China,DairyDemand,DairyNonfoodDemand,2005,
-Middle East,DairyDemand,DairyNonfoodDemand,2005,
-Africa,DairyDemand,DairyNonfoodDemand,2005,
-Latin America,DairyDemand,DairyNonfoodDemand,2005,
-Southeast Asia,DairyDemand,DairyNonfoodDemand,2005,
-Eastern Europe,DairyDemand,DairyNonfoodDemand,2005,
-Korea,DairyDemand,DairyNonfoodDemand,2005,
-India,DairyDemand,DairyNonfoodDemand,2005,
-
-
-Efficiency,,,,
-INPUT_TABLE,,,,
-Variable ID,,,,
-5001,,,,minicam-energy-input
-,,,,efficiency
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input
-USA,DairyDemand,DairyDemand,DairyDemand,0.993802,0.993802,0.994734,0.994734,0.994734,0.994734,0.994734,0.994734,0.994734,Dairy
-Canada,DairyDemand,DairyDemand,DairyDemand,0.992460,0.992460,0.993137,0.993137,0.993137,0.993137,0.993137,0.993137,0.993137,Dairy
-Western Europe,DairyDemand,DairyDemand,DairyDemand,0.971631,0.971631,0.975351,0.975351,0.975351,0.975351,0.975351,0.975351,0.975351,Dairy
-Japan,DairyDemand,DairyDemand,DairyDemand,0.975731,0.975731,0.979563,0.979563,0.979563,0.979563,0.979563,0.979563,0.979563,Dairy
-Australia_NZ,DairyDemand,DairyDemand,DairyDemand,0.969646,0.969646,0.972598,0.972598,0.972598,0.972598,0.972598,0.972598,0.972598,Dairy
-Former Soviet Union,DairyDemand,DairyDemand,DairyDemand,0.955114,0.955114,0.970503,0.970503,0.970503,0.970503,0.970503,0.970503,0.970503,Dairy
-China,DairyDemand,DairyDemand,DairyDemand,0.997776,0.997776,0.997308,0.997308,0.997308,0.997308,0.997308,0.997308,0.997308,Dairy
-Middle East,DairyDemand,DairyDemand,DairyDemand,0.970052,0.970052,0.974787,0.974787,0.974787,0.974787,0.974787,0.974787,0.974787,Dairy
-Africa,DairyDemand,DairyDemand,DairyDemand,0.987908,0.987908,0.984842,0.984842,0.984842,0.984842,0.984842,0.984842,0.984842,Dairy
-Latin America,DairyDemand,DairyDemand,DairyDemand,0.988096,0.988096,0.988814,0.988814,0.988814,0.988814,0.988814,0.988814,0.988814,Dairy
-Southeast Asia,DairyDemand,DairyDemand,DairyDemand,0.989652,0.989652,0.988585,0.988585,0.988585,0.988585,0.988585,0.988585,0.988585,Dairy
-Eastern Europe,DairyDemand,DairyDemand,DairyDemand,0.972651,0.972651,0.974157,0.974157,0.974157,0.974157,0.974157,0.974157,0.974157,Dairy
-Korea,DairyDemand,DairyDemand,DairyDemand,0.983135,0.983135,0.983173,0.983173,0.983173,0.983173,0.983173,0.983173,0.983173,Dairy
-India,DairyDemand,DairyDemand,DairyDemand,0.989984,0.989984,0.988008,0.988008,0.988008,0.988008,0.988008,0.988008,0.988008,Dairy
-USA,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0.993802,0.993802,0.994734,0.994734,0.994734,0.994734,0.994734,0.994734,0.994734,Dairy
-Canada,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0.992460,0.992460,0.993137,0.993137,0.993137,0.993137,0.993137,0.993137,0.993137,Dairy
-Western Europe,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0.971631,0.971631,0.975351,0.975351,0.975351,0.975351,0.975351,0.975351,0.975351,Dairy
-Japan,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0.975731,0.975731,0.979563,0.979563,0.979563,0.979563,0.979563,0.979563,0.979563,Dairy
-Australia_NZ,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0.969646,0.969646,0.972598,0.972598,0.972598,0.972598,0.972598,0.972598,0.972598,Dairy
-Former Soviet Union,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0.955114,0.955114,0.970503,0.970503,0.970503,0.970503,0.970503,0.970503,0.970503,Dairy
-China,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0.997776,0.997776,0.997308,0.997308,0.997308,0.997308,0.997308,0.997308,0.997308,Dairy
-Middle East,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0.970052,0.970052,0.974787,0.974787,0.974787,0.974787,0.974787,0.974787,0.974787,Dairy
-Africa,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0.987908,0.987908,0.984842,0.984842,0.984842,0.984842,0.984842,0.984842,0.984842,Dairy
-Latin America,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0.988096,0.988096,0.988814,0.988814,0.988814,0.988814,0.988814,0.988814,0.988814,Dairy
-Southeast Asia,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0.989652,0.989652,0.988585,0.988585,0.988585,0.988585,0.988585,0.988585,0.988585,Dairy
-Eastern Europe,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0.972651,0.972651,0.974157,0.974157,0.974157,0.974157,0.974157,0.974157,0.974157,Dairy
-Korea,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0.983135,0.983135,0.983173,0.983173,0.983173,0.983173,0.983173,0.983173,0.983173,Dairy
-India,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0.989984,0.989984,0.988008,0.988008,0.988008,0.988008,0.988008,0.988008,0.988008,Dairy
-
-Calibrated inputs to demand sectors,,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,,Afr and Aus_NZ have pastoral inputs of ag crops
-Variable ID,,,,,,,,,,,,,,,,,
-5000,,,,,,,,,,,,,,,,,
-,demandsector,,,calibrated-value,,,,from data,,,demands,,supplies,,,demand scalers,
-region,supplysector,subsector,technology,1990,2005,minicam-energy-input,,1990,2005,,1990,2005,1990,2005,,1990,2005
-USA,DairyDemand,DairyDemand,DairyDemand,46986656,60555520,Dairy,,47019936,60596057,,52799940,63248434,52762568,63206122,,0.999292204,0.999331015
-Canada,DairyDemand,DairyDemand,DairyDemand,4644569,5169052,Dairy,,4648467,5172976,,6284300,6382800,6279030,6377959,,0.999161442,0.999241496
-Western Europe,DairyDemand,DairyDemand,DairyDemand,80064295,89445214,Dairy,,80318988,89691563,,115096321,112104229,114731348,111796321,,0.996828976,0.997253378
-Japan,DairyDemand,DairyDemand,DairyDemand,6427672,6504957,Dairy,,6453208,6528753,,6453209,6528754,6427673,6504958,,0.99604286,0.996355132
-Australia_NZ,DairyDemand,DairyDemand,DairyDemand,4396337,4282300,Dairy,,4402067,4288138,,11058686,19427478,11044290,19401028,,0.998698161,0.998638526
-Former Soviet Union,DairyDemand,DairyDemand,DairyDemand,85086012,39184422,Dairy,,85499576,39336534,,85499577,51995991,85086013,51794925,,0.99516297,0.996133048
-China,DairyDemand,DairyDemand,DairyDemand,5772978,19735907,Dairy,,5773975,19744262,,5781233,23452440,5780234,23442516,,0.999827188,0.999576834
-Middle East,DairyDemand,DairyDemand,DairyDemand,6156211,9902673,Dairy,,6185595,9945227,,6185596,9945228,6156212,9902674,,0.995249522,0.99572121
-Africa,DairyDemand,DairyDemand,DairyDemand,15008656,22387822,Dairy,,15019871,22413517,,16524599,23641002,16512261,23613900,,0.999253342,0.998853579
-Latin America,DairyDemand,DairyDemand,DairyDemand,31024881,46061580,Dairy,,31054670,46101317,,33116367,53388074,33084600,53342056,,0.999040759,0.999138045
-Southeast Asia,DairyDemand,DairyDemand,DairyDemand,14322828,27408166,Dairy,,14339015,27453313,,15563000,30470033,15545431,30419925,,0.998871112,0.998355475
-Eastern Europe,DairyDemand,DairyDemand,DairyDemand,14082356,16435665,Dairy,,14134317,16495559,,29387506,27106380,29279471,27007959,,0.996323773,0.996369102
-Korea,DairyDemand,DairyDemand,DairyDemand,975775,1501555,Dairy,,977065,1505600,,1451638,1831871,1449722,1826950,,0.99868007,0.997313603
-India,DairyDemand,DairyDemand,DairyDemand,38992574,59213246,Dairy,,39035156,59313509,,42298264,75347772,42252123,75220405,,0.998909148,0.998309615
-USA,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,5775913,2650602,Dairy,,5780004,2652376,,,,,,,,
-Canada,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,1634461,1208907,Dairy,,1635833,1209824,,,,,,,,
-Western Europe,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,34667053,22351107,Dairy,,34777333,22412666,,,,,,,,
-Japan,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,1,1,Dairy,,1,1,,,,,,,,
-Australia_NZ,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,6647953,15118728,Dairy,,6656619,15139340,,,,,,,,
-Former Soviet Union,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,1,12610503,Dairy,,1,12659456,,,,,,,,
-China,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,7256,3706609,Dairy,,7257,3708178,,,,,,,,
-Middle East,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,1,1,Dairy,,1,1,,,,,,,,
-Africa,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,1503604,1226078,Dairy,,1504728,1227485,,,,,,,,
-Latin America,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,2059719,7280476,Dairy,,2061696,7286757,,,,,,,,
-Southeast Asia,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,1222603,3011759,Dairy,,1223985,3016720,,,,,,,,
-Eastern Europe,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,15197115,10572294,Dairy,,15253189,10610821,,,,,,,,
-Korea,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,473947,325395,Dairy,,474573,326271,,,,,,,,
-India,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,3259548,16007159,Dairy,,3263108,16034263,,,,,,,,
-
-
-Non-energy input cost,,,,,,,,,,,,
-table not necessary,,,,,,,,,,,,
-
-5002,,,,minicam-non-energy-input,,,,,,,,
-,,,,input-cost,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,DairyDemand,DairyDemand,DairyDemand,0,0,0,0,0,0,0,0,0
-ALL,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0,0,0,0,0,0,0,0,0
-
-
-add CO2 tag,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-5010,,,,,,,,,,,,
-,,,,CO2,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,DairyDemand,DairyDemand,DairyDemand,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-
-
-
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
+Dairy Supply,,,,,,,,,,,,,,,,,,
+Units and sector type,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+70,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+region,supplysector,output-unit,input-unit,price-unit,sectorType,,,,,,,,,,,,,
+ALL,Dairy,Gcal,Gcal,1975$/Gcal,AnimalSupply,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Subsector logit exponent,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+71,,,,,,,,,,,,,,,,,,
+,,1975 fillout,,,,,,,,,,,,,,,,
+region,supplysector,logit-exponent,,,,,,,,,,,,,,,,
+USA,Dairy,-3,,,,,,,,,,,,,,,,
+Canada,Dairy,-3,,,,,,,,,,,,,,,,
+Western Europe,Dairy,-3,,,,,,,,,,,,,,,,
+Japan,Dairy,-3,,,,,,,,,,,,,,,,
+Australia_NZ,Dairy,-3,,,,,,,,,,,,,,,,
+Former Soviet Union,Dairy,-3,,,,,,,,,,,,,,,,
+China,Dairy,-3,,,,,,,,,,,,,,,,
+Middle East,Dairy,-3,,,,,,,,,,,,,,,,
+Africa,Dairy,-3,,,,,,,,,,,,,,,,
+Latin America,Dairy,-3,,,,,,,,,,,,,,,,
+Southeast Asia,Dairy,-3,,,,,,,,,,,,,,,,
+Eastern Europe,Dairy,-3,,,,,,,,,,,,,,,,
+Korea,Dairy,-3,,,,,,,,,,,,,,,,
+India,Dairy,-3,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Scale Year,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+700,,,,,,,,,,,,,,,,,,
+Source Inputs,,,share-weight,interpolation-rule,,,,,,,,,,,,,,
+region,supplysector,subsector,1975 fillout,apply-to,from-year,to-year,interpolation-function,,,,,,,,,,,
+USA,Dairy,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,Dairy,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,Dairy,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,Dairy,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,Dairy,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,Dairy,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,Dairy,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,Dairy,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,Dairy,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,Dairy,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,Dairy,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,Dairy,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,Dairy,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,Dairy,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+USA,Dairy,Pastoral,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,Dairy,Pastoral,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,Dairy,Pastoral,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,Dairy,Pastoral,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,Dairy,Pastoral,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,Dairy,Pastoral,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,Dairy,Pastoral,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,Dairy,Pastoral,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,Dairy,Pastoral,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,Dairy,Pastoral,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,Dairy,Pastoral,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,Dairy,Pastoral,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,Dairy,Pastoral,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,Dairy,Pastoral,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Technology logit exponent,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+702,,,,,,,,,,,,,,,,,,
+Source Inputs,,,,,,,,,,,,,,,,,,
+region,supplysector,subsector,logit-exponent,,,,,,,,,,,,,,,
+USA,Dairy,Mixed,-6,,,,,,,,,,,,,,,
+Canada,Dairy,Mixed,-6,,,,,,,,,,,,,,,
+Western Europe,Dairy,Mixed,-6,,,,,,,,,,,,,,,
+Japan,Dairy,Mixed,-6,,,,,,,,,,,,,,,
+Australia_NZ,Dairy,Mixed,-6,,,,,,,,,,,,,,,
+Former Soviet Union,Dairy,Mixed,-6,,,,,,,,,,,,,,,
+China,Dairy,Mixed,-6,,,,,,,,,,,,,,,
+Middle East,Dairy,Mixed,-6,,,,,,,,,,,,,,,
+Africa,Dairy,Mixed,-6,,,,,,,,,,,,,,,
+Latin America,Dairy,Mixed,-6,,,,,,,,,,,,,,,
+Southeast Asia,Dairy,Mixed,-6,,,,,,,,,,,,,,,
+Eastern Europe,Dairy,Mixed,-6,,,,,,,,,,,,,,,
+Korea,Dairy,Mixed,-6,,,,,,,,,,,,,,,
+India,Dairy,Mixed,-6,,,,,,,,,,,,,,,
+USA,Dairy,Pastoral,-6,,,,,,,,,,,,,,,
+Canada,Dairy,Pastoral,-6,,,,,,,,,,,,,,,
+Western Europe,Dairy,Pastoral,-6,,,,,,,,,,,,,,,
+Japan,Dairy,Pastoral,-6,,,,,,,,,,,,,,,
+Australia_NZ,Dairy,Pastoral,-6,,,,,,,,,,,,,,,
+Former Soviet Union,Dairy,Pastoral,-6,,,,,,,,,,,,,,,
+China,Dairy,Pastoral,-6,,,,,,,,,,,,,,,
+Middle East,Dairy,Pastoral,-6,,,,,,,,,,,,,,,
+Africa,Dairy,Pastoral,-6,,,,,,,,,,,,,,,
+Latin America,Dairy,Pastoral,-6,,,,,,,,,,,,,,,
+Southeast Asia,Dairy,Pastoral,-6,,,,,,,,,,,,,,,
+Eastern Europe,Dairy,Pastoral,-6,,,,,,,,,,,,,,,
+Korea,Dairy,Pastoral,-6,,,,,,,,,,,,,,,
+India,Dairy,Pastoral,-6,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Technology shareweight scaling,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+705,,,,,,,,,,,,,,,,,,
+,,,,interpolation-rule,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,apply-to,from-year,to-year,interpolation-function,,,,,,,,,,,
+USA,Dairy,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,Dairy,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,Dairy,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,Dairy,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,Dairy,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,Dairy,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,Dairy,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,Dairy,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,Dairy,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,Dairy,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,Dairy,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,Dairy,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,Dairy,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,Dairy,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+USA,Dairy,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,Dairy,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,Dairy,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,Dairy,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,Dairy,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,Dairy,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,Dairy,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,Dairy,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,Dairy,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,Dairy,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,Dairy,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,Dairy,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,Dairy,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,Dairy,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+USA,Dairy,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,Dairy,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,Dairy,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,Dairy,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,Dairy,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,Dairy,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,Dairy,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,Dairy,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,Dairy,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,Dairy,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,Dairy,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,Dairy,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,Dairy,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,Dairy,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+USA,Dairy,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,Dairy,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,Dairy,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,Dairy,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,Dairy,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,Dairy,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,Dairy,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,Dairy,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,Dairy,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,Dairy,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,Dairy,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,Dairy,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,Dairy,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,Dairy,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+USA,Dairy,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,Dairy,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,Dairy,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,Dairy,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,Dairy,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,Dairy,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,Dairy,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,Dairy,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,Dairy,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,Dairy,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,Dairy,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,Dairy,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,Dairy,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,Dairy,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+USA,Dairy,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,Dairy,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,Dairy,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,Dairy,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,Dairy,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,Dairy,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,Dairy,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,Dairy,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,Dairy,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,Dairy,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,Dairy,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,Dairy,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,Dairy,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,Dairy,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+USA,Dairy,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,Dairy,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,Dairy,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,Dairy,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,Dairy,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,Dairy,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,Dairy,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,Dairy,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,Dairy,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,Dairy,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,Dairy,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,Dairy,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,Dairy,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,Dairy,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+USA,Dairy,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,Dairy,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,Dairy,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,Dairy,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,Dairy,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,Dairy,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,Dairy,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,Dairy,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,Dairy,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,Dairy,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,Dairy,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,Dairy,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,Dairy,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,Dairy,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+USA,Dairy,Mixed,Pasture,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,Dairy,Mixed,Pasture,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,Dairy,Mixed,Pasture,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,Dairy,Mixed,Pasture,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,Dairy,Mixed,Pasture,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,Dairy,Mixed,Pasture,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,Dairy,Mixed,Pasture,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,Dairy,Mixed,Pasture,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,Dairy,Mixed,Pasture,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,Dairy,Mixed,Pasture,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,Dairy,Mixed,Pasture,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,Dairy,Mixed,Pasture,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,Dairy,Mixed,Pasture,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,Dairy,Mixed,Pasture,share-weight,2005,2095,fixed,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Efficiency: Mixed,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+7001,,,,minicam-energy-input,,,,,,,,,,,,,,
+,,,,efficiency,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input,,,,,
+USA,Dairy,Mixed,Corn,0.30901,0.30901,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,Corn,,,,,
+Canada,Dairy,Mixed,Corn,0.30003,0.30003,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,Corn,,,,,
+Western Europe,Dairy,Mixed,Corn,0.29759,0.29759,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,Corn,,,,,
+Japan,Dairy,Mixed,Corn,0.25571,0.25571,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,Corn,,,,,
+Australia_NZ,Dairy,Mixed,Corn,0.42949,0.42949,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,Corn,,,,,
+Former Soviet Union,Dairy,Mixed,Corn,0.22998,0.22998,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,Corn,,,,,
+China,Dairy,Mixed,Corn,0.13182,0.13182,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,Corn,,,,,
+Middle East,Dairy,Mixed,Corn,0.28158,0.28158,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,Corn,,,,,
+Africa,Dairy,Mixed,Corn,0.11146,0.11146,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,Corn,,,,,
+Latin America,Dairy,Mixed,Corn,0.15957,0.15957,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,Corn,,,,,
+Southeast Asia,Dairy,Mixed,Corn,0.17413,0.17413,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,Corn,,,,,
+Eastern Europe,Dairy,Mixed,Corn,0.28041,0.28041,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,Corn,,,,,
+Korea,Dairy,Mixed,Corn,0.33987,0.33987,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,Corn,,,,,
+India,Dairy,Mixed,Corn,0.18762,0.18762,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,Corn,,,,,
+USA,Dairy,Mixed,FodderCrop,0.30901,0.30901,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,FodderCrop,,,,,
+Canada,Dairy,Mixed,FodderCrop,0.30003,0.30003,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,FodderCrop,,,,,
+Western Europe,Dairy,Mixed,FodderCrop,0.29759,0.29759,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,FodderCrop,,,,,
+Japan,Dairy,Mixed,FodderCrop,0.25571,0.25571,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,FodderCrop,,,,,
+Australia_NZ,Dairy,Mixed,FodderCrop,0.42949,0.42949,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,FodderCrop,,,,,
+Former Soviet Union,Dairy,Mixed,FodderCrop,0.22998,0.22998,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,FodderCrop,,,,,
+China,Dairy,Mixed,FodderCrop,0.13182,0.13182,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,FodderCrop,,,,,
+Middle East,Dairy,Mixed,FodderCrop,0.28158,0.28158,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,FodderCrop,,,,,
+Africa,Dairy,Mixed,FodderCrop,0.11146,0.11146,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,FodderCrop,,,,,
+Latin America,Dairy,Mixed,FodderCrop,0.15957,0.15957,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,FodderCrop,,,,,
+Southeast Asia,Dairy,Mixed,FodderCrop,0.17413,0.17413,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,FodderCrop,,,,,
+Eastern Europe,Dairy,Mixed,FodderCrop,0.28041,0.28041,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,FodderCrop,,,,,
+Korea,Dairy,Mixed,FodderCrop,0.33987,0.33987,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,FodderCrop,,,,,
+India,Dairy,Mixed,FodderCrop,0.18762,0.18762,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,FodderCrop,,,,,
+USA,Dairy,Mixed,MiscCrop,0.30901,0.30901,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,MiscCrop,,,,,
+Canada,Dairy,Mixed,MiscCrop,0.30003,0.30003,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,MiscCrop,,,,,
+Western Europe,Dairy,Mixed,MiscCrop,0.29759,0.29759,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,MiscCrop,,,,,
+Japan,Dairy,Mixed,MiscCrop,0.25571,0.25571,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,MiscCrop,,,,,
+Australia_NZ,Dairy,Mixed,MiscCrop,0.42949,0.42949,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,MiscCrop,,,,,
+Former Soviet Union,Dairy,Mixed,MiscCrop,0.22998,0.22998,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,MiscCrop,,,,,
+China,Dairy,Mixed,MiscCrop,0.13182,0.13182,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,MiscCrop,,,,,
+Middle East,Dairy,Mixed,MiscCrop,0.28158,0.28158,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,MiscCrop,,,,,
+Africa,Dairy,Mixed,MiscCrop,0.11146,0.11146,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,MiscCrop,,,,,
+Latin America,Dairy,Mixed,MiscCrop,0.15957,0.15957,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,MiscCrop,,,,,
+Southeast Asia,Dairy,Mixed,MiscCrop,0.17413,0.17413,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,MiscCrop,,,,,
+Eastern Europe,Dairy,Mixed,MiscCrop,0.28041,0.28041,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,MiscCrop,,,,,
+Korea,Dairy,Mixed,MiscCrop,0.33987,0.33987,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,MiscCrop,,,,,
+India,Dairy,Mixed,MiscCrop,0.18762,0.18762,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,MiscCrop,,,,,
+USA,Dairy,Mixed,OilCrop,0.30901,0.30901,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,OilCrop,,,,,
+Canada,Dairy,Mixed,OilCrop,0.30003,0.30003,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,OilCrop,,,,,
+Western Europe,Dairy,Mixed,OilCrop,0.29759,0.29759,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,OilCrop,,,,,
+Japan,Dairy,Mixed,OilCrop,0.25571,0.25571,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,OilCrop,,,,,
+Australia_NZ,Dairy,Mixed,OilCrop,0.42949,0.42949,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,OilCrop,,,,,
+Former Soviet Union,Dairy,Mixed,OilCrop,0.22998,0.22998,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,OilCrop,,,,,
+China,Dairy,Mixed,OilCrop,0.13182,0.13182,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,OilCrop,,,,,
+Middle East,Dairy,Mixed,OilCrop,0.28158,0.28158,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,OilCrop,,,,,
+Africa,Dairy,Mixed,OilCrop,0.11146,0.11146,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,OilCrop,,,,,
+Latin America,Dairy,Mixed,OilCrop,0.15957,0.15957,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,OilCrop,,,,,
+Southeast Asia,Dairy,Mixed,OilCrop,0.17413,0.17413,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,OilCrop,,,,,
+Eastern Europe,Dairy,Mixed,OilCrop,0.28041,0.28041,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,OilCrop,,,,,
+Korea,Dairy,Mixed,OilCrop,0.33987,0.33987,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,OilCrop,,,,,
+India,Dairy,Mixed,OilCrop,0.18762,0.18762,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,OilCrop,,,,,
+USA,Dairy,Mixed,OtherGrain,0.30901,0.30901,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,OtherGrain,,,,,
+Canada,Dairy,Mixed,OtherGrain,0.30003,0.30003,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,OtherGrain,,,,,
+Western Europe,Dairy,Mixed,OtherGrain,0.29759,0.29759,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,OtherGrain,,,,,
+Japan,Dairy,Mixed,OtherGrain,0.25571,0.25571,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,OtherGrain,,,,,
+Australia_NZ,Dairy,Mixed,OtherGrain,0.42949,0.42949,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,OtherGrain,,,,,
+Former Soviet Union,Dairy,Mixed,OtherGrain,0.22998,0.22998,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,OtherGrain,,,,,
+China,Dairy,Mixed,OtherGrain,0.13182,0.13182,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,OtherGrain,,,,,
+Middle East,Dairy,Mixed,OtherGrain,0.28158,0.28158,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,OtherGrain,,,,,
+Africa,Dairy,Mixed,OtherGrain,0.11146,0.11146,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,OtherGrain,,,,,
+Latin America,Dairy,Mixed,OtherGrain,0.15957,0.15957,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,OtherGrain,,,,,
+Southeast Asia,Dairy,Mixed,OtherGrain,0.17413,0.17413,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,OtherGrain,,,,,
+Eastern Europe,Dairy,Mixed,OtherGrain,0.28041,0.28041,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,OtherGrain,,,,,
+Korea,Dairy,Mixed,OtherGrain,0.33987,0.33987,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,OtherGrain,,,,,
+India,Dairy,Mixed,OtherGrain,0.18762,0.18762,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,OtherGrain,,,,,
+USA,Dairy,Mixed,Rice,0.30901,0.30901,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,Rice,,,,,
+Canada,Dairy,Mixed,Rice,0.30003,0.30003,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,Rice,,,,,
+Western Europe,Dairy,Mixed,Rice,0.29759,0.29759,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,Rice,,,,,
+Japan,Dairy,Mixed,Rice,0.25571,0.25571,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,Rice,,,,,
+Australia_NZ,Dairy,Mixed,Rice,0.42949,0.42949,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,Rice,,,,,
+Former Soviet Union,Dairy,Mixed,Rice,0.22998,0.22998,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,Rice,,,,,
+China,Dairy,Mixed,Rice,0.13182,0.13182,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,Rice,,,,,
+Middle East,Dairy,Mixed,Rice,0.28158,0.28158,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,Rice,,,,,
+Africa,Dairy,Mixed,Rice,0.11146,0.11146,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,Rice,,,,,
+Latin America,Dairy,Mixed,Rice,0.15957,0.15957,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,Rice,,,,,
+Southeast Asia,Dairy,Mixed,Rice,0.17413,0.17413,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,Rice,,,,,
+Eastern Europe,Dairy,Mixed,Rice,0.28041,0.28041,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,Rice,,,,,
+Korea,Dairy,Mixed,Rice,0.33987,0.33987,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,Rice,,,,,
+India,Dairy,Mixed,Rice,0.18762,0.18762,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,Rice,,,,,
+USA,Dairy,Mixed,SugarCrop,0.30901,0.30901,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,SugarCrop,,,,,
+Canada,Dairy,Mixed,SugarCrop,0.30003,0.30003,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,SugarCrop,,,,,
+Western Europe,Dairy,Mixed,SugarCrop,0.29759,0.29759,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,SugarCrop,,,,,
+Japan,Dairy,Mixed,SugarCrop,0.25571,0.25571,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,SugarCrop,,,,,
+Australia_NZ,Dairy,Mixed,SugarCrop,0.42949,0.42949,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,SugarCrop,,,,,
+Former Soviet Union,Dairy,Mixed,SugarCrop,0.22998,0.22998,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,SugarCrop,,,,,
+China,Dairy,Mixed,SugarCrop,0.13182,0.13182,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,SugarCrop,,,,,
+Middle East,Dairy,Mixed,SugarCrop,0.28158,0.28158,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,SugarCrop,,,,,
+Africa,Dairy,Mixed,SugarCrop,0.11146,0.11146,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,SugarCrop,,,,,
+Latin America,Dairy,Mixed,SugarCrop,0.15957,0.15957,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,SugarCrop,,,,,
+Southeast Asia,Dairy,Mixed,SugarCrop,0.17413,0.17413,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,SugarCrop,,,,,
+Eastern Europe,Dairy,Mixed,SugarCrop,0.28041,0.28041,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,SugarCrop,,,,,
+Korea,Dairy,Mixed,SugarCrop,0.33987,0.33987,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,SugarCrop,,,,,
+India,Dairy,Mixed,SugarCrop,0.18762,0.18762,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,SugarCrop,,,,,
+USA,Dairy,Mixed,Wheat,0.30901,0.30901,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,Wheat,,,,,
+Canada,Dairy,Mixed,Wheat,0.30003,0.30003,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,Wheat,,,,,
+Western Europe,Dairy,Mixed,Wheat,0.29759,0.29759,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,Wheat,,,,,
+Japan,Dairy,Mixed,Wheat,0.25571,0.25571,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,Wheat,,,,,
+Australia_NZ,Dairy,Mixed,Wheat,0.42949,0.42949,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,Wheat,,,,,
+Former Soviet Union,Dairy,Mixed,Wheat,0.22998,0.22998,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,Wheat,,,,,
+China,Dairy,Mixed,Wheat,0.13182,0.13182,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,Wheat,,,,,
+Middle East,Dairy,Mixed,Wheat,0.28158,0.28158,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,Wheat,,,,,
+Africa,Dairy,Mixed,Wheat,0.11146,0.11146,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,Wheat,,,,,
+Latin America,Dairy,Mixed,Wheat,0.15957,0.15957,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,Wheat,,,,,
+Southeast Asia,Dairy,Mixed,Wheat,0.17413,0.17413,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,Wheat,,,,,
+Eastern Europe,Dairy,Mixed,Wheat,0.28041,0.28041,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,Wheat,,,,,
+Korea,Dairy,Mixed,Wheat,0.33987,0.33987,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,Wheat,,,,,
+India,Dairy,Mixed,Wheat,0.18762,0.18762,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,Wheat,,,,,
+USA,Dairy,Mixed,Pasture,0.30901,0.30901,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,Pasture,,,,,
+Canada,Dairy,Mixed,Pasture,0.30003,0.30003,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,Pasture,,,,,
+Western Europe,Dairy,Mixed,Pasture,0.29759,0.29759,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,Pasture,,,,,
+Japan,Dairy,Mixed,Pasture,0.25571,0.25571,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,Pasture,,,,,
+Australia_NZ,Dairy,Mixed,Pasture,0.42949,0.42949,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,Pasture,,,,,
+Former Soviet Union,Dairy,Mixed,Pasture,0.22998,0.22998,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,Pasture,,,,,
+China,Dairy,Mixed,Pasture,0.13182,0.13182,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,Pasture,,,,,
+Middle East,Dairy,Mixed,Pasture,0.28158,0.28158,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,Pasture,,,,,
+Africa,Dairy,Mixed,Pasture,0.11146,0.11146,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,Pasture,,,,,
+Latin America,Dairy,Mixed,Pasture,0.15957,0.15957,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,Pasture,,,,,
+Southeast Asia,Dairy,Mixed,Pasture,0.17413,0.17413,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,Pasture,,,,,
+Eastern Europe,Dairy,Mixed,Pasture,0.28041,0.28041,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,Pasture,,,,,
+Korea,Dairy,Mixed,Pasture,0.33987,0.33987,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,Pasture,,,,,
+India,Dairy,Mixed,Pasture,0.18762,0.18762,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,Pasture,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Efficiency: Pastoral,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+7001,,,,minicam-energy-input,,,,,,,,,,,,,,
+,,,,efficiency,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input,,,,,
+Australia_NZ,Dairy,Pastoral,Corn,0.19725,0.19725,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,Corn,,,,,
+Africa,Dairy,Pastoral,Corn,0.06417,0.06417,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,Corn,,,,,
+Australia_NZ,Dairy,Pastoral,FodderCrop,0.19725,0.19725,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,FodderCrop,,,,,
+Africa,Dairy,Pastoral,FodderCrop,0.06417,0.06417,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,FodderCrop,,,,,
+Australia_NZ,Dairy,Pastoral,MiscCrop,0.19725,0.19725,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,MiscCrop,,,,,
+Africa,Dairy,Pastoral,MiscCrop,0.06417,0.06417,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,MiscCrop,,,,,
+Australia_NZ,Dairy,Pastoral,OilCrop,0.19725,0.19725,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,OilCrop,,,,,
+Africa,Dairy,Pastoral,OilCrop,0.06417,0.06417,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,OilCrop,,,,,
+Australia_NZ,Dairy,Pastoral,OtherGrain,0.19725,0.19725,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,OtherGrain,,,,,
+Africa,Dairy,Pastoral,OtherGrain,0.06417,0.06417,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,OtherGrain,,,,,
+Australia_NZ,Dairy,Pastoral,Rice,0.19725,0.19725,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,Rice,,,,,
+Africa,Dairy,Pastoral,Rice,0.06417,0.06417,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,Rice,,,,,
+Australia_NZ,Dairy,Pastoral,SugarCrop,0.19725,0.19725,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,SugarCrop,,,,,
+Africa,Dairy,Pastoral,SugarCrop,0.06417,0.06417,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,SugarCrop,,,,,
+Australia_NZ,Dairy,Pastoral,Wheat,0.19725,0.19725,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,Wheat,,,,,
+Africa,Dairy,Pastoral,Wheat,0.06417,0.06417,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,Wheat,,,,,
+USA,Dairy,Pastoral,Pasture,0.21675,0.21675,0.25520,0.25520,0.25520,0.25520,0.25520,0.25520,0.25520,Pasture,,,,,
+Canada,Dairy,Pastoral,Pasture,0.21385,0.21385,0.26950,0.26950,0.26950,0.26950,0.26950,0.26950,0.26950,Pasture,,,,,
+Western Europe,Dairy,Pastoral,Pasture,0.17565,0.17565,0.16971,0.16971,0.16971,0.16971,0.16971,0.16971,0.16971,Pasture,,,,,
+Japan,Dairy,Pastoral,Pasture,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,Pasture,,,,,
+Australia_NZ,Dairy,Pastoral,Pasture,0.19725,0.19725,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,Pasture,,,,,
+Former Soviet Union,Dairy,Pastoral,Pasture,0.15993,0.15993,0.15402,0.15402,0.15402,0.15402,0.15402,0.15402,0.15402,Pasture,,,,,
+China,Dairy,Pastoral,Pasture,0.13191,0.13191,0.10889,0.10889,0.10889,0.10889,0.10889,0.10889,0.10889,Pasture,,,,,
+Middle East,Dairy,Pastoral,Pasture,0.17037,0.17037,0.14488,0.14488,0.14488,0.14488,0.14488,0.14488,0.14488,Pasture,,,,,
+Africa,Dairy,Pastoral,Pasture,0.06417,0.06417,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,Pasture,,,,,
+Latin America,Dairy,Pastoral,Pasture,0.08156,0.08156,0.08998,0.08998,0.08998,0.08998,0.08998,0.08998,0.08998,Pasture,,,,,
+Southeast Asia,Dairy,Pastoral,Pasture,0.10383,0.10383,0.12553,0.12553,0.12553,0.12553,0.12553,0.12553,0.12553,Pasture,,,,,
+Eastern Europe,Dairy,Pastoral,Pasture,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,Pasture,,,,,
+Korea,Dairy,Pastoral,Pasture,0.32010,0.32010,0.20620,0.20620,0.20620,0.20620,0.20620,0.20620,0.20620,Pasture,,,,,
+India,Dairy,Pastoral,Pasture,0.10448,0.10448,0.12744,0.12744,0.12744,0.12744,0.12744,0.12744,0.12744,Pasture,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Efficiency: Scavenging,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+7001,,,,minicam-energy-input,,,,,,,,,,,,,,
+,,,,efficiency,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input,,,,,
+USA,Dairy,Mixed,Scavenging,0.30901,0.30901,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,0.32309,Scavenging,,,,,
+Canada,Dairy,Mixed,Scavenging,0.30003,0.30003,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,0.29196,Scavenging,,,,,
+Western Europe,Dairy,Mixed,Scavenging,0.29759,0.29759,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,0.29969,Scavenging,,,,,
+Japan,Dairy,Mixed,Scavenging,0.25571,0.25571,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,0.26635,Scavenging,,,,,
+Australia_NZ,Dairy,Mixed,Scavenging,0.42949,0.42949,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,0.39612,Scavenging,,,,,
+Former Soviet Union,Dairy,Mixed,Scavenging,0.22998,0.22998,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,0.25489,Scavenging,,,,,
+China,Dairy,Mixed,Scavenging,0.13182,0.13182,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,0.21627,Scavenging,,,,,
+Middle East,Dairy,Mixed,Scavenging,0.28158,0.28158,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,0.27630,Scavenging,,,,,
+Africa,Dairy,Mixed,Scavenging,0.11146,0.11146,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,0.12724,Scavenging,,,,,
+Latin America,Dairy,Mixed,Scavenging,0.15957,0.15957,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,0.18250,Scavenging,,,,,
+Southeast Asia,Dairy,Mixed,Scavenging,0.17413,0.17413,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,0.19083,Scavenging,,,,,
+Eastern Europe,Dairy,Mixed,Scavenging,0.28041,0.28041,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,0.29140,Scavenging,,,,,
+Korea,Dairy,Mixed,Scavenging,0.33987,0.33987,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,0.41761,Scavenging,,,,,
+India,Dairy,Mixed,Scavenging,0.18762,0.18762,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,0.20470,Scavenging,,,,,
+USA,Dairy,Pastoral,Scavenging,0.21675,0.21675,0.25520,0.25520,0.25520,0.25520,0.25520,0.25520,0.25520,Scavenging,,,,,
+Canada,Dairy,Pastoral,Scavenging,0.21385,0.21385,0.26950,0.26950,0.26950,0.26950,0.26950,0.26950,0.26950,Scavenging,,,,,
+Western Europe,Dairy,Pastoral,Scavenging,0.17565,0.17565,0.16971,0.16971,0.16971,0.16971,0.16971,0.16971,0.16971,Scavenging,,,,,
+Japan,Dairy,Pastoral,Scavenging,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,Scavenging,,,,,
+Australia_NZ,Dairy,Pastoral,Scavenging,0.19725,0.19725,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,0.23643,Scavenging,,,,,
+Former Soviet Union,Dairy,Pastoral,Scavenging,0.15993,0.15993,0.15402,0.15402,0.15402,0.15402,0.15402,0.15402,0.15402,Scavenging,,,,,
+China,Dairy,Pastoral,Scavenging,0.13191,0.13191,0.10889,0.10889,0.10889,0.10889,0.10889,0.10889,0.10889,Scavenging,,,,,
+Middle East,Dairy,Pastoral,Scavenging,0.17037,0.17037,0.14488,0.14488,0.14488,0.14488,0.14488,0.14488,0.14488,Scavenging,,,,,
+Africa,Dairy,Pastoral,Scavenging,0.06417,0.06417,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,0.06103,Scavenging,,,,,
+Latin America,Dairy,Pastoral,Scavenging,0.08156,0.08156,0.08998,0.08998,0.08998,0.08998,0.08998,0.08998,0.08998,Scavenging,,,,,
+Southeast Asia,Dairy,Pastoral,Scavenging,0.10383,0.10383,0.12553,0.12553,0.12553,0.12553,0.12553,0.12553,0.12553,Scavenging,,,,,
+Eastern Europe,Dairy,Pastoral,Scavenging,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,Scavenging,,,,,
+Korea,Dairy,Pastoral,Scavenging,0.32010,0.32010,0.20620,0.20620,0.20620,0.20620,0.20620,0.20620,0.20620,Scavenging,,,,,
+India,Dairy,Pastoral,Scavenging,0.10448,0.10448,0.12744,0.12744,0.12744,0.12744,0.12744,0.12744,0.12744,Scavenging,,,,,
+,,,,,,,,,,,,,,,,,,
+Calibrated inputs: mixed,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+7000,,,,,minicam-energy-input,,,,,,,,,,,,,
+,,,,,calibrated-value,,share-weight,,,,,,,,,,,
+region,supplysector,subsector,technology,minicam-energy-input,1990,2005,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,
+USA,Dairy,Mixed,Corn,Corn,58001088,75946496,1,1,1,1,1,1,1,1,1,,,
+Canada,Dairy,Mixed,Corn,Corn,2648622,3124404,1,1,1,1,1,1,1,1,1,,,
+Western Europe,Dairy,Mixed,Corn,Corn,9995784,20043249,1,1,1,1,1,1,1,1,1,,,
+Japan,Dairy,Mixed,Corn,Corn,7398225,9239823,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,Dairy,Mixed,Corn,Corn,14098,59259,1,1,1,1,1,1,1,1,1,,,
+Former Soviet Union,Dairy,Mixed,Corn,Corn,8517464,6259504,1,1,1,1,1,1,1,1,1,,,
+China,Dairy,Mixed,Corn,Corn,869331,8632089,1,1,1,1,1,1,1,1,1,,,
+Middle East,Dairy,Mixed,Corn,Corn,2140578,6976777,1,1,1,1,1,1,1,1,1,,,
+Africa,Dairy,Mixed,Corn,Corn,4088336,6789380,1,1,1,1,1,1,1,1,1,,,
+Latin America,Dairy,Mixed,Corn,Corn,6281872,15773529,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,Dairy,Mixed,Corn,Corn,3507612,9015349,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,Dairy,Mixed,Corn,Corn,8780788,15556774,1,1,1,1,1,1,1,1,1,,,
+Korea,Dairy,Mixed,Corn,Corn,543194,377961,1,1,1,1,1,1,1,1,1,,,
+India,Dairy,Mixed,Corn,Corn,978340,8482889,1,1,1,1,1,1,1,1,1,,,
+USA,Dairy,Mixed,FodderCrop,FodderCrop,37068590,40178391,1,1,1,1,1,1,1,1,1,,,
+Canada,Dairy,Mixed,FodderCrop,FodderCrop,4050720,3283492,1,1,1,1,1,1,1,1,1,,,
+Western Europe,Dairy,Mixed,FodderCrop,FodderCrop,187151128,165063563,1,1,1,1,1,1,1,1,1,,,
+Japan,Dairy,Mixed,FodderCrop,FodderCrop,8012072,8556186,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,Dairy,Mixed,FodderCrop,FodderCrop,1347449,1675918,1,1,1,1,1,1,1,1,1,,,
+Former Soviet Union,Dairy,Mixed,FodderCrop,FodderCrop,86171981,62271519,1,1,1,1,1,1,1,1,1,,,
+China,Dairy,Mixed,FodderCrop,FodderCrop,10690202,31852352,1,1,1,1,1,1,1,1,1,,,
+Middle East,Dairy,Mixed,FodderCrop,FodderCrop,5136883,8380679,1,1,1,1,1,1,1,1,1,,,
+Africa,Dairy,Mixed,FodderCrop,FodderCrop,31300361,45229285,1,1,1,1,1,1,1,1,1,,,
+Latin America,Dairy,Mixed,FodderCrop,FodderCrop,68327284,94712743,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,Dairy,Mixed,FodderCrop,FodderCrop,31409285,50919901,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,Dairy,Mixed,FodderCrop,FodderCrop,38022111,24416653,1,1,1,1,1,1,1,1,1,,,
+Korea,Dairy,Mixed,FodderCrop,FodderCrop,480078,1336324,1,1,1,1,1,1,1,1,1,,,
+India,Dairy,Mixed,FodderCrop,FodderCrop,79743020,124316103,1,1,1,1,1,1,1,1,1,,,
+USA,Dairy,Mixed,MiscCrop,MiscCrop,44623,83347,1,1,1,1,1,1,1,1,1,,,
+Canada,Dairy,Mixed,MiscCrop,MiscCrop,9486,151952,1,1,1,1,1,1,1,1,1,,,
+Western Europe,Dairy,Mixed,MiscCrop,MiscCrop,7205541,3241722,1,1,1,1,1,1,1,1,1,,,
+Japan,Dairy,Mixed,MiscCrop,MiscCrop,54278,95432,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,Dairy,Mixed,MiscCrop,MiscCrop,16897,85908,1,1,1,1,1,1,1,1,1,,,
+Former Soviet Union,Dairy,Mixed,MiscCrop,MiscCrop,10023014,4140658,1,1,1,1,1,1,1,1,1,,,
+China,Dairy,Mixed,MiscCrop,MiscCrop,244319,2146498,1,1,1,1,1,1,1,1,1,,,
+Middle East,Dairy,Mixed,MiscCrop,MiscCrop,94787,31938,1,1,1,1,1,1,1,1,1,,,
+Africa,Dairy,Mixed,MiscCrop,MiscCrop,2245123,4956042,1,1,1,1,1,1,1,1,1,,,
+Latin America,Dairy,Mixed,MiscCrop,MiscCrop,1982905,3208966,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,Dairy,Mixed,MiscCrop,MiscCrop,290641,497793,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,Dairy,Mixed,MiscCrop,MiscCrop,1742813,998075,1,1,1,1,1,1,1,1,1,,,
+Korea,Dairy,Mixed,MiscCrop,MiscCrop,97738,15880,1,1,1,1,1,1,1,1,1,,,
+India,Dairy,Mixed,MiscCrop,MiscCrop,1563525,2840519,1,1,1,1,1,1,1,1,1,,,
+USA,Dairy,Mixed,OilCrop,OilCrop,773330,1523214,1,1,1,1,1,1,1,1,1,,,
+Canada,Dairy,Mixed,OilCrop,OilCrop,364585,1171115,1,1,1,1,1,1,1,1,1,,,
+Western Europe,Dairy,Mixed,OilCrop,OilCrop,1256742,3109475,1,1,1,1,1,1,1,1,1,,,
+Japan,Dairy,Mixed,OilCrop,OilCrop,128289,171732,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,Dairy,Mixed,OilCrop,OilCrop,4209,21337,1,1,1,1,1,1,1,1,1,,,
+Former Soviet Union,Dairy,Mixed,OilCrop,OilCrop,1149059,1227991,1,1,1,1,1,1,1,1,1,,,
+China,Dairy,Mixed,OilCrop,OilCrop,45144,475918,1,1,1,1,1,1,1,1,1,,,
+Middle East,Dairy,Mixed,OilCrop,OilCrop,29535,163972,1,1,1,1,1,1,1,1,1,,,
+Africa,Dairy,Mixed,OilCrop,OilCrop,7168,9058,1,1,1,1,1,1,1,1,1,,,
+Latin America,Dairy,Mixed,OilCrop,OilCrop,215297,810419,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,Dairy,Mixed,OilCrop,OilCrop,343208,491239,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,Dairy,Mixed,OilCrop,OilCrop,38503,62561,1,1,1,1,1,1,1,1,1,,,
+Korea,Dairy,Mixed,OilCrop,OilCrop,1741,1198,1,1,1,1,1,1,1,1,1,,,
+India,Dairy,Mixed,OilCrop,OilCrop,1171093,2179016,1,1,1,1,1,1,1,1,1,,,
+USA,Dairy,Mixed,OtherGrain,OtherGrain,8211687,4249078,1,1,1,1,1,1,1,1,1,,,
+Canada,Dairy,Mixed,OtherGrain,OtherGrain,4679287,5098053,1,1,1,1,1,1,1,1,1,,,
+Western Europe,Dairy,Mixed,OtherGrain,OtherGrain,26120708,29063383,1,1,1,1,1,1,1,1,1,,,
+Japan,Dairy,Mixed,OtherGrain,OtherGrain,2920649,2104428,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,Dairy,Mixed,OtherGrain,OtherGrain,177929,1538461,1,1,1,1,1,1,1,1,1,,,
+Former Soviet Union,Dairy,Mixed,OtherGrain,OtherGrain,55658806,19285564,1,1,1,1,1,1,1,1,1,,,
+China,Dairy,Mixed,OtherGrain,OtherGrain,87305,341756,1,1,1,1,1,1,1,1,1,,,
+Middle East,Dairy,Mixed,OtherGrain,OtherGrain,8151109,10880928,1,1,1,1,1,1,1,1,1,,,
+Africa,Dairy,Mixed,OtherGrain,OtherGrain,1683196,2082095,1,1,1,1,1,1,1,1,1,,,
+Latin America,Dairy,Mixed,OtherGrain,OtherGrain,2914789,4899105,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,Dairy,Mixed,OtherGrain,OtherGrain,174548,193079,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,Dairy,Mixed,OtherGrain,OtherGrain,9902178,12581774,1,1,1,1,1,1,1,1,1,,,
+Korea,Dairy,Mixed,OtherGrain,OtherGrain,26154,2160,1,1,1,1,1,1,1,1,1,,,
+India,Dairy,Mixed,OtherGrain,OtherGrain,757680,1102012,1,1,1,1,1,1,1,1,1,,,
+USA,Dairy,Mixed,Rice,Rice,0,0,1,0,0,0,0,0,0,0,0,,,
+Canada,Dairy,Mixed,Rice,Rice,0,0,1,0,0,0,0,0,0,0,0,,,
+Western Europe,Dairy,Mixed,Rice,Rice,123794,133012,1,1,1,1,1,1,1,1,1,,,
+Japan,Dairy,Mixed,Rice,Rice,10690,45604,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,Dairy,Mixed,Rice,Rice,0,0,1,0,0,0,0,0,0,0,0,,,
+Former Soviet Union,Dairy,Mixed,Rice,Rice,0,0,1,0,0,0,0,0,0,0,0,,,
+China,Dairy,Mixed,Rice,Rice,57186,197679,1,1,1,1,1,1,1,1,1,,,
+Middle East,Dairy,Mixed,Rice,Rice,141501,392544,1,1,1,1,1,1,1,1,1,,,
+Africa,Dairy,Mixed,Rice,Rice,169411,164488,1,1,1,1,1,1,1,1,1,,,
+Latin America,Dairy,Mixed,Rice,Rice,61281,96079,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,Dairy,Mixed,Rice,Rice,1207651,2372236,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,Dairy,Mixed,Rice,Rice,756,6470,1,1,1,1,1,1,1,1,1,,,
+Korea,Dairy,Mixed,Rice,Rice,0,0,1,0,0,0,0,0,0,0,0,,,
+India,Dairy,Mixed,Rice,Rice,512117,841678,1,1,1,1,1,1,1,1,1,,,
+USA,Dairy,Mixed,SugarCrop,SugarCrop,0,0,1,0,0,0,0,0,0,0,0,,,
+Canada,Dairy,Mixed,SugarCrop,SugarCrop,5970,1251,1,1,1,1,1,1,1,1,1,,,
+Western Europe,Dairy,Mixed,SugarCrop,SugarCrop,998157,523215,1,1,1,1,1,1,1,1,1,,,
+Japan,Dairy,Mixed,SugarCrop,SugarCrop,0,0,1,0,0,0,0,0,0,0,0,,,
+Australia_NZ,Dairy,Mixed,SugarCrop,SugarCrop,0,0,1,0,0,0,0,0,0,0,0,,,
+Former Soviet Union,Dairy,Mixed,SugarCrop,SugarCrop,937655,863532,1,1,1,1,1,1,1,1,1,,,
+China,Dairy,Mixed,SugarCrop,SugarCrop,101789,326274,1,1,1,1,1,1,1,1,1,,,
+Middle East,Dairy,Mixed,SugarCrop,SugarCrop,38339,50944,1,1,1,1,1,1,1,1,1,,,
+Africa,Dairy,Mixed,SugarCrop,SugarCrop,65457,100354,1,1,1,1,1,1,1,1,1,,,
+Latin America,Dairy,Mixed,SugarCrop,SugarCrop,3420658,3777945,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,Dairy,Mixed,SugarCrop,SugarCrop,353856,783793,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,Dairy,Mixed,SugarCrop,SugarCrop,163154,115209,1,1,1,1,1,1,1,1,1,,,
+Korea,Dairy,Mixed,SugarCrop,SugarCrop,0,0,1,0,0,0,0,0,0,0,0,,,
+India,Dairy,Mixed,SugarCrop,SugarCrop,1762703,2677826,1,1,1,1,1,1,1,1,1,,,
+USA,Dairy,Mixed,Wheat,Wheat,3649222,2110171,1,1,1,1,1,1,1,1,1,,,
+Canada,Dairy,Mixed,Wheat,Wheat,1481713,1218671,1,1,1,1,1,1,1,1,1,,,
+Western Europe,Dairy,Mixed,Wheat,Wheat,11076079,24597085,1,1,1,1,1,1,1,1,1,,,
+Japan,Dairy,Mixed,Wheat,Wheat,352081,274032,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,Dairy,Mixed,Wheat,Wheat,44297,294643,1,1,1,1,1,1,1,1,1,,,
+Former Soviet Union,Dairy,Mixed,Wheat,Wheat,41834106,17080236,1,1,1,1,1,1,1,1,1,,,
+China,Dairy,Mixed,Wheat,Wheat,47246,110521,1,1,1,1,1,1,1,1,1,,,
+Middle East,Dairy,Mixed,Wheat,Wheat,1212942,2261786,1,1,1,1,1,1,1,1,1,,,
+Africa,Dairy,Mixed,Wheat,Wheat,650911,925422,1,1,1,1,1,1,1,1,1,,,
+Latin America,Dairy,Mixed,Wheat,Wheat,318674,248318,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,Dairy,Mixed,Wheat,Wheat,211553,375661,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,Dairy,Mixed,Wheat,Wheat,6577044,6508397,1,1,1,1,1,1,1,1,1,,,
+Korea,Dairy,Mixed,Wheat,Wheat,139889,69659,1,1,1,1,1,1,1,1,1,,,
+India,Dairy,Mixed,Wheat,Wheat,824799,1656639,1,1,1,1,1,1,1,1,1,,,
+USA,Dairy,Mixed,Pasture,Pasture,52746440,60121303,1,1,1,1,1,1,1,1,1,,,
+Canada,Dairy,Mixed,Pasture,Pasture,6431100,6484788,1,1,1,1,1,1,1,1,1,,,
+Western Europe,Dairy,Mixed,Pasture,Pasture,139427618,124287547,1,1,1,1,1,1,1,1,1,,,
+Japan,Dairy,Mixed,Pasture,Pasture,6260467,3934962,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,Dairy,Mixed,Pasture,Pasture,2243703,4431870,1,1,1,1,1,1,1,1,1,,,
+Former Soviet Union,Dairy,Mixed,Pasture,Pasture,149530591,78834803,1,1,1,1,1,1,1,1,1,,,
+China,Dairy,Mixed,Pasture,Pasture,8670860,38274352,1,1,1,1,1,1,1,1,1,,,
+Middle East,Dairy,Mixed,Pasture,Pasture,3409157,4035077,1,1,1,1,1,1,1,1,1,,,
+Africa,Dairy,Mixed,Pasture,Pasture,41369660,60246595,1,1,1,1,1,1,1,1,1,,,
+Latin America,Dairy,Mixed,Pasture,Pasture,71364760,102924898,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,Dairy,Mixed,Pasture,Pasture,10428765,21397820,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,Dairy,Mixed,Pasture,Pasture,34192647,32438888,1,1,1,1,1,1,1,1,1,,,
+Korea,Dairy,Mixed,Pasture,Pasture,745823,1455783,1,1,1,1,1,1,1,1,1,,,
+India,Dairy,Mixed,Pasture,Pasture,21081643,34131122,1,1,1,1,1,1,1,1,1,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Calibrated inputs: Pastoral,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+7000,,,,,,,,,,,,,,,,,,
+,,,,,,,share-weight,,,,,,,,,,,
+region,supplysector,subsector,technology,minicam-energy-input,1990,2005,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,
+Australia_NZ,Dairy,Pastoral,Corn,Corn,44550,0,1,1,0,0,0,0,0,0,0,,,
+Africa,Dairy,Pastoral,Corn,Corn,88396,104676,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,Dairy,Pastoral,FodderCrop,FodderCrop,4257908,0,1,1,0,0,0,0,0,0,0,,,
+Africa,Dairy,Pastoral,FodderCrop,FodderCrop,773464,833412,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,Dairy,Pastoral,MiscCrop,MiscCrop,53393,0,1,1,0,0,0,0,0,0,0,,,
+Africa,Dairy,Pastoral,MiscCrop,MiscCrop,48543,76410,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,Dairy,Pastoral,OilCrop,OilCrop,13300,0,1,1,0,0,0,0,0,0,0,,,
+Africa,Dairy,Pastoral,OilCrop,OilCrop,155,140,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,Dairy,Pastoral,OtherGrain,OtherGrain,562251,0,1,1,0,0,0,0,0,0,0,,,
+Africa,Dairy,Pastoral,OtherGrain,OtherGrain,36393,32101,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,Dairy,Pastoral,Rice,Rice,0,0,1,0,0,0,0,0,0,0,0,,,
+Africa,Dairy,Pastoral,Rice,Rice,3663,2536,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,Dairy,Pastoral,SugarCrop,SugarCrop,0,0,1,0,0,0,0,0,0,0,0,,,
+Africa,Dairy,Pastoral,SugarCrop,SugarCrop,1415,1547,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,Dairy,Pastoral,Wheat,Wheat,139976,0,1,1,0,0,0,0,0,0,0,,,
+Africa,Dairy,Pastoral,Wheat,Wheat,14074,14268,1,1,1,1,1,1,1,1,1,,,
+USA,Dairy,Pastoral,Pasture,Pasture,14615714,14457080,1,1,1,1,1,1,1,1,1,,,
+Canada,Dairy,Pastoral,Pasture,Pasture,1763207,1421010,1,1,1,1,1,1,1,1,1,,,
+Western Europe,Dairy,Pastoral,Pasture,Pasture,409419,489428,1,1,1,1,1,1,1,1,1,,,
+Japan,Dairy,Pastoral,Pasture,Pasture,0,0,1,0,0,0,0,0,0,0,0,,,
+Australia_NZ,Dairy,Pastoral,Pasture,Pasture,42540280,68476064,1,1,1,1,1,1,1,1,1,,,
+Former Soviet Union,Dairy,Pastoral,Pasture,Pasture,19291134,17731475,1,1,1,1,1,1,1,1,1,,,
+China,Dairy,Pastoral,Pasture,Pasture,20794121,40874875,1,1,1,1,1,1,1,1,1,,,
+Middle East,Dairy,Pastoral,Pasture,Pasture,999145,2334134,1,1,1,1,1,1,1,1,1,,,
+Africa,Dairy,Pastoral,Pasture,Pasture,101712558,115171598,1,1,1,1,1,1,1,1,1,,,
+Latin America,Dairy,Pastoral,Pasture,Pasture,82312651,104199686,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,Dairy,Pastoral,Pasture,Pasture,2821585,4556206,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,Dairy,Pastoral,Pasture,Pasture,0,0,1,0,0,0,0,0,0,0,0,,,
+Korea,Dairy,Pastoral,Pasture,Pasture,2151645,1826547,1,1,1,1,1,1,1,1,1,,,
+India,Dairy,Pastoral,Pasture,Pasture,8006575,11692998,1,1,1,1,1,1,1,1,1,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Calibrated inputs: Scavenging,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+7000,,,,,minicam-energy-input,,,,,,,,,,,,,
+,,,,,calibrated-value,,share-weight,,,,,,,,,,,
+region,supplysector,subsector,technology,minicam-energy-input,1990,2005,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,
+USA,Dairy,Mixed,Scavenging,Scavenging,0,0,1,0,0,0,0,0,0,0,0,,,
+Canada,Dairy,Mixed,Scavenging,Scavenging,0,0,1,0,0,0,0,0,0,0,0,,,
+Western Europe,Dairy,Mixed,Scavenging,Scavenging,1925182,2690169,1,1,1,1,1,1,1,1,1,,,
+Japan,Dairy,Mixed,Scavenging,Scavenging,0,0,1,0,0,0,0,0,0,0,0,,,
+Australia_NZ,Dairy,Mixed,Scavenging,Scavenging,0,0,1,0,0,0,0,0,0,0,0,,,
+Former Soviet Union,Dairy,Mixed,Scavenging,Scavenging,2011659,1952628,1,1,1,1,1,1,1,1,1,,,
+China,Dairy,Mixed,Scavenging,Scavenging,1108369,4348879,1,1,1,1,1,1,1,1,1,,,
+Middle East,Dairy,Mixed,Scavenging,Scavenging,871564,1375443,1,1,1,1,1,1,1,1,1,,,
+Africa,Dairy,Mixed,Scavenging,Scavenging,4274251,6325352,1,1,1,1,1,1,1,1,1,,,
+Latin America,Dairy,Mixed,Scavenging,Scavenging,8108738,11694723,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,Dairy,Mixed,Scavenging,Scavenging,37961402,67338929,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,Dairy,Mixed,Scavenging,Scavenging,4995129,0,1,1,0,0,0,0,0,0,0,,,
+Korea,Dairy,Mixed,Scavenging,Scavenging,95336,165412,1,1,1,1,1,1,1,1,1,,,
+India,Dairy,Mixed,Scavenging,Scavenging,107791980,174514918,1,1,1,1,1,1,1,1,1,,,
+USA,Dairy,Pastoral,Scavenging,Scavenging,0,0,1,0,0,0,0,0,0,0,0,,,
+Canada,Dairy,Pastoral,Scavenging,Scavenging,0,0,1,0,0,0,0,0,0,0,0,,,
+Western Europe,Dairy,Pastoral,Scavenging,Scavenging,22036,26342,1,1,1,1,1,1,1,1,1,,,
+Japan,Dairy,Pastoral,Scavenging,Scavenging,0,0,1,0,0,0,0,0,0,0,0,,,
+Australia_NZ,Dairy,Pastoral,Scavenging,Scavenging,0,0,1,0,0,0,0,0,0,0,0,,,
+Former Soviet Union,Dairy,Pastoral,Scavenging,Scavenging,1038284,954340,1,1,1,1,1,1,1,1,1,,,
+China,Dairy,Pastoral,Scavenging,Scavenging,1119177,2199960,1,1,1,1,1,1,1,1,1,,,
+Middle East,Dairy,Pastoral,Scavenging,Scavenging,53776,125627,1,1,1,1,1,1,1,1,1,,,
+Africa,Dairy,Pastoral,Scavenging,Scavenging,5523865,6253584,1,1,1,1,1,1,1,1,1,,,
+Latin America,Dairy,Pastoral,Scavenging,Scavenging,4430217,5608217,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,Dairy,Pastoral,Scavenging,Scavenging,2856969,4599450,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,Dairy,Pastoral,Scavenging,Scavenging,0,0,1,0,0,0,0,0,0,0,0,,,
+Korea,Dairy,Pastoral,Scavenging,Scavenging,115805,98308,1,1,1,1,1,1,1,1,1,,,
+India,Dairy,Pastoral,Scavenging,Scavenging,8187641,11957431,1,1,1,1,1,1,1,1,1,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Non-energy cost: Mixed,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+7002,,,,minicam-non-energy-input,,,,,,,,,,,,,,
+,,,,input-cost,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,,,,
+USA,Dairy,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,Dairy,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,Dairy,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,Dairy,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,Dairy,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,Dairy,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+China,Dairy,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,Dairy,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,Dairy,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,Dairy,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,Dairy,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,Dairy,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,Dairy,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+India,Dairy,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+USA,Dairy,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,Dairy,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,Dairy,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,Dairy,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,Dairy,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,Dairy,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+China,Dairy,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,Dairy,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,Dairy,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,Dairy,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,Dairy,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,Dairy,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,Dairy,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+India,Dairy,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+USA,Dairy,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,Dairy,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,Dairy,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,Dairy,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,Dairy,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,Dairy,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+China,Dairy,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,Dairy,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,Dairy,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,Dairy,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,Dairy,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,Dairy,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,Dairy,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+India,Dairy,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+USA,Dairy,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,Dairy,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,Dairy,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,Dairy,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,Dairy,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,Dairy,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+China,Dairy,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,Dairy,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,Dairy,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,Dairy,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,Dairy,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,Dairy,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,Dairy,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+India,Dairy,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+USA,Dairy,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,Dairy,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,Dairy,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,Dairy,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,Dairy,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,Dairy,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+China,Dairy,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,Dairy,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,Dairy,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,Dairy,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,Dairy,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,Dairy,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,Dairy,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+India,Dairy,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+USA,Dairy,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,Dairy,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,Dairy,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,Dairy,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,Dairy,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,Dairy,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+China,Dairy,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,Dairy,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,Dairy,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,Dairy,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,Dairy,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,Dairy,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,Dairy,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+India,Dairy,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+USA,Dairy,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,Dairy,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,Dairy,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,Dairy,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,Dairy,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,Dairy,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+China,Dairy,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,Dairy,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,Dairy,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,Dairy,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,Dairy,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,Dairy,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,Dairy,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+India,Dairy,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+USA,Dairy,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,Dairy,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,Dairy,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,Dairy,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,Dairy,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,Dairy,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+China,Dairy,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,Dairy,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,Dairy,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,Dairy,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,Dairy,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,Dairy,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,Dairy,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+India,Dairy,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+USA,Dairy,Mixed,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,Dairy,Mixed,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,Dairy,Mixed,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,Dairy,Mixed,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,Dairy,Mixed,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,Dairy,Mixed,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+China,Dairy,Mixed,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,Dairy,Mixed,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,Dairy,Mixed,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,Dairy,Mixed,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,Dairy,Mixed,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,Dairy,Mixed,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,Dairy,Mixed,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+India,Dairy,Mixed,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Non-energy cost: Pastoral,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+7002,,,,minicam-non-energy-input,,,,,,,,,,,,,,
+,,,,input-cost,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,,,,
+Australia_NZ,Dairy,Pastoral,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,Dairy,Pastoral,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,Dairy,Pastoral,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,Dairy,Pastoral,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,Dairy,Pastoral,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,Dairy,Pastoral,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,Dairy,Pastoral,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,Dairy,Pastoral,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,Dairy,Pastoral,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,Dairy,Pastoral,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,Dairy,Pastoral,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,Dairy,Pastoral,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,Dairy,Pastoral,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,Dairy,Pastoral,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,Dairy,Pastoral,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,Dairy,Pastoral,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+USA,Dairy,Pastoral,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,Dairy,Pastoral,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,Dairy,Pastoral,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,Dairy,Pastoral,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,Dairy,Pastoral,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,Dairy,Pastoral,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+China,Dairy,Pastoral,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,Dairy,Pastoral,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,Dairy,Pastoral,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,Dairy,Pastoral,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,Dairy,Pastoral,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,Dairy,Pastoral,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,Dairy,Pastoral,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+India,Dairy,Pastoral,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Non-energy cost: Scavenging,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+7002,,,,minicam-non-energy-input,,,,,,,,,,,,,,
+,,,,input-cost,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,,,,
+USA,Dairy,Mixed,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,Dairy,Mixed,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,Dairy,Mixed,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,Dairy,Mixed,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,Dairy,Mixed,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,Dairy,Mixed,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+China,Dairy,Mixed,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,Dairy,Mixed,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,Dairy,Mixed,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,Dairy,Mixed,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,Dairy,Mixed,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,Dairy,Mixed,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,Dairy,Mixed,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+India,Dairy,Mixed,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+USA,Dairy,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,Dairy,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,Dairy,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,Dairy,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,Dairy,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,Dairy,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+China,Dairy,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,Dairy,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,Dairy,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,Dairy,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,Dairy,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,Dairy,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,Dairy,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+India,Dairy,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+CO2 tag,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+7010,,,,,,,,,,,,,,,,,,
+,,,,CO2,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,,,,
+ALL,Dairy,Mixed,Corn,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,Dairy,Mixed,FodderCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,Dairy,Mixed,MiscCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,Dairy,Mixed,OilCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,Dairy,Mixed,OtherGrain,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,Dairy,Mixed,Rice,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,Dairy,Mixed,SugarCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,Dairy,Mixed,Wheat,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,Dairy,Mixed,Pasture,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,Dairy,Pastoral,Pasture,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,Dairy,Mixed,Scavenging,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,Dairy,Pastoral,Scavenging,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+CO2 tag,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+7011,,,,,,,,,,,,,,,,,,
+,,,,CO2,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,,,,
+Australia_NZ,Dairy,Pastoral,Corn,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+Africa,Dairy,Pastoral,Corn,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+Australia_NZ,Dairy,Pastoral,FodderCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+Africa,Dairy,Pastoral,FodderCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+Australia_NZ,Dairy,Pastoral,MiscCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+Africa,Dairy,Pastoral,MiscCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+Australia_NZ,Dairy,Pastoral,OilCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+Africa,Dairy,Pastoral,OilCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+Australia_NZ,Dairy,Pastoral,OtherGrain,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+Africa,Dairy,Pastoral,OtherGrain,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+Australia_NZ,Dairy,Pastoral,Rice,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+Africa,Dairy,Pastoral,Rice,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+Australia_NZ,Dairy,Pastoral,SugarCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+Africa,Dairy,Pastoral,SugarCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+Australia_NZ,Dairy,Pastoral,Wheat,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+Africa,Dairy,Pastoral,Wheat,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Energy-final-demand drivers: consumption of animals for food,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+62,,,,,,,,,,,,,,,,,,
+,,,base-service,,,price-elasticity,income-elasticity,,,,,,,,,,,
+region,energy-final-demand,perCapitaBased,1975,1990,2005,2020 fillout,2020,2035,2050,2065,2080,2095,,,,,,
+USA,DairyDemand,1,52435546,52435546,62873306,-0.5,0.01,0.006,0.002,0.002,0.002,0.002,,,,,,
+Canada,DairyDemand,1,6231687,6231687,6334186,-0.5,0.01,0.006,0.002,0.002,0.002,0.002,,,,,,
+Western Europe,DairyDemand,1,111476483,111476483,109040647,-0.5,0.01,0.006,0.002,0.002,0.002,0.002,,,,,,
+Japan,DairyDemand,1,6271676,6271676,6372013,-0.5,0.01,0.006,0.002,0.002,0.002,0.002,,,,,,
+Australia_NZ,DairyDemand,1,10709046,10709046,18869403,-0.5,0.01,0.006,0.002,0.002,0.002,0.002,,,,,,
+Former Soviet Union,DairyDemand,1,81266857,81266857,50267130,-0.5,0.022,0.023,0.04,0.04,0.04,0.04,,,,,,
+China,DairyDemand,1,5767377,5767377,23379417,-0.5,0.183,0.1175,0.052,0.052,0.052,0.052,,,,,,
+Middle East,DairyDemand,1,5971846,5971846,9652994,-0.5,0.091,0.0505,0.01,0.01,0.01,0.01,,,,,,
+Africa,DairyDemand,1,16312587,16312587,23255968,-0.5,0.2,0.105,0.01,0.01,0.01,0.01,,,,,,
+Latin America,DairyDemand,1,32690755,32690755,52745378,-0.5,0.2,0.105,0.01,0.01,0.01,0.01,,,,,,
+Southeast Asia,DairyDemand,1,15384565,15384565,30072669,-0.5,0.167,0.097,0.027,0.027,0.027,0.027,,,,,,
+Eastern Europe,DairyDemand,1,28478696,28478696,26309982,-0.5,0.022,0.023,0.04,0.04,0.04,0.04,,,,,,
+Korea,DairyDemand,1,1425272,1425272,1796208,-0.5,0.183,0.1175,0.052,0.052,0.052,0.052,,,,,,
+India,DairyDemand,1,41828909,41828909,74318345,-0.5,0.167,0.097,0.027,0.027,0.027,0.027,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Meat demand supplysectors: unit tags and sector type,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+50,,,,,,,,,,,,,,,,,,
+,demandsector,,,,,,,,,,,,,,,,,
+region,supplysector,input-unit,output-unit,price-unit,sectorType,,,,,,,,,,,,,
+ALL,DairyDemand,Gcal,Gcal,1975$/Gcal,agDemand,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Meat Food Demands scale year,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+500,,,,,,,,,,,,,,,,,,
+,demandsector,,share-weight,interpolation-rule,,,,,,,,,,,,,,
+region,supplysector,subsector,1975 fillout,apply-to,from-year,to-year,interpolation-function,,,,,,,,,,,
+USA,DairyDemand,DairyDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,DairyDemand,DairyDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,DairyDemand,DairyDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,DairyDemand,DairyDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,DairyDemand,DairyDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,DairyDemand,DairyDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,DairyDemand,DairyDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,DairyDemand,DairyDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,DairyDemand,DairyDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,DairyDemand,DairyDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,DairyDemand,DairyDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,DairyDemand,DairyDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,DairyDemand,DairyDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,DairyDemand,DairyDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+USA,DairyDemand,DairyNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,DairyDemand,DairyNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,DairyDemand,DairyNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,DairyDemand,DairyNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,DairyDemand,DairyNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,DairyDemand,DairyNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,DairyDemand,DairyNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,DairyDemand,DairyNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,DairyDemand,DairyNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,DairyDemand,DairyNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,DairyDemand,DairyNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,DairyDemand,DairyNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,DairyDemand,DairyNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,DairyDemand,DairyNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Efficiency,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+5001,,,,minicam-energy-input,,,,,,,,,,,,,,
+,,,,efficiency,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input,,,,,
+USA,DairyDemand,DairyDemand,DairyDemand,0.993802,0.993802,0.994734,0.994734,0.994734,0.994734,0.994734,0.994734,0.994734,Dairy,,,,,
+Canada,DairyDemand,DairyDemand,DairyDemand,0.992460,0.992460,0.993137,0.993137,0.993137,0.993137,0.993137,0.993137,0.993137,Dairy,,,,,
+Western Europe,DairyDemand,DairyDemand,DairyDemand,0.971631,0.971631,0.975351,0.975351,0.975351,0.975351,0.975351,0.975351,0.975351,Dairy,,,,,
+Japan,DairyDemand,DairyDemand,DairyDemand,0.975731,0.975731,0.979563,0.979563,0.979563,0.979563,0.979563,0.979563,0.979563,Dairy,,,,,
+Australia_NZ,DairyDemand,DairyDemand,DairyDemand,0.969646,0.969646,0.972598,0.972598,0.972598,0.972598,0.972598,0.972598,0.972598,Dairy,,,,,
+Former Soviet Union,DairyDemand,DairyDemand,DairyDemand,0.955114,0.955114,0.970503,0.970503,0.970503,0.970503,0.970503,0.970503,0.970503,Dairy,,,,,
+China,DairyDemand,DairyDemand,DairyDemand,0.997776,0.997776,0.997308,0.997308,0.997308,0.997308,0.997308,0.997308,0.997308,Dairy,,,,,
+Middle East,DairyDemand,DairyDemand,DairyDemand,0.970052,0.970052,0.974787,0.974787,0.974787,0.974787,0.974787,0.974787,0.974787,Dairy,,,,,
+Africa,DairyDemand,DairyDemand,DairyDemand,0.987908,0.987908,0.984842,0.984842,0.984842,0.984842,0.984842,0.984842,0.984842,Dairy,,,,,
+Latin America,DairyDemand,DairyDemand,DairyDemand,0.988096,0.988096,0.988814,0.988814,0.988814,0.988814,0.988814,0.988814,0.988814,Dairy,,,,,
+Southeast Asia,DairyDemand,DairyDemand,DairyDemand,0.989652,0.989652,0.988585,0.988585,0.988585,0.988585,0.988585,0.988585,0.988585,Dairy,,,,,
+Eastern Europe,DairyDemand,DairyDemand,DairyDemand,0.972651,0.972651,0.974157,0.974157,0.974157,0.974157,0.974157,0.974157,0.974157,Dairy,,,,,
+Korea,DairyDemand,DairyDemand,DairyDemand,0.983135,0.983135,0.983173,0.983173,0.983173,0.983173,0.983173,0.983173,0.983173,Dairy,,,,,
+India,DairyDemand,DairyDemand,DairyDemand,0.989984,0.989984,0.988008,0.988008,0.988008,0.988008,0.988008,0.988008,0.988008,Dairy,,,,,
+USA,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0.993802,0.993802,0.994734,0.994734,0.994734,0.994734,0.994734,0.994734,0.994734,Dairy,,,,,
+Canada,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0.992460,0.992460,0.993137,0.993137,0.993137,0.993137,0.993137,0.993137,0.993137,Dairy,,,,,
+Western Europe,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0.971631,0.971631,0.975351,0.975351,0.975351,0.975351,0.975351,0.975351,0.975351,Dairy,,,,,
+Japan,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0.975731,0.975731,0.979563,0.979563,0.979563,0.979563,0.979563,0.979563,0.979563,Dairy,,,,,
+Australia_NZ,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0.969646,0.969646,0.972598,0.972598,0.972598,0.972598,0.972598,0.972598,0.972598,Dairy,,,,,
+Former Soviet Union,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0.955114,0.955114,0.970503,0.970503,0.970503,0.970503,0.970503,0.970503,0.970503,Dairy,,,,,
+China,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0.997776,0.997776,0.997308,0.997308,0.997308,0.997308,0.997308,0.997308,0.997308,Dairy,,,,,
+Middle East,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0.970052,0.970052,0.974787,0.974787,0.974787,0.974787,0.974787,0.974787,0.974787,Dairy,,,,,
+Africa,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0.987908,0.987908,0.984842,0.984842,0.984842,0.984842,0.984842,0.984842,0.984842,Dairy,,,,,
+Latin America,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0.988096,0.988096,0.988814,0.988814,0.988814,0.988814,0.988814,0.988814,0.988814,Dairy,,,,,
+Southeast Asia,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0.989652,0.989652,0.988585,0.988585,0.988585,0.988585,0.988585,0.988585,0.988585,Dairy,,,,,
+Eastern Europe,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0.972651,0.972651,0.974157,0.974157,0.974157,0.974157,0.974157,0.974157,0.974157,Dairy,,,,,
+Korea,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0.983135,0.983135,0.983173,0.983173,0.983173,0.983173,0.983173,0.983173,0.983173,Dairy,,,,,
+India,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0.989984,0.989984,0.988008,0.988008,0.988008,0.988008,0.988008,0.988008,0.988008,Dairy,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,Afr and Aus_NZ have pastoral inputs of ag crops,,,,,,,,,,,,,,,
+,demands,,supplies,,,demand scalers,,,,,,,,,,,,
+,1990,2005,1990,2005,,1990,2005,,,,,,,,,,,
+,52799940,63248434,52762568,63206122,,0.999292204,0.999331015,,,,,,,,,,,
+,6284300,6382800,6279030,6377959,,0.999161442,0.999241496,,,,,,,,,,,
+,115096321,112104229,114731348,111796321,,0.996828976,0.997253378,,,,,,,,,,,
+,6453209,6528754,6427673,6504958,,0.99604286,0.996355132,,,,,,,,,,,
+,11058686,19427478,11044290,19401028,,0.998698161,0.998638526,,,,,,,,,,,
+,85499577,51995991,85086013,51794925,,0.99516297,0.996133048,,,,,,,,,,,
+,5781233,23452440,5780234,23442516,,0.999827188,0.999576834,,,,,,,,,,,
+,6185596,9945228,6156212,9902674,,0.995249522,0.99572121,,,,,,,,,,,
+,16524599,23641002,16512261,23613900,,0.999253342,0.998853579,,,,,,,,,,,
+,33116367,53388074,33084600,53342056,,0.999040759,0.999138045,,,,,,,,,,,
+,15563000,30470033,15545431,30419925,,0.998871112,0.998355475,,,,,,,,,,,
+,29387506,27106380,29279471,27007959,,0.996323773,0.996369102,,,,,,,,,,,
+,1451638,1831871,1449722,1826950,,0.99868007,0.997313603,,,,,,,,,,,
+,42298264,75347772,42252123,75220405,,0.998909148,0.998309615,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Calibrated inputs to demand sectors,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+5000,,,,,,,,,,,,,,,,,,
+,demandsector,,,,calibrated-value,,share-weight,,,,,,,,,,from data,
+region,supplysector,subsector,technology,minicam-energy-input,1990,2005,1975,1990,2005,2020,2035,2050,2065,2080,2095,,1990,2005
+USA,DairyDemand,DairyDemand,DairyDemand,Dairy,46986656,60555520,1,1,1,1,1,1,1,1,1,,47019936,60596057
+Canada,DairyDemand,DairyDemand,DairyDemand,Dairy,4644569,5169052,1,1,1,1,1,1,1,1,1,,4648467,5172976
+Western Europe,DairyDemand,DairyDemand,DairyDemand,Dairy,80064295,89445214,1,1,1,1,1,1,1,1,1,,80318988,89691563
+Japan,DairyDemand,DairyDemand,DairyDemand,Dairy,6427672,6504957,1,1,1,1,1,1,1,1,1,,6453208,6528753
+Australia_NZ,DairyDemand,DairyDemand,DairyDemand,Dairy,4396337,4282300,1,1,1,1,1,1,1,1,1,,4402067,4288138
+Former Soviet Union,DairyDemand,DairyDemand,DairyDemand,Dairy,85086012,39184422,1,1,1,1,1,1,1,1,1,,85499576,39336534
+China,DairyDemand,DairyDemand,DairyDemand,Dairy,5772978,19735907,1,1,1,1,1,1,1,1,1,,5773975,19744262
+Middle East,DairyDemand,DairyDemand,DairyDemand,Dairy,6156211,9902673,1,1,1,1,1,1,1,1,1,,6185595,9945227
+Africa,DairyDemand,DairyDemand,DairyDemand,Dairy,15008656,22387822,1,1,1,1,1,1,1,1,1,,15019871,22413517
+Latin America,DairyDemand,DairyDemand,DairyDemand,Dairy,31024881,46061580,1,1,1,1,1,1,1,1,1,,31054670,46101317
+Southeast Asia,DairyDemand,DairyDemand,DairyDemand,Dairy,14322828,27408166,1,1,1,1,1,1,1,1,1,,14339015,27453313
+Eastern Europe,DairyDemand,DairyDemand,DairyDemand,Dairy,14082356,16435665,1,1,1,1,1,1,1,1,1,,14134317,16495559
+Korea,DairyDemand,DairyDemand,DairyDemand,Dairy,975775,1501555,1,1,1,1,1,1,1,1,1,,977065,1505600
+India,DairyDemand,DairyDemand,DairyDemand,Dairy,38992574,59213246,1,1,1,1,1,1,1,1,1,,39035156,59313509
+USA,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,Dairy,5775913,2650602,1,1,1,1,1,1,1,1,1,,5780004,2652376
+Canada,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,Dairy,1634461,1208907,1,1,1,1,1,1,1,1,1,,1635833,1209824
+Western Europe,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,Dairy,34667053,22351107,1,1,1,1,1,1,1,1,1,,34777333,22412666
+Japan,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,Dairy,1,1,1,1,1,1,1,1,1,1,1,,1,1
+Australia_NZ,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,Dairy,6647953,15118728,1,1,1,1,1,1,1,1,1,,6656619,15139340
+Former Soviet Union,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,Dairy,1,12610503,1,1,1,1,1,1,1,1,1,,1,12659456
+China,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,Dairy,7256,3706609,1,1,1,1,1,1,1,1,1,,7257,3708178
+Middle East,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,Dairy,1,1,1,1,1,1,1,1,1,1,1,,1,1
+Africa,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,Dairy,1503604,1226078,1,1,1,1,1,1,1,1,1,,1504728,1227485
+Latin America,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,Dairy,2059719,7280476,1,1,1,1,1,1,1,1,1,,2061696,7286757
+Southeast Asia,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,Dairy,1222603,3011759,1,1,1,1,1,1,1,1,1,,1223985,3016720
+Eastern Europe,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,Dairy,15197115,10572294,1,1,1,1,1,1,1,1,1,,15253189,10610821
+Korea,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,Dairy,473947,325395,1,1,1,1,1,1,1,1,1,,474573,326271
+India,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,Dairy,3259548,16007159,1,1,1,1,1,1,1,1,1,,3263108,16034263
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Non-energy input cost,,,,,,,,,,,,,,,,,,
+table not necessary,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+5002,,,,minicam-non-energy-input,,,,,,,,,,,,,,
+,,,,input-cost,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,,,,
+ALL,DairyDemand,DairyDemand,DairyDemand,0,0,0,0,0,0,0,0,0,,,,,,
+ALL,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,0,0,0,0,0,0,0,0,0,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+add CO2 tag,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+5010,,,,,,,,,,,,,,,,,,
+,,,,CO2,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,,,,
+ALL,DairyDemand,DairyDemand,DairyDemand,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,DairyDemand,DairyNonfoodDemand,DairyNonfoodDemand,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,

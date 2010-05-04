@@ -5,11 +5,13 @@ Variable ID,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 region,supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,,,,,,
 ALL,regional crude oil,regional crude oil,regional crude oil,ALL,NOx,,,,,,,,,,,,,
-ALL,refined liquids industrial,biomass liquids,biomass liquids,ALL,NOx,,,,,,,,,,,,,
+ALL,refined liquids industrial,biomass liquids-ethanol,biomass liquids-ethanol,ALL,NOx,,,,,,,,,,,,,
+ALL,refined liquids industrial,biomass liquids-FT,biomass liquids-FT,ALL,NOx,,,,,,,,,,,,,
 ALL,refined liquids industrial,unconventional oil refining,unconventional oil refining,ALL,NOx,,,,,,,,,,,,,
 ALL,refined liquids industrial,coal to liquids,coal to liquids,ALL,NOx,,,,,,,,,,,,,
 ALL,refined liquids industrial,gas to liquids,gas to liquids,ALL,NOx,,,,,,,,,,,,,
-ALL,refined liquids enduse,biomass liquids,biomass liquids,ALL,NOx,,,,,,,,,,,,,
+ALL,refined liquids enduse,biomass liquids-ethanol,biomass liquids-ethanol,ALL,NOx,,,,,,,,,,,,,
+ALL,refined liquids enduse,biomass liquids-FT,biomass liquids-FT,ALL,NOx,,,,,,,,,,,,,
 ALL,refined liquids enduse,unconventional oil refining,unconventional oil refining,ALL,NOx,,,,,,,,,,,,,
 ALL,refined liquids enduse,coal to liquids,coal to liquids,ALL,NOx,,,,,,,,,,,,,
 ALL,refined liquids enduse,gas to liquids,gas to liquids,ALL,NOx,,,,,,,,,,,,,
@@ -70,11 +72,13 @@ Variable ID,,,,,,,,,,,,,,,,,,
 ,,,,,uncontrolled-emiss-coef,,,,,,,,,,,,,
 supplysector,subsector,technology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
 regional crude oil,regional crude oil,regional crude oil,1990,NOx,0.000104911,0.002156599,0.002963334,9.23915E-06,0.028990736,0.001137447,0.000167665,0.010898179,0.020698924,0.003172237,0.003456823,0.007181516,0.000134626,0.000962721
-refined liquids industrial,biomass liquids,biomass liquids,1990,NOx,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
+refined liquids industrial,biomass liquids-ethanol,biomass liquids-ethanol,1990,NOx,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
+refined liquids industrial,biomass liquids-FT,biomass liquids-FT,1990,NOx,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
 refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,NOx,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
 refined liquids industrial,coal to liquids,coal to liquids,1990,NOx,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
 refined liquids industrial,gas to liquids,gas to liquids,1990,NOx,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
-refined liquids enduse,biomass liquids,biomass liquids,1990,NOx,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
+refined liquids enduse,biomass liquids-ethanol,biomass liquids-ethanol,1990,NOx,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
+refined liquids enduse,biomass liquids-FT,biomass liquids-FT,1990,NOx,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
 refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,NOx,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
 refined liquids enduse,coal to liquids,coal to liquids,1990,NOx,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
 refined liquids enduse,gas to liquids,gas to liquids,1990,NOx,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01,0.01
@@ -129,11 +133,13 @@ Variable ID,,,,,,,,,,,,,,,,,,
 ,,,,,gdp-mid-control,,,,,,,,,,,,,
 supplysector,subsector,technology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
 regional crude oil,regional crude oil,regional crude oil,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
-refined liquids industrial,biomass liquids,biomass liquids,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+refined liquids industrial,biomass liquids-ethanol,biomass liquids-ethanol,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+refined liquids industrial,biomass liquids-FT,biomass liquids-FT,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
 refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
 refined liquids industrial,coal to liquids,coal to liquids,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
 refined liquids industrial,gas to liquids,gas to liquids,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
-refined liquids enduse,biomass liquids,biomass liquids,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+refined liquids enduse,biomass liquids-ethanol,biomass liquids-ethanol,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
+refined liquids enduse,biomass liquids-FT,biomass liquids-FT,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
 refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
 refined liquids enduse,coal to liquids,coal to liquids,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
 refined liquids enduse,gas to liquids,gas to liquids,1990,NOx,34.6,26.7,16.6,30.6,20.0,12.0,12.0,12.0,12.0,12.0,12.0,6.0,12.3,12.0
@@ -188,11 +194,13 @@ Variable ID,,,,,,,,,,,,,,,,,,
 ,,,,,gdp-control-range,,,,,,,,,,,,,
 supplysector,subsector,technology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
 regional crude oil,regional crude oil,regional crude oil,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
-refined liquids industrial,biomass liquids,biomass liquids,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+refined liquids industrial,biomass liquids-ethanol,biomass liquids-ethanol,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+refined liquids industrial,biomass liquids-FT,biomass liquids-FT,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
 refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
 refined liquids industrial,coal to liquids,coal to liquids,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
 refined liquids industrial,gas to liquids,gas to liquids,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
-refined liquids enduse,biomass liquids,biomass liquids,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+refined liquids enduse,biomass liquids-ethanol,biomass liquids-ethanol,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
+refined liquids enduse,biomass liquids-FT,biomass liquids-FT,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
 refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
 refined liquids enduse,coal to liquids,coal to liquids,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
 refined liquids enduse,gas to liquids,gas to liquids,1990,NOx,30.0,30.0,12.0,12.0,30.0,12.0,8.0,12.0,12.0,12.0,12.0,6.0,8.0,12.0
@@ -247,11 +255,13 @@ Variable ID,,,,,,,,,,,,,,,,,,
 ,,,,,tech-diffusion,,,,,,,,,,,,,
 supplysector,subsector,technology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
 regional crude oil,regional crude oil,regional crude oil,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
-refined liquids industrial,biomass liquids,biomass liquids,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
+refined liquids industrial,biomass liquids-ethanol,biomass liquids-ethanol,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
+refined liquids industrial,biomass liquids-FT,biomass liquids-FT,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
 refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
 refined liquids industrial,coal to liquids,coal to liquids,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
 refined liquids industrial,gas to liquids,gas to liquids,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
-refined liquids enduse,biomass liquids,biomass liquids,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
+refined liquids enduse,biomass liquids-ethanol,biomass liquids-ethanol,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
+refined liquids enduse,biomass liquids-FT,biomass liquids-FT,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
 refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
 refined liquids enduse,coal to liquids,coal to liquids,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
 refined liquids enduse,gas to liquids,gas to liquids,1990,NOx,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.5
@@ -306,11 +316,13 @@ Variable ID,,,,,,,,,,,,,,,,,,
 ,,,,,final-emiss-coef,,,,,,,,,,,,,
 supplysector,subsector,technology,period,generic-ghg,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
 regional crude oil,regional crude oil,regional crude oil,1990,NOx,6.29464E-05,0.001293959,0.001778,5.54349E-06,0.017394442,0.000682468,9.0539E-05,0.006538908,0.012419355,0.001903342,0.001866685,0.00430891,8.07758E-05,0.000519869
-refined liquids industrial,biomass liquids,biomass liquids,1990,NOx,0.006,0.006,0.006,0.006,0.006,0.006,0.0054,0.006,0.006,0.006,0.0054,0.006,0.006,0.0054
+refined liquids industrial,biomass liquids-ethanol,biomass liquids-ethanol,1990,NOx,0.006,0.006,0.006,0.006,0.006,0.006,0.0054,0.006,0.006,0.006,0.0054,0.006,0.006,0.0054
+refined liquids industrial,biomass liquids-FT,biomass liquids-FT,1990,NOx,0.006,0.006,0.006,0.006,0.006,0.006,0.0054,0.006,0.006,0.006,0.0054,0.006,0.006,0.0054
 refined liquids industrial,unconventional oil refining,unconventional oil refining,1990,NOx,0.006,0.006,0.006,0.006,0.006,0.006,0.0054,0.006,0.006,0.006,0.0054,0.006,0.006,0.0054
 refined liquids industrial,coal to liquids,coal to liquids,1990,NOx,0.006,0.006,0.006,0.006,0.006,0.006,0.0054,0.006,0.006,0.006,0.0054,0.006,0.006,0.0054
 refined liquids industrial,gas to liquids,gas to liquids,1990,NOx,0.006,0.006,0.006,0.006,0.006,0.006,0.0054,0.006,0.006,0.006,0.0054,0.006,0.006,0.0054
-refined liquids enduse,biomass liquids,biomass liquids,1990,NOx,0.006,0.006,0.006,0.006,0.006,0.006,0.0054,0.006,0.006,0.006,0.0054,0.006,0.006,0.0054
+refined liquids enduse,biomass liquids-ethanol,biomass liquids-ethanol,1990,NOx,0.006,0.006,0.006,0.006,0.006,0.006,0.0054,0.006,0.006,0.006,0.0054,0.006,0.006,0.0054
+refined liquids enduse,biomass liquids-FT,biomass liquids-FT,1990,NOx,0.006,0.006,0.006,0.006,0.006,0.006,0.0054,0.006,0.006,0.006,0.0054,0.006,0.006,0.0054
 refined liquids enduse,unconventional oil refining,unconventional oil refining,1990,NOx,0.006,0.006,0.006,0.006,0.006,0.006,0.0054,0.006,0.006,0.006,0.0054,0.006,0.006,0.0054
 refined liquids enduse,coal to liquids,coal to liquids,1990,NOx,0.006,0.006,0.006,0.006,0.006,0.006,0.0054,0.006,0.006,0.006,0.0054,0.006,0.006,0.0054
 refined liquids enduse,gas to liquids,gas to liquids,1990,NOx,0.006,0.006,0.006,0.006,0.006,0.006,0.0054,0.006,0.006,0.006,0.0054,0.006,0.006,0.0054

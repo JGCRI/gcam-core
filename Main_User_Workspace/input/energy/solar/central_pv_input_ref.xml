@@ -14,16 +14,21 @@
             <price year="2080">0.001</price>
             <price year="2095">0.001</price>
          </unlimited-resource>
-         <intermittent-supplysector delete="1" name="SolarAndAuxiliary"/>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2020</scaleYear>
-               <sharewt year="2020">0.5</sharewt>
-               <sharewt year="2035">0.5</sharewt>
-               <sharewt year="2050">0.5</sharewt>
-               <sharewt year="2065">0.5</sharewt>
-               <sharewt year="2080">0.5</sharewt>
-               <sharewt year="2095">0.5</sharewt>
+               <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2095">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <share-weight year="2020">0.5</share-weight>
+               <share-weight year="2035">0.5</share-weight>
+               <share-weight year="2050">0.5</share-weight>
+               <share-weight year="2065">0.5</share-weight>
+               <share-weight year="2080">0.5</share-weight>
+               <share-weight year="2095">0.5</share-weight>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <intermittent-technology name="PV">
                   <period year="1975">
                      <minicam-energy-input name="global solar resource">
@@ -40,6 +45,7 @@
                      <capacity-limit-backup-calculator>
                         <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="global solar resource">
@@ -60,6 +66,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>48.69</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="global solar resource">
@@ -80,6 +87,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>48.69</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="global solar resource">
@@ -100,6 +108,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>31.22</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="global solar resource">
@@ -120,6 +129,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>21.47</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="global solar resource">
@@ -140,6 +150,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>15.98</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="global solar resource">
@@ -160,6 +171,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>12.80</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="global solar resource">
@@ -180,6 +192,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.05</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="global solar resource">
@@ -200,6 +213,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>10.28</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                </intermittent-technology>
                <technology name="PV_storage">
@@ -208,7 +222,7 @@
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="global solar resource">
@@ -219,7 +233,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>60.61</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="global solar resource">
@@ -230,7 +244,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>60.61</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="global solar resource">
@@ -241,7 +255,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>41.03</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="global solar resource">
@@ -252,7 +266,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>29.96</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="global solar resource">
@@ -263,7 +277,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>23.70</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="global solar resource">
@@ -274,7 +288,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.12</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="global solar resource">
@@ -285,7 +299,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>18.05</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="global solar resource">
@@ -296,23 +310,28 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>17.01</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                </technology>
             </subsector>
          </supplysector>
       </region>
       <region name="USA">
-         <intermittent-supplysector delete="1" name="SolarAndAuxiliary"/>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2035</scaleYear>
-               <sharewt year="2020">0.25</sharewt>
-               <sharewt year="2035">0.5</sharewt>
-               <sharewt year="2050">0.5</sharewt>
-               <sharewt year="2065">0.5</sharewt>
-               <sharewt year="2080">0.5</sharewt>
-               <sharewt year="2095">0.5</sharewt>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <share-weight year="2020">0.25</share-weight>
+               <share-weight year="2035">0.5</share-weight>
+               <share-weight year="2050">0.5</share-weight>
+               <share-weight year="2065">0.5</share-weight>
+               <share-weight year="2080">0.5</share-weight>
+               <share-weight year="2095">0.5</share-weight>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <intermittent-technology name="PV">
                   <period year="1975">
                      <minicam-energy-input name="global solar resource">
@@ -329,6 +348,7 @@
                      <capacity-limit-backup-calculator>
                         <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="global solar resource">
@@ -349,6 +369,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>49.78</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="global solar resource">
@@ -369,6 +390,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>49.78</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="global solar resource">
@@ -389,6 +411,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>31.92</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="global solar resource">
@@ -409,6 +432,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>21.95</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="global solar resource">
@@ -429,6 +453,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>16.34</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="global solar resource">
@@ -449,6 +474,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>13.09</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="global solar resource">
@@ -469,6 +495,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.30</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="global solar resource">
@@ -489,6 +516,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>10.51</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                </intermittent-technology>
                <technology name="PV_storage">
@@ -497,7 +525,7 @@
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="global solar resource">
@@ -508,7 +536,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>61.97</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="global solar resource">
@@ -519,7 +547,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>61.97</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="global solar resource">
@@ -530,7 +558,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>41.95</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="global solar resource">
@@ -541,7 +569,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>30.63</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="global solar resource">
@@ -552,7 +580,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>24.23</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="global solar resource">
@@ -563,7 +591,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.57</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="global solar resource">
@@ -574,7 +602,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>18.45</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="global solar resource">
@@ -585,23 +613,28 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>17.39</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                </technology>
             </subsector>
          </supplysector>
       </region>
       <region name="Canada">
-         <intermittent-supplysector delete="1" name="SolarAndAuxiliary"/>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2035</scaleYear>
-               <sharewt year="2020">0.25</sharewt>
-               <sharewt year="2035">0.5</sharewt>
-               <sharewt year="2050">0.5</sharewt>
-               <sharewt year="2065">0.5</sharewt>
-               <sharewt year="2080">0.5</sharewt>
-               <sharewt year="2095">0.5</sharewt>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <share-weight year="2020">0.25</share-weight>
+               <share-weight year="2035">0.5</share-weight>
+               <share-weight year="2050">0.5</share-weight>
+               <share-weight year="2065">0.5</share-weight>
+               <share-weight year="2080">0.5</share-weight>
+               <share-weight year="2095">0.5</share-weight>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <intermittent-technology name="PV">
                   <period year="1975">
                      <minicam-energy-input name="global solar resource">
@@ -618,6 +651,7 @@
                      <capacity-limit-backup-calculator>
                         <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="global solar resource">
@@ -638,6 +672,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>61.36</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="global solar resource">
@@ -658,6 +693,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>61.36</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="global solar resource">
@@ -678,6 +714,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>39.34</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="global solar resource">
@@ -698,6 +735,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>27.05</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="global solar resource">
@@ -718,6 +756,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.14</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="global solar resource">
@@ -738,6 +777,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>16.13</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="global solar resource">
@@ -758,6 +798,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>13.93</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="global solar resource">
@@ -778,6 +819,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>12.96</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                </intermittent-technology>
                <technology name="PV_storage">
@@ -786,7 +828,7 @@
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="global solar resource">
@@ -797,7 +839,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>76.38</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="global solar resource">
@@ -808,7 +850,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>76.38</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="global solar resource">
@@ -819,7 +861,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>51.70</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="global solar resource">
@@ -830,7 +872,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>37.76</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="global solar resource">
@@ -841,7 +883,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>29.86</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="global solar resource">
@@ -852,7 +894,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>25.36</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="global solar resource">
@@ -863,7 +905,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>22.75</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="global solar resource">
@@ -874,23 +916,28 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>21.44</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                </technology>
             </subsector>
          </supplysector>
       </region>
       <region name="Western Europe">
-         <intermittent-supplysector delete="1" name="SolarAndAuxiliary"/>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2020</scaleYear>
-               <sharewt year="2020">0.5</sharewt>
-               <sharewt year="2035">0.5</sharewt>
-               <sharewt year="2050">0.5</sharewt>
-               <sharewt year="2065">0.5</sharewt>
-               <sharewt year="2080">0.5</sharewt>
-               <sharewt year="2095">0.5</sharewt>
+               <interpolation-rule apply-to="share-weight" from-year="2020" to-year="2095">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <share-weight year="2020">0.5</share-weight>
+               <share-weight year="2035">0.5</share-weight>
+               <share-weight year="2050">0.5</share-weight>
+               <share-weight year="2065">0.5</share-weight>
+               <share-weight year="2080">0.5</share-weight>
+               <share-weight year="2095">0.5</share-weight>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <intermittent-technology name="PV">
                   <period year="1975">
                      <minicam-energy-input name="global solar resource">
@@ -907,6 +954,7 @@
                      <capacity-limit-backup-calculator>
                         <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="global solar resource">
@@ -927,6 +975,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>73.53</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="global solar resource">
@@ -947,6 +996,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>73.53</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="global solar resource">
@@ -967,6 +1017,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>47.15</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="global solar resource">
@@ -987,6 +1038,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>32.42</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="global solar resource">
@@ -1007,6 +1059,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>24.14</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="global solar resource">
@@ -1027,6 +1080,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.33</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="global solar resource">
@@ -1047,6 +1101,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>16.69</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="global solar resource">
@@ -1067,6 +1122,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>15.53</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                </intermittent-technology>
                <technology name="PV_storage">
@@ -1075,7 +1131,7 @@
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="global solar resource">
@@ -1086,7 +1142,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>91.54</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="global solar resource">
@@ -1097,7 +1153,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>91.54</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="global solar resource">
@@ -1108,7 +1164,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>61.96</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="global solar resource">
@@ -1119,7 +1175,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>45.25</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="global solar resource">
@@ -1130,7 +1186,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>35.79</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="global solar resource">
@@ -1141,7 +1197,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>30.39</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="global solar resource">
@@ -1152,7 +1208,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>27.26</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="global solar resource">
@@ -1163,23 +1219,28 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>25.69</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                </technology>
             </subsector>
          </supplysector>
       </region>
       <region name="Japan">
-         <intermittent-supplysector delete="1" name="SolarAndAuxiliary"/>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2035</scaleYear>
-               <sharewt year="2020">0.25</sharewt>
-               <sharewt year="2035">0.5</sharewt>
-               <sharewt year="2050">0.5</sharewt>
-               <sharewt year="2065">0.5</sharewt>
-               <sharewt year="2080">0.5</sharewt>
-               <sharewt year="2095">0.5</sharewt>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <share-weight year="2020">0.25</share-weight>
+               <share-weight year="2035">0.5</share-weight>
+               <share-weight year="2050">0.5</share-weight>
+               <share-weight year="2065">0.5</share-weight>
+               <share-weight year="2080">0.5</share-weight>
+               <share-weight year="2095">0.5</share-weight>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <intermittent-technology name="PV">
                   <period year="1975">
                      <minicam-energy-input name="global solar resource">
@@ -1196,6 +1257,7 @@
                      <capacity-limit-backup-calculator>
                         <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="global solar resource">
@@ -1216,6 +1278,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>79.14</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="global solar resource">
@@ -1236,6 +1299,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>79.14</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="global solar resource">
@@ -1256,6 +1320,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>50.74</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="global solar resource">
@@ -1276,6 +1341,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>34.89</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="global solar resource">
@@ -1296,6 +1362,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>25.98</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="global solar resource">
@@ -1316,6 +1383,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.81</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="global solar resource">
@@ -1336,6 +1404,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>17.96</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="global solar resource">
@@ -1356,6 +1425,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>16.72</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                </intermittent-technology>
                <technology name="PV_storage">
@@ -1364,7 +1434,7 @@
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="global solar resource">
@@ -1375,7 +1445,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>98.51</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="global solar resource">
@@ -1386,7 +1456,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>98.51</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="global solar resource">
@@ -1397,7 +1467,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>66.68</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="global solar resource">
@@ -1408,7 +1478,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>48.70</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="global solar resource">
@@ -1419,7 +1489,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>38.52</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="global solar resource">
@@ -1430,7 +1500,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>32.71</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="global solar resource">
@@ -1441,7 +1511,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>29.34</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="global solar resource">
@@ -1452,312 +1522,28 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>27.65</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-      </region>
-      <region name="Former Soviet Union">
-         <intermittent-supplysector delete="1" name="SolarAndAuxiliary"/>
-         <supplysector name="electricity">
-            <subsector name="solar">
-               <scaleYear>2035</scaleYear>
-               <sharewt year="2020">0.25</sharewt>
-               <sharewt year="2035">0.5</sharewt>
-               <sharewt year="2050">0.5</sharewt>
-               <sharewt year="2065">0.5</sharewt>
-               <sharewt year="2080">0.5</sharewt>
-               <sharewt year="2095">0.5</sharewt>
-               <intermittent-technology name="PV">
-                  <period year="1975">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                     <minicam-energy-input name="backup_electricity">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <trial-market-name>renewable</trial-market-name>
-                     <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>30</backup-capital-cost>
-                     <backup-capacity-factor>0.05</backup-capacity-factor>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.25</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="1990">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                     <minicam-energy-input name="backup_electricity">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <trial-market-name>renewable</trial-market-name>
-                     <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>30</backup-capital-cost>
-                     <backup-capacity-factor>0.05</backup-capacity-factor>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.25</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                     <lifetime>15</lifetime>
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>84.97</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                     <minicam-energy-input name="backup_electricity">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <trial-market-name>renewable</trial-market-name>
-                     <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>30</backup-capital-cost>
-                     <backup-capacity-factor>0.05</backup-capacity-factor>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.25</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                     <lifetime>30</lifetime>
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>84.97</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                     <minicam-energy-input name="backup_electricity">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <trial-market-name>renewable</trial-market-name>
-                     <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>30</backup-capital-cost>
-                     <backup-capacity-factor>0.05</backup-capacity-factor>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.25</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                     <lifetime>30</lifetime>
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>54.48</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                     <minicam-energy-input name="backup_electricity">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <trial-market-name>renewable</trial-market-name>
-                     <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>30</backup-capital-cost>
-                     <backup-capacity-factor>0.05</backup-capacity-factor>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.25</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                     <lifetime>30</lifetime>
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>37.47</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                     <minicam-energy-input name="backup_electricity">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <trial-market-name>renewable</trial-market-name>
-                     <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>30</backup-capital-cost>
-                     <backup-capacity-factor>0.05</backup-capacity-factor>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.25</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                     <lifetime>30</lifetime>
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>27.90</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                     <minicam-energy-input name="backup_electricity">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <trial-market-name>renewable</trial-market-name>
-                     <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>30</backup-capital-cost>
-                     <backup-capacity-factor>0.05</backup-capacity-factor>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.25</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                     <lifetime>30</lifetime>
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>22.34</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                     <minicam-energy-input name="backup_electricity">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <trial-market-name>renewable</trial-market-name>
-                     <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>30</backup-capital-cost>
-                     <backup-capacity-factor>0.05</backup-capacity-factor>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.25</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                     <lifetime>30</lifetime>
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>19.29</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                     <minicam-energy-input name="backup_electricity">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <trial-market-name>renewable</trial-market-name>
-                     <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>30</backup-capital-cost>
-                     <backup-capacity-factor>0.05</backup-capacity-factor>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.25</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                     <lifetime>30</lifetime>
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>17.95</input-cost>
-                     </minicam-non-energy-input>
-                  </period>
-               </intermittent-technology>
-               <technology name="PV_storage">
-                  <period year="1975">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>0.96</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                     <sharewt>0</sharewt>
-                  </period>
-                  <period year="1990">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>0.96</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                     <lifetime>15</lifetime>
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>105.77</input-cost>
-                     </minicam-non-energy-input>
-                     <sharewt>0</sharewt>
-                  </period>
-                  <period year="2005">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>0.96</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                     <lifetime>30</lifetime>
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>105.77</input-cost>
-                     </minicam-non-energy-input>
-                     <sharewt>0</sharewt>
-                  </period>
-                  <period year="2020">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>0.96</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                     <lifetime>30</lifetime>
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>71.60</input-cost>
-                     </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
-                  </period>
-                  <period year="2035">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>0.96</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                     <lifetime>30</lifetime>
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>52.29</input-cost>
-                     </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
-                  </period>
-                  <period year="2050">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>0.96</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                     <lifetime>30</lifetime>
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>41.36</input-cost>
-                     </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
-                  </period>
-                  <period year="2065">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>0.96</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                     <lifetime>30</lifetime>
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>35.12</input-cost>
-                     </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
-                  </period>
-                  <period year="2080">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>0.96</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                     <lifetime>30</lifetime>
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>31.50</input-cost>
-                     </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
-                  </period>
-                  <period year="2095">
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>0.96</efficiency>
-                     </minicam-energy-input>
-                     <CO2 name="CO2"/>
-                     <lifetime>30</lifetime>
-                     <minicam-non-energy-input name="non-energy">
-                        <input-cost>29.69</input-cost>
-                     </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                </technology>
             </subsector>
          </supplysector>
       </region>
       <region name="Australia_NZ">
-         <intermittent-supplysector delete="1" name="SolarAndAuxiliary"/>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2035</scaleYear>
-               <sharewt year="2020">0.25</sharewt>
-               <sharewt year="2035">0.5</sharewt>
-               <sharewt year="2050">0.5</sharewt>
-               <sharewt year="2065">0.5</sharewt>
-               <sharewt year="2080">0.5</sharewt>
-               <sharewt year="2095">0.5</sharewt>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <share-weight year="2020">0.25</share-weight>
+               <share-weight year="2035">0.5</share-weight>
+               <share-weight year="2050">0.5</share-weight>
+               <share-weight year="2065">0.5</share-weight>
+               <share-weight year="2080">0.5</share-weight>
+               <share-weight year="2095">0.5</share-weight>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <intermittent-technology name="PV">
                   <period year="1975">
                      <minicam-energy-input name="global solar resource">
@@ -1774,6 +1560,7 @@
                      <capacity-limit-backup-calculator>
                         <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="global solar resource">
@@ -1794,6 +1581,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>68.00</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="global solar resource">
@@ -1814,6 +1602,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>68.00</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="global solar resource">
@@ -1834,6 +1623,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>43.60</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="global solar resource">
@@ -1854,6 +1644,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>29.98</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="global solar resource">
@@ -1874,6 +1665,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>22.32</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="global solar resource">
@@ -1894,6 +1686,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>17.88</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="global solar resource">
@@ -1914,6 +1707,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>15.43</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="global solar resource">
@@ -1934,6 +1728,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>14.36</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                </intermittent-technology>
                <technology name="PV_storage">
@@ -1942,7 +1737,7 @@
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="global solar resource">
@@ -1953,7 +1748,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>84.65</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="global solar resource">
@@ -1964,7 +1759,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>84.65</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="global solar resource">
@@ -1975,7 +1770,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>57.30</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="global solar resource">
@@ -1986,7 +1781,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>41.85</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="global solar resource">
@@ -1997,7 +1792,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>33.10</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="global solar resource">
@@ -2008,7 +1803,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>28.11</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="global solar resource">
@@ -2019,7 +1814,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>25.21</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="global solar resource">
@@ -2030,23 +1825,28 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>23.76</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                </technology>
             </subsector>
          </supplysector>
       </region>
-      <region name="China">
-         <intermittent-supplysector delete="1" name="SolarAndAuxiliary"/>
+      <region name="Former Soviet Union">
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2035</scaleYear>
-               <sharewt year="2020">0.25</sharewt>
-               <sharewt year="2035">0.5</sharewt>
-               <sharewt year="2050">0.5</sharewt>
-               <sharewt year="2065">0.5</sharewt>
-               <sharewt year="2080">0.5</sharewt>
-               <sharewt year="2095">0.5</sharewt>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <share-weight year="2020">0.25</share-weight>
+               <share-weight year="2035">0.5</share-weight>
+               <share-weight year="2050">0.5</share-weight>
+               <share-weight year="2065">0.5</share-weight>
+               <share-weight year="2080">0.5</share-weight>
+               <share-weight year="2095">0.5</share-weight>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <intermittent-technology name="PV">
                   <period year="1975">
                      <minicam-energy-input name="global solar resource">
@@ -2063,6 +1863,310 @@
                      <capacity-limit-backup-calculator>
                         <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-energy-input name="backup_electricity">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <lifetime>15</lifetime>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>84.97</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-energy-input name="backup_electricity">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <lifetime>30</lifetime>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>84.97</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-energy-input name="backup_electricity">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <lifetime>30</lifetime>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>54.48</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-energy-input name="backup_electricity">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <lifetime>30</lifetime>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>37.47</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-energy-input name="backup_electricity">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <lifetime>30</lifetime>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>27.90</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-energy-input name="backup_electricity">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <lifetime>30</lifetime>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>22.34</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-energy-input name="backup_electricity">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <lifetime>30</lifetime>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>19.29</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-energy-input name="backup_electricity">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <lifetime>30</lifetime>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>17.95</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+               </intermittent-technology>
+               <technology name="PV_storage">
+                  <period year="1975">
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>0.96</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <share-weight>0</share-weight>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>0.96</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>15</lifetime>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>105.77</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>0</share-weight>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>0.96</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>105.77</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>0</share-weight>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>0.96</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>71.60</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>0.96</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>52.29</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>0.96</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>41.36</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>0.96</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>35.12</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>0.96</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>31.50</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>0.96</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <lifetime>30</lifetime>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>29.69</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="China">
+         <supplysector name="electricity">
+            <subsector name="solar">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <share-weight year="2020">0.25</share-weight>
+               <share-weight year="2035">0.5</share-weight>
+               <share-weight year="2050">0.5</share-weight>
+               <share-weight year="2065">0.5</share-weight>
+               <share-weight year="2080">0.5</share-weight>
+               <share-weight year="2095">0.5</share-weight>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <intermittent-technology name="PV">
+                  <period year="1975">
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-energy-input name="backup_electricity">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="global solar resource">
@@ -2083,6 +2187,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>86.32</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="global solar resource">
@@ -2103,6 +2208,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>86.32</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="global solar resource">
@@ -2123,6 +2229,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>55.35</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="global solar resource">
@@ -2143,6 +2250,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>38.06</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="global solar resource">
@@ -2163,6 +2271,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>28.34</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="global solar resource">
@@ -2183,6 +2292,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>22.69</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="global solar resource">
@@ -2203,6 +2313,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.59</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="global solar resource">
@@ -2223,6 +2334,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>18.23</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                </intermittent-technology>
                <technology name="PV_storage">
@@ -2231,7 +2343,7 @@
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="global solar resource">
@@ -2242,7 +2354,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>107.45</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="global solar resource">
@@ -2253,7 +2365,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>107.45</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="global solar resource">
@@ -2264,7 +2376,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>72.73</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="global solar resource">
@@ -2275,7 +2387,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>53.11</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="global solar resource">
@@ -2286,7 +2398,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>42.01</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="global solar resource">
@@ -2297,7 +2409,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>35.67</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="global solar resource">
@@ -2308,7 +2420,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>32.00</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="global solar resource">
@@ -2319,23 +2431,28 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>30.16</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                </technology>
             </subsector>
          </supplysector>
       </region>
       <region name="Middle East">
-         <intermittent-supplysector delete="1" name="SolarAndAuxiliary"/>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2035</scaleYear>
-               <sharewt year="2020">0.25</sharewt>
-               <sharewt year="2035">0.5</sharewt>
-               <sharewt year="2050">0.5</sharewt>
-               <sharewt year="2065">0.5</sharewt>
-               <sharewt year="2080">0.5</sharewt>
-               <sharewt year="2095">0.5</sharewt>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <share-weight year="2020">0.25</share-weight>
+               <share-weight year="2035">0.5</share-weight>
+               <share-weight year="2050">0.5</share-weight>
+               <share-weight year="2065">0.5</share-weight>
+               <share-weight year="2080">0.5</share-weight>
+               <share-weight year="2095">0.5</share-weight>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <intermittent-technology name="PV">
                   <period year="1975">
                      <minicam-energy-input name="global solar resource">
@@ -2352,6 +2469,7 @@
                      <capacity-limit-backup-calculator>
                         <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="global solar resource">
@@ -2372,6 +2490,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>65.12</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="global solar resource">
@@ -2392,6 +2511,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>65.12</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="global solar resource">
@@ -2412,6 +2532,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>41.76</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="global solar resource">
@@ -2432,6 +2553,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>28.71</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="global solar resource">
@@ -2452,6 +2574,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>21.38</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="global solar resource">
@@ -2472,6 +2595,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>17.12</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="global solar resource">
@@ -2492,6 +2616,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>14.78</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="global solar resource">
@@ -2512,6 +2637,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>13.75</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                </intermittent-technology>
                <technology name="PV_storage">
@@ -2520,7 +2646,7 @@
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="global solar resource">
@@ -2531,7 +2657,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>81.06</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="global solar resource">
@@ -2542,7 +2668,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>81.06</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="global solar resource">
@@ -2553,7 +2679,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>54.87</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="global solar resource">
@@ -2564,7 +2690,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>40.07</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="global solar resource">
@@ -2575,7 +2701,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>31.70</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="global solar resource">
@@ -2586,7 +2712,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>26.91</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="global solar resource">
@@ -2597,7 +2723,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>24.14</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="global solar resource">
@@ -2608,23 +2734,28 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>22.75</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                </technology>
             </subsector>
          </supplysector>
       </region>
       <region name="Latin America">
-         <intermittent-supplysector delete="1" name="SolarAndAuxiliary"/>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2035</scaleYear>
-               <sharewt year="2020">0.25</sharewt>
-               <sharewt year="2035">0.5</sharewt>
-               <sharewt year="2050">0.5</sharewt>
-               <sharewt year="2065">0.5</sharewt>
-               <sharewt year="2080">0.5</sharewt>
-               <sharewt year="2095">0.5</sharewt>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <share-weight year="2020">0.25</share-weight>
+               <share-weight year="2035">0.5</share-weight>
+               <share-weight year="2050">0.5</share-weight>
+               <share-weight year="2065">0.5</share-weight>
+               <share-weight year="2080">0.5</share-weight>
+               <share-weight year="2095">0.5</share-weight>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <intermittent-technology name="PV">
                   <period year="1975">
                      <minicam-energy-input name="global solar resource">
@@ -2641,6 +2772,7 @@
                      <capacity-limit-backup-calculator>
                         <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="global solar resource">
@@ -2661,6 +2793,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>39.91</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="global solar resource">
@@ -2681,6 +2814,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>39.91</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="global solar resource">
@@ -2701,6 +2835,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>25.59</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="global solar resource">
@@ -2721,6 +2856,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>17.60</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="global solar resource">
@@ -2741,6 +2877,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>13.10</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="global solar resource">
@@ -2761,6 +2898,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>10.49</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="global solar resource">
@@ -2781,6 +2919,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>9.06</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="global solar resource">
@@ -2801,6 +2940,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>8.43</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                </intermittent-technology>
                <technology name="PV_storage">
@@ -2809,7 +2949,7 @@
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="global solar resource">
@@ -2820,7 +2960,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>49.68</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="global solar resource">
@@ -2831,7 +2971,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>49.68</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="global solar resource">
@@ -2842,7 +2982,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>33.63</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="global solar resource">
@@ -2853,7 +2993,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>24.56</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="global solar resource">
@@ -2864,7 +3004,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.42</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="global solar resource">
@@ -2875,7 +3015,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>16.49</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="global solar resource">
@@ -2886,7 +3026,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>14.79</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="global solar resource">
@@ -2897,23 +3037,28 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>13.94</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                </technology>
             </subsector>
          </supplysector>
       </region>
       <region name="Southeast Asia">
-         <intermittent-supplysector delete="1" name="SolarAndAuxiliary"/>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2035</scaleYear>
-               <sharewt year="2020">0.25</sharewt>
-               <sharewt year="2035">0.5</sharewt>
-               <sharewt year="2050">0.5</sharewt>
-               <sharewt year="2065">0.5</sharewt>
-               <sharewt year="2080">0.5</sharewt>
-               <sharewt year="2095">0.5</sharewt>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <share-weight year="2020">0.25</share-weight>
+               <share-weight year="2035">0.5</share-weight>
+               <share-weight year="2050">0.5</share-weight>
+               <share-weight year="2065">0.5</share-weight>
+               <share-weight year="2080">0.5</share-weight>
+               <share-weight year="2095">0.5</share-weight>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <intermittent-technology name="PV">
                   <period year="1975">
                      <minicam-energy-input name="global solar resource">
@@ -2930,6 +3075,7 @@
                      <capacity-limit-backup-calculator>
                         <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="global solar resource">
@@ -2950,6 +3096,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>32.78</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="global solar resource">
@@ -2970,6 +3117,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>32.78</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="global solar resource">
@@ -2990,6 +3138,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>21.02</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="global solar resource">
@@ -3010,6 +3159,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>14.45</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="global solar resource">
@@ -3030,6 +3180,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>10.76</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="global solar resource">
@@ -3050,6 +3201,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>8.62</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="global solar resource">
@@ -3070,6 +3222,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>7.44</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="global solar resource">
@@ -3090,6 +3243,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>6.92</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                </intermittent-technology>
                <technology name="PV_storage">
@@ -3098,7 +3252,7 @@
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="global solar resource">
@@ -3109,7 +3263,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>40.81</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="global solar resource">
@@ -3120,7 +3274,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>40.81</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="global solar resource">
@@ -3131,7 +3285,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>27.62</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="global solar resource">
@@ -3142,7 +3296,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.17</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="global solar resource">
@@ -3153,7 +3307,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>15.96</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="global solar resource">
@@ -3164,7 +3318,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>13.55</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="global solar resource">
@@ -3175,7 +3329,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>12.15</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="global solar resource">
@@ -3186,23 +3340,28 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.45</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                </technology>
             </subsector>
          </supplysector>
       </region>
       <region name="Eastern Europe">
-         <intermittent-supplysector delete="1" name="SolarAndAuxiliary"/>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2035</scaleYear>
-               <sharewt year="2020">0.25</sharewt>
-               <sharewt year="2035">0.5</sharewt>
-               <sharewt year="2050">0.5</sharewt>
-               <sharewt year="2065">0.5</sharewt>
-               <sharewt year="2080">0.5</sharewt>
-               <sharewt year="2095">0.5</sharewt>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <share-weight year="2020">0.25</share-weight>
+               <share-weight year="2035">0.5</share-weight>
+               <share-weight year="2050">0.5</share-weight>
+               <share-weight year="2065">0.5</share-weight>
+               <share-weight year="2080">0.5</share-weight>
+               <share-weight year="2095">0.5</share-weight>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <intermittent-technology name="PV">
                   <period year="1975">
                      <minicam-energy-input name="global solar resource">
@@ -3219,6 +3378,7 @@
                      <capacity-limit-backup-calculator>
                         <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="global solar resource">
@@ -3239,6 +3399,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>40.54</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="global solar resource">
@@ -3259,6 +3420,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>40.54</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="global solar resource">
@@ -3279,6 +3441,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>26.00</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="global solar resource">
@@ -3299,6 +3462,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>17.88</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="global solar resource">
@@ -3319,6 +3483,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>13.31</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="global solar resource">
@@ -3339,6 +3504,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>10.66</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="global solar resource">
@@ -3359,6 +3525,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>9.20</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="global solar resource">
@@ -3379,6 +3546,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>8.56</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                </intermittent-technology>
                <technology name="PV_storage">
@@ -3387,7 +3555,7 @@
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="global solar resource">
@@ -3398,7 +3566,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>50.47</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="global solar resource">
@@ -3409,7 +3577,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>50.47</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="global solar resource">
@@ -3420,7 +3588,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>34.16</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="global solar resource">
@@ -3431,7 +3599,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>24.95</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="global solar resource">
@@ -3442,7 +3610,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.73</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="global solar resource">
@@ -3453,7 +3621,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>16.76</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="global solar resource">
@@ -3464,7 +3632,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>15.03</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="global solar resource">
@@ -3475,23 +3643,28 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>14.16</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                </technology>
             </subsector>
          </supplysector>
       </region>
       <region name="Korea">
-         <intermittent-supplysector delete="1" name="SolarAndAuxiliary"/>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2035</scaleYear>
-               <sharewt year="2020">0.25</sharewt>
-               <sharewt year="2035">0.5</sharewt>
-               <sharewt year="2050">0.5</sharewt>
-               <sharewt year="2065">0.5</sharewt>
-               <sharewt year="2080">0.5</sharewt>
-               <sharewt year="2095">0.5</sharewt>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <share-weight year="2020">0.25</share-weight>
+               <share-weight year="2035">0.5</share-weight>
+               <share-weight year="2050">0.5</share-weight>
+               <share-weight year="2065">0.5</share-weight>
+               <share-weight year="2080">0.5</share-weight>
+               <share-weight year="2095">0.5</share-weight>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <intermittent-technology name="PV">
                   <period year="1975">
                      <minicam-energy-input name="global solar resource">
@@ -3508,6 +3681,7 @@
                      <capacity-limit-backup-calculator>
                         <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="global solar resource">
@@ -3528,6 +3702,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>40.76</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="global solar resource">
@@ -3548,6 +3723,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>40.76</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="global solar resource">
@@ -3568,6 +3744,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>26.13</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="global solar resource">
@@ -3588,6 +3765,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>17.97</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="global solar resource">
@@ -3608,6 +3786,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>13.38</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="global solar resource">
@@ -3628,6 +3807,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>10.72</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="global solar resource">
@@ -3648,6 +3828,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>9.25</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="global solar resource">
@@ -3668,6 +3849,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>8.61</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                </intermittent-technology>
                <technology name="PV_storage">
@@ -3676,7 +3858,7 @@
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="global solar resource">
@@ -3687,7 +3869,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>50.73</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="global solar resource">
@@ -3698,7 +3880,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>50.73</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="global solar resource">
@@ -3709,7 +3891,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>34.34</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="global solar resource">
@@ -3720,7 +3902,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>25.08</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="global solar resource">
@@ -3731,7 +3913,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.84</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="global solar resource">
@@ -3742,7 +3924,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>16.84</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="global solar resource">
@@ -3753,7 +3935,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>15.11</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="global solar resource">
@@ -3764,23 +3946,28 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>14.24</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                </technology>
             </subsector>
          </supplysector>
       </region>
       <region name="India">
-         <intermittent-supplysector delete="1" name="SolarAndAuxiliary"/>
          <supplysector name="electricity">
             <subsector name="solar">
-               <scaleYear>2035</scaleYear>
-               <sharewt year="2020">0.25</sharewt>
-               <sharewt year="2035">0.5</sharewt>
-               <sharewt year="2050">0.5</sharewt>
-               <sharewt year="2065">0.5</sharewt>
-               <sharewt year="2080">0.5</sharewt>
-               <sharewt year="2095">0.5</sharewt>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <share-weight year="2020">0.25</share-weight>
+               <share-weight year="2035">0.5</share-weight>
+               <share-weight year="2050">0.5</share-weight>
+               <share-weight year="2065">0.5</share-weight>
+               <share-weight year="2080">0.5</share-weight>
+               <share-weight year="2095">0.5</share-weight>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
                <intermittent-technology name="PV">
                   <period year="1975">
                      <minicam-energy-input name="global solar resource">
@@ -3797,6 +3984,7 @@
                      <capacity-limit-backup-calculator>
                         <capacity-limit>0.25</capacity-limit>
                      </capacity-limit-backup-calculator>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="global solar resource">
@@ -3817,6 +4005,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>33.92</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="global solar resource">
@@ -3837,6 +4026,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>33.92</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="global solar resource">
@@ -3857,6 +4047,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>21.75</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="global solar resource">
@@ -3877,6 +4068,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>14.96</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="global solar resource">
@@ -3897,6 +4089,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.14</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="global solar resource">
@@ -3917,6 +4110,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>8.92</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="global solar resource">
@@ -3937,6 +4131,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>7.70</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="global solar resource">
@@ -3957,6 +4152,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>7.17</input-cost>
                      </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                </intermittent-technology>
                <technology name="PV_storage">
@@ -3965,7 +4161,7 @@
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="1990">
                      <minicam-energy-input name="global solar resource">
@@ -3976,7 +4172,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>42.23</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="global solar resource">
@@ -3987,7 +4183,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>42.23</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>0</sharewt>
+                     <share-weight>0</share-weight>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="global solar resource">
@@ -3998,7 +4194,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>28.59</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <minicam-energy-input name="global solar resource">
@@ -4009,7 +4205,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.88</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <minicam-energy-input name="global solar resource">
@@ -4020,7 +4216,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>16.51</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <minicam-energy-input name="global solar resource">
@@ -4031,7 +4227,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>14.02</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <minicam-energy-input name="global solar resource">
@@ -4042,7 +4238,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>12.58</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <minicam-energy-input name="global solar resource">
@@ -4053,7 +4249,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.85</input-cost>
                      </minicam-non-energy-input>
-                     <sharewt>1</sharewt>
+                     <share-weight>1</share-weight>
                   </period>
                </technology>
             </subsector>

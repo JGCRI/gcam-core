@@ -6,8 +6,8 @@ region,unlimited-resource,capacity-factor,1975,1990,2005,2020,2035,2050,2065,208
 Africa,global solar resource,0.3,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,
 ,,,,,,,,,,,,
 Delete intermittent supplysector,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
+not reading,,,,,,,,,,,,
+removing from core input,,,,,,,,,,,,
 19,,,,,,,,,,,,
 ,,,,,,,,,,,,
 region,intermittent-supplysector,,,,,,,,,,,
@@ -17,22 +17,43 @@ Subsector shareweights,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
 100,,,,,,,,,,,,
-,,,,sharewt,,,,,,,,
-region,supplysector,subsector,scaleYear,2020,2035,2050,2065,2080,2095,,,
-USA,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5,,,
-Canada,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5,,,
-Western Europe,electricity,solar,2020,0.5,0.5,0.5,0.5,0.5,0.5,,,
-Japan,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5,,,
-Australia_NZ,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5,,,
-Former Soviet Union,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5,,,
-China,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5,,,
-Middle East,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5,,,
-Africa,electricity,solar,2020,0.5,0.5,0.5,0.5,0.5,0.5,,,
-Latin America,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5,,,
-Southeast Asia,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5,,,
-Eastern Europe,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5,,,
-Korea,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5,,,
-India,electricity,solar,2035,0.25,0.5,0.5,0.5,0.5,0.5,,,
+,,,interpolation-rule,,,,,,,,,
+region,supplysector,subsector,apply-to,from-year,to-year,interpolation-function,,,,,,
+USA,electricity,solar,share-weight,2005,2035,linear,,,,,,
+Canada,electricity,solar,share-weight,2005,2035,linear,,,,,,
+Western Europe,electricity,solar,share-weight,2020,2095,fixed,,,,,,
+Japan,electricity,solar,share-weight,2005,2035,linear,,,,,,
+Australia_NZ,electricity,solar,share-weight,2005,2035,linear,,,,,,
+Former Soviet Union,electricity,solar,share-weight,2005,2035,linear,,,,,,
+China,electricity,solar,share-weight,2005,2035,linear,,,,,,
+Middle East,electricity,solar,share-weight,2005,2035,linear,,,,,,
+Africa,electricity,solar,share-weight,2020,2095,fixed,,,,,,
+Latin America,electricity,solar,share-weight,2005,2035,linear,,,,,,
+Southeast Asia,electricity,solar,share-weight,2005,2035,linear,,,,,,
+Eastern Europe,electricity,solar,share-weight,2005,2035,linear,,,,,,
+Korea,electricity,solar,share-weight,2005,2035,linear,,,,,,
+India,electricity,solar,share-weight,2005,2035,linear,,,,,,
+,,,,,,,,,,,,
+"Subsector shareweights and technology logit exponent (PV, PV_storage, CSP, CSP_storage)",,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+101,,,base year shareweights will be over-written in calibration,,,,,,,,,
+,,,sharewt,,,,,,,,,1975 fillout
+region,supplysector,subsector,1975,1990,2005,2020,2035,2050,2065,2080,2095,logit-exponent
+USA,electricity,solar,1,1,1,0.25,0.5,0.5,0.5,0.5,0.5,-6
+Canada,electricity,solar,1,1,1,0.25,0.5,0.5,0.5,0.5,0.5,-6
+Western Europe,electricity,solar,1,1,1,0.5,0.5,0.5,0.5,0.5,0.5,-6
+Japan,electricity,solar,1,1,1,0.25,0.5,0.5,0.5,0.5,0.5,-6
+Australia_NZ,electricity,solar,1,1,1,0.25,0.5,0.5,0.5,0.5,0.5,-6
+Former Soviet Union,electricity,solar,1,1,1,0.25,0.5,0.5,0.5,0.5,0.5,-6
+China,electricity,solar,1,1,1,0.25,0.5,0.5,0.5,0.5,0.5,-6
+Middle East,electricity,solar,1,1,1,0.25,0.5,0.5,0.5,0.5,0.5,-6
+Africa,electricity,solar,1,1,1,0.5,0.5,0.5,0.5,0.5,0.5,-6
+Latin America,electricity,solar,1,1,1,0.25,0.5,0.5,0.5,0.5,0.5,-6
+Southeast Asia,electricity,solar,1,1,1,0.25,0.5,0.5,0.5,0.5,0.5,-6
+Eastern Europe,electricity,solar,1,1,1,0.25,0.5,0.5,0.5,0.5,0.5,-6
+Korea,electricity,solar,1,1,1,0.25,0.5,0.5,0.5,0.5,0.5,-6
+India,electricity,solar,1,1,1,0.25,0.5,0.5,0.5,0.5,0.5,-6
 ,,,,,,,,,,,,
 Intermittent technology energy inputs and efficiencies,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,
@@ -117,6 +138,26 @@ Eastern Europe,electricity,solar,PV,40.54,40.54,26.00,17.88,13.31,10.66,9.20,8.5
 Korea,electricity,solar,PV,40.76,40.76,26.13,17.97,13.38,10.72,9.25,8.61,
 India,electricity,solar,PV,33.92,33.92,21.75,14.96,11.14,8.92,7.70,7.17,
 ,,,,,,,,,,,,
+Tech-level shareweight (future only),,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+1004,,,,base year shareweights will be over-written in calibration,,,,,,,,
+,,,,share-weight,,,,,,,,
+region,supplysector,subsector,intermittent-technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
+USA,electricity,solar,PV,1,1,1,1,1,1,1,1,1
+Canada,electricity,solar,PV,1,1,1,1,1,1,1,1,1
+Western Europe,electricity,solar,PV,1,1,1,1,1,1,1,1,1
+Japan,electricity,solar,PV,1,1,1,1,1,1,1,1,1
+Australia_NZ,electricity,solar,PV,1,1,1,1,1,1,1,1,1
+Former Soviet Union,electricity,solar,PV,1,1,1,1,1,1,1,1,1
+China,electricity,solar,PV,1,1,1,1,1,1,1,1,1
+Middle East,electricity,solar,PV,1,1,1,1,1,1,1,1,1
+Africa,electricity,solar,PV,1,1,1,1,1,1,1,1,1
+Latin America,electricity,solar,PV,1,1,1,1,1,1,1,1,1
+Southeast Asia,electricity,solar,PV,1,1,1,1,1,1,1,1,1
+Eastern Europe,electricity,solar,PV,1,1,1,1,1,1,1,1,1
+Korea,electricity,solar,PV,1,1,1,1,1,1,1,1,1
+India,electricity,solar,PV,1,1,1,1,1,1,1,1,1
 ,,,,,,,,,,,,
 PV with storage technology definition,,,,,,,,,,,,
 Energy input and efficiency,,,,,,,,,,,,

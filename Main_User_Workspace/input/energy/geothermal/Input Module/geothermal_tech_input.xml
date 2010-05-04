@@ -4,19 +4,18 @@
       <region name="USA">
          <supplysector name="electricity">
             <subsector name="geothermal">
-               <logitexp fillout="1" year="1975">-3</logitexp>
-               <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
-               <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>1975</scaleYear>
-               <sharewt year="1975">1</sharewt>
-               <sharewt year="1990">1</sharewt>
-               <sharewt year="2005">1</sharewt>
-               <sharewt year="2020">0.17</sharewt>
-               <sharewt year="2035">0.33</sharewt>
-               <sharewt year="2050">0.5</sharewt>
-               <sharewt year="2065">0.5</sharewt>
-               <sharewt year="2080">0.5</sharewt>
-               <sharewt year="2095">0.5</sharewt>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2050">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <share-weight year="2020">0.17</share-weight>
+               <share-weight year="2035">0.33</share-weight>
+               <share-weight year="2050">0.5</share-weight>
+               <share-weight year="2065">0.5</share-weight>
+               <share-weight year="2080">0.5</share-weight>
+               <share-weight year="2095">0.5</share-weight>
                <technology name="geothermal">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -27,6 +26,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <lifetime>-1</lifetime>
@@ -37,6 +37,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <lifetime>30</lifetime>
@@ -47,6 +48,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2020">
                      <lifetime>30</lifetime>
@@ -57,6 +59,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <lifetime>30</lifetime>
@@ -67,6 +70,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <lifetime>30</lifetime>
@@ -77,6 +81,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <lifetime>30</lifetime>
@@ -87,6 +92,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <lifetime>30</lifetime>
@@ -97,6 +103,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <lifetime>30</lifetime>
@@ -107,6 +114,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                </technology>
             </subsector>
@@ -115,19 +123,18 @@
       <region name="Canada">
          <supplysector name="electricity">
             <subsector name="geothermal">
-               <logitexp fillout="1" year="1975">-3</logitexp>
-               <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
-               <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>1975</scaleYear>
-               <sharewt year="1975">0</sharewt>
-               <sharewt year="1990">0</sharewt>
-               <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.05</sharewt>
-               <sharewt year="2035">0.25</sharewt>
-               <sharewt year="2050">0.5</sharewt>
-               <sharewt year="2065">0.5</sharewt>
-               <sharewt year="2080">0.5</sharewt>
-               <sharewt year="2095">0.5</sharewt>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2050">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <share-weight year="2020">0.05</share-weight>
+               <share-weight year="2035">0.25</share-weight>
+               <share-weight year="2050">0.5</share-weight>
+               <share-weight year="2065">0.5</share-weight>
+               <share-weight year="2080">0.5</share-weight>
+               <share-weight year="2095">0.5</share-weight>
                <technology name="geothermal">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -138,6 +145,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <lifetime>-1</lifetime>
@@ -148,6 +156,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <lifetime>30</lifetime>
@@ -158,6 +167,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2020">
                      <lifetime>30</lifetime>
@@ -168,6 +178,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <lifetime>30</lifetime>
@@ -178,6 +189,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <lifetime>30</lifetime>
@@ -188,6 +200,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <lifetime>30</lifetime>
@@ -198,6 +211,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <lifetime>30</lifetime>
@@ -208,6 +222,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <lifetime>30</lifetime>
@@ -218,6 +233,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                </technology>
             </subsector>
@@ -226,19 +242,18 @@
       <region name="Western Europe">
          <supplysector name="electricity">
             <subsector name="geothermal">
-               <logitexp fillout="1" year="1975">-3</logitexp>
-               <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
-               <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>1975</scaleYear>
-               <sharewt year="1975">1</sharewt>
-               <sharewt year="1990">1</sharewt>
-               <sharewt year="2005">1</sharewt>
-               <sharewt year="2020">0.17</sharewt>
-               <sharewt year="2035">0.33</sharewt>
-               <sharewt year="2050">0.5</sharewt>
-               <sharewt year="2065">0.5</sharewt>
-               <sharewt year="2080">0.5</sharewt>
-               <sharewt year="2095">0.5</sharewt>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2050">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <share-weight year="2020">0.17</share-weight>
+               <share-weight year="2035">0.33</share-weight>
+               <share-weight year="2050">0.5</share-weight>
+               <share-weight year="2065">0.5</share-weight>
+               <share-weight year="2080">0.5</share-weight>
+               <share-weight year="2095">0.5</share-weight>
                <technology name="geothermal">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -249,6 +264,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <lifetime>-1</lifetime>
@@ -259,6 +275,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <lifetime>30</lifetime>
@@ -269,6 +286,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2020">
                      <lifetime>30</lifetime>
@@ -279,6 +297,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <lifetime>30</lifetime>
@@ -289,6 +308,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <lifetime>30</lifetime>
@@ -299,6 +319,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <lifetime>30</lifetime>
@@ -309,6 +330,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <lifetime>30</lifetime>
@@ -319,6 +341,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <lifetime>30</lifetime>
@@ -329,6 +352,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                </technology>
             </subsector>
@@ -337,19 +361,18 @@
       <region name="Japan">
          <supplysector name="electricity">
             <subsector name="geothermal">
-               <logitexp fillout="1" year="1975">-3</logitexp>
-               <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
-               <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>1975</scaleYear>
-               <sharewt year="1975">1</sharewt>
-               <sharewt year="1990">1</sharewt>
-               <sharewt year="2005">1</sharewt>
-               <sharewt year="2020">0.17</sharewt>
-               <sharewt year="2035">0.33</sharewt>
-               <sharewt year="2050">0.5</sharewt>
-               <sharewt year="2065">0.5</sharewt>
-               <sharewt year="2080">0.5</sharewt>
-               <sharewt year="2095">0.5</sharewt>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2050">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <share-weight year="2020">0.17</share-weight>
+               <share-weight year="2035">0.33</share-weight>
+               <share-weight year="2050">0.5</share-weight>
+               <share-weight year="2065">0.5</share-weight>
+               <share-weight year="2080">0.5</share-weight>
+               <share-weight year="2095">0.5</share-weight>
                <technology name="geothermal">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -360,6 +383,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <lifetime>-1</lifetime>
@@ -370,6 +394,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <lifetime>30</lifetime>
@@ -380,6 +405,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2020">
                      <lifetime>30</lifetime>
@@ -390,6 +416,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <lifetime>30</lifetime>
@@ -400,6 +427,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <lifetime>30</lifetime>
@@ -410,6 +438,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <lifetime>30</lifetime>
@@ -420,6 +449,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <lifetime>30</lifetime>
@@ -430,6 +460,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <lifetime>30</lifetime>
@@ -440,6 +471,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                </technology>
             </subsector>
@@ -448,19 +480,18 @@
       <region name="Australia_NZ">
          <supplysector name="electricity">
             <subsector name="geothermal">
-               <logitexp fillout="1" year="1975">-3</logitexp>
-               <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
-               <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>1975</scaleYear>
-               <sharewt year="1975">1</sharewt>
-               <sharewt year="1990">1</sharewt>
-               <sharewt year="2005">1</sharewt>
-               <sharewt year="2020">0.17</sharewt>
-               <sharewt year="2035">0.33</sharewt>
-               <sharewt year="2050">0.5</sharewt>
-               <sharewt year="2065">0.5</sharewt>
-               <sharewt year="2080">0.5</sharewt>
-               <sharewt year="2095">0.5</sharewt>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2050">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <share-weight year="2020">0.17</share-weight>
+               <share-weight year="2035">0.33</share-weight>
+               <share-weight year="2050">0.5</share-weight>
+               <share-weight year="2065">0.5</share-weight>
+               <share-weight year="2080">0.5</share-weight>
+               <share-weight year="2095">0.5</share-weight>
                <technology name="geothermal">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -471,6 +502,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <lifetime>-1</lifetime>
@@ -481,6 +513,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <lifetime>30</lifetime>
@@ -491,6 +524,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2020">
                      <lifetime>30</lifetime>
@@ -501,6 +535,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <lifetime>30</lifetime>
@@ -511,6 +546,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <lifetime>30</lifetime>
@@ -521,6 +557,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <lifetime>30</lifetime>
@@ -531,6 +568,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <lifetime>30</lifetime>
@@ -541,6 +579,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <lifetime>30</lifetime>
@@ -551,6 +590,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                </technology>
             </subsector>
@@ -559,19 +599,18 @@
       <region name="Former Soviet Union">
          <supplysector name="electricity">
             <subsector name="geothermal">
-               <logitexp fillout="1" year="1975">-3</logitexp>
-               <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
-               <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>1975</scaleYear>
-               <sharewt year="1975">1</sharewt>
-               <sharewt year="1990">1</sharewt>
-               <sharewt year="2005">1</sharewt>
-               <sharewt year="2020">0.17</sharewt>
-               <sharewt year="2035">0.33</sharewt>
-               <sharewt year="2050">0.5</sharewt>
-               <sharewt year="2065">0.5</sharewt>
-               <sharewt year="2080">0.5</sharewt>
-               <sharewt year="2095">0.5</sharewt>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2050">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <share-weight year="2020">0.17</share-weight>
+               <share-weight year="2035">0.33</share-weight>
+               <share-weight year="2050">0.5</share-weight>
+               <share-weight year="2065">0.5</share-weight>
+               <share-weight year="2080">0.5</share-weight>
+               <share-weight year="2095">0.5</share-weight>
                <technology name="geothermal">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -582,6 +621,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <lifetime>-1</lifetime>
@@ -592,6 +632,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <lifetime>30</lifetime>
@@ -602,6 +643,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2020">
                      <lifetime>30</lifetime>
@@ -612,6 +654,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <lifetime>30</lifetime>
@@ -622,6 +665,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <lifetime>30</lifetime>
@@ -632,6 +676,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <lifetime>30</lifetime>
@@ -642,6 +687,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <lifetime>30</lifetime>
@@ -652,6 +698,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <lifetime>30</lifetime>
@@ -662,6 +709,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                </technology>
             </subsector>
@@ -670,19 +718,18 @@
       <region name="China">
          <supplysector name="electricity">
             <subsector name="geothermal">
-               <logitexp fillout="1" year="1975">-3</logitexp>
-               <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
-               <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>1975</scaleYear>
-               <sharewt year="1975">0</sharewt>
-               <sharewt year="1990">0</sharewt>
-               <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.05</sharewt>
-               <sharewt year="2035">0.25</sharewt>
-               <sharewt year="2050">0.5</sharewt>
-               <sharewt year="2065">0.5</sharewt>
-               <sharewt year="2080">0.5</sharewt>
-               <sharewt year="2095">0.5</sharewt>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2050">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <share-weight year="2020">0.05</share-weight>
+               <share-weight year="2035">0.25</share-weight>
+               <share-weight year="2050">0.5</share-weight>
+               <share-weight year="2065">0.5</share-weight>
+               <share-weight year="2080">0.5</share-weight>
+               <share-weight year="2095">0.5</share-weight>
                <technology name="geothermal">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -693,6 +740,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <lifetime>-1</lifetime>
@@ -703,6 +751,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <lifetime>30</lifetime>
@@ -713,6 +762,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2020">
                      <lifetime>30</lifetime>
@@ -723,6 +773,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <lifetime>30</lifetime>
@@ -733,6 +784,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <lifetime>30</lifetime>
@@ -743,6 +795,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <lifetime>30</lifetime>
@@ -753,6 +806,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <lifetime>30</lifetime>
@@ -763,6 +817,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <lifetime>30</lifetime>
@@ -773,6 +828,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                </technology>
             </subsector>
@@ -781,19 +837,18 @@
       <region name="Middle East">
          <supplysector name="electricity">
             <subsector name="geothermal">
-               <logitexp fillout="1" year="1975">-3</logitexp>
-               <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
-               <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>1975</scaleYear>
-               <sharewt year="1975">0</sharewt>
-               <sharewt year="1990">0</sharewt>
-               <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.05</sharewt>
-               <sharewt year="2035">0.25</sharewt>
-               <sharewt year="2050">0.5</sharewt>
-               <sharewt year="2065">0.5</sharewt>
-               <sharewt year="2080">0.5</sharewt>
-               <sharewt year="2095">0.5</sharewt>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2050">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <share-weight year="2020">0.05</share-weight>
+               <share-weight year="2035">0.25</share-weight>
+               <share-weight year="2050">0.5</share-weight>
+               <share-weight year="2065">0.5</share-weight>
+               <share-weight year="2080">0.5</share-weight>
+               <share-weight year="2095">0.5</share-weight>
                <technology name="geothermal">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -804,6 +859,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <lifetime>-1</lifetime>
@@ -814,6 +870,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <lifetime>30</lifetime>
@@ -824,6 +881,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2020">
                      <lifetime>30</lifetime>
@@ -834,6 +892,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <lifetime>30</lifetime>
@@ -844,6 +903,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <lifetime>30</lifetime>
@@ -854,6 +914,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <lifetime>30</lifetime>
@@ -864,6 +925,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <lifetime>30</lifetime>
@@ -874,6 +936,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <lifetime>30</lifetime>
@@ -884,6 +947,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                </technology>
             </subsector>
@@ -892,19 +956,18 @@
       <region name="Africa">
          <supplysector name="electricity">
             <subsector name="geothermal">
-               <logitexp fillout="1" year="1975">-3</logitexp>
-               <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
-               <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>1975</scaleYear>
-               <sharewt year="1975">1</sharewt>
-               <sharewt year="1990">1</sharewt>
-               <sharewt year="2005">1</sharewt>
-               <sharewt year="2020">0.17</sharewt>
-               <sharewt year="2035">0.33</sharewt>
-               <sharewt year="2050">0.5</sharewt>
-               <sharewt year="2065">0.5</sharewt>
-               <sharewt year="2080">0.5</sharewt>
-               <sharewt year="2095">0.5</sharewt>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2050">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <share-weight year="2020">0.17</share-weight>
+               <share-weight year="2035">0.33</share-weight>
+               <share-weight year="2050">0.5</share-weight>
+               <share-weight year="2065">0.5</share-weight>
+               <share-weight year="2080">0.5</share-weight>
+               <share-weight year="2095">0.5</share-weight>
                <technology name="geothermal">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -915,6 +978,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <lifetime>-1</lifetime>
@@ -925,6 +989,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <lifetime>30</lifetime>
@@ -935,6 +1000,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2020">
                      <lifetime>30</lifetime>
@@ -945,6 +1011,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <lifetime>30</lifetime>
@@ -955,6 +1022,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <lifetime>30</lifetime>
@@ -965,6 +1033,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <lifetime>30</lifetime>
@@ -975,6 +1044,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <lifetime>30</lifetime>
@@ -985,6 +1055,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <lifetime>30</lifetime>
@@ -995,6 +1066,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                </technology>
             </subsector>
@@ -1003,19 +1075,18 @@
       <region name="Latin America">
          <supplysector name="electricity">
             <subsector name="geothermal">
-               <logitexp fillout="1" year="1975">-3</logitexp>
-               <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
-               <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>1975</scaleYear>
-               <sharewt year="1975">1</sharewt>
-               <sharewt year="1990">1</sharewt>
-               <sharewt year="2005">1</sharewt>
-               <sharewt year="2020">0.17</sharewt>
-               <sharewt year="2035">0.33</sharewt>
-               <sharewt year="2050">0.5</sharewt>
-               <sharewt year="2065">0.5</sharewt>
-               <sharewt year="2080">0.5</sharewt>
-               <sharewt year="2095">0.5</sharewt>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2050">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <share-weight year="2020">0.17</share-weight>
+               <share-weight year="2035">0.33</share-weight>
+               <share-weight year="2050">0.5</share-weight>
+               <share-weight year="2065">0.5</share-weight>
+               <share-weight year="2080">0.5</share-weight>
+               <share-weight year="2095">0.5</share-weight>
                <technology name="geothermal">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -1026,6 +1097,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <lifetime>-1</lifetime>
@@ -1036,6 +1108,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <lifetime>30</lifetime>
@@ -1046,6 +1119,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2020">
                      <lifetime>30</lifetime>
@@ -1056,6 +1130,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <lifetime>30</lifetime>
@@ -1066,6 +1141,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <lifetime>30</lifetime>
@@ -1076,6 +1152,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <lifetime>30</lifetime>
@@ -1086,6 +1163,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <lifetime>30</lifetime>
@@ -1096,6 +1174,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <lifetime>30</lifetime>
@@ -1106,6 +1185,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                </technology>
             </subsector>
@@ -1114,19 +1194,18 @@
       <region name="Southeast Asia">
          <supplysector name="electricity">
             <subsector name="geothermal">
-               <logitexp fillout="1" year="1975">-3</logitexp>
-               <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
-               <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>1975</scaleYear>
-               <sharewt year="1975">1</sharewt>
-               <sharewt year="1990">1</sharewt>
-               <sharewt year="2005">1</sharewt>
-               <sharewt year="2020">0.17</sharewt>
-               <sharewt year="2035">0.33</sharewt>
-               <sharewt year="2050">0.5</sharewt>
-               <sharewt year="2065">0.5</sharewt>
-               <sharewt year="2080">0.5</sharewt>
-               <sharewt year="2095">0.5</sharewt>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2050">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <share-weight year="2020">0.17</share-weight>
+               <share-weight year="2035">0.33</share-weight>
+               <share-weight year="2050">0.5</share-weight>
+               <share-weight year="2065">0.5</share-weight>
+               <share-weight year="2080">0.5</share-weight>
+               <share-weight year="2095">0.5</share-weight>
                <technology name="geothermal">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -1137,6 +1216,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <lifetime>-1</lifetime>
@@ -1147,6 +1227,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <lifetime>30</lifetime>
@@ -1157,6 +1238,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2020">
                      <lifetime>30</lifetime>
@@ -1167,6 +1249,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <lifetime>30</lifetime>
@@ -1177,6 +1260,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <lifetime>30</lifetime>
@@ -1187,6 +1271,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <lifetime>30</lifetime>
@@ -1197,6 +1282,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <lifetime>30</lifetime>
@@ -1207,6 +1293,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <lifetime>30</lifetime>
@@ -1217,6 +1304,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                </technology>
             </subsector>
@@ -1225,19 +1313,18 @@
       <region name="Eastern Europe">
          <supplysector name="electricity">
             <subsector name="geothermal">
-               <logitexp fillout="1" year="1975">-3</logitexp>
-               <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
-               <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>1975</scaleYear>
-               <sharewt year="1975">0</sharewt>
-               <sharewt year="1990">0</sharewt>
-               <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.05</sharewt>
-               <sharewt year="2035">0.25</sharewt>
-               <sharewt year="2050">0.5</sharewt>
-               <sharewt year="2065">0.5</sharewt>
-               <sharewt year="2080">0.5</sharewt>
-               <sharewt year="2095">0.5</sharewt>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2050">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <share-weight year="2020">0.05</share-weight>
+               <share-weight year="2035">0.25</share-weight>
+               <share-weight year="2050">0.5</share-weight>
+               <share-weight year="2065">0.5</share-weight>
+               <share-weight year="2080">0.5</share-weight>
+               <share-weight year="2095">0.5</share-weight>
                <technology name="geothermal">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -1248,6 +1335,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <lifetime>-1</lifetime>
@@ -1258,6 +1346,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <lifetime>30</lifetime>
@@ -1268,6 +1357,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2020">
                      <lifetime>30</lifetime>
@@ -1278,6 +1368,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <lifetime>30</lifetime>
@@ -1288,6 +1379,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <lifetime>30</lifetime>
@@ -1298,6 +1390,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <lifetime>30</lifetime>
@@ -1308,6 +1401,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <lifetime>30</lifetime>
@@ -1318,6 +1412,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <lifetime>30</lifetime>
@@ -1328,6 +1423,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                </technology>
             </subsector>
@@ -1336,19 +1432,18 @@
       <region name="India">
          <supplysector name="electricity">
             <subsector name="geothermal">
-               <logitexp fillout="1" year="1975">-3</logitexp>
-               <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
-               <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <scaleYear>1975</scaleYear>
-               <sharewt year="1975">0</sharewt>
-               <sharewt year="1990">0</sharewt>
-               <sharewt year="2005">0</sharewt>
-               <sharewt year="2020">0.17</sharewt>
-               <sharewt year="2035">0.33</sharewt>
-               <sharewt year="2050">0.5</sharewt>
-               <sharewt year="2065">0.5</sharewt>
-               <sharewt year="2080">0.5</sharewt>
-               <sharewt year="2095">0.5</sharewt>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2050">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <share-weight year="2020">0.17</share-weight>
+               <share-weight year="2035">0.33</share-weight>
+               <share-weight year="2050">0.5</share-weight>
+               <share-weight year="2065">0.5</share-weight>
+               <share-weight year="2080">0.5</share-weight>
+               <share-weight year="2095">0.5</share-weight>
                <technology name="geothermal">
                   <period year="1975">
                      <lifetime>-1</lifetime>
@@ -1359,6 +1454,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="1990">
                      <lifetime>-1</lifetime>
@@ -1369,6 +1465,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <lifetime>30</lifetime>
@@ -1379,6 +1476,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2020">
                      <lifetime>30</lifetime>
@@ -1389,6 +1487,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2035">
                      <lifetime>30</lifetime>
@@ -1399,6 +1498,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2050">
                      <lifetime>30</lifetime>
@@ -1409,6 +1509,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2065">
                      <lifetime>30</lifetime>
@@ -1419,6 +1520,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2080">
                      <lifetime>30</lifetime>
@@ -1429,6 +1531,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                   <period year="2095">
                      <lifetime>30</lifetime>
@@ -1439,14 +1542,10 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <share-weight>1</share-weight>
                   </period>
                </technology>
             </subsector>
-         </supplysector>
-      </region>
-      <region name="Korea">
-         <supplysector name="electricity">
-            <subsector delete="1" name="geothermal"/>
          </supplysector>
       </region>
    </world>

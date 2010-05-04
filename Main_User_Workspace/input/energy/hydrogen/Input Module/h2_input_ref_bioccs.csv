@@ -1,50 +1,95 @@
-Supply Sector Definitions,,,,,
-,,,,1,Include Bio CCS
-
-INPUT_TABLE,,,,,
-Variable ID,,,,,
-1,,,,,
-Delete any existing H2 supply sectors as they may have different technologies,,,,,
-region,SupplySector,,,,
-ALL,H2ProdCS,,,,
-ALL,H2ProdDist,,,,
-ALL,H2Distribution,,,,
-ALL,H2Dispensing,,,,
-
-INPUT_TABLE,,,,,
-Variable ID,,,,,
-10,,,,
-Define Supply Sector,,,,
-region,supplysector,output-unit,input-unit,price-unit
-ALL,H2 Central Production,EJ,EJ,1975$/GJ
-ALL,H2 Forecourt Production,EJ,EJ,1975$/GJ
-ALL,H2_td,EJ,EJ,1975$/GJ
-ALL,H2 Enduse,EJ,EJ,1975$/GJ
-
-
-SubSector Definitions,,,,
-
-INPUT_TABLE,,,,
-Variable ID,,,,
-12,,,1975 fillout,1975 fillout
-Define and fill-out subsectors,,,logitexp,sharewt
-region,Supply Sector,Subsector,1975,1975
-ALL,H2 Central Production,coal chemical,-3,1,,
-ALL,H2 Central Production,gas chemical,-3,1,,
-ALL,H2 Central Production,biomass to H2,-3,1,,
-ALL,H2 Central Production,electrolysis,-3,1,,
-ALL,H2 Central Production,nuclear,-3,1,,
-ALL,H2 Central Production,wind,-3,1,,Wind and solar have been moved from H2ProdDist to H2ProdCS
-ALL,H2 Central Production,solar,-3,1,,SO be sure old H2ProdDist has been deleted
-ALL,H2 Forecourt Production,gas chemical,-3,1,,
-ALL,H2 Forecourt Production,electrolysis,-3,1,,
-ALL,H2_td,H2_td,-3,1,,
-ALL,H2 Enduse,H2 Enduse,-3,1,,
-
-
-Technology Definitions,,,,,,
-
-INPUT_TABLE,,,,,,
+Supply Sector Definitions,,,,,,,,,,,,,
+,,,,1,Include Bio CCS,,,,,,,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+1,,,,,,,,,,,,,
+Delete any existing H2 supply sectors as they may have different technologies,,,,,,,,,,,,,
+region,SupplySector,,,,,,,,,,,,
+ALL,H2ProdCS,,,,,,,,,,,,
+ALL,H2ProdDist,,,,,,,,,,,,
+ALL,H2Distribution,,,,,,,,,,,,
+ALL,H2Dispensing,,,,,,,,,,,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+10,,,,,,,,,,,,,
+Define Supply Sector,,,,,,,,,,,,,
+region,supplysector,output-unit,input-unit,price-unit,,,,,,,,,
+ALL,H2 Central Production,EJ,EJ,1975$/GJ,,,,,,,,,
+ALL,H2 Forecourt Production,EJ,EJ,1975$/GJ,,,,,,,,,
+ALL,H2_td,EJ,EJ,1975$/GJ,,,,,,,,,
+ALL,H2 Enduse,EJ,EJ,1975$/GJ,,,,,,,,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+11,,,,,,,,,,,,,
+Subsector logit exponent,,,,,,,,,,,,,
+region,supplysector,logit-exponent,,,,,,,,,,,
+ALL,H2 Central Production,-3,,,,,,,,,,,
+ALL,H2 Forecourt Production,-3,,,,,,,,,,,
+ALL,H2_td,-3,,,,,,,,,,,
+ALL,H2 Enduse,-3,,,,,,,,,,,
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+12,,,,,,,,,,,,,
+Subsector shareweight scaling,,,interpolation-rule,,,,,,,,,,
+region,Supply Sector,Subsector,apply-to,from-year,to-year,interpolation-function,,,,,,,
+ALL,H2 Central Production,coal chemical,share-weight,2020,2095,linear,,,,,,,
+ALL,H2 Central Production,gas chemical,share-weight,2020,2095,linear,,,,,,,
+ALL,H2 Central Production,biomass to H2,share-weight,2020,2095,linear,,,,,,,
+ALL,H2 Central Production,electrolysis,share-weight,2020,2095,linear,,,,,,,
+ALL,H2 Central Production,nuclear,share-weight,2020,2095,linear,,,,,,,
+ALL,H2 Central Production,wind,share-weight,2020,2095,linear,,,,,,,
+ALL,H2 Central Production,solar,share-weight,2020,2095,linear,,,,,,,
+ALL,H2 Forecourt Production,gas chemical,share-weight,2020,2095,linear,,,,,,,
+ALL,H2 Forecourt Production,electrolysis,share-weight,2020,2095,linear,,,,,,,
+ALL,H2_td,H2_td,share-weight,2020,2095,linear,,,,,,,
+ALL,H2 Enduse,H2 Enduse,share-weight,2020,2095,linear,,,,,,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+13,,,,,,,,,,,,,
+Subsector shareweights and technology logit exponent,,,share-weight,,,,,,,,,1975 fillout,
+region,Supply Sector,Subsector,1975,1990,2005,2020,2035,2050,2065,2080,2095,logitexp,
+ALL,H2 Central Production,coal chemical,0,0,0,1,1,1,1,1,1,-10,
+ALL,H2 Central Production,gas chemical,0,0,0,1,1,1,1,1,1,-10,
+ALL,H2 Central Production,biomass to H2,0,0,0,1,1,1,1,1,1,-10,
+ALL,H2 Central Production,electrolysis,0,0,0,1,1,1,1,1,1,-10,
+ALL,H2 Central Production,nuclear,0,0,0,1,1,1,1,1,1,-10,
+ALL,H2 Central Production,wind,0,0,0,1,1,1,1,1,1,-10,
+ALL,H2 Central Production,solar,0,0,0,1,1,1,1,1,1,-10,
+ALL,H2 Forecourt Production,gas chemical,0,0,0,1,1,1,1,1,1,-10,
+ALL,H2 Forecourt Production,electrolysis,0,0,0,1,1,1,1,1,1,-10,
+ALL,H2_td,H2_td,0,0,0,1,1,1,1,1,1,-10,
+ALL,H2 Enduse,H2 Enduse,0,0,0,1,1,1,1,1,1,-10,
+,,,,,,,,,,,,,
+Technology Definitions,,,,,,,,,,,,,
+Shareweight scaling,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+26,,,,,,,,,,,,,
+technology shareweights,,,,interpolation-rule,,,,,,,,,
+region,Supply Sector,Subsector,Technology,apply-to,from-year,to-year,interpolation-function,,,,,,
+ALL,H2 Central Production,gas chemical,natural gas steam reforming,share-weight,2020,2035,linear,,,,,,
+ALL,H2 Central Production,gas chemical,natural gas steam reforming CCS,share-weight,2020,2035,linear,,,,,,
+ALL,H2 Central Production,coal chemical,coal chemical,share-weight,2020,2035,linear,,,,,,
+ALL,H2 Central Production,coal chemical,coal chemical CCS,share-weight,2020,2035,linear,,,,,,
+ALL,H2 Central Production,biomass to H2,biomass to H2,share-weight,2020,2035,linear,,,,,,
+ALL,H2 Central Production,electrolysis,electrolysis,share-weight,2020,2035,linear,,,,,,
+ALL,H2 Central Production,nuclear,thermal splitting,share-weight,2020,2035,linear,,,,,,
+ALL,H2 Central Production,wind,electrolysis,share-weight,2020,2035,linear,,,,,,
+ALL,H2 Central Production,solar,electrolysis,share-weight,2020,2035,linear,,,,,,
+ALL,H2 Forecourt Production,gas chemical,natural gas steam reforming,share-weight,2020,2035,linear,,,,,,
+ALL,H2 Forecourt Production,electrolysis,electrolysis,share-weight,2020,2035,linear,,,,,,
+ALL,H2_td,H2_td,H2_td,share-weight,2020,2035,linear,,,,,,
+ALL,H2 Enduse,H2 Enduse,H2_td,share-weight,2020,2035,linear,,,,,,
+ALL,H2 Enduse,H2 Enduse,H2 Forecourt Production,share-weight,2020,2035,linear,,,,,,
+ALL,H2 Central Production,biomass to H2,biomass to H2 CCS,share-weight,2020,2035,linear,,,,,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,
 16,,,,,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input
 Techology Efficiencies,,,,,efficiency,efficiency,efficiency,efficiency,efficiency,efficiency,efficiency,efficiency,efficiency
@@ -64,8 +109,8 @@ ALL,H2_td,H2_td,H2_td,H2 Central Production,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1
 ALL,H2 Enduse,H2 Enduse,H2_td,H2_td,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
 ALL,H2 Enduse,H2 Enduse,H2 Forecourt Production,H2 Forecourt Production,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00,1.00
 ALL,H2 Central Production,biomass to H2,biomass to H2 CCS,regional biomass,0.45,0.45,0.45,0.45,0.47,0.48,0.49,0.50,0.51
-
-
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,
 18,,,,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input,minicam-non-energy-input
@@ -77,73 +122,85 @@ ALL,H2 Central Production,coal chemical,coal chemical,3.00,3.00,3.00,3.00,2.74,2
 ALL,H2 Central Production,coal chemical,coal chemical CCS,3.88,3.88,3.88,3.88,3.56,3.27,3.00,2.78,2.58,
 ALL,H2 Central Production,biomass to H2,biomass to H2,2.98,2.98,2.98,2.98,2.72,2.49,2.28,2.12,1.96,
 ALL,H2 Central Production,electrolysis,electrolysis,7.40,7.40,7.40,7.40,6.11,5.05,4.17,3.87,3.59,
-ALL,H2 Central Production,nuclear,thermal splitting,7.00,7.00,7.00,7.00,7.00,7.00,4.44,4.12,3.82
-ALL,H2 Central Production,wind,electrolysis,7.40,7.40,7.40,7.40,7.40,7.40,7.40,6.86,6.37
-ALL,H2 Central Production,solar,electrolysis,7.40,7.40,7.40,7.40,7.40,7.40,7.40,6.86,6.37
-ALL,H2 Forecourt Production,gas chemical,natural gas steam reforming,6.46,6.46,6.46,6.46,5.70,5.03,4.43,4.11,3.82
-ALL,H2 Forecourt Production,electrolysis,electrolysis,7.40,7.40,7.40,7.40,7.40,7.40,7.40,6.86,6.37
-ALL,H2_td,H2_td,H2_td,6.07,6.07,6.07,6.07,5.71,5.38,5.06,4.69,4.36
-ALL,H2 Enduse,H2 Enduse,H2_td,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00
-ALL,H2 Enduse,H2 Enduse,H2 Forecourt Production,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00
-ALL,H2 Central Production,biomass to H2,biomass to H2 CCS,3.88,3.88,3.88,3.88,3.56,3.27,3.00,2.78,2.58
-,,,,,,,,,,,,
-
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-14,,,,,,,,,,,,
-Define and fill-out technologies,,,,1975 fillout,,,,,,,,
-region,Supply Sector,Subsector,Technology,CO2 Tag,,,,,,,,
-ALL,H2 Central Production,gas chemical,natural gas steam reforming,CO2
-ALL,H2 Central Production,gas chemical,natural gas steam reforming CCS,CO2
-ALL,H2 Central Production,coal chemical,coal chemical,CO2
-ALL,H2 Central Production,coal chemical,coal chemical CCS,CO2
-ALL,H2 Central Production,biomass to H2,biomass to H2,CO2
-ALL,H2 Central Production,electrolysis,electrolysis,CO2
-ALL,H2 Central Production,nuclear,thermal splitting,CO2
-ALL,H2 Central Production,wind,electrolysis,CO2
-ALL,H2 Central Production,solar,electrolysis,CO2
-ALL,H2 Forecourt Production,gas chemical,natural gas steam reforming,CO2
-ALL,H2 Forecourt Production,electrolysis,electrolysis,CO2
-ALL,H2_td,H2_td,H2_td,CO2
-ALL,H2 Enduse,H2 Enduse,H2_td,CO2
-ALL,H2 Enduse,H2 Enduse,H2 Forecourt Production,CO2
-ALL,H2 Central Production,biomass to H2,biomass to H2 CCS,CO2
-
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-20,,,,standard-capture-component,,,,,,,,
-CCS Parameters,,,,storage-market,storage-market,storage-market,storage-market,storage-market,storage-market,storage-market,storage-market,storage-market
-region,Supply Sector,Subsector,Technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,H2 Central Production,gas chemical,natural gas steam reforming CCS,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage
-ALL,H2 Central Production,coal chemical,coal chemical CCS,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage
-ALL,H2 Central Production,biomass to H2,biomass to H2 CCS,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage
-
-
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-22,,,,standard-capture-component,,,,,,,,
-CCS Parameters,,,,remove-fraction,remove-fraction,remove-fraction,remove-fraction,remove-fraction,remove-fraction,remove-fraction,remove-fraction,remove-fraction
-region,Supply Sector,Subsector,Technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,H2 Central Production,gas chemical,natural gas steam reforming CCS,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9
-ALL,H2 Central Production,coal chemical,coal chemical CCS,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9
-ALL,H2 Central Production,biomass to H2,biomass to H2 CCS,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9
-
-
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-24,,,,standard-capture-component,,,,,,,,
-CCS Parameters,,,,storage-cost,storage-cost,storage-cost,storage-cost,storage-cost,storage-cost,storage-cost,storage-cost,storage-cost
-region,Supply Sector,Subsector,Technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,H2 Central Production,gas chemical,natural gas steam reforming CCS,0,0,0,0,0,0,0,0,0
-ALL,H2 Central Production,coal chemical,coal chemical CCS,0,0,0,0,0,0,0,0,0
-ALL,H2 Central Production,biomass to H2,biomass to H2 CCS,0,0,0,0,0,0,0,0,0
-
-
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-26,,,,,,,,,,,,
-CCS Parameters,,,,sharewt,,,,,,,,
-region,Supply Sector,Subsector,Technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,H2 Central Production,gas chemical,natural gas steam reforming CCS,0,0,0,0.333,1,1,1,1,1
-ALL,H2 Central Production,coal chemical,coal chemical CCS,0,0,0,0.333,1,1,1,1,1
-ALL,H2 Central Production,biomass to H2,biomass to H2 CCS,0,0,0,0.333,1,1,1,1,1
+ALL,H2 Central Production,nuclear,thermal splitting,7.00,7.00,7.00,7.00,7.00,7.00,4.44,4.12,3.82,
+ALL,H2 Central Production,wind,electrolysis,7.40,7.40,7.40,7.40,7.40,7.40,7.40,6.86,6.37,
+ALL,H2 Central Production,solar,electrolysis,7.40,7.40,7.40,7.40,7.40,7.40,7.40,6.86,6.37,
+ALL,H2 Forecourt Production,gas chemical,natural gas steam reforming,6.46,6.46,6.46,6.46,5.70,5.03,4.43,4.11,3.82,
+ALL,H2 Forecourt Production,electrolysis,electrolysis,7.40,7.40,7.40,7.40,7.40,7.40,7.40,6.86,6.37,
+ALL,H2_td,H2_td,H2_td,6.07,6.07,6.07,6.07,5.71,5.38,5.06,4.69,4.36,
+ALL,H2 Enduse,H2 Enduse,H2_td,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,
+ALL,H2 Enduse,H2 Enduse,H2 Forecourt Production,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,0.00,
+ALL,H2 Central Production,biomass to H2,biomass to H2 CCS,3.88,3.88,3.88,3.88,3.56,3.27,3.00,2.78,2.58,
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+14,,,,,,,,,,,,,
+Define and fill-out technologies,,,,1975 fillout,,,,,,,,,
+region,Supply Sector,Subsector,Technology,CO2 Tag,,,,,,,,,
+ALL,H2 Central Production,gas chemical,natural gas steam reforming,CO2,,,,,,,,,
+ALL,H2 Central Production,gas chemical,natural gas steam reforming CCS,CO2,,,,,,,,,
+ALL,H2 Central Production,coal chemical,coal chemical,CO2,,,,,,,,,
+ALL,H2 Central Production,coal chemical,coal chemical CCS,CO2,,,,,,,,,
+ALL,H2 Central Production,biomass to H2,biomass to H2,CO2,,,,,,,,,
+ALL,H2 Central Production,electrolysis,electrolysis,CO2,,,,,,,,,
+ALL,H2 Central Production,nuclear,thermal splitting,CO2,,,,,,,,,
+ALL,H2 Central Production,wind,electrolysis,CO2,,,,,,,,,
+ALL,H2 Central Production,solar,electrolysis,CO2,,,,,,,,,
+ALL,H2 Forecourt Production,gas chemical,natural gas steam reforming,CO2,,,,,,,,,
+ALL,H2 Forecourt Production,electrolysis,electrolysis,CO2,,,,,,,,,
+ALL,H2_td,H2_td,H2_td,CO2,,,,,,,,,
+ALL,H2 Enduse,H2 Enduse,H2_td,CO2,,,,,,,,,
+ALL,H2 Enduse,H2 Enduse,H2 Forecourt Production,CO2,,,,,,,,,
+ALL,H2 Central Production,biomass to H2,biomass to H2 CCS,CO2,,,,,,,,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+20,,,,standard-capture-component,,,,,,,,,
+CCS Parameters,,,,storage-market,storage-market,storage-market,storage-market,storage-market,storage-market,storage-market,storage-market,storage-market,
+region,Supply Sector,Subsector,Technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,
+ALL,H2 Central Production,gas chemical,natural gas steam reforming CCS,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,
+ALL,H2 Central Production,coal chemical,coal chemical CCS,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,
+ALL,H2 Central Production,biomass to H2,biomass to H2 CCS,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,carbon-storage,
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+22,,,,standard-capture-component,,,,,,,,,
+CCS Parameters,,,,remove-fraction,remove-fraction,remove-fraction,remove-fraction,remove-fraction,remove-fraction,remove-fraction,remove-fraction,remove-fraction,
+region,Supply Sector,Subsector,Technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,
+ALL,H2 Central Production,gas chemical,natural gas steam reforming CCS,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,
+ALL,H2 Central Production,coal chemical,coal chemical CCS,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,
+ALL,H2 Central Production,biomass to H2,biomass to H2 CCS,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,0.9,
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+24,,,,standard-capture-component,,,,,,,,,
+CCS Parameters,,,,storage-cost,storage-cost,storage-cost,storage-cost,storage-cost,storage-cost,storage-cost,storage-cost,storage-cost,
+region,Supply Sector,Subsector,Technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,
+ALL,H2 Central Production,gas chemical,natural gas steam reforming CCS,0,0,0,0,0,0,0,0,0,
+ALL,H2 Central Production,coal chemical,coal chemical CCS,0,0,0,0,0,0,0,0,0,
+ALL,H2 Central Production,biomass to H2,biomass to H2 CCS,0,0,0,0,0,0,0,0,0,
+,,,,,,,,,,,,,
+,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,
+28,,,,,,,,,,,,,
+technology shareweights,,,,share-weight,,,,,,,,,
+region,Supply Sector,Subsector,Technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,
+ALL,H2 Central Production,gas chemical,natural gas steam reforming,0,0,0,1,1,1,1,1,1,
+ALL,H2 Central Production,gas chemical,natural gas steam reforming CCS,0,0,0,0.333,1,1,1,1,1,
+ALL,H2 Central Production,coal chemical,coal chemical,0,0,0,1,1,1,1,1,1,
+ALL,H2 Central Production,coal chemical,coal chemical CCS,0,0,0,0.333,1,1,1,1,1,
+ALL,H2 Central Production,biomass to H2,biomass to H2,0,0,0,1,1,1,1,1,1,
+ALL,H2 Central Production,electrolysis,electrolysis,0,0,0,1,1,1,1,1,1,
+ALL,H2 Central Production,nuclear,thermal splitting,0,0,0,1,1,1,1,1,1,
+ALL,H2 Central Production,wind,electrolysis,0,0,0,1,1,1,1,1,1,
+ALL,H2 Central Production,solar,electrolysis,0,0,0,1,1,1,1,1,1,
+ALL,H2 Forecourt Production,gas chemical,natural gas steam reforming,0,0,0,1,1,1,1,1,1,
+ALL,H2 Forecourt Production,electrolysis,electrolysis,0,0,0,1,1,1,1,1,1,
+ALL,H2_td,H2_td,H2_td,0,0,0,1,1,1,1,1,1,
+ALL,H2 Enduse,H2 Enduse,H2_td,0,0,0,1,1,1,1,1,1,
+ALL,H2 Enduse,H2 Enduse,H2 Forecourt Production,0,0,0,1,1,1,1,1,1,
+ALL,H2 Central Production,biomass to H2,biomass to H2 CCS,0,0,0,0.333,1,1,1,1,1,

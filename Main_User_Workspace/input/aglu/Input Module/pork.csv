@@ -1,772 +1,911 @@
-Pork Supply,,,,,
-Units and sector type,,,,,
-INPUT_TABLE,,,,,
-Variable ID,,,,,
-70,,,,,
-
-region,supplysector,output-unit,input-unit,price-unit,sectorType
-ALL,Pork,Gcal,Gcal,1975$/Gcal,AnimalSupply
-
-
-Tech Scale Year,,,,,
-INPUT_TABLE,,,,,
-Variable ID,,,,,
-701,,,,,
-Source Inputs,,,,,
-region,supplysector,subsector,techScaleYear,,
-USA,Pork,Mixed,2005
-Canada,Pork,Mixed,2005
-Western Europe,Pork,Mixed,2005
-Japan,Pork,Mixed,2005
-Australia_NZ,Pork,Mixed,2005
-Former Soviet Union,Pork,Mixed,2005
-China,Pork,Mixed,2005
-Middle East,Pork,Mixed,2005
-Africa,Pork,Mixed,2005
-Latin America,Pork,Mixed,2005
-Southeast Asia,Pork,Mixed,2005
-Eastern Europe,Pork,Mixed,2005
-Korea,Pork,Mixed,2005
-India,Pork,Mixed,2005
-
-
-Efficiency: Mixed,,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,
-7001,,,,minicam-energy-input,,,,,,,,,
-,,,,efficiency,,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input
-USA,Pork,Mixed,Corn,0.15041,0.15041,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,Corn
-Canada,Pork,Mixed,Corn,0.15322,0.15322,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,Corn
-Western Europe,Pork,Mixed,Corn,0.18426,0.18426,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,Corn
-Japan,Pork,Mixed,Corn,0.16971,0.16971,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,Corn
-Australia_NZ,Pork,Mixed,Corn,0.17089,0.17089,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,Corn
-Former Soviet Union,Pork,Mixed,Corn,0.16644,0.16644,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,Corn
-China,Pork,Mixed,Corn,0.18502,0.18502,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,Corn
-Middle East,Pork,Mixed,Corn,0.14949,0.14949,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,Corn
-Africa,Pork,Mixed,Corn,0.19396,0.19396,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,Corn
-Latin America,Pork,Mixed,Corn,0.18659,0.18659,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,Corn
-Southeast Asia,Pork,Mixed,Corn,0.19916,0.19916,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,Corn
-Eastern Europe,Pork,Mixed,Corn,0.16980,0.16980,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,Corn
-Korea,Pork,Mixed,Corn,0.13283,0.13283,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,Corn
-India,Pork,Mixed,Corn,0.18390,0.18390,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,Corn
-USA,Pork,Mixed,FodderCrop,0.15041,0.15041,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,FodderCrop
-Canada,Pork,Mixed,FodderCrop,0.15322,0.15322,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,FodderCrop
-Western Europe,Pork,Mixed,FodderCrop,0.18426,0.18426,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,FodderCrop
-Japan,Pork,Mixed,FodderCrop,0.16971,0.16971,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,FodderCrop
-Australia_NZ,Pork,Mixed,FodderCrop,0.17089,0.17089,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,FodderCrop
-Former Soviet Union,Pork,Mixed,FodderCrop,0.16644,0.16644,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,FodderCrop
-China,Pork,Mixed,FodderCrop,0.18502,0.18502,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,FodderCrop
-Middle East,Pork,Mixed,FodderCrop,0.14949,0.14949,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,FodderCrop
-Africa,Pork,Mixed,FodderCrop,0.19396,0.19396,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,FodderCrop
-Latin America,Pork,Mixed,FodderCrop,0.18659,0.18659,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,FodderCrop
-Southeast Asia,Pork,Mixed,FodderCrop,0.19916,0.19916,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,FodderCrop
-Eastern Europe,Pork,Mixed,FodderCrop,0.16980,0.16980,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,FodderCrop
-Korea,Pork,Mixed,FodderCrop,0.13283,0.13283,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,FodderCrop
-India,Pork,Mixed,FodderCrop,0.18390,0.18390,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,FodderCrop
-USA,Pork,Mixed,MiscCrop,0.15041,0.15041,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,MiscCrop
-Canada,Pork,Mixed,MiscCrop,0.15322,0.15322,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,MiscCrop
-Western Europe,Pork,Mixed,MiscCrop,0.18426,0.18426,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,MiscCrop
-Japan,Pork,Mixed,MiscCrop,0.16971,0.16971,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,MiscCrop
-Australia_NZ,Pork,Mixed,MiscCrop,0.17089,0.17089,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,MiscCrop
-Former Soviet Union,Pork,Mixed,MiscCrop,0.16644,0.16644,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,MiscCrop
-China,Pork,Mixed,MiscCrop,0.18502,0.18502,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,MiscCrop
-Middle East,Pork,Mixed,MiscCrop,0.14949,0.14949,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,MiscCrop
-Africa,Pork,Mixed,MiscCrop,0.19396,0.19396,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,MiscCrop
-Latin America,Pork,Mixed,MiscCrop,0.18659,0.18659,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,MiscCrop
-Southeast Asia,Pork,Mixed,MiscCrop,0.19916,0.19916,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,MiscCrop
-Eastern Europe,Pork,Mixed,MiscCrop,0.16980,0.16980,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,MiscCrop
-Korea,Pork,Mixed,MiscCrop,0.13283,0.13283,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,MiscCrop
-India,Pork,Mixed,MiscCrop,0.18390,0.18390,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,MiscCrop
-USA,Pork,Mixed,OilCrop,0.15041,0.15041,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,OilCrop
-Canada,Pork,Mixed,OilCrop,0.15322,0.15322,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,OilCrop
-Western Europe,Pork,Mixed,OilCrop,0.18426,0.18426,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,OilCrop
-Japan,Pork,Mixed,OilCrop,0.16971,0.16971,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,OilCrop
-Australia_NZ,Pork,Mixed,OilCrop,0.17089,0.17089,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,OilCrop
-Former Soviet Union,Pork,Mixed,OilCrop,0.16644,0.16644,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,OilCrop
-China,Pork,Mixed,OilCrop,0.18502,0.18502,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,OilCrop
-Middle East,Pork,Mixed,OilCrop,0.14949,0.14949,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,OilCrop
-Africa,Pork,Mixed,OilCrop,0.19396,0.19396,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,OilCrop
-Latin America,Pork,Mixed,OilCrop,0.18659,0.18659,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,OilCrop
-Southeast Asia,Pork,Mixed,OilCrop,0.19916,0.19916,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,OilCrop
-Eastern Europe,Pork,Mixed,OilCrop,0.16980,0.16980,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,OilCrop
-Korea,Pork,Mixed,OilCrop,0.13283,0.13283,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,OilCrop
-India,Pork,Mixed,OilCrop,0.18390,0.18390,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,OilCrop
-USA,Pork,Mixed,OtherGrain,0.15041,0.15041,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,OtherGrain
-Canada,Pork,Mixed,OtherGrain,0.15322,0.15322,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,OtherGrain
-Western Europe,Pork,Mixed,OtherGrain,0.18426,0.18426,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,OtherGrain
-Japan,Pork,Mixed,OtherGrain,0.16971,0.16971,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,OtherGrain
-Australia_NZ,Pork,Mixed,OtherGrain,0.17089,0.17089,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,OtherGrain
-Former Soviet Union,Pork,Mixed,OtherGrain,0.16644,0.16644,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,OtherGrain
-China,Pork,Mixed,OtherGrain,0.18502,0.18502,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,OtherGrain
-Middle East,Pork,Mixed,OtherGrain,0.14949,0.14949,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,OtherGrain
-Africa,Pork,Mixed,OtherGrain,0.19396,0.19396,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,OtherGrain
-Latin America,Pork,Mixed,OtherGrain,0.18659,0.18659,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,OtherGrain
-Southeast Asia,Pork,Mixed,OtherGrain,0.19916,0.19916,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,OtherGrain
-Eastern Europe,Pork,Mixed,OtherGrain,0.16980,0.16980,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,OtherGrain
-Korea,Pork,Mixed,OtherGrain,0.13283,0.13283,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,OtherGrain
-India,Pork,Mixed,OtherGrain,0.18390,0.18390,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,OtherGrain
-USA,Pork,Mixed,Rice,0.15041,0.15041,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,Rice
-Canada,Pork,Mixed,Rice,0.15322,0.15322,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,Rice
-Western Europe,Pork,Mixed,Rice,0.18426,0.18426,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,Rice
-Japan,Pork,Mixed,Rice,0.16971,0.16971,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,Rice
-Australia_NZ,Pork,Mixed,Rice,0.17089,0.17089,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,Rice
-Former Soviet Union,Pork,Mixed,Rice,0.16644,0.16644,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,Rice
-China,Pork,Mixed,Rice,0.18502,0.18502,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,Rice
-Middle East,Pork,Mixed,Rice,0.14949,0.14949,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,Rice
-Africa,Pork,Mixed,Rice,0.19396,0.19396,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,Rice
-Latin America,Pork,Mixed,Rice,0.18659,0.18659,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,Rice
-Southeast Asia,Pork,Mixed,Rice,0.19916,0.19916,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,Rice
-Eastern Europe,Pork,Mixed,Rice,0.16980,0.16980,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,Rice
-Korea,Pork,Mixed,Rice,0.13283,0.13283,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,Rice
-India,Pork,Mixed,Rice,0.18390,0.18390,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,Rice
-USA,Pork,Mixed,SugarCrop,0.15041,0.15041,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,SugarCrop
-Canada,Pork,Mixed,SugarCrop,0.15322,0.15322,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,SugarCrop
-Western Europe,Pork,Mixed,SugarCrop,0.18426,0.18426,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,SugarCrop
-Japan,Pork,Mixed,SugarCrop,0.16971,0.16971,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,SugarCrop
-Australia_NZ,Pork,Mixed,SugarCrop,0.17089,0.17089,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,SugarCrop
-Former Soviet Union,Pork,Mixed,SugarCrop,0.16644,0.16644,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,SugarCrop
-China,Pork,Mixed,SugarCrop,0.18502,0.18502,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,SugarCrop
-Middle East,Pork,Mixed,SugarCrop,0.14949,0.14949,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,SugarCrop
-Africa,Pork,Mixed,SugarCrop,0.19396,0.19396,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,SugarCrop
-Latin America,Pork,Mixed,SugarCrop,0.18659,0.18659,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,SugarCrop
-Southeast Asia,Pork,Mixed,SugarCrop,0.19916,0.19916,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,SugarCrop
-Eastern Europe,Pork,Mixed,SugarCrop,0.16980,0.16980,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,SugarCrop
-Korea,Pork,Mixed,SugarCrop,0.13283,0.13283,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,SugarCrop
-India,Pork,Mixed,SugarCrop,0.18390,0.18390,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,SugarCrop
-USA,Pork,Mixed,Wheat,0.15041,0.15041,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,Wheat
-Canada,Pork,Mixed,Wheat,0.15322,0.15322,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,Wheat
-Western Europe,Pork,Mixed,Wheat,0.18426,0.18426,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,Wheat
-Japan,Pork,Mixed,Wheat,0.16971,0.16971,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,Wheat
-Australia_NZ,Pork,Mixed,Wheat,0.17089,0.17089,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,Wheat
-Former Soviet Union,Pork,Mixed,Wheat,0.16644,0.16644,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,Wheat
-China,Pork,Mixed,Wheat,0.18502,0.18502,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,Wheat
-Middle East,Pork,Mixed,Wheat,0.14949,0.14949,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,Wheat
-Africa,Pork,Mixed,Wheat,0.19396,0.19396,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,Wheat
-Latin America,Pork,Mixed,Wheat,0.18659,0.18659,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,Wheat
-Southeast Asia,Pork,Mixed,Wheat,0.19916,0.19916,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,Wheat
-Eastern Europe,Pork,Mixed,Wheat,0.16980,0.16980,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,Wheat
-Korea,Pork,Mixed,Wheat,0.13283,0.13283,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,Wheat
-India,Pork,Mixed,Wheat,0.18390,0.18390,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,Wheat
-,,,,,,,,,,,,,
-,,,,,,,,,,,,,
-Calibrated inputs: mixed,,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,
-7000,,,,minicam-energy-input,,,,,,,,,
-,,,,calibrated-value,,,,,,,,,
-region,supplysector,subsector,technology,1990,2005,minicam-energy-input,,,,,,,
-USA,Pork,Mixed,Corn,111678529,156270547,Corn,,,,,,,
-Canada,Pork,Mixed,Corn,6577324,13968394,Corn,,,,,,,
-Western Europe,Pork,Mixed,Corn,37678322,63208607,Corn
-Japan,Pork,Mixed,Corn,14303677,11985378,Corn
-Australia_NZ,Pork,Mixed,Corn,271356,159692,Corn
-Former Soviet Union,Pork,Mixed,Corn,6508314,3722590,Corn
-China,Pork,Mixed,Corn,90199923,173422600,Corn
-Middle East,Pork,Mixed,Corn,35108,93551,Corn
-Africa,Pork,Mixed,Corn,2899334,3540960,Corn
-Latin America,Pork,Mixed,Corn,15458359,37172772,Corn
-Southeast Asia,Pork,Mixed,Corn,8882260,19841325,Corn
-Eastern Europe,Pork,Mixed,Corn,28534305,30161372,Corn
-Korea,Pork,Mixed,Corn,11836861,17939173,Corn
-India,Pork,Mixed,Corn,634886,2391567,Corn
-USA,Pork,Mixed,FodderCrop,14697006,19958786,FodderCrop
-Canada,Pork,Mixed,FodderCrop,2515458,5562555,FodderCrop
-Western Europe,Pork,Mixed,FodderCrop,67835831,80414607,FodderCrop
-Japan,Pork,Mixed,FodderCrop,8752525,7055278,FodderCrop
-Australia_NZ,Pork,Mixed,FodderCrop,2128175,2606985,FodderCrop
-Former Soviet Union,Pork,Mixed,FodderCrop,38713836,15982639,FodderCrop
-China,Pork,Mixed,FodderCrop,272441395,530619727,FodderCrop
-Middle East,Pork,Mixed,FodderCrop,86253,133544,FodderCrop
-Africa,Pork,Mixed,FodderCrop,3605955,5155911,FodderCrop
-Latin America,Pork,Mixed,FodderCrop,13422365,34160352,FodderCrop
-Southeast Asia,Pork,Mixed,FodderCrop,30995819,61109669,FodderCrop
-Eastern Europe,Pork,Mixed,FodderCrop,23131588,17411396,FodderCrop
-Korea,Pork,Mixed,FodderCrop,1352146,1672275,FodderCrop
-India,Pork,Mixed,FodderCrop,2465837,3239812,FodderCrop
-USA,Pork,Mixed,MiscCrop,85920,171499,MiscCrop
-Canada,Pork,Mixed,MiscCrop,23557,679336,MiscCrop
-Western Europe,Pork,Mixed,MiscCrop,27160719,10223130,MiscCrop
-Japan,Pork,Mixed,MiscCrop,104941,123789,MiscCrop
-Australia_NZ,Pork,Mixed,MiscCrop,325218,231505,MiscCrop
-Former Soviet Union,Pork,Mixed,MiscCrop,7658725,2462491,MiscCrop
-China,Pork,Mixed,MiscCrop,25349966,43124123,MiscCrop
-Middle East,Pork,Mixed,MiscCrop,1555,428,MiscCrop
-Africa,Pork,Mixed,MiscCrop,1592179,2584793,MiscCrop
-Latin America,Pork,Mixed,MiscCrop,4879509,7562428,MiscCrop
-Southeast Asia,Pork,Mixed,MiscCrop,735985,1095562,MiscCrop
-Eastern Europe,Pork,Mixed,MiscCrop,5663495,1935062,MiscCrop
-Korea,Pork,Mixed,MiscCrop,2129836,753719,MiscCrop
-India,Pork,Mixed,MiscCrop,1014638,800823,MiscCrop
-USA,Pork,Mixed,OilCrop,1489013,3134226,OilCrop
-Canada,Pork,Mixed,OilCrop,905373,5235750,OilCrop
-Western Europe,Pork,Mixed,OilCrop,4737190,9806075,OilCrop
-Japan,Pork,Mixed,OilCrop,248033,222761,OilCrop
-Australia_NZ,Pork,Mixed,OilCrop,81012,57499,OilCrop
-Former Soviet Union,Pork,Mixed,OilCrop,878012,730299,OilCrop
-China,Pork,Mixed,OilCrop,4684067,9561400,OilCrop
-Middle East,Pork,Mixed,OilCrop,484,2199,OilCrop
-Africa,Pork,Mixed,OilCrop,5083,4724,OilCrop
-Latin America,Pork,Mixed,OilCrop,529800,1909878,OilCrop
-Southeast Asia,Pork,Mixed,OilCrop,869098,1081137,OilCrop
-Eastern Europe,Pork,Mixed,OilCrop,125122,121294,OilCrop
-Korea,Pork,Mixed,OilCrop,37935,56864,OilCrop
-India,Pork,Mixed,OilCrop,759972,614326,OilCrop
-USA,Pork,Mixed,OtherGrain,15811240,8743072,OtherGrain
-Canada,Pork,Mixed,OtherGrain,11620077,22792063,OtherGrain
-Western Europe,Pork,Mixed,OtherGrain,98459951,91654599,OtherGrain
-Japan,Pork,Mixed,OtherGrain,5646763,2729745,OtherGrain
-Australia_NZ,Pork,Mixed,OtherGrain,3424675,4145855,OtherGrain
-Former Soviet Union,Pork,Mixed,OtherGrain,42529674,11469319,OtherGrain
-China,Pork,Mixed,OtherGrain,9058589,6866040,OtherGrain
-Middle East,Pork,Mixed,OtherGrain,133687,145901,OtherGrain
-Africa,Pork,Mixed,OtherGrain,1193675,1085904,OtherGrain
-Latin America,Pork,Mixed,OtherGrain,7172679,11545502,OtherGrain
-Southeast Asia,Pork,Mixed,OtherGrain,442004,424936,OtherGrain
-Eastern Europe,Pork,Mixed,OtherGrain,32178408,24393461,OtherGrain
-Korea,Pork,Mixed,OtherGrain,569921,102534,OtherGrain
-India,Pork,Mixed,OtherGrain,491691,310688,OtherGrain
-USA,Pork,Mixed,Rice,0,0,Rice
-Canada,Pork,Mixed,Rice,0,0,Rice
-Western Europe,Pork,Mixed,Rice,466631,419467,Rice
-Japan,Pork,Mixed,Rice,20667,59154,Rice
-Australia_NZ,Pork,Mixed,Rice,0,0,Rice
-Former Soviet Union,Pork,Mixed,Rice,0,0,Rice
-China,Pork,Mixed,Rice,5933457,3971461,Rice
-Middle East,Pork,Mixed,Rice,2321,5264,Rice
-Africa,Pork,Mixed,Rice,120141,85788,Rice
-Latin America,Pork,Mixed,Rice,150799,226424,Rice
-Southeast Asia,Pork,Mixed,Rice,3058112,5220909,Rice
-Eastern Europe,Pork,Mixed,Rice,2455,12544,Rice
-Korea,Pork,Mixed,Rice,0,0,Rice
-India,Pork,Mixed,Rice,332335,237293,Rice
-USA,Pork,Mixed,SugarCrop,0,0,SugarCrop
-Canada,Pork,Mixed,SugarCrop,14825,5593,SugarCrop
-Western Europe,Pork,Mixed,SugarCrop,3762473,1650017,SugarCrop
-Japan,Pork,Mixed,SugarCrop,0,0,SugarCrop
-Australia_NZ,Pork,Mixed,SugarCrop,0,0,SugarCrop
-Former Soviet Union,Pork,Mixed,SugarCrop,716475,513551,SugarCrop
-China,Pork,Mixed,SugarCrop,10561449,6554995,SugarCrop
-Middle East,Pork,Mixed,SugarCrop,629,683,SugarCrop
-Africa,Pork,Mixed,SugarCrop,46420,52339,SugarCrop
-Latin America,Pork,Mixed,SugarCrop,8417516,8903314,SugarCrop
-Southeast Asia,Pork,Mixed,SugarCrop,896063,1725002,SugarCrop
-Eastern Europe,Pork,Mixed,SugarCrop,530190,223367,SugarCrop
-Korea,Pork,Mixed,SugarCrop,0,0,SugarCrop
-India,Pork,Mixed,SugarCrop,1143893,754955,SugarCrop
-USA,Pork,Mixed,Wheat,7026416,4341972,Wheat
-Canada,Pork,Mixed,Wheat,3679538,5448358,Wheat
-Western Europe,Pork,Mixed,Wheat,41750406,77569634,Wheat
-Japan,Pork,Mixed,Wheat,680711,355459,Wheat
-Australia_NZ,Pork,Mixed,Wheat,852597,794006,Wheat
-Former Soviet Union,Pork,Mixed,Wheat,31966028,10157788,Wheat
-China,Pork,Mixed,Wheat,4902190,2220415,Wheat
-Middle East,Pork,Mixed,Wheat,19894,30328,Wheat
-Africa,Pork,Mixed,Wheat,461608,482648,Wheat
-Latin America,Pork,Mixed,Wheat,784188,585200,Wheat
-Southeast Asia,Pork,Mixed,Wheat,535711,826769,Wheat
-Eastern Europe,Pork,Mixed,Wheat,21372953,12618437,Wheat
-Korea,Pork,Mixed,Wheat,3048352,3306244,Wheat
-India,Pork,Mixed,Wheat,535247,467054,Wheat
-
-
-Non-energy cost: Mixed,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-7002,,,,minicam-non-energy-input,,,,,,,,
-,,,,input-cost,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-USA,Pork,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Canada,Pork,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Western Europe,Pork,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Japan,Pork,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Australia_NZ,Pork,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Former Soviet Union,Pork,Mixed,Corn,10,10,10,10,10,10,10,10,10
-China,Pork,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Middle East,Pork,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Africa,Pork,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Latin America,Pork,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Southeast Asia,Pork,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Eastern Europe,Pork,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Korea,Pork,Mixed,Corn,10,10,10,10,10,10,10,10,10
-India,Pork,Mixed,Corn,10,10,10,10,10,10,10,10,10
-USA,Pork,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Canada,Pork,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Western Europe,Pork,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Japan,Pork,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Australia_NZ,Pork,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Former Soviet Union,Pork,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-China,Pork,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Middle East,Pork,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Africa,Pork,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Latin America,Pork,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Southeast Asia,Pork,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Eastern Europe,Pork,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Korea,Pork,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-India,Pork,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-USA,Pork,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Canada,Pork,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Western Europe,Pork,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Japan,Pork,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Australia_NZ,Pork,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Former Soviet Union,Pork,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-China,Pork,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Middle East,Pork,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Africa,Pork,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Latin America,Pork,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Southeast Asia,Pork,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Eastern Europe,Pork,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Korea,Pork,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-India,Pork,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-USA,Pork,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Canada,Pork,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Western Europe,Pork,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Japan,Pork,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Australia_NZ,Pork,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Former Soviet Union,Pork,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-China,Pork,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Middle East,Pork,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Africa,Pork,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Latin America,Pork,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Southeast Asia,Pork,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Eastern Europe,Pork,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Korea,Pork,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-India,Pork,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-USA,Pork,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Canada,Pork,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Western Europe,Pork,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Japan,Pork,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Australia_NZ,Pork,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Former Soviet Union,Pork,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-China,Pork,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Middle East,Pork,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Africa,Pork,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Latin America,Pork,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Southeast Asia,Pork,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Eastern Europe,Pork,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Korea,Pork,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-India,Pork,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-USA,Pork,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Canada,Pork,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Western Europe,Pork,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Japan,Pork,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Australia_NZ,Pork,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Former Soviet Union,Pork,Mixed,Rice,10,10,10,10,10,10,10,10,10
-China,Pork,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Middle East,Pork,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Africa,Pork,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Latin America,Pork,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Southeast Asia,Pork,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Eastern Europe,Pork,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Korea,Pork,Mixed,Rice,10,10,10,10,10,10,10,10,10
-India,Pork,Mixed,Rice,10,10,10,10,10,10,10,10,10
-USA,Pork,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Canada,Pork,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Western Europe,Pork,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Japan,Pork,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Australia_NZ,Pork,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Former Soviet Union,Pork,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-China,Pork,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Middle East,Pork,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Africa,Pork,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Latin America,Pork,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Southeast Asia,Pork,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Eastern Europe,Pork,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Korea,Pork,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-India,Pork,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-USA,Pork,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Canada,Pork,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Western Europe,Pork,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Japan,Pork,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Australia_NZ,Pork,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Former Soviet Union,Pork,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-China,Pork,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Middle East,Pork,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Africa,Pork,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Latin America,Pork,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Southeast Asia,Pork,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Eastern Europe,Pork,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Korea,Pork,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-India,Pork,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-
-
-Technology Logit Exponent,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-7003,,,,,,,,,,,,
-,,,,logitexp,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-USA,Pork,Mixed,Corn,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Canada,Pork,Mixed,Corn,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Western Europe,Pork,Mixed,Corn,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Japan,Pork,Mixed,Corn,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Australia_NZ,Pork,Mixed,Corn,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Former Soviet Union,Pork,Mixed,Corn,-1,-1,-1,-1,-1,-1,-1,-1,-1
-China,Pork,Mixed,Corn,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Middle East,Pork,Mixed,Corn,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Africa,Pork,Mixed,Corn,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Latin America,Pork,Mixed,Corn,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Southeast Asia,Pork,Mixed,Corn,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Eastern Europe,Pork,Mixed,Corn,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Korea,Pork,Mixed,Corn,-1,-1,-1,-1,-1,-1,-1,-1,-1
-India,Pork,Mixed,Corn,-1,-1,-1,-1,-1,-1,-1,-1,-1
-USA,Pork,Mixed,FodderCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Canada,Pork,Mixed,FodderCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Western Europe,Pork,Mixed,FodderCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Japan,Pork,Mixed,FodderCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Australia_NZ,Pork,Mixed,FodderCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Former Soviet Union,Pork,Mixed,FodderCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-China,Pork,Mixed,FodderCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Middle East,Pork,Mixed,FodderCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Africa,Pork,Mixed,FodderCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Latin America,Pork,Mixed,FodderCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Southeast Asia,Pork,Mixed,FodderCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Eastern Europe,Pork,Mixed,FodderCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Korea,Pork,Mixed,FodderCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-India,Pork,Mixed,FodderCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-USA,Pork,Mixed,MiscCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Canada,Pork,Mixed,MiscCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Western Europe,Pork,Mixed,MiscCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Japan,Pork,Mixed,MiscCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Australia_NZ,Pork,Mixed,MiscCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Former Soviet Union,Pork,Mixed,MiscCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-China,Pork,Mixed,MiscCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Middle East,Pork,Mixed,MiscCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Africa,Pork,Mixed,MiscCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Latin America,Pork,Mixed,MiscCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Southeast Asia,Pork,Mixed,MiscCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Eastern Europe,Pork,Mixed,MiscCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Korea,Pork,Mixed,MiscCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-India,Pork,Mixed,MiscCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-USA,Pork,Mixed,OilCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Canada,Pork,Mixed,OilCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Western Europe,Pork,Mixed,OilCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Japan,Pork,Mixed,OilCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Australia_NZ,Pork,Mixed,OilCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Former Soviet Union,Pork,Mixed,OilCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-China,Pork,Mixed,OilCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Middle East,Pork,Mixed,OilCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Africa,Pork,Mixed,OilCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Latin America,Pork,Mixed,OilCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Southeast Asia,Pork,Mixed,OilCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Eastern Europe,Pork,Mixed,OilCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Korea,Pork,Mixed,OilCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-India,Pork,Mixed,OilCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-USA,Pork,Mixed,OtherGrain,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Canada,Pork,Mixed,OtherGrain,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Western Europe,Pork,Mixed,OtherGrain,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Japan,Pork,Mixed,OtherGrain,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Australia_NZ,Pork,Mixed,OtherGrain,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Former Soviet Union,Pork,Mixed,OtherGrain,-1,-1,-1,-1,-1,-1,-1,-1,-1
-China,Pork,Mixed,OtherGrain,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Middle East,Pork,Mixed,OtherGrain,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Africa,Pork,Mixed,OtherGrain,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Latin America,Pork,Mixed,OtherGrain,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Southeast Asia,Pork,Mixed,OtherGrain,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Eastern Europe,Pork,Mixed,OtherGrain,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Korea,Pork,Mixed,OtherGrain,-1,-1,-1,-1,-1,-1,-1,-1,-1
-India,Pork,Mixed,OtherGrain,-1,-1,-1,-1,-1,-1,-1,-1,-1
-USA,Pork,Mixed,Rice,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Canada,Pork,Mixed,Rice,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Western Europe,Pork,Mixed,Rice,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Japan,Pork,Mixed,Rice,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Australia_NZ,Pork,Mixed,Rice,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Former Soviet Union,Pork,Mixed,Rice,-1,-1,-1,-1,-1,-1,-1,-1,-1
-China,Pork,Mixed,Rice,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Middle East,Pork,Mixed,Rice,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Africa,Pork,Mixed,Rice,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Latin America,Pork,Mixed,Rice,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Southeast Asia,Pork,Mixed,Rice,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Eastern Europe,Pork,Mixed,Rice,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Korea,Pork,Mixed,Rice,-1,-1,-1,-1,-1,-1,-1,-1,-1
-India,Pork,Mixed,Rice,-1,-1,-1,-1,-1,-1,-1,-1,-1
-USA,Pork,Mixed,SugarCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Canada,Pork,Mixed,SugarCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Western Europe,Pork,Mixed,SugarCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Japan,Pork,Mixed,SugarCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Australia_NZ,Pork,Mixed,SugarCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Former Soviet Union,Pork,Mixed,SugarCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-China,Pork,Mixed,SugarCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Middle East,Pork,Mixed,SugarCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Africa,Pork,Mixed,SugarCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Latin America,Pork,Mixed,SugarCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Southeast Asia,Pork,Mixed,SugarCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Eastern Europe,Pork,Mixed,SugarCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Korea,Pork,Mixed,SugarCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-India,Pork,Mixed,SugarCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1
-USA,Pork,Mixed,Wheat,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Canada,Pork,Mixed,Wheat,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Western Europe,Pork,Mixed,Wheat,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Japan,Pork,Mixed,Wheat,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Australia_NZ,Pork,Mixed,Wheat,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Former Soviet Union,Pork,Mixed,Wheat,-1,-1,-1,-1,-1,-1,-1,-1,-1
-China,Pork,Mixed,Wheat,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Middle East,Pork,Mixed,Wheat,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Africa,Pork,Mixed,Wheat,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Latin America,Pork,Mixed,Wheat,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Southeast Asia,Pork,Mixed,Wheat,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Eastern Europe,Pork,Mixed,Wheat,-1,-1,-1,-1,-1,-1,-1,-1,-1
-Korea,Pork,Mixed,Wheat,-1,-1,-1,-1,-1,-1,-1,-1,-1
-India,Pork,Mixed,Wheat,-1,-1,-1,-1,-1,-1,-1,-1,-1
-
-
-Set shareweights to 0 for techs with 0 share in base years,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,
-Variable ID,,,,,,,,,,,
-7004,,,,,,,,,,,
-,,,,sharewt,,,,,,,
-region,supplysector,subsector,technology,1990,2005,2020,2035,2050,2065,2080,2095
-USA,Pork,Mixed,Rice,0,0,0,0,0,0,0,0
-Canada,Pork,Mixed,Rice,0,0,0,0,0,0,0,0
-Australia_NZ,Pork,Mixed,Rice,0,0,0,0,0,0,0,0
-Former Soviet Union,Pork,Mixed,Rice,0,0,0,0,0,0,0,0
-Korea,Pork,Mixed,Rice,0,0,0,0,0,0,0,0
-USA,Pork,Mixed,SugarCrop,0,0,0,0,0,0,0,0
-Japan,Pork,Mixed,SugarCrop,0,0,0,0,0,0,0,0
-Australia_NZ,Pork,Mixed,SugarCrop,0,0,0,0,0,0,0,0
-Korea,Pork,Mixed,SugarCrop,0,0,0,0,0,0,0,0
-
-
-CO2 tag,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-7010,,,,,,,,,,,,
-,,,,CO2,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,Pork,Mixed,Corn,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,Pork,Mixed,FodderCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,Pork,Mixed,MiscCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,Pork,Mixed,OilCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,Pork,Mixed,OtherGrain,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,Pork,Mixed,Rice,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,Pork,Mixed,SugarCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,Pork,Mixed,Wheat,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-
-
-Energy-final-demand drivers: consumption of animals for food,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-62,,,,,,,,,,,,
-,,,base-service,,,price-elasticity,income-elasticity,,,,,
-region,energy-final-demand,perCapitaBased,1975,1990,2005,2020 fillout,2020,2035,2050,2065,2080,2095
-USA,PorkDemand,1,22539647,22539647,30429050,-0.5,0.014,0.013,0.012,0.012,0.012,0.012
-Canada,PorkDemand,1,3852830,3852830,8467830,-0.5,0.014,0.013,0.012,0.012,0.012,0.012
-Western Europe,PorkDemand,1,50460380,50460380,59736080,-0.5,0.014,0.013,0.012,0.012,0.012,0.012
-Japan,PorkDemand,1,4927682,4927682,3962316,-0.5,0.014,0.013,0.012,0.012,0.012,0.012
-Australia_NZ,PorkDemand,1,1173708,1173708,1430928,-0.5,0.014,0.013,0.012,0.012,0.012,0.012
-Former Soviet Union,PorkDemand,1,20502371,20502371,8306859,-0.5,0.014,0.013,0.012,0.012,0.012,0.012
-China,PorkDemand,1,78113915,78113915,166383169,-0.5,0.069,0.0415,0.014,0.014,0.014,0.014
-Middle East,PorkDemand,1,40593,40593,62797,-0.5,0.05175,0.031125,0.0105,0.0105,0.0105,0.0105
-Africa,PorkDemand,1,1901618,1901618,2663611,-0.5,0.069,0.0415,0.014,0.014,0.014,0.014
-Latin America,PorkDemand,1,9368536,9368536,19129583,-0.5,0.069,0.0415,0.014,0.014,0.014,0.014
-Southeast Asia,PorkDemand,1,9148164,9148164,18659057,-0.5,0.069,0.0415,0.014,0.014,0.014,0.014
-Eastern Europe,PorkDemand,1,18420819,18420819,13951096,-0.5,0.014,0.013,0.012,0.012,0.012,0.012
-Korea,PorkDemand,1,2477908,2477908,3410451,-0.5,0.069,0.0415,0.014,0.014,0.014,0.014
-India,PorkDemand,1,1343279,1343279,1618732,-0.5,0.069,0.0415,0.014,0.014,0.014,0.014
-
-Meat demand supplysectors: unit tags and sector type,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-50,,,,,,,,,,,,
-,demandsector,,,,,,,,,,,
-region,supplysector,input-unit,output-unit,price-unit,sectorType,,,,,,,
-ALL,PorkDemand,Gcal,Gcal,1975$/Gcal,agDemand,,,,,,,
-
-
-Meat Food Demands scale year,,,,,,,,,,,,
-INPUT_TABLE,,,
-Variable ID,,,
-500,,,
-,demandsector,,
-region,supplysector,subsector,scaleYear
-USA,PorkDemand,PorkDemand,2005
-Canada,PorkDemand,PorkDemand,2005
-Western Europe,PorkDemand,PorkDemand,2005
-Japan,PorkDemand,PorkDemand,2005
-Australia_NZ,PorkDemand,PorkDemand,2005
-Former Soviet Union,PorkDemand,PorkDemand,2005
-China,PorkDemand,PorkDemand,2005
-Middle East,PorkDemand,PorkDemand,2005
-Africa,PorkDemand,PorkDemand,2005
-Latin America,PorkDemand,PorkDemand,2005
-Southeast Asia,PorkDemand,PorkDemand,2005
-Eastern Europe,PorkDemand,PorkDemand,2005
-Korea,PorkDemand,PorkDemand,2005
-India,PorkDemand,PorkDemand,2005
-USA,PorkDemand,PorkNonfoodDemand,2005
-Canada,PorkDemand,PorkNonfoodDemand,2005
-Western Europe,PorkDemand,PorkNonfoodDemand,2005
-Japan,PorkDemand,PorkNonfoodDemand,2005
-Australia_NZ,PorkDemand,PorkNonfoodDemand,2005
-Former Soviet Union,PorkDemand,PorkNonfoodDemand,2005
-China,PorkDemand,PorkNonfoodDemand,2005
-Middle East,PorkDemand,PorkNonfoodDemand,2005
-Africa,PorkDemand,PorkNonfoodDemand,2005
-Latin America,PorkDemand,PorkNonfoodDemand,2005
-Southeast Asia,PorkDemand,PorkNonfoodDemand,2005
-Eastern Europe,PorkDemand,PorkNonfoodDemand,2005
-Korea,PorkDemand,PorkNonfoodDemand,2005
-India,PorkDemand,PorkNonfoodDemand,2005,,,,,,,,,,
-
-Efficiency,,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,
-5001,,,,minicam-energy-input,,,,,,,,,
-,,,,efficiency,,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input
-USA,PorkDemand,PorkDemand,PorkDemand,0.993802,0.993802,0.994734,0.994734,0.994734,0.994734,0.994734,0.994734,0.994734,Pork
-Canada,PorkDemand,PorkDemand,PorkDemand,0.992460,0.992460,0.993137,0.993137,0.993137,0.993137,0.993137,0.993137,0.993137,Pork
-Western Europe,PorkDemand,PorkDemand,PorkDemand,0.971631,0.971631,0.975351,0.975351,0.975351,0.975351,0.975351,0.975351,0.975351,Pork
-Japan,PorkDemand,PorkDemand,PorkDemand,0.975731,0.975731,0.979563,0.979563,0.979563,0.979563,0.979563,0.979563,0.979563,Pork
-Australia_NZ,PorkDemand,PorkDemand,PorkDemand,0.969646,0.969646,0.972598,0.972598,0.972598,0.972598,0.972598,0.972598,0.972598,Pork
-Former Soviet Union,PorkDemand,PorkDemand,PorkDemand,0.955114,0.955114,0.970503,0.970503,0.970503,0.970503,0.970503,0.970503,0.970503,Pork
-China,PorkDemand,PorkDemand,PorkDemand,0.997776,0.997776,0.997308,0.997308,0.997308,0.997308,0.997308,0.997308,0.997308,Pork
-Middle East,PorkDemand,PorkDemand,PorkDemand,0.970052,0.970052,0.974787,0.974787,0.974787,0.974787,0.974787,0.974787,0.974787,Pork
-Africa,PorkDemand,PorkDemand,PorkDemand,0.987908,0.987908,0.984842,0.984842,0.984842,0.984842,0.984842,0.984842,0.984842,Pork
-Latin America,PorkDemand,PorkDemand,PorkDemand,0.988096,0.988096,0.988814,0.988814,0.988814,0.988814,0.988814,0.988814,0.988814,Pork
-Southeast Asia,PorkDemand,PorkDemand,PorkDemand,0.989652,0.989652,0.988585,0.988585,0.988585,0.988585,0.988585,0.988585,0.988585,Pork
-Eastern Europe,PorkDemand,PorkDemand,PorkDemand,0.972651,0.972651,0.974157,0.974157,0.974157,0.974157,0.974157,0.974157,0.974157,Pork
-Korea,PorkDemand,PorkDemand,PorkDemand,0.983135,0.983135,0.983173,0.983173,0.983173,0.983173,0.983173,0.983173,0.983173,Pork
-India,PorkDemand,PorkDemand,PorkDemand,0.989984,0.989984,0.988008,0.988008,0.988008,0.988008,0.988008,0.988008,0.988008,Pork
-USA,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0.993802,0.993802,0.994734,0.994734,0.994734,0.994734,0.994734,0.994734,0.994734,Pork
-Canada,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0.992460,0.992460,0.993137,0.993137,0.993137,0.993137,0.993137,0.993137,0.993137,Pork
-Western Europe,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0.971631,0.971631,0.975351,0.975351,0.975351,0.975351,0.975351,0.975351,0.975351,Pork
-Japan,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0.975731,0.975731,0.979563,0.979563,0.979563,0.979563,0.979563,0.979563,0.979563,Pork
-Australia_NZ,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0.969646,0.969646,0.972598,0.972598,0.972598,0.972598,0.972598,0.972598,0.972598,Pork
-Former Soviet Union,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0.955114,0.955114,0.970503,0.970503,0.970503,0.970503,0.970503,0.970503,0.970503,Pork
-China,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0.997776,0.997776,0.997308,0.997308,0.997308,0.997308,0.997308,0.997308,0.997308,Pork
-Middle East,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0.970052,0.970052,0.974787,0.974787,0.974787,0.974787,0.974787,0.974787,0.974787,Pork
-Africa,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0.987908,0.987908,0.984842,0.984842,0.984842,0.984842,0.984842,0.984842,0.984842,Pork
-Latin America,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0.988096,0.988096,0.988814,0.988814,0.988814,0.988814,0.988814,0.988814,0.988814,Pork
-Southeast Asia,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0.989652,0.989652,0.988585,0.988585,0.988585,0.988585,0.988585,0.988585,0.988585,Pork,,,,
-Eastern Europe,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0.972651,0.972651,0.974157,0.974157,0.974157,0.974157,0.974157,0.974157,0.974157,Pork,,,,
-Korea,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0.983135,0.983135,0.983173,0.983173,0.983173,0.983173,0.983173,0.983173,0.983173,Pork,,,,
-India,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0.989984,0.989984,0.988008,0.988008,0.988008,0.988008,0.988008,0.988008,0.988008,Pork,,,,
-
-
-Calibrated outputs,,,,,,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,,,,,
-5000,,,,,,,,,,,,,,,,,
-,demandsector,,,calibrated-value,,,,from data,,,demands,,supplies,,,demand scalers,
-region,supplysector,subsector,technology,1990,2005,minicam-energy-input,,1990,2005,,1990,2005,1990,2005,,1990,2005
-USA,PorkDemand,PorkDemand,PorkDemand,13062324,16977519,Pork,,13075241,16992946,,22702647,30617920,22680219,30590124,,0.999012117,0.999092172
-Canada,PorkDemand,PorkDemand,PorkDemand,2039998,2870672,Pork,,2041868,2873005,,3885659,8533278,3882101,8526347,,0.999084151,0.999187779
-Western Europe,PorkDemand,PorkDemand,PorkDemand,36971743,40242745,Pork,,37299779,40528744,,52394498,61680993,51933711,61245730,,0.991205426,0.992943318
-Japan,PorkDemand,PorkDemand,PorkDemand,3908444,4044985,Pork,,3923769,4058700,,5070050,4058701,5050248,4044986,,0.996094435,0.996620725
-Australia_NZ,PorkDemand,PorkDemand,PorkDemand,556965,812763,Pork,,567240,828496,,1232782,1499724,1210451,1471243,,0.981885336,0.981009448
-Former Soviet Union,PorkDemand,PorkDemand,PorkDemand,21465884,6803277,Pork,,21691714,6872895,,21691715,8646922,21465885,8559334,,0.989589115,0.989870586
-China,PorkDemand,PorkDemand,PorkDemand,78288054,166832220,Pork,,78316903,166919987,,78316904,166919988,78288055,166832221,,0.999631626,0.999474196
-Middle East,PorkDemand,PorkDemand,PorkDemand,41845,64420,Pork,,42217,64939,,42218,64940,41846,64421,,0.991186474,0.992006303
-Africa,PorkDemand,PorkDemand,PorkDemand,1924894,2704606,Pork,,1928417,2709454,,1928418,2709455,1924895,2704607,,0.998172907,0.998210385
-Latin America,PorkDemand,PorkDemand,PorkDemand,9481403,17915971,Pork,,9504435,17956015,,9504436,19389225,9481404,19345985,,0.997576686,0.997769913
-Southeast Asia,PorkDemand,PorkDemand,PorkDemand,5931699,10050646,Pork,,5935971,10062707,,9250478,18897167,9243820,18874518,,0.999280262,0.998801433
-Eastern Europe,PorkDemand,PorkDemand,PorkDemand,11842372,10559245,Pork,,11912170,10623525,,19050407,14408385,18938783,14321204,,0.994140615,0.993949315
-Korea,PorkDemand,PorkDemand,PorkDemand,929074,2354718,Pork,,931317,2360990,,2526500,3478061,2520416,3468822,,0.997592033,0.997343573
-India,PorkDemand,PorkDemand,PorkDemand,1333577,1638378,Pork,,1334481,1639780,,1357790,1639781,1356870,1638379,,0.999322542,0.999145269
-USA,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,9617895,13612605,Pork,,9627406,13624974,,,,,,,,
-Canada,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,1842102,5655675,Pork,,1843791,5660273,,,,,,,,
-Western Europe,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,14961968,21002985,Pork,,15094719,21152249,,,,,,,,
-Japan,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,1141804,1,Pork,,1146281,1,,,,,,,,
-Australia_NZ,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,653486,658480,Pork,,665542,671227,,,,,,,,
-Former Soviet Union,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,1,1756057,Pork,,1,1774027,,,,,,,,
-China,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,1,1,Pork,,1,1,,,
-Middle East,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,1,1,Pork,,1,1,,,
-Africa,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,1,1,Pork,,1,1,,,
-Latin America,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,1,1430014,Pork,,1,1433210,,,
-Southeast Asia,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,3312122,8823871,Pork,,3314507,8834460,,,
-Eastern Europe,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,7096411,3761959,Pork,,7138236,3784860,,,
-Korea,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,1591342,1114104,Pork,,1595183,1117072,,,
-India,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,23293,1,Pork,,23309,1,,,
-
-
-Non-energy input cost,,,,,,,,,,,,
-table not necessary,,,,,,,,,,,,
-
-5002,,,,minicam-non-energy-input,,,,,,,,
-,,,,input-cost,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,PorkDemand,PorkDemand,PorkDemand,0,0,0,0,0,0,0,0,0
-ALL,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0,0,0,0,0,0,0,0,0
-
-
-add CO2 tag,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-5010,,,,,,,,,,,,
-,,,,CO2,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,PorkDemand,PorkDemand,PorkDemand,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-
-
-
-
-
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
+Pork Supply,,,,,,,,,,,,,,,,,,
+Units and sector type,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+70,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+region,supplysector,output-unit,input-unit,price-unit,sectorType,,,,,,,,,,,,,
+ALL,Pork,Gcal,Gcal,1975$/Gcal,AnimalSupply,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Subsector shareweight scaling,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+700,,,,,,,,,,,,,,,,,,
+Source Inputs,,,share-weight,interpolation-rule,,,,,,,,,,,,,,
+region,supplysector,subsector,1975 fillout,apply-to,from-year,to-year,interpolation-function,,,,,,,,,,,
+USA,Pork,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,Pork,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,Pork,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,Pork,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,Pork,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,Pork,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,Pork,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,Pork,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,Pork,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,Pork,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,Pork,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,Pork,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,Pork,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,Pork,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Technology Logit Exponent,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+702,,,,,,,,,,,,,,,,,,
+Source Inputs,,,1975 fillout,,,,,,,,,,,,,,,
+region,supplysector,subsector,logit-exponent,,,,,,,,,,,,,,,
+USA,Pork,Mixed,-1,,,,,,,,,,,,,,,
+Canada,Pork,Mixed,-1,,,,,,,,,,,,,,,
+Western Europe,Pork,Mixed,-1,,,,,,,,,,,,,,,
+Japan,Pork,Mixed,-1,,,,,,,,,,,,,,,
+Australia_NZ,Pork,Mixed,-1,,,,,,,,,,,,,,,
+Former Soviet Union,Pork,Mixed,-1,,,,,,,,,,,,,,,
+China,Pork,Mixed,-1,,,,,,,,,,,,,,,
+Middle East,Pork,Mixed,-1,,,,,,,,,,,,,,,
+Africa,Pork,Mixed,-1,,,,,,,,,,,,,,,
+Latin America,Pork,Mixed,-1,,,,,,,,,,,,,,,
+Southeast Asia,Pork,Mixed,-1,,,,,,,,,,,,,,,
+Eastern Europe,Pork,Mixed,-1,,,,,,,,,,,,,,,
+Korea,Pork,Mixed,-1,,,,,,,,,,,,,,,
+India,Pork,Mixed,-1,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Technology shareweight scaling,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+705,,,,,,,,,,,,,,,,,,
+,,,,interpolation-rule,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,apply-to,from-year,to-year,interpolation-function,,,,,,,,,,,
+USA,Pork,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,Pork,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,Pork,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,Pork,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,Pork,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,Pork,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,Pork,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,Pork,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,Pork,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,Pork,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,Pork,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,Pork,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,Pork,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,Pork,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+USA,Pork,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,Pork,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,Pork,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,Pork,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,Pork,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,Pork,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,Pork,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,Pork,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,Pork,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,Pork,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,Pork,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,Pork,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,Pork,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,Pork,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+USA,Pork,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,Pork,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,Pork,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,Pork,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,Pork,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,Pork,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,Pork,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,Pork,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,Pork,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,Pork,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,Pork,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,Pork,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,Pork,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,Pork,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+USA,Pork,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,Pork,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,Pork,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,Pork,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,Pork,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,Pork,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,Pork,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,Pork,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,Pork,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,Pork,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,Pork,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,Pork,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,Pork,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,Pork,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+USA,Pork,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,Pork,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,Pork,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,Pork,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,Pork,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,Pork,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,Pork,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,Pork,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,Pork,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,Pork,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,Pork,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,Pork,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,Pork,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,Pork,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+USA,Pork,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,Pork,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,Pork,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,Pork,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,Pork,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,Pork,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,Pork,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,Pork,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,Pork,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,Pork,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,Pork,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,Pork,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,Pork,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,Pork,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+USA,Pork,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,Pork,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,Pork,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,Pork,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,Pork,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,Pork,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,Pork,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,Pork,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,Pork,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,Pork,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,Pork,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,Pork,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,Pork,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,Pork,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+USA,Pork,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,Pork,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,Pork,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,Pork,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,Pork,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,Pork,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,Pork,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,Pork,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,Pork,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,Pork,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,Pork,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,Pork,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,Pork,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,Pork,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Efficiency: Mixed,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+7001,,,,minicam-energy-input,,,,,,,,,,,,,,
+,,,,efficiency,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input,,,,,
+USA,Pork,Mixed,Corn,0.15041,0.15041,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,Corn,,,,,
+Canada,Pork,Mixed,Corn,0.15322,0.15322,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,Corn,,,,,
+Western Europe,Pork,Mixed,Corn,0.18426,0.18426,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,Corn,,,,,
+Japan,Pork,Mixed,Corn,0.16971,0.16971,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,Corn,,,,,
+Australia_NZ,Pork,Mixed,Corn,0.17089,0.17089,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,Corn,,,,,
+Former Soviet Union,Pork,Mixed,Corn,0.16644,0.16644,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,Corn,,,,,
+China,Pork,Mixed,Corn,0.18502,0.18502,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,Corn,,,,,
+Middle East,Pork,Mixed,Corn,0.14949,0.14949,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,Corn,,,,,
+Africa,Pork,Mixed,Corn,0.19396,0.19396,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,Corn,,,,,
+Latin America,Pork,Mixed,Corn,0.18659,0.18659,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,Corn,,,,,
+Southeast Asia,Pork,Mixed,Corn,0.19916,0.19916,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,Corn,,,,,
+Eastern Europe,Pork,Mixed,Corn,0.16980,0.16980,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,Corn,,,,,
+Korea,Pork,Mixed,Corn,0.13283,0.13283,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,Corn,,,,,
+India,Pork,Mixed,Corn,0.18390,0.18390,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,Corn,,,,,
+USA,Pork,Mixed,FodderCrop,0.15041,0.15041,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,FodderCrop,,,,,
+Canada,Pork,Mixed,FodderCrop,0.15322,0.15322,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,FodderCrop,,,,,
+Western Europe,Pork,Mixed,FodderCrop,0.18426,0.18426,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,FodderCrop,,,,,
+Japan,Pork,Mixed,FodderCrop,0.16971,0.16971,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,FodderCrop,,,,,
+Australia_NZ,Pork,Mixed,FodderCrop,0.17089,0.17089,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,FodderCrop,,,,,
+Former Soviet Union,Pork,Mixed,FodderCrop,0.16644,0.16644,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,FodderCrop,,,,,
+China,Pork,Mixed,FodderCrop,0.18502,0.18502,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,FodderCrop,,,,,
+Middle East,Pork,Mixed,FodderCrop,0.14949,0.14949,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,FodderCrop,,,,,
+Africa,Pork,Mixed,FodderCrop,0.19396,0.19396,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,FodderCrop,,,,,
+Latin America,Pork,Mixed,FodderCrop,0.18659,0.18659,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,FodderCrop,,,,,
+Southeast Asia,Pork,Mixed,FodderCrop,0.19916,0.19916,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,FodderCrop,,,,,
+Eastern Europe,Pork,Mixed,FodderCrop,0.16980,0.16980,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,FodderCrop,,,,,
+Korea,Pork,Mixed,FodderCrop,0.13283,0.13283,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,FodderCrop,,,,,
+India,Pork,Mixed,FodderCrop,0.18390,0.18390,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,FodderCrop,,,,,
+USA,Pork,Mixed,MiscCrop,0.15041,0.15041,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,MiscCrop,,,,,
+Canada,Pork,Mixed,MiscCrop,0.15322,0.15322,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,MiscCrop,,,,,
+Western Europe,Pork,Mixed,MiscCrop,0.18426,0.18426,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,MiscCrop,,,,,
+Japan,Pork,Mixed,MiscCrop,0.16971,0.16971,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,MiscCrop,,,,,
+Australia_NZ,Pork,Mixed,MiscCrop,0.17089,0.17089,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,MiscCrop,,,,,
+Former Soviet Union,Pork,Mixed,MiscCrop,0.16644,0.16644,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,MiscCrop,,,,,
+China,Pork,Mixed,MiscCrop,0.18502,0.18502,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,MiscCrop,,,,,
+Middle East,Pork,Mixed,MiscCrop,0.14949,0.14949,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,MiscCrop,,,,,
+Africa,Pork,Mixed,MiscCrop,0.19396,0.19396,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,MiscCrop,,,,,
+Latin America,Pork,Mixed,MiscCrop,0.18659,0.18659,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,MiscCrop,,,,,
+Southeast Asia,Pork,Mixed,MiscCrop,0.19916,0.19916,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,MiscCrop,,,,,
+Eastern Europe,Pork,Mixed,MiscCrop,0.16980,0.16980,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,MiscCrop,,,,,
+Korea,Pork,Mixed,MiscCrop,0.13283,0.13283,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,MiscCrop,,,,,
+India,Pork,Mixed,MiscCrop,0.18390,0.18390,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,MiscCrop,,,,,
+USA,Pork,Mixed,OilCrop,0.15041,0.15041,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,OilCrop,,,,,
+Canada,Pork,Mixed,OilCrop,0.15322,0.15322,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,OilCrop,,,,,
+Western Europe,Pork,Mixed,OilCrop,0.18426,0.18426,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,OilCrop,,,,,
+Japan,Pork,Mixed,OilCrop,0.16971,0.16971,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,OilCrop,,,,,
+Australia_NZ,Pork,Mixed,OilCrop,0.17089,0.17089,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,OilCrop,,,,,
+Former Soviet Union,Pork,Mixed,OilCrop,0.16644,0.16644,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,OilCrop,,,,,
+China,Pork,Mixed,OilCrop,0.18502,0.18502,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,OilCrop,,,,,
+Middle East,Pork,Mixed,OilCrop,0.14949,0.14949,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,OilCrop,,,,,
+Africa,Pork,Mixed,OilCrop,0.19396,0.19396,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,OilCrop,,,,,
+Latin America,Pork,Mixed,OilCrop,0.18659,0.18659,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,OilCrop,,,,,
+Southeast Asia,Pork,Mixed,OilCrop,0.19916,0.19916,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,OilCrop,,,,,
+Eastern Europe,Pork,Mixed,OilCrop,0.16980,0.16980,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,OilCrop,,,,,
+Korea,Pork,Mixed,OilCrop,0.13283,0.13283,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,OilCrop,,,,,
+India,Pork,Mixed,OilCrop,0.18390,0.18390,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,OilCrop,,,,,
+USA,Pork,Mixed,OtherGrain,0.15041,0.15041,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,OtherGrain,,,,,
+Canada,Pork,Mixed,OtherGrain,0.15322,0.15322,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,OtherGrain,,,,,
+Western Europe,Pork,Mixed,OtherGrain,0.18426,0.18426,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,OtherGrain,,,,,
+Japan,Pork,Mixed,OtherGrain,0.16971,0.16971,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,OtherGrain,,,,,
+Australia_NZ,Pork,Mixed,OtherGrain,0.17089,0.17089,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,OtherGrain,,,,,
+Former Soviet Union,Pork,Mixed,OtherGrain,0.16644,0.16644,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,OtherGrain,,,,,
+China,Pork,Mixed,OtherGrain,0.18502,0.18502,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,OtherGrain,,,,,
+Middle East,Pork,Mixed,OtherGrain,0.14949,0.14949,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,OtherGrain,,,,,
+Africa,Pork,Mixed,OtherGrain,0.19396,0.19396,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,OtherGrain,,,,,
+Latin America,Pork,Mixed,OtherGrain,0.18659,0.18659,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,OtherGrain,,,,,
+Southeast Asia,Pork,Mixed,OtherGrain,0.19916,0.19916,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,OtherGrain,,,,,
+Eastern Europe,Pork,Mixed,OtherGrain,0.16980,0.16980,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,OtherGrain,,,,,
+Korea,Pork,Mixed,OtherGrain,0.13283,0.13283,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,OtherGrain,,,,,
+India,Pork,Mixed,OtherGrain,0.18390,0.18390,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,OtherGrain,,,,,
+USA,Pork,Mixed,Rice,0.15041,0.15041,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,Rice,,,,,
+Canada,Pork,Mixed,Rice,0.15322,0.15322,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,Rice,,,,,
+Western Europe,Pork,Mixed,Rice,0.18426,0.18426,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,Rice,,,,,
+Japan,Pork,Mixed,Rice,0.16971,0.16971,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,Rice,,,,,
+Australia_NZ,Pork,Mixed,Rice,0.17089,0.17089,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,Rice,,,,,
+Former Soviet Union,Pork,Mixed,Rice,0.16644,0.16644,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,Rice,,,,,
+China,Pork,Mixed,Rice,0.18502,0.18502,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,Rice,,,,,
+Middle East,Pork,Mixed,Rice,0.14949,0.14949,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,Rice,,,,,
+Africa,Pork,Mixed,Rice,0.19396,0.19396,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,Rice,,,,,
+Latin America,Pork,Mixed,Rice,0.18659,0.18659,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,Rice,,,,,
+Southeast Asia,Pork,Mixed,Rice,0.19916,0.19916,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,Rice,,,,,
+Eastern Europe,Pork,Mixed,Rice,0.16980,0.16980,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,Rice,,,,,
+Korea,Pork,Mixed,Rice,0.13283,0.13283,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,Rice,,,,,
+India,Pork,Mixed,Rice,0.18390,0.18390,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,Rice,,,,,
+USA,Pork,Mixed,SugarCrop,0.15041,0.15041,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,SugarCrop,,,,,
+Canada,Pork,Mixed,SugarCrop,0.15322,0.15322,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,SugarCrop,,,,,
+Western Europe,Pork,Mixed,SugarCrop,0.18426,0.18426,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,SugarCrop,,,,,
+Japan,Pork,Mixed,SugarCrop,0.16971,0.16971,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,SugarCrop,,,,,
+Australia_NZ,Pork,Mixed,SugarCrop,0.17089,0.17089,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,SugarCrop,,,,,
+Former Soviet Union,Pork,Mixed,SugarCrop,0.16644,0.16644,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,SugarCrop,,,,,
+China,Pork,Mixed,SugarCrop,0.18502,0.18502,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,SugarCrop,,,,,
+Middle East,Pork,Mixed,SugarCrop,0.14949,0.14949,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,SugarCrop,,,,,
+Africa,Pork,Mixed,SugarCrop,0.19396,0.19396,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,SugarCrop,,,,,
+Latin America,Pork,Mixed,SugarCrop,0.18659,0.18659,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,SugarCrop,,,,,
+Southeast Asia,Pork,Mixed,SugarCrop,0.19916,0.19916,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,SugarCrop,,,,,
+Eastern Europe,Pork,Mixed,SugarCrop,0.16980,0.16980,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,SugarCrop,,,,,
+Korea,Pork,Mixed,SugarCrop,0.13283,0.13283,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,SugarCrop,,,,,
+India,Pork,Mixed,SugarCrop,0.18390,0.18390,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,SugarCrop,,,,,
+USA,Pork,Mixed,Wheat,0.15041,0.15041,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,0.15881,Wheat,,,,,
+Canada,Pork,Mixed,Wheat,0.15322,0.15322,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,0.15880,Wheat,,,,,
+Western Europe,Pork,Mixed,Wheat,0.18426,0.18426,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,0.18285,Wheat,,,,,
+Japan,Pork,Mixed,Wheat,0.16971,0.16971,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,0.17953,Wheat,,,,,
+Australia_NZ,Pork,Mixed,Wheat,0.17089,0.17089,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,0.18401,Wheat,,,,,
+Former Soviet Union,Pork,Mixed,Wheat,0.16644,0.16644,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,0.19004,Wheat,,,,,
+China,Pork,Mixed,Wheat,0.18502,0.18502,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,0.21490,Wheat,,,,,
+Middle East,Pork,Mixed,Wheat,0.14949,0.14949,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,0.15640,Wheat,,,,,
+Africa,Pork,Mixed,Wheat,0.19396,0.19396,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,0.20816,Wheat,,,,,
+Latin America,Pork,Mixed,Wheat,0.18659,0.18659,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,0.18954,Wheat,,,,,
+Southeast Asia,Pork,Mixed,Wheat,0.19916,0.19916,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,0.20667,Wheat,,,,,
+Eastern Europe,Pork,Mixed,Wheat,0.16980,0.16980,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,0.16484,Wheat,,,,,
+Korea,Pork,Mixed,Wheat,0.13283,0.13283,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,0.14556,Wheat,,,,,
+India,Pork,Mixed,Wheat,0.18390,0.18390,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,0.18583,Wheat,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Calibrated inputs: mixed,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+7000,,,,,minicam-energy-input,,,,,,,,,,,,,
+,,,,,calibrated-value,,share-weight,,,,,,,,,,,
+region,supplysector,subsector,technology,minicam-energy-input,1990,2005,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,
+USA,Pork,Mixed,Corn,Corn,111678529,156270547,1,1,1,1,1,1,1,1,1,,,
+Canada,Pork,Mixed,Corn,Corn,6577324,13968394,1,1,1,1,1,1,1,1,1,,,
+Western Europe,Pork,Mixed,Corn,Corn,37678322,63208607,1,1,1,1,1,1,1,1,1,,,
+Japan,Pork,Mixed,Corn,Corn,14303677,11985378,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,Pork,Mixed,Corn,Corn,271356,159692,1,1,1,1,1,1,1,1,1,,,
+Former Soviet Union,Pork,Mixed,Corn,Corn,6508314,3722590,1,1,1,1,1,1,1,1,1,,,
+China,Pork,Mixed,Corn,Corn,90199923,173422600,1,1,1,1,1,1,1,1,1,,,
+Middle East,Pork,Mixed,Corn,Corn,35108,93551,1,1,1,1,1,1,1,1,1,,,
+Africa,Pork,Mixed,Corn,Corn,2899334,3540960,1,1,1,1,1,1,1,1,1,,,
+Latin America,Pork,Mixed,Corn,Corn,15458359,37172772,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,Pork,Mixed,Corn,Corn,8882260,19841325,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,Pork,Mixed,Corn,Corn,28534305,30161372,1,1,1,1,1,1,1,1,1,,,
+Korea,Pork,Mixed,Corn,Corn,11836861,17939173,1,1,1,1,1,1,1,1,1,,,
+India,Pork,Mixed,Corn,Corn,634886,2391567,1,1,1,1,1,1,1,1,1,,,
+USA,Pork,Mixed,FodderCrop,FodderCrop,14697006,19958786,1,1,1,1,1,1,1,1,1,,,
+Canada,Pork,Mixed,FodderCrop,FodderCrop,2515458,5562555,1,1,1,1,1,1,1,1,1,,,
+Western Europe,Pork,Mixed,FodderCrop,FodderCrop,67835831,80414607,1,1,1,1,1,1,1,1,1,,,
+Japan,Pork,Mixed,FodderCrop,FodderCrop,8752525,7055278,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,Pork,Mixed,FodderCrop,FodderCrop,2128175,2606985,1,1,1,1,1,1,1,1,1,,,
+Former Soviet Union,Pork,Mixed,FodderCrop,FodderCrop,38713836,15982639,1,1,1,1,1,1,1,1,1,,,
+China,Pork,Mixed,FodderCrop,FodderCrop,272441395,530619727,1,1,1,1,1,1,1,1,1,,,
+Middle East,Pork,Mixed,FodderCrop,FodderCrop,86253,133544,1,1,1,1,1,1,1,1,1,,,
+Africa,Pork,Mixed,FodderCrop,FodderCrop,3605955,5155911,1,1,1,1,1,1,1,1,1,,,
+Latin America,Pork,Mixed,FodderCrop,FodderCrop,13422365,34160352,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,Pork,Mixed,FodderCrop,FodderCrop,30995819,61109669,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,Pork,Mixed,FodderCrop,FodderCrop,23131588,17411396,1,1,1,1,1,1,1,1,1,,,
+Korea,Pork,Mixed,FodderCrop,FodderCrop,1352146,1672275,1,1,1,1,1,1,1,1,1,,,
+India,Pork,Mixed,FodderCrop,FodderCrop,2465837,3239812,1,1,1,1,1,1,1,1,1,,,
+USA,Pork,Mixed,MiscCrop,MiscCrop,85920,171499,1,1,1,1,1,1,1,1,1,,,
+Canada,Pork,Mixed,MiscCrop,MiscCrop,23557,679336,1,1,1,1,1,1,1,1,1,,,
+Western Europe,Pork,Mixed,MiscCrop,MiscCrop,27160719,10223130,1,1,1,1,1,1,1,1,1,,,
+Japan,Pork,Mixed,MiscCrop,MiscCrop,104941,123789,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,Pork,Mixed,MiscCrop,MiscCrop,325218,231505,1,1,1,1,1,1,1,1,1,,,
+Former Soviet Union,Pork,Mixed,MiscCrop,MiscCrop,7658725,2462491,1,1,1,1,1,1,1,1,1,,,
+China,Pork,Mixed,MiscCrop,MiscCrop,25349966,43124123,1,1,1,1,1,1,1,1,1,,,
+Middle East,Pork,Mixed,MiscCrop,MiscCrop,1555,428,1,1,1,1,1,1,1,1,1,,,
+Africa,Pork,Mixed,MiscCrop,MiscCrop,1592179,2584793,1,1,1,1,1,1,1,1,1,,,
+Latin America,Pork,Mixed,MiscCrop,MiscCrop,4879509,7562428,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,Pork,Mixed,MiscCrop,MiscCrop,735985,1095562,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,Pork,Mixed,MiscCrop,MiscCrop,5663495,1935062,1,1,1,1,1,1,1,1,1,,,
+Korea,Pork,Mixed,MiscCrop,MiscCrop,2129836,753719,1,1,1,1,1,1,1,1,1,,,
+India,Pork,Mixed,MiscCrop,MiscCrop,1014638,800823,1,1,1,1,1,1,1,1,1,,,
+USA,Pork,Mixed,OilCrop,OilCrop,1489013,3134226,1,1,1,1,1,1,1,1,1,,,
+Canada,Pork,Mixed,OilCrop,OilCrop,905373,5235750,1,1,1,1,1,1,1,1,1,,,
+Western Europe,Pork,Mixed,OilCrop,OilCrop,4737190,9806075,1,1,1,1,1,1,1,1,1,,,
+Japan,Pork,Mixed,OilCrop,OilCrop,248033,222761,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,Pork,Mixed,OilCrop,OilCrop,81012,57499,1,1,1,1,1,1,1,1,1,,,
+Former Soviet Union,Pork,Mixed,OilCrop,OilCrop,878012,730299,1,1,1,1,1,1,1,1,1,,,
+China,Pork,Mixed,OilCrop,OilCrop,4684067,9561400,1,1,1,1,1,1,1,1,1,,,
+Middle East,Pork,Mixed,OilCrop,OilCrop,484,2199,1,1,1,1,1,1,1,1,1,,,
+Africa,Pork,Mixed,OilCrop,OilCrop,5083,4724,1,1,1,1,1,1,1,1,1,,,
+Latin America,Pork,Mixed,OilCrop,OilCrop,529800,1909878,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,Pork,Mixed,OilCrop,OilCrop,869098,1081137,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,Pork,Mixed,OilCrop,OilCrop,125122,121294,1,1,1,1,1,1,1,1,1,,,
+Korea,Pork,Mixed,OilCrop,OilCrop,37935,56864,1,1,1,1,1,1,1,1,1,,,
+India,Pork,Mixed,OilCrop,OilCrop,759972,614326,1,1,1,1,1,1,1,1,1,,,
+USA,Pork,Mixed,OtherGrain,OtherGrain,15811240,8743072,1,1,1,1,1,1,1,1,1,,,
+Canada,Pork,Mixed,OtherGrain,OtherGrain,11620077,22792063,1,1,1,1,1,1,1,1,1,,,
+Western Europe,Pork,Mixed,OtherGrain,OtherGrain,98459951,91654599,1,1,1,1,1,1,1,1,1,,,
+Japan,Pork,Mixed,OtherGrain,OtherGrain,5646763,2729745,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,Pork,Mixed,OtherGrain,OtherGrain,3424675,4145855,1,1,1,1,1,1,1,1,1,,,
+Former Soviet Union,Pork,Mixed,OtherGrain,OtherGrain,42529674,11469319,1,1,1,1,1,1,1,1,1,,,
+China,Pork,Mixed,OtherGrain,OtherGrain,9058589,6866040,1,1,1,1,1,1,1,1,1,,,
+Middle East,Pork,Mixed,OtherGrain,OtherGrain,133687,145901,1,1,1,1,1,1,1,1,1,,,
+Africa,Pork,Mixed,OtherGrain,OtherGrain,1193675,1085904,1,1,1,1,1,1,1,1,1,,,
+Latin America,Pork,Mixed,OtherGrain,OtherGrain,7172679,11545502,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,Pork,Mixed,OtherGrain,OtherGrain,442004,424936,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,Pork,Mixed,OtherGrain,OtherGrain,32178408,24393461,1,1,1,1,1,1,1,1,1,,,
+Korea,Pork,Mixed,OtherGrain,OtherGrain,569921,102534,1,1,1,1,1,1,1,1,1,,,
+India,Pork,Mixed,OtherGrain,OtherGrain,491691,310688,1,1,1,1,1,1,1,1,1,,,
+USA,Pork,Mixed,Rice,Rice,0,0,1,0,0,0,0,0,0,0,0,,,
+Canada,Pork,Mixed,Rice,Rice,0,0,1,0,0,0,0,0,0,0,0,,,
+Western Europe,Pork,Mixed,Rice,Rice,466631,419467,1,1,1,1,1,1,1,1,1,,,
+Japan,Pork,Mixed,Rice,Rice,20667,59154,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,Pork,Mixed,Rice,Rice,0,0,1,0,0,0,0,0,0,0,0,,,
+Former Soviet Union,Pork,Mixed,Rice,Rice,0,0,1,0,0,0,0,0,0,0,0,,,
+China,Pork,Mixed,Rice,Rice,5933457,3971461,1,1,1,1,1,1,1,1,1,,,
+Middle East,Pork,Mixed,Rice,Rice,2321,5264,1,1,1,1,1,1,1,1,1,,,
+Africa,Pork,Mixed,Rice,Rice,120141,85788,1,1,1,1,1,1,1,1,1,,,
+Latin America,Pork,Mixed,Rice,Rice,150799,226424,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,Pork,Mixed,Rice,Rice,3058112,5220909,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,Pork,Mixed,Rice,Rice,2455,12544,1,1,1,1,1,1,1,1,1,,,
+Korea,Pork,Mixed,Rice,Rice,0,0,1,0,0,0,0,0,0,0,0,,,
+India,Pork,Mixed,Rice,Rice,332335,237293,1,1,1,1,1,1,1,1,1,,,
+USA,Pork,Mixed,SugarCrop,SugarCrop,0,0,1,0,0,0,0,0,0,0,0,,,
+Canada,Pork,Mixed,SugarCrop,SugarCrop,14825,5593,1,1,1,1,1,1,1,1,1,,,
+Western Europe,Pork,Mixed,SugarCrop,SugarCrop,3762473,1650017,1,1,1,1,1,1,1,1,1,,,
+Japan,Pork,Mixed,SugarCrop,SugarCrop,0,0,1,0,0,0,0,0,0,0,0,,,
+Australia_NZ,Pork,Mixed,SugarCrop,SugarCrop,0,0,1,0,0,0,0,0,0,0,0,,,
+Former Soviet Union,Pork,Mixed,SugarCrop,SugarCrop,716475,513551,1,1,1,1,1,1,1,1,1,,,
+China,Pork,Mixed,SugarCrop,SugarCrop,10561449,6554995,1,1,1,1,1,1,1,1,1,,,
+Middle East,Pork,Mixed,SugarCrop,SugarCrop,629,683,1,1,1,1,1,1,1,1,1,,,
+Africa,Pork,Mixed,SugarCrop,SugarCrop,46420,52339,1,1,1,1,1,1,1,1,1,,,
+Latin America,Pork,Mixed,SugarCrop,SugarCrop,8417516,8903314,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,Pork,Mixed,SugarCrop,SugarCrop,896063,1725002,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,Pork,Mixed,SugarCrop,SugarCrop,530190,223367,1,1,1,1,1,1,1,1,1,,,
+Korea,Pork,Mixed,SugarCrop,SugarCrop,0,0,1,0,0,0,0,0,0,0,0,,,
+India,Pork,Mixed,SugarCrop,SugarCrop,1143893,754955,1,1,1,1,1,1,1,1,1,,,
+USA,Pork,Mixed,Wheat,Wheat,7026416,4341972,1,1,1,1,1,1,1,1,1,,,
+Canada,Pork,Mixed,Wheat,Wheat,3679538,5448358,1,1,1,1,1,1,1,1,1,,,
+Western Europe,Pork,Mixed,Wheat,Wheat,41750406,77569634,1,1,1,1,1,1,1,1,1,,,
+Japan,Pork,Mixed,Wheat,Wheat,680711,355459,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,Pork,Mixed,Wheat,Wheat,852597,794006,1,1,1,1,1,1,1,1,1,,,
+Former Soviet Union,Pork,Mixed,Wheat,Wheat,31966028,10157788,1,1,1,1,1,1,1,1,1,,,
+China,Pork,Mixed,Wheat,Wheat,4902190,2220415,1,1,1,1,1,1,1,1,1,,,
+Middle East,Pork,Mixed,Wheat,Wheat,19894,30328,1,1,1,1,1,1,1,1,1,,,
+Africa,Pork,Mixed,Wheat,Wheat,461608,482648,1,1,1,1,1,1,1,1,1,,,
+Latin America,Pork,Mixed,Wheat,Wheat,784188,585200,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,Pork,Mixed,Wheat,Wheat,535711,826769,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,Pork,Mixed,Wheat,Wheat,21372953,12618437,1,1,1,1,1,1,1,1,1,,,
+Korea,Pork,Mixed,Wheat,Wheat,3048352,3306244,1,1,1,1,1,1,1,1,1,,,
+India,Pork,Mixed,Wheat,Wheat,535247,467054,1,1,1,1,1,1,1,1,1,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Non-energy cost: Mixed,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+7002,,,,minicam-non-energy-input,,,,,,,,,,,,,,
+,,,,input-cost,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,,,,
+USA,Pork,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,Pork,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,Pork,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,Pork,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,Pork,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,Pork,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+China,Pork,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,Pork,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,Pork,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,Pork,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,Pork,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,Pork,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,Pork,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+India,Pork,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+USA,Pork,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,Pork,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,Pork,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,Pork,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,Pork,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,Pork,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+China,Pork,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,Pork,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,Pork,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,Pork,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,Pork,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,Pork,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,Pork,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+India,Pork,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+USA,Pork,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,Pork,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,Pork,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,Pork,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,Pork,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,Pork,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+China,Pork,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,Pork,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,Pork,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,Pork,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,Pork,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,Pork,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,Pork,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+India,Pork,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+USA,Pork,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,Pork,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,Pork,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,Pork,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,Pork,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,Pork,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+China,Pork,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,Pork,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,Pork,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,Pork,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,Pork,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,Pork,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,Pork,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+India,Pork,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+USA,Pork,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,Pork,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,Pork,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,Pork,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,Pork,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,Pork,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+China,Pork,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,Pork,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,Pork,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,Pork,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,Pork,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,Pork,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,Pork,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+India,Pork,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+USA,Pork,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,Pork,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,Pork,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,Pork,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,Pork,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,Pork,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+China,Pork,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,Pork,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,Pork,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,Pork,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,Pork,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,Pork,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,Pork,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+India,Pork,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+USA,Pork,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,Pork,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,Pork,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,Pork,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,Pork,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,Pork,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+China,Pork,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,Pork,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,Pork,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,Pork,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,Pork,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,Pork,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,Pork,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+India,Pork,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+USA,Pork,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,Pork,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,Pork,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,Pork,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,Pork,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,Pork,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+China,Pork,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,Pork,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,Pork,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,Pork,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,Pork,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,Pork,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,Pork,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+India,Pork,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Technology Logit Exponent,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+7003,,,,,,,,,,,,,,,,,,
+,,,,logit-exponent,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,,,,
+USA,Pork,Mixed,Corn,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Canada,Pork,Mixed,Corn,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Western Europe,Pork,Mixed,Corn,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Japan,Pork,Mixed,Corn,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Australia_NZ,Pork,Mixed,Corn,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Former Soviet Union,Pork,Mixed,Corn,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+China,Pork,Mixed,Corn,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Middle East,Pork,Mixed,Corn,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Africa,Pork,Mixed,Corn,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Latin America,Pork,Mixed,Corn,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Southeast Asia,Pork,Mixed,Corn,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Eastern Europe,Pork,Mixed,Corn,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Korea,Pork,Mixed,Corn,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+India,Pork,Mixed,Corn,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+USA,Pork,Mixed,FodderCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Canada,Pork,Mixed,FodderCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Western Europe,Pork,Mixed,FodderCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Japan,Pork,Mixed,FodderCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Australia_NZ,Pork,Mixed,FodderCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Former Soviet Union,Pork,Mixed,FodderCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+China,Pork,Mixed,FodderCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Middle East,Pork,Mixed,FodderCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Africa,Pork,Mixed,FodderCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Latin America,Pork,Mixed,FodderCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Southeast Asia,Pork,Mixed,FodderCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Eastern Europe,Pork,Mixed,FodderCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Korea,Pork,Mixed,FodderCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+India,Pork,Mixed,FodderCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+USA,Pork,Mixed,MiscCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Canada,Pork,Mixed,MiscCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Western Europe,Pork,Mixed,MiscCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Japan,Pork,Mixed,MiscCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Australia_NZ,Pork,Mixed,MiscCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Former Soviet Union,Pork,Mixed,MiscCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+China,Pork,Mixed,MiscCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Middle East,Pork,Mixed,MiscCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Africa,Pork,Mixed,MiscCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Latin America,Pork,Mixed,MiscCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Southeast Asia,Pork,Mixed,MiscCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Eastern Europe,Pork,Mixed,MiscCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Korea,Pork,Mixed,MiscCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+India,Pork,Mixed,MiscCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+USA,Pork,Mixed,OilCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Canada,Pork,Mixed,OilCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Western Europe,Pork,Mixed,OilCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Japan,Pork,Mixed,OilCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Australia_NZ,Pork,Mixed,OilCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Former Soviet Union,Pork,Mixed,OilCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+China,Pork,Mixed,OilCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Middle East,Pork,Mixed,OilCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Africa,Pork,Mixed,OilCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Latin America,Pork,Mixed,OilCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Southeast Asia,Pork,Mixed,OilCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Eastern Europe,Pork,Mixed,OilCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Korea,Pork,Mixed,OilCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+India,Pork,Mixed,OilCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+USA,Pork,Mixed,OtherGrain,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Canada,Pork,Mixed,OtherGrain,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Western Europe,Pork,Mixed,OtherGrain,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Japan,Pork,Mixed,OtherGrain,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Australia_NZ,Pork,Mixed,OtherGrain,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Former Soviet Union,Pork,Mixed,OtherGrain,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+China,Pork,Mixed,OtherGrain,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Middle East,Pork,Mixed,OtherGrain,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Africa,Pork,Mixed,OtherGrain,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Latin America,Pork,Mixed,OtherGrain,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Southeast Asia,Pork,Mixed,OtherGrain,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Eastern Europe,Pork,Mixed,OtherGrain,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Korea,Pork,Mixed,OtherGrain,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+India,Pork,Mixed,OtherGrain,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+USA,Pork,Mixed,Rice,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Canada,Pork,Mixed,Rice,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Western Europe,Pork,Mixed,Rice,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Japan,Pork,Mixed,Rice,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Australia_NZ,Pork,Mixed,Rice,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Former Soviet Union,Pork,Mixed,Rice,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+China,Pork,Mixed,Rice,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Middle East,Pork,Mixed,Rice,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Africa,Pork,Mixed,Rice,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Latin America,Pork,Mixed,Rice,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Southeast Asia,Pork,Mixed,Rice,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Eastern Europe,Pork,Mixed,Rice,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Korea,Pork,Mixed,Rice,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+India,Pork,Mixed,Rice,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+USA,Pork,Mixed,SugarCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Canada,Pork,Mixed,SugarCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Western Europe,Pork,Mixed,SugarCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Japan,Pork,Mixed,SugarCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Australia_NZ,Pork,Mixed,SugarCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Former Soviet Union,Pork,Mixed,SugarCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+China,Pork,Mixed,SugarCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Middle East,Pork,Mixed,SugarCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Africa,Pork,Mixed,SugarCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Latin America,Pork,Mixed,SugarCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Southeast Asia,Pork,Mixed,SugarCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Eastern Europe,Pork,Mixed,SugarCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Korea,Pork,Mixed,SugarCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+India,Pork,Mixed,SugarCrop,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+USA,Pork,Mixed,Wheat,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Canada,Pork,Mixed,Wheat,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Western Europe,Pork,Mixed,Wheat,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Japan,Pork,Mixed,Wheat,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Australia_NZ,Pork,Mixed,Wheat,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Former Soviet Union,Pork,Mixed,Wheat,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+China,Pork,Mixed,Wheat,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Middle East,Pork,Mixed,Wheat,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Africa,Pork,Mixed,Wheat,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Latin America,Pork,Mixed,Wheat,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Southeast Asia,Pork,Mixed,Wheat,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Eastern Europe,Pork,Mixed,Wheat,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+Korea,Pork,Mixed,Wheat,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+India,Pork,Mixed,Wheat,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+CO2 tag,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+7010,,,,,,,,,,,,,,,,,,
+,,,,CO2,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,,,,
+ALL,Pork,Mixed,Corn,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,Pork,Mixed,FodderCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,Pork,Mixed,MiscCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,Pork,Mixed,OilCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,Pork,Mixed,OtherGrain,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,Pork,Mixed,Rice,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,Pork,Mixed,SugarCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,Pork,Mixed,Wheat,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Energy-final-demand drivers: consumption of animals for food,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+62,,,,,,,,,,,,,,,,,,
+,,,base-service,,,price-elasticity,income-elasticity,,,,,,,,,,,
+region,energy-final-demand,perCapitaBased,1975,1990,2005,2020 fillout,2020,2035,2050,2065,2080,2095,,,,,,
+USA,PorkDemand,1,22539647,22539647,30429050,-0.5,0.014,0.013,0.012,0.012,0.012,0.012,,,,,,
+Canada,PorkDemand,1,3852830,3852830,8467830,-0.5,0.014,0.013,0.012,0.012,0.012,0.012,,,,,,
+Western Europe,PorkDemand,1,50460380,50460380,59736080,-0.5,0.014,0.013,0.012,0.012,0.012,0.012,,,,,,
+Japan,PorkDemand,1,4927682,4927682,3962316,-0.5,0.014,0.013,0.012,0.012,0.012,0.012,,,,,,
+Australia_NZ,PorkDemand,1,1173708,1173708,1430928,-0.5,0.014,0.013,0.012,0.012,0.012,0.012,,,,,,
+Former Soviet Union,PorkDemand,1,20502371,20502371,8306859,-0.5,0.014,0.013,0.012,0.012,0.012,0.012,,,,,,
+China,PorkDemand,1,78113915,78113915,166383169,-0.5,0.069,0.0415,0.014,0.014,0.014,0.014,,,,,,
+Middle East,PorkDemand,1,40593,40593,62797,-0.5,0.05175,0.031125,0.0105,0.0105,0.0105,0.0105,,,,,,
+Africa,PorkDemand,1,1901618,1901618,2663611,-0.5,0.069,0.0415,0.014,0.014,0.014,0.014,,,,,,
+Latin America,PorkDemand,1,9368536,9368536,19129583,-0.5,0.069,0.0415,0.014,0.014,0.014,0.014,,,,,,
+Southeast Asia,PorkDemand,1,9148164,9148164,18659057,-0.5,0.069,0.0415,0.014,0.014,0.014,0.014,,,,,,
+Eastern Europe,PorkDemand,1,18420819,18420819,13951096,-0.5,0.014,0.013,0.012,0.012,0.012,0.012,,,,,,
+Korea,PorkDemand,1,2477908,2477908,3410451,-0.5,0.069,0.0415,0.014,0.014,0.014,0.014,,,,,,
+India,PorkDemand,1,1343279,1343279,1618732,-0.5,0.069,0.0415,0.014,0.014,0.014,0.014,,,,,,
+,,,,,,,,,,,,,,,,,,
+Meat demand supplysectors: unit tags and sector type,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+50,,,,,,,,,,,,,,,,,,
+,demandsector,,,,,,,,,,,,,,,,,
+region,supplysector,input-unit,output-unit,price-unit,sectorType,,,,,,,,,,,,,
+ALL,PorkDemand,Gcal,Gcal,1975$/Gcal,agDemand,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Meat Food Demands scale year,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+500,,,,,,,,,,,,,,,,,,
+,demandsector,,share-weight,interpolation-rule,,,,,,,,,,,,,,
+region,supplysector,subsector,1975 fillout,apply-to,from-year,to-year,interpolation-function,,,,,,,,,,,
+USA,PorkDemand,PorkDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,PorkDemand,PorkDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,PorkDemand,PorkDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,PorkDemand,PorkDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,PorkDemand,PorkDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,PorkDemand,PorkDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,PorkDemand,PorkDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,PorkDemand,PorkDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,PorkDemand,PorkDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,PorkDemand,PorkDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,PorkDemand,PorkDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,PorkDemand,PorkDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,PorkDemand,PorkDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,PorkDemand,PorkDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+USA,PorkDemand,PorkNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,PorkDemand,PorkNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,PorkDemand,PorkNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,PorkDemand,PorkNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,PorkDemand,PorkNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,PorkDemand,PorkNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,PorkDemand,PorkNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,PorkDemand,PorkNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,PorkDemand,PorkNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,PorkDemand,PorkNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,PorkDemand,PorkNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,PorkDemand,PorkNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,PorkDemand,PorkNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,PorkDemand,PorkNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Efficiency,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+5001,,,,minicam-energy-input,,,,,,,,,,,,,,
+,,,,efficiency,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input,,,,,
+USA,PorkDemand,PorkDemand,PorkDemand,0.993802,0.993802,0.994734,0.994734,0.994734,0.994734,0.994734,0.994734,0.994734,Pork,,,,,
+Canada,PorkDemand,PorkDemand,PorkDemand,0.992460,0.992460,0.993137,0.993137,0.993137,0.993137,0.993137,0.993137,0.993137,Pork,,,,,
+Western Europe,PorkDemand,PorkDemand,PorkDemand,0.971631,0.971631,0.975351,0.975351,0.975351,0.975351,0.975351,0.975351,0.975351,Pork,,,,,
+Japan,PorkDemand,PorkDemand,PorkDemand,0.975731,0.975731,0.979563,0.979563,0.979563,0.979563,0.979563,0.979563,0.979563,Pork,,,,,
+Australia_NZ,PorkDemand,PorkDemand,PorkDemand,0.969646,0.969646,0.972598,0.972598,0.972598,0.972598,0.972598,0.972598,0.972598,Pork,,,,,
+Former Soviet Union,PorkDemand,PorkDemand,PorkDemand,0.955114,0.955114,0.970503,0.970503,0.970503,0.970503,0.970503,0.970503,0.970503,Pork,,,,,
+China,PorkDemand,PorkDemand,PorkDemand,0.997776,0.997776,0.997308,0.997308,0.997308,0.997308,0.997308,0.997308,0.997308,Pork,,,,,
+Middle East,PorkDemand,PorkDemand,PorkDemand,0.970052,0.970052,0.974787,0.974787,0.974787,0.974787,0.974787,0.974787,0.974787,Pork,,,,,
+Africa,PorkDemand,PorkDemand,PorkDemand,0.987908,0.987908,0.984842,0.984842,0.984842,0.984842,0.984842,0.984842,0.984842,Pork,,,,,
+Latin America,PorkDemand,PorkDemand,PorkDemand,0.988096,0.988096,0.988814,0.988814,0.988814,0.988814,0.988814,0.988814,0.988814,Pork,,,,,
+Southeast Asia,PorkDemand,PorkDemand,PorkDemand,0.989652,0.989652,0.988585,0.988585,0.988585,0.988585,0.988585,0.988585,0.988585,Pork,,,,,
+Eastern Europe,PorkDemand,PorkDemand,PorkDemand,0.972651,0.972651,0.974157,0.974157,0.974157,0.974157,0.974157,0.974157,0.974157,Pork,,,,,
+Korea,PorkDemand,PorkDemand,PorkDemand,0.983135,0.983135,0.983173,0.983173,0.983173,0.983173,0.983173,0.983173,0.983173,Pork,,,,,
+India,PorkDemand,PorkDemand,PorkDemand,0.989984,0.989984,0.988008,0.988008,0.988008,0.988008,0.988008,0.988008,0.988008,Pork,,,,,
+USA,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0.993802,0.993802,0.994734,0.994734,0.994734,0.994734,0.994734,0.994734,0.994734,Pork,,,,,
+Canada,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0.992460,0.992460,0.993137,0.993137,0.993137,0.993137,0.993137,0.993137,0.993137,Pork,,,,,
+Western Europe,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0.971631,0.971631,0.975351,0.975351,0.975351,0.975351,0.975351,0.975351,0.975351,Pork,,,,,
+Japan,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0.975731,0.975731,0.979563,0.979563,0.979563,0.979563,0.979563,0.979563,0.979563,Pork,,,,,
+Australia_NZ,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0.969646,0.969646,0.972598,0.972598,0.972598,0.972598,0.972598,0.972598,0.972598,Pork,,,,,
+Former Soviet Union,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0.955114,0.955114,0.970503,0.970503,0.970503,0.970503,0.970503,0.970503,0.970503,Pork,,,,,
+China,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0.997776,0.997776,0.997308,0.997308,0.997308,0.997308,0.997308,0.997308,0.997308,Pork,,,,,
+Middle East,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0.970052,0.970052,0.974787,0.974787,0.974787,0.974787,0.974787,0.974787,0.974787,Pork,,,,,
+Africa,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0.987908,0.987908,0.984842,0.984842,0.984842,0.984842,0.984842,0.984842,0.984842,Pork,,,,,
+Latin America,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0.988096,0.988096,0.988814,0.988814,0.988814,0.988814,0.988814,0.988814,0.988814,Pork,,,,,
+Southeast Asia,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0.989652,0.989652,0.988585,0.988585,0.988585,0.988585,0.988585,0.988585,0.988585,Pork,,,,,
+Eastern Europe,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0.972651,0.972651,0.974157,0.974157,0.974157,0.974157,0.974157,0.974157,0.974157,Pork,,,,,
+Korea,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0.983135,0.983135,0.983173,0.983173,0.983173,0.983173,0.983173,0.983173,0.983173,Pork,,,,,
+India,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0.989984,0.989984,0.988008,0.988008,0.988008,0.988008,0.988008,0.988008,0.988008,Pork,,,,,
+,,,,,,,,,,,,,,,,,,
+,demands,,supplies,,,demand scalers,,,,,,,,,,,,
+,1990,2005,1990,2005,,1990,2005,,,,,,,,,,,
+,22702647,30617920,22680219,30590124,,0.999012117,0.999092172,,,,,,,,,,,
+,3885659,8533278,3882101,8526347,,0.999084151,0.999187779,,,,,,,,,,,
+,52394498,61680993,51933711,61245730,,0.991205426,0.992943318,,,,,,,,,,,
+,5070050,4058701,5050248,4044986,,0.996094435,0.996620725,,,,,,,,,,,
+,1232782,1499724,1210451,1471243,,0.981885336,0.981009448,,,,,,,,,,,
+,21691715,8646922,21465885,8559334,,0.989589115,0.989870586,,,,,,,,,,,
+,78316904,166919988,78288055,166832221,,0.999631626,0.999474196,,,,,,,,,,,
+,42218,64940,41846,64421,,0.991186474,0.992006303,,,,,,,,,,,
+,1928418,2709455,1924895,2704607,,0.998172907,0.998210385,,,,,,,,,,,
+,9504436,19389225,9481404,19345985,,0.997576686,0.997769913,,,,,,,,,,,
+,9250478,18897167,9243820,18874518,,0.999280262,0.998801433,,,,,,,,,,,
+,19050407,14408385,18938783,14321204,,0.994140615,0.993949315,,,,,,,,,,,
+,2526500,3478061,2520416,3468822,,0.997592033,0.997343573,,,,,,,,,,,
+,1357790,1639781,1356870,1638379,,0.999322542,0.999145269,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Calibrated outputs,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+5000,,,,,,,,,,,,,,,,,,
+,demandsector,,,,calibrated-value,,share-weight,,,,,,,,,,from data,
+region,supplysector,subsector,technology,minicam-energy-input,1990,2005,1975,1990,2005,2020,2035,2050,2065,2080,2095,,1990,2005
+USA,PorkDemand,PorkDemand,PorkDemand,Pork,13062324,16977519,1,1,1,1,1,1,1,1,1,,13075241,16992946
+Canada,PorkDemand,PorkDemand,PorkDemand,Pork,2039998,2870672,1,1,1,1,1,1,1,1,1,,2041868,2873005
+Western Europe,PorkDemand,PorkDemand,PorkDemand,Pork,36971743,40242745,1,1,1,1,1,1,1,1,1,,37299779,40528744
+Japan,PorkDemand,PorkDemand,PorkDemand,Pork,3908444,4044985,1,1,1,1,1,1,1,1,1,,3923769,4058700
+Australia_NZ,PorkDemand,PorkDemand,PorkDemand,Pork,556965,812763,1,1,1,1,1,1,1,1,1,,567240,828496
+Former Soviet Union,PorkDemand,PorkDemand,PorkDemand,Pork,21465884,6803277,1,1,1,1,1,1,1,1,1,,21691714,6872895
+China,PorkDemand,PorkDemand,PorkDemand,Pork,78288054,166832220,1,1,1,1,1,1,1,1,1,,78316903,166919987
+Middle East,PorkDemand,PorkDemand,PorkDemand,Pork,41845,64420,1,1,1,1,1,1,1,1,1,,42217,64939
+Africa,PorkDemand,PorkDemand,PorkDemand,Pork,1924894,2704606,1,1,1,1,1,1,1,1,1,,1928417,2709454
+Latin America,PorkDemand,PorkDemand,PorkDemand,Pork,9481403,17915971,1,1,1,1,1,1,1,1,1,,9504435,17956015
+Southeast Asia,PorkDemand,PorkDemand,PorkDemand,Pork,5931699,10050646,1,1,1,1,1,1,1,1,1,,5935971,10062707
+Eastern Europe,PorkDemand,PorkDemand,PorkDemand,Pork,11842372,10559245,1,1,1,1,1,1,1,1,1,,11912170,10623525
+Korea,PorkDemand,PorkDemand,PorkDemand,Pork,929074,2354718,1,1,1,1,1,1,1,1,1,,931317,2360990
+India,PorkDemand,PorkDemand,PorkDemand,Pork,1333577,1638378,1,1,1,1,1,1,1,1,1,,1334481,1639780
+USA,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,Pork,9617895,13612605,1,1,1,1,1,1,1,1,1,,9627406,13624974
+Canada,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,Pork,1842102,5655675,1,1,1,1,1,1,1,1,1,,1843791,5660273
+Western Europe,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,Pork,14961968,21002985,1,1,1,1,1,1,1,1,1,,15094719,21152249
+Japan,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,Pork,1141804,1,1,1,1,1,1,1,1,1,1,,1146281,1
+Australia_NZ,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,Pork,653486,658480,1,1,1,1,1,1,1,1,1,,665542,671227
+Former Soviet Union,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,Pork,1,1756057,1,1,1,1,1,1,1,1,1,,1,1774027
+China,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,Pork,1,1,1,1,1,1,1,1,1,1,1,,1,1
+Middle East,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,Pork,1,1,1,1,1,1,1,1,1,1,1,,1,1
+Africa,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,Pork,1,1,1,1,1,1,1,1,1,1,1,,1,1
+Latin America,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,Pork,1,1430014,1,1,1,1,1,1,1,1,1,,1,1433210
+Southeast Asia,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,Pork,3312122,8823871,1,1,1,1,1,1,1,1,1,,3314507,8834460
+Eastern Europe,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,Pork,7096411,3761959,1,1,1,1,1,1,1,1,1,,7138236,3784860
+Korea,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,Pork,1591342,1114104,1,1,1,1,1,1,1,1,1,,1595183,1117072
+India,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,Pork,23293,1,1,1,1,1,1,1,1,1,1,,23309,1
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Non-energy input cost,,,,,,,,,,,,,,,,,,
+table not necessary,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+5002,,,,minicam-non-energy-input,,,,,,,,,,,,,,
+,,,,input-cost,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,,,,
+ALL,PorkDemand,PorkDemand,PorkDemand,0,0,0,0,0,0,0,0,0,,,,,,
+ALL,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,0,0,0,0,0,0,0,0,0,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+add CO2 tag,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+5010,,,,,,,,,,,,,,,,,,
+,,,,CO2,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,,,,
+ALL,PorkDemand,PorkDemand,PorkDemand,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,PorkDemand,PorkNonfoodDemand,PorkNonfoodDemand,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,

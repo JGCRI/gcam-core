@@ -1,1159 +1,1074 @@
-SheepGoat Supply,,,,,
-Units and sector type,,,,,
-INPUT_TABLE,,,,,
-Variable ID,,,,,
-70,,,,,
-
-region,supplysector,output-unit,input-unit,price-unit,sectorType
-ALL,SheepGoat,Gcal,Gcal,1975$/Gcal,AnimalSupply
-
-
-Scale Year,,,,,
-INPUT_TABLE,,,,,
-Variable ID,,,,,
-700,,,,,
-Source Inputs,,,,,
-region,supplysector,subsector,scaleYear,,
-USA,SheepGoat,Mixed,2005
-Canada,SheepGoat,Mixed,2005
-Western Europe,SheepGoat,Mixed,2005
-Japan,SheepGoat,Mixed,2005
-Australia_NZ,SheepGoat,Mixed,2005
-Former Soviet Union,SheepGoat,Mixed,2005
-China,SheepGoat,Mixed,2005
-Middle East,SheepGoat,Mixed,2005
-Africa,SheepGoat,Mixed,2005
-Latin America,SheepGoat,Mixed,2005
-Southeast Asia,SheepGoat,Mixed,2005
-Eastern Europe,SheepGoat,Mixed,2005
-Korea,SheepGoat,Mixed,2005
-India,SheepGoat,Mixed,2005
-USA,SheepGoat,Pastoral,2005
-Canada,SheepGoat,Pastoral,2005
-Western Europe,SheepGoat,Pastoral,2005
-Japan,SheepGoat,Pastoral,2005
-Australia_NZ,SheepGoat,Pastoral,2005
-Former Soviet Union,SheepGoat,Pastoral,2005
-China,SheepGoat,Pastoral,2005
-Middle East,SheepGoat,Pastoral,2005
-Africa,SheepGoat,Pastoral,2005
-Latin America,SheepGoat,Pastoral,2005
-Southeast Asia,SheepGoat,Pastoral,2005
-Eastern Europe,SheepGoat,Pastoral,2005
-Korea,SheepGoat,Pastoral,2005
-India,SheepGoat,Pastoral,2005
-
-
-Tech Scale Year,,,
-INPUT_TABLE,,,
-Variable ID,,,
-701,,,
-Source Inputs,,,
-region,supplysector,subsector,techScaleYear
-USA,SheepGoat,Mixed,2005
-Canada,SheepGoat,Mixed,2005
-Western Europe,SheepGoat,Mixed,2005
-Japan,SheepGoat,Mixed,2005
-Australia_NZ,SheepGoat,Mixed,2005
-Former Soviet Union,SheepGoat,Mixed,2005
-China,SheepGoat,Mixed,2005
-Middle East,SheepGoat,Mixed,2005
-Africa,SheepGoat,Mixed,2005
-Latin America,SheepGoat,Mixed,2005
-Southeast Asia,SheepGoat,Mixed,2005
-Eastern Europe,SheepGoat,Mixed,2005
-Korea,SheepGoat,Mixed,2005
-India,SheepGoat,Mixed,2005
-USA,SheepGoat,Pastoral,2005
-Canada,SheepGoat,Pastoral,2005
-Western Europe,SheepGoat,Pastoral,2005
-Japan,SheepGoat,Pastoral,2005
-Australia_NZ,SheepGoat,Pastoral,2005
-Former Soviet Union,SheepGoat,Pastoral,2005
-China,SheepGoat,Pastoral,2005
-Middle East,SheepGoat,Pastoral,2005
-Africa,SheepGoat,Pastoral,2005
-Latin America,SheepGoat,Pastoral,2005
-Southeast Asia,SheepGoat,Pastoral,2005
-Eastern Europe,SheepGoat,Pastoral,2005
-Korea,SheepGoat,Pastoral,2005
-India,SheepGoat,Pastoral,2005
-
-
-Subsector Logit Exponent,,,
-INPUT_TABLE,,,
-Variable ID,,,
-702,,,
-Source Inputs,,,
-region,supplysector,subsector,logitexp
-USA,SheepGoat,Mixed,-3
-Canada,SheepGoat,Mixed,-3
-Western Europe,SheepGoat,Mixed,-3
-Japan,SheepGoat,Mixed,-3
-Australia_NZ,SheepGoat,Mixed,-3
-Former Soviet Union,SheepGoat,Mixed,-3
-China,SheepGoat,Mixed,-3
-Middle East,SheepGoat,Mixed,-3
-Africa,SheepGoat,Mixed,-3
-Latin America,SheepGoat,Mixed,-3
-Southeast Asia,SheepGoat,Mixed,-3
-Eastern Europe,SheepGoat,Mixed,-3
-Korea,SheepGoat,Mixed,-3
-India,SheepGoat,Mixed,-3
-USA,SheepGoat,Pastoral,-3
-Canada,SheepGoat,Pastoral,-3
-Western Europe,SheepGoat,Pastoral,-3
-Japan,SheepGoat,Pastoral,-3
-Australia_NZ,SheepGoat,Pastoral,-3
-Former Soviet Union,SheepGoat,Pastoral,-3
-China,SheepGoat,Pastoral,-3
-Middle East,SheepGoat,Pastoral,-3
-Africa,SheepGoat,Pastoral,-3
-Latin America,SheepGoat,Pastoral,-3
-Southeast Asia,SheepGoat,Pastoral,-3,,,,,,,,,,
-Eastern Europe,SheepGoat,Pastoral,-3,,,,,,,,,,
-Korea,SheepGoat,Pastoral,-3,,,,,,,,,,
-India,SheepGoat,Pastoral,-3,,,,,,,,,,
-
-
-Efficiency: Mixed,,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,
-7001,,,,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,
-,,,,efficiency,efficiency,efficiency,efficiency,efficiency,efficiency,efficiency,efficiency,efficiency,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input
-USA,SheepGoat,Mixed,Corn,0.01865,0.01865,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,Corn
-Canada,SheepGoat,Mixed,Corn,0.01778,0.01778,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,Corn
-Western Europe,SheepGoat,Mixed,Corn,0.02662,0.02662,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,Corn
-Japan,SheepGoat,Mixed,Corn,0.02212,0.02212,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,Corn
-Australia_NZ,SheepGoat,Mixed,Corn,0.01897,0.01897,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,Corn
-Former Soviet Union,SheepGoat,Mixed,Corn,0.01604,0.01604,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,Corn
-China,SheepGoat,Mixed,Corn,0.03115,0.03115,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,Corn
-Middle East,SheepGoat,Mixed,Corn,0.03312,0.03312,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,Corn
-Africa,SheepGoat,Mixed,Corn,0.02860,0.02860,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,Corn
-Latin America,SheepGoat,Mixed,Corn,0.01131,0.01131,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,Corn
-Southeast Asia,SheepGoat,Mixed,Corn,0.03082,0.03082,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,Corn
-Eastern Europe,SheepGoat,Mixed,Corn,0.01283,0.01283,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,Corn
-Korea,SheepGoat,Mixed,Corn,0.03077,0.03077,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,Corn
-India,SheepGoat,Mixed,Corn,0.03081,0.03081,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,Corn
-USA,SheepGoat,Mixed,FodderCrop,0.01865,0.01865,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,FodderCrop
-Canada,SheepGoat,Mixed,FodderCrop,0.01778,0.01778,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,FodderCrop
-Western Europe,SheepGoat,Mixed,FodderCrop,0.02662,0.02662,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,FodderCrop
-Japan,SheepGoat,Mixed,FodderCrop,0.02212,0.02212,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,FodderCrop
-Australia_NZ,SheepGoat,Mixed,FodderCrop,0.01897,0.01897,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,FodderCrop
-Former Soviet Union,SheepGoat,Mixed,FodderCrop,0.01604,0.01604,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,FodderCrop
-China,SheepGoat,Mixed,FodderCrop,0.03115,0.03115,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,FodderCrop
-Middle East,SheepGoat,Mixed,FodderCrop,0.03312,0.03312,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,FodderCrop
-Africa,SheepGoat,Mixed,FodderCrop,0.02860,0.02860,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,FodderCrop
-Latin America,SheepGoat,Mixed,FodderCrop,0.01131,0.01131,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,FodderCrop
-Southeast Asia,SheepGoat,Mixed,FodderCrop,0.03082,0.03082,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,FodderCrop
-Eastern Europe,SheepGoat,Mixed,FodderCrop,0.01283,0.01283,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,FodderCrop
-Korea,SheepGoat,Mixed,FodderCrop,0.03077,0.03077,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,FodderCrop
-India,SheepGoat,Mixed,FodderCrop,0.03081,0.03081,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,FodderCrop
-USA,SheepGoat,Mixed,MiscCrop,0.01865,0.01865,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,MiscCrop
-Canada,SheepGoat,Mixed,MiscCrop,0.01778,0.01778,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,MiscCrop
-Western Europe,SheepGoat,Mixed,MiscCrop,0.02662,0.02662,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,MiscCrop
-Japan,SheepGoat,Mixed,MiscCrop,0.02212,0.02212,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,MiscCrop
-Australia_NZ,SheepGoat,Mixed,MiscCrop,0.01897,0.01897,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,MiscCrop
-Former Soviet Union,SheepGoat,Mixed,MiscCrop,0.01604,0.01604,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,MiscCrop
-China,SheepGoat,Mixed,MiscCrop,0.03115,0.03115,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,MiscCrop
-Middle East,SheepGoat,Mixed,MiscCrop,0.03312,0.03312,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,MiscCrop
-Africa,SheepGoat,Mixed,MiscCrop,0.02860,0.02860,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,MiscCrop
-Latin America,SheepGoat,Mixed,MiscCrop,0.01131,0.01131,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,MiscCrop
-Southeast Asia,SheepGoat,Mixed,MiscCrop,0.03082,0.03082,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,MiscCrop
-Eastern Europe,SheepGoat,Mixed,MiscCrop,0.01283,0.01283,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,MiscCrop
-Korea,SheepGoat,Mixed,MiscCrop,0.03077,0.03077,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,MiscCrop
-India,SheepGoat,Mixed,MiscCrop,0.03081,0.03081,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,MiscCrop
-USA,SheepGoat,Mixed,OilCrop,0.01865,0.01865,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,OilCrop
-Canada,SheepGoat,Mixed,OilCrop,0.01778,0.01778,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,OilCrop
-Western Europe,SheepGoat,Mixed,OilCrop,0.02662,0.02662,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,OilCrop
-Japan,SheepGoat,Mixed,OilCrop,0.02212,0.02212,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,OilCrop
-Australia_NZ,SheepGoat,Mixed,OilCrop,0.01897,0.01897,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,OilCrop
-Former Soviet Union,SheepGoat,Mixed,OilCrop,0.01604,0.01604,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,OilCrop
-China,SheepGoat,Mixed,OilCrop,0.03115,0.03115,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,OilCrop
-Middle East,SheepGoat,Mixed,OilCrop,0.03312,0.03312,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,OilCrop
-Africa,SheepGoat,Mixed,OilCrop,0.02860,0.02860,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,OilCrop
-Latin America,SheepGoat,Mixed,OilCrop,0.01131,0.01131,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,OilCrop
-Southeast Asia,SheepGoat,Mixed,OilCrop,0.03082,0.03082,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,OilCrop
-Eastern Europe,SheepGoat,Mixed,OilCrop,0.01283,0.01283,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,OilCrop
-Korea,SheepGoat,Mixed,OilCrop,0.03077,0.03077,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,OilCrop
-India,SheepGoat,Mixed,OilCrop,0.03081,0.03081,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,OilCrop
-USA,SheepGoat,Mixed,OtherGrain,0.01865,0.01865,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,OtherGrain
-Canada,SheepGoat,Mixed,OtherGrain,0.01778,0.01778,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,OtherGrain
-Western Europe,SheepGoat,Mixed,OtherGrain,0.02662,0.02662,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,OtherGrain
-Japan,SheepGoat,Mixed,OtherGrain,0.02212,0.02212,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,OtherGrain
-Australia_NZ,SheepGoat,Mixed,OtherGrain,0.01897,0.01897,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,OtherGrain
-Former Soviet Union,SheepGoat,Mixed,OtherGrain,0.01604,0.01604,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,OtherGrain
-China,SheepGoat,Mixed,OtherGrain,0.03115,0.03115,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,OtherGrain
-Middle East,SheepGoat,Mixed,OtherGrain,0.03312,0.03312,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,OtherGrain
-Africa,SheepGoat,Mixed,OtherGrain,0.02860,0.02860,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,OtherGrain
-Latin America,SheepGoat,Mixed,OtherGrain,0.01131,0.01131,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,OtherGrain
-Southeast Asia,SheepGoat,Mixed,OtherGrain,0.03082,0.03082,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,OtherGrain
-Eastern Europe,SheepGoat,Mixed,OtherGrain,0.01283,0.01283,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,OtherGrain
-Korea,SheepGoat,Mixed,OtherGrain,0.03077,0.03077,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,OtherGrain
-India,SheepGoat,Mixed,OtherGrain,0.03081,0.03081,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,OtherGrain
-USA,SheepGoat,Mixed,Rice,0.01865,0.01865,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,Rice
-Canada,SheepGoat,Mixed,Rice,0.01778,0.01778,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,Rice
-Western Europe,SheepGoat,Mixed,Rice,0.02662,0.02662,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,Rice
-Japan,SheepGoat,Mixed,Rice,0.02212,0.02212,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,Rice
-Australia_NZ,SheepGoat,Mixed,Rice,0.01897,0.01897,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,Rice
-Former Soviet Union,SheepGoat,Mixed,Rice,0.01604,0.01604,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,Rice
-China,SheepGoat,Mixed,Rice,0.03115,0.03115,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,Rice
-Middle East,SheepGoat,Mixed,Rice,0.03312,0.03312,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,Rice
-Africa,SheepGoat,Mixed,Rice,0.02860,0.02860,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,Rice
-Latin America,SheepGoat,Mixed,Rice,0.01131,0.01131,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,Rice
-Southeast Asia,SheepGoat,Mixed,Rice,0.03082,0.03082,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,Rice
-Eastern Europe,SheepGoat,Mixed,Rice,0.01283,0.01283,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,Rice
-Korea,SheepGoat,Mixed,Rice,0.03077,0.03077,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,Rice
-India,SheepGoat,Mixed,Rice,0.03081,0.03081,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,Rice
-USA,SheepGoat,Mixed,SugarCrop,0.01865,0.01865,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,SugarCrop
-Canada,SheepGoat,Mixed,SugarCrop,0.01778,0.01778,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,SugarCrop
-Western Europe,SheepGoat,Mixed,SugarCrop,0.02662,0.02662,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,SugarCrop
-Japan,SheepGoat,Mixed,SugarCrop,0.02212,0.02212,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,SugarCrop
-Australia_NZ,SheepGoat,Mixed,SugarCrop,0.01897,0.01897,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,SugarCrop
-Former Soviet Union,SheepGoat,Mixed,SugarCrop,0.01604,0.01604,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,SugarCrop
-China,SheepGoat,Mixed,SugarCrop,0.03115,0.03115,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,SugarCrop
-Middle East,SheepGoat,Mixed,SugarCrop,0.03312,0.03312,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,SugarCrop
-Africa,SheepGoat,Mixed,SugarCrop,0.02860,0.02860,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,SugarCrop
-Latin America,SheepGoat,Mixed,SugarCrop,0.01131,0.01131,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,SugarCrop
-Southeast Asia,SheepGoat,Mixed,SugarCrop,0.03082,0.03082,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,SugarCrop
-Eastern Europe,SheepGoat,Mixed,SugarCrop,0.01283,0.01283,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,SugarCrop
-Korea,SheepGoat,Mixed,SugarCrop,0.03077,0.03077,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,SugarCrop
-India,SheepGoat,Mixed,SugarCrop,0.03081,0.03081,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,SugarCrop
-USA,SheepGoat,Mixed,Wheat,0.01865,0.01865,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,Wheat
-Canada,SheepGoat,Mixed,Wheat,0.01778,0.01778,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,Wheat
-Western Europe,SheepGoat,Mixed,Wheat,0.02662,0.02662,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,Wheat
-Japan,SheepGoat,Mixed,Wheat,0.02212,0.02212,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,Wheat
-Australia_NZ,SheepGoat,Mixed,Wheat,0.01897,0.01897,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,Wheat
-Former Soviet Union,SheepGoat,Mixed,Wheat,0.01604,0.01604,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,Wheat
-China,SheepGoat,Mixed,Wheat,0.03115,0.03115,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,Wheat
-Middle East,SheepGoat,Mixed,Wheat,0.03312,0.03312,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,Wheat
-Africa,SheepGoat,Mixed,Wheat,0.02860,0.02860,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,Wheat
-Latin America,SheepGoat,Mixed,Wheat,0.01131,0.01131,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,Wheat
-Southeast Asia,SheepGoat,Mixed,Wheat,0.03082,0.03082,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,Wheat
-Eastern Europe,SheepGoat,Mixed,Wheat,0.01283,0.01283,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,Wheat
-Korea,SheepGoat,Mixed,Wheat,0.03077,0.03077,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,Wheat
-India,SheepGoat,Mixed,Wheat,0.03081,0.03081,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,Wheat
-USA,SheepGoat,Mixed,Pasture,0.01865,0.01865,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,Pasture
-Canada,SheepGoat,Mixed,Pasture,0.01778,0.01778,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,Pasture
-Western Europe,SheepGoat,Mixed,Pasture,0.02662,0.02662,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,Pasture
-Japan,SheepGoat,Mixed,Pasture,0.02212,0.02212,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,Pasture
-Australia_NZ,SheepGoat,Mixed,Pasture,0.01897,0.01897,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,Pasture
-Former Soviet Union,SheepGoat,Mixed,Pasture,0.01604,0.01604,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,Pasture
-China,SheepGoat,Mixed,Pasture,0.03115,0.03115,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,Pasture
-Middle East,SheepGoat,Mixed,Pasture,0.03312,0.03312,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,Pasture
-Africa,SheepGoat,Mixed,Pasture,0.02860,0.02860,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,Pasture
-Latin America,SheepGoat,Mixed,Pasture,0.01131,0.01131,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,Pasture
-Southeast Asia,SheepGoat,Mixed,Pasture,0.03082,0.03082,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,Pasture
-Eastern Europe,SheepGoat,Mixed,Pasture,0.01283,0.01283,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,Pasture
-Korea,SheepGoat,Mixed,Pasture,0.03077,0.03077,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,Pasture
-India,SheepGoat,Mixed,Pasture,0.03081,0.03081,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,Pasture
-,,,,,,,,,,,,,
-,,,,,,,,,,,,,
-Efficiency: Pastoral,,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,
-7001,,,,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,
-,,,,efficiency,efficiency,efficiency,efficiency,efficiency,efficiency,efficiency,efficiency,efficiency,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input
-USA,SheepGoat,Pastoral,Pasture,0.01530,0.01530,0.01640,0.01640,0.01640,0.01640,0.01640,0.01640,0.01640,Pasture
-Canada,SheepGoat,Pastoral,Pasture,0.01596,0.01596,0.01644,0.01644,0.01644,0.01644,0.01644,0.01644,0.01644,Pasture
-Western Europe,SheepGoat,Pastoral,Pasture,0.04161,0.04161,0.04313,0.04313,0.04313,0.04313,0.04313,0.04313,0.04313,Pasture
-Japan,SheepGoat,Pastoral,Pasture,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,Pasture
-Australia_NZ,SheepGoat,Pastoral,Pasture,0.01761,0.01761,0.01682,0.01682,0.01682,0.01682,0.01682,0.01682,0.01682,Pasture
-Former Soviet Union,SheepGoat,Pastoral,Pasture,0.02964,0.02964,0.04164,0.04164,0.04164,0.04164,0.04164,0.04164,0.04164,Pasture
-China,SheepGoat,Pastoral,Pasture,0.01779,0.01779,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,Pasture
-Middle East,SheepGoat,Pastoral,Pasture,0.03804,0.03804,0.04430,0.04430,0.04430,0.04430,0.04430,0.04430,0.04430,Pasture
-Africa,SheepGoat,Pastoral,Pasture,0.02267,0.02267,0.02330,0.02330,0.02330,0.02330,0.02330,0.02330,0.02330,Pasture
-Latin America,SheepGoat,Pastoral,Pasture,0.00692,0.00692,0.00785,0.00785,0.00785,0.00785,0.00785,0.00785,0.00785,Pasture
-Southeast Asia,SheepGoat,Pastoral,Pasture,0.01793,0.01793,0.02099,0.02099,0.02099,0.02099,0.02099,0.02099,0.02099,Pasture
-Eastern Europe,SheepGoat,Pastoral,Pasture,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,Pasture
-Korea,SheepGoat,Pastoral,Pasture,0.01127,0.01127,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,Pasture
-India,SheepGoat,Pastoral,Pasture,0.01788,0.01788,0.02093,0.02093,0.02093,0.02093,0.02093,0.02093,0.02093,Pasture
-
-
-Efficiency: Scavenging,,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,
-7001,,,,minicam-energy-input,,,,,,,,,
-,,,,efficiency,,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input
-USA,SheepGoat,Mixed,Scavenging,0.01865,0.01865,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,Scavenging
-Canada,SheepGoat,Mixed,Scavenging,0.01778,0.01778,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,Scavenging
-Western Europe,SheepGoat,Mixed,Scavenging,0.02662,0.02662,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,Scavenging
-Japan,SheepGoat,Mixed,Scavenging,0.02212,0.02212,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,Scavenging
-Australia_NZ,SheepGoat,Mixed,Scavenging,0.01897,0.01897,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,Scavenging
-Former Soviet Union,SheepGoat,Mixed,Scavenging,0.01604,0.01604,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,Scavenging
-China,SheepGoat,Mixed,Scavenging,0.03115,0.03115,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,Scavenging
-Middle East,SheepGoat,Mixed,Scavenging,0.03312,0.03312,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,Scavenging
-Africa,SheepGoat,Mixed,Scavenging,0.02860,0.02860,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,Scavenging
-Latin America,SheepGoat,Mixed,Scavenging,0.01131,0.01131,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,Scavenging
-Southeast Asia,SheepGoat,Mixed,Scavenging,0.03082,0.03082,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,Scavenging
-Eastern Europe,SheepGoat,Mixed,Scavenging,0.01283,0.01283,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,Scavenging
-Korea,SheepGoat,Mixed,Scavenging,0.03077,0.03077,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,Scavenging
-India,SheepGoat,Mixed,Scavenging,0.03081,0.03081,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,Scavenging
-USA,SheepGoat,Pastoral,Scavenging,0.01530,0.01530,0.01640,0.01640,0.01640,0.01640,0.01640,0.01640,0.01640,Scavenging
-Canada,SheepGoat,Pastoral,Scavenging,0.01596,0.01596,0.01644,0.01644,0.01644,0.01644,0.01644,0.01644,0.01644,Scavenging
-Western Europe,SheepGoat,Pastoral,Scavenging,0.04161,0.04161,0.04313,0.04313,0.04313,0.04313,0.04313,0.04313,0.04313,Scavenging
-Japan,SheepGoat,Pastoral,Scavenging,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,Scavenging
-Australia_NZ,SheepGoat,Pastoral,Scavenging,0.01761,0.01761,0.01682,0.01682,0.01682,0.01682,0.01682,0.01682,0.01682,Scavenging
-Former Soviet Union,SheepGoat,Pastoral,Scavenging,0.02964,0.02964,0.04164,0.04164,0.04164,0.04164,0.04164,0.04164,0.04164,Scavenging
-China,SheepGoat,Pastoral,Scavenging,0.01779,0.01779,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,Scavenging
-Middle East,SheepGoat,Pastoral,Scavenging,0.03804,0.03804,0.04430,0.04430,0.04430,0.04430,0.04430,0.04430,0.04430,Scavenging
-Africa,SheepGoat,Pastoral,Scavenging,0.02267,0.02267,0.02330,0.02330,0.02330,0.02330,0.02330,0.02330,0.02330,Scavenging
-Latin America,SheepGoat,Pastoral,Scavenging,0.00692,0.00692,0.00785,0.00785,0.00785,0.00785,0.00785,0.00785,0.00785,Scavenging
-Southeast Asia,SheepGoat,Pastoral,Scavenging,0.01793,0.01793,0.02099,0.02099,0.02099,0.02099,0.02099,0.02099,0.02099,Scavenging
-Eastern Europe,SheepGoat,Pastoral,Scavenging,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,Scavenging
-Korea,SheepGoat,Pastoral,Scavenging,0.01127,0.01127,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,Scavenging
-India,SheepGoat,Pastoral,Scavenging,0.01788,0.01788,0.02093,0.02093,0.02093,0.02093,0.02093,0.02093,0.02093,Scavenging
-
-
-Calibrated inputs: mixed,,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,
-7000,,,,minicam-energy-input,,,,,,,,,
-,,,,calibrated-value,,,,,,,,,
-region,supplysector,subsector,technology,1990,2005,minicam-energy-input,,,,,,,
-USA,SheepGoat,Mixed,Corn,405852,225313,Corn,,,,,,,
-Canada,SheepGoat,Mixed,Corn,8301,16333,Corn,,,,,,,
-Western Europe,SheepGoat,Mixed,Corn,515904,919461,Corn,,,,,,,
-Japan,SheepGoat,Mixed,Corn,2126,1287,Corn,,,,,,,
-Australia_NZ,SheepGoat,Mixed,Corn,16875,36103,Corn
-Former Soviet Union,SheepGoat,Mixed,Corn,614005,203350,Corn
-China,SheepGoat,Mixed,Corn,43133,405593,Corn
-Middle East,SheepGoat,Mixed,Corn,1315693,3736393,Corn
-Africa,SheepGoat,Mixed,Corn,916840,933602,Corn
-Latin America,SheepGoat,Mixed,Corn,64215,147585,Corn
-Southeast Asia,SheepGoat,Mixed,Corn,104277,191515,Corn
-Eastern Europe,SheepGoat,Mixed,Corn,500220,454808,Corn
-Korea,SheepGoat,Mixed,Corn,1701,1561,Corn
-India,SheepGoat,Mixed,Corn,12574,64274,Corn
-USA,SheepGoat,Mixed,FodderCrop,259381,119199,FodderCrop
-Canada,SheepGoat,Mixed,FodderCrop,12695,17165,FodderCrop
-Western Europe,SheepGoat,Mixed,FodderCrop,7968647,7358585,FodderCrop
-Japan,SheepGoat,Mixed,FodderCrop,2303,1192,FodderCrop
-Australia_NZ,SheepGoat,Mixed,FodderCrop,1612817,1021033,FodderCrop
-Former Soviet Union,SheepGoat,Mixed,FodderCrop,6502148,4373918,FodderCrop
-China,SheepGoat,Mixed,FodderCrop,530403,1496634,FodderCrop
-Middle East,SheepGoat,Mixed,FodderCrop,3157353,4488249,FodderCrop
-Africa,SheepGoat,Mixed,FodderCrop,4239615,4122404,FodderCrop
-Latin America,SheepGoat,Mixed,FodderCrop,886684,825173,FodderCrop
-Southeast Asia,SheepGoat,Mixed,FodderCrop,1374310,1241597,FodderCrop
-Eastern Europe,SheepGoat,Mixed,FodderCrop,2166028,713830,FodderCrop
-Korea,SheepGoat,Mixed,FodderCrop,1503,5519,FodderCrop
-India,SheepGoat,Mixed,FodderCrop,1024924,941932,FodderCrop
-USA,SheepGoat,Mixed,MiscCrop,312,247,MiscCrop
-Canada,SheepGoat,Mixed,MiscCrop,30,794,MiscCrop
-Western Europe,SheepGoat,Mixed,MiscCrop,371893,148710,MiscCrop
-Japan,SheepGoat,Mixed,MiscCrop,16,13,MiscCrop
-Australia_NZ,SheepGoat,Mixed,MiscCrop,20224,52338,MiscCrop
-Former Soviet Union,SheepGoat,Mixed,MiscCrop,722537,134516,MiscCrop
-China,SheepGoat,Mixed,MiscCrop,12122,100857,MiscCrop
-Middle East,SheepGoat,Mixed,MiscCrop,58260,17104,MiscCrop
-Africa,SheepGoat,Mixed,MiscCrop,503486,681501,MiscCrop
-Latin America,SheepGoat,Mixed,MiscCrop,20270,30025,MiscCrop
-Southeast Asia,SheepGoat,Mixed,MiscCrop,8640,10575,MiscCrop
-Eastern Europe,SheepGoat,Mixed,MiscCrop,99284,29179,MiscCrop
-Korea,SheepGoat,Mixed,MiscCrop,306,66,MiscCrop
-India,SheepGoat,Mixed,MiscCrop,20096,21522,MiscCrop
-USA,SheepGoat,Mixed,OilCrop,5411,4519,OilCrop
-Canada,SheepGoat,Mixed,OilCrop,1143,6122,OilCrop
-Western Europe,SheepGoat,Mixed,OilCrop,64863,142644,OilCrop
-Japan,SheepGoat,Mixed,OilCrop,37,24,OilCrop
-Australia_NZ,SheepGoat,Mixed,OilCrop,5038,12999,OilCrop
-Former Soviet Union,SheepGoat,Mixed,OilCrop,82833,39893,OilCrop
-China,SheepGoat,Mixed,OilCrop,2240,22362,OilCrop
-Middle East,SheepGoat,Mixed,OilCrop,18154,87815,OilCrop
-Africa,SheepGoat,Mixed,OilCrop,1608,1246,OilCrop
-Latin America,SheepGoat,Mixed,OilCrop,2201,7583,OilCrop
-Southeast Asia,SheepGoat,Mixed,OilCrop,10203,10435,OilCrop
-Eastern Europe,SheepGoat,Mixed,OilCrop,2193,1829,OilCrop
-Korea,SheepGoat,Mixed,OilCrop,5,5,OilCrop
-India,SheepGoat,Mixed,OilCrop,15052,16510,OilCrop
-USA,SheepGoat,Mixed,OtherGrain,57460,12606,OtherGrain
-Canada,SheepGoat,Mixed,OtherGrain,14665,26651,OtherGrain
-Western Europe,SheepGoat,Mixed,OtherGrain,1348146,1333250,OtherGrain
-Japan,SheepGoat,Mixed,OtherGrain,839,293,OtherGrain
-Australia_NZ,SheepGoat,Mixed,OtherGrain,212970,937289,OtherGrain
-Former Soviet Union,SheepGoat,Mixed,OtherGrain,4012320,626522,OtherGrain
-China,SheepGoat,Mixed,OtherGrain,4332,16058,OtherGrain
-Middle East,SheepGoat,Mixed,OtherGrain,5010027,5827250,OtherGrain
-Africa,SheepGoat,Mixed,OtherGrain,377469,286307,OtherGrain
-Latin America,SheepGoat,Mixed,OtherGrain,29796,45839,OtherGrain
-Southeast Asia,SheepGoat,Mixed,OtherGrain,5189,4102,OtherGrain
-Eastern Europe,SheepGoat,Mixed,OtherGrain,564103,367833,OtherGrain
-Korea,SheepGoat,Mixed,OtherGrain,82,9,OtherGrain
-India,SheepGoat,Mixed,OtherGrain,9738,8350,OtherGrain
-USA,SheepGoat,Mixed,Rice,0,0,Rice
-Canada,SheepGoat,Mixed,Rice,0,0,Rice
-Western Europe,SheepGoat,Mixed,Rice,6389,6102,Rice
-Japan,SheepGoat,Mixed,Rice,3,6,Rice
-Australia_NZ,SheepGoat,Mixed,Rice,0,0,Rice
-Former Soviet Union,SheepGoat,Mixed,Rice,0,0,Rice
-China,SheepGoat,Mixed,Rice,2837,9288,Rice
-Middle East,SheepGoat,Mixed,Rice,86972,210226,Rice
-Africa,SheepGoat,Mixed,Rice,37992,22619,Rice
-Latin America,SheepGoat,Mixed,Rice,626,899,Rice
-Southeast Asia,SheepGoat,Mixed,Rice,35902,50394,Rice
-Eastern Europe,SheepGoat,Mixed,Rice,43,189,Rice
-Korea,SheepGoat,Mixed,Rice,0,0,Rice
-India,SheepGoat,Mixed,Rice,6582,6377,Rice
-USA,SheepGoat,Mixed,SugarCrop,0,0,SugarCrop
-Canada,SheepGoat,Mixed,SugarCrop,19,7,SugarCrop
-Western Europe,SheepGoat,Mixed,SugarCrop,51517,24002,SugarCrop
-Japan,SheepGoat,Mixed,SugarCrop,0,0,SugarCrop
-Australia_NZ,SheepGoat,Mixed,SugarCrop,0,0,SugarCrop
-Former Soviet Union,SheepGoat,Mixed,SugarCrop,67593,28053,SugarCrop
-China,SheepGoat,Mixed,SugarCrop,5050,15331,SugarCrop
-Middle East,SheepGoat,Mixed,SugarCrop,23565,27283,SugarCrop
-Africa,SheepGoat,Mixed,SugarCrop,14679,13800,SugarCrop
-Latin America,SheepGoat,Mixed,SugarCrop,34967,35348,SugarCrop
-Southeast Asia,SheepGoat,Mixed,SugarCrop,10520,16650,SugarCrop
-Eastern Europe,SheepGoat,Mixed,SugarCrop,9294,3368,SugarCrop
-Korea,SheepGoat,Mixed,SugarCrop,0,0,SugarCrop
-India,SheepGoat,Mixed,SugarCrop,22656,20290,SugarCrop
-USA,SheepGoat,Mixed,Wheat,25535,6260,Wheat
-Canada,SheepGoat,Mixed,Wheat,4644,6371,Wheat
-Western Europe,SheepGoat,Mixed,Wheat,571660,1128363,Wheat
-Japan,SheepGoat,Mixed,Wheat,101,38,Wheat
-Australia_NZ,SheepGoat,Mixed,Wheat,53020,179508,Wheat
-Former Soviet Union,SheepGoat,Mixed,Wheat,3015728,554879,Wheat
-China,SheepGoat,Mixed,Wheat,2344,5193,Wheat
-Middle East,SheepGoat,Mixed,Wheat,745527,1211293,Wheat
-Africa,SheepGoat,Mixed,Wheat,145972,127254,Wheat
-Latin America,SheepGoat,Mixed,Wheat,3258,2323,Wheat
-Southeast Asia,SheepGoat,Mixed,Wheat,6289,7980,Wheat
-Eastern Europe,SheepGoat,Mixed,Wheat,374678,190275,Wheat
-Korea,SheepGoat,Mixed,Wheat,438,288,Wheat
-India,SheepGoat,Mixed,Wheat,10601,12552,Wheat
-USA,SheepGoat,Mixed,Pasture,4982625,2407917,Pasture
-Canada,SheepGoat,Mixed,Pasture,272092,457649,Pasture
-Western Europe,SheepGoat,Mixed,Pasture,65438476,61426027,Pasture
-Japan,SheepGoat,Mixed,Pasture,16793,8771,Pasture
-Australia_NZ,SheepGoat,Mixed,Pasture,14323088,14400333,Pasture
-Former Soviet Union,SheepGoat,Mixed,Pasture,57752981,21966416,Pasture
-China,SheepGoat,Mixed,Pasture,10647730,35967648,Pasture
-Middle East,SheepGoat,Mixed,Pasture,12347992,14406496,Pasture
-Africa,SheepGoat,Mixed,Pasture,27558628,33444361,Pasture
-Latin America,SheepGoat,Mixed,Pasture,17940886,18186919,Pasture
-Southeast Asia,SheepGoat,Mixed,Pasture,14889789,14792820,Pasture
-Eastern Europe,SheepGoat,Mixed,Pasture,30052885,12802893,Pasture
-Korea,SheepGoat,Mixed,Pasture,57809,120256,Pasture
-India,SheepGoat,Mixed,Pasture,9754523,9309908,Pasture
-
-
-Calibrated inputs: Pastoral,,,,,,
-INPUT_TABLE,,,,,,
-Variable ID,,,,,,
-7000,,,,,,
-
-region,supplysector,subsector,technology,1990,2005,minicam-energy-input
-USA,SheepGoat,Pastoral,Pasture,7337268,3234992,Pasture
-Canada,SheepGoat,Pastoral,Pasture,366571,622036,Pasture
-Western Europe,SheepGoat,Pastoral,Pasture,597920,445632,Pasture
-Japan,SheepGoat,Pastoral,Pasture,0,0,Pasture
-Australia_NZ,SheepGoat,Pastoral,Pasture,62020794,60413901,Pasture
-Former Soviet Union,SheepGoat,Pastoral,Pasture,1056749,521231,Pasture
-China,SheepGoat,Pastoral,Pasture,59082719,179065935,Pasture
-Middle East,SheepGoat,Pastoral,Pasture,1143222,1490170,Pasture
-Africa,SheepGoat,Pastoral,Pasture,35497678,37644939,Pasture
-Latin America,SheepGoat,Pastoral,Pasture,44847352,34031151,Pasture
-Southeast Asia,SheepGoat,Pastoral,Pasture,4465459,4665024,Pasture
-Eastern Europe,SheepGoat,Pastoral,Pasture,0,0,Pasture
-Korea,SheepGoat,Pastoral,Pasture,506527,594565,Pasture
-India,SheepGoat,Pastoral,Pasture,2078671,2116541,Pasture
-,,,,,,
-,,,,,,
-Calibrated inputs: Scavenging,,,,,,
-INPUT_TABLE,,,,,,
-Variable ID,,,,,,
-7000,,,,minicam-energy-input,,
-,,,,calibrated-value,,
-region,supplysector,subsector,technology,1990,2005,minicam-energy-input
-USA,SheepGoat,Mixed,Scavenging,0,0,Scavenging
-Canada,SheepGoat,Mixed,Scavenging,0,0,Scavenging
-Western Europe,SheepGoat,Mixed,Scavenging,963794,861152,Scavenging
-Japan,SheepGoat,Mixed,Scavenging,0,0,Scavenging
-Australia_NZ,SheepGoat,Mixed,Scavenging,1830875,1840749,Scavenging
-Former Soviet Union,SheepGoat,Mixed,Scavenging,2192580,963399,Scavenging
-China,SheepGoat,Mixed,Scavenging,604918,2043391,Scavenging
-Middle East,SheepGoat,Mixed,Scavenging,2295861,2946459,Scavenging
-Africa,SheepGoat,Mixed,Scavenging,3789392,4460129,Scavenging
-Latin America,SheepGoat,Mixed,Scavenging,1019256,1033234,Scavenging
-Southeast Asia,SheepGoat,Mixed,Scavenging,13603472,12600941,Scavenging
-Eastern Europe,SheepGoat,Mixed,Scavenging,0,0,Scavenging
-Korea,SheepGoat,Mixed,Scavenging,3284,6832,Scavenging
-India,SheepGoat,Mixed,Scavenging,11083464,10578275,Scavenging
-USA,SheepGoat,Pastoral,Scavenging,0,0,Scavenging
-Canada,SheepGoat,Pastoral,Scavenging,0,0,Scavenging
-Western Europe,SheepGoat,Pastoral,Scavenging,67938,50634,Scavenging
-Japan,SheepGoat,Pastoral,Scavenging,0,0,Scavenging
-Australia_NZ,SheepGoat,Pastoral,Scavenging,7047041,6864460,Scavenging
-Former Soviet Union,SheepGoat,Pastoral,Scavenging,120072,59224,Scavenging
-China,SheepGoat,Pastoral,Scavenging,3179940,9637655,Scavenging
-Middle East,SheepGoat,Pastoral,Scavenging,129897,169319,Scavenging
-Africa,SheepGoat,Pastoral,Scavenging,4033383,4277363,Scavenging
-Latin America,SheepGoat,Pastoral,Scavenging,2413766,1831619,Scavenging
-Southeast Asia,SheepGoat,Pastoral,Scavenging,2759561,2731231,Scavenging,,,,,,
-Eastern Europe,SheepGoat,Pastoral,Scavenging,0,0,Scavenging,,,,,,
-Korea,SheepGoat,Pastoral,Scavenging,27262,32001,Scavenging,,,,,,
-India,SheepGoat,Pastoral,Scavenging,2125679,2164406,Scavenging,,,,,,
-
-
-Non-energy cost: Mixed,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-7002,,,,minicam-non-energy-input,,,,,,,,
-,,,,input-cost,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-USA,SheepGoat,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Canada,SheepGoat,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Western Europe,SheepGoat,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Japan,SheepGoat,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Australia_NZ,SheepGoat,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Former Soviet Union,SheepGoat,Mixed,Corn,10,10,10,10,10,10,10,10,10
-China,SheepGoat,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Middle East,SheepGoat,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Africa,SheepGoat,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Latin America,SheepGoat,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Southeast Asia,SheepGoat,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Eastern Europe,SheepGoat,Mixed,Corn,10,10,10,10,10,10,10,10,10
-Korea,SheepGoat,Mixed,Corn,10,10,10,10,10,10,10,10,10
-India,SheepGoat,Mixed,Corn,10,10,10,10,10,10,10,10,10
-USA,SheepGoat,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Canada,SheepGoat,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Western Europe,SheepGoat,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Japan,SheepGoat,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Australia_NZ,SheepGoat,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Former Soviet Union,SheepGoat,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-China,SheepGoat,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Middle East,SheepGoat,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Africa,SheepGoat,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Latin America,SheepGoat,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Southeast Asia,SheepGoat,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Eastern Europe,SheepGoat,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-Korea,SheepGoat,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-India,SheepGoat,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10
-USA,SheepGoat,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Canada,SheepGoat,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Western Europe,SheepGoat,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Japan,SheepGoat,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Australia_NZ,SheepGoat,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Former Soviet Union,SheepGoat,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-China,SheepGoat,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Middle East,SheepGoat,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Africa,SheepGoat,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Latin America,SheepGoat,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Southeast Asia,SheepGoat,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Eastern Europe,SheepGoat,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-Korea,SheepGoat,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-India,SheepGoat,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10
-USA,SheepGoat,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Canada,SheepGoat,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Western Europe,SheepGoat,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Japan,SheepGoat,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Australia_NZ,SheepGoat,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Former Soviet Union,SheepGoat,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-China,SheepGoat,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Middle East,SheepGoat,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Africa,SheepGoat,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Latin America,SheepGoat,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Southeast Asia,SheepGoat,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Eastern Europe,SheepGoat,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-Korea,SheepGoat,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-India,SheepGoat,Mixed,OilCrop,10,10,10,10,10,10,10,10,10
-USA,SheepGoat,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Canada,SheepGoat,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Western Europe,SheepGoat,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Japan,SheepGoat,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Australia_NZ,SheepGoat,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Former Soviet Union,SheepGoat,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-China,SheepGoat,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Middle East,SheepGoat,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Africa,SheepGoat,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Latin America,SheepGoat,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Southeast Asia,SheepGoat,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Eastern Europe,SheepGoat,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-Korea,SheepGoat,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-India,SheepGoat,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10
-USA,SheepGoat,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Canada,SheepGoat,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Western Europe,SheepGoat,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Japan,SheepGoat,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Australia_NZ,SheepGoat,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Former Soviet Union,SheepGoat,Mixed,Rice,10,10,10,10,10,10,10,10,10
-China,SheepGoat,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Middle East,SheepGoat,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Africa,SheepGoat,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Latin America,SheepGoat,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Southeast Asia,SheepGoat,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Eastern Europe,SheepGoat,Mixed,Rice,10,10,10,10,10,10,10,10,10
-Korea,SheepGoat,Mixed,Rice,10,10,10,10,10,10,10,10,10
-India,SheepGoat,Mixed,Rice,10,10,10,10,10,10,10,10,10
-USA,SheepGoat,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Canada,SheepGoat,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Western Europe,SheepGoat,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Japan,SheepGoat,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Australia_NZ,SheepGoat,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Former Soviet Union,SheepGoat,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-China,SheepGoat,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Middle East,SheepGoat,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Africa,SheepGoat,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Latin America,SheepGoat,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Southeast Asia,SheepGoat,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Eastern Europe,SheepGoat,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-Korea,SheepGoat,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-India,SheepGoat,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10
-USA,SheepGoat,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Canada,SheepGoat,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Western Europe,SheepGoat,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Japan,SheepGoat,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Australia_NZ,SheepGoat,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Former Soviet Union,SheepGoat,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-China,SheepGoat,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Middle East,SheepGoat,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Africa,SheepGoat,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Latin America,SheepGoat,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Southeast Asia,SheepGoat,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Eastern Europe,SheepGoat,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-Korea,SheepGoat,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-India,SheepGoat,Mixed,Wheat,10,10,10,10,10,10,10,10,10
-USA,SheepGoat,Mixed,Pasture,10,10,10,10,10,10,10,10,10
-Canada,SheepGoat,Mixed,Pasture,10,10,10,10,10,10,10,10,10
-Western Europe,SheepGoat,Mixed,Pasture,10,10,10,10,10,10,10,10,10
-Japan,SheepGoat,Mixed,Pasture,10,10,10,10,10,10,10,10,10
-Australia_NZ,SheepGoat,Mixed,Pasture,10,10,10,10,10,10,10,10,10
-Former Soviet Union,SheepGoat,Mixed,Pasture,10,10,10,10,10,10,10,10,10
-China,SheepGoat,Mixed,Pasture,10,10,10,10,10,10,10,10,10
-Middle East,SheepGoat,Mixed,Pasture,10,10,10,10,10,10,10,10,10
-Africa,SheepGoat,Mixed,Pasture,10,10,10,10,10,10,10,10,10
-Latin America,SheepGoat,Mixed,Pasture,10,10,10,10,10,10,10,10,10
-Southeast Asia,SheepGoat,Mixed,Pasture,10,10,10,10,10,10,10,10,10
-Eastern Europe,SheepGoat,Mixed,Pasture,10,10,10,10,10,10,10,10,10
-Korea,SheepGoat,Mixed,Pasture,10,10,10,10,10,10,10,10,10
-India,SheepGoat,Mixed,Pasture,10,10,10,10,10,10,10,10,10
-
-
-Non-energy cost: Pastoral,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-7002,,,,minicam-non-energy-input,,,,,,,,
-,,,,input-cost,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-USA,SheepGoat,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
-Canada,SheepGoat,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
-Western Europe,SheepGoat,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
-Japan,SheepGoat,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
-Australia_NZ,SheepGoat,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
-Former Soviet Union,SheepGoat,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
-China,SheepGoat,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
-Middle East,SheepGoat,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
-Africa,SheepGoat,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
-Latin America,SheepGoat,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
-Southeast Asia,SheepGoat,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
-Eastern Europe,SheepGoat,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
-Korea,SheepGoat,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
-India,SheepGoat,Pastoral,Pasture,10,10,10,10,10,10,10,10,10
-
-
-Non-energy cost: Scavenging,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-7002,,,,minicam-non-energy-input,,,,,,,,
-,,,,input-cost,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-USA,SheepGoat,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
-Canada,SheepGoat,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
-Western Europe,SheepGoat,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
-Japan,SheepGoat,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
-Australia_NZ,SheepGoat,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
-Former Soviet Union,SheepGoat,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
-China,SheepGoat,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
-Middle East,SheepGoat,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
-Africa,SheepGoat,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
-Latin America,SheepGoat,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
-Southeast Asia,SheepGoat,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
-Eastern Europe,SheepGoat,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
-Korea,SheepGoat,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
-India,SheepGoat,Mixed,Scavenging,10,10,10,10,10,10,10,10,10
-USA,SheepGoat,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
-Canada,SheepGoat,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
-Western Europe,SheepGoat,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
-Japan,SheepGoat,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
-Australia_NZ,SheepGoat,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
-Former Soviet Union,SheepGoat,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
-China,SheepGoat,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
-Middle East,SheepGoat,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
-Africa,SheepGoat,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
-Latin America,SheepGoat,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
-Southeast Asia,SheepGoat,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
-Eastern Europe,SheepGoat,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
-Korea,SheepGoat,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
-India,SheepGoat,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10
-
-
-Technology Logit Exponent,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-7003,,,,,,,,,,,,
-,,,,logitexp,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-USA,SheepGoat,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Canada,SheepGoat,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Western Europe,SheepGoat,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Japan,SheepGoat,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,SheepGoat,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Former Soviet Union,SheepGoat,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-China,SheepGoat,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Middle East,SheepGoat,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,SheepGoat,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Latin America,SheepGoat,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Southeast Asia,SheepGoat,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Eastern Europe,SheepGoat,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Korea,SheepGoat,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-India,SheepGoat,Mixed,Corn,-6,-6,-6,-6,-6,-6,-6,-6,-6
-USA,SheepGoat,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Canada,SheepGoat,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Western Europe,SheepGoat,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Japan,SheepGoat,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,SheepGoat,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Former Soviet Union,SheepGoat,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-China,SheepGoat,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Middle East,SheepGoat,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,SheepGoat,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Latin America,SheepGoat,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Southeast Asia,SheepGoat,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Eastern Europe,SheepGoat,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Korea,SheepGoat,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-India,SheepGoat,Mixed,FodderCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-USA,SheepGoat,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Canada,SheepGoat,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Western Europe,SheepGoat,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Japan,SheepGoat,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,SheepGoat,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Former Soviet Union,SheepGoat,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-China,SheepGoat,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Middle East,SheepGoat,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,SheepGoat,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Latin America,SheepGoat,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Southeast Asia,SheepGoat,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Eastern Europe,SheepGoat,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Korea,SheepGoat,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-India,SheepGoat,Mixed,MiscCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-USA,SheepGoat,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Canada,SheepGoat,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Western Europe,SheepGoat,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Japan,SheepGoat,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,SheepGoat,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Former Soviet Union,SheepGoat,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-China,SheepGoat,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Middle East,SheepGoat,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,SheepGoat,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Latin America,SheepGoat,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Southeast Asia,SheepGoat,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Eastern Europe,SheepGoat,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Korea,SheepGoat,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-India,SheepGoat,Mixed,OilCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-USA,SheepGoat,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Canada,SheepGoat,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Western Europe,SheepGoat,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Japan,SheepGoat,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,SheepGoat,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Former Soviet Union,SheepGoat,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-China,SheepGoat,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Middle East,SheepGoat,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,SheepGoat,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Latin America,SheepGoat,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Southeast Asia,SheepGoat,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Eastern Europe,SheepGoat,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Korea,SheepGoat,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-India,SheepGoat,Mixed,OtherGrain,-6,-6,-6,-6,-6,-6,-6,-6,-6
-USA,SheepGoat,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Canada,SheepGoat,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Western Europe,SheepGoat,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Japan,SheepGoat,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,SheepGoat,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Former Soviet Union,SheepGoat,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-China,SheepGoat,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Middle East,SheepGoat,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,SheepGoat,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Latin America,SheepGoat,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Southeast Asia,SheepGoat,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Eastern Europe,SheepGoat,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Korea,SheepGoat,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-India,SheepGoat,Mixed,Rice,-6,-6,-6,-6,-6,-6,-6,-6,-6
-USA,SheepGoat,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Canada,SheepGoat,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Western Europe,SheepGoat,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Japan,SheepGoat,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,SheepGoat,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Former Soviet Union,SheepGoat,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-China,SheepGoat,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Middle East,SheepGoat,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,SheepGoat,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Latin America,SheepGoat,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Southeast Asia,SheepGoat,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Eastern Europe,SheepGoat,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Korea,SheepGoat,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-India,SheepGoat,Mixed,SugarCrop,-6,-6,-6,-6,-6,-6,-6,-6,-6
-USA,SheepGoat,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Canada,SheepGoat,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Western Europe,SheepGoat,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Japan,SheepGoat,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,SheepGoat,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Former Soviet Union,SheepGoat,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-China,SheepGoat,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Middle East,SheepGoat,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,SheepGoat,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Latin America,SheepGoat,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Southeast Asia,SheepGoat,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Eastern Europe,SheepGoat,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Korea,SheepGoat,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-India,SheepGoat,Mixed,Wheat,-6,-6,-6,-6,-6,-6,-6,-6,-6
-USA,SheepGoat,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Canada,SheepGoat,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Western Europe,SheepGoat,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Japan,SheepGoat,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,SheepGoat,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Former Soviet Union,SheepGoat,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-China,SheepGoat,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Middle East,SheepGoat,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,SheepGoat,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Latin America,SheepGoat,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Southeast Asia,SheepGoat,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Eastern Europe,SheepGoat,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Korea,SheepGoat,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-India,SheepGoat,Mixed,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-
-
-Technology Logit Exponent,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-7003,,,,,,,,,,,,
-,,,,logitexp,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-USA,SheepGoat,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Canada,SheepGoat,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Western Europe,SheepGoat,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Japan,SheepGoat,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,SheepGoat,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Former Soviet Union,SheepGoat,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-China,SheepGoat,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Middle East,SheepGoat,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,SheepGoat,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Latin America,SheepGoat,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Southeast Asia,SheepGoat,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Eastern Europe,SheepGoat,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Korea,SheepGoat,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-India,SheepGoat,Pastoral,Pasture,-6,-6,-6,-6,-6,-6,-6,-6,-6
-
-
-Technology Logit Exponent: Animal Products and Scavenging,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-7003,,,,,,,,,,,,
-,,,,logitexp,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-USA,SheepGoat,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Canada,SheepGoat,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Western Europe,SheepGoat,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Japan,SheepGoat,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,SheepGoat,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Former Soviet Union,SheepGoat,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-China,SheepGoat,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Middle East,SheepGoat,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,SheepGoat,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Latin America,SheepGoat,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Southeast Asia,SheepGoat,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Eastern Europe,SheepGoat,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Korea,SheepGoat,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-India,SheepGoat,Mixed,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-USA,SheepGoat,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Canada,SheepGoat,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Western Europe,SheepGoat,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Japan,SheepGoat,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Australia_NZ,SheepGoat,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Former Soviet Union,SheepGoat,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-China,SheepGoat,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Middle East,SheepGoat,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Africa,SheepGoat,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Latin America,SheepGoat,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Southeast Asia,SheepGoat,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Eastern Europe,SheepGoat,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-Korea,SheepGoat,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-India,SheepGoat,Pastoral,Scavenging,-6,-6,-6,-6,-6,-6,-6,-6,-6
-
-
-Set shareweights to 0 for techs with 0 share in base years,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-7004,,,,,,,,,,,,
-,,,,sharewt,,,,,,,,
-region,supplysector,subsector,technology,1990,2005,2020,2035,2050,2065,2080,2095,
-USA,SheepGoat,Mixed,Rice,0,0,0,0,0,0,0,0,
-Canada,SheepGoat,Mixed,Rice,0,0,0,0,0,0,0,0,
-Australia_NZ,SheepGoat,Mixed,Rice,0,0,0,0,0,0,0,0,
-Former Soviet Union,SheepGoat,Mixed,Rice,0,0,0,0,0,0,0,0,
-Korea,SheepGoat,Mixed,Rice,0,0,0,0,0,0,0,0
-USA,SheepGoat,Mixed,SugarCrop,0,0,0,0,0,0,0,0
-Japan,SheepGoat,Mixed,SugarCrop,0,0,0,0,0,0,0,0
-Australia_NZ,SheepGoat,Mixed,SugarCrop,0,0,0,0,0,0,0,0
-Korea,SheepGoat,Mixed,SugarCrop,0,0,0,0,0,0,0,0
-Japan,SheepGoat,Pastoral,Pasture,0,0,0,0,0,0,0,0
-Eastern Europe,SheepGoat,Pastoral,Pasture,0,0,0,0,0,0,0,0
-USA,SheepGoat,Mixed,Scavenging,0,0,0,0,0,0,0,0
-Canada,SheepGoat,Mixed,Scavenging,0,0,0,0,0,0,0,0
-Japan,SheepGoat,Mixed,Scavenging,0,0,0,0,0,0,0,0
-Eastern Europe,SheepGoat,Mixed,Scavenging,0,0,0,0,0,0,0,0
-USA,SheepGoat,Pastoral,Scavenging,0,0,0,0,0,0,0,0
-Canada,SheepGoat,Pastoral,Scavenging,0,0,0,0,0,0,0,0
-Japan,SheepGoat,Pastoral,Scavenging,0,0,0,0,0,0,0,0
-Eastern Europe,SheepGoat,Pastoral,Scavenging,0,0,0,0,0,0,0,0
-
-
-CO2 tag,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-7010,,,,,,,,,,,,
-,,,,CO2,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,SheepGoat,Mixed,Corn,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,SheepGoat,Mixed,FodderCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,SheepGoat,Mixed,MiscCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,SheepGoat,Mixed,OilCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,SheepGoat,Mixed,OtherGrain,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,SheepGoat,Mixed,Rice,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,SheepGoat,Mixed,SugarCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,SheepGoat,Mixed,Wheat,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,SheepGoat,Mixed,Pasture,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,SheepGoat,Pastoral,Pasture,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,SheepGoat,Mixed,Scavenging,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,SheepGoat,Pastoral,Scavenging,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-
-
-Energy-final-demand drivers: consumption of animals for food,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-62,,,,,,,,,,,,
-,demandsector,,base-service,,,price-elasticity,income-elasticity,,,,,
-region,energy-final-demand,perCapitaBased,1975,1990,2005,2020 fillout,2020,2035,2050,2065,2080,2095
-USA,SheepGoatDemand,1,217848,217848,110158,-0.5,0.01,0.089,0.002,0.002,0.002,0.002
-Canada,SheepGoatDemand,1,11340,11340,21204,-0.5,0.01,0.089,0.002,0.002,0.002,0.002
-Western Europe,SheepGoatDemand,1,2026244,2026244,1761273,-0.5,0.01,0.089,0.002,0.002,0.002,0.002
-Japan,SheepGoatDemand,1,479,479,241,-0.5,0.01,0.089,0.002,0.002,0.002,0.002
-Australia_NZ,SheepGoatDemand,1,1512089,1512089,1478887,-0.5,0.01,0.089,0.002,0.002,0.002,0.002
-Former Soviet Union,SheepGoatDemand,1,1181983,1181983,708064,-0.5,0.01,0.089,0.002,0.002,0.002,0.002
-China,SheepGoatDemand,1,1473810,1473810,5497241,-0.5,0.134,0.074,0.014,0.014,0.014,0.014
-Middle East,SheepGoatDemand,1,852147,852147,1311869,-0.5,0.134,0.074,0.014,0.014,0.014,0.014
-Africa,SheepGoatDemand,1,1947390,1947390,2308128,-0.5,0.134,0.074,0.014,0.014,0.014,0.014
-Latin America,SheepGoatDemand,1,546649,546649,511112,-0.5,0.134,0.074,0.014,0.014,0.014,0.014
-Southeast Asia,SheepGoatDemand,1,1044771,1044771,1258686,-0.5,0.134,0.074,0.014,0.014,0.014,0.014
-Eastern Europe,SheepGoatDemand,1,421528,421528,209144,-0.5,0.01,0.089,0.002,0.002,0.002,0.002
-Korea,SheepGoatDemand,1,7884,7884,17993,-0.5,0.134,0.074,0.014,0.014,0.014,0.014
-India,SheepGoatDemand,1,744150,744150,892554,-0.5,0.134,0.074,0.014,0.014,0.014,0.014
-
-Meat demand supplysectors: unit tags and sector type,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-50,,,,,,,,,,,,
-,demandsector,,,,,,,,,,,
-region,supplysector,input-unit,output-unit,price-unit,sectorType,,,,,,,
-ALL,SheepGoatDemand,Gcal,Gcal,1975$/Gcal,agDemand
-
-
-Meat Food Demands scale year,,,,,
-INPUT_TABLE,,,,,
-Variable ID,,,,,
-500,,,,,
-,demandsector,,,,
-region,supplysector,subsector,scaleYear,,
-USA,SheepGoatDemand,SheepGoatDemand,2005,,
-Canada,SheepGoatDemand,SheepGoatDemand,2005,,
-Western Europe,SheepGoatDemand,SheepGoatDemand,2005,,
-Japan,SheepGoatDemand,SheepGoatDemand,2005,,
-Australia_NZ,SheepGoatDemand,SheepGoatDemand,2005,,
-Former Soviet Union,SheepGoatDemand,SheepGoatDemand,2005,,
-China,SheepGoatDemand,SheepGoatDemand,2005,,
-Middle East,SheepGoatDemand,SheepGoatDemand,2005
-Africa,SheepGoatDemand,SheepGoatDemand,2005
-Latin America,SheepGoatDemand,SheepGoatDemand,2005
-Southeast Asia,SheepGoatDemand,SheepGoatDemand,2005
-Eastern Europe,SheepGoatDemand,SheepGoatDemand,2005
-Korea,SheepGoatDemand,SheepGoatDemand,2005
-India,SheepGoatDemand,SheepGoatDemand,2005
-USA,SheepGoatDemand,SheepGoatNonfoodDemand,2005
-Canada,SheepGoatDemand,SheepGoatNonfoodDemand,2005
-Western Europe,SheepGoatDemand,SheepGoatNonfoodDemand,2005
-Japan,SheepGoatDemand,SheepGoatNonfoodDemand,2005
-Australia_NZ,SheepGoatDemand,SheepGoatNonfoodDemand,2005
-Former Soviet Union,SheepGoatDemand,SheepGoatNonfoodDemand,2005
-China,SheepGoatDemand,SheepGoatNonfoodDemand,2005
-Middle East,SheepGoatDemand,SheepGoatNonfoodDemand,2005
-Africa,SheepGoatDemand,SheepGoatNonfoodDemand,2005
-Latin America,SheepGoatDemand,SheepGoatNonfoodDemand,2005,,,,,,,,,,
-Southeast Asia,SheepGoatDemand,SheepGoatNonfoodDemand,2005,,,,,,,,,,
-Eastern Europe,SheepGoatDemand,SheepGoatNonfoodDemand,2005,,,,,,,,,,
-Korea,SheepGoatDemand,SheepGoatNonfoodDemand,2005,,,,,,,,,,
-India,SheepGoatDemand,SheepGoatNonfoodDemand,2005,,,,,,,,,,
-
-
-Efficiency,,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,
-5001,,,,,,,,,,,,,
-,,,,efficiency,,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input
-USA,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0.993802,0.993802,0.994734,0.994734,0.994734,0.994734,0.994734,0.994734,0.994734,SheepGoat
-Canada,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0.992460,0.992460,0.993137,0.993137,0.993137,0.993137,0.993137,0.993137,0.993137,SheepGoat
-Western Europe,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0.971631,0.971631,0.975351,0.975351,0.975351,0.975351,0.975351,0.975351,0.975351,SheepGoat
-Japan,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0.975731,0.975731,0.979563,0.979563,0.979563,0.979563,0.979563,0.979563,0.979563,SheepGoat
-Australia_NZ,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0.969646,0.969646,0.972598,0.972598,0.972598,0.972598,0.972598,0.972598,0.972598,SheepGoat
-Former Soviet Union,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0.955114,0.955114,0.970503,0.970503,0.970503,0.970503,0.970503,0.970503,0.970503,SheepGoat
-China,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0.997776,0.997776,0.997308,0.997308,0.997308,0.997308,0.997308,0.997308,0.997308,SheepGoat
-Middle East,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0.970052,0.970052,0.974787,0.974787,0.974787,0.974787,0.974787,0.974787,0.974787,SheepGoat
-Africa,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0.987908,0.987908,0.984842,0.984842,0.984842,0.984842,0.984842,0.984842,0.984842,SheepGoat
-Latin America,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0.988096,0.988096,0.988814,0.988814,0.988814,0.988814,0.988814,0.988814,0.988814,SheepGoat
-Southeast Asia,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0.989652,0.989652,0.988585,0.988585,0.988585,0.988585,0.988585,0.988585,0.988585,SheepGoat
-Eastern Europe,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0.972651,0.972651,0.974157,0.974157,0.974157,0.974157,0.974157,0.974157,0.974157,SheepGoat
-Korea,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0.983135,0.983135,0.983173,0.983173,0.983173,0.983173,0.983173,0.983173,0.983173,SheepGoat
-India,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0.989984,0.989984,0.988008,0.988008,0.988008,0.988008,0.988008,0.988008,0.988008,SheepGoat
-USA,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0.993802,0.993802,0.994734,0.994734,0.994734,0.994734,0.994734,0.994734,0.994734,SheepGoat
-Canada,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0.992460,0.992460,0.993137,0.993137,0.993137,0.993137,0.993137,0.993137,0.993137,SheepGoat
-Western Europe,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0.971631,0.971631,0.975351,0.975351,0.975351,0.975351,0.975351,0.975351,0.975351,SheepGoat
-Japan,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0.975731,0.975731,0.979563,0.979563,0.979563,0.979563,0.979563,0.979563,0.979563,SheepGoat
-Australia_NZ,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0.969646,0.969646,0.972598,0.972598,0.972598,0.972598,0.972598,0.972598,0.972598,SheepGoat
-Former Soviet Union,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0.955114,0.955114,0.970503,0.970503,0.970503,0.970503,0.970503,0.970503,0.970503,SheepGoat,,,,
-China,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0.997776,0.997776,0.997308,0.997308,0.997308,0.997308,0.997308,0.997308,0.997308,SheepGoat,,,,
-Middle East,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0.970052,0.970052,0.974787,0.974787,0.974787,0.974787,0.974787,0.974787,0.974787,SheepGoat,,,,
-Africa,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0.987908,0.987908,0.984842,0.984842,0.984842,0.984842,0.984842,0.984842,0.984842,SheepGoat,,,,
-Latin America,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0.988096,0.988096,0.988814,0.988814,0.988814,0.988814,0.988814,0.988814,0.988814,SheepGoat,,,,
-Southeast Asia,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0.989652,0.989652,0.988585,0.988585,0.988585,0.988585,0.988585,0.988585,0.988585,SheepGoat,,,,
-Eastern Europe,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0.972651,0.972651,0.974157,0.974157,0.974157,0.974157,0.974157,0.974157,0.974157,SheepGoat,,,,
-Korea,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0.983135,0.983135,0.983173,0.983173,0.983173,0.983173,0.983173,0.983173,0.983173,SheepGoat,,,,
-India,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0.989984,0.989984,0.988008,0.988008,0.988008,0.988008,0.988008,0.988008,0.988008,SheepGoat,,,,
-
-Calibrated inputs to demand sectors,,,,,,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,,,,,,
-5000,,,,,,,,,,,,,,,,,
-,demandsector,,,calibrated-value,calibrated-value,calibrated-value,,from data,,,demands,,supplies,,,demand scalers,
-region,supplysector,subsector,technology,1990,2005,minicam-energy-input,,1990,2005,,1990,2005,1990,2005,,1990,2005
-USA,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,219206,110740,SheepGoat,,219223,110749,,219224,110750,219207,110741,,0.99992346,0.999918064
-Canada,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,11425,21350,SheepGoat,,11427,21353,,11428,21354,11426,21351,,0.999826854,0.999868148
-Western Europe,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,2085405,1805783,SheepGoat,,2086761,1806810,,2086762,1806811,2085406,1805784,,0.999350095,0.999431483
-Japan,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,490,245,SheepGoat,,492,246,,493,247,491,246,,0.996684146,0.994886296
-Australia_NZ,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,619046,461162,SheepGoat,,619170,461422,,1559735,1521409,1559424,1520553,,0.999800958,0.999436971
-Former Soviet Union,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,1237530,684513,SheepGoat,,1239348,685196,,1239349,730313,1237531,729584,,0.998532927,0.999002677
-China,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,1477094,5512076,SheepGoat,,1477107,5512159,,1477108,5512160,1477095,5512077,,0.999991393,0.999984964
-Middle East,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,878454,1236239,SheepGoat,,880579,1239164,,880580,1348985,878455,1345801,,0.997586276,0.997639821
-Africa,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,1541390,2185557,SheepGoat,,1541842,2186313,,1971806,2344462,1971227,2343652,,0.999706723,0.999654466
-Latin America,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,527428,516893,SheepGoat,,527461,516927,,553269,516928,553235,516894,,0.99993843,0.999933809
-Southeast Asia,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,946913,1193111,SheepGoat,,947039,1193321,,1055836,1273445,1055696,1273220,,0.999867267,0.999823667
-Eastern Europe,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,264635,177750,SheepGoat,,264807,177870,,433662,214838,433381,214692,,0.999350475,0.999322468
-Korea,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,8018,11573,SheepGoat,,8020,11574,,8021,18302,8019,18301,,0.999807576,0.999900126
-India,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,733514,869680,SheepGoat,,733609,869856,,751776,903570,751679,903387,,0.999870473,0.999797618
-USA,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,1,1,SheepGoat,,1,1,,,,,,,,
-Canada,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,1,1,SheepGoat,,1,1,,,,,,,,
-Western Europe,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,1,1,SheepGoat,,1,1
-Japan,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,1,1,SheepGoat,,1,1
-Australia_NZ,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,940378,1059390,SheepGoat,,940565,1059987
-Former Soviet Union,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,1,45071,SheepGoat,,1,45116
-China,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,1,1,SheepGoat,,1,1
-Middle East,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,1,109563,SheepGoat,,1,109822
-Africa,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,429838,158095,SheepGoat,,429964,158150
-Latin America,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,25806,1,SheepGoat,,25808,1
-Southeast Asia,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,108783,80109,SheepGoat,,108797,80123
-Eastern Europe,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,168746,36943,SheepGoat,,168856,36968
-Korea,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,1,6727,SheepGoat,,1,6728
-India,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,18165,33707,SheepGoat,,18167,33714
-
-
-Non-energy input cost,,,,,,,,,
-table not necessary,,,,,,,,,
-
-5002,,,,,,,,,,,,
-,,,,input-cost,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0,0,0,0,0,0,0,0,0
-ALL,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0,0,0,0,0,0,0,0,0
-
-
-add CO2 tag,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-5010,,,,,,,,,,,,
-,,,,CO2,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-ALL,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2
-
-
-
-
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
-,,,,,,
+SheepGoat Supply,,,,,,,,,,,,,,,,,,
+Units and sector type,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+70,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+region,supplysector,output-unit,input-unit,price-unit,sectorType,,,,,,,,,,,,,
+ALL,SheepGoat,Gcal,Gcal,1975$/Gcal,AnimalSupply,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Subsector logit exponent,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+71,,,,,,,,,,,,,,,,,,
+,,1975 fillout,,,,,,,,,,,,,,,,
+region,supplysector,logit-exponent,,,,,,,,,,,,,,,,
+USA,SheepGoat,-3,,,,,,,,,,,,,,,,
+Canada,SheepGoat,-3,,,,,,,,,,,,,,,,
+Western Europe,SheepGoat,-3,,,,,,,,,,,,,,,,
+Japan,SheepGoat,-3,,,,,,,,,,,,,,,,
+Australia_NZ,SheepGoat,-3,,,,,,,,,,,,,,,,
+Former Soviet Union,SheepGoat,-3,,,,,,,,,,,,,,,,
+China,SheepGoat,-3,,,,,,,,,,,,,,,,
+Middle East,SheepGoat,-3,,,,,,,,,,,,,,,,
+Africa,SheepGoat,-3,,,,,,,,,,,,,,,,
+Latin America,SheepGoat,-3,,,,,,,,,,,,,,,,
+Southeast Asia,SheepGoat,-3,,,,,,,,,,,,,,,,
+Eastern Europe,SheepGoat,-3,,,,,,,,,,,,,,,,
+Korea,SheepGoat,-3,,,,,,,,,,,,,,,,
+India,SheepGoat,-3,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Subsector scaling,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+700,,,,,,,,,,,,,,,,,,
+Source Inputs,,,share-weight,interpolation-rule,,,,,,,,,,,,,,
+region,supplysector,subsector,1975 fillout,apply-to,from-year,to-year,interpolation-function,,,,,,,,,,,
+USA,SheepGoat,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,SheepGoat,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,SheepGoat,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,SheepGoat,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,SheepGoat,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,SheepGoat,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,SheepGoat,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,SheepGoat,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,SheepGoat,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,SheepGoat,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,SheepGoat,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,SheepGoat,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,SheepGoat,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,SheepGoat,Mixed,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+USA,SheepGoat,Pastoral,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,SheepGoat,Pastoral,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,SheepGoat,Pastoral,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,SheepGoat,Pastoral,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,SheepGoat,Pastoral,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,SheepGoat,Pastoral,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,SheepGoat,Pastoral,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,SheepGoat,Pastoral,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,SheepGoat,Pastoral,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,SheepGoat,Pastoral,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,SheepGoat,Pastoral,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,SheepGoat,Pastoral,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,SheepGoat,Pastoral,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,SheepGoat,Pastoral,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Technology Logit Exponent,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+702,,,,,,,,,,,,,,,,,,
+Source Inputs,,,1975 fillout,,,,,,,,,,,,,,,
+region,supplysector,subsector,logit-exponent,,,,,,,,,,,,,,,
+USA,SheepGoat,Mixed,-6,,,,,,,,,,,,,,,
+Canada,SheepGoat,Mixed,-6,,,,,,,,,,,,,,,
+Western Europe,SheepGoat,Mixed,-6,,,,,,,,,,,,,,,
+Japan,SheepGoat,Mixed,-6,,,,,,,,,,,,,,,
+Australia_NZ,SheepGoat,Mixed,-6,,,,,,,,,,,,,,,
+Former Soviet Union,SheepGoat,Mixed,-6,,,,,,,,,,,,,,,
+China,SheepGoat,Mixed,-6,,,,,,,,,,,,,,,
+Middle East,SheepGoat,Mixed,-6,,,,,,,,,,,,,,,
+Africa,SheepGoat,Mixed,-6,,,,,,,,,,,,,,,
+Latin America,SheepGoat,Mixed,-6,,,,,,,,,,,,,,,
+Southeast Asia,SheepGoat,Mixed,-6,,,,,,,,,,,,,,,
+Eastern Europe,SheepGoat,Mixed,-6,,,,,,,,,,,,,,,
+Korea,SheepGoat,Mixed,-6,,,,,,,,,,,,,,,
+India,SheepGoat,Mixed,-6,,,,,,,,,,,,,,,
+USA,SheepGoat,Pastoral,-6,,,,,,,,,,,,,,,
+Canada,SheepGoat,Pastoral,-6,,,,,,,,,,,,,,,
+Western Europe,SheepGoat,Pastoral,-6,,,,,,,,,,,,,,,
+Japan,SheepGoat,Pastoral,-6,,,,,,,,,,,,,,,
+Australia_NZ,SheepGoat,Pastoral,-6,,,,,,,,,,,,,,,
+Former Soviet Union,SheepGoat,Pastoral,-6,,,,,,,,,,,,,,,
+China,SheepGoat,Pastoral,-6,,,,,,,,,,,,,,,
+Middle East,SheepGoat,Pastoral,-6,,,,,,,,,,,,,,,
+Africa,SheepGoat,Pastoral,-6,,,,,,,,,,,,,,,
+Latin America,SheepGoat,Pastoral,-6,,,,,,,,,,,,,,,
+Southeast Asia,SheepGoat,Pastoral,-6,,,,,,,,,,,,,,,
+Eastern Europe,SheepGoat,Pastoral,-6,,,,,,,,,,,,,,,
+Korea,SheepGoat,Pastoral,-6,,,,,,,,,,,,,,,
+India,SheepGoat,Pastoral,-6,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Technology shareweight scaling,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+705,,,,,,,,,,,,,,,,,,
+,,,,interpolation-rule,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,apply-to,from-year,to-year,interpolation-function,,,,,,,,,,,
+USA,SheepGoat,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,SheepGoat,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,SheepGoat,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,SheepGoat,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,SheepGoat,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,SheepGoat,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,SheepGoat,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,SheepGoat,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,SheepGoat,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,SheepGoat,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,SheepGoat,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,SheepGoat,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,SheepGoat,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,SheepGoat,Mixed,Corn,share-weight,2005,2095,fixed,,,,,,,,,,,
+USA,SheepGoat,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,SheepGoat,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,SheepGoat,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,SheepGoat,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,SheepGoat,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,SheepGoat,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,SheepGoat,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,SheepGoat,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,SheepGoat,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,SheepGoat,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,SheepGoat,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,SheepGoat,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,SheepGoat,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,SheepGoat,Mixed,FodderCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+USA,SheepGoat,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,SheepGoat,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,SheepGoat,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,SheepGoat,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,SheepGoat,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,SheepGoat,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,SheepGoat,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,SheepGoat,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,SheepGoat,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,SheepGoat,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,SheepGoat,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,SheepGoat,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,SheepGoat,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,SheepGoat,Mixed,MiscCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+USA,SheepGoat,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,SheepGoat,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,SheepGoat,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,SheepGoat,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,SheepGoat,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,SheepGoat,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,SheepGoat,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,SheepGoat,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,SheepGoat,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,SheepGoat,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,SheepGoat,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,SheepGoat,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,SheepGoat,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,SheepGoat,Mixed,OilCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+USA,SheepGoat,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,SheepGoat,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,SheepGoat,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,SheepGoat,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,SheepGoat,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,SheepGoat,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,SheepGoat,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,SheepGoat,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,SheepGoat,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,SheepGoat,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,SheepGoat,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,SheepGoat,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,SheepGoat,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,SheepGoat,Mixed,OtherGrain,share-weight,2005,2095,fixed,,,,,,,,,,,
+USA,SheepGoat,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,SheepGoat,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,SheepGoat,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,SheepGoat,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,SheepGoat,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,SheepGoat,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,SheepGoat,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,SheepGoat,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,SheepGoat,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,SheepGoat,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,SheepGoat,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,SheepGoat,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,SheepGoat,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,SheepGoat,Mixed,Rice,share-weight,2005,2095,fixed,,,,,,,,,,,
+USA,SheepGoat,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,SheepGoat,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,SheepGoat,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,SheepGoat,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,SheepGoat,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,SheepGoat,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,SheepGoat,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,SheepGoat,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,SheepGoat,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,SheepGoat,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,SheepGoat,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,SheepGoat,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,SheepGoat,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,SheepGoat,Mixed,SugarCrop,share-weight,2005,2095,fixed,,,,,,,,,,,
+USA,SheepGoat,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,SheepGoat,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,SheepGoat,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,SheepGoat,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,SheepGoat,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,SheepGoat,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,SheepGoat,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,SheepGoat,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,SheepGoat,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,SheepGoat,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,SheepGoat,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,SheepGoat,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,SheepGoat,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,SheepGoat,Mixed,Wheat,share-weight,2005,2095,fixed,,,,,,,,,,,
+USA,SheepGoat,Mixed,Pasture,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,SheepGoat,Mixed,Pasture,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,SheepGoat,Mixed,Pasture,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,SheepGoat,Mixed,Pasture,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,SheepGoat,Mixed,Pasture,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,SheepGoat,Mixed,Pasture,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,SheepGoat,Mixed,Pasture,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,SheepGoat,Mixed,Pasture,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,SheepGoat,Mixed,Pasture,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,SheepGoat,Mixed,Pasture,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,SheepGoat,Mixed,Pasture,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,SheepGoat,Mixed,Pasture,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,SheepGoat,Mixed,Pasture,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,SheepGoat,Mixed,Pasture,share-weight,2005,2095,fixed,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Efficiency: Mixed,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+7001,,,,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,,,,,,
+,,,,efficiency,efficiency,efficiency,efficiency,efficiency,efficiency,efficiency,efficiency,efficiency,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input,,,,,
+USA,SheepGoat,Mixed,Corn,0.01865,0.01865,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,Corn,,,,,
+Canada,SheepGoat,Mixed,Corn,0.01778,0.01778,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,Corn,,,,,
+Western Europe,SheepGoat,Mixed,Corn,0.02662,0.02662,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,Corn,,,,,
+Japan,SheepGoat,Mixed,Corn,0.02212,0.02212,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,Corn,,,,,
+Australia_NZ,SheepGoat,Mixed,Corn,0.01897,0.01897,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,Corn,,,,,
+Former Soviet Union,SheepGoat,Mixed,Corn,0.01604,0.01604,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,Corn,,,,,
+China,SheepGoat,Mixed,Corn,0.03115,0.03115,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,Corn,,,,,
+Middle East,SheepGoat,Mixed,Corn,0.03312,0.03312,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,Corn,,,,,
+Africa,SheepGoat,Mixed,Corn,0.02860,0.02860,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,Corn,,,,,
+Latin America,SheepGoat,Mixed,Corn,0.01131,0.01131,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,Corn,,,,,
+Southeast Asia,SheepGoat,Mixed,Corn,0.03082,0.03082,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,Corn,,,,,
+Eastern Europe,SheepGoat,Mixed,Corn,0.01283,0.01283,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,Corn,,,,,
+Korea,SheepGoat,Mixed,Corn,0.03077,0.03077,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,Corn,,,,,
+India,SheepGoat,Mixed,Corn,0.03081,0.03081,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,Corn,,,,,
+USA,SheepGoat,Mixed,FodderCrop,0.01865,0.01865,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,FodderCrop,,,,,
+Canada,SheepGoat,Mixed,FodderCrop,0.01778,0.01778,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,FodderCrop,,,,,
+Western Europe,SheepGoat,Mixed,FodderCrop,0.02662,0.02662,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,FodderCrop,,,,,
+Japan,SheepGoat,Mixed,FodderCrop,0.02212,0.02212,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,FodderCrop,,,,,
+Australia_NZ,SheepGoat,Mixed,FodderCrop,0.01897,0.01897,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,FodderCrop,,,,,
+Former Soviet Union,SheepGoat,Mixed,FodderCrop,0.01604,0.01604,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,FodderCrop,,,,,
+China,SheepGoat,Mixed,FodderCrop,0.03115,0.03115,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,FodderCrop,,,,,
+Middle East,SheepGoat,Mixed,FodderCrop,0.03312,0.03312,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,FodderCrop,,,,,
+Africa,SheepGoat,Mixed,FodderCrop,0.02860,0.02860,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,FodderCrop,,,,,
+Latin America,SheepGoat,Mixed,FodderCrop,0.01131,0.01131,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,FodderCrop,,,,,
+Southeast Asia,SheepGoat,Mixed,FodderCrop,0.03082,0.03082,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,FodderCrop,,,,,
+Eastern Europe,SheepGoat,Mixed,FodderCrop,0.01283,0.01283,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,FodderCrop,,,,,
+Korea,SheepGoat,Mixed,FodderCrop,0.03077,0.03077,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,FodderCrop,,,,,
+India,SheepGoat,Mixed,FodderCrop,0.03081,0.03081,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,FodderCrop,,,,,
+USA,SheepGoat,Mixed,MiscCrop,0.01865,0.01865,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,MiscCrop,,,,,
+Canada,SheepGoat,Mixed,MiscCrop,0.01778,0.01778,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,MiscCrop,,,,,
+Western Europe,SheepGoat,Mixed,MiscCrop,0.02662,0.02662,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,MiscCrop,,,,,
+Japan,SheepGoat,Mixed,MiscCrop,0.02212,0.02212,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,MiscCrop,,,,,
+Australia_NZ,SheepGoat,Mixed,MiscCrop,0.01897,0.01897,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,MiscCrop,,,,,
+Former Soviet Union,SheepGoat,Mixed,MiscCrop,0.01604,0.01604,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,MiscCrop,,,,,
+China,SheepGoat,Mixed,MiscCrop,0.03115,0.03115,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,MiscCrop,,,,,
+Middle East,SheepGoat,Mixed,MiscCrop,0.03312,0.03312,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,MiscCrop,,,,,
+Africa,SheepGoat,Mixed,MiscCrop,0.02860,0.02860,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,MiscCrop,,,,,
+Latin America,SheepGoat,Mixed,MiscCrop,0.01131,0.01131,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,MiscCrop,,,,,
+Southeast Asia,SheepGoat,Mixed,MiscCrop,0.03082,0.03082,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,MiscCrop,,,,,
+Eastern Europe,SheepGoat,Mixed,MiscCrop,0.01283,0.01283,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,MiscCrop,,,,,
+Korea,SheepGoat,Mixed,MiscCrop,0.03077,0.03077,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,MiscCrop,,,,,
+India,SheepGoat,Mixed,MiscCrop,0.03081,0.03081,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,MiscCrop,,,,,
+USA,SheepGoat,Mixed,OilCrop,0.01865,0.01865,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,OilCrop,,,,,
+Canada,SheepGoat,Mixed,OilCrop,0.01778,0.01778,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,OilCrop,,,,,
+Western Europe,SheepGoat,Mixed,OilCrop,0.02662,0.02662,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,OilCrop,,,,,
+Japan,SheepGoat,Mixed,OilCrop,0.02212,0.02212,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,OilCrop,,,,,
+Australia_NZ,SheepGoat,Mixed,OilCrop,0.01897,0.01897,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,OilCrop,,,,,
+Former Soviet Union,SheepGoat,Mixed,OilCrop,0.01604,0.01604,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,OilCrop,,,,,
+China,SheepGoat,Mixed,OilCrop,0.03115,0.03115,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,OilCrop,,,,,
+Middle East,SheepGoat,Mixed,OilCrop,0.03312,0.03312,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,OilCrop,,,,,
+Africa,SheepGoat,Mixed,OilCrop,0.02860,0.02860,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,OilCrop,,,,,
+Latin America,SheepGoat,Mixed,OilCrop,0.01131,0.01131,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,OilCrop,,,,,
+Southeast Asia,SheepGoat,Mixed,OilCrop,0.03082,0.03082,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,OilCrop,,,,,
+Eastern Europe,SheepGoat,Mixed,OilCrop,0.01283,0.01283,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,OilCrop,,,,,
+Korea,SheepGoat,Mixed,OilCrop,0.03077,0.03077,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,OilCrop,,,,,
+India,SheepGoat,Mixed,OilCrop,0.03081,0.03081,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,OilCrop,,,,,
+USA,SheepGoat,Mixed,OtherGrain,0.01865,0.01865,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,OtherGrain,,,,,
+Canada,SheepGoat,Mixed,OtherGrain,0.01778,0.01778,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,OtherGrain,,,,,
+Western Europe,SheepGoat,Mixed,OtherGrain,0.02662,0.02662,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,OtherGrain,,,,,
+Japan,SheepGoat,Mixed,OtherGrain,0.02212,0.02212,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,OtherGrain,,,,,
+Australia_NZ,SheepGoat,Mixed,OtherGrain,0.01897,0.01897,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,OtherGrain,,,,,
+Former Soviet Union,SheepGoat,Mixed,OtherGrain,0.01604,0.01604,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,OtherGrain,,,,,
+China,SheepGoat,Mixed,OtherGrain,0.03115,0.03115,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,OtherGrain,,,,,
+Middle East,SheepGoat,Mixed,OtherGrain,0.03312,0.03312,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,OtherGrain,,,,,
+Africa,SheepGoat,Mixed,OtherGrain,0.02860,0.02860,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,OtherGrain,,,,,
+Latin America,SheepGoat,Mixed,OtherGrain,0.01131,0.01131,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,OtherGrain,,,,,
+Southeast Asia,SheepGoat,Mixed,OtherGrain,0.03082,0.03082,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,OtherGrain,,,,,
+Eastern Europe,SheepGoat,Mixed,OtherGrain,0.01283,0.01283,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,OtherGrain,,,,,
+Korea,SheepGoat,Mixed,OtherGrain,0.03077,0.03077,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,OtherGrain,,,,,
+India,SheepGoat,Mixed,OtherGrain,0.03081,0.03081,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,OtherGrain,,,,,
+USA,SheepGoat,Mixed,Rice,0.01865,0.01865,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,Rice,,,,,
+Canada,SheepGoat,Mixed,Rice,0.01778,0.01778,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,Rice,,,,,
+Western Europe,SheepGoat,Mixed,Rice,0.02662,0.02662,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,Rice,,,,,
+Japan,SheepGoat,Mixed,Rice,0.02212,0.02212,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,Rice,,,,,
+Australia_NZ,SheepGoat,Mixed,Rice,0.01897,0.01897,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,Rice,,,,,
+Former Soviet Union,SheepGoat,Mixed,Rice,0.01604,0.01604,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,Rice,,,,,
+China,SheepGoat,Mixed,Rice,0.03115,0.03115,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,Rice,,,,,
+Middle East,SheepGoat,Mixed,Rice,0.03312,0.03312,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,Rice,,,,,
+Africa,SheepGoat,Mixed,Rice,0.02860,0.02860,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,Rice,,,,,
+Latin America,SheepGoat,Mixed,Rice,0.01131,0.01131,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,Rice,,,,,
+Southeast Asia,SheepGoat,Mixed,Rice,0.03082,0.03082,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,Rice,,,,,
+Eastern Europe,SheepGoat,Mixed,Rice,0.01283,0.01283,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,Rice,,,,,
+Korea,SheepGoat,Mixed,Rice,0.03077,0.03077,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,Rice,,,,,
+India,SheepGoat,Mixed,Rice,0.03081,0.03081,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,Rice,,,,,
+USA,SheepGoat,Mixed,SugarCrop,0.01865,0.01865,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,SugarCrop,,,,,
+Canada,SheepGoat,Mixed,SugarCrop,0.01778,0.01778,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,SugarCrop,,,,,
+Western Europe,SheepGoat,Mixed,SugarCrop,0.02662,0.02662,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,SugarCrop,,,,,
+Japan,SheepGoat,Mixed,SugarCrop,0.02212,0.02212,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,SugarCrop,,,,,
+Australia_NZ,SheepGoat,Mixed,SugarCrop,0.01897,0.01897,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,SugarCrop,,,,,
+Former Soviet Union,SheepGoat,Mixed,SugarCrop,0.01604,0.01604,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,SugarCrop,,,,,
+China,SheepGoat,Mixed,SugarCrop,0.03115,0.03115,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,SugarCrop,,,,,
+Middle East,SheepGoat,Mixed,SugarCrop,0.03312,0.03312,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,SugarCrop,,,,,
+Africa,SheepGoat,Mixed,SugarCrop,0.02860,0.02860,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,SugarCrop,,,,,
+Latin America,SheepGoat,Mixed,SugarCrop,0.01131,0.01131,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,SugarCrop,,,,,
+Southeast Asia,SheepGoat,Mixed,SugarCrop,0.03082,0.03082,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,SugarCrop,,,,,
+Eastern Europe,SheepGoat,Mixed,SugarCrop,0.01283,0.01283,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,SugarCrop,,,,,
+Korea,SheepGoat,Mixed,SugarCrop,0.03077,0.03077,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,SugarCrop,,,,,
+India,SheepGoat,Mixed,SugarCrop,0.03081,0.03081,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,SugarCrop,,,,,
+USA,SheepGoat,Mixed,Wheat,0.01865,0.01865,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,Wheat,,,,,
+Canada,SheepGoat,Mixed,Wheat,0.01778,0.01778,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,Wheat,,,,,
+Western Europe,SheepGoat,Mixed,Wheat,0.02662,0.02662,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,Wheat,,,,,
+Japan,SheepGoat,Mixed,Wheat,0.02212,0.02212,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,Wheat,,,,,
+Australia_NZ,SheepGoat,Mixed,Wheat,0.01897,0.01897,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,Wheat,,,,,
+Former Soviet Union,SheepGoat,Mixed,Wheat,0.01604,0.01604,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,Wheat,,,,,
+China,SheepGoat,Mixed,Wheat,0.03115,0.03115,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,Wheat,,,,,
+Middle East,SheepGoat,Mixed,Wheat,0.03312,0.03312,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,Wheat,,,,,
+Africa,SheepGoat,Mixed,Wheat,0.02860,0.02860,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,Wheat,,,,,
+Latin America,SheepGoat,Mixed,Wheat,0.01131,0.01131,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,Wheat,,,,,
+Southeast Asia,SheepGoat,Mixed,Wheat,0.03082,0.03082,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,Wheat,,,,,
+Eastern Europe,SheepGoat,Mixed,Wheat,0.01283,0.01283,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,Wheat,,,,,
+Korea,SheepGoat,Mixed,Wheat,0.03077,0.03077,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,Wheat,,,,,
+India,SheepGoat,Mixed,Wheat,0.03081,0.03081,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,Wheat,,,,,
+USA,SheepGoat,Mixed,Pasture,0.01865,0.01865,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,Pasture,,,,,
+Canada,SheepGoat,Mixed,Pasture,0.01778,0.01778,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,Pasture,,,,,
+Western Europe,SheepGoat,Mixed,Pasture,0.02662,0.02662,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,Pasture,,,,,
+Japan,SheepGoat,Mixed,Pasture,0.02212,0.02212,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,Pasture,,,,,
+Australia_NZ,SheepGoat,Mixed,Pasture,0.01897,0.01897,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,Pasture,,,,,
+Former Soviet Union,SheepGoat,Mixed,Pasture,0.01604,0.01604,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,Pasture,,,,,
+China,SheepGoat,Mixed,Pasture,0.03115,0.03115,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,Pasture,,,,,
+Middle East,SheepGoat,Mixed,Pasture,0.03312,0.03312,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,Pasture,,,,,
+Africa,SheepGoat,Mixed,Pasture,0.02860,0.02860,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,Pasture,,,,,
+Latin America,SheepGoat,Mixed,Pasture,0.01131,0.01131,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,Pasture,,,,,
+Southeast Asia,SheepGoat,Mixed,Pasture,0.03082,0.03082,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,Pasture,,,,,
+Eastern Europe,SheepGoat,Mixed,Pasture,0.01283,0.01283,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,Pasture,,,,,
+Korea,SheepGoat,Mixed,Pasture,0.03077,0.03077,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,Pasture,,,,,
+India,SheepGoat,Mixed,Pasture,0.03081,0.03081,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,Pasture,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Efficiency: Pastoral,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+7001,,,,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,minicam-energy-input,,,,,,
+,,,,efficiency,efficiency,efficiency,efficiency,efficiency,efficiency,efficiency,efficiency,efficiency,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input,,,,,
+USA,SheepGoat,Pastoral,Pasture,0.01530,0.01530,0.01640,0.01640,0.01640,0.01640,0.01640,0.01640,0.01640,Pasture,,,,,
+Canada,SheepGoat,Pastoral,Pasture,0.01596,0.01596,0.01644,0.01644,0.01644,0.01644,0.01644,0.01644,0.01644,Pasture,,,,,
+Western Europe,SheepGoat,Pastoral,Pasture,0.04161,0.04161,0.04313,0.04313,0.04313,0.04313,0.04313,0.04313,0.04313,Pasture,,,,,
+Japan,SheepGoat,Pastoral,Pasture,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,Pasture,,,,,
+Australia_NZ,SheepGoat,Pastoral,Pasture,0.01761,0.01761,0.01682,0.01682,0.01682,0.01682,0.01682,0.01682,0.01682,Pasture,,,,,
+Former Soviet Union,SheepGoat,Pastoral,Pasture,0.02964,0.02964,0.04164,0.04164,0.04164,0.04164,0.04164,0.04164,0.04164,Pasture,,,,,
+China,SheepGoat,Pastoral,Pasture,0.01779,0.01779,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,Pasture,,,,,
+Middle East,SheepGoat,Pastoral,Pasture,0.03804,0.03804,0.04430,0.04430,0.04430,0.04430,0.04430,0.04430,0.04430,Pasture,,,,,
+Africa,SheepGoat,Pastoral,Pasture,0.02267,0.02267,0.02330,0.02330,0.02330,0.02330,0.02330,0.02330,0.02330,Pasture,,,,,
+Latin America,SheepGoat,Pastoral,Pasture,0.00692,0.00692,0.00785,0.00785,0.00785,0.00785,0.00785,0.00785,0.00785,Pasture,,,,,
+Southeast Asia,SheepGoat,Pastoral,Pasture,0.01793,0.01793,0.02099,0.02099,0.02099,0.02099,0.02099,0.02099,0.02099,Pasture,,,,,
+Eastern Europe,SheepGoat,Pastoral,Pasture,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,Pasture,,,,,
+Korea,SheepGoat,Pastoral,Pasture,0.01127,0.01127,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,Pasture,,,,,
+India,SheepGoat,Pastoral,Pasture,0.01788,0.01788,0.02093,0.02093,0.02093,0.02093,0.02093,0.02093,0.02093,Pasture,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Efficiency: Scavenging,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+7001,,,,minicam-energy-input,,,,,,,,,,,,,,
+,,,,efficiency,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input,,,,,
+USA,SheepGoat,Mixed,Scavenging,0.01865,0.01865,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,0.02078,Scavenging,,,,,
+Canada,SheepGoat,Mixed,Scavenging,0.01778,0.01778,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,0.02094,Scavenging,,,,,
+Western Europe,SheepGoat,Mixed,Scavenging,0.02662,0.02662,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,0.02433,Scavenging,,,,,
+Japan,SheepGoat,Mixed,Scavenging,0.02212,0.02212,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,Scavenging,,,,,
+Australia_NZ,SheepGoat,Mixed,Scavenging,0.01897,0.01897,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,0.02106,Scavenging,,,,,
+Former Soviet Union,SheepGoat,Mixed,Scavenging,0.01604,0.01604,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,0.02442,Scavenging,,,,,
+China,SheepGoat,Mixed,Scavenging,0.03115,0.03115,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,0.03798,Scavenging,,,,,
+Middle East,SheepGoat,Mixed,Scavenging,0.03312,0.03312,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,0.03860,Scavenging,,,,,
+Africa,SheepGoat,Mixed,Scavenging,0.02860,0.02860,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,0.03100,Scavenging,,,,,
+Latin America,SheepGoat,Mixed,Scavenging,0.01131,0.01131,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,0.01159,Scavenging,,,,,
+Southeast Asia,SheepGoat,Mixed,Scavenging,0.03082,0.03082,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,0.03865,Scavenging,,,,,
+Eastern Europe,SheepGoat,Mixed,Scavenging,0.01283,0.01283,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,0.01474,Scavenging,,,,,
+Korea,SheepGoat,Mixed,Scavenging,0.03077,0.03077,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,0.03756,Scavenging,,,,,
+India,SheepGoat,Mixed,Scavenging,0.03081,0.03081,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,0.03879,Scavenging,,,,,
+USA,SheepGoat,Pastoral,Scavenging,0.01530,0.01530,0.01640,0.01640,0.01640,0.01640,0.01640,0.01640,0.01640,Scavenging,,,,,
+Canada,SheepGoat,Pastoral,Scavenging,0.01596,0.01596,0.01644,0.01644,0.01644,0.01644,0.01644,0.01644,0.01644,Scavenging,,,,,
+Western Europe,SheepGoat,Pastoral,Scavenging,0.04161,0.04161,0.04313,0.04313,0.04313,0.04313,0.04313,0.04313,0.04313,Scavenging,,,,,
+Japan,SheepGoat,Pastoral,Scavenging,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,Scavenging,,,,,
+Australia_NZ,SheepGoat,Pastoral,Scavenging,0.01761,0.01761,0.01682,0.01682,0.01682,0.01682,0.01682,0.01682,0.01682,Scavenging,,,,,
+Former Soviet Union,SheepGoat,Pastoral,Scavenging,0.02964,0.02964,0.04164,0.04164,0.04164,0.04164,0.04164,0.04164,0.04164,Scavenging,,,,,
+China,SheepGoat,Pastoral,Scavenging,0.01779,0.01779,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,Scavenging,,,,,
+Middle East,SheepGoat,Pastoral,Scavenging,0.03804,0.03804,0.04430,0.04430,0.04430,0.04430,0.04430,0.04430,0.04430,Scavenging,,,,,
+Africa,SheepGoat,Pastoral,Scavenging,0.02267,0.02267,0.02330,0.02330,0.02330,0.02330,0.02330,0.02330,0.02330,Scavenging,,,,,
+Latin America,SheepGoat,Pastoral,Scavenging,0.00692,0.00692,0.00785,0.00785,0.00785,0.00785,0.00785,0.00785,0.00785,Scavenging,,,,,
+Southeast Asia,SheepGoat,Pastoral,Scavenging,0.01793,0.01793,0.02099,0.02099,0.02099,0.02099,0.02099,0.02099,0.02099,Scavenging,,,,,
+Eastern Europe,SheepGoat,Pastoral,Scavenging,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,0.00500,Scavenging,,,,,
+Korea,SheepGoat,Pastoral,Scavenging,0.01127,0.01127,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,0.02114,Scavenging,,,,,
+India,SheepGoat,Pastoral,Scavenging,0.01788,0.01788,0.02093,0.02093,0.02093,0.02093,0.02093,0.02093,0.02093,Scavenging,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Calibrated inputs: mixed,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+7000,,,,,minicam-energy-input,,,,,,,,,,,,,
+,,,,,calibrated-value,,share-weight,,,,,,,,,,,
+region,supplysector,subsector,technology,minicam-energy-input,1990,2005,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,
+USA,SheepGoat,Mixed,Corn,Corn,405852,225313,1,1,1,1,1,1,1,1,1,,,
+Canada,SheepGoat,Mixed,Corn,Corn,8301,16333,1,1,1,1,1,1,1,1,1,,,
+Western Europe,SheepGoat,Mixed,Corn,Corn,515904,919461,1,1,1,1,1,1,1,1,1,,,
+Japan,SheepGoat,Mixed,Corn,Corn,2126,1287,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,SheepGoat,Mixed,Corn,Corn,16875,36103,1,1,1,1,1,1,1,1,1,,,
+Former Soviet Union,SheepGoat,Mixed,Corn,Corn,614005,203350,1,1,1,1,1,1,1,1,1,,,
+China,SheepGoat,Mixed,Corn,Corn,43133,405593,1,1,1,1,1,1,1,1,1,,,
+Middle East,SheepGoat,Mixed,Corn,Corn,1315693,3736393,1,1,1,1,1,1,1,1,1,,,
+Africa,SheepGoat,Mixed,Corn,Corn,916840,933602,1,1,1,1,1,1,1,1,1,,,
+Latin America,SheepGoat,Mixed,Corn,Corn,64215,147585,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,SheepGoat,Mixed,Corn,Corn,104277,191515,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,SheepGoat,Mixed,Corn,Corn,500220,454808,1,1,1,1,1,1,1,1,1,,,
+Korea,SheepGoat,Mixed,Corn,Corn,1701,1561,1,1,1,1,1,1,1,1,1,,,
+India,SheepGoat,Mixed,Corn,Corn,12574,64274,1,1,1,1,1,1,1,1,1,,,
+USA,SheepGoat,Mixed,FodderCrop,FodderCrop,259381,119199,1,1,1,1,1,1,1,1,1,,,
+Canada,SheepGoat,Mixed,FodderCrop,FodderCrop,12695,17165,1,1,1,1,1,1,1,1,1,,,
+Western Europe,SheepGoat,Mixed,FodderCrop,FodderCrop,7968647,7358585,1,1,1,1,1,1,1,1,1,,,
+Japan,SheepGoat,Mixed,FodderCrop,FodderCrop,2303,1192,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,SheepGoat,Mixed,FodderCrop,FodderCrop,1612817,1021033,1,1,1,1,1,1,1,1,1,,,
+Former Soviet Union,SheepGoat,Mixed,FodderCrop,FodderCrop,6502148,4373918,1,1,1,1,1,1,1,1,1,,,
+China,SheepGoat,Mixed,FodderCrop,FodderCrop,530403,1496634,1,1,1,1,1,1,1,1,1,,,
+Middle East,SheepGoat,Mixed,FodderCrop,FodderCrop,3157353,4488249,1,1,1,1,1,1,1,1,1,,,
+Africa,SheepGoat,Mixed,FodderCrop,FodderCrop,4239615,4122404,1,1,1,1,1,1,1,1,1,,,
+Latin America,SheepGoat,Mixed,FodderCrop,FodderCrop,886684,825173,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,SheepGoat,Mixed,FodderCrop,FodderCrop,1374310,1241597,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,SheepGoat,Mixed,FodderCrop,FodderCrop,2166028,713830,1,1,1,1,1,1,1,1,1,,,
+Korea,SheepGoat,Mixed,FodderCrop,FodderCrop,1503,5519,1,1,1,1,1,1,1,1,1,,,
+India,SheepGoat,Mixed,FodderCrop,FodderCrop,1024924,941932,1,1,1,1,1,1,1,1,1,,,
+USA,SheepGoat,Mixed,MiscCrop,MiscCrop,312,247,1,1,1,1,1,1,1,1,1,,,
+Canada,SheepGoat,Mixed,MiscCrop,MiscCrop,30,794,1,1,1,1,1,1,1,1,1,,,
+Western Europe,SheepGoat,Mixed,MiscCrop,MiscCrop,371893,148710,1,1,1,1,1,1,1,1,1,,,
+Japan,SheepGoat,Mixed,MiscCrop,MiscCrop,16,13,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,SheepGoat,Mixed,MiscCrop,MiscCrop,20224,52338,1,1,1,1,1,1,1,1,1,,,
+Former Soviet Union,SheepGoat,Mixed,MiscCrop,MiscCrop,722537,134516,1,1,1,1,1,1,1,1,1,,,
+China,SheepGoat,Mixed,MiscCrop,MiscCrop,12122,100857,1,1,1,1,1,1,1,1,1,,,
+Middle East,SheepGoat,Mixed,MiscCrop,MiscCrop,58260,17104,1,1,1,1,1,1,1,1,1,,,
+Africa,SheepGoat,Mixed,MiscCrop,MiscCrop,503486,681501,1,1,1,1,1,1,1,1,1,,,
+Latin America,SheepGoat,Mixed,MiscCrop,MiscCrop,20270,30025,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,SheepGoat,Mixed,MiscCrop,MiscCrop,8640,10575,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,SheepGoat,Mixed,MiscCrop,MiscCrop,99284,29179,1,1,1,1,1,1,1,1,1,,,
+Korea,SheepGoat,Mixed,MiscCrop,MiscCrop,306,66,1,1,1,1,1,1,1,1,1,,,
+India,SheepGoat,Mixed,MiscCrop,MiscCrop,20096,21522,1,1,1,1,1,1,1,1,1,,,
+USA,SheepGoat,Mixed,OilCrop,OilCrop,5411,4519,1,1,1,1,1,1,1,1,1,,,
+Canada,SheepGoat,Mixed,OilCrop,OilCrop,1143,6122,1,1,1,1,1,1,1,1,1,,,
+Western Europe,SheepGoat,Mixed,OilCrop,OilCrop,64863,142644,1,1,1,1,1,1,1,1,1,,,
+Japan,SheepGoat,Mixed,OilCrop,OilCrop,37,24,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,SheepGoat,Mixed,OilCrop,OilCrop,5038,12999,1,1,1,1,1,1,1,1,1,,,
+Former Soviet Union,SheepGoat,Mixed,OilCrop,OilCrop,82833,39893,1,1,1,1,1,1,1,1,1,,,
+China,SheepGoat,Mixed,OilCrop,OilCrop,2240,22362,1,1,1,1,1,1,1,1,1,,,
+Middle East,SheepGoat,Mixed,OilCrop,OilCrop,18154,87815,1,1,1,1,1,1,1,1,1,,,
+Africa,SheepGoat,Mixed,OilCrop,OilCrop,1608,1246,1,1,1,1,1,1,1,1,1,,,
+Latin America,SheepGoat,Mixed,OilCrop,OilCrop,2201,7583,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,SheepGoat,Mixed,OilCrop,OilCrop,10203,10435,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,SheepGoat,Mixed,OilCrop,OilCrop,2193,1829,1,1,1,1,1,1,1,1,1,,,
+Korea,SheepGoat,Mixed,OilCrop,OilCrop,5,5,1,1,1,1,1,1,1,1,1,,,
+India,SheepGoat,Mixed,OilCrop,OilCrop,15052,16510,1,1,1,1,1,1,1,1,1,,,
+USA,SheepGoat,Mixed,OtherGrain,OtherGrain,57460,12606,1,1,1,1,1,1,1,1,1,,,
+Canada,SheepGoat,Mixed,OtherGrain,OtherGrain,14665,26651,1,1,1,1,1,1,1,1,1,,,
+Western Europe,SheepGoat,Mixed,OtherGrain,OtherGrain,1348146,1333250,1,1,1,1,1,1,1,1,1,,,
+Japan,SheepGoat,Mixed,OtherGrain,OtherGrain,839,293,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,SheepGoat,Mixed,OtherGrain,OtherGrain,212970,937289,1,1,1,1,1,1,1,1,1,,,
+Former Soviet Union,SheepGoat,Mixed,OtherGrain,OtherGrain,4012320,626522,1,1,1,1,1,1,1,1,1,,,
+China,SheepGoat,Mixed,OtherGrain,OtherGrain,4332,16058,1,1,1,1,1,1,1,1,1,,,
+Middle East,SheepGoat,Mixed,OtherGrain,OtherGrain,5010027,5827250,1,1,1,1,1,1,1,1,1,,,
+Africa,SheepGoat,Mixed,OtherGrain,OtherGrain,377469,286307,1,1,1,1,1,1,1,1,1,,,
+Latin America,SheepGoat,Mixed,OtherGrain,OtherGrain,29796,45839,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,SheepGoat,Mixed,OtherGrain,OtherGrain,5189,4102,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,SheepGoat,Mixed,OtherGrain,OtherGrain,564103,367833,1,1,1,1,1,1,1,1,1,,,
+Korea,SheepGoat,Mixed,OtherGrain,OtherGrain,82,9,1,1,1,1,1,1,1,1,1,,,
+India,SheepGoat,Mixed,OtherGrain,OtherGrain,9738,8350,1,1,1,1,1,1,1,1,1,,,
+USA,SheepGoat,Mixed,Rice,Rice,0,0,1,0,0,0,0,0,0,0,0,,,
+Canada,SheepGoat,Mixed,Rice,Rice,0,0,1,0,0,0,0,0,0,0,0,,,
+Western Europe,SheepGoat,Mixed,Rice,Rice,6389,6102,1,1,1,1,1,1,1,1,1,,,
+Japan,SheepGoat,Mixed,Rice,Rice,3,6,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,SheepGoat,Mixed,Rice,Rice,0,0,1,0,0,0,0,0,0,0,0,,,
+Former Soviet Union,SheepGoat,Mixed,Rice,Rice,0,0,1,0,0,0,0,0,0,0,0,,,
+China,SheepGoat,Mixed,Rice,Rice,2837,9288,1,1,1,1,1,1,1,1,1,,,
+Middle East,SheepGoat,Mixed,Rice,Rice,86972,210226,1,1,1,1,1,1,1,1,1,,,
+Africa,SheepGoat,Mixed,Rice,Rice,37992,22619,1,1,1,1,1,1,1,1,1,,,
+Latin America,SheepGoat,Mixed,Rice,Rice,626,899,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,SheepGoat,Mixed,Rice,Rice,35902,50394,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,SheepGoat,Mixed,Rice,Rice,43,189,1,1,1,1,1,1,1,1,1,,,
+Korea,SheepGoat,Mixed,Rice,Rice,0,0,1,0,0,0,0,0,0,0,0,,,
+India,SheepGoat,Mixed,Rice,Rice,6582,6377,1,1,1,1,1,1,1,1,1,,,
+USA,SheepGoat,Mixed,SugarCrop,SugarCrop,0,0,1,0,0,0,0,0,0,0,0,,,
+Canada,SheepGoat,Mixed,SugarCrop,SugarCrop,19,7,1,1,1,1,1,1,1,1,1,,,
+Western Europe,SheepGoat,Mixed,SugarCrop,SugarCrop,51517,24002,1,1,1,1,1,1,1,1,1,,,
+Japan,SheepGoat,Mixed,SugarCrop,SugarCrop,0,0,1,0,0,0,0,0,0,0,0,,,
+Australia_NZ,SheepGoat,Mixed,SugarCrop,SugarCrop,0,0,1,0,0,0,0,0,0,0,0,,,
+Former Soviet Union,SheepGoat,Mixed,SugarCrop,SugarCrop,67593,28053,1,1,1,1,1,1,1,1,1,,,
+China,SheepGoat,Mixed,SugarCrop,SugarCrop,5050,15331,1,1,1,1,1,1,1,1,1,,,
+Middle East,SheepGoat,Mixed,SugarCrop,SugarCrop,23565,27283,1,1,1,1,1,1,1,1,1,,,
+Africa,SheepGoat,Mixed,SugarCrop,SugarCrop,14679,13800,1,1,1,1,1,1,1,1,1,,,
+Latin America,SheepGoat,Mixed,SugarCrop,SugarCrop,34967,35348,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,SheepGoat,Mixed,SugarCrop,SugarCrop,10520,16650,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,SheepGoat,Mixed,SugarCrop,SugarCrop,9294,3368,1,1,1,1,1,1,1,1,1,,,
+Korea,SheepGoat,Mixed,SugarCrop,SugarCrop,0,0,1,0,0,0,0,0,0,0,0,,,
+India,SheepGoat,Mixed,SugarCrop,SugarCrop,22656,20290,1,1,1,1,1,1,1,1,1,,,
+USA,SheepGoat,Mixed,Wheat,Wheat,25535,6260,1,1,1,1,1,1,1,1,1,,,
+Canada,SheepGoat,Mixed,Wheat,Wheat,4644,6371,1,1,1,1,1,1,1,1,1,,,
+Western Europe,SheepGoat,Mixed,Wheat,Wheat,571660,1128363,1,1,1,1,1,1,1,1,1,,,
+Japan,SheepGoat,Mixed,Wheat,Wheat,101,38,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,SheepGoat,Mixed,Wheat,Wheat,53020,179508,1,1,1,1,1,1,1,1,1,,,
+Former Soviet Union,SheepGoat,Mixed,Wheat,Wheat,3015728,554879,1,1,1,1,1,1,1,1,1,,,
+China,SheepGoat,Mixed,Wheat,Wheat,2344,5193,1,1,1,1,1,1,1,1,1,,,
+Middle East,SheepGoat,Mixed,Wheat,Wheat,745527,1211293,1,1,1,1,1,1,1,1,1,,,
+Africa,SheepGoat,Mixed,Wheat,Wheat,145972,127254,1,1,1,1,1,1,1,1,1,,,
+Latin America,SheepGoat,Mixed,Wheat,Wheat,3258,2323,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,SheepGoat,Mixed,Wheat,Wheat,6289,7980,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,SheepGoat,Mixed,Wheat,Wheat,374678,190275,1,1,1,1,1,1,1,1,1,,,
+Korea,SheepGoat,Mixed,Wheat,Wheat,438,288,1,1,1,1,1,1,1,1,1,,,
+India,SheepGoat,Mixed,Wheat,Wheat,10601,12552,1,1,1,1,1,1,1,1,1,,,
+USA,SheepGoat,Mixed,Pasture,Pasture,4982625,2407917,1,1,1,1,1,1,1,1,1,,,
+Canada,SheepGoat,Mixed,Pasture,Pasture,272092,457649,1,1,1,1,1,1,1,1,1,,,
+Western Europe,SheepGoat,Mixed,Pasture,Pasture,65438476,61426027,1,1,1,1,1,1,1,1,1,,,
+Japan,SheepGoat,Mixed,Pasture,Pasture,16793,8771,1,1,1,1,1,1,1,1,1,,,
+Australia_NZ,SheepGoat,Mixed,Pasture,Pasture,14323088,14400333,1,1,1,1,1,1,1,1,1,,,
+Former Soviet Union,SheepGoat,Mixed,Pasture,Pasture,57752981,21966416,1,1,1,1,1,1,1,1,1,,,
+China,SheepGoat,Mixed,Pasture,Pasture,10647730,35967648,1,1,1,1,1,1,1,1,1,,,
+Middle East,SheepGoat,Mixed,Pasture,Pasture,12347992,14406496,1,1,1,1,1,1,1,1,1,,,
+Africa,SheepGoat,Mixed,Pasture,Pasture,27558628,33444361,1,1,1,1,1,1,1,1,1,,,
+Latin America,SheepGoat,Mixed,Pasture,Pasture,17940886,18186919,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,SheepGoat,Mixed,Pasture,Pasture,14889789,14792820,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,SheepGoat,Mixed,Pasture,Pasture,30052885,12802893,1,1,1,1,1,1,1,1,1,,,
+Korea,SheepGoat,Mixed,Pasture,Pasture,57809,120256,1,1,1,1,1,1,1,1,1,,,
+India,SheepGoat,Mixed,Pasture,Pasture,9754523,9309908,1,1,1,1,1,1,1,1,1,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Calibrated inputs: Pastoral,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+7000,,,,,,,,,,,,,,,,,,
+,,,,,,,share-weight,,,,,,,,,,,
+region,supplysector,subsector,technology,minicam-energy-input,1990,2005,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,
+USA,SheepGoat,Pastoral,Pasture,Pasture,7337268,3234992,1,1,1,1,1,1,1,1,1,,,
+Canada,SheepGoat,Pastoral,Pasture,Pasture,366571,622036,1,1,1,1,1,1,1,1,1,,,
+Western Europe,SheepGoat,Pastoral,Pasture,Pasture,597920,445632,1,1,1,1,1,1,1,1,1,,,
+Japan,SheepGoat,Pastoral,Pasture,Pasture,0,0,1,0,0,0,0,0,0,0,0,,,
+Australia_NZ,SheepGoat,Pastoral,Pasture,Pasture,62020794,60413901,1,1,1,1,1,1,1,1,1,,,
+Former Soviet Union,SheepGoat,Pastoral,Pasture,Pasture,1056749,521231,1,1,1,1,1,1,1,1,1,,,
+China,SheepGoat,Pastoral,Pasture,Pasture,59082719,179065935,1,1,1,1,1,1,1,1,1,,,
+Middle East,SheepGoat,Pastoral,Pasture,Pasture,1143222,1490170,1,1,1,1,1,1,1,1,1,,,
+Africa,SheepGoat,Pastoral,Pasture,Pasture,35497678,37644939,1,1,1,1,1,1,1,1,1,,,
+Latin America,SheepGoat,Pastoral,Pasture,Pasture,44847352,34031151,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,SheepGoat,Pastoral,Pasture,Pasture,4465459,4665024,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,SheepGoat,Pastoral,Pasture,Pasture,0,0,1,0,0,0,0,0,0,0,0,,,
+Korea,SheepGoat,Pastoral,Pasture,Pasture,506527,594565,1,1,1,1,1,1,1,1,1,,,
+India,SheepGoat,Pastoral,Pasture,Pasture,2078671,2116541,1,1,1,1,1,1,1,1,1,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Calibrated inputs: Scavenging,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+7000,,,,,minicam-energy-input,,,,,,,,,,,,,
+,,,,,calibrated-value,,share-weight,,,,,,,,,,,
+region,supplysector,subsector,technology,minicam-energy-input,1990,2005,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,
+USA,SheepGoat,Mixed,Scavenging,Scavenging,0,0,1,0,0,0,0,0,0,0,0,,,
+Canada,SheepGoat,Mixed,Scavenging,Scavenging,0,0,1,0,0,0,0,0,0,0,0,,,
+Western Europe,SheepGoat,Mixed,Scavenging,Scavenging,963794,861152,1,1,1,1,1,1,1,1,1,,,
+Japan,SheepGoat,Mixed,Scavenging,Scavenging,0,0,1,0,0,0,0,0,0,0,0,,,
+Australia_NZ,SheepGoat,Mixed,Scavenging,Scavenging,1830875,1840749,1,1,1,1,1,1,1,1,1,,,
+Former Soviet Union,SheepGoat,Mixed,Scavenging,Scavenging,2192580,963399,1,1,1,1,1,1,1,1,1,,,
+China,SheepGoat,Mixed,Scavenging,Scavenging,604918,2043391,1,1,1,1,1,1,1,1,1,,,
+Middle East,SheepGoat,Mixed,Scavenging,Scavenging,2295861,2946459,1,1,1,1,1,1,1,1,1,,,
+Africa,SheepGoat,Mixed,Scavenging,Scavenging,3789392,4460129,1,1,1,1,1,1,1,1,1,,,
+Latin America,SheepGoat,Mixed,Scavenging,Scavenging,1019256,1033234,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,SheepGoat,Mixed,Scavenging,Scavenging,13603472,12600941,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,SheepGoat,Mixed,Scavenging,Scavenging,0,0,1,0,0,0,0,0,0,0,0,,,
+Korea,SheepGoat,Mixed,Scavenging,Scavenging,3284,6832,1,1,1,1,1,1,1,1,1,,,
+India,SheepGoat,Mixed,Scavenging,Scavenging,11083464,10578275,1,1,1,1,1,1,1,1,1,,,
+USA,SheepGoat,Pastoral,Scavenging,Scavenging,0,0,1,0,0,0,0,0,0,0,0,,,
+Canada,SheepGoat,Pastoral,Scavenging,Scavenging,0,0,1,0,0,0,0,0,0,0,0,,,
+Western Europe,SheepGoat,Pastoral,Scavenging,Scavenging,67938,50634,1,1,1,1,1,1,1,1,1,,,
+Japan,SheepGoat,Pastoral,Scavenging,Scavenging,0,0,1,0,0,0,0,0,0,0,0,,,
+Australia_NZ,SheepGoat,Pastoral,Scavenging,Scavenging,7047041,6864460,1,1,1,1,1,1,1,1,1,,,
+Former Soviet Union,SheepGoat,Pastoral,Scavenging,Scavenging,120072,59224,1,1,1,1,1,1,1,1,1,,,
+China,SheepGoat,Pastoral,Scavenging,Scavenging,3179940,9637655,1,1,1,1,1,1,1,1,1,,,
+Middle East,SheepGoat,Pastoral,Scavenging,Scavenging,129897,169319,1,1,1,1,1,1,1,1,1,,,
+Africa,SheepGoat,Pastoral,Scavenging,Scavenging,4033383,4277363,1,1,1,1,1,1,1,1,1,,,
+Latin America,SheepGoat,Pastoral,Scavenging,Scavenging,2413766,1831619,1,1,1,1,1,1,1,1,1,,,
+Southeast Asia,SheepGoat,Pastoral,Scavenging,Scavenging,2759561,2731231,1,1,1,1,1,1,1,1,1,,,
+Eastern Europe,SheepGoat,Pastoral,Scavenging,Scavenging,0,0,1,0,0,0,0,0,0,0,0,,,
+Korea,SheepGoat,Pastoral,Scavenging,Scavenging,27262,32001,1,1,1,1,1,1,1,1,1,,,
+India,SheepGoat,Pastoral,Scavenging,Scavenging,2125679,2164406,1,1,1,1,1,1,1,1,1,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Non-energy cost: Mixed,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+7002,,,,minicam-non-energy-input,,,,,,,,,,,,,,
+,,,,input-cost,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,,,,
+USA,SheepGoat,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,SheepGoat,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,SheepGoat,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,SheepGoat,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,SheepGoat,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,SheepGoat,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+China,SheepGoat,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,SheepGoat,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,SheepGoat,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,SheepGoat,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,SheepGoat,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,SheepGoat,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,SheepGoat,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+India,SheepGoat,Mixed,Corn,10,10,10,10,10,10,10,10,10,,,,,,
+USA,SheepGoat,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,SheepGoat,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,SheepGoat,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,SheepGoat,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,SheepGoat,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,SheepGoat,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+China,SheepGoat,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,SheepGoat,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,SheepGoat,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,SheepGoat,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,SheepGoat,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,SheepGoat,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,SheepGoat,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+India,SheepGoat,Mixed,FodderCrop,10,10,10,10,10,10,10,10,10,,,,,,
+USA,SheepGoat,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,SheepGoat,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,SheepGoat,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,SheepGoat,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,SheepGoat,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,SheepGoat,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+China,SheepGoat,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,SheepGoat,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,SheepGoat,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,SheepGoat,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,SheepGoat,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,SheepGoat,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,SheepGoat,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+India,SheepGoat,Mixed,MiscCrop,10,10,10,10,10,10,10,10,10,,,,,,
+USA,SheepGoat,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,SheepGoat,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,SheepGoat,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,SheepGoat,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,SheepGoat,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,SheepGoat,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+China,SheepGoat,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,SheepGoat,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,SheepGoat,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,SheepGoat,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,SheepGoat,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,SheepGoat,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,SheepGoat,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+India,SheepGoat,Mixed,OilCrop,10,10,10,10,10,10,10,10,10,,,,,,
+USA,SheepGoat,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,SheepGoat,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,SheepGoat,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,SheepGoat,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,SheepGoat,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,SheepGoat,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+China,SheepGoat,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,SheepGoat,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,SheepGoat,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,SheepGoat,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,SheepGoat,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,SheepGoat,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,SheepGoat,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+India,SheepGoat,Mixed,OtherGrain,10,10,10,10,10,10,10,10,10,,,,,,
+USA,SheepGoat,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,SheepGoat,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,SheepGoat,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,SheepGoat,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,SheepGoat,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,SheepGoat,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+China,SheepGoat,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,SheepGoat,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,SheepGoat,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,SheepGoat,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,SheepGoat,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,SheepGoat,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,SheepGoat,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+India,SheepGoat,Mixed,Rice,10,10,10,10,10,10,10,10,10,,,,,,
+USA,SheepGoat,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,SheepGoat,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,SheepGoat,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,SheepGoat,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,SheepGoat,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,SheepGoat,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+China,SheepGoat,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,SheepGoat,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,SheepGoat,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,SheepGoat,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,SheepGoat,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,SheepGoat,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,SheepGoat,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+India,SheepGoat,Mixed,SugarCrop,10,10,10,10,10,10,10,10,10,,,,,,
+USA,SheepGoat,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,SheepGoat,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,SheepGoat,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,SheepGoat,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,SheepGoat,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,SheepGoat,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+China,SheepGoat,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,SheepGoat,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,SheepGoat,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,SheepGoat,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,SheepGoat,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,SheepGoat,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,SheepGoat,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+India,SheepGoat,Mixed,Wheat,10,10,10,10,10,10,10,10,10,,,,,,
+USA,SheepGoat,Mixed,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,SheepGoat,Mixed,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,SheepGoat,Mixed,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,SheepGoat,Mixed,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,SheepGoat,Mixed,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,SheepGoat,Mixed,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+China,SheepGoat,Mixed,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,SheepGoat,Mixed,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,SheepGoat,Mixed,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,SheepGoat,Mixed,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,SheepGoat,Mixed,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,SheepGoat,Mixed,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,SheepGoat,Mixed,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+India,SheepGoat,Mixed,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Non-energy cost: Pastoral,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+7002,,,,minicam-non-energy-input,,,,,,,,,,,,,,
+,,,,input-cost,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,,,,
+USA,SheepGoat,Pastoral,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,SheepGoat,Pastoral,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,SheepGoat,Pastoral,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,SheepGoat,Pastoral,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,SheepGoat,Pastoral,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,SheepGoat,Pastoral,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+China,SheepGoat,Pastoral,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,SheepGoat,Pastoral,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,SheepGoat,Pastoral,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,SheepGoat,Pastoral,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,SheepGoat,Pastoral,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,SheepGoat,Pastoral,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,SheepGoat,Pastoral,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+India,SheepGoat,Pastoral,Pasture,10,10,10,10,10,10,10,10,10,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Non-energy cost: Scavenging,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+7002,,,,minicam-non-energy-input,,,,,,,,,,,,,,
+,,,,input-cost,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,,,,
+USA,SheepGoat,Mixed,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,SheepGoat,Mixed,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,SheepGoat,Mixed,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,SheepGoat,Mixed,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,SheepGoat,Mixed,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,SheepGoat,Mixed,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+China,SheepGoat,Mixed,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,SheepGoat,Mixed,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,SheepGoat,Mixed,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,SheepGoat,Mixed,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,SheepGoat,Mixed,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,SheepGoat,Mixed,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,SheepGoat,Mixed,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+India,SheepGoat,Mixed,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+USA,SheepGoat,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Canada,SheepGoat,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Western Europe,SheepGoat,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Japan,SheepGoat,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Australia_NZ,SheepGoat,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Former Soviet Union,SheepGoat,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+China,SheepGoat,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Middle East,SheepGoat,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Africa,SheepGoat,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Latin America,SheepGoat,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Southeast Asia,SheepGoat,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Eastern Europe,SheepGoat,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+Korea,SheepGoat,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+India,SheepGoat,Pastoral,Scavenging,10,10,10,10,10,10,10,10,10,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+CO2 tag,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+7010,,,,,,,,,,,,,,,,,,
+,,,,CO2,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,,,,
+ALL,SheepGoat,Mixed,Corn,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,SheepGoat,Mixed,FodderCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,SheepGoat,Mixed,MiscCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,SheepGoat,Mixed,OilCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,SheepGoat,Mixed,OtherGrain,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,SheepGoat,Mixed,Rice,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,SheepGoat,Mixed,SugarCrop,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,SheepGoat,Mixed,Wheat,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,SheepGoat,Mixed,Pasture,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,SheepGoat,Pastoral,Pasture,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,SheepGoat,Mixed,Scavenging,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,SheepGoat,Pastoral,Scavenging,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Energy-final-demand drivers: consumption of animals for food,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+62,,,,,,,,,,,,,,,,,,
+,demandsector,,base-service,,,price-elasticity,income-elasticity,,,,,,,,,,,
+region,energy-final-demand,perCapitaBased,1975,1990,2005,2020 fillout,2020,2035,2050,2065,2080,2095,,,,,,
+USA,SheepGoatDemand,1,217848,217848,110158,-0.5,0.01,0.089,0.002,0.002,0.002,0.002,,,,,,
+Canada,SheepGoatDemand,1,11340,11340,21204,-0.5,0.01,0.089,0.002,0.002,0.002,0.002,,,,,,
+Western Europe,SheepGoatDemand,1,2026244,2026244,1761273,-0.5,0.01,0.089,0.002,0.002,0.002,0.002,,,,,,
+Japan,SheepGoatDemand,1,479,479,241,-0.5,0.01,0.089,0.002,0.002,0.002,0.002,,,,,,
+Australia_NZ,SheepGoatDemand,1,1512089,1512089,1478887,-0.5,0.01,0.089,0.002,0.002,0.002,0.002,,,,,,
+Former Soviet Union,SheepGoatDemand,1,1181983,1181983,708064,-0.5,0.01,0.089,0.002,0.002,0.002,0.002,,,,,,
+China,SheepGoatDemand,1,1473810,1473810,5497241,-0.5,0.134,0.074,0.014,0.014,0.014,0.014,,,,,,
+Middle East,SheepGoatDemand,1,852147,852147,1311869,-0.5,0.134,0.074,0.014,0.014,0.014,0.014,,,,,,
+Africa,SheepGoatDemand,1,1947390,1947390,2308128,-0.5,0.134,0.074,0.014,0.014,0.014,0.014,,,,,,
+Latin America,SheepGoatDemand,1,546649,546649,511112,-0.5,0.134,0.074,0.014,0.014,0.014,0.014,,,,,,
+Southeast Asia,SheepGoatDemand,1,1044771,1044771,1258686,-0.5,0.134,0.074,0.014,0.014,0.014,0.014,,,,,,
+Eastern Europe,SheepGoatDemand,1,421528,421528,209144,-0.5,0.01,0.089,0.002,0.002,0.002,0.002,,,,,,
+Korea,SheepGoatDemand,1,7884,7884,17993,-0.5,0.134,0.074,0.014,0.014,0.014,0.014,,,,,,
+India,SheepGoatDemand,1,744150,744150,892554,-0.5,0.134,0.074,0.014,0.014,0.014,0.014,,,,,,
+,,,,,,,,,,,,,,,,,,
+Meat demand supplysectors: unit tags and sector type,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+50,,,,,,,,,,,,,,,,,,
+,demandsector,,,,,,,,,,,,,,,,,
+region,supplysector,input-unit,output-unit,price-unit,sectorType,,,,,,,,,,,,,
+ALL,SheepGoatDemand,Gcal,Gcal,1975$/Gcal,agDemand,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Meat Food Demands scale year,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+500,,,,,,,,,,,,,,,,,,
+,demandsector,,share-weight,interpolation-rule,,,,,,,,,,,,,,
+region,supplysector,subsector,1975 fillout,apply-to,from-year,to-year,interpolation-function,,,,,,,,,,,
+USA,SheepGoatDemand,SheepGoatDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,SheepGoatDemand,SheepGoatDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,SheepGoatDemand,SheepGoatDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,SheepGoatDemand,SheepGoatDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,SheepGoatDemand,SheepGoatDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,SheepGoatDemand,SheepGoatDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,SheepGoatDemand,SheepGoatDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,SheepGoatDemand,SheepGoatDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,SheepGoatDemand,SheepGoatDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,SheepGoatDemand,SheepGoatDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,SheepGoatDemand,SheepGoatDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,SheepGoatDemand,SheepGoatDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,SheepGoatDemand,SheepGoatDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,SheepGoatDemand,SheepGoatDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+USA,SheepGoatDemand,SheepGoatNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Canada,SheepGoatDemand,SheepGoatNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Western Europe,SheepGoatDemand,SheepGoatNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Japan,SheepGoatDemand,SheepGoatNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Australia_NZ,SheepGoatDemand,SheepGoatNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Former Soviet Union,SheepGoatDemand,SheepGoatNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+China,SheepGoatDemand,SheepGoatNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Middle East,SheepGoatDemand,SheepGoatNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Africa,SheepGoatDemand,SheepGoatNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Latin America,SheepGoatDemand,SheepGoatNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Southeast Asia,SheepGoatDemand,SheepGoatNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Eastern Europe,SheepGoatDemand,SheepGoatNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+Korea,SheepGoatDemand,SheepGoatNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+India,SheepGoatDemand,SheepGoatNonfoodDemand,1,share-weight,2005,2095,fixed,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Efficiency,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+5001,,,,,,,,,,,,,,,,,,
+,,,,efficiency,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,minicam-energy-input,,,,,
+USA,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0.993802,0.993802,0.994734,0.994734,0.994734,0.994734,0.994734,0.994734,0.994734,SheepGoat,,,,,
+Canada,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0.992460,0.992460,0.993137,0.993137,0.993137,0.993137,0.993137,0.993137,0.993137,SheepGoat,,,,,
+Western Europe,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0.971631,0.971631,0.975351,0.975351,0.975351,0.975351,0.975351,0.975351,0.975351,SheepGoat,,,,,
+Japan,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0.975731,0.975731,0.979563,0.979563,0.979563,0.979563,0.979563,0.979563,0.979563,SheepGoat,,,,,
+Australia_NZ,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0.969646,0.969646,0.972598,0.972598,0.972598,0.972598,0.972598,0.972598,0.972598,SheepGoat,,,,,
+Former Soviet Union,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0.955114,0.955114,0.970503,0.970503,0.970503,0.970503,0.970503,0.970503,0.970503,SheepGoat,,,,,
+China,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0.997776,0.997776,0.997308,0.997308,0.997308,0.997308,0.997308,0.997308,0.997308,SheepGoat,,,,,
+Middle East,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0.970052,0.970052,0.974787,0.974787,0.974787,0.974787,0.974787,0.974787,0.974787,SheepGoat,,,,,
+Africa,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0.987908,0.987908,0.984842,0.984842,0.984842,0.984842,0.984842,0.984842,0.984842,SheepGoat,,,,,
+Latin America,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0.988096,0.988096,0.988814,0.988814,0.988814,0.988814,0.988814,0.988814,0.988814,SheepGoat,,,,,
+Southeast Asia,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0.989652,0.989652,0.988585,0.988585,0.988585,0.988585,0.988585,0.988585,0.988585,SheepGoat,,,,,
+Eastern Europe,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0.972651,0.972651,0.974157,0.974157,0.974157,0.974157,0.974157,0.974157,0.974157,SheepGoat,,,,,
+Korea,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0.983135,0.983135,0.983173,0.983173,0.983173,0.983173,0.983173,0.983173,0.983173,SheepGoat,,,,,
+India,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0.989984,0.989984,0.988008,0.988008,0.988008,0.988008,0.988008,0.988008,0.988008,SheepGoat,,,,,
+USA,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0.993802,0.993802,0.994734,0.994734,0.994734,0.994734,0.994734,0.994734,0.994734,SheepGoat,,,,,
+Canada,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0.992460,0.992460,0.993137,0.993137,0.993137,0.993137,0.993137,0.993137,0.993137,SheepGoat,,,,,
+Western Europe,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0.971631,0.971631,0.975351,0.975351,0.975351,0.975351,0.975351,0.975351,0.975351,SheepGoat,,,,,
+Japan,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0.975731,0.975731,0.979563,0.979563,0.979563,0.979563,0.979563,0.979563,0.979563,SheepGoat,,,,,
+Australia_NZ,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0.969646,0.969646,0.972598,0.972598,0.972598,0.972598,0.972598,0.972598,0.972598,SheepGoat,,,,,
+Former Soviet Union,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0.955114,0.955114,0.970503,0.970503,0.970503,0.970503,0.970503,0.970503,0.970503,SheepGoat,,,,,
+China,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0.997776,0.997776,0.997308,0.997308,0.997308,0.997308,0.997308,0.997308,0.997308,SheepGoat,,,,,
+Middle East,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0.970052,0.970052,0.974787,0.974787,0.974787,0.974787,0.974787,0.974787,0.974787,SheepGoat,,,,,
+Africa,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0.987908,0.987908,0.984842,0.984842,0.984842,0.984842,0.984842,0.984842,0.984842,SheepGoat,,,,,
+Latin America,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0.988096,0.988096,0.988814,0.988814,0.988814,0.988814,0.988814,0.988814,0.988814,SheepGoat,,,,,
+Southeast Asia,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0.989652,0.989652,0.988585,0.988585,0.988585,0.988585,0.988585,0.988585,0.988585,SheepGoat,,,,,
+Eastern Europe,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0.972651,0.972651,0.974157,0.974157,0.974157,0.974157,0.974157,0.974157,0.974157,SheepGoat,,,,,
+Korea,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0.983135,0.983135,0.983173,0.983173,0.983173,0.983173,0.983173,0.983173,0.983173,SheepGoat,,,,,
+India,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0.989984,0.989984,0.988008,0.988008,0.988008,0.988008,0.988008,0.988008,0.988008,SheepGoat,,,,,
+,,,,,,,,,,,,,,,,,,
+,demands,,supplies,,,demand scalers,,,,,,,,,,,,
+,1990,2005,1990,2005,,1990,2005,,,,,,,,,,,
+,219224,110750,219207,110741,,0.99992346,0.999918064,,,,,,,,,,,
+,11428,21354,11426,21351,,0.999826854,0.999868148,,,,,,,,,,,
+,2086762,1806811,2085406,1805784,,0.999350095,0.999431483,,,,,,,,,,,
+,493,247,491,246,,0.996684146,0.994886296,,,,,,,,,,,
+,1559735,1521409,1559424,1520553,,0.999800958,0.999436971,,,,,,,,,,,
+,1239349,730313,1237531,729584,,0.998532927,0.999002677,,,,,,,,,,,
+,1477108,5512160,1477095,5512077,,0.999991393,0.999984964,,,,,,,,,,,
+,880580,1348985,878455,1345801,,0.997586276,0.997639821,,,,,,,,,,,
+,1971806,2344462,1971227,2343652,,0.999706723,0.999654466,,,,,,,,,,,
+,553269,516928,553235,516894,,0.99993843,0.999933809,,,,,,,,,,,
+,1055836,1273445,1055696,1273220,,0.999867267,0.999823667,,,,,,,,,,,
+,433662,214838,433381,214692,,0.999350475,0.999322468,,,,,,,,,,,
+,8021,18302,8019,18301,,0.999807576,0.999900126,,,,,,,,,,,
+,751776,903570,751679,903387,,0.999870473,0.999797618,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Calibrated inputs to demand sectors,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+5000,,,,,,,,,,,,,,,,,,
+,demandsector,,,calibrated-value,calibrated-value,calibrated-value,share-weight,,,,,,,,,,from data,
+region,supplysector,subsector,technology,minicam-energy-input,1990,2005,1975,1990,2005,2020,2035,2050,2065,2080,2095,,1990,2005
+USA,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,SheepGoat,219206,110740,1,1,1,1,1,1,1,1,1,,219223,110749
+Canada,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,SheepGoat,11425,21350,1,1,1,1,1,1,1,1,1,,11427,21353
+Western Europe,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,SheepGoat,2085405,1805783,1,1,1,1,1,1,1,1,1,,2086761,1806810
+Japan,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,SheepGoat,490,245,1,1,1,1,1,1,1,1,1,,492,246
+Australia_NZ,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,SheepGoat,619046,461162,1,1,1,1,1,1,1,1,1,,619170,461422
+Former Soviet Union,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,SheepGoat,1237530,684513,1,1,1,1,1,1,1,1,1,,1239348,685196
+China,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,SheepGoat,1477094,5512076,1,1,1,1,1,1,1,1,1,,1477107,5512159
+Middle East,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,SheepGoat,878454,1236239,1,1,1,1,1,1,1,1,1,,880579,1239164
+Africa,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,SheepGoat,1541390,2185557,1,1,1,1,1,1,1,1,1,,1541842,2186313
+Latin America,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,SheepGoat,527428,516893,1,1,1,1,1,1,1,1,1,,527461,516927
+Southeast Asia,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,SheepGoat,946913,1193111,1,1,1,1,1,1,1,1,1,,947039,1193321
+Eastern Europe,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,SheepGoat,264635,177750,1,1,1,1,1,1,1,1,1,,264807,177870
+Korea,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,SheepGoat,8018,11573,1,1,1,1,1,1,1,1,1,,8020,11574
+India,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,SheepGoat,733514,869680,1,1,1,1,1,1,1,1,1,,733609,869856
+USA,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,SheepGoat,1,1,1,1,1,1,1,1,1,1,1,,1,1
+Canada,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,SheepGoat,1,1,1,1,1,1,1,1,1,1,1,,1,1
+Western Europe,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,SheepGoat,1,1,1,1,1,1,1,1,1,1,1,,1,1
+Japan,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,SheepGoat,1,1,1,1,1,1,1,1,1,1,1,,1,1
+Australia_NZ,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,SheepGoat,940378,1059390,1,1,1,1,1,1,1,1,1,,940565,1059987
+Former Soviet Union,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,SheepGoat,1,45071,1,1,1,1,1,1,1,1,1,,1,45116
+China,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,SheepGoat,1,1,1,1,1,1,1,1,1,1,1,,1,1
+Middle East,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,SheepGoat,1,109563,1,1,1,1,1,1,1,1,1,,1,109822
+Africa,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,SheepGoat,429838,158095,1,1,1,1,1,1,1,1,1,,429964,158150
+Latin America,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,SheepGoat,25806,1,1,1,1,1,1,1,1,1,1,,25808,1
+Southeast Asia,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,SheepGoat,108783,80109,1,1,1,1,1,1,1,1,1,,108797,80123
+Eastern Europe,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,SheepGoat,168746,36943,1,1,1,1,1,1,1,1,1,,168856,36968
+Korea,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,SheepGoat,1,6727,1,1,1,1,1,1,1,1,1,,1,6728
+India,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,SheepGoat,18165,33707,1,1,1,1,1,1,1,1,1,,18167,33714
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+Non-energy input cost,,,,,,,,,,,,,,,,,,
+table not necessary,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+5002,,,,,,,,,,,,,,,,,,
+,,,,input-cost,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,,,,
+ALL,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,0,0,0,0,0,0,0,0,0,,,,,,
+ALL,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,0,0,0,0,0,0,0,0,0,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+add CO2 tag,,,,,,,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,,,,,,,
+5010,,,,,,,,,,,,,,,,,,
+,,,,CO2,,,,,,,,,,,,,,
+region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095,,,,,,
+ALL,SheepGoatDemand,SheepGoatDemand,SheepGoatDemand,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+ALL,SheepGoatDemand,SheepGoatNonfoodDemand,SheepGoatNonfoodDemand,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,CO2,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
+,,,,,,,,,,,,,,,,,,
