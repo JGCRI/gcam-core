@@ -963,6 +963,12 @@ void Technology::production( const string& aRegionName,
     // Check that a state has been created for the period.
     assert( mProductionState[ aPeriod ] );
 
+    // Early exit optimization to avoid running through the demand function and
+    // emissions calculations for non-operating technologies.
+    if( !mProductionState[ aPeriod ]->isOperating() ) {
+        return;
+    }
+
     // Construct a marginal profit calculator. This allows the calculation of 
     // marginal profits to be lazy.
     MarginalProfitCalculator marginalProfitCalc( this );
