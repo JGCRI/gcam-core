@@ -273,7 +273,7 @@ private:
     */
     struct DBContainer {
         //! The database environment.
-        DbEnv* mDBEnvironment;
+        DB_ENV* mDBEnvironment;
 
         //! The database manager.
         std::auto_ptr<DbXml::XmlManager> mManager;

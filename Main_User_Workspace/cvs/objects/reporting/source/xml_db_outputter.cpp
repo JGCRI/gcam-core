@@ -124,6 +124,7 @@
 
 #include <ctime>
 #include "dbxml/DbXml.hpp"
+#include <db_cxx.h>
 
 #include <string>
 
@@ -228,12 +229,18 @@ auto_ptr<XMLDBOutputter::DBContainer> XMLDBOutputter::createContainer() {
     auto_ptr<DBContainer> dbContainer( new DBContainer );
 
     // Create a database environment.
-    dbContainer->mDBEnvironment = new DbEnv( 0 );
+    if( db_env_create( &dbContainer->mDBEnvironment, 0 ) ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "Failed to create a database environment." << endl;
+        return auto_ptr<DBContainer>();
+    }
 
     // Set the database cache size to 100 megabytes. This will ensure maximum
     // database performance.
     const unsigned int CACHE_SIZE = 100 * 1024 * 1024;
-    dbContainer->mDBEnvironment->set_cachesize(0, CACHE_SIZE, 1);
+    dbContainer->mDBEnvironment->set_cachesize(
+        dbContainer->mDBEnvironment, 0, CACHE_SIZE, 1);
 
     // Get the location to open the environment.
     const Configuration* conf = Configuration::getInstance();
@@ -261,7 +268,7 @@ auto_ptr<XMLDBOutputter::DBContainer> XMLDBOutputter::createContainer() {
 
     try {
         // Open the environment.
-        dbContainer->mDBEnvironment->open( environmentLocation.c_str(),
+        dbContainer->mDBEnvironment->open( dbContainer->mDBEnvironment, environmentLocation.c_str(),
                                         DB_INIT_MPOOL | DB_CREATE | DB_INIT_LOCK, 0 );
     }
     catch( const DbException& e ) {
@@ -280,6 +287,12 @@ auto_ptr<XMLDBOutputter::DBContainer> XMLDBOutputter::createContainer() {
         dbContainer->mContainerWrapper.reset( new DBContainer::XMLContainerWrapper(
                                              dbContainer->mManager->openContainer( xmldbContainerName, 
                                              DB_CREATE | DBXML_INDEX_NODES) ) );
+        // TODO: Automatically creating indecies for all nodes in the database will lead to
+        // very large databases and most likely we would rarely utilize most of that
+        // functionality.  So for the moment turn this feature off and in the future
+        // determine if and which indecies would be helpful.
+        XmlUpdateContext uc = dbContainer->mManager->createUpdateContext();
+        dbContainer->mContainerWrapper->mContainer.setAutoIndexing( false, uc );
     }
     catch ( const DbXml::XmlException& e ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -345,23 +358,16 @@ bool XMLDBOutputter::appendData( const string& aData, const string& aLocation ) 
                                       + "/" + docName + "')";
 
         // Create the XPath will which locate where to insert the content.
+        const string locationXPath = docXPath + aLocation;
 
+        // finally the XQuery-Update query to insert the node after the given location
+        const string insertAfterQuery = "insert node " + aData + " after " + locationXPath;
 
+        // set the var dataToInsertVar to aData and run the query
         XmlQueryContext queryContext = dbContainer->mManager->createQueryContext();
-        XmlQueryExpression locationExpr = dbContainer->mManager->prepare( docXPath + aLocation,
+        XmlQueryExpression updateExpr = dbContainer->mManager->prepare( insertAfterQuery,
                                                                           queryContext );
-
-        // Create a modification context.
-        XmlModify modifier = dbContainer->mManager->createModify();
-
-        // Add the insertion command.
-        modifier.addInsertAfterStep( locationExpr, XmlModify::Element, "", aData );
-
-        // Execute the command.
-        XmlUpdateContext updateContext = dbContainer->mManager->createUpdateContext();
-
-        XmlResults results = dbContainer->mManager->query( docXPath, queryContext );
-        modifier.execute( results, queryContext, updateContext );
+        updateExpr.execute( queryContext );
     }
     catch ( const DbXml::XmlException& e ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
