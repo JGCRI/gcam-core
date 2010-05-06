@@ -92,7 +92,7 @@
 		<Value name="PrintSectorDependencies">1</Value>
 		<Value name="ShowNullPaths">0</Value>
 		<Value name="PrintPrices">1</Value>
-		<Value name="createCostCurve">1</Value>
+		<Value name="createCostCurve">0</Value>
 		<Value name="estimateCosts">0</Value>
 		<Value name="find-path">0</Value>
 	</Bools>
