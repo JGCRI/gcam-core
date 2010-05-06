@@ -75,6 +75,7 @@
 #include "util/logger/include/ilogger.h"
 #include "util/logger/include/logger_factory.h"
 #include "util/base/include/timer.h"
+#include "util/base/include/version.h"
 
 using namespace std;
 using namespace xercesc;
@@ -122,17 +123,39 @@ int main( int argc, char *argv[] ) {
     mainLog.setLevel( ILogger::WARNING );
 
     // print disclaimer
-    mainLog << "This computer software was prepared by" << endl;
-    mainLog << "Battelle Memorial Institute, hereinafter the" << endl;
-    mainLog << "Contractor, under Contract No. DE-AC05-" << endl;
-    mainLog << "76RL0 1830 with the Department of Energy" << endl;
-    mainLog << "(DOE). NEITHER THE GOVERNMENT NOR THE" << endl;
-    mainLog << "CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR" << endl;
-    mainLog << "IMPLIED, OR ASSUMES ANY LIABILITY FOR THE" << endl;
-    mainLog << "USE OF THIS SOFTWARE. This notice including" << endl;
-    mainLog << "this sentence must appear on any copies of" << endl;
-    mainLog << "this computer software." << endl << endl;
+    mainLog << "This computer software was prepared by Battelle Memorial Institute," << endl;
+    mainLog << "hereinafter the Contractor, under Contract No. DE-AC05-76RL0 1830 with" << endl;
+    mainLog << "the Department of Energy (DOE). NEITHER THE GOVERNMENT NOR THE" << endl;
+    mainLog << "CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY" << endl;
+    mainLog << "LIABILITY FOR THE USE OF THIS SOFTWARE. This notice including this" << endl;
+    mainLog << "sentence must appear on any copies of this computer software." << endl << endl;
     
+    // print export control notice
+    mainLog << "User agrees that the Software will not be shipped, transferred or" << endl;
+    mainLog << "exported into any country or used in any manner prohibited by the United" << endl;
+    mainLog << "States Export Administration Act or any other applicable export laws," << endl;
+    mainLog << "restrictions or regulations (collectively the 'Export Laws'). Export of" << endl;
+    mainLog << "the Software may require some form of license or other authority from" << endl;
+    mainLog << "the U.S. Government, and failure to obtain such export control license" << endl;
+    mainLog << "may result in criminal liability under U.S. laws. In addition, if the" << endl;
+    mainLog << "Software is identified as export controlled items under the Export Laws," << endl;
+    mainLog << "User represents and warrants that User is not a citizen, or otherwise" << endl;
+    mainLog << "located within, an embargoed nation (including without limitation Iran," << endl;
+    mainLog << "Syria, Sudan, Cuba, and North Korea) and that User is not otherwise" << endl;
+    mainLog << "prohibited under the Export Laws from receiving the Software. Note that" << endl;
+    mainLog << "the United States Department of Commerce has determined that this" << endl;
+    mainLog << "software has been assigned an export licensing code (ECCN) of EAR99." << endl;
+    mainLog << "This ECCN applies to both the ObjECTS modeling framework and the ObjECTS" << endl;
+    mainLog << "Model Interface. All rights to use the Software are granted on condition" << endl;
+    mainLog << "that such rights are forfeited if User fails to comply with the terms of" << endl;
+    mainLog << "this Agreement. User agrees to indemnify, defend and hold harmless" << endl;
+    mainLog << "BATTELLE, its officers, agents and employees from all liability" << endl;
+    mainLog << "involving the violation of such Export Laws, either directly or" << endl;
+    mainLog << "indirectly, by User." << endl << endl;
+
+    mainLog << "Running GCAM model code base version " << __ObjECTS_VER__ << " revision "
+        << __REVISION_NUMBER__ << endl << endl;
+
     // Parse configuration file.
     mainLog.setLevel( ILogger::NOTICE );
     mainLog << "Parsing input files..." << endl;

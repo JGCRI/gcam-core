@@ -112,6 +112,7 @@
 #include "ccarbon_model/include/acarbon_flow.h"
 #include "ccarbon_model/include/carbon_model_utils.h"
 #include "ccarbon_model/include/environmental_info.h"
+#include "util/base/include/version.h"
 #include <typeinfo>
 
 // Whether to write a text file with the contents that are to be inserted
@@ -386,7 +387,11 @@ void XMLDBOutputter::startVisitScenario( const Scenario* aScenario, const int aP
             << aScenario->getName() << "\" date=\""
             << util::XMLCreateDate( gGlobalTime ) << "\">" << endl;
     mTabs->increaseIndent();
+
+    //Write model version information
     mTabs->writeTabs( mBuffer );
+    mBuffer << "<model-version>ver_" << __ObjECTS_VER__ << "_r" << __REVISION_NUMBER__
+        << "</model-version>" << endl;
 }
 
 void XMLDBOutputter::endVisitScenario( const Scenario* aScenario, const int aPeriod ){
