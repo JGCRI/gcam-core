@@ -21,18 +21,18 @@ Variable ID,,,,,,,,,,,,
 region,supplysector,subsector,intermittent-technology,1990,2005,2020,2035,2050,2065,2080,2095,
 USA,electricity,solar,PV,49.78,49.78,24.44,14.02,9.41,7.34,6.35,5.84,
 Canada,electricity,solar,PV,61.36,61.36,30.13,17.29,11.60,9.04,7.83,7.20,
-Western Europe,electricity,solar,PV,73.53,73.53,36.10,20.72,13.90,10.84,9.38,8.63,
-Japan,electricity,solar,PV,79.14,79.14,38.86,22.30,14.96,11.66,10.10,9.29,
-Australia_NZ,electricity,solar,PV,68.00,68.00,33.39,19.16,12.86,10.02,8.68,7.98,
-Former Soviet Union,electricity,solar,PV,84.97,84.97,41.72,23.94,16.07,12.52,10.84,9.97,
-China,electricity,solar,PV,86.32,86.32,42.38,24.32,16.32,12.72,11.02,10.13,
-Middle East,electricity,solar,PV,65.12,65.12,31.97,18.35,12.31,9.60,8.31,7.64,
-Africa,electricity,solar,PV,48.69,48.69,23.90,13.72,9.21,7.18,6.21,5.71,
-Latin America,electricity,solar,PV,39.91,39.91,19.59,11.24,7.55,5.88,5.09,4.68,
-Southeast Asia,electricity,solar,PV,32.78,32.78,16.10,9.24,6.20,4.83,4.18,3.85,
-Eastern Europe,electricity,solar,PV,40.54,40.54,19.91,11.42,7.67,5.98,5.17,4.76,
-Korea,electricity,solar,PV,40.76,40.76,20.01,11.48,7.71,6.01,5.20,4.78,
-India,electricity,solar,PV,33.92,33.92,16.66,9.56,6.41,5.00,4.33,3.98,
+Western Europe,electricity,solar,PV,59.66,59.66,29.29,16.81,11.28,8.79,7.61,7.00,
+Japan,electricity,solar,PV,53.58,53.58,26.30,15.09,10.13,7.90,6.84,6.29,
+Australia_NZ,electricity,solar,PV,42.78,42.78,21.00,12.05,8.09,6.31,5.46,5.02,
+Former Soviet Union,electricity,solar,PV,62.20,62.20,30.54,17.52,11.76,9.17,7.94,7.30,
+China,electricity,solar,PV,50.57,50.57,24.83,14.25,9.56,7.45,6.45,5.93,
+Middle East,electricity,solar,PV,37.56,37.56,18.44,10.58,7.10,5.54,4.79,4.41,
+Africa,electricity,solar,PV,37.22,37.22,18.27,10.49,7.04,5.49,4.75,4.37,
+Latin America,electricity,solar,PV,40.81,40.81,20.04,11.50,7.71,6.01,5.21,4.79,
+Southeast Asia,electricity,solar,PV,40.89,40.89,20.08,11.52,7.73,6.03,5.22,4.80,
+Eastern Europe,electricity,solar,PV,61.57,61.57,30.23,17.35,11.64,9.07,7.86,7.22,
+Korea,electricity,solar,PV,50.04,50.04,24.57,14.10,9.46,7.38,6.39,5.87,
+India,electricity,solar,PV,41.44,41.44,20.34,11.67,7.83,6.11,5.29,4.86,
 ,,,,,,,,,,,,
 ,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,
@@ -42,18 +42,18 @@ Variable ID,,,,,,,,,,,,
 region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
 USA,electricity,solar,PV_storage,61.97,61.97,61.97,32.93,20.13,14.55,11.88,10.55,9.87
 Canada,electricity,solar,PV_storage,76.38,76.38,76.38,40.59,24.81,17.93,14.64,13.00,12.17
-Western Europe,electricity,solar,PV_storage,91.54,91.54,91.54,48.64,29.73,21.49,17.55,15.58,14.58
-Japan,electricity,solar,PV_storage,98.51,98.51,98.51,52.35,31.99,23.13,18.89,16.77,15.69
-Australia_NZ,electricity,solar,PV_storage,84.65,84.65,84.65,44.98,27.49,19.87,16.23,14.41,13.48
-Former Soviet Union,electricity,solar,PV_storage,105.77,105.77,105.77,56.21,34.35,24.83,20.28,18.00,16.85
-China,electricity,solar,PV_storage,107.45,107.45,107.45,57.10,34.90,25.23,20.60,18.29,17.11
-Middle East,electricity,solar,PV_storage,81.06,81.06,81.06,43.08,26.33,19.03,15.54,13.80,12.91
-Africa,electricity,solar,PV_storage,60.61,60.61,60.61,32.21,19.68,14.23,11.62,10.32,9.65
-Latin America,electricity,solar,PV_storage,49.68,49.68,49.68,26.40,16.13,11.66,9.52,8.46,7.91
-Southeast Asia,electricity,solar,PV_storage,40.81,40.81,40.81,21.68,13.25,9.58,7.82,6.95,6.50
-Eastern Europe,electricity,solar,PV_storage,50.47,50.47,50.47,26.82,16.39,11.85,9.68,8.59,8.04
-Korea,electricity,solar,PV_storage,50.73,50.73,50.73,26.96,16.48,11.91,9.73,8.64,8.08
-India,electricity,solar,PV_storage,42.23,42.23,42.23,22.44,13.72,9.91,8.10,7.19,6.73
+Western Europe,electricity,solar,PV_storage,74.26,74.26,74.26,39.46,24.12,17.43,14.24,12.64,11.83
+Japan,electricity,solar,PV_storage,66.69,66.69,66.69,35.44,21.66,15.66,12.79,11.35,10.62
+Australia_NZ,electricity,solar,PV_storage,53.25,53.25,53.25,28.30,17.29,12.50,10.21,9.06,8.48
+Former Soviet Union,electricity,solar,PV_storage,77.43,77.43,77.43,41.15,25.15,18.18,14.85,13.18,12.33
+China,electricity,solar,PV_storage,62.95,62.95,62.95,33.45,20.44,14.78,12.07,10.71,10.03
+Middle East,electricity,solar,PV_storage,46.75,46.75,46.75,24.84,15.18,10.98,8.96,7.96,7.45
+Africa,electricity,solar,PV_storage,46.33,46.33,46.33,24.62,15.05,10.88,8.88,7.89,7.38
+Latin America,electricity,solar,PV_storage,50.80,50.80,50.80,26.99,16.50,11.93,9.74,8.65,8.09
+Southeast Asia,electricity,solar,PV_storage,50.90,50.90,50.90,27.05,16.53,11.95,9.76,8.66,8.11
+Eastern Europe,electricity,solar,PV_storage,76.64,76.64,76.64,40.72,24.89,17.99,14.69,13.05,12.21
+Korea,electricity,solar,PV_storage,62.29,62.29,62.29,33.10,20.23,14.62,11.94,10.60,9.92
+India,electricity,solar,PV_storage,51.58,51.58,51.58,27.41,16.75,12.11,9.89,8.78,8.22
 ,,,,,,,,,,,,
 ,,,,,,,,,,,,
 ,,,,,,,,,,,,
