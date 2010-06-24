@@ -181,6 +181,12 @@ double CO2Emissions::getGHGValue( const std::string& aRegionName,
     // SHK 3/15/07: is this correct?
     double coefProduct = calcOutputCoef( aOutputs, aPeriod );
     double coefInput = calcInputCoef( aInputs, aPeriod );
+	
+	// Prevent fuels with a zero input coefficient and positive output coefficient from having
+	// a large negative generalizedCost. This prevents CCS in the reference case.
+	if ((coefInput-coefProduct) < 0 && GHGTax == 0){
+		storageCost *= -1;
+	}
 
     // Calculate the generalized emissions cost per unit.
     // units for generalized cost is in 1975$/GJ
