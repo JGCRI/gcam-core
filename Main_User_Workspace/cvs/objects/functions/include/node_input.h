@@ -288,6 +288,15 @@ public:
 
     virtual void copyParamsInto( InputTax& aInput,
         const int aPeriod ) const {}
+	
+	virtual void copyParamsInto( InputOMVar& aInput,
+								const int aPeriod ) const {}
+	
+	virtual void copyParamsInto( InputOMFixed& aInput,
+								const int aPeriod ) const {}
+	
+	virtual void copyParamsInto( InputCapital& aInput,
+								const int aPeriod ) const {}
 
     // IVisitable interface.
     virtual void accept( IVisitor* aVisitor,

@@ -223,10 +223,11 @@
       </supplyDemandQuery>
    </queryGroup>
    <queryGroup name="Electricity">
+      
       <supplyDemandQuery title="Electricity generation by region (incl rooftop PV and CHP)">
          <axis1 name="region">region</axis1>
          <axis2 name="Year">physical-output[@vintage]</axis2>
-         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (:collapse:)]//*[@type = 'technology' (:collapse:) and not (@name='electricity_td_bld')]/*[@type='output' (:collapse:)  and (@name='electricity' or @name='elect_td_bld')]/physical-output/node()</xPath>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and ((@name='electricity' or @name='elect_td_bld' or @name='industrial energy use'))]//*[@type = 'technology' (:collapse:) and not (@name='electricity_td_bld')]/*[@type='output' (:collapse:)  and (@name='electricity' or @name='elect_td_bld')]/physical-output/node()</xPath>
          <comments/>
       </supplyDemandQuery>
       <supplyDemandQuery title="Electricity generation by region (central only)">
@@ -235,61 +236,183 @@
          <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and ((@name='electricity') )]//*[@type='output']/physical-output/node()</xPath>
          <comments/>
       </supplyDemandQuery>
+      
+      
       <supplyDemandQuery title="Electricity generation by aggregate technology">
          <axis1 name="technology">technology</axis1>
          <axis2 name="Year">physical-output[@vintage]</axis2>
-         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (: collapse :)]//*[@type='output' and (@name='electricity' or @name='elect_td_bld')]/physical-output/node()</xPath>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and ((@name='electricity' or @name='elect_td_bld' or @name='industrial energy use' or (@name='base load generation') or (@name='peak generation') or (@name = 'intermediate generation') or (@name='subpeak generation')) )]//*[@type = 'technology' and not (@name='electricity_td_bld' or @name='electricity')]/*[@type='output' (:collapse:) and (@name='electricity' or @name='elect_td_bld' or @name='base load generation' or @name='intermediate generation' or @name='subpeak generation' or @name='peak generation')]/physical-output/node()</xPath>
          <comments/>
          <labelRewriteList>
             <level name="technology">
                <rewrite from="Oil (existing)" to="e Oil"/>
                <rewrite from="hydrogen cogen" to="n CHP"/>
-               <rewrite from="exotic" to="d Breakthrough Technology"/>
-               <rewrite from="hydro" to="i Hydro"/>
+               <rewrite from="Gen_II_LWR" to="i Nuclear"/>
                <rewrite from="Oil (peak load conv)" to="e Oil"/>
-               <rewrite from="Gen_II_LWR" to="g Nuclear"/>
+               <rewrite from="hydro" to="k Hydro"/>
+               <rewrite from="exotic" to="d Breakthrough Technology"/>
                <rewrite from="coal cogen" to="n CHP"/>
                <rewrite from="Oil (base load conv)" to="e Oil"/>
                <rewrite from="gas cogen" to="n CHP"/>
-               <rewrite from="Biomass (IGCC)" to="h Biomass"/>
                <rewrite from="Gas (base load conv)" to="c Gas"/>
-               <rewrite from="geothermal" to="m Geothermal"/>
+               <rewrite from="Biomass (IGCC)" to="g Biomass"/>
+               <rewrite from="geothermal" to="j Geothermal"/>
                <rewrite from="Coal (conv pul)" to="a Coal"/>
-               <rewrite from="PV_storage" to="l Solar"/>
-               <rewrite from="wind_storage" to="j Wind"/>
-               <rewrite from="CSP_storage" to="l Solar"/>
-               <rewrite from="Biomass (conv)" to="h Biomass"/>
-               <rewrite from="refined liquids cogen" to="n CHP"/>
+               <rewrite from="PV_storage" to="m Solar"/>
+               <rewrite from="wind_storage" to="l Wind"/>
+               <rewrite from="Biomass (conv)" to="g Biomass"/>
+               <rewrite from="CSP_storage" to="m Solar"/>
                <rewrite from="Oil (IGCC)_CCS" to="f Oil w/CCS"/>
+               <rewrite from="refined liquids cogen" to="n CHP"/>
                <rewrite from="biomass cogen" to="n CHP"/>
-               <rewrite from="wind" to="j Wind"/>
+               <rewrite from="wind" to="l Wind"/>
                <rewrite from="Coal (existing)" to="a Coal"/>
-               <rewrite from="Gen_III" to="g Nuclear"/>
-               <rewrite from="CSP" to="l Solar"/>
+               <rewrite from="CSP" to="m Solar"/>
+               <rewrite from="Gen_III" to="i Nuclear"/>
                <rewrite from="Coal (IGCC)_CCS" to="b Coal w/CCS"/>
-               <rewrite from="Gas (peak load conv)" to="c Gas"/>
-               <rewrite from="Gas (CC)" to="c Gas"/>
                <rewrite from="Biomass (IGCC)_CCS" to="h Biomass w/CCS"/>
+               <rewrite from="Gas (CC)" to="c Gas"/>
+               <rewrite from="Gas (peak load conv)" to="c Gas"/>
                <rewrite from="Gas (CC)_CCS" to="d Gas w/CCS"/>
-               <rewrite from="Biomass (existing)" to="h Biomass"/>
+               <rewrite from="Biomass (existing)" to="g Biomass"/>
                <rewrite from="Coal (IGCC)" to="a Coal"/>
-               <rewrite from="PV" to="l Solar"/>
+               <rewrite from="PV" to="m Solar"/>
                <rewrite from="Oil (IGCC)" to="e Oil"/>
-               <rewrite from="electricity_td_bld" to=""/>
                <rewrite from="Gas (existing)" to="c Gas"/>
+               <rewrite from="nuc_base_gen3" to="i Nuclear"/>
+               <rewrite from="nuc_base_gen2" to="i Nuclear"/>
+               <rewrite from="coal_int_IGCC" to="a Coal"/>
+               <rewrite from="csp_base_storage" to="m Solar"/>
+               <rewrite from="oil_int_IGCC" to="e Oil"/>
+               <rewrite from="coal_int_exist" to="a Coal"/>
+               <rewrite from="pv_base_storage" to="m Solar"/>
+               <rewrite from="oil_int_IGCC_CCS" to="f Oil w/CCS"/>
+               <rewrite from="gas_base_CC" to="c Gas"/>
+               <rewrite from="coal_base_IGCC_CCS" to="b Coal w/CCS"/>
+               <rewrite from="bio_base_IGCC_CCS" to="h Biomass w/CCS"/>
+               <rewrite from="gas_subpeak_CC" to="c Gas"/>
+               <rewrite from="gas_base_CC_CCS" to="d Gas w/CCS"/>
+               <rewrite from="oil_peak_exist" to="e Oil"/>
+               <rewrite from="bio_int_exist" to="g Biomass"/>
+               <rewrite from="coal_base_conv" to="a Coal"/>
+               <rewrite from="geo_base" to="j Geothermal"/>
+               <rewrite from="oil_subpeak_IGCC" to="e Oil"/>
+               <rewrite from="oil_subpeak_IGCC_CCS" to="f Oil w/CCS"/>
+               <rewrite from="gas_subpeak_CC_CCS" to="d Gas w/CCS"/>
+               <rewrite from="csp_subpeak" to="m Solar"/>
+               <rewrite from="gas_int_CC_CCS" to="d Gas w/CCS"/>
+               <rewrite from="oil_peak_IGCC_CCS" to="f Oil w/CCS"/>
+               <rewrite from="wind_base" to="l Wind"/>
+               <rewrite from="coal_base_exist" to="a Coal"/>
+               <rewrite from="gas_int_exist" to="c Gas"/>
+               <rewrite from="bio_base_conv" to="g Biomass"/>
+               <rewrite from="gas_peak_CC_CCS" to="d Gas w/CCS"/>
+               <rewrite from="oil_int_exist" to="e Oil"/>
+               <rewrite from="bio_int_IGCC_CCS" to="h Biomass w/CCS"/>
+               <rewrite from="oil_base_exist" to="e Oil"/>
+               <rewrite from="coal_int_conv" to="a Coal"/>
+               <rewrite from="csp_int" to="m Solar"/>
+               <rewrite from="gas_peak_CC" to="c Gas"/>
+               <rewrite from="bio_base_exist" to="g Biomass"/>
+               <rewrite from="oil_peak_IGCC" to="e Oil"/>
+               <rewrite from="hydro_subpeak" to="k Hydro"/>
+               <rewrite from="gas_base_exist" to="c Gas"/>
+               <rewrite from="oil_subpeak_exist" to="e Oil"/>
+               <rewrite from="battery" to="o Battery"/>
+               <rewrite from="hydro_peak" to="k Hydro"/>
+               <rewrite from="gas_int_CC" to="c Gas"/>
+               <rewrite from="hydro_int" to="k Hydro"/>
+               <rewrite from="gas_subpeak_exist" to="c Gas"/>
+               <rewrite from="bio_base_IGCC" to="g Biomass"/>
+               <rewrite from="hydro_base" to="k Hydro"/>
+               <rewrite from="gas_peak_exist" to="c Gas"/>
+               <rewrite from="bio_int_IGCC" to="g Biomass"/>
+               <rewrite from="oil_base_IGCC_CCS" to="f Oil w/CCS"/>
+               <rewrite from="pv_subpeak" to="m Solar"/>
+               <rewrite from="coal_base_IGCC" to="a Coal"/>
+               <rewrite from="wind_base_storage" to="l Wind"/>
+               <rewrite from="coal_int_IGCC_CCS" to="b Coal w/CCS"/>
+               <rewrite from="bio_int_conv" to="g Biomass"/>
+               <rewrite from="oil_base_IGCC" to="e Oil"/>
+               <rewrite from="oil_peak_turbine" to="e Oil"/>
+               <rewrite from="gas_peak_turbine" to="c Gas"/>
             </level>
          </labelRewriteList>
       </supplyDemandQuery>
-      <supplyDemandQuery title="Electricity generation by technology">
+      
+      
+      <supplyDemandQuery title="Electricity generation by technology (inc solar roofs)">
          <axis1 name="technology">technology</axis1>
          <axis2 name="Year">physical-output[@vintage]</axis2>
-         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (: collapse :)]//*[@type = 'technology' and not(@name='electricity_td_bld')]/*[@type='output' and (@name='electricity' or @name='elect_td_bld')]/physical-output/node()</xPath>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and ((@name='electricity' or @name='elect_td_bld' or @name='industrial energy use' or (@name='base load generation') or (@name='peak generation') or (@name = 'intermediate generation') or (@name='subpeak generation')) )]//*[@type = 'technology' and not (@name='electricity_td_bld' or @name='electricity')]/*[@type='output' (:collapse:) and (@name='electricity' or @name='elect_td_bld' or @name='base load generation' or @name='intermediate generation' or @name='subpeak generation' or @name='peak generation')]/physical-output/node()</xPath>
          <comments/>
+         <labelRewriteList>
+            <level name="technology">
+               <rewrite from="nuc_base_gen3" to="Gen_III"/>
+               <rewrite from="nuc_base_gen2" to="Gen_II_LWR"/>
+               <rewrite from="coal_int_IGCC" to="Coal (IGCC)"/>
+               <rewrite from="csp_base_storage" to="CSP_storage"/>
+               <rewrite from="oil_int_IGCC" to="Oil (IGCC)"/>
+               <rewrite from="coal_int_exist" to="Coal (existing)"/>
+               <rewrite from="pv_base_storage" to="PV_storage"/>
+               <rewrite from="oil_int_IGCC_CCS" to="Oil (IGCC)_CCS"/>
+               <rewrite from="gas_base_CC" to="Gas (CC)"/>
+               <rewrite from="coal_base_IGCC_CCS" to="Coal (IGCC)_CCS"/>
+               <rewrite from="bio_base_IGCC_CCS" to="Biomass (IGCC)_CCS"/>
+               <rewrite from="gas_subpeak_CC" to="Gas (CC)"/>
+               <rewrite from="gas_base_CC_CCS" to="Gas (CC)_CCS"/>
+               <rewrite from="oil_peak_exist" to="Oil (existing)"/>
+               <rewrite from="oil_base_CC_CCS" to="Oil (IGCC)_CCS"/>
+               <rewrite from="bio_int_exist" to="Biomass (existing)"/>
+               <rewrite from="coal_base_conv" to="Coal (conv pul)"/>
+               <rewrite from="geo_base" to="geothermal"/>
+               <rewrite from="oil_subpeak_IGCC" to="Oil (IGCC)"/>
+               <rewrite from="oil_subpeak_IGCC_CCS" to="Oil (IGCC)_CCS"/>
+               <rewrite from="gas_subpeak_CC_CCS" to="Gas (CC)_CCS"/>
+               <rewrite from="csp_subpeak" to="CSP"/>
+               <rewrite from="gas_int_CC_CCS" to="Gas (CC)_CCS"/>
+               <rewrite from="oil_peak_IGCC_CCS" to="Oil (IGCC)_CCS"/>
+               <rewrite from="wind_base" to="wind"/>
+               <rewrite from="coal_base_exist" to="Coal (existing)"/>
+               <rewrite from="gas_int_exist" to="Gas (existing)"/>
+               <rewrite from="bio_base_conv" to="Biomass (conv)"/>
+               <rewrite from="gas_peak_CC_CCS" to="Gas (CC)_CCS"/>
+               <rewrite from="oil_int_exist" to="Oil (existing)"/>
+               <rewrite from="bio_int_IGCC_CCS" to="Biomass (IGCC)_CCS"/>
+               <rewrite from="oil_base_exist" to="Oil (existing)"/>
+               <rewrite from="coal_int_conv" to="Coal (conv pulv)"/>
+               <rewrite from="csp_int" to="CSP"/>
+               <rewrite from="gas_peak_CC" to="Gas (CC)"/>
+               <rewrite from="bio_base_exist" to="Biomass (existing)"/>
+               <rewrite from="oil_peak_IGCC" to="Oil (IGCC)"/>
+               <rewrite from="hydro_subpeak" to="hydro"/>
+               <rewrite from="gas_base_exist" to="Gas (existing)"/>
+               <rewrite from="oil_subpeak_exist" to="Oil (existing)"/>
+               <rewrite from="battery" to="Battery"/>
+               <rewrite from="hydro_peak" to="hydro"/>
+               <rewrite from="gas_int_CC" to="Gas (CC)"/>
+               <rewrite from="hydro_int" to="hydro"/>
+               <rewrite from="gas_subpeak_exist" to="Gas (existing)"/>
+               <rewrite from="bio_base_IGCC" to="Biomass (IGCC)"/>
+               <rewrite from="hydro_base" to="hydro"/>
+               <rewrite from="bio_int_IGCC" to="Biomass (IGCC)"/>
+               <rewrite from="gas_peak_exist" to="Gas (existing)"/>
+               <rewrite from="pv_subpeak" to="PV"/>
+               <rewrite from="coal_base_IGCC" to="Coal (IGCC)"/>
+               <rewrite from="wind_base_storage" to="wind_storage"/>
+               <rewrite from="coal_int_IGCC_CCS" to="Coal (IGCC)_CCS"/>
+               <rewrite from="bio_int_conv" to="Biomass (conv)"/>
+               <rewrite from="oil_base_IGCC" to="Oil (IGCC)"/>
+               <rewrite from="oil_peak_turbine" to="Oil (conv)"/>
+               <rewrite from="gas_peak_turbine" to="Gas (conv)"/>
+            </level>
+         </labelRewriteList>
       </supplyDemandQuery>
-      <supplyDemandQuery title="Electricity energy consumption by technology">
+      
+      <supplyDemandQuery title="Electricity Fuel Consumption">
          <axis1 name="fuel">input</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
-         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and ((@name='electricity' or @name='elect_td_bld') )]//*[@type = 'technology' and not(@name='electricity_td_bld')]/*[@type='input' and not (@name='water consumption' or @name='water withdrawals')]/demand-physical/node()</xPath>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and ((@name='base load generation') or (@name='peak generation') or (@name = 'intermediate generation') or (@name='subpeak generation') or @name='electricity')]//*[@type = 'technology']//*[@type='input']/demand-physical/node()</xPath>
          <comments/>
       </supplyDemandQuery>
       <supplyDemandQuery title="Central electricity demand by demand sector">
@@ -298,24 +421,70 @@
          <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector']//*[@type='input' (:collapse:) and (@name='electricity_net_ownuse')]/demand-physical/node()</xPath>
          <comments/>
       </supplyDemandQuery>
+      
+      
+      <supplyDemandQuery title="Aggregate Electricity generation by vertical demand sector (US only)">
+         <axis1 name="input">input</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and ((@name='electricity') )]//*[@type='input']/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Aggregate Electricity generation by horizontal generation sector (US only)">
+         <axis1 name="input">input</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and ((@name='off peak electricity' or @name='intermediate electricity' or @name='subpeak electricity' or @name='peak electricity') )]//*[@type='input']/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Baseload Electricity generation (US only)">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and (@name='base load generation')]//*[@type = 'technology']/*[@type='output']/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Intermediate Electricity generation (US only)">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and (@name='intermediate generation')]//*[@type = 'technology']/*[@type='output']/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Subpeak Electricity generation (US only)">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and (@name='subpeak generation')]//*[@type = 'technology']/*[@type='output']/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Peak Electricity generation (US only)">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and (@name='peak generation')]//*[@type = 'technology']/*[@type='output']/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      
       <supplyDemandQuery title="Electricity costs and prices">
          <axis1 name="sector">sector</axis1>
          <axis2 name="Year">cost</axis2>
-         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector' and ((@name='electricity' or @name='elect_td_bld' or @name='elect_td_ind' or @name='elect_td_trn'))]/cost/text()</xPath>
+         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector' and ((@name='electricity' or @name='off peak electricity' or @name='intermediate electricity' or @name='subpeak electricity' or @name='peak electricity' or @name='elect_td_bld' or @name='elect_td_ind' or @name='elect_td_trn'))]/cost/text()</xPath>
          <comments/>
-      </supplyDemandQuery>
+      </supplyDemandQuery>     
+      <supplyDemandQuery title="Electricity costs by sector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="Price" group="false" sumAll="false">*[@type = 'sector' and ((@name='base load generation') or (@name='peak generation') or (@name = 'intermediate generation') or (@name='subpeak generation') or @name='electricity' or @name='elect_td_bld' or @name='elect_td_ind' or @name='elect_td_trn' )]/cost/text()</xPath>
+         <comments>doesn't include rooftop PV</comments>
+      </supplyDemandQuery>    
       <supplyDemandQuery title="Electricity costs by subsector">
          <axis1 name="subsector">subsector</axis1>
          <axis2 name="Year">cost</axis2>
-         <xPath buildList="true" dataName="Price" group="false" sumAll="false">*[@type = 'sector' and (@name='electricity')]/*[@type = 'subsector']/cost/text()</xPath>
+         <xPath buildList="true" dataName="Price" group="false" sumAll="false">*[@type = 'sector' and ((@name='base load generation') or (@name='peak generation') or (@name = 'intermediate generation') or (@name='subpeak generation') or (@name='electricity'))]/*[@type = 'subsector' and not (@name='electricity')]/cost/text()</xPath>
          <comments>doesn't include rooftop PV</comments>
       </supplyDemandQuery>
       <supplyDemandQuery title="Electricity generation costs by technology">
          <axis1 name="technology">technology</axis1>
          <axis2 name="Year">cost</axis2>
-         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector' and ((@name='electricity' or @name='elect_td_bld') )]//*[@type = 'technology' and not(@name='electricity_td_bld')]/cost/text()</xPath>
+         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and ((@name='base load generation') or (@name='peak generation') or (@name = 'intermediate generation') or (@name='subpeak generation') or @name='elect_td_bld' or @name='electricity' )]//*[@type = 'technology' and not (@name='electricity_td_bld' or @name='electricity')]/cost/text()</xPath>
          <comments/>
       </supplyDemandQuery>
+      
       <supplyDemandQuery title="Cogeneration by region">
          <axis1 name="region">region</axis1>
          <axis2 name="Year">physical-output[@vintage]</axis2>
@@ -334,7 +503,10 @@
          <xPath buildList="true" dataName="Price" group="false" sumAll="false">*[@type = 'sector' and (@name='electricity')]/*[@type = 'subsector']/share-weight/text()</xPath>
          <comments>doesn't include rooftop PV</comments>
       </supplyDemandQuery>
+      
+      
    </queryGroup>
+   
    <queryGroup name="Refining">
       <supplyDemandQuery title="Refined liquids production by region">
          <axis1 name="region">region</axis1>

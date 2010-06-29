@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+         <supplysector delete="1" name="electricity"/>
+         <supplysector name="electricity">
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <has-trial-supply-market>1</has-trial-supply-market>
+            <object-meta-info name="electricity-reserve-margin">
+               <value>0.15</value>
+            </object-meta-info>
+            <object-meta-info name="average-grid-capacity-factor">
+               <value>0.6</value>
+            </object-meta-info>
+            <subsector name="electricity">
+               <technology name="electricity">
+                  <period year="1975">
+                     <minicam-energy-input name="off peak electricity">
+                        <coefficient>0.250</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate electricity">
+                        <coefficient>0.288</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="subpeak electricity">
+                        <coefficient>0.278</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="peak electricity">
+                        <coefficient>0.184</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="off peak electricity">
+                        <coefficient>0.250</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate electricity">
+                        <coefficient>0.288</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="subpeak electricity">
+                        <coefficient>0.278</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="peak electricity">
+                        <coefficient>0.184</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="off peak electricity">
+                        <coefficient>0.250</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate electricity">
+                        <coefficient>0.288</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="subpeak electricity">
+                        <coefficient>0.278</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="peak electricity">
+                        <coefficient>0.184</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="off peak electricity">
+                        <coefficient>0.250</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate electricity">
+                        <coefficient>0.288</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="subpeak electricity">
+                        <coefficient>0.278</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="peak electricity">
+                        <coefficient>0.184</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="off peak electricity">
+                        <coefficient>0.250</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate electricity">
+                        <coefficient>0.288</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="subpeak electricity">
+                        <coefficient>0.278</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="peak electricity">
+                        <coefficient>0.184</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="off peak electricity">
+                        <coefficient>0.250</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate electricity">
+                        <coefficient>0.288</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="subpeak electricity">
+                        <coefficient>0.278</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="peak electricity">
+                        <coefficient>0.184</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="off peak electricity">
+                        <coefficient>0.250</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate electricity">
+                        <coefficient>0.288</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="subpeak electricity">
+                        <coefficient>0.278</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="peak electricity">
+                        <coefficient>0.184</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="off peak electricity">
+                        <coefficient>0.250</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate electricity">
+                        <coefficient>0.288</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="subpeak electricity">
+                        <coefficient>0.278</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="peak electricity">
+                        <coefficient>0.184</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="off peak electricity">
+                        <coefficient>0.250</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate electricity">
+                        <coefficient>0.288</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="subpeak electricity">
+                        <coefficient>0.278</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="peak electricity">
+                        <coefficient>0.184</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+               </technology>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+            </subsector>
+         </supplysector>
+         <supplysector name="off peak electricity">
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <subsector name="off peak electricity">
+               <technology name="off peak electricity">
+                  <period year="1975">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>1.000</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>1.000</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>1.000</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>1.000</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>1.000</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>1.000</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>1.000</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>1.000</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>1.000</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+               </technology>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+            </subsector>
+         </supplysector>
+         <supplysector name="intermediate electricity">
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <subsector name="intermediate electricity">
+               <technology name="intermediate electricity">
+                  <period year="1975">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>0.760</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate generation">
+                        <coefficient>0.240</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>0.760</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate generation">
+                        <coefficient>0.240</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>0.760</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate generation">
+                        <coefficient>0.240</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>0.760</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate generation">
+                        <coefficient>0.240</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>0.760</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate generation">
+                        <coefficient>0.240</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>0.760</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate generation">
+                        <coefficient>0.240</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>0.760</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate generation">
+                        <coefficient>0.240</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>0.760</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate generation">
+                        <coefficient>0.240</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>0.760</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate generation">
+                        <coefficient>0.240</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+               </technology>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+            </subsector>
+         </supplysector>
+         <supplysector name="subpeak electricity">
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <subsector name="subpeak electricity">
+               <technology name="subpeak electricity">
+                  <period year="1975">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>0.676</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate generation">
+                        <coefficient>0.213</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="subpeak generation">
+                        <coefficient>0.111</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>0.676</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate generation">
+                        <coefficient>0.213</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="subpeak generation">
+                        <coefficient>0.111</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>0.676</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate generation">
+                        <coefficient>0.213</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="subpeak generation">
+                        <coefficient>0.111</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>0.676</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate generation">
+                        <coefficient>0.213</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="subpeak generation">
+                        <coefficient>0.111</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>0.676</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate generation">
+                        <coefficient>0.213</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="subpeak generation">
+                        <coefficient>0.111</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>0.676</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate generation">
+                        <coefficient>0.213</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="subpeak generation">
+                        <coefficient>0.111</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>0.676</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate generation">
+                        <coefficient>0.213</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="subpeak generation">
+                        <coefficient>0.111</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>0.676</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate generation">
+                        <coefficient>0.213</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="subpeak generation">
+                        <coefficient>0.111</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>0.676</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate generation">
+                        <coefficient>0.213</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="subpeak generation">
+                        <coefficient>0.111</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+               </technology>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+            </subsector>
+         </supplysector>
+         <supplysector name="peak electricity">
+            <output-unit>EJ</output-unit>
+            <input-unit>EJ</input-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <subsector name="peak electricity">
+               <technology name="peak electricity">
+                  <period year="1975">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>0.510</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate generation">
+                        <coefficient>0.161</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="subpeak generation">
+                        <coefficient>0.084</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="peak generation">
+                        <coefficient>0.245</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>0.510</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate generation">
+                        <coefficient>0.161</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="subpeak generation">
+                        <coefficient>0.084</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="peak generation">
+                        <coefficient>0.245</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>0.510</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate generation">
+                        <coefficient>0.161</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="subpeak generation">
+                        <coefficient>0.084</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="peak generation">
+                        <coefficient>0.245</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>0.510</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate generation">
+                        <coefficient>0.161</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="subpeak generation">
+                        <coefficient>0.084</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="peak generation">
+                        <coefficient>0.245</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>0.510</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate generation">
+                        <coefficient>0.161</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="subpeak generation">
+                        <coefficient>0.084</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="peak generation">
+                        <coefficient>0.245</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>0.510</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate generation">
+                        <coefficient>0.161</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="subpeak generation">
+                        <coefficient>0.084</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="peak generation">
+                        <coefficient>0.245</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>0.510</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate generation">
+                        <coefficient>0.161</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="subpeak generation">
+                        <coefficient>0.084</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="peak generation">
+                        <coefficient>0.245</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>0.510</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate generation">
+                        <coefficient>0.161</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="subpeak generation">
+                        <coefficient>0.084</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="peak generation">
+                        <coefficient>0.245</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="base load generation">
+                        <coefficient>0.510</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="intermediate generation">
+                        <coefficient>0.161</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="subpeak generation">
+                        <coefficient>0.084</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="peak generation">
+                        <coefficient>0.245</coefficient>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+               </technology>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+            </subsector>
+         </supplysector>
+      </region>
+   </world>
+</scenario>

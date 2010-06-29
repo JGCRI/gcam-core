@@ -86,6 +86,100 @@ double FunctionUtils::getCurrencyDemandSum( const InputSet& aInputs,
     return sum;
 }
 
+//! Function to calculate the periodic payment amount of the loan with the first payment due a 
+// full payment period into the loan.
+// Future value is assumed to be 0.
+// TODO: change aPV to Value class to incorporate units calculation.
+double FunctionUtils::PMT( double aRate, double aNper, double aPV )
+{
+    // Formula from http://en.wikipedia.org/wiki/Amortization_calculator
+    assert( aRate > 0 );
+    assert( aNper > 0 );
+    if( ( aNper > util::getVerySmallNumber() ) | 
+        ( aRate > util::getVerySmallNumber() ) ) {
+            return ( aPV * aRate ) / ( 1 - pow( ( 1 + aRate ), -aNper ) );
+        }
+    return -1;
+}
+
+//! Function to return average number of hours in a year.
+double FunctionUtils::HOURS_PER_YEAR( void )
+{
+    return 8766;
+}
+
+//! Function to return hours per day.
+double FunctionUtils::HOURS_PER_DAY( void )
+{
+    return 24;
+}
+
+//! Function to return 2003 to 1975 US $ deflator.
+double FunctionUtils::DEFLATOR_1975_PER_DEFLATOR_2003( void )
+{
+    return 0.357; // Ratio of 1975/2003 deflators
+}
+
+//! Function to return 2005 to 1975 US $ deflator.
+double FunctionUtils::DEFLATOR_1975_PER_DEFLATOR_2005( void )
+{
+    return 0.337; // Ratio of 1975/2005 deflators
+}
+
+//! Function to return 1990 to 1975 US $ deflator.
+double FunctionUtils::DEFLATOR_1990_PER_DEFLATOR_1975( void )
+{
+    return 2.212; // Ratio of 1990/1975 deflators
+}
+
+//! Function to return kWh to GJ conversion.
+double FunctionUtils::GJ_PER_KWH( void )
+{
+    return 0.003600457; // GJ/kWh
+}
+
+//! Function to return kWh to GJ conversion.
+double FunctionUtils::GJ_PER_MWH( void )
+{
+    return 3.600457; // GJ/MWh
+}
+
+//! Function to return EJ to GJ conversion.
+double FunctionUtils::GJ_PER_EJ( void )
+{
+    return 1.0E+9; // GJ/EJ
+}
+
+//! Function to return EJ to GJ conversion.
+double FunctionUtils::MWH_PER_GWH( void )
+{
+    return 1.0E+3; // MWh/GWh
+}
+
+//! Function to return GWh to EJ conversion.
+double FunctionUtils::EJ_PER_GWH( void )
+{
+    return GJ_PER_MWH() / GJ_PER_EJ() * MWH_PER_GWH(); // EJ/GWh
+}
+
+//! Function to return GJ to GWh conversion.
+double FunctionUtils::GWH_PER_GJ( void )
+{
+    return 2.778E-4; // GWh/GJ
+}
+
+//! Function to return GJ to MWh conversion.
+double FunctionUtils::MWH_PER_GJ( void )
+{
+    return 2.778E-1; // MWh/GJ
+}
+
+//! Function to return metric ton to kg conversion.
+double FunctionUtils::KG_PER_METRIC_TON( void )
+{
+    return 1000; // kg/tonne
+}
+
 //! Function to return sum of all physical demand inputs
 double FunctionUtils::getPhysicalDemandSum( const InputSet& aInputs,
                                             const int aPeriod )
@@ -129,6 +223,17 @@ IInput* FunctionUtils::getCapitalInput( const InputSet& aInputs )
 {
     for( unsigned int i = 0; i < aInputs.size(); ++i ) {
         if( aInputs[i]->hasTypeFlag( IInput::CAPITAL ) ) {
+            return aInputs[i];
+        }
+    }
+    return 0;
+}
+
+//! Helper function to get an input by type.
+IInput* FunctionUtils::getInputByType( const InputSet& aInputs, const int aTypeFlag )
+{
+    for( unsigned int i = 0; i < aInputs.size(); ++i ) {
+        if( aInputs[i]->hasTypeFlag( aTypeFlag ) ) {
             return aInputs[i];
         }
     }
@@ -494,11 +599,6 @@ double FunctionUtils::calcPriceRatio( const string& aRegionName,
 {
     // The price ratio is always 1 in the base period.
     double priceRatio = 1;
-    // Prices before 1990 are not valid.
-    int basePeriod = aBasePeriod;
-    if ( aBasePeriod == 0 ) {
-        basePeriod = 1; 
-    }
     if( aCurrentPeriod > aBasePeriod ) {
         double basePrice = aInput->getPrice( aRegionName, aBasePeriod );
         if( basePrice > util::getSmallNumber() ){

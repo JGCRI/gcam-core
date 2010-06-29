@@ -241,7 +241,11 @@ void IntermittentTechnology::completeInit( const string& aRegionName,
                                            ILandAllocator* aLandAllocator,
                                            const GlobalTechnologyDatabase* aGlobalTechDB )
 {
-    // Initialize electric reserve margin and average grid capacity factor from the Sector.
+	// The parent method must be called first due to sequence issues
+    Technology::completeInit( aRegionName, aSectorName, aSubsectorName, aDepFinder, aSubsectorInfo,
+							 aLandAllocator, aGlobalTechDB );	
+	
+	// Initialize electric reserve margin and average grid capacity factor from the Sector.
     mElecReserveMargin = aSubsectorInfo->getDouble( "electricity-reserve-margin", true );
     mAveGridCapacityFactor = aSubsectorInfo->getDouble( "average-grid-capacity-factor", true );
 
@@ -251,10 +255,6 @@ void IntermittentTechnology::completeInit( const string& aRegionName,
     if( util::searchForValue( mInputs, getBackupCapCostName() ) == mInputs.end() ){
         mInputs.push_back( new NonEnergyInput( getBackupCapCostName() ) );
     }
-
-    // Call parent method
-    Technology::completeInit( aRegionName, aSectorName, aSubsectorName, aDepFinder, aSubsectorInfo,
-                              aLandAllocator, aGlobalTechDB );
 
     // Inititalize info object
     mIntermittTechInfo.reset( InfoFactory::constructInfo( 0, getName() ) );

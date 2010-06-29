@@ -102,10 +102,44 @@ public:
     
     static IInput* getCapitalInput( const InputSet& aInputs );
     
+    static IInput* getInputByType( const InputSet& aInputs, const int aTypeFlag );
+    
     static IInput* getNumeraireInput( const InputSet& aInputs );
     
     static double getRho( const double aSigma );
     
+    static double PMT( double aRate, double aNper, double aPV );
+
+    // **** Begin Unit Conversions
+    // TODO: remove when units conversion is working
+    static double HOURS_PER_YEAR( void );
+
+    static double HOURS_PER_DAY( void );
+
+    static double DEFLATOR_1975_PER_DEFLATOR_2003( void );
+
+    static double DEFLATOR_1975_PER_DEFLATOR_2005( void );
+
+    static double DEFLATOR_1990_PER_DEFLATOR_1975( void );
+
+    static double GJ_PER_KWH( void );
+
+    static double GJ_PER_MWH( void );
+
+    static double GJ_PER_EJ( void );
+
+    static double EJ_PER_GWH( void );
+
+    static double MWH_PER_GWH( void );
+
+    static double GWH_PER_GJ( void );
+
+    static double MWH_PER_GJ( void );
+
+    static double KG_PER_METRIC_TON( void );
+
+    // **** End Unit Conversions
+
     static double getNetPresentValueMult( const InputSet& aInputs,
                                           const std::string& aRegionName,
                                           const double aLifetimeYears,

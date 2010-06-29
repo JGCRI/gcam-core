@@ -70,6 +70,12 @@
 		<Value name="nonco2_adj">../input/nonco2/rcp_input_patch.xml</Value>
 		<Value name="keywords">../input/keywords/keywords_agg.xml</Value>
 		<Value name="solver_config">../input/solution/cal_solver_config.xml</Value>
+		<Value name="elec_sectors_elec">../input/energy/electric sector/elec_cal_input.xml</Value>
+		<Value name="elec_sectors_sub">../input/energy/electric sector/gen_subsector_input.xml</Value>
+		<Value name="elec_sectors_fossil">../input/energy/electric sector/gen_fossil_tech_input.xml</Value>
+		<Value name="elec_sectors_nonfossil">../input/energy/electric sector/gen_nonfossil_tech_input.xml</Value>
+		<Value name="elec_sectors_cal">../input/energy/electric sector/gen_cal_input.xml</Value>
+		
 	</ScenarioComponents>
 	<Strings>
 		<Value name="scenarioName">Main</Value>

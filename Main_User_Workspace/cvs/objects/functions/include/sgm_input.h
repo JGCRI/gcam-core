@@ -199,6 +199,10 @@ public:
     virtual void copyParamsInto( InputTax& aInput, const int aPeriod ) const {}
     virtual void copyParamsInto( NodeInput& aInput, const int aPeriod ) const {}
     virtual void copyParamsInto( TradeInput& aInput, const int aPeriod ) const {}
+	virtual void copyParamsInto( InputOMVar& aInput, const int aPeriod ) const {}
+    virtual void copyParamsInto( InputOMFixed& aInput, const int aPeriod ) const {}
+    virtual void copyParamsInto( InputCapital& aInput, const int aPeriod ) const {}
+
 
     // INestedInput methods
     // define them to do nothing since an SGMInput is a leaf in the nesting structure

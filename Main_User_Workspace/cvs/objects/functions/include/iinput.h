@@ -70,6 +70,9 @@ class NonEnergyInput;
 class RenewableInput;
 class InputSubsidy;
 class InputTax;
+class InputOMVar;
+class InputOMFixed;
+class InputCapital;
 
 #include "util/base/include/ivisitable.h"
 
@@ -131,7 +134,13 @@ public:
         TAX = 1 << 11,
 
         //! Traded Good.
-        TRADED = 1 << 12
+        TRADED = 1 << 12,
+		
+		//! O&M Input
+        OM_VAR = 1 << 13,
+		
+		//! O&M Input
+        OM_FIXED = 1 << 14
 
     };
 
@@ -450,6 +459,14 @@ public:
 
     virtual void copyParamsInto( NonEnergyInput& aInput,
                                  const int aPeriod ) const = 0;
+	virtual void copyParamsInto( InputCapital& aInput,
+								const int aPeriod ) const = 0;
+	
+    virtual void copyParamsInto( InputOMFixed& aInput,
+								const int aPeriod ) const = 0;
+	
+    virtual void copyParamsInto( InputOMVar& aInput,
+								const int aPeriod ) const = 0;
 
     virtual void copyParamsInto( BuildingDemandInput& aInput,
                                  const int aPeriod ) const = 0;
@@ -462,7 +479,7 @@ public:
 
     virtual void copyParamsInto( InputTax& aInput,
                                  const int aPeriod ) const = 0;
-
+	
     // IVisitable interface.
     virtual void accept( IVisitor* aVisitor,
                         const int aPeriod ) const = 0;

@@ -61,6 +61,8 @@
 #include "technologies/include/ishutdown_decider.h"
 #include "technologies/include/shutdown_decider_factory.h"
 #include "functions/include/iinput.h"
+#include "functions/include/non_energy_input.h"
+#include "functions/include/input_capital.h"
 #include "functions/include/ifunction.h"
 #include "technologies/include/input_factory.h"
 #include "functions/include/function_manager.h"
@@ -379,6 +381,36 @@ void Technology::completeInit( const string& aRegionName,
     if( mLifetimeYears == -1 ) {
         mLifetimeYears = modeltime->gettimestep( modeltime->getyr_to_per( year ) );
     }
+    
+    // Check if both the original MiniCAM non-energy-input and the new input-capital
+    // are in the vector.  If so, eliminate the non-energy-input and use input-capital 
+    // only so that non-energy costs are not double accounted.
+    // Does not check for fixed and variable O&M, however.
+    vector<IInput*>::iterator iterNonEnergy = mInputs.end();
+    vector<IInput*>::iterator iterCapital = mInputs.end();
+	
+    // First look for input-capital since most technologies will have non-energy-input.
+    for( vector<IInput*>::iterator iter = mInputs.begin(); iter != mInputs.end(); ++iter ) {
+        // Cannot use hasTypeFlag() as both have same type.
+        if( ( *iter )->isSameType( InputCapital::getXMLNameStatic() ) ){
+            iterCapital = iter;
+        }
+    }
+    // Only look for non-energy-input iterator if input-capital iterator is found.
+    if( iterCapital != mInputs.end() ){
+        for( vector<IInput*>::iterator iter = mInputs.begin(); iter != mInputs.end(); ++iter ) {
+            // Cannot use hasTypeFlag() as both have same type.
+            if( ( *iter )->isSameType( NonEnergyInput::getXMLNameStatic() ) ){
+                iterNonEnergy = iter;
+            }
+        }
+    }
+    // If both are found, then eliminate the orginal non-energy-input since the 
+    // more detailed levelized capital calculation is intended to be used.
+    //if( iterNonEnergy != mInputs.end() && iterCapital != mInputs.end() ){
+    // mInputs.erase( iterNonEnergy );
+	//}
+    
     // Complete the initialization of the inputs. Pass the inputs and outputs
     // the most local info object available.
     const IInfo* localInfo = getTechInfo() != 0 ? getTechInfo() : aSubsectorInfo;
