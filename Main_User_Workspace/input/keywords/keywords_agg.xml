@@ -1046,6 +1046,1320 @@
                </technology>
             </subsector>
          </supplysector>
+         <supplysector name="base load generation" nocreate="1">
+            <subsector name="geothermal" nocreate="1">
+               <technology name="geo_base" nocreate="1">
+                  <period year="1975">
+                     <keyword primary-renewable="geothermal-elect"/>
+                  </period>
+                  <period year="1990">
+                     <keyword primary-renewable="geothermal-elect"/>
+                  </period>
+                  <period year="2005">
+                     <keyword primary-renewable="geothermal-elect"/>
+                  </period>
+                  <period year="2020">
+                     <keyword primary-renewable="geothermal-elect"/>
+                  </period>
+                  <period year="2035">
+                     <keyword primary-renewable="geothermal-elect"/>
+                  </period>
+                  <period year="2050">
+                     <keyword primary-renewable="geothermal-elect"/>
+                  </period>
+                  <period year="2065">
+                     <keyword primary-renewable="geothermal-elect"/>
+                  </period>
+                  <period year="2080">
+                     <keyword primary-renewable="geothermal-elect"/>
+                  </period>
+                  <period year="2095">
+                     <keyword primary-renewable="geothermal-elect"/>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="hydro" nocreate="1">
+               <technology name="hydro_base" nocreate="1">
+                  <period year="1975">
+                     <keyword primary-renewable="hydro-elect"/>
+                  </period>
+                  <period year="1990">
+                     <keyword primary-renewable="hydro-elect"/>
+                  </period>
+                  <period year="2005">
+                     <keyword primary-renewable="hydro-elect"/>
+                  </period>
+                  <period year="2020">
+                     <keyword primary-renewable="hydro-elect"/>
+                  </period>
+                  <period year="2035">
+                     <keyword primary-renewable="hydro-elect"/>
+                  </period>
+                  <period year="2050">
+                     <keyword primary-renewable="hydro-elect"/>
+                  </period>
+                  <period year="2065">
+                     <keyword primary-renewable="hydro-elect"/>
+                  </period>
+                  <period year="2080">
+                     <keyword primary-renewable="hydro-elect"/>
+                  </period>
+                  <period year="2095">
+                     <keyword primary-renewable="hydro-elect"/>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="nuclear" nocreate="1">
+               <technology name="nuc_base_gen2" nocreate="1">
+                  <period year="1975">
+                     <keyword primary-renewable="nuclear-elect"/>
+                  </period>
+                  <period year="1990">
+                     <keyword primary-renewable="nuclear-elect"/>
+                  </period>
+                  <period year="2005">
+                     <keyword primary-renewable="nuclear-elect"/>
+                  </period>
+                  <period year="2020">
+                     <keyword primary-renewable="nuclear-elect"/>
+                  </period>
+                  <period year="2035">
+                     <keyword primary-renewable="nuclear-elect"/>
+                  </period>
+                  <period year="2050">
+                     <keyword primary-renewable="nuclear-elect"/>
+                  </period>
+                  <period year="2065">
+                     <keyword primary-renewable="nuclear-elect"/>
+                  </period>
+                  <period year="2080">
+                     <keyword primary-renewable="nuclear-elect"/>
+                  </period>
+                  <period year="2095">
+                     <keyword primary-renewable="nuclear-elect"/>
+                  </period>
+               </technology>
+               <technology name="nuc_base_gen3" nocreate="1">
+                  <period year="1975">
+                     <keyword primary-renewable="nuclear-elect"/>
+                  </period>
+                  <period year="1990">
+                     <keyword primary-renewable="nuclear-elect"/>
+                  </period>
+                  <period year="2005">
+                     <keyword primary-renewable="nuclear-elect"/>
+                  </period>
+                  <period year="2020">
+                     <keyword primary-renewable="nuclear-elect"/>
+                  </period>
+                  <period year="2035">
+                     <keyword primary-renewable="nuclear-elect"/>
+                  </period>
+                  <period year="2050">
+                     <keyword primary-renewable="nuclear-elect"/>
+                  </period>
+                  <period year="2065">
+                     <keyword primary-renewable="nuclear-elect"/>
+                  </period>
+                  <period year="2080">
+                     <keyword primary-renewable="nuclear-elect"/>
+                  </period>
+                  <period year="2095">
+                     <keyword primary-renewable="nuclear-elect"/>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="wind" nocreate="1">
+               <technology name="wind_base_storage" nocreate="1">
+                  <period year="1975">
+                     <keyword primary-renewable="wind-elect"/>
+                  </period>
+                  <period year="1990">
+                     <keyword primary-renewable="wind-elect"/>
+                  </period>
+                  <period year="2005">
+                     <keyword primary-renewable="wind-elect"/>
+                  </period>
+                  <period year="2020">
+                     <keyword primary-renewable="wind-elect"/>
+                  </period>
+                  <period year="2035">
+                     <keyword primary-renewable="wind-elect"/>
+                  </period>
+                  <period year="2050">
+                     <keyword primary-renewable="wind-elect"/>
+                  </period>
+                  <period year="2065">
+                     <keyword primary-renewable="wind-elect"/>
+                  </period>
+                  <period year="2080">
+                     <keyword primary-renewable="wind-elect"/>
+                  </period>
+                  <period year="2095">
+                     <keyword primary-renewable="wind-elect"/>
+                  </period>
+               </technology>
+               <technology name="wind_base" nocreate="1">
+                  <period year="1975">
+                     <keyword primary-renewable="wind-elect"/>
+                  </period>
+                  <period year="1990">
+                     <keyword primary-renewable="wind-elect"/>
+                  </period>
+                  <period year="2005">
+                     <keyword primary-renewable="wind-elect"/>
+                  </period>
+                  <period year="2020">
+                     <keyword primary-renewable="wind-elect"/>
+                  </period>
+                  <period year="2035">
+                     <keyword primary-renewable="wind-elect"/>
+                  </period>
+                  <period year="2050">
+                     <keyword primary-renewable="wind-elect"/>
+                  </period>
+                  <period year="2065">
+                     <keyword primary-renewable="wind-elect"/>
+                  </period>
+                  <period year="2080">
+                     <keyword primary-renewable="wind-elect"/>
+                  </period>
+                  <period year="2095">
+                     <keyword primary-renewable="wind-elect"/>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="solar" nocreate="1">
+               <technology name="pv_base_storage" nocreate="1">
+                  <period year="1975">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="1990">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2005">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2020">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2035">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2050">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2065">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2080">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2095">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+               </technology>
+               <technology name="csp_base_storage" nocreate="1">
+                  <period year="1975">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="1990">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2005">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2020">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2035">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2050">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2065">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2080">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2095">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <technology name="coal_base_exist" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="coal_base_conv" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="coal_base_IGCC" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="coal_base_IGCC_CCS" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <technology name="bio_base_exist" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="bio_base_conv" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="bio_base_IGCC" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="bio_base_IGCC_CCS" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <technology name="gas_base_exist" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="gas_base_CC" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="gas_base_CC_CCS" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="intermediate generation" nocreate="1">
+            <subsector name="solar" nocreate="1">
+               <technology name="csp_int" nocreate="1">
+                  <period year="1975">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="1990">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2005">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2020">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2035">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2050">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2065">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2080">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2095">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="coal" nocreate="1">
+               <technology name="coal_int_exist" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="coal_int_conv" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="coal_int_IGCC" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="coal_int_IGCC_CCS" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <technology name="gas_int_exist" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="gas_int_CC" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="gas_int_CC_CCS" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="biomass" nocreate="1">
+               <technology name="bio_int_exist" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="bio_int_conv" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="bio_int_IGCC" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="bio_int_IGCC_CCS" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="oil" nocreate="1">
+               <technology name="oil_int_exist" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="oil_int_IGCC" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="oil_int_IGCC_CCS" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="subpeak generation" nocreate="1">
+            <subsector name="solar" nocreate="1">
+               <technology name="pv_subpeak" nocreate="1">
+                  <period year="1975">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="1990">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2005">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2020">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2035">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2050">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2065">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2080">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2095">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+               </technology>
+               <technology name="csp_subpeak" nocreate="1">
+                  <period year="1975">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="1990">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2005">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2020">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2035">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2050">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2065">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2080">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+                  <period year="2095">
+                     <keyword primary-renewable="solar-elect"/>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="gas" nocreate="1">
+               <technology name="gas_subpeak_exist" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="gas_subpeak_turbine" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="gas_subpeak_CC" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="gas_subpeak_CC_CCS" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="oil" nocreate="1">
+               <technology name="oil_subpeak_exist" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="oil_subpeak_turbine" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="oil_subpeak_IGCC" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="oil_subpeak_IGCC_CCS" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
          <supplysector name="H2 Forecourt Production" nocreate="1">
             <subsector name="gas chemical" nocreate="1">
                <technology name="natural gas steam reforming" nocreate="1">
@@ -1080,6 +2394,244 @@
             </subsector>
             <subsector name="electrolysis" nocreate="1">
                <technology name="electrolysis" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+            </subsector>
+         </supplysector>
+         <supplysector name="peak generation" nocreate="1">
+            <subsector name="gas" nocreate="1">
+               <technology name="gas_peak_exist" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="gas_peak_turbine" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="gas_peak_CC" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="gas_peak_CC_CCS" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="oil" nocreate="1">
+               <technology name="oil_peak_exist" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="oil_peak_turbine" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="oil_peak_IGCC" nocreate="1">
+                  <period year="1975">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="1990">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2005">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2020">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2035">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2050">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2065">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2080">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+                  <period year="2095">
+                     <keyword average-fossil-efficiency=""/>
+                  </period>
+               </technology>
+               <technology name="oil_peak_IGCC_CCS" nocreate="1">
                   <period year="1975">
                      <keyword average-fossil-efficiency=""/>
                   </period>

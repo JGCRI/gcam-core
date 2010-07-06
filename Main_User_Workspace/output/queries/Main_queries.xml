@@ -91,7 +91,7 @@
 			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
 			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
 			 	 	 return (: get renewables from electricity :)
-					 	 	 	local:get-primary-renewable($currTree/supplysector[@name='electricity' or @name='elect_td_bld']//keyword[fn:exists(@primary-renewable)]/preceding-sibling::output-primary/physical-output, local:get-weighted-eff($currTree/supplysector[@name='electricity']//keyword[fn:exists(@average-fossil-efficiency)]/preceding-sibling::output-primary)) 
+			 	 	 local:get-primary-renewable($currTree/supplysector[@name='electricity' or @name='base load generation' or @name='subpeak generation' or @name='peak generation' or @name='intermediate generation' or @name='elect_td_bld']//keyword[fn:exists(@primary-renewable)]/preceding-sibling::output-primary/physical-output, local:get-weighted-eff($currTree/supplysector[@name='electricity' or @name='base load generation' or @name='subpeak generation' or @name='peak generation' or @name='intermediate generation' ]//keyword[fn:exists(@average-fossil-efficiency)]/preceding-sibling::output-primary)) 
 					 		 	| (: get renewables from H2ProdCS :)
 					 	 	 	local:get-primary-renewable($currTree/supplysector[@name='H2 Central Production'](: /*[@type='subsector' (: collapse :) and fn:not(@name='electrolysis')] :)//keyword[fn:exists(@primary-renewable)]/preceding-sibling::output-primary/physical-output, local:get-weighted-eff($currTree/supplysector[@name='H2 Central Production']//keyword[fn:exists(@average-fossil-efficiency)]/preceding-sibling::output-primary)) 
 					 	 	 	| (: get renewables from H2ProdDist :)
@@ -172,7 +172,7 @@
 			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
 			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
 			 	 	 return (: get renewables from electricity :)
-					 	 	 	local:get-primary-renewable($currTree/supplysector[@name='electricity' or @name='elect_td_bld']//keyword[fn:exists(@primary-renewable)]/preceding-sibling::output-primary/physical-output)
+					 	 	 	local:get-primary-renewable($currTree/supplysector[@name='electricity' or @name='base load generation' or @name='subpeak generation' or @name='peak generation' or @name='intermediate generation' or @name='elect_td_bld']//keyword[fn:exists(@primary-renewable)]/preceding-sibling::output-primary/physical-output)
 					 		 	| (: get renewables from H2ProdCS :)
 					 	 	 	local:get-primary-renewable($currTree/supplysector[@name='H2 Central Production'](: /*[@type='subsector' (: collapse :) and fn:not(@name='electrolysis')] :)//keyword[fn:exists(@primary-renewable)]/preceding-sibling::output-primary/physical-output)
 					 	 	 	| (: get renewables from H2ProdDist :)
