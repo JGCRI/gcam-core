@@ -1,0 +1,874 @@
+Electric sector nonco2 inputs.,,,,,,,,,,,,
+All parameters imported from nonco2 workbook,,,,,,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+10000,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,
+base load generation,coal,coal_base_exist,ALL,CH4,,,,,,,,
+base load generation,biomass,bio_base_exist,ALL,CH4,,,,,,,,
+base load generation,gas,gas_base_exist,ALL,CH4,,,,,,,,
+base load generation,coal,coal_base_conv,ALL,CH4,,,,,,,,
+base load generation,coal,coal_base_IGCC,ALL,CH4,,,,,,,,
+base load generation,coal,coal_base_IGCC_CCS,ALL,CH4,,,,,,,,
+base load generation,biomass,bio_base_conv,ALL,CH4,,,,,,,,
+base load generation,biomass,bio_base_IGCC,ALL,CH4,,,,,,,,
+base load generation,biomass,bio_base_IGCC_CCS,ALL,CH4,,,,,,,,
+base load generation,gas,gas_base_CC,ALL,CH4,,,,,,,,
+base load generation,gas,gas_base_CC_CCS,ALL,CH4,,,,,,,,
+intermediate generation,gas,gas_int_exist,ALL,CH4,,,,,,,,
+intermediate generation,biomass,bio_int_exist,ALL,CH4,,,,,,,,
+intermediate generation,coal,coal_int_exist,ALL,CH4,,,,,,,,
+intermediate generation,gas,gas_int_CC,ALL,CH4,,,,,,,,
+intermediate generation,gas,gas_int_CC_CCS,ALL,CH4,,,,,,,,
+intermediate generation,biomass,bio_int_conv,ALL,CH4,,,,,,,,
+intermediate generation,biomass,bio_int_IGCC,ALL,CH4,,,,,,,,
+intermediate generation,biomass,bio_int_IGCC_CCS,ALL,CH4,,,,,,,,
+intermediate generation,oil,oil_int_IGCC,ALL,CH4,,,,,,,,
+intermediate generation,oil,oil_int_IGCC_CCS,ALL,CH4,,,,,,,,
+intermediate generation,coal,coal_int_conv,ALL,CH4,,,,,,,,
+intermediate generation,coal,coal_int_IGCC,ALL,CH4,,,,,,,,
+intermediate generation,coal,coal_int_IGCC_CCS,ALL,CH4,,,,,,,,
+subpeak generation,gas,gas_subpeak_exist,ALL,CH4,,,,,,,,
+subpeak generation,oil,oil_subpeak_exist,ALL,CH4,,,,,,,,
+subpeak generation,gas,gas_subpeak_turbine,ALL,CH4,,,,,,,,
+subpeak generation,gas,gas_subpeak_CC,ALL,CH4,,,,,,,,
+subpeak generation,gas,gas_subpeak_CC_CCS,ALL,CH4,,,,,,,,
+subpeak generation,biomass,bio_subpeak_conv,ALL,CH4,,,,,,,,
+subpeak generation,biomass,bio_subpeak_IGCC,ALL,CH4,,,,,,,,
+subpeak generation,biomass,bio_subpeak_IGCC_CCS,ALL,CH4,,,,,,,,
+subpeak generation,oil,oil_subpeak_turbine,ALL,CH4,,,,,,,,
+subpeak generation,oil,oil_subpeak_IGCC,ALL,CH4,,,,,,,,
+subpeak generation,oil,oil_subpeak_IGCC_CCS,ALL,CH4,,,,,,,,
+subpeak generation,coal,coal_subpeak_IGCC,ALL,CH4,,,,,,,,
+subpeak generation,coal,coal_subpeak_IGCC_CCS,ALL,CH4,,,,,,,,
+peak generation,gas,gas_peak_exist,ALL,CH4,,,,,,,,
+peak generation,oil,oil_peak_exist,ALL,CH4,,,,,,,,
+peak generation,gas,gas_peak_turbine,ALL,CH4,,,,,,,,
+peak generation,gas,gas_peak_CC,ALL,CH4,,,,,,,,
+peak generation,gas,gas_peak_CC_CCS,ALL,CH4,,,,,,,,
+peak generation,oil,oil_peak_turbine,ALL,CH4,,,,,,,,
+peak generation,oil,oil_peak_IGCC,ALL,CH4,,,,,,,,
+peak generation,oil,oil_peak_IGCC_CCS,ALL,CH4,,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+10050,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,tech-diffusion,final-emiss-coef,,,technology lookup
+base load generation,coal,coal_base_exist,1990,CH4,0.000494256,41.52,41.52,0,0.00034598,,,Coal (existing)
+base load generation,biomass,bio_base_exist,1990,CH4,0.00027135,41.52,41.52,0,0.000189945,,,Biomass (existing)
+base load generation,gas,gas_base_exist,1990,CH4,0.000425892,27.68,27.68,0,0.000298124,,,Gas (existing)
+base load generation,coal,coal_base_conv,1990,CH4,0.000494256,41.52,41.52,0,0.00034598,,,Coal (conv pul)
+base load generation,coal,coal_base_IGCC,1990,CH4,0.0005,41.52,41.52,0,0.0005,,,Coal (IGCC)
+base load generation,coal,coal_base_IGCC_CCS,1990,CH4,0.0005,41.52,41.52,0,0.0005,,,Coal (IGCC)_CCS
+base load generation,biomass,bio_base_conv,1990,CH4,0.00027135,41.52,41.52,0,0.000189945,,,Biomass (conv)
+base load generation,biomass,bio_base_IGCC,1990,CH4,0.0005,41.52,41.52,0,0.0005,,,Biomass (IGCC)
+base load generation,biomass,bio_base_IGCC_CCS,1990,CH4,0.0005,41.52,41.52,0,0.0005,,,Biomass (IGCC)_CCS
+base load generation,gas,gas_base_CC,1990,CH4,0.0005,27.68,27.68,0,0.00035,,,Gas (CC)
+base load generation,gas,gas_base_CC_CCS,1990,CH4,0.0005,27.68,27.68,0,0.00035,,,Gas (CC)_CCS
+intermediate generation,gas,gas_int_exist,1990,CH4,0.000425892,27.68,27.68,0,0.000298124,,,Gas (existing)
+intermediate generation,biomass,bio_int_exist,1990,CH4,0.00027135,41.52,41.52,0,0.000189945,,,Biomass (existing)
+intermediate generation,coal,coal_int_exist,1990,CH4,0.000494256,41.52,41.52,0,0.00034598,,,Coal (existing)
+intermediate generation,gas,gas_int_CC,1990,CH4,0.0005,27.68,27.68,0,0.00035,,,Gas (CC)
+intermediate generation,gas,gas_int_CC_CCS,1990,CH4,0.0005,27.68,27.68,0,0.00035,,,Gas (CC)_CCS
+intermediate generation,biomass,bio_int_conv,1990,CH4,0.00027135,41.52,41.52,0,0.000189945,,,Biomass (conv)
+intermediate generation,biomass,bio_int_IGCC,1990,CH4,0.0005,41.52,41.52,0,0.0005,,,Biomass (IGCC)
+intermediate generation,biomass,bio_int_IGCC_CCS,1990,CH4,0.0005,41.52,41.52,0,0.0005,,,Biomass (IGCC)_CCS
+intermediate generation,oil,oil_int_IGCC,1990,CH4,0.0005,41.52,41.52,0,0.0005,,,Oil (IGCC)
+intermediate generation,oil,oil_int_IGCC_CCS,1990,CH4,0.0005,41.52,41.52,0,0.0005,,,Oil (IGCC)_CCS
+intermediate generation,coal,coal_int_conv,1990,CH4,0.000494256,41.52,41.52,0,0.00034598,,,Coal (conv pul)
+intermediate generation,coal,coal_int_IGCC,1990,CH4,0.0005,41.52,41.52,0,0.0005,,,Coal (IGCC)
+intermediate generation,coal,coal_int_IGCC_CCS,1990,CH4,0.0005,41.52,41.52,0,0.0005,,,Coal (IGCC)_CCS
+subpeak generation,gas,gas_subpeak_exist,1990,CH4,0.000425892,27.68,27.68,0,0.000298124,,,Gas (existing)
+subpeak generation,oil,oil_subpeak_exist,1990,CH4,0.002323987,41.52,41.52,0,0.001626791,,,Oil (existing)
+subpeak generation,gas,gas_subpeak_turbine,1990,CH4,0.000425892,27.68,27.68,0,0.000298124,,,Gas (peak load conv)
+subpeak generation,gas,gas_subpeak_CC,1990,CH4,0.0005,27.68,27.68,0,0.00035,,,Gas (CC)
+subpeak generation,gas,gas_subpeak_CC_CCS,1990,CH4,0.0005,27.68,27.68,0,0.00035,,,Gas (CC)_CCS
+subpeak generation,biomass,bio_subpeak_conv,1990,CH4,0.00027135,41.52,41.52,0,0.000189945,,,Biomass (conv)
+subpeak generation,biomass,bio_subpeak_IGCC,1990,CH4,0.0005,41.52,41.52,0,0.0005,,,Biomass (IGCC)
+subpeak generation,biomass,bio_subpeak_IGCC_CCS,1990,CH4,0.0005,41.52,41.52,0,0.0005,,,Biomass (IGCC)_CCS
+subpeak generation,oil,oil_subpeak_turbine,1990,CH4,0.002323987,41.52,41.52,0,0.001626791,,,Oil (peak load conv)
+subpeak generation,oil,oil_subpeak_IGCC,1990,CH4,0.0005,41.52,41.52,0,0.0005,,,Oil (IGCC)
+subpeak generation,oil,oil_subpeak_IGCC_CCS,1990,CH4,0.0005,41.52,41.52,0,0.0005,,,Oil (IGCC)_CCS
+subpeak generation,coal,coal_subpeak_IGCC,1990,CH4,0.0005,41.52,41.52,0,0.0005,,,Coal (IGCC)
+subpeak generation,coal,coal_subpeak_IGCC_CCS,1990,CH4,0.0005,41.52,41.52,0,0.0005,,,Coal (IGCC)_CCS
+peak generation,gas,gas_peak_exist,1990,CH4,0.000425892,27.68,27.68,0,0.000298124,,,Gas (existing)
+peak generation,oil,oil_peak_exist,1990,CH4,0.002323987,41.52,41.52,0,0.001626791,,,Oil (existing)
+peak generation,gas,gas_peak_turbine,1990,CH4,0.000425892,27.68,27.68,0,0.000298124,,,Gas (peak load conv)
+peak generation,gas,gas_peak_CC,1990,CH4,0.0005,27.68,27.68,0,0.00035,,,Gas (CC)
+peak generation,gas,gas_peak_CC_CCS,1990,CH4,0.0005,27.68,27.68,0,0.00035,,,Gas (CC)_CCS
+peak generation,oil,oil_peak_turbine,1990,CH4,0.002323987,41.52,41.52,0,0.001626791,,,Oil (peak load conv)
+peak generation,oil,oil_peak_IGCC,1990,CH4,0.0005,41.52,41.52,0,0.0005,,,Oil (IGCC)
+peak generation,oil,oil_peak_IGCC_CCS,1990,CH4,0.0005,41.52,41.52,0,0.0005,,,Oil (IGCC)_CCS
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+10000,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,
+base load generation,coal,coal_base_exist,ALL,N2O,,,,,,,,
+base load generation,biomass,bio_base_exist,ALL,N2O,,,,,,,,
+base load generation,gas,gas_base_exist,ALL,N2O,,,,,,,,
+base load generation,coal,coal_base_conv,ALL,N2O,,,,,,,,
+base load generation,coal,coal_base_IGCC,ALL,N2O,,,,,,,,
+base load generation,coal,coal_base_IGCC_CCS,ALL,N2O,,,,,,,,
+base load generation,biomass,bio_base_conv,ALL,N2O,,,,,,,,
+base load generation,biomass,bio_base_IGCC,ALL,N2O,,,,,,,,
+base load generation,biomass,bio_base_IGCC_CCS,ALL,N2O,,,,,,,,
+base load generation,gas,gas_base_CC,ALL,N2O,,,,,,,,
+base load generation,gas,gas_base_CC_CCS,ALL,N2O,,,,,,,,
+intermediate generation,gas,gas_int_exist,ALL,N2O,,,,,,,,
+intermediate generation,biomass,bio_int_exist,ALL,N2O,,,,,,,,
+intermediate generation,coal,coal_int_exist,ALL,N2O,,,,,,,,
+intermediate generation,gas,gas_int_CC,ALL,N2O,,,,,,,,
+intermediate generation,gas,gas_int_CC_CCS,ALL,N2O,,,,,,,,
+intermediate generation,biomass,bio_int_conv,ALL,N2O,,,,,,,,
+intermediate generation,biomass,bio_int_IGCC,ALL,N2O,,,,,,,,
+intermediate generation,biomass,bio_int_IGCC_CCS,ALL,N2O,,,,,,,,
+intermediate generation,oil,oil_int_IGCC,ALL,N2O,,,,,,,,
+intermediate generation,oil,oil_int_IGCC_CCS,ALL,N2O,,,,,,,,
+intermediate generation,coal,coal_int_conv,ALL,N2O,,,,,,,,
+intermediate generation,coal,coal_int_IGCC,ALL,N2O,,,,,,,,
+intermediate generation,coal,coal_int_IGCC_CCS,ALL,N2O,,,,,,,,
+subpeak generation,gas,gas_subpeak_exist,ALL,N2O,,,,,,,,
+subpeak generation,oil,oil_subpeak_exist,ALL,N2O,,,,,,,,
+subpeak generation,gas,gas_subpeak_turbine,ALL,N2O,,,,,,,,
+subpeak generation,gas,gas_subpeak_CC,ALL,N2O,,,,,,,,
+subpeak generation,gas,gas_subpeak_CC_CCS,ALL,N2O,,,,,,,,
+subpeak generation,biomass,bio_subpeak_conv,ALL,N2O,,,,,,,,
+subpeak generation,biomass,bio_subpeak_IGCC,ALL,N2O,,,,,,,,
+subpeak generation,biomass,bio_subpeak_IGCC_CCS,ALL,N2O,,,,,,,,
+subpeak generation,oil,oil_subpeak_turbine,ALL,N2O,,,,,,,,
+subpeak generation,oil,oil_subpeak_IGCC,ALL,N2O,,,,,,,,
+subpeak generation,oil,oil_subpeak_IGCC_CCS,ALL,N2O,,,,,,,,
+subpeak generation,coal,coal_subpeak_IGCC,ALL,N2O,,,,,,,,
+subpeak generation,coal,coal_subpeak_IGCC_CCS,ALL,N2O,,,,,,,,
+peak generation,gas,gas_peak_exist,ALL,N2O,,,,,,,,
+peak generation,oil,oil_peak_exist,ALL,N2O,,,,,,,,
+peak generation,gas,gas_peak_turbine,ALL,N2O,,,,,,,,
+peak generation,gas,gas_peak_CC,ALL,N2O,,,,,,,,
+peak generation,gas,gas_peak_CC_CCS,ALL,N2O,,,,,,,,
+peak generation,oil,oil_peak_turbine,ALL,N2O,,,,,,,,
+peak generation,oil,oil_peak_IGCC,ALL,N2O,,,,,,,,
+peak generation,oil,oil_peak_IGCC_CCS,ALL,N2O,,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+10050,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,tech-diffusion,final-emiss-coef,,,technology lookup
+base load generation,coal,coal_base_exist,1990,N2O,0.002142932,20.76,13.84,0,0.001500053,,,Coal (existing)
+base load generation,biomass,bio_base_exist,1990,N2O,0.00114489,20.76,13.84,0,0.000801423,,,Biomass (existing)
+base load generation,gas,gas_base_exist,1990,N2O,0.000118802,20.76,13.84,0,8.31615E-05,,,Gas (existing)
+base load generation,coal,coal_base_conv,1990,N2O,0.002142932,20.76,13.84,0,0.001500053,,,Coal (conv pul)
+base load generation,coal,coal_base_IGCC,1990,N2O,0.0001,20.76,13.84,0,0.0001,,,Coal (IGCC)
+base load generation,coal,coal_base_IGCC_CCS,1990,N2O,0.0001,20.76,13.84,0,0.0001,,,Coal (IGCC)_CCS
+base load generation,biomass,bio_base_conv,1990,N2O,0.00114489,20.76,13.84,0,0.000801423,,,Biomass (conv)
+base load generation,biomass,bio_base_IGCC,1990,N2O,0.0001,20.76,13.84,0,0.0001,,,Biomass (IGCC)
+base load generation,biomass,bio_base_IGCC_CCS,1990,N2O,0.0001,20.76,13.84,0,0.0001,,,Biomass (IGCC)_CCS
+base load generation,gas,gas_base_CC,1990,N2O,0.0001,20.76,13.84,0,0.00007,,,Gas (CC)
+base load generation,gas,gas_base_CC_CCS,1990,N2O,0.0001,20.76,13.84,0,0.00007,,,Gas (CC)_CCS
+intermediate generation,gas,gas_int_exist,1990,N2O,0.000118802,20.76,13.84,0,8.31615E-05,,,Gas (existing)
+intermediate generation,biomass,bio_int_exist,1990,N2O,0.00114489,20.76,13.84,0,0.000801423,,,Biomass (existing)
+intermediate generation,coal,coal_int_exist,1990,N2O,0.002142932,20.76,13.84,0,0.001500053,,,Coal (existing)
+intermediate generation,gas,gas_int_CC,1990,N2O,0.0001,20.76,13.84,0,0.00007,,,Gas (CC)
+intermediate generation,gas,gas_int_CC_CCS,1990,N2O,0.0001,20.76,13.84,0,0.00007,,,Gas (CC)_CCS
+intermediate generation,biomass,bio_int_conv,1990,N2O,0.00114489,20.76,13.84,0,0.000801423,,,Biomass (conv)
+intermediate generation,biomass,bio_int_IGCC,1990,N2O,0.0001,20.76,13.84,0,0.0001,,,Biomass (IGCC)
+intermediate generation,biomass,bio_int_IGCC_CCS,1990,N2O,0.0001,20.76,13.84,0,0.0001,,,Biomass (IGCC)_CCS
+intermediate generation,oil,oil_int_IGCC,1990,N2O,0.0001,20.76,13.84,0,0.0001,,,Oil (IGCC)
+intermediate generation,oil,oil_int_IGCC_CCS,1990,N2O,0.0001,20.76,13.84,0,0.0001,,,Oil (IGCC)_CCS
+intermediate generation,coal,coal_int_conv,1990,N2O,0.002142932,20.76,13.84,0,0.001500053,,,Coal (conv pul)
+intermediate generation,coal,coal_int_IGCC,1990,N2O,0.0001,20.76,13.84,0,0.0001,,,Coal (IGCC)
+intermediate generation,coal,coal_int_IGCC_CCS,1990,N2O,0.0001,20.76,13.84,0,0.0001,,,Coal (IGCC)_CCS
+subpeak generation,gas,gas_subpeak_exist,1990,N2O,0.000118802,20.76,13.84,0,8.31615E-05,,,Gas (existing)
+subpeak generation,oil,oil_subpeak_exist,1990,N2O,0.001439434,20.76,13.84,0,0.001007604,,,Oil (existing)
+subpeak generation,gas,gas_subpeak_turbine,1990,N2O,0.000118802,20.76,13.84,0,8.31615E-05,,,Gas (peak load conv)
+subpeak generation,gas,gas_subpeak_CC,1990,N2O,0.0001,20.76,13.84,0,0.00007,,,Gas (CC)
+subpeak generation,gas,gas_subpeak_CC_CCS,1990,N2O,0.0001,20.76,13.84,0,0.00007,,,Gas (CC)_CCS
+subpeak generation,biomass,bio_subpeak_conv,1990,N2O,0.00114489,20.76,13.84,0,0.000801423,,,Biomass (conv)
+subpeak generation,biomass,bio_subpeak_IGCC,1990,N2O,0.0001,20.76,13.84,0,0.0001,,,Biomass (IGCC)
+subpeak generation,biomass,bio_subpeak_IGCC_CCS,1990,N2O,0.0001,20.76,13.84,0,0.0001,,,Biomass (IGCC)_CCS
+subpeak generation,oil,oil_subpeak_turbine,1990,N2O,0.001439434,20.76,13.84,0,0.001007604,,,Oil (peak load conv)
+subpeak generation,oil,oil_subpeak_IGCC,1990,N2O,0.0001,20.76,13.84,0,0.0001,,,Oil (IGCC)
+subpeak generation,oil,oil_subpeak_IGCC_CCS,1990,N2O,0.0001,20.76,13.84,0,0.0001,,,Oil (IGCC)_CCS
+subpeak generation,coal,coal_subpeak_IGCC,1990,N2O,0.0001,20.76,13.84,0,0.0001,,,Coal (IGCC)
+subpeak generation,coal,coal_subpeak_IGCC_CCS,1990,N2O,0.0001,20.76,13.84,0,0.0001,,,Coal (IGCC)_CCS
+peak generation,gas,gas_peak_exist,1990,N2O,0.000118802,20.76,13.84,0,8.31615E-05,,,Gas (existing)
+peak generation,oil,oil_peak_exist,1990,N2O,0.001439434,20.76,13.84,0,0.001007604,,,Oil (existing)
+peak generation,gas,gas_peak_turbine,1990,N2O,0.000118802,20.76,13.84,0,8.31615E-05,,,Gas (peak load conv)
+peak generation,gas,gas_peak_CC,1990,N2O,0.0001,20.76,13.84,0,0.00007,,,Gas (CC)
+peak generation,gas,gas_peak_CC_CCS,1990,N2O,0.0001,20.76,13.84,0,0.00007,,,Gas (CC)_CCS
+peak generation,oil,oil_peak_turbine,1990,N2O,0.001439434,20.76,13.84,0,0.001007604,,,Oil (peak load conv)
+peak generation,oil,oil_peak_IGCC,1990,N2O,0.0001,20.76,13.84,0,0.0001,,,Oil (IGCC)
+peak generation,oil,oil_peak_IGCC_CCS,1990,N2O,0.0001,20.76,13.84,0,0.0001,,,Oil (IGCC)_CCS
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+10000,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,
+base load generation,coal,coal_base_exist,ALL,NOx,,,,,,,,
+base load generation,biomass,bio_base_exist,ALL,NOx,,,,,,,,
+base load generation,gas,gas_base_exist,ALL,NOx,,,,,,,,
+base load generation,coal,coal_base_conv,ALL,NOx,,,,,,,,
+base load generation,coal,coal_base_IGCC,ALL,NOx,,,,,,,,
+base load generation,coal,coal_base_IGCC_CCS,ALL,NOx,,,,,,,,
+base load generation,biomass,bio_base_conv,ALL,NOx,,,,,,,,
+base load generation,biomass,bio_base_IGCC,ALL,NOx,,,,,,,,
+base load generation,biomass,bio_base_IGCC_CCS,ALL,NOx,,,,,,,,
+base load generation,gas,gas_base_CC,ALL,NOx,,,,,,,,
+base load generation,gas,gas_base_CC_CCS,ALL,NOx,,,,,,,,
+intermediate generation,gas,gas_int_exist,ALL,NOx,,,,,,,,
+intermediate generation,biomass,bio_int_exist,ALL,NOx,,,,,,,,
+intermediate generation,coal,coal_int_exist,ALL,NOx,,,,,,,,
+intermediate generation,gas,gas_int_CC,ALL,NOx,,,,,,,,
+intermediate generation,gas,gas_int_CC_CCS,ALL,NOx,,,,,,,,
+intermediate generation,biomass,bio_int_conv,ALL,NOx,,,,,,,,
+intermediate generation,biomass,bio_int_IGCC,ALL,NOx,,,,,,,,
+intermediate generation,biomass,bio_int_IGCC_CCS,ALL,NOx,,,,,,,,
+intermediate generation,oil,oil_int_IGCC,ALL,NOx,,,,,,,,
+intermediate generation,oil,oil_int_IGCC_CCS,ALL,NOx,,,,,,,,
+intermediate generation,coal,coal_int_conv,ALL,NOx,,,,,,,,
+intermediate generation,coal,coal_int_IGCC,ALL,NOx,,,,,,,,
+intermediate generation,coal,coal_int_IGCC_CCS,ALL,NOx,,,,,,,,
+subpeak generation,gas,gas_subpeak_exist,ALL,NOx,,,,,,,,
+subpeak generation,oil,oil_subpeak_exist,ALL,NOx,,,,,,,,
+subpeak generation,gas,gas_subpeak_turbine,ALL,NOx,,,,,,,,
+subpeak generation,gas,gas_subpeak_CC,ALL,NOx,,,,,,,,
+subpeak generation,gas,gas_subpeak_CC_CCS,ALL,NOx,,,,,,,,
+subpeak generation,biomass,bio_subpeak_conv,ALL,NOx,,,,,,,,
+subpeak generation,biomass,bio_subpeak_IGCC,ALL,NOx,,,,,,,,
+subpeak generation,biomass,bio_subpeak_IGCC_CCS,ALL,NOx,,,,,,,,
+subpeak generation,oil,oil_subpeak_turbine,ALL,NOx,,,,,,,,
+subpeak generation,oil,oil_subpeak_IGCC,ALL,NOx,,,,,,,,
+subpeak generation,oil,oil_subpeak_IGCC_CCS,ALL,NOx,,,,,,,,
+subpeak generation,coal,coal_subpeak_IGCC,ALL,NOx,,,,,,,,
+subpeak generation,coal,coal_subpeak_IGCC_CCS,ALL,NOx,,,,,,,,
+peak generation,gas,gas_peak_exist,ALL,NOx,,,,,,,,
+peak generation,oil,oil_peak_exist,ALL,NOx,,,,,,,,
+peak generation,gas,gas_peak_turbine,ALL,NOx,,,,,,,,
+peak generation,gas,gas_peak_CC,ALL,NOx,,,,,,,,
+peak generation,gas,gas_peak_CC_CCS,ALL,NOx,,,,,,,,
+peak generation,oil,oil_peak_turbine,ALL,NOx,,,,,,,,
+peak generation,oil,oil_peak_IGCC,ALL,NOx,,,,,,,,
+peak generation,oil,oil_peak_IGCC_CCS,ALL,NOx,,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+10050,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,tech-diffusion,final-emiss-coef,,,technology lookup
+base load generation,coal,coal_base_exist,1990,NOx,0.825837978,22.00,20.00,0.5,0.041291899,,,Coal (existing)
+base load generation,biomass,bio_base_exist,1990,NOx,0.06196869,34.60,30.00,0.5,0.030984345,,,Biomass (existing)
+base load generation,gas,gas_base_exist,1990,NOx,0.101600653,34.60,30.00,0.5,0.020320131,,,Gas (existing)
+base load generation,coal,coal_base_conv,1990,NOx,0.825837978,22.00,20.00,0.5,0.041291899,,,Coal (conv pul)
+base load generation,coal,coal_base_IGCC,1990,NOx,0.03,34.60,30.00,0.5,0.02,,,Coal (IGCC)
+base load generation,coal,coal_base_IGCC_CCS,1990,NOx,0.03,34.60,30.00,0.5,0.02,,,Coal (IGCC)_CCS
+base load generation,biomass,bio_base_conv,1990,NOx,0.3,34.60,30.00,0.5,0.06,,,Biomass (conv)
+base load generation,biomass,bio_base_IGCC,1990,NOx,0.03,34.60,30.00,0.5,0.03,,,Biomass (IGCC)
+base load generation,biomass,bio_base_IGCC_CCS,1990,NOx,0.03,34.60,30.00,0.5,0.03,,,Biomass (IGCC)_CCS
+base load generation,gas,gas_base_CC,1990,NOx,0.01,34.60,30.00,0.5,0.005,,,Gas (CC)
+base load generation,gas,gas_base_CC_CCS,1990,NOx,0.01,34.60,30.00,0.5,0.005,,,Gas (CC)_CCS
+intermediate generation,gas,gas_int_exist,1990,NOx,0.101600653,34.60,30.00,0.5,0.020320131,,,Gas (existing)
+intermediate generation,biomass,bio_int_exist,1990,NOx,0.06196869,34.60,30.00,0.5,0.030984345,,,Biomass (existing)
+intermediate generation,coal,coal_int_exist,1990,NOx,0.825837978,22.00,20.00,0.5,0.041291899,,,Coal (existing)
+intermediate generation,gas,gas_int_CC,1990,NOx,0.01,34.60,30.00,0.5,0.005,,,Gas (CC)
+intermediate generation,gas,gas_int_CC_CCS,1990,NOx,0.01,34.60,30.00,0.5,0.005,,,Gas (CC)_CCS
+intermediate generation,biomass,bio_int_conv,1990,NOx,0.3,34.60,30.00,0.5,0.06,,,Biomass (conv)
+intermediate generation,biomass,bio_int_IGCC,1990,NOx,0.03,34.60,30.00,0.5,0.03,,,Biomass (IGCC)
+intermediate generation,biomass,bio_int_IGCC_CCS,1990,NOx,0.03,34.60,30.00,0.5,0.03,,,Biomass (IGCC)_CCS
+intermediate generation,oil,oil_int_IGCC,1990,NOx,0.03,34.60,30.00,0.5,0.03,,,Oil (IGCC)
+intermediate generation,oil,oil_int_IGCC_CCS,1990,NOx,0.03,34.60,30.00,0.5,0.03,,,Oil (IGCC)_CCS
+intermediate generation,coal,coal_int_conv,1990,NOx,0.825837978,22.00,20.00,0.5,0.041291899,,,Coal (conv pul)
+intermediate generation,coal,coal_int_IGCC,1990,NOx,0.03,34.60,30.00,0.5,0.02,,,Coal (IGCC)
+intermediate generation,coal,coal_int_IGCC_CCS,1990,NOx,0.03,34.60,30.00,0.5,0.02,,,Coal (IGCC)_CCS
+subpeak generation,gas,gas_subpeak_exist,1990,NOx,0.101600653,34.60,30.00,0.5,0.020320131,,,Gas (existing)
+subpeak generation,oil,oil_subpeak_exist,1990,NOx,0.197589382,34.60,30.00,0.5,0.039517876,,,Oil (existing)
+subpeak generation,gas,gas_subpeak_turbine,1990,NOx,0.101600653,34.60,30.00,0.5,0.020320131,,,Gas (peak load conv)
+subpeak generation,gas,gas_subpeak_CC,1990,NOx,0.01,34.60,30.00,0.5,0.005,,,Gas (CC)
+subpeak generation,gas,gas_subpeak_CC_CCS,1990,NOx,0.01,34.60,30.00,0.5,0.005,,,Gas (CC)_CCS
+subpeak generation,biomass,bio_subpeak_conv,1990,NOx,0.3,34.60,30.00,0.5,0.06,,,Biomass (conv)
+subpeak generation,biomass,bio_subpeak_IGCC,1990,NOx,0.03,34.60,30.00,0.5,0.03,,,Biomass (IGCC)
+subpeak generation,biomass,bio_subpeak_IGCC_CCS,1990,NOx,0.03,34.60,30.00,0.5,0.03,,,Biomass (IGCC)_CCS
+subpeak generation,oil,oil_subpeak_turbine,1990,NOx,0.197589382,34.60,30.00,0.5,0.039517876,,,Oil (peak load conv)
+subpeak generation,oil,oil_subpeak_IGCC,1990,NOx,0.03,34.60,30.00,0.5,0.03,,,Oil (IGCC)
+subpeak generation,oil,oil_subpeak_IGCC_CCS,1990,NOx,0.03,34.60,30.00,0.5,0.03,,,Oil (IGCC)_CCS
+subpeak generation,coal,coal_subpeak_IGCC,1990,NOx,0.03,34.60,30.00,0.5,0.02,,,Coal (IGCC)
+subpeak generation,coal,coal_subpeak_IGCC_CCS,1990,NOx,0.03,34.60,30.00,0.5,0.02,,,Coal (IGCC)_CCS
+peak generation,gas,gas_peak_exist,1990,NOx,0.101600653,34.60,30.00,0.5,0.020320131,,,Gas (existing)
+peak generation,oil,oil_peak_exist,1990,NOx,0.197589382,34.60,30.00,0.5,0.039517876,,,Oil (existing)
+peak generation,gas,gas_peak_turbine,1990,NOx,0.101600653,34.60,30.00,0.5,0.020320131,,,Gas (peak load conv)
+peak generation,gas,gas_peak_CC,1990,NOx,0.01,34.60,30.00,0.5,0.005,,,Gas (CC)
+peak generation,gas,gas_peak_CC_CCS,1990,NOx,0.01,34.60,30.00,0.5,0.005,,,Gas (CC)_CCS
+peak generation,oil,oil_peak_turbine,1990,NOx,0.197589382,34.60,30.00,0.5,0.039517876,,,Oil (peak load conv)
+peak generation,oil,oil_peak_IGCC,1990,NOx,0.03,34.60,30.00,0.5,0.03,,,Oil (IGCC)
+peak generation,oil,oil_peak_IGCC_CCS,1990,NOx,0.03,34.60,30.00,0.5,0.03,,,Oil (IGCC)_CCS
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+10000,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,
+base load generation,coal,coal_base_exist,ALL,CO,,,,,,,,
+base load generation,biomass,bio_base_exist,ALL,CO,,,,,,,,
+base load generation,gas,gas_base_exist,ALL,CO,,,,,,,,
+base load generation,coal,coal_base_conv,ALL,CO,,,,,,,,
+base load generation,coal,coal_base_IGCC,ALL,CO,,,,,,,,
+base load generation,coal,coal_base_IGCC_CCS,ALL,CO,,,,,,,,
+base load generation,biomass,bio_base_conv,ALL,CO,,,,,,,,
+base load generation,biomass,bio_base_IGCC,ALL,CO,,,,,,,,
+base load generation,biomass,bio_base_IGCC_CCS,ALL,CO,,,,,,,,
+base load generation,gas,gas_base_CC,ALL,CO,,,,,,,,
+base load generation,gas,gas_base_CC_CCS,ALL,CO,,,,,,,,
+intermediate generation,gas,gas_int_exist,ALL,CO,,,,,,,,
+intermediate generation,biomass,bio_int_exist,ALL,CO,,,,,,,,
+intermediate generation,coal,coal_int_exist,ALL,CO,,,,,,,,
+intermediate generation,gas,gas_int_CC,ALL,CO,,,,,,,,
+intermediate generation,gas,gas_int_CC_CCS,ALL,CO,,,,,,,,
+intermediate generation,biomass,bio_int_conv,ALL,CO,,,,,,,,
+intermediate generation,biomass,bio_int_IGCC,ALL,CO,,,,,,,,
+intermediate generation,biomass,bio_int_IGCC_CCS,ALL,CO,,,,,,,,
+intermediate generation,oil,oil_int_IGCC,ALL,CO,,,,,,,,
+intermediate generation,oil,oil_int_IGCC_CCS,ALL,CO,,,,,,,,
+intermediate generation,coal,coal_int_conv,ALL,CO,,,,,,,,
+intermediate generation,coal,coal_int_IGCC,ALL,CO,,,,,,,,
+intermediate generation,coal,coal_int_IGCC_CCS,ALL,CO,,,,,,,,
+subpeak generation,gas,gas_subpeak_exist,ALL,CO,,,,,,,,
+subpeak generation,oil,oil_subpeak_exist,ALL,CO,,,,,,,,
+subpeak generation,gas,gas_subpeak_turbine,ALL,CO,,,,,,,,
+subpeak generation,gas,gas_subpeak_CC,ALL,CO,,,,,,,,
+subpeak generation,gas,gas_subpeak_CC_CCS,ALL,CO,,,,,,,,
+subpeak generation,biomass,bio_subpeak_conv,ALL,CO,,,,,,,,
+subpeak generation,biomass,bio_subpeak_IGCC,ALL,CO,,,,,,,,
+subpeak generation,biomass,bio_subpeak_IGCC_CCS,ALL,CO,,,,,,,,
+subpeak generation,oil,oil_subpeak_turbine,ALL,CO,,,,,,,,
+subpeak generation,oil,oil_subpeak_IGCC,ALL,CO,,,,,,,,
+subpeak generation,oil,oil_subpeak_IGCC_CCS,ALL,CO,,,,,,,,
+subpeak generation,coal,coal_subpeak_IGCC,ALL,CO,,,,,,,,
+subpeak generation,coal,coal_subpeak_IGCC_CCS,ALL,CO,,,,,,,,
+peak generation,gas,gas_peak_exist,ALL,CO,,,,,,,,
+peak generation,oil,oil_peak_exist,ALL,CO,,,,,,,,
+peak generation,gas,gas_peak_turbine,ALL,CO,,,,,,,,
+peak generation,gas,gas_peak_CC,ALL,CO,,,,,,,,
+peak generation,gas,gas_peak_CC_CCS,ALL,CO,,,,,,,,
+peak generation,oil,oil_peak_turbine,ALL,CO,,,,,,,,
+peak generation,oil,oil_peak_IGCC,ALL,CO,,,,,,,,
+peak generation,oil,oil_peak_IGCC_CCS,ALL,CO,,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+10050,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,tech-diffusion,final-emiss-coef,,,technology lookup
+base load generation,coal,coal_base_exist,1990,CO,0.020076514,34.60,30.00,0.5,0.004015303,,,Coal (existing)
+base load generation,biomass,bio_base_exist,1990,CO,0.043506838,34.60,30.00,0.5,0.008701368,,,Biomass (existing)
+base load generation,gas,gas_base_exist,1990,CO,0.034309274,34.60,30.00,0.5,0.006861855,,,Gas (existing)
+base load generation,coal,coal_base_conv,1990,CO,0.020076514,34.60,30.00,0.5,0.004015303,,,Coal (conv pul)
+base load generation,coal,coal_base_IGCC,1990,CO,0.034309274,34.60,30.00,0.5,0.034309274,,,Coal (IGCC)
+base load generation,coal,coal_base_IGCC_CCS,1990,CO,0.034309274,34.60,30.00,0.5,0.034309274,,,Coal (IGCC)_CCS
+base load generation,biomass,bio_base_conv,1990,CO,0.043506838,34.60,30.00,0.5,0.008701368,,,Biomass (conv)
+base load generation,biomass,bio_base_IGCC,1990,CO,0.034309274,34.60,30.00,0.5,0.034309274,,,Biomass (IGCC)
+base load generation,biomass,bio_base_IGCC_CCS,1990,CO,0.034309274,34.60,30.00,0.5,0.034309274,,,Biomass (IGCC)_CCS
+base load generation,gas,gas_base_CC,1990,CO,0.034309274,34.60,30.00,0.5,0.006861855,,,Gas (CC)
+base load generation,gas,gas_base_CC_CCS,1990,CO,0.034309274,34.60,30.00,0.5,0.006861855,,,Gas (CC)_CCS
+intermediate generation,gas,gas_int_exist,1990,CO,0.034309274,34.60,30.00,0.5,0.006861855,,,Gas (existing)
+intermediate generation,biomass,bio_int_exist,1990,CO,0.043506838,34.60,30.00,0.5,0.008701368,,,Biomass (existing)
+intermediate generation,coal,coal_int_exist,1990,CO,0.020076514,34.60,30.00,0.5,0.004015303,,,Coal (existing)
+intermediate generation,gas,gas_int_CC,1990,CO,0.034309274,34.60,30.00,0.5,0.006861855,,,Gas (CC)
+intermediate generation,gas,gas_int_CC_CCS,1990,CO,0.034309274,34.60,30.00,0.5,0.006861855,,,Gas (CC)_CCS
+intermediate generation,biomass,bio_int_conv,1990,CO,0.043506838,34.60,30.00,0.5,0.008701368,,,Biomass (conv)
+intermediate generation,biomass,bio_int_IGCC,1990,CO,0.034309274,34.60,30.00,0.5,0.034309274,,,Biomass (IGCC)
+intermediate generation,biomass,bio_int_IGCC_CCS,1990,CO,0.034309274,34.60,30.00,0.5,0.034309274,,,Biomass (IGCC)_CCS
+intermediate generation,oil,oil_int_IGCC,1990,CO,0.034309274,34.60,30.00,0.5,0.034309274,,,Oil (IGCC)
+intermediate generation,oil,oil_int_IGCC_CCS,1990,CO,0.034309274,34.60,30.00,0.5,0.034309274,,,Oil (IGCC)_CCS
+intermediate generation,coal,coal_int_conv,1990,CO,0.020076514,34.60,30.00,0.5,0.004015303,,,Coal (conv pul)
+intermediate generation,coal,coal_int_IGCC,1990,CO,0.034309274,34.60,30.00,0.5,0.034309274,,,Coal (IGCC)
+intermediate generation,coal,coal_int_IGCC_CCS,1990,CO,0.034309274,34.60,30.00,0.5,0.034309274,,,Coal (IGCC)_CCS
+subpeak generation,gas,gas_subpeak_exist,1990,CO,0.034309274,34.60,30.00,0.5,0.006861855,,,Gas (existing)
+subpeak generation,oil,oil_subpeak_exist,1990,CO,0.130718116,34.60,30.00,0.5,0.026143623,,,Oil (existing)
+subpeak generation,gas,gas_subpeak_turbine,1990,CO,0.034309274,34.60,30.00,0.5,0.006861855,,,Gas (peak load conv)
+subpeak generation,gas,gas_subpeak_CC,1990,CO,0.034309274,34.60,30.00,0.5,0.006861855,,,Gas (CC)
+subpeak generation,gas,gas_subpeak_CC_CCS,1990,CO,0.034309274,34.60,30.00,0.5,0.006861855,,,Gas (CC)_CCS
+subpeak generation,biomass,bio_subpeak_conv,1990,CO,0.043506838,34.60,30.00,0.5,0.008701368,,,Biomass (conv)
+subpeak generation,biomass,bio_subpeak_IGCC,1990,CO,0.034309274,34.60,30.00,0.5,0.034309274,,,Biomass (IGCC)
+subpeak generation,biomass,bio_subpeak_IGCC_CCS,1990,CO,0.034309274,34.60,30.00,0.5,0.034309274,,,Biomass (IGCC)_CCS
+subpeak generation,oil,oil_subpeak_turbine,1990,CO,0.130718116,34.60,30.00,0.5,0.026143623,,,Oil (peak load conv)
+subpeak generation,oil,oil_subpeak_IGCC,1990,CO,0.034309274,34.60,30.00,0.5,0.034309274,,,Oil (IGCC)
+subpeak generation,oil,oil_subpeak_IGCC_CCS,1990,CO,0.034309274,34.60,30.00,0.5,0.034309274,,,Oil (IGCC)_CCS
+subpeak generation,coal,coal_subpeak_IGCC,1990,CO,0.034309274,34.60,30.00,0.5,0.034309274,,,Coal (IGCC)
+subpeak generation,coal,coal_subpeak_IGCC_CCS,1990,CO,0.034309274,34.60,30.00,0.5,0.034309274,,,Coal (IGCC)_CCS
+peak generation,gas,gas_peak_exist,1990,CO,0.034309274,34.60,30.00,0.5,0.006861855,,,Gas (existing)
+peak generation,oil,oil_peak_exist,1990,CO,0.130718116,34.60,30.00,0.5,0.026143623,,,Oil (existing)
+peak generation,gas,gas_peak_turbine,1990,CO,0.034309274,34.60,30.00,0.5,0.006861855,,,Gas (peak load conv)
+peak generation,gas,gas_peak_CC,1990,CO,0.034309274,34.60,30.00,0.5,0.006861855,,,Gas (CC)
+peak generation,gas,gas_peak_CC_CCS,1990,CO,0.034309274,34.60,30.00,0.5,0.006861855,,,Gas (CC)_CCS
+peak generation,oil,oil_peak_turbine,1990,CO,0.130718116,34.60,30.00,0.5,0.026143623,,,Oil (peak load conv)
+peak generation,oil,oil_peak_IGCC,1990,CO,0.034309274,34.60,30.00,0.5,0.034309274,,,Oil (IGCC)
+peak generation,oil,oil_peak_IGCC_CCS,1990,CO,0.034309274,34.60,30.00,0.5,0.034309274,,,Oil (IGCC)_CCS
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+10000,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,
+base load generation,coal,coal_base_exist,ALL,NMVOC,,,,,,,,
+base load generation,biomass,bio_base_exist,ALL,NMVOC,,,,,,,,
+base load generation,gas,gas_base_exist,ALL,NMVOC,,,,,,,,
+base load generation,coal,coal_base_conv,ALL,NMVOC,,,,,,,,
+base load generation,coal,coal_base_IGCC,ALL,NMVOC,,,,,,,,
+base load generation,coal,coal_base_IGCC_CCS,ALL,NMVOC,,,,,,,,
+base load generation,biomass,bio_base_conv,ALL,NMVOC,,,,,,,,
+base load generation,biomass,bio_base_IGCC,ALL,NMVOC,,,,,,,,
+base load generation,biomass,bio_base_IGCC_CCS,ALL,NMVOC,,,,,,,,
+base load generation,gas,gas_base_CC,ALL,NMVOC,,,,,,,,
+base load generation,gas,gas_base_CC_CCS,ALL,NMVOC,,,,,,,,
+intermediate generation,gas,gas_int_exist,ALL,NMVOC,,,,,,,,
+intermediate generation,biomass,bio_int_exist,ALL,NMVOC,,,,,,,,
+intermediate generation,coal,coal_int_exist,ALL,NMVOC,,,,,,,,
+intermediate generation,gas,gas_int_CC,ALL,NMVOC,,,,,,,,
+intermediate generation,gas,gas_int_CC_CCS,ALL,NMVOC,,,,,,,,
+intermediate generation,biomass,bio_int_conv,ALL,NMVOC,,,,,,,,
+intermediate generation,biomass,bio_int_IGCC,ALL,NMVOC,,,,,,,,
+intermediate generation,biomass,bio_int_IGCC_CCS,ALL,NMVOC,,,,,,,,
+intermediate generation,oil,oil_int_IGCC,ALL,NMVOC,,,,,,,,
+intermediate generation,oil,oil_int_IGCC_CCS,ALL,NMVOC,,,,,,,,
+intermediate generation,coal,coal_int_conv,ALL,NMVOC,,,,,,,,
+intermediate generation,coal,coal_int_IGCC,ALL,NMVOC,,,,,,,,
+intermediate generation,coal,coal_int_IGCC_CCS,ALL,NMVOC,,,,,,,,
+subpeak generation,gas,gas_subpeak_exist,ALL,NMVOC,,,,,,,,
+subpeak generation,oil,oil_subpeak_exist,ALL,NMVOC,,,,,,,,
+subpeak generation,gas,gas_subpeak_turbine,ALL,NMVOC,,,,,,,,
+subpeak generation,gas,gas_subpeak_CC,ALL,NMVOC,,,,,,,,
+subpeak generation,gas,gas_subpeak_CC_CCS,ALL,NMVOC,,,,,,,,
+subpeak generation,biomass,bio_subpeak_conv,ALL,NMVOC,,,,,,,,
+subpeak generation,biomass,bio_subpeak_IGCC,ALL,NMVOC,,,,,,,,
+subpeak generation,biomass,bio_subpeak_IGCC_CCS,ALL,NMVOC,,,,,,,,
+subpeak generation,oil,oil_subpeak_turbine,ALL,NMVOC,,,,,,,,
+subpeak generation,oil,oil_subpeak_IGCC,ALL,NMVOC,,,,,,,,
+subpeak generation,oil,oil_subpeak_IGCC_CCS,ALL,NMVOC,,,,,,,,
+subpeak generation,coal,coal_subpeak_IGCC,ALL,NMVOC,,,,,,,,
+subpeak generation,coal,coal_subpeak_IGCC_CCS,ALL,NMVOC,,,,,,,,
+peak generation,gas,gas_peak_exist,ALL,NMVOC,,,,,,,,
+peak generation,oil,oil_peak_exist,ALL,NMVOC,,,,,,,,
+peak generation,gas,gas_peak_turbine,ALL,NMVOC,,,,,,,,
+peak generation,gas,gas_peak_CC,ALL,NMVOC,,,,,,,,
+peak generation,gas,gas_peak_CC_CCS,ALL,NMVOC,,,,,,,,
+peak generation,oil,oil_peak_turbine,ALL,NMVOC,,,,,,,,
+peak generation,oil,oil_peak_IGCC,ALL,NMVOC,,,,,,,,
+peak generation,oil,oil_peak_IGCC_CCS,ALL,NMVOC,,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+10050,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,tech-diffusion,final-emiss-coef,,,technology lookup
+base load generation,coal,coal_base_exist,1990,NMVOC,0.000740876,34.60,30.00,0.5,0.00029635,,,Coal (existing)
+base load generation,biomass,bio_base_exist,1990,NMVOC,0.004920553,34.60,30.00,0.5,0.001968221,,,Biomass (existing)
+base load generation,gas,gas_base_exist,1990,NMVOC,0.001295867,34.60,30.00,0.5,0.000518347,,,Gas (existing)
+base load generation,coal,coal_base_conv,1990,NMVOC,0.000740876,34.60,30.00,0.5,0.00029635,,,Coal (conv pul)
+base load generation,coal,coal_base_IGCC,1990,NMVOC,0.001,34.60,30.00,0.5,0.001,,,Coal (IGCC)
+base load generation,coal,coal_base_IGCC_CCS,1990,NMVOC,0.001,34.60,30.00,0.5,0.001,,,Coal (IGCC)_CCS
+base load generation,biomass,bio_base_conv,1990,NMVOC,0.004920553,34.60,30.00,0.5,0.001968221,,,Biomass (conv)
+base load generation,biomass,bio_base_IGCC,1990,NMVOC,0.001,34.60,30.00,0.5,0.001,,,Biomass (IGCC)
+base load generation,biomass,bio_base_IGCC_CCS,1990,NMVOC,0.001,34.60,30.00,0.5,0.001,,,Biomass (IGCC)_CCS
+base load generation,gas,gas_base_CC,1990,NMVOC,0.001,34.60,30.00,0.5,0.0004,,,Gas (CC)
+base load generation,gas,gas_base_CC_CCS,1990,NMVOC,0.001,34.60,30.00,0.5,0.0004,,,Gas (CC)_CCS
+intermediate generation,gas,gas_int_exist,1990,NMVOC,0.001295867,34.60,30.00,0.5,0.000518347,,,Gas (existing)
+intermediate generation,biomass,bio_int_exist,1990,NMVOC,0.004920553,34.60,30.00,0.5,0.001968221,,,Biomass (existing)
+intermediate generation,coal,coal_int_exist,1990,NMVOC,0.000740876,34.60,30.00,0.5,0.00029635,,,Coal (existing)
+intermediate generation,gas,gas_int_CC,1990,NMVOC,0.001,34.60,30.00,0.5,0.0004,,,Gas (CC)
+intermediate generation,gas,gas_int_CC_CCS,1990,NMVOC,0.001,34.60,30.00,0.5,0.0004,,,Gas (CC)_CCS
+intermediate generation,biomass,bio_int_conv,1990,NMVOC,0.004920553,34.60,30.00,0.5,0.001968221,,,Biomass (conv)
+intermediate generation,biomass,bio_int_IGCC,1990,NMVOC,0.001,34.60,30.00,0.5,0.001,,,Biomass (IGCC)
+intermediate generation,biomass,bio_int_IGCC_CCS,1990,NMVOC,0.001,34.60,30.00,0.5,0.001,,,Biomass (IGCC)_CCS
+intermediate generation,oil,oil_int_IGCC,1990,NMVOC,0.001,34.60,30.00,0.5,0.001,,,Oil (IGCC)
+intermediate generation,oil,oil_int_IGCC_CCS,1990,NMVOC,0.001,34.60,30.00,0.5,0.001,,,Oil (IGCC)_CCS
+intermediate generation,coal,coal_int_conv,1990,NMVOC,0.000740876,34.60,30.00,0.5,0.00029635,,,Coal (conv pul)
+intermediate generation,coal,coal_int_IGCC,1990,NMVOC,0.001,34.60,30.00,0.5,0.001,,,Coal (IGCC)
+intermediate generation,coal,coal_int_IGCC_CCS,1990,NMVOC,0.001,34.60,30.00,0.5,0.001,,,Coal (IGCC)_CCS
+subpeak generation,gas,gas_subpeak_exist,1990,NMVOC,0.001295867,34.60,30.00,0.5,0.000518347,,,Gas (existing)
+subpeak generation,oil,oil_subpeak_exist,1990,NMVOC,0.006864282,34.60,30.00,0.5,0.002745713,,,Oil (existing)
+subpeak generation,gas,gas_subpeak_turbine,1990,NMVOC,0.001295867,34.60,30.00,0.5,0.000518347,,,Gas (peak load conv)
+subpeak generation,gas,gas_subpeak_CC,1990,NMVOC,0.001,34.60,30.00,0.5,0.0004,,,Gas (CC)
+subpeak generation,gas,gas_subpeak_CC_CCS,1990,NMVOC,0.001,34.60,30.00,0.5,0.0004,,,Gas (CC)_CCS
+subpeak generation,biomass,bio_subpeak_conv,1990,NMVOC,0.004920553,34.60,30.00,0.5,0.001968221,,,Biomass (conv)
+subpeak generation,biomass,bio_subpeak_IGCC,1990,NMVOC,0.001,34.60,30.00,0.5,0.001,,,Biomass (IGCC)
+subpeak generation,biomass,bio_subpeak_IGCC_CCS,1990,NMVOC,0.001,34.60,30.00,0.5,0.001,,,Biomass (IGCC)_CCS
+subpeak generation,oil,oil_subpeak_turbine,1990,NMVOC,0.006864282,34.60,30.00,0.5,0.002745713,,,Oil (peak load conv)
+subpeak generation,oil,oil_subpeak_IGCC,1990,NMVOC,0.001,34.60,30.00,0.5,0.001,,,Oil (IGCC)
+subpeak generation,oil,oil_subpeak_IGCC_CCS,1990,NMVOC,0.001,34.60,30.00,0.5,0.001,,,Oil (IGCC)_CCS
+subpeak generation,coal,coal_subpeak_IGCC,1990,NMVOC,0.001,34.60,30.00,0.5,0.001,,,Coal (IGCC)
+subpeak generation,coal,coal_subpeak_IGCC_CCS,1990,NMVOC,0.001,34.60,30.00,0.5,0.001,,,Coal (IGCC)_CCS
+peak generation,gas,gas_peak_exist,1990,NMVOC,0.001295867,34.60,30.00,0.5,0.000518347,,,Gas (existing)
+peak generation,oil,oil_peak_exist,1990,NMVOC,0.006864282,34.60,30.00,0.5,0.002745713,,,Oil (existing)
+peak generation,gas,gas_peak_turbine,1990,NMVOC,0.001295867,34.60,30.00,0.5,0.000518347,,,Gas (peak load conv)
+peak generation,gas,gas_peak_CC,1990,NMVOC,0.001,34.60,30.00,0.5,0.0004,,,Gas (CC)
+peak generation,gas,gas_peak_CC_CCS,1990,NMVOC,0.001,34.60,30.00,0.5,0.0004,,,Gas (CC)_CCS
+peak generation,oil,oil_peak_turbine,1990,NMVOC,0.006864282,34.60,30.00,0.5,0.002745713,,,Oil (peak load conv)
+peak generation,oil,oil_peak_IGCC,1990,NMVOC,0.001,34.60,30.00,0.5,0.001,,,Oil (IGCC)
+peak generation,oil,oil_peak_IGCC_CCS,1990,NMVOC,0.001,34.60,30.00,0.5,0.001,,,Oil (IGCC)_CCS
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+10000,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,
+base load generation,coal,coal_base_exist,ALL,SO2_1,,,,,,,,
+base load generation,biomass,bio_base_exist,ALL,SO2_1,,,,,,,,
+base load generation,gas,gas_base_exist,ALL,SO2_1,,,,,,,,
+base load generation,coal,coal_base_conv,ALL,SO2_1,,,,,,,,
+base load generation,coal,coal_base_IGCC,ALL,SO2_1,,,,,,,,
+base load generation,coal,coal_base_IGCC_CCS,ALL,SO2_1,,,,,,,,
+base load generation,biomass,bio_base_conv,ALL,SO2_1,,,,,,,,
+base load generation,biomass,bio_base_IGCC,ALL,SO2_1,,,,,,,,
+base load generation,biomass,bio_base_IGCC_CCS,ALL,SO2_1,,,,,,,,
+base load generation,gas,gas_base_CC,ALL,SO2_1,,,,,,,,
+base load generation,gas,gas_base_CC_CCS,ALL,SO2_1,,,,,,,,
+intermediate generation,gas,gas_int_exist,ALL,SO2_1,,,,,,,,
+intermediate generation,biomass,bio_int_exist,ALL,SO2_1,,,,,,,,
+intermediate generation,coal,coal_int_exist,ALL,SO2_1,,,,,,,,
+intermediate generation,gas,gas_int_CC,ALL,SO2_1,,,,,,,,
+intermediate generation,gas,gas_int_CC_CCS,ALL,SO2_1,,,,,,,,
+intermediate generation,biomass,bio_int_conv,ALL,SO2_1,,,,,,,,
+intermediate generation,biomass,bio_int_IGCC,ALL,SO2_1,,,,,,,,
+intermediate generation,biomass,bio_int_IGCC_CCS,ALL,SO2_1,,,,,,,,
+intermediate generation,oil,oil_int_IGCC,ALL,SO2_1,,,,,,,,
+intermediate generation,oil,oil_int_IGCC_CCS,ALL,SO2_1,,,,,,,,
+intermediate generation,coal,coal_int_conv,ALL,SO2_1,,,,,,,,
+intermediate generation,coal,coal_int_IGCC,ALL,SO2_1,,,,,,,,
+intermediate generation,coal,coal_int_IGCC_CCS,ALL,SO2_1,,,,,,,,
+subpeak generation,gas,gas_subpeak_exist,ALL,SO2_1,,,,,,,,
+subpeak generation,oil,oil_subpeak_exist,ALL,SO2_1,,,,,,,,
+subpeak generation,gas,gas_subpeak_turbine,ALL,SO2_1,,,,,,,,
+subpeak generation,gas,gas_subpeak_CC,ALL,SO2_1,,,,,,,,
+subpeak generation,gas,gas_subpeak_CC_CCS,ALL,SO2_1,,,,,,,,
+subpeak generation,biomass,bio_subpeak_conv,ALL,SO2_1,,,,,,,,
+subpeak generation,biomass,bio_subpeak_IGCC,ALL,SO2_1,,,,,,,,
+subpeak generation,biomass,bio_subpeak_IGCC_CCS,ALL,SO2_1,,,,,,,,
+subpeak generation,oil,oil_subpeak_turbine,ALL,SO2_1,,,,,,,,
+subpeak generation,oil,oil_subpeak_IGCC,ALL,SO2_1,,,,,,,,
+subpeak generation,oil,oil_subpeak_IGCC_CCS,ALL,SO2_1,,,,,,,,
+subpeak generation,coal,coal_subpeak_IGCC,ALL,SO2_1,,,,,,,,
+subpeak generation,coal,coal_subpeak_IGCC_CCS,ALL,SO2_1,,,,,,,,
+peak generation,gas,gas_peak_exist,ALL,SO2_1,,,,,,,,
+peak generation,oil,oil_peak_exist,ALL,SO2_1,,,,,,,,
+peak generation,gas,gas_peak_turbine,ALL,SO2_1,,,,,,,,
+peak generation,gas,gas_peak_CC,ALL,SO2_1,,,,,,,,
+peak generation,gas,gas_peak_CC_CCS,ALL,SO2_1,,,,,,,,
+peak generation,oil,oil_peak_turbine,ALL,SO2_1,,,,,,,,
+peak generation,oil,oil_peak_IGCC,ALL,SO2_1,,,,,,,,
+peak generation,oil,oil_peak_IGCC_CCS,ALL,SO2_1,,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+10050,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,tech-diffusion,final-emiss-coef,,,technology lookup
+base load generation,coal,coal_base_exist,1990,SO2_1,0.894053037,27.68,30.00,0.5,0.089405304,,,Coal (existing)
+base load generation,biomass,bio_base_exist,1990,SO2_1,0.001035532,27.68,30.00,0.5,0.000517766,,,Biomass (existing)
+base load generation,gas,gas_base_exist,1990,SO2_1,0.002467484,27.68,30.00,0.5,0.001233742,,,Gas (existing)
+base load generation,coal,coal_base_conv,1990,SO2_1,0.894053037,27.68,30.00,0.5,0.044702652,,,Coal (conv pul)
+base load generation,coal,coal_base_IGCC,1990,SO2_1,0.001,27.68,30.00,0.5,0.001,,,Coal (IGCC)
+base load generation,coal,coal_base_IGCC_CCS,1990,SO2_1,0.001,27.68,30.00,0.5,0.001,,,Coal (IGCC)_CCS
+base load generation,biomass,bio_base_conv,1990,SO2_1,0.001035532,27.68,30.00,0.5,0.000517766,,,Biomass (conv)
+base load generation,biomass,bio_base_IGCC,1990,SO2_1,0.001,27.68,30.00,0.5,0.001,,,Biomass (IGCC)
+base load generation,biomass,bio_base_IGCC_CCS,1990,SO2_1,0.001,27.68,30.00,0.5,0.001,,,Biomass (IGCC)_CCS
+base load generation,gas,gas_base_CC,1990,SO2_1,0.001,27.68,30.00,0.5,0.0009,,,Gas (CC)
+base load generation,gas,gas_base_CC_CCS,1990,SO2_1,0.001,27.68,30.00,0.5,0.0009,,,Gas (CC)_CCS
+intermediate generation,gas,gas_int_exist,1990,SO2_1,0.002467484,27.68,30.00,0.5,0.001233742,,,Gas (existing)
+intermediate generation,biomass,bio_int_exist,1990,SO2_1,0.001035532,27.68,30.00,0.5,0.000517766,,,Biomass (existing)
+intermediate generation,coal,coal_int_exist,1990,SO2_1,0.894053037,27.68,30.00,0.5,0.089405304,,,Coal (existing)
+intermediate generation,gas,gas_int_CC,1990,SO2_1,0.001,27.68,30.00,0.5,0.0009,,,Gas (CC)
+intermediate generation,gas,gas_int_CC_CCS,1990,SO2_1,0.001,27.68,30.00,0.5,0.0009,,,Gas (CC)_CCS
+intermediate generation,biomass,bio_int_conv,1990,SO2_1,0.001035532,27.68,30.00,0.5,0.000517766,,,Biomass (conv)
+intermediate generation,biomass,bio_int_IGCC,1990,SO2_1,0.001,27.68,30.00,0.5,0.001,,,Biomass (IGCC)
+intermediate generation,biomass,bio_int_IGCC_CCS,1990,SO2_1,0.001,27.68,30.00,0.5,0.001,,,Biomass (IGCC)_CCS
+intermediate generation,oil,oil_int_IGCC,1990,SO2_1,0.001,27.68,30.00,0.5,0.001,,,Oil (IGCC)
+intermediate generation,oil,oil_int_IGCC_CCS,1990,SO2_1,0.001,27.68,30.00,0.5,0.001,,,Oil (IGCC)_CCS
+intermediate generation,coal,coal_int_conv,1990,SO2_1,0.894053037,27.68,30.00,0.5,0.044702652,,,Coal (conv pul)
+intermediate generation,coal,coal_int_IGCC,1990,SO2_1,0.001,27.68,30.00,0.5,0.001,,,Coal (IGCC)
+intermediate generation,coal,coal_int_IGCC_CCS,1990,SO2_1,0.001,27.68,30.00,0.5,0.001,,,Coal (IGCC)_CCS
+subpeak generation,gas,gas_subpeak_exist,1990,SO2_1,0.002467484,27.68,30.00,0.5,0.001233742,,,Gas (existing)
+subpeak generation,oil,oil_subpeak_exist,1990,SO2_1,0.605072708,27.68,30.00,0.5,0.302536354,,,Oil (existing)
+subpeak generation,gas,gas_subpeak_turbine,1990,SO2_1,0.002467484,27.68,30.00,0.5,0.001233742,,,Gas (peak load conv)
+subpeak generation,gas,gas_subpeak_CC,1990,SO2_1,0.001,27.68,30.00,0.5,0.0009,,,Gas (CC)
+subpeak generation,gas,gas_subpeak_CC_CCS,1990,SO2_1,0.001,27.68,30.00,0.5,0.0009,,,Gas (CC)_CCS
+subpeak generation,biomass,bio_subpeak_conv,1990,SO2_1,0.001035532,27.68,30.00,0.5,0.000517766,,,Biomass (conv)
+subpeak generation,biomass,bio_subpeak_IGCC,1990,SO2_1,0.001,27.68,30.00,0.5,0.001,,,Biomass (IGCC)
+subpeak generation,biomass,bio_subpeak_IGCC_CCS,1990,SO2_1,0.001,27.68,30.00,0.5,0.001,,,Biomass (IGCC)_CCS
+subpeak generation,oil,oil_subpeak_turbine,1990,SO2_1,0.605072708,27.68,30.00,0.5,0.302536354,,,Oil (peak load conv)
+subpeak generation,oil,oil_subpeak_IGCC,1990,SO2_1,0.001,27.68,30.00,0.5,0.001,,,Oil (IGCC)
+subpeak generation,oil,oil_subpeak_IGCC_CCS,1990,SO2_1,0.001,27.68,30.00,0.5,0.001,,,Oil (IGCC)_CCS
+subpeak generation,coal,coal_subpeak_IGCC,1990,SO2_1,0.001,27.68,30.00,0.5,0.001,,,Coal (IGCC)
+subpeak generation,coal,coal_subpeak_IGCC_CCS,1990,SO2_1,0.001,27.68,30.00,0.5,0.001,,,Coal (IGCC)_CCS
+peak generation,gas,gas_peak_exist,1990,SO2_1,0.002467484,27.68,30.00,0.5,0.001233742,,,Gas (existing)
+peak generation,oil,oil_peak_exist,1990,SO2_1,0.605072708,27.68,30.00,0.5,0.302536354,,,Oil (existing)
+peak generation,gas,gas_peak_turbine,1990,SO2_1,0.002467484,27.68,30.00,0.5,0.001233742,,,Gas (peak load conv)
+peak generation,gas,gas_peak_CC,1990,SO2_1,0.001,27.68,30.00,0.5,0.0009,,,Gas (CC)
+peak generation,gas,gas_peak_CC_CCS,1990,SO2_1,0.001,27.68,30.00,0.5,0.0009,,,Gas (CC)_CCS
+peak generation,oil,oil_peak_turbine,1990,SO2_1,0.605072708,27.68,30.00,0.5,0.302536354,,,Oil (peak load conv)
+peak generation,oil,oil_peak_IGCC,1990,SO2_1,0.001,27.68,30.00,0.5,0.001,,,Oil (IGCC)
+peak generation,oil,oil_peak_IGCC_CCS,1990,SO2_1,0.001,27.68,30.00,0.5,0.001,,,Oil (IGCC)_CCS
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+10000,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,
+base load generation,coal,coal_base_exist,ALL,BC,,,,,,,,
+base load generation,biomass,bio_base_exist,ALL,BC,,,,,,,,
+base load generation,gas,gas_base_exist,ALL,BC,,,,,,,,
+base load generation,coal,coal_base_conv,ALL,BC,,,,,,,,
+base load generation,coal,coal_base_IGCC,ALL,BC,,,,,,,,
+base load generation,coal,coal_base_IGCC_CCS,ALL,BC,,,,,,,,
+base load generation,biomass,bio_base_conv,ALL,BC,,,,,,,,
+base load generation,biomass,bio_base_IGCC,ALL,BC,,,,,,,,
+base load generation,biomass,bio_base_IGCC_CCS,ALL,BC,,,,,,,,
+base load generation,gas,gas_base_CC,ALL,BC,,,,,,,,
+base load generation,gas,gas_base_CC_CCS,ALL,BC,,,,,,,,
+intermediate generation,gas,gas_int_exist,ALL,BC,,,,,,,,
+intermediate generation,biomass,bio_int_exist,ALL,BC,,,,,,,,
+intermediate generation,coal,coal_int_exist,ALL,BC,,,,,,,,
+intermediate generation,gas,gas_int_CC,ALL,BC,,,,,,,,
+intermediate generation,gas,gas_int_CC_CCS,ALL,BC,,,,,,,,
+intermediate generation,biomass,bio_int_conv,ALL,BC,,,,,,,,
+intermediate generation,biomass,bio_int_IGCC,ALL,BC,,,,,,,,
+intermediate generation,biomass,bio_int_IGCC_CCS,ALL,BC,,,,,,,,
+intermediate generation,oil,oil_int_IGCC,ALL,BC,,,,,,,,
+intermediate generation,oil,oil_int_IGCC_CCS,ALL,BC,,,,,,,,
+intermediate generation,coal,coal_int_conv,ALL,BC,,,,,,,,
+intermediate generation,coal,coal_int_IGCC,ALL,BC,,,,,,,,
+intermediate generation,coal,coal_int_IGCC_CCS,ALL,BC,,,,,,,,
+subpeak generation,gas,gas_subpeak_exist,ALL,BC,,,,,,,,
+subpeak generation,oil,oil_subpeak_exist,ALL,BC,,,,,,,,
+subpeak generation,gas,gas_subpeak_turbine,ALL,BC,,,,,,,,
+subpeak generation,gas,gas_subpeak_CC,ALL,BC,,,,,,,,
+subpeak generation,gas,gas_subpeak_CC_CCS,ALL,BC,,,,,,,,
+subpeak generation,biomass,bio_subpeak_conv,ALL,BC,,,,,,,,
+subpeak generation,biomass,bio_subpeak_IGCC,ALL,BC,,,,,,,,
+subpeak generation,biomass,bio_subpeak_IGCC_CCS,ALL,BC,,,,,,,,
+subpeak generation,oil,oil_subpeak_turbine,ALL,BC,,,,,,,,
+subpeak generation,oil,oil_subpeak_IGCC,ALL,BC,,,,,,,,
+subpeak generation,oil,oil_subpeak_IGCC_CCS,ALL,BC,,,,,,,,
+subpeak generation,coal,coal_subpeak_IGCC,ALL,BC,,,,,,,,
+subpeak generation,coal,coal_subpeak_IGCC_CCS,ALL,BC,,,,,,,,
+peak generation,gas,gas_peak_exist,ALL,BC,,,,,,,,
+peak generation,oil,oil_peak_exist,ALL,BC,,,,,,,,
+peak generation,gas,gas_peak_turbine,ALL,BC,,,,,,,,
+peak generation,gas,gas_peak_CC,ALL,BC,,,,,,,,
+peak generation,gas,gas_peak_CC_CCS,ALL,BC,,,,,,,,
+peak generation,oil,oil_peak_turbine,ALL,BC,,,,,,,,
+peak generation,oil,oil_peak_IGCC,ALL,BC,,,,,,,,
+peak generation,oil,oil_peak_IGCC_CCS,ALL,BC,,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+10050,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,tech-diffusion,final-emiss-coef,,,technology lookup
+base load generation,coal,coal_base_exist,1990,BC,1.33356E-05,34.60,30.00,0.5,6.66781E-06,,,Coal (existing)
+base load generation,biomass,bio_base_exist,1990,BC,0.001980899,34.60,30.00,0.5,0.000990449,,,Biomass (existing)
+base load generation,gas,gas_base_exist,1990,BC,4.06986E-07,34.60,30.00,0.5,2.03493E-07,,,Gas (existing)
+base load generation,coal,coal_base_conv,1990,BC,1.33356E-05,34.60,30.00,0.5,6.66781E-06,,,Coal (conv pul)
+base load generation,coal,coal_base_IGCC,1990,BC,4.06986E-07,34.60,30.00,0.5,4.06986E-07,,,Coal (IGCC)
+base load generation,coal,coal_base_IGCC_CCS,1990,BC,4.06986E-07,34.60,30.00,0.5,4.06986E-07,,,Coal (IGCC)_CCS
+base load generation,biomass,bio_base_conv,1990,BC,0.001980899,34.60,30.00,0.5,0.000990449,,,Biomass (conv)
+base load generation,biomass,bio_base_IGCC,1990,BC,4.06986E-07,34.60,30.00,0.5,4.06986E-07,,,Biomass (IGCC)
+base load generation,biomass,bio_base_IGCC_CCS,1990,BC,4.06986E-07,34.60,30.00,0.5,4.06986E-07,,,Biomass (IGCC)_CCS
+base load generation,gas,gas_base_CC,1990,BC,4.06986E-07,34.60,30.00,0.5,2.03493E-07,,,Gas (CC)
+base load generation,gas,gas_base_CC_CCS,1990,BC,4.06986E-07,34.60,30.00,0.5,2.03493E-07,,,Gas (CC)_CCS
+intermediate generation,gas,gas_int_exist,1990,BC,4.06986E-07,34.60,30.00,0.5,2.03493E-07,,,Gas (existing)
+intermediate generation,biomass,bio_int_exist,1990,BC,0.001980899,34.60,30.00,0.5,0.000990449,,,Biomass (existing)
+intermediate generation,coal,coal_int_exist,1990,BC,1.33356E-05,34.60,30.00,0.5,6.66781E-06,,,Coal (existing)
+intermediate generation,gas,gas_int_CC,1990,BC,4.06986E-07,34.60,30.00,0.5,2.03493E-07,,,Gas (CC)
+intermediate generation,gas,gas_int_CC_CCS,1990,BC,4.06986E-07,34.60,30.00,0.5,2.03493E-07,,,Gas (CC)_CCS
+intermediate generation,biomass,bio_int_conv,1990,BC,0.001980899,34.60,30.00,0.5,0.000990449,,,Biomass (conv)
+intermediate generation,biomass,bio_int_IGCC,1990,BC,4.06986E-07,34.60,30.00,0.5,4.06986E-07,,,Biomass (IGCC)
+intermediate generation,biomass,bio_int_IGCC_CCS,1990,BC,4.06986E-07,34.60,30.00,0.5,4.06986E-07,,,Biomass (IGCC)_CCS
+intermediate generation,oil,oil_int_IGCC,1990,BC,4.06986E-07,34.60,30.00,0.5,4.06986E-07,,,Oil (IGCC)
+intermediate generation,oil,oil_int_IGCC_CCS,1990,BC,4.06986E-07,34.60,30.00,0.5,4.06986E-07,,,Oil (IGCC)_CCS
+intermediate generation,coal,coal_int_conv,1990,BC,1.33356E-05,34.60,30.00,0.5,6.66781E-06,,,Coal (conv pul)
+intermediate generation,coal,coal_int_IGCC,1990,BC,4.06986E-07,34.60,30.00,0.5,4.06986E-07,,,Coal (IGCC)
+intermediate generation,coal,coal_int_IGCC_CCS,1990,BC,4.06986E-07,34.60,30.00,0.5,4.06986E-07,,,Coal (IGCC)_CCS
+subpeak generation,gas,gas_subpeak_exist,1990,BC,4.06986E-07,34.60,30.00,0.5,2.03493E-07,,,Gas (existing)
+subpeak generation,oil,oil_subpeak_exist,1990,BC,0.000207247,34.60,30.00,0.5,0.000103623,,,Oil (existing)
+subpeak generation,gas,gas_subpeak_turbine,1990,BC,4.06986E-07,34.60,30.00,0.5,2.03493E-07,,,Gas (peak load conv)
+subpeak generation,gas,gas_subpeak_CC,1990,BC,4.06986E-07,34.60,30.00,0.5,2.03493E-07,,,Gas (CC)
+subpeak generation,gas,gas_subpeak_CC_CCS,1990,BC,4.06986E-07,34.60,30.00,0.5,2.03493E-07,,,Gas (CC)_CCS
+subpeak generation,biomass,bio_subpeak_conv,1990,BC,0.001980899,34.60,30.00,0.5,0.000990449,,,Biomass (conv)
+subpeak generation,biomass,bio_subpeak_IGCC,1990,BC,4.06986E-07,34.60,30.00,0.5,4.06986E-07,,,Biomass (IGCC)
+subpeak generation,biomass,bio_subpeak_IGCC_CCS,1990,BC,4.06986E-07,34.60,30.00,0.5,4.06986E-07,,,Biomass (IGCC)_CCS
+subpeak generation,oil,oil_subpeak_turbine,1990,BC,0.000207247,34.60,30.00,0.5,0.000103623,,,Oil (peak load conv)
+subpeak generation,oil,oil_subpeak_IGCC,1990,BC,4.06986E-07,34.60,30.00,0.5,4.06986E-07,,,Oil (IGCC)
+subpeak generation,oil,oil_subpeak_IGCC_CCS,1990,BC,4.06986E-07,34.60,30.00,0.5,4.06986E-07,,,Oil (IGCC)_CCS
+subpeak generation,coal,coal_subpeak_IGCC,1990,BC,4.06986E-07,34.60,30.00,0.5,4.06986E-07,,,Coal (IGCC)
+subpeak generation,coal,coal_subpeak_IGCC_CCS,1990,BC,4.06986E-07,34.60,30.00,0.5,4.06986E-07,,,Coal (IGCC)_CCS
+peak generation,gas,gas_peak_exist,1990,BC,4.06986E-07,34.60,30.00,0.5,2.03493E-07,,,Gas (existing)
+peak generation,oil,oil_peak_exist,1990,BC,0.000207247,34.60,30.00,0.5,0.000103623,,,Oil (existing)
+peak generation,gas,gas_peak_turbine,1990,BC,4.06986E-07,34.60,30.00,0.5,2.03493E-07,,,Gas (peak load conv)
+peak generation,gas,gas_peak_CC,1990,BC,4.06986E-07,34.60,30.00,0.5,2.03493E-07,,,Gas (CC)
+peak generation,gas,gas_peak_CC_CCS,1990,BC,4.06986E-07,34.60,30.00,0.5,2.03493E-07,,,Gas (CC)_CCS
+peak generation,oil,oil_peak_turbine,1990,BC,0.000207247,34.60,30.00,0.5,0.000103623,,,Oil (peak load conv)
+peak generation,oil,oil_peak_IGCC,1990,BC,4.06986E-07,34.60,30.00,0.5,4.06986E-07,,,Oil (IGCC)
+peak generation,oil,oil_peak_IGCC_CCS,1990,BC,4.06986E-07,34.60,30.00,0.5,4.06986E-07,,,Oil (IGCC)_CCS
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+10000,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,
+base load generation,coal,coal_base_exist,ALL,OC,,,,,,,,
+base load generation,biomass,bio_base_exist,ALL,OC,,,,,,,,
+base load generation,gas,gas_base_exist,ALL,OC,,,,,,,,
+base load generation,coal,coal_base_conv,ALL,OC,,,,,,,,
+base load generation,coal,coal_base_IGCC,ALL,OC,,,,,,,,
+base load generation,coal,coal_base_IGCC_CCS,ALL,OC,,,,,,,,
+base load generation,biomass,bio_base_conv,ALL,OC,,,,,,,,
+base load generation,biomass,bio_base_IGCC,ALL,OC,,,,,,,,
+base load generation,biomass,bio_base_IGCC_CCS,ALL,OC,,,,,,,,
+base load generation,gas,gas_base_CC,ALL,OC,,,,,,,,
+base load generation,gas,gas_base_CC_CCS,ALL,OC,,,,,,,,
+intermediate generation,gas,gas_int_exist,ALL,OC,,,,,,,,
+intermediate generation,biomass,bio_int_exist,ALL,OC,,,,,,,,
+intermediate generation,coal,coal_int_exist,ALL,OC,,,,,,,,
+intermediate generation,gas,gas_int_CC,ALL,OC,,,,,,,,
+intermediate generation,gas,gas_int_CC_CCS,ALL,OC,,,,,,,,
+intermediate generation,biomass,bio_int_conv,ALL,OC,,,,,,,,
+intermediate generation,biomass,bio_int_IGCC,ALL,OC,,,,,,,,
+intermediate generation,biomass,bio_int_IGCC_CCS,ALL,OC,,,,,,,,
+intermediate generation,oil,oil_int_IGCC,ALL,OC,,,,,,,,
+intermediate generation,oil,oil_int_IGCC_CCS,ALL,OC,,,,,,,,
+intermediate generation,coal,coal_int_conv,ALL,OC,,,,,,,,
+intermediate generation,coal,coal_int_IGCC,ALL,OC,,,,,,,,
+intermediate generation,coal,coal_int_IGCC_CCS,ALL,OC,,,,,,,,
+subpeak generation,gas,gas_subpeak_exist,ALL,OC,,,,,,,,
+subpeak generation,oil,oil_subpeak_exist,ALL,OC,,,,,,,,
+subpeak generation,gas,gas_subpeak_turbine,ALL,OC,,,,,,,,
+subpeak generation,gas,gas_subpeak_CC,ALL,OC,,,,,,,,
+subpeak generation,gas,gas_subpeak_CC_CCS,ALL,OC,,,,,,,,
+subpeak generation,biomass,bio_subpeak_conv,ALL,OC,,,,,,,,
+subpeak generation,biomass,bio_subpeak_IGCC,ALL,OC,,,,,,,,
+subpeak generation,biomass,bio_subpeak_IGCC_CCS,ALL,OC,,,,,,,,
+subpeak generation,oil,oil_subpeak_turbine,ALL,OC,,,,,,,,
+subpeak generation,oil,oil_subpeak_IGCC,ALL,OC,,,,,,,,
+subpeak generation,oil,oil_subpeak_IGCC_CCS,ALL,OC,,,,,,,,
+subpeak generation,coal,coal_subpeak_IGCC,ALL,OC,,,,,,,,
+subpeak generation,coal,coal_subpeak_IGCC_CCS,ALL,OC,,,,,,,,
+peak generation,gas,gas_peak_exist,ALL,OC,,,,,,,,
+peak generation,oil,oil_peak_exist,ALL,OC,,,,,,,,
+peak generation,gas,gas_peak_turbine,ALL,OC,,,,,,,,
+peak generation,gas,gas_peak_CC,ALL,OC,,,,,,,,
+peak generation,gas,gas_peak_CC_CCS,ALL,OC,,,,,,,,
+peak generation,oil,oil_peak_turbine,ALL,OC,,,,,,,,
+peak generation,oil,oil_peak_IGCC,ALL,OC,,,,,,,,
+peak generation,oil,oil_peak_IGCC_CCS,ALL,OC,,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+10050,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,tech-diffusion,final-emiss-coef,,,technology lookup
+base load generation,coal,coal_base_exist,1990,OC,3.21472E-05,34.60,30.00,0.5,1.60736E-05,,,Coal (existing)
+base load generation,biomass,bio_base_exist,1990,OC,0.021405314,34.60,30.00,0.5,0.010702657,,,Biomass (existing)
+base load generation,gas,gas_base_exist,1990,OC,1.00408E-05,34.60,30.00,0.5,5.02041E-06,,,Gas (existing)
+base load generation,coal,coal_base_conv,1990,OC,3.21472E-05,34.60,30.00,0.5,1.60736E-05,,,Coal (conv pul)
+base load generation,coal,coal_base_IGCC,1990,OC,1.00408E-05,34.60,30.00,0.5,1.00408E-05,,,Coal (IGCC)
+base load generation,coal,coal_base_IGCC_CCS,1990,OC,1.00408E-05,34.60,30.00,0.5,1.00408E-05,,,Coal (IGCC)_CCS
+base load generation,biomass,bio_base_conv,1990,OC,0.021405314,34.60,30.00,0.5,0.010702657,,,Biomass (conv)
+base load generation,biomass,bio_base_IGCC,1990,OC,1.00408E-05,34.60,30.00,0.5,1.00408E-05,,,Biomass (IGCC)
+base load generation,biomass,bio_base_IGCC_CCS,1990,OC,1.00408E-05,34.60,30.00,0.5,1.00408E-05,,,Biomass (IGCC)_CCS
+base load generation,gas,gas_base_CC,1990,OC,1.00408E-05,34.60,30.00,0.5,5.02041E-06,,,Gas (CC)
+base load generation,gas,gas_base_CC_CCS,1990,OC,1.00408E-05,34.60,30.00,0.5,5.02041E-06,,,Gas (CC)_CCS
+intermediate generation,gas,gas_int_exist,1990,OC,1.00408E-05,34.60,30.00,0.5,5.02041E-06,,,Gas (existing)
+intermediate generation,biomass,bio_int_exist,1990,OC,0.021405314,34.60,30.00,0.5,0.010702657,,,Biomass (existing)
+intermediate generation,coal,coal_int_exist,1990,OC,3.21472E-05,34.60,30.00,0.5,1.60736E-05,,,Coal (existing)
+intermediate generation,gas,gas_int_CC,1990,OC,1.00408E-05,34.60,30.00,0.5,5.02041E-06,,,Gas (CC)
+intermediate generation,gas,gas_int_CC_CCS,1990,OC,1.00408E-05,34.60,30.00,0.5,5.02041E-06,,,Gas (CC)_CCS
+intermediate generation,biomass,bio_int_conv,1990,OC,0.021405314,34.60,30.00,0.5,0.010702657,,,Biomass (conv)
+intermediate generation,biomass,bio_int_IGCC,1990,OC,1.00408E-05,34.60,30.00,0.5,1.00408E-05,,,Biomass (IGCC)
+intermediate generation,biomass,bio_int_IGCC_CCS,1990,OC,1.00408E-05,34.60,30.00,0.5,1.00408E-05,,,Biomass (IGCC)_CCS
+intermediate generation,oil,oil_int_IGCC,1990,OC,1.00408E-05,34.60,30.00,0.5,1.00408E-05,,,Oil (IGCC)
+intermediate generation,oil,oil_int_IGCC_CCS,1990,OC,1.00408E-05,34.60,30.00,0.5,1.00408E-05,,,Oil (IGCC)_CCS
+intermediate generation,coal,coal_int_conv,1990,OC,3.21472E-05,34.60,30.00,0.5,1.60736E-05,,,Coal (conv pul)
+intermediate generation,coal,coal_int_IGCC,1990,OC,1.00408E-05,34.60,30.00,0.5,1.00408E-05,,,Coal (IGCC)
+intermediate generation,coal,coal_int_IGCC_CCS,1990,OC,1.00408E-05,34.60,30.00,0.5,1.00408E-05,,,Coal (IGCC)_CCS
+subpeak generation,gas,gas_subpeak_exist,1990,OC,1.00408E-05,34.60,30.00,0.5,5.02041E-06,,,Gas (existing)
+subpeak generation,oil,oil_subpeak_exist,1990,OC,0.0003872,34.60,30.00,0.5,0.0001936,,,Oil (existing)
+subpeak generation,gas,gas_subpeak_turbine,1990,OC,1.00408E-05,34.60,30.00,0.5,5.02041E-06,,,Gas (peak load conv)
+subpeak generation,gas,gas_subpeak_CC,1990,OC,1.00408E-05,34.60,30.00,0.5,5.02041E-06,,,Gas (CC)
+subpeak generation,gas,gas_subpeak_CC_CCS,1990,OC,1.00408E-05,34.60,30.00,0.5,5.02041E-06,,,Gas (CC)_CCS
+subpeak generation,biomass,bio_subpeak_conv,1990,OC,0.021405314,34.60,30.00,0.5,0.010702657,,,Biomass (conv)
+subpeak generation,biomass,bio_subpeak_IGCC,1990,OC,1.00408E-05,34.60,30.00,0.5,1.00408E-05,,,Biomass (IGCC)
+subpeak generation,biomass,bio_subpeak_IGCC_CCS,1990,OC,1.00408E-05,34.60,30.00,0.5,1.00408E-05,,,Biomass (IGCC)_CCS
+subpeak generation,oil,oil_subpeak_turbine,1990,OC,0.0003872,34.60,30.00,0.5,0.0001936,,,Oil (peak load conv)
+subpeak generation,oil,oil_subpeak_IGCC,1990,OC,1.00408E-05,34.60,30.00,0.5,1.00408E-05,,,Oil (IGCC)
+subpeak generation,oil,oil_subpeak_IGCC_CCS,1990,OC,1.00408E-05,34.60,30.00,0.5,1.00408E-05,,,Oil (IGCC)_CCS
+subpeak generation,coal,coal_subpeak_IGCC,1990,OC,1.00408E-05,34.60,30.00,0.5,1.00408E-05,,,Coal (IGCC)
+subpeak generation,coal,coal_subpeak_IGCC_CCS,1990,OC,1.00408E-05,34.60,30.00,0.5,1.00408E-05,,,Coal (IGCC)_CCS
+peak generation,gas,gas_peak_exist,1990,OC,1.00408E-05,34.60,30.00,0.5,5.02041E-06,,,Gas (existing)
+peak generation,oil,oil_peak_exist,1990,OC,0.0003872,34.60,30.00,0.5,0.0001936,,,Oil (existing)
+peak generation,gas,gas_peak_turbine,1990,OC,1.00408E-05,34.60,30.00,0.5,5.02041E-06,,,Gas (peak load conv)
+peak generation,gas,gas_peak_CC,1990,OC,1.00408E-05,34.60,30.00,0.5,5.02041E-06,,,Gas (CC)
+peak generation,gas,gas_peak_CC_CCS,1990,OC,1.00408E-05,34.60,30.00,0.5,5.02041E-06,,,Gas (CC)_CCS
+peak generation,oil,oil_peak_turbine,1990,OC,0.0003872,34.60,30.00,0.5,0.0001936,,,Oil (peak load conv)
+peak generation,oil,oil_peak_IGCC,1990,OC,1.00408E-05,34.60,30.00,0.5,1.00408E-05,,,Oil (IGCC)
+peak generation,oil,oil_peak_IGCC_CCS,1990,OC,1.00408E-05,34.60,30.00,0.5,1.00408E-05,,,Oil (IGCC)_CCS
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+10000,,,note that many techs are not included in NH3 tables,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,input-driver,,,,,,,
+base load generation,coal,coal_base_exist,ALL,NH3,,,,,,,,
+base load generation,gas,gas_base_exist,ALL,NH3,,,,,,,,
+base load generation,coal,coal_base_conv,ALL,NH3,,,,,,,,
+base load generation,gas,gas_base_CC,ALL,NH3,,,,,,,,
+base load generation,gas,gas_base_CC_CCS,ALL,NH3,,,,,,,,
+intermediate generation,gas,gas_int_exist,ALL,NH3,,,,,,,,
+intermediate generation,coal,coal_int_exist,ALL,NH3,,,,,,,,
+intermediate generation,gas,gas_int_CC,ALL,NH3,,,,,,,,
+intermediate generation,gas,gas_int_CC_CCS,ALL,NH3,,,,,,,,
+intermediate generation,coal,coal_int_conv,ALL,NH3,,,,,,,,
+subpeak generation,gas,gas_subpeak_exist,ALL,NH3,,,,,,,,
+subpeak generation,oil,oil_subpeak_exist,ALL,NH3,,,,,,,,
+subpeak generation,gas,gas_subpeak_turbine,ALL,NH3,,,,,,,,
+subpeak generation,gas,gas_subpeak_CC,ALL,NH3,,,,,,,,
+subpeak generation,gas,gas_subpeak_CC_CCS,ALL,NH3,,,,,,,,
+subpeak generation,oil,oil_subpeak_turbine,ALL,NH3,,,,,,,,
+peak generation,gas,gas_peak_exist,ALL,NH3,,,,,,,,
+peak generation,oil,oil_peak_exist,ALL,NH3,,,,,,,,
+peak generation,gas,gas_peak_turbine,ALL,NH3,,,,,,,,
+peak generation,gas,gas_peak_CC,ALL,NH3,,,,,,,,
+peak generation,gas,gas_peak_CC_CCS,ALL,NH3,,,,,,,,
+peak generation,oil,oil_peak_turbine,ALL,NH3,,,,,,,,
+,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+10050,,,,,,,,,,,,
+,,,,,,,,,,,,
+supplysector,subsector,technology,period,generic-ghg,uncontrolled-emiss-coef,gdp-mid-control,gdp-control-range,tech-diffusion,final-emiss-coef,,,technology lookup
+base load generation,coal,coal_base_exist,1990,NH3,3.22298E-05,27.68,30.00,0,1.61149E-05,,,Coal (existing)
+base load generation,gas,gas_base_exist,1990,NH3,0.000644266,27.68,30.00,0,0.000322133,,,Gas (existing)
+base load generation,coal,coal_base_conv,1990,NH3,3.22298E-05,27.68,30.00,0,1.61149E-05,,,Coal (conv pul)
+base load generation,gas,gas_base_CC,1990,NH3,0.000644266,27.68,30.00,0,0.000322133,,,Gas (CC)
+base load generation,gas,gas_base_CC_CCS,1990,NH3,0.000644266,27.68,30.00,0,0.000322133,,,Gas (CC)_CCS
+intermediate generation,gas,gas_int_exist,1990,NH3,0.000644266,27.68,30.00,0,0.000322133,,,Gas (existing)
+intermediate generation,coal,coal_int_exist,1990,NH3,3.22298E-05,27.68,30.00,0,1.61149E-05,,,Coal (existing)
+intermediate generation,gas,gas_int_CC,1990,NH3,0.000644266,27.68,30.00,0,0.000322133,,,Gas (CC)
+intermediate generation,gas,gas_int_CC_CCS,1990,NH3,0.000644266,27.68,30.00,0,0.000322133,,,Gas (CC)_CCS
+intermediate generation,coal,coal_int_conv,1990,NH3,3.22298E-05,27.68,30.00,0,1.61149E-05,,,Coal (conv pul)
+subpeak generation,gas,gas_subpeak_exist,1990,NH3,0.000644266,27.68,30.00,0,0.000322133,,,Gas (existing)
+subpeak generation,oil,oil_subpeak_exist,1990,NH3,0.003822237,27.68,30.00,0,0.001911119,,,Oil (existing)
+subpeak generation,gas,gas_subpeak_turbine,1990,NH3,0.000644266,27.68,30.00,0,0.000322133,,,Gas (peak load conv)
+subpeak generation,gas,gas_subpeak_CC,1990,NH3,0.000644266,27.68,30.00,0,0.000322133,,,Gas (CC)
+subpeak generation,gas,gas_subpeak_CC_CCS,1990,NH3,0.000644266,27.68,30.00,0,0.000322133,,,Gas (CC)_CCS
+subpeak generation,oil,oil_subpeak_turbine,1990,NH3,0.003822237,27.68,30.00,0,0.001911119,,,Oil (peak load conv)
+peak generation,gas,gas_peak_exist,1990,NH3,0.000644266,27.68,30.00,0,0.000322133,,,Gas (existing)
+peak generation,oil,oil_peak_exist,1990,NH3,0.003822237,27.68,30.00,0,0.001911119,,,Oil (existing)
+peak generation,gas,gas_peak_turbine,1990,NH3,0.000644266,27.68,30.00,0,0.000322133,,,Gas (peak load conv)
+peak generation,gas,gas_peak_CC,1990,NH3,0.000644266,27.68,30.00,0,0.000322133,,,Gas (CC)
+peak generation,gas,gas_peak_CC_CCS,1990,NH3,0.000644266,27.68,30.00,0,0.000322133,,,Gas (CC)_CCS
+peak generation,oil,oil_peak_turbine,1990,NH3,0.003822237,27.68,30.00,0,0.001911119,,,Oil (peak load conv)
