@@ -394,7 +394,7 @@
             <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="biomass">
@@ -494,7 +494,7 @@
             </subsector>
             <subsector name="gas">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="gas">
@@ -594,7 +594,7 @@
             </subsector>
             <subsector name="coal">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="coal">
@@ -694,7 +694,7 @@
             </subsector>
             <subsector name="refined liquids">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="refined liquids">
@@ -1205,7 +1205,7 @@
             <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="biomass">
@@ -1305,7 +1305,7 @@
             </subsector>
             <subsector name="gas">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="gas">
@@ -1405,7 +1405,7 @@
             </subsector>
             <subsector name="coal">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="coal">
@@ -1505,7 +1505,7 @@
             </subsector>
             <subsector name="refined liquids">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="refined liquids">
@@ -2016,7 +2016,7 @@
             <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="biomass">
@@ -2116,7 +2116,7 @@
             </subsector>
             <subsector name="gas">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="gas">
@@ -2216,7 +2216,7 @@
             </subsector>
             <subsector name="coal">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="coal">
@@ -2316,7 +2316,7 @@
             </subsector>
             <subsector name="refined liquids">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="refined liquids">
@@ -2827,7 +2827,7 @@
             <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="biomass">
@@ -2927,7 +2927,7 @@
             </subsector>
             <subsector name="gas">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="1990">0</share-weight>
@@ -3035,7 +3035,7 @@
             </subsector>
             <subsector name="coal">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="coal">
@@ -3135,7 +3135,7 @@
             </subsector>
             <subsector name="refined liquids">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="refined liquids">
@@ -3646,7 +3646,7 @@
             <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="biomass">
@@ -3746,7 +3746,7 @@
             </subsector>
             <subsector name="gas">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="gas">
@@ -3846,7 +3846,7 @@
             </subsector>
             <subsector name="coal">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="coal">
@@ -3946,7 +3946,7 @@
             </subsector>
             <subsector name="refined liquids">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="1990">0</share-weight>
@@ -4465,7 +4465,7 @@
             <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="biomass">
@@ -4565,7 +4565,7 @@
             </subsector>
             <subsector name="gas">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="gas">
@@ -4665,7 +4665,7 @@
             </subsector>
             <subsector name="coal">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="coal">
@@ -4765,7 +4765,7 @@
             </subsector>
             <subsector name="refined liquids">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="refined liquids">
@@ -5276,7 +5276,7 @@
             <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="1990">0</share-weight>
@@ -5384,7 +5384,7 @@
             </subsector>
             <subsector name="gas">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="1990">0</share-weight>
@@ -5492,7 +5492,7 @@
             </subsector>
             <subsector name="coal">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="coal">
@@ -5592,7 +5592,7 @@
             </subsector>
             <subsector name="refined liquids">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="refined liquids">
@@ -6103,7 +6103,7 @@
             <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="biomass">
@@ -6203,7 +6203,7 @@
             </subsector>
             <subsector name="gas">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="gas">
@@ -6303,7 +6303,7 @@
             </subsector>
             <subsector name="coal">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="1990">0</share-weight>
@@ -6411,7 +6411,7 @@
             </subsector>
             <subsector name="refined liquids">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="refined liquids">
@@ -6922,7 +6922,7 @@
             <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="biomass">
@@ -7022,7 +7022,7 @@
             </subsector>
             <subsector name="gas">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="gas">
@@ -7122,7 +7122,7 @@
             </subsector>
             <subsector name="coal">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="coal">
@@ -7222,7 +7222,7 @@
             </subsector>
             <subsector name="refined liquids">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="refined liquids">
@@ -7733,7 +7733,7 @@
             <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="biomass">
@@ -7833,7 +7833,7 @@
             </subsector>
             <subsector name="gas">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="gas">
@@ -7933,7 +7933,7 @@
             </subsector>
             <subsector name="coal">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="coal">
@@ -8033,7 +8033,7 @@
             </subsector>
             <subsector name="refined liquids">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="refined liquids">
@@ -8544,7 +8544,7 @@
             <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="biomass">
@@ -8644,7 +8644,7 @@
             </subsector>
             <subsector name="gas">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="gas">
@@ -8744,7 +8744,7 @@
             </subsector>
             <subsector name="coal">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="coal">
@@ -8844,7 +8844,7 @@
             </subsector>
             <subsector name="refined liquids">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="refined liquids">
@@ -9355,7 +9355,7 @@
             <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="biomass">
@@ -9455,7 +9455,7 @@
             </subsector>
             <subsector name="gas">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="gas">
@@ -9555,7 +9555,7 @@
             </subsector>
             <subsector name="coal">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="coal">
@@ -9655,7 +9655,7 @@
             </subsector>
             <subsector name="refined liquids">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="refined liquids">
@@ -10166,7 +10166,7 @@
             <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="biomass">
@@ -10266,7 +10266,7 @@
             </subsector>
             <subsector name="gas">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="1990">0</share-weight>
@@ -10374,7 +10374,7 @@
             </subsector>
             <subsector name="coal">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="coal">
@@ -10474,7 +10474,7 @@
             </subsector>
             <subsector name="refined liquids">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="refined liquids">
@@ -10985,7 +10985,7 @@
             <logit-exponent fillout="1" year="1975">-6</logit-exponent>
             <subsector name="biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="biomass">
@@ -11085,7 +11085,7 @@
             </subsector>
             <subsector name="gas">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="gas">
@@ -11185,7 +11185,7 @@
             </subsector>
             <subsector name="coal">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="coal">
@@ -11285,7 +11285,7 @@
             </subsector>
             <subsector name="refined liquids">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <technology name="refined liquids">
