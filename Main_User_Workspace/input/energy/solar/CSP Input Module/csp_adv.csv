@@ -1,7 +1,7 @@
 Intermittent Technology: backup info,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,
 Variable ID,,,,,,,,,,,
-1001,,,,,,,,,,,
+1051,,,,,,,,,,,
 ,,,,,,capacity-limit-backup-calculator,,,,,
 region,supplysector,subsector,intermittent-technology,period,trial-market-name,capacity-limit,electric-sector-name,backup-capital-cost,backup-capacity-factor,,
 ALL,electricity,solar,CSP,1975,renewable,0.25,electricity,0,0.05,,
@@ -17,7 +17,7 @@ ALL,electricity,solar,CSP,2095,renewable,0.4,electricity,0,0.05,,
 ,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,
 Variable ID,,,,,,,,,,,
-1002,,,,,,,,,,,
+1052,,,,,,,,,,,
 ,,,,input-cost,,,,,,,
 region,supplysector,subsector,intermittent-technology,1990,2005,2020,2035,2050,2065,2080,2095
 USA,electricity,solar,CSP,15.83,15.83,11.69,10.06,9.33,8.65,8.03,7.44
@@ -37,7 +37,7 @@ India,electricity,solar,CSP,13.18,13.18,9.73,8.37,7.76,7.20,6.68,6.20
 ,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,
 Variable ID,,,,,,,,,,,
-1102,,,,,,,,,,,
+1152,,,,,,,,,,,
 ,,,,input-cost,,,,,,,
 region,supplysector,subsector,technology,1990,2005,2020,2035,2050,2065,2080,2095
 USA,electricity,solar,CSP_storage,10.81,10.81,7.99,6.87,6.37,5.91,5.48,5.08

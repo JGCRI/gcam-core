@@ -1,9 +1,9 @@
 Nuclear reference scenario,,,,,,,,,,,
-
+,,,,,,,,,,,
 Costs,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,
 Variable ID,,,,,,,,,,,
-1005,,,,minicam-non-energy-input{non-energy},,,,,,,
+1105,,,,minicam-non-energy-input{non-energy},,,,,,,
 ,,,,input-cost,,,,,,,
 region,supplysector,subsector,technology,1990,2005,2020,2035,2050,2065,2080,2095
 USA,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.6,4.41,4.22,4.04,3.87

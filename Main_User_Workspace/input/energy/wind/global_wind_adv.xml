@@ -2,9 +2,9 @@
 <scenario>
    <world>
       <region name="Africa">
-         <supplysector name="electricity">
-            <subsector name="wind">
-               <intermittent-technology name="wind">
+         <supplysector name="electricity" nocreate="1">
+            <subsector name="wind" nocreate="1">
+               <intermittent-technology name="wind" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.81</input-cost>
@@ -88,7 +88,7 @@
                      </capacity-limit-backup-calculator>
                   </period>
                </intermittent-technology>
-               <technology name="wind_storage">
+               <technology name="wind_storage" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.58</input-cost>
@@ -142,9 +142,9 @@
          </renewresource>
       </region>
       <region name="Australia_NZ">
-         <supplysector name="electricity">
-            <subsector name="wind">
-               <intermittent-technology name="wind">
+         <supplysector name="electricity" nocreate="1">
+            <subsector name="wind" nocreate="1">
+               <intermittent-technology name="wind" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.81</input-cost>
@@ -228,7 +228,7 @@
                      </capacity-limit-backup-calculator>
                   </period>
                </intermittent-technology>
-               <technology name="wind_storage">
+               <technology name="wind_storage" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.58</input-cost>
@@ -282,9 +282,9 @@
          </renewresource>
       </region>
       <region name="Canada">
-         <supplysector name="electricity">
-            <subsector name="wind">
-               <intermittent-technology name="wind">
+         <supplysector name="electricity" nocreate="1">
+            <subsector name="wind" nocreate="1">
+               <intermittent-technology name="wind" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.81</input-cost>
@@ -368,7 +368,7 @@
                      </capacity-limit-backup-calculator>
                   </period>
                </intermittent-technology>
-               <technology name="wind_storage">
+               <technology name="wind_storage" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.58</input-cost>
@@ -422,9 +422,9 @@
          </renewresource>
       </region>
       <region name="China">
-         <supplysector name="electricity">
-            <subsector name="wind">
-               <intermittent-technology name="wind">
+         <supplysector name="electricity" nocreate="1">
+            <subsector name="wind" nocreate="1">
+               <intermittent-technology name="wind" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.81</input-cost>
@@ -508,7 +508,7 @@
                      </capacity-limit-backup-calculator>
                   </period>
                </intermittent-technology>
-               <technology name="wind_storage">
+               <technology name="wind_storage" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.58</input-cost>
@@ -562,9 +562,9 @@
          </renewresource>
       </region>
       <region name="Eastern Europe">
-         <supplysector name="electricity">
-            <subsector name="wind">
-               <intermittent-technology name="wind">
+         <supplysector name="electricity" nocreate="1">
+            <subsector name="wind" nocreate="1">
+               <intermittent-technology name="wind" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.81</input-cost>
@@ -648,7 +648,7 @@
                      </capacity-limit-backup-calculator>
                   </period>
                </intermittent-technology>
-               <technology name="wind_storage">
+               <technology name="wind_storage" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.58</input-cost>
@@ -702,9 +702,9 @@
          </renewresource>
       </region>
       <region name="Former Soviet Union">
-         <supplysector name="electricity">
-            <subsector name="wind">
-               <intermittent-technology name="wind">
+         <supplysector name="electricity" nocreate="1">
+            <subsector name="wind" nocreate="1">
+               <intermittent-technology name="wind" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.81</input-cost>
@@ -788,7 +788,7 @@
                      </capacity-limit-backup-calculator>
                   </period>
                </intermittent-technology>
-               <technology name="wind_storage">
+               <technology name="wind_storage" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.58</input-cost>
@@ -842,9 +842,9 @@
          </renewresource>
       </region>
       <region name="India">
-         <supplysector name="electricity">
-            <subsector name="wind">
-               <intermittent-technology name="wind">
+         <supplysector name="electricity" nocreate="1">
+            <subsector name="wind" nocreate="1">
+               <intermittent-technology name="wind" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.81</input-cost>
@@ -928,7 +928,7 @@
                      </capacity-limit-backup-calculator>
                   </period>
                </intermittent-technology>
-               <technology name="wind_storage">
+               <technology name="wind_storage" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.58</input-cost>
@@ -982,9 +982,9 @@
          </renewresource>
       </region>
       <region name="Japan">
-         <supplysector name="electricity">
-            <subsector name="wind">
-               <intermittent-technology name="wind">
+         <supplysector name="electricity" nocreate="1">
+            <subsector name="wind" nocreate="1">
+               <intermittent-technology name="wind" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.81</input-cost>
@@ -1068,7 +1068,7 @@
                      </capacity-limit-backup-calculator>
                   </period>
                </intermittent-technology>
-               <technology name="wind_storage">
+               <technology name="wind_storage" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.58</input-cost>
@@ -1122,9 +1122,9 @@
          </renewresource>
       </region>
       <region name="Korea">
-         <supplysector name="electricity">
-            <subsector name="wind">
-               <intermittent-technology name="wind">
+         <supplysector name="electricity" nocreate="1">
+            <subsector name="wind" nocreate="1">
+               <intermittent-technology name="wind" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.81</input-cost>
@@ -1208,7 +1208,7 @@
                      </capacity-limit-backup-calculator>
                   </period>
                </intermittent-technology>
-               <technology name="wind_storage">
+               <technology name="wind_storage" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.58</input-cost>
@@ -1262,9 +1262,9 @@
          </renewresource>
       </region>
       <region name="Latin America">
-         <supplysector name="electricity">
-            <subsector name="wind">
-               <intermittent-technology name="wind">
+         <supplysector name="electricity" nocreate="1">
+            <subsector name="wind" nocreate="1">
+               <intermittent-technology name="wind" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.81</input-cost>
@@ -1348,7 +1348,7 @@
                      </capacity-limit-backup-calculator>
                   </period>
                </intermittent-technology>
-               <technology name="wind_storage">
+               <technology name="wind_storage" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.58</input-cost>
@@ -1402,9 +1402,9 @@
          </renewresource>
       </region>
       <region name="Middle East">
-         <supplysector name="electricity">
-            <subsector name="wind">
-               <intermittent-technology name="wind">
+         <supplysector name="electricity" nocreate="1">
+            <subsector name="wind" nocreate="1">
+               <intermittent-technology name="wind" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.81</input-cost>
@@ -1488,7 +1488,7 @@
                      </capacity-limit-backup-calculator>
                   </period>
                </intermittent-technology>
-               <technology name="wind_storage">
+               <technology name="wind_storage" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.58</input-cost>
@@ -1542,9 +1542,9 @@
          </renewresource>
       </region>
       <region name="Southeast Asia">
-         <supplysector name="electricity">
-            <subsector name="wind">
-               <intermittent-technology name="wind">
+         <supplysector name="electricity" nocreate="1">
+            <subsector name="wind" nocreate="1">
+               <intermittent-technology name="wind" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.81</input-cost>
@@ -1628,7 +1628,7 @@
                      </capacity-limit-backup-calculator>
                   </period>
                </intermittent-technology>
-               <technology name="wind_storage">
+               <technology name="wind_storage" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.58</input-cost>
@@ -1682,9 +1682,9 @@
          </renewresource>
       </region>
       <region name="USA">
-         <supplysector name="electricity">
-            <subsector name="wind">
-               <intermittent-technology name="wind">
+         <supplysector name="electricity" nocreate="1">
+            <subsector name="wind" nocreate="1">
+               <intermittent-technology name="wind" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.81</input-cost>
@@ -1768,7 +1768,7 @@
                      </capacity-limit-backup-calculator>
                   </period>
                </intermittent-technology>
-               <technology name="wind_storage">
+               <technology name="wind_storage" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.58</input-cost>
@@ -1822,9 +1822,9 @@
          </renewresource>
       </region>
       <region name="Western Europe">
-         <supplysector name="electricity">
-            <subsector name="wind">
-               <intermittent-technology name="wind">
+         <supplysector name="electricity" nocreate="1">
+            <subsector name="wind" nocreate="1">
+               <intermittent-technology name="wind" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.81</input-cost>
@@ -1908,7 +1908,7 @@
                      </capacity-limit-backup-calculator>
                   </period>
                </intermittent-technology>
-               <technology name="wind_storage">
+               <technology name="wind_storage" nocreate="1">
                   <period year="1990">
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.58</input-cost>

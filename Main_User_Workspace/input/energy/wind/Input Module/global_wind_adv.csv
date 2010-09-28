@@ -1,6 +1,6 @@
 INPUT_TABLE,,,,,,,,,,,
 Variable ID,,,,,,,,,,,
-2001,,,,minicam-non-energy-input,,,,,,,
+2101,,,,minicam-non-energy-input,,,,,,,
 ,,,,input-cost,,,,,,,
 region,supplysector,subsector,intermittent-technology,1990,2005,2020,2035,2050,2065,2080,2095
 Africa,electricity,wind,wind,4.81,4.81,3.88,3.46,3.09,2.77,2.53,2.34
@@ -20,7 +20,7 @@ Western Europe,electricity,wind,wind,4.81,4.81,3.88,3.46,3.09,2.77,2.53,2.34
 ,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,
 Variable ID,,,,,,,,,,,
-2006,,,,,,,,,,,
+2106,,,,,,,,,,,
 ,,,,,capacity-limit-backup-calculator,,,,,,
 region,supplysector,subsector,intermittent-technology,period,capacity-limit,trial-market-name,electric-sector-name,backup-capital-cost,backup-capacity-factor,,
 ALL,electricity,wind,wind,2020,0.4,renewable,electricity,30,0.05,,
@@ -33,7 +33,7 @@ ALL,electricity,wind,wind,2095,0.4,renewable,electricity,30,0.05,,
 ,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,
 Variable ID,,,,,,,,,,,
-2011,,,,minicam-non-energy-input,,,,,,,
+2111,,,,minicam-non-energy-input,,,,,,,
 ,,,,input-cost,,,,,,,
 region,supplysector,subsector,technology,1990,2005,2020,2035,2050,2065,2080,2095
 Africa,electricity,wind,wind_storage,11.58,11.58,8.61,7.07,6.21,5.55,5.12,4.86
