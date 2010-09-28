@@ -471,7 +471,7 @@ void Technology::completeInit( const string& aRegionName,
 
     // Clear shareweights for fixed output technologies.
     if( mFixedOutput != getFixedOutputDefault() ) {
-        mShareWeight = 0;
+        mShareWeight = mParsedShareWeight = 0;
     }
 
     // Accidentally missing CO2 is very easy to do, and would cause big

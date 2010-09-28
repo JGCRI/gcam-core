@@ -1152,39 +1152,39 @@ void Subsector::interpolateShareWeights( const int aPeriod ) {
     // Technologies must be processed at the subsector level so that we can have access to all years of a
     // technology.
     for( vector< vector< ITechnology* > >::const_iterator techIter = techs.begin(); techIter != techs.end(); techIter++ ){
+        PeriodVector<Value> techShareWeights;
+        PeriodVector<Value> techParsedShareWeights;
+        for( vector<ITechnology*>::const_iterator techYearIter = techIter->begin(); techYearIter != techIter->end(); techYearIter++ ){
+            const int period = techYearIter - techIter->begin();
+            techParsedShareWeights[ period ] = (*techYearIter)->getParsedShareWeight();
+            if( period <= modeltime->getFinalCalibrationPeriod() ) {
+                techShareWeights[ period ] = (*techYearIter)->getShareWeight();
+            }
+            else {
+                techShareWeights[ period ] = techParsedShareWeights[ period ];
+            }
+        }
         // find any rules associated with the current set of technologies
         CTechInterpRuleIterator techNameRuleIter = mTechShareWeightInterpRules.find( findTechName( *techIter ) );
         if( techNameRuleIter != mTechShareWeightInterpRules.end() ) {
-            PeriodVector<Value> techShareWeights;
-            PeriodVector<Value> techParsedShareWeights;
-            for( vector<ITechnology*>::const_iterator techYearIter = techIter->begin(); techYearIter != techIter->end(); techYearIter++ ){
-                const int period = techYearIter - techIter->begin();
-                techParsedShareWeights[ period ] = (*techYearIter)->getParsedShareWeight();
-                if( period <= modeltime->getFinalCalibrationPeriod() ) {
-                    techShareWeights[ period ] = (*techYearIter)->getShareWeight();
-                }
-                else {
-                    techShareWeights[ period ] = techParsedShareWeights[ period ];
-                }
-            }
             vector<InterpolationRule*> tempTechRules = techNameRuleIter->second;
             for( CInterpRuleIterator ruleIter = tempTechRules.begin(); ruleIter != tempTechRules.end();
                 ++ruleIter ) {
                     (*ruleIter)->applyInterpolations( techShareWeights, techParsedShareWeights );
             }
-            // All periods must have set a share weight value at this point, not having one is an error.
-            for( vector<ITechnology*>::const_iterator techYearIter = techIter->begin(); techYearIter != techIter->end(); techYearIter++ ){
-                const int period = techYearIter - techIter->begin();
-                // TODO: checks to make sure all periods got a valid value
-                if( period > modeltime->getFinalCalibrationPeriod() && !techShareWeights[ period ].isInited() ) {
-                    ILogger& mainLog = ILogger::getLogger( "main_log" );
-                    mainLog.setLevel( ILogger::ERROR );
-                    mainLog << "Found uninitialized share weight in tech: " << (*techYearIter)->getName()
-                            << " subsector " << name << " in period " << period << endl;
-                    exit( 1 );
-                }
-                (*techYearIter)->setShareWeight( techShareWeights[ period ] );
+        }
+        // All periods must have set a share weight value at this point, not having one is an error.
+        for( vector<ITechnology*>::const_iterator techYearIter = techIter->begin(); techYearIter != techIter->end(); techYearIter++ ){
+            const int period = techYearIter - techIter->begin();
+            // TODO: checks to make sure all periods got a valid value
+            if( period > modeltime->getFinalCalibrationPeriod() && !techShareWeights[ period ].isInited() ) {
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::ERROR );
+                mainLog << "Found uninitialized share weight in tech: " << (*techYearIter)->getName()
+                        << " subsector " << name << " in period " << period << endl;
+                exit( 1 );
             }
+            (*techYearIter)->setShareWeight( techShareWeights[ period ] );
         }
     }
 }
