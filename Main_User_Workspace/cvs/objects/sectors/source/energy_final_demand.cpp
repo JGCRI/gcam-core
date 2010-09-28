@@ -73,10 +73,7 @@ mBaseService( scenario->getModeltime()->getmaxper() )
     const Modeltime* modeltime = scenario->getModeltime();
     const int maxper = modeltime->getmaxper();
 
-    // mIncomeElasticity = 0;
     mIncomeElasticity.resize( maxper );
-
-    // mPriceElasticity = 0;
     mPriceElasticity.resize( maxper );
     mServiceDemands.resize( maxper );
     mPreTechChangeServiceDemand.resize( maxper );
@@ -107,7 +104,7 @@ bool EnergyFinalDemand::XMLParse( const DOMNode* aNode ) {
             continue;
         }
         if( nodeName == "base-service" ){
-            // TEMP TEMP TEMP
+            // TEMP
             if( XMLHelper<int>::getAttr( curr, "year" ) == 0 ){
                 mBaseService[ 0 ] = XMLHelper<double>::getValue( curr );
             }
@@ -254,7 +251,7 @@ void EnergyFinalDemand::completeInit( const string& aRegionName,
 
     if( mBaseService[ 0 ] <= util::getSmallNumber() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
+        mainLog.setLevel( ILogger::DEBUG );
         mainLog << "Zero base service for demand sector " << mName
                 << " in region " << aRegionName << "." << endl;
         mBaseService[ 0 ] = 1;

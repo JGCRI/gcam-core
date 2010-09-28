@@ -272,7 +272,8 @@ void FoodProductionTechnology::initCalc( const string& aRegionName,
     }
     else {
         // Get the calibrated variable cost from the market info.
-        if ( variableCost == -1 ) {
+        // TODO: Generalize for all periods. preVarCost not available for base period.
+        if ( variableCost == -1 && aPeriod > 0 ) {
             preVarCost = marketInfo->getDouble( preVarCostName, true );
             if ( preVarCost > util::getSmallNumber() ) {
                 // Adjust last period's variable cost by tech change
