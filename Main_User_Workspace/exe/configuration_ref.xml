@@ -25,7 +25,7 @@
 		<Value name="ObjectSGMGenFileName">ObjectSGMGen.csv</Value>
 	</Files>
 	<ScenarioComponents>
-		<Value name="del_gen_bio">../input/aglu/smoothwastebio.xml</Value>
+		<Value name="del_gen_bio">../input/aglu/SmoothWasteBio.xml</Value>
 		<Value name="aglu">../input/aglu/aglu_input_ref.xml</Value>
 		<Value name="noadder">../input/aglu/Add_On_bioadder_0.xml</Value>
 		<Value name="start_year">../input/aglu/CCcycle_Start_1700.xml</Value>
