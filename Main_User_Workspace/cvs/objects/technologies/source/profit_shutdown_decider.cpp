@@ -55,8 +55,8 @@ using namespace xercesc;
 //! Constructor
 ProfitShutdownDecider::ProfitShutdownDecider():
     mMaxShutdown(1.0),
-    mSteepness(5.0),
-    mMedianShutdownPoint(0.0)
+    mSteepness(6.0),
+    mMedianShutdownPoint(-0.1)
 {
 }
 
@@ -121,8 +121,8 @@ bool ProfitShutdownDecider::XMLParse( const xercesc::DOMNode* node ){
 void ProfitShutdownDecider::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
     XMLWriteElementCheckDefault( mMaxShutdown, "max-shutdown", aOut, aTabs, 1.0 );
-    XMLWriteElementCheckDefault( mSteepness, "steepness", aOut, aTabs, 5.0 );
-    XMLWriteElementCheckDefault( mMedianShutdownPoint, "median-shutdown-point", aOut, aTabs, 0.0 );
+    XMLWriteElementCheckDefault( mSteepness, "steepness", aOut, aTabs, 6.0 );
+    XMLWriteElementCheckDefault( mMedianShutdownPoint, "median-shutdown-point", aOut, aTabs, -0.1 );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
@@ -172,10 +172,11 @@ double ProfitShutdownDecider::calcShutdownCoef( const ProductionFunctionInfo* aF
             profitRate = aCalculatedProfitRate;
         }
        
-        // Compute Shutdown factor using exponential S-curve.  ScaleFactor that is returned
+        // Compute Shutdown factor using logistic S-curve.  ScaleFactor that is returned
         // is actually the fraction not shut down, so it is 1.0 - the shutdown fraction.
-        scaleFactor = 1.0 - mMaxShutdown / 
-                      ( 1.0 + exp(mSteepness * (profitRate - mMedianShutdownPoint) ) );
+        const double midPointToSteepness = pow( mMedianShutdownPoint + 1, mSteepness );
+        scaleFactor = 1.0 - mMaxShutdown * ( midPointToSteepness / 
+                      ( midPointToSteepness + pow( profitRate + 1, mSteepness ) ) );
     }
 
     // Scale factor is between 0 and 1.

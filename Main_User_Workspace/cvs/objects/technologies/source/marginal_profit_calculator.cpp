@@ -56,11 +56,11 @@ MarginalProfitCalculator::MarginalProfitCalculator( const Technology* aTechnolog
 {}
 
 /*!
- * \brief Calculate the short term marginal profit as a proportion of non-energy
+ * \brief Calculate the short term marginal profit as a proportion of variable
  *        costs.
  * \param aRegionName Region name.
  * \param aPeriod Model period.
- * \return Short term marginal profit as a proportion of non-energy costs.
+ * \return Short term marginal profit as a proportion of variable costs.
  * \todo This calculation will have to be improved when a Technology has
  *       multiple and correctly differentiated fixed and variable costs. The
  *       code currently assumes that all non-energy costs are fixed, which would
@@ -70,13 +70,18 @@ double MarginalProfitCalculator::calcShortTermMarginalProfit( const string& aReg
                                                               const string& aSectorName,
                                                               const int aPeriod ) const
 {
+    // TODO: Marginal revenue has already deducted the ghg value.  If we could avoid
+    // recalculating that value it could be a performance increase.
+    double ghgValue = mTechnology->getTotalGHGCost( aRegionName, aSectorName, aPeriod );
+    // The GHG cost should be added as a cost however it has already been included
+    // in the revenue so we need to remove it from there first.
     double marginalRevenue = mTechnology->getMarginalRevenue( aRegionName,
                                                               aSectorName,
-                                                              aPeriod );
+                                                              aPeriod ) + ghgValue;
 
     double variableCosts = mTechnology->getEnergyCost( aRegionName,
                                                        aSectorName,
-                                                       aPeriod );
+                                                       aPeriod ) + ghgValue;
     
 
     /* Marginal profit is defined here as the percentage that price exceeds

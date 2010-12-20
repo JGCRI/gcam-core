@@ -53,7 +53,7 @@ struct ProductionFunctionInfo;
  * \ingroup Objects
  * \brief This object begins to shut down a vintage when its profit rate falls
  *        below a minimum level.
- * \details Profit shutdown decider which applies an exponential S-shaped curve
+ * \details Profit shutdown decider which applies a logistic S-shaped curve
  *          to determine the shutdown rate. The proportion shutdown is based
  *          the percentage that the price receive exceeds or is below variable cost.<br>
  *
@@ -61,7 +61,8 @@ struct ProductionFunctionInfo;
  *
  *          functional form of profit shutdown decider is
  *          
- *          shutDownRate = mMaxShutdown / (1.0 + exp( mSteepness * (profitRate - medianShutdownPoint)))
+ *          shutDownRate = mMaxShutdown * (1 + medianShutdownPoint) ^ mSteepness /
+ *                           ((1 + medianShutdownPoint) ^ mSteepness + (1 + profitRate) ^ mSteepness)
  *                  where  mMaxShutdown is the maximum shutdown fraction (defaults to 1)
  *                         mSteepness is a shape parameter of curve steepness to reach Max              
  *                         profitRate is the percentage that price exceeds variable cost
@@ -75,7 +76,7 @@ struct ProductionFunctionInfo;
  *          - Attributes: None
  *          - Elements: None
  *   
- * \author Josh Lurz, S-Curve by Marshall Wise
+ * \author Josh Lurz, S-Curve by Pralit Patel
  */
 class ProfitShutdownDecider: public IShutdownDecider
 {
