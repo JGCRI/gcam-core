@@ -63,30 +63,39 @@
                <technology name="hydro_base">
                   <period year="1975">
                      <fixedOutput>0.9808092</fixedOutput>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="1990">
                      <fixedOutput>0.993914568</fixedOutput>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <fixedOutput>0.9808092</fixedOutput>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <fixedOutput>0.9808092</fixedOutput>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2035">
                      <fixedOutput>0.993914568</fixedOutput>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2050">
                      <fixedOutput>1.007019936</fixedOutput>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2065">
                      <fixedOutput>1.020125304</fixedOutput>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2080">
                      <fixedOutput>1.033230672</fixedOutput>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2095">
                      <fixedOutput>1.04633604</fixedOutput>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>
@@ -94,9 +103,11 @@
                <technology name="nuc_base_gen2">
                   <period year="1990">
                      <fixedOutput>2.2013028</fixedOutput>
+                     <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <fixedOutput>2.9186136</fixedOutput>
+                     <CO2 name="CO2"/>
                   </period>
                </technology>
             </subsector>

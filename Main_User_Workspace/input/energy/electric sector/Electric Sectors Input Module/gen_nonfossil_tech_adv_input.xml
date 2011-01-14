@@ -19,6 +19,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input>
                         <input-cost>3.122758261</input-cost>
                      </minicam-non-energy-input>
@@ -29,6 +30,7 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input>
                         <input-cost>3.122758261</input-cost>
                      </minicam-non-energy-input>
@@ -39,66 +41,73 @@
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input>
                         <input-cost>3.122758261</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2020">
-                     <share-weight>0.17</share-weight>
+                     <share-weight>1</share-weight>
                      <lifetime>30</lifetime>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input>
                         <input-cost>2.907423578</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2035">
-                     <share-weight>0.33</share-weight>
+                     <share-weight>1</share-weight>
                      <lifetime>30</lifetime>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input>
                         <input-cost>2.685034743</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2050">
-                     <share-weight>0.5</share-weight>
+                     <share-weight>1</share-weight>
                      <lifetime>30</lifetime>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input>
                         <input-cost>2.526822464</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2065">
-                     <share-weight>0.5</share-weight>
+                     <share-weight>1</share-weight>
                      <lifetime>30</lifetime>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input>
                         <input-cost>2.433707019</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2080">
-                     <share-weight>0.5</share-weight>
+                     <share-weight>1</share-weight>
                      <lifetime>30</lifetime>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input>
                         <input-cost>2.344022953</input-cost>
                      </minicam-non-energy-input>
                   </period>
                   <period year="2095">
-                     <share-weight>0.5</share-weight>
+                     <share-weight>1</share-weight>
                      <lifetime>30</lifetime>
                      <minicam-energy-input name="geothermal">
                         <efficiency>0.1</efficiency>
                      </minicam-energy-input>
+                     <CO2 name="CO2"/>
                      <minicam-non-energy-input>
                         <input-cost>2.257643817</input-cost>
                      </minicam-non-energy-input>
@@ -112,10 +121,10 @@
                      <minicam-energy-input name="nuclearFuelGenII">
                         <efficiency>0.333</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.025</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>-1</lifetime>
                      <input-capital name="capital">
@@ -136,10 +145,10 @@
                      <minicam-energy-input name="nuclearFuelGenII">
                         <efficiency>0.333</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.025</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>-1</lifetime>
                      <input-capital name="capital">
@@ -160,10 +169,10 @@
                      <minicam-energy-input name="nuclearFuelGenII">
                         <efficiency>0.333</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.025</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>45</lifetime>
                      <input-capital name="capital">
@@ -184,10 +193,10 @@
                      <minicam-energy-input name="nuclearFuelGenII">
                         <efficiency>0.333</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>-1</lifetime>
                      <input-capital name="capital">
@@ -208,10 +217,10 @@
                      <minicam-energy-input name="nuclearFuelGenII">
                         <efficiency>0.333</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>-1</lifetime>
                      <input-capital name="capital">
@@ -232,10 +241,10 @@
                      <minicam-energy-input name="nuclearFuelGenII">
                         <efficiency>0.333</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>-1</lifetime>
                      <input-capital name="capital">
@@ -256,10 +265,10 @@
                      <minicam-energy-input name="nuclearFuelGenII">
                         <efficiency>0.333</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>-1</lifetime>
                      <input-capital name="capital">
@@ -280,10 +289,10 @@
                      <minicam-energy-input name="nuclearFuelGenII">
                         <efficiency>0.333</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>-1</lifetime>
                      <input-capital name="capital">
@@ -304,10 +313,10 @@
                      <minicam-energy-input name="nuclearFuelGenII">
                         <efficiency>0.333</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>-1</lifetime>
                      <input-capital name="capital">
@@ -330,10 +339,10 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>-1</lifetime>
                      <input-capital name="capital">
@@ -354,10 +363,10 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>-1</lifetime>
                      <input-capital name="capital">
@@ -378,10 +387,10 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>60</lifetime>
                      <input-capital name="capital">
@@ -402,10 +411,10 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>60</lifetime>
                      <input-capital name="capital">
@@ -426,10 +435,10 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>60</lifetime>
                      <input-capital name="capital">
@@ -450,10 +459,10 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>60</lifetime>
                      <input-capital name="capital">
@@ -474,10 +483,10 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>60</lifetime>
                      <input-capital name="capital">
@@ -498,10 +507,10 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>60</lifetime>
                      <input-capital name="capital">
@@ -522,10 +531,10 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>60</lifetime>
                      <input-capital name="capital">
@@ -550,10 +559,10 @@
                      <minicam-energy-input name="large onshore windresource">
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>-1</lifetime>
                      <input-capital name="capital">
@@ -574,10 +583,10 @@
                      <minicam-energy-input name="large onshore windresource">
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>-1</lifetime>
                      <input-capital name="capital">
@@ -598,10 +607,10 @@
                      <minicam-energy-input name="large onshore windresource">
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>60</lifetime>
                      <input-capital name="capital">
@@ -622,10 +631,10 @@
                      <minicam-energy-input name="large onshore windresource">
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>60</lifetime>
                      <input-capital name="capital">
@@ -646,10 +655,10 @@
                      <minicam-energy-input name="large onshore windresource">
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>60</lifetime>
                      <input-capital name="capital">
@@ -670,10 +679,10 @@
                      <minicam-energy-input name="large onshore windresource">
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>60</lifetime>
                      <input-capital name="capital">
@@ -694,10 +703,10 @@
                      <minicam-energy-input name="large onshore windresource">
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>60</lifetime>
                      <input-capital name="capital">
@@ -718,10 +727,10 @@
                      <minicam-energy-input name="large onshore windresource">
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>60</lifetime>
                      <input-capital name="capital">
@@ -742,10 +751,10 @@
                      <minicam-energy-input name="large onshore windresource">
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>60</lifetime>
                      <input-capital name="capital">
@@ -768,10 +777,10 @@
                      <minicam-energy-input name="large onshore windresource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
@@ -802,10 +811,10 @@
                      <minicam-energy-input name="large onshore windresource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
@@ -836,10 +845,10 @@
                      <minicam-energy-input name="large onshore windresource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
@@ -870,10 +879,10 @@
                      <minicam-energy-input name="large onshore windresource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
@@ -904,10 +913,10 @@
                      <minicam-energy-input name="large onshore windresource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
@@ -938,10 +947,10 @@
                      <minicam-energy-input name="large onshore windresource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
@@ -972,10 +981,10 @@
                      <minicam-energy-input name="large onshore windresource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
@@ -1006,10 +1015,10 @@
                      <minicam-energy-input name="large onshore windresource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
@@ -1040,10 +1049,10 @@
                      <minicam-energy-input name="large onshore windresource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
@@ -1078,10 +1087,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>-1</lifetime>
                      <input-capital name="capital">
@@ -1102,10 +1111,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>-1</lifetime>
                      <input-capital name="capital">
@@ -1126,10 +1135,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>-1</lifetime>
                      <input-capital name="capital">
@@ -1150,10 +1159,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>30</lifetime>
                      <input-capital name="capital">
@@ -1174,10 +1183,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>30</lifetime>
                      <input-capital name="capital">
@@ -1198,10 +1207,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>30</lifetime>
                      <input-capital name="capital">
@@ -1222,10 +1231,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>30</lifetime>
                      <input-capital name="capital">
@@ -1246,10 +1255,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>30</lifetime>
                      <input-capital name="capital">
@@ -1270,10 +1279,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>30</lifetime>
                      <input-capital name="capital">
@@ -1296,10 +1305,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>-1</lifetime>
                      <input-capital name="capital">
@@ -1320,10 +1329,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>-1</lifetime>
                      <input-capital name="capital">
@@ -1344,10 +1353,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>-1</lifetime>
                      <input-capital name="capital">
@@ -1368,10 +1377,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>30</lifetime>
                      <input-capital name="capital">
@@ -1392,10 +1401,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>30</lifetime>
                      <input-capital name="capital">
@@ -1416,10 +1425,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>30</lifetime>
                      <input-capital name="capital">
@@ -1440,10 +1449,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>30</lifetime>
                      <input-capital name="capital">
@@ -1464,10 +1473,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>30</lifetime>
                      <input-capital name="capital">
@@ -1488,10 +1497,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>30</lifetime>
                      <input-capital name="capital">
@@ -1518,10 +1527,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
@@ -1552,10 +1561,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
@@ -1586,10 +1595,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
@@ -1620,10 +1629,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
@@ -1654,10 +1663,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
@@ -1688,10 +1697,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
@@ -1722,10 +1731,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
@@ -1756,10 +1765,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
@@ -1790,10 +1799,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
@@ -1826,10 +1835,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="csp_backup">
                         <efficiency>1</efficiency>
@@ -1860,10 +1869,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="csp_backup">
                         <efficiency>1</efficiency>
@@ -1894,10 +1903,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="csp_backup">
                         <efficiency>1</efficiency>
@@ -1928,10 +1937,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="csp_backup">
                         <efficiency>1</efficiency>
@@ -1962,10 +1971,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="csp_backup">
                         <efficiency>1</efficiency>
@@ -1996,10 +2005,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="csp_backup">
                         <efficiency>1</efficiency>
@@ -2030,10 +2039,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="csp_backup">
                         <efficiency>1</efficiency>
@@ -2064,10 +2073,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="csp_backup">
                         <efficiency>1</efficiency>
@@ -2098,10 +2107,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="csp_backup">
                         <efficiency>1</efficiency>
@@ -2136,10 +2145,10 @@
                      <minicam-energy-input name="off peak electricity">
                         <efficiency>0.89</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>-1</lifetime>
                      <input-capital name="capital">
@@ -2160,10 +2169,10 @@
                      <minicam-energy-input name="off peak electricity">
                         <efficiency>0.89</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>-1</lifetime>
                      <input-capital name="capital">
@@ -2184,10 +2193,10 @@
                      <minicam-energy-input name="off peak electricity">
                         <efficiency>0.89</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <lifetime>-1</lifetime>
                      <input-capital name="capital">
@@ -2208,12 +2217,12 @@
                      <minicam-energy-input name="off peak electricity">
                         <efficiency>0.89</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
-                     <lifetime>30</lifetime>
+                     <lifetime>15</lifetime>
                      <input-capital name="capital">
                         <capital-overnight>403</capital-overnight>
                         <fixed-charge-rate>0.15</fixed-charge-rate>
@@ -2232,12 +2241,12 @@
                      <minicam-energy-input name="off peak electricity">
                         <efficiency>0.89</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
-                     <lifetime>30</lifetime>
+                     <lifetime>15</lifetime>
                      <input-capital name="capital">
                         <capital-overnight>298</capital-overnight>
                         <fixed-charge-rate>0.15</fixed-charge-rate>
@@ -2256,12 +2265,12 @@
                      <minicam-energy-input name="off peak electricity">
                         <efficiency>0.89</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
-                     <lifetime>30</lifetime>
+                     <lifetime>15</lifetime>
                      <input-capital name="capital">
                         <capital-overnight>256</capital-overnight>
                         <fixed-charge-rate>0.15</fixed-charge-rate>
@@ -2280,12 +2289,12 @@
                      <minicam-energy-input name="off peak electricity">
                         <efficiency>0.89</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
-                     <lifetime>30</lifetime>
+                     <lifetime>15</lifetime>
                      <input-capital name="capital">
                         <capital-overnight>229</capital-overnight>
                         <fixed-charge-rate>0.15</fixed-charge-rate>
@@ -2304,12 +2313,12 @@
                      <minicam-energy-input name="off peak electricity">
                         <efficiency>0.89</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
-                     <lifetime>30</lifetime>
+                     <lifetime>15</lifetime>
                      <input-capital name="capital">
                         <capital-overnight>212</capital-overnight>
                         <fixed-charge-rate>0.15</fixed-charge-rate>
@@ -2328,12 +2337,12 @@
                      <minicam-energy-input name="off peak electricity">
                         <efficiency>0.89</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
-                     <lifetime>30</lifetime>
+                     <lifetime>15</lifetime>
                      <input-capital name="capital">
                         <capital-overnight>204</capital-overnight>
                         <fixed-charge-rate>0.15</fixed-charge-rate>
@@ -2358,10 +2367,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
@@ -2370,6 +2379,314 @@
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
                      <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <input-capital name="capital">
+                        <capital-overnight>3016</capital-overnight>
+                        <fixed-charge-rate>0.13</fixed-charge-rate>
+                        <capacity-factor>0.25</capacity-factor>
+                     </input-capital>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>8.93</OM-fixed>
+                        <capacity-factor>0.25</capacity-factor>
+                     </input-OM-fixed>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0</OM-var>
+                     </input-OM-var>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                  </period>
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0.0075</shutdown-rate>
+                     </phased-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <minicam-energy-input name="backup_electricity">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <lifetime>-1</lifetime>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <input-capital name="capital">
+                        <capital-overnight>3016</capital-overnight>
+                        <fixed-charge-rate>0.13</fixed-charge-rate>
+                        <capacity-factor>0.25</capacity-factor>
+                     </input-capital>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>8.93</OM-fixed>
+                        <capacity-factor>0.25</capacity-factor>
+                     </input-OM-fixed>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0</OM-var>
+                     </input-OM-var>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0.0075</shutdown-rate>
+                     </phased-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <minicam-energy-input name="backup_electricity">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <lifetime>-1</lifetime>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <input-capital name="capital">
+                        <capital-overnight>3016</capital-overnight>
+                        <fixed-charge-rate>0.13</fixed-charge-rate>
+                        <capacity-factor>0.25</capacity-factor>
+                     </input-capital>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>8.93</OM-fixed>
+                        <capacity-factor>0.25</capacity-factor>
+                     </input-OM-fixed>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0</OM-var>
+                     </input-OM-var>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                  </period>
+                  <period year="2020">
+                     <share-weight>0</share-weight>
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0.0075</shutdown-rate>
+                     </phased-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <minicam-energy-input name="backup_electricity">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <lifetime>30</lifetime>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <input-capital name="capital">
+                        <capital-overnight>792</capital-overnight>
+                        <fixed-charge-rate>0.13</fixed-charge-rate>
+                        <capacity-factor>0.25</capacity-factor>
+                     </input-capital>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>7.86</OM-fixed>
+                        <capacity-factor>0.25</capacity-factor>
+                     </input-OM-fixed>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0</OM-var>
+                     </input-OM-var>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                  </period>
+                  <period year="2035">
+                     <share-weight>0</share-weight>
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0.0075</shutdown-rate>
+                     </phased-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <minicam-energy-input name="backup_electricity">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <lifetime>30</lifetime>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <input-capital name="capital">
+                        <capital-overnight>682</capital-overnight>
+                        <fixed-charge-rate>0.13</fixed-charge-rate>
+                        <capacity-factor>0.25</capacity-factor>
+                     </input-capital>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>6.43</OM-fixed>
+                        <capacity-factor>0.25</capacity-factor>
+                     </input-OM-fixed>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0</OM-var>
+                     </input-OM-var>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                  </period>
+                  <period year="2050">
+                     <share-weight>0</share-weight>
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0.0075</shutdown-rate>
+                     </phased-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <minicam-energy-input name="backup_electricity">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <lifetime>30</lifetime>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <input-capital name="capital">
+                        <capital-overnight>632</capital-overnight>
+                        <fixed-charge-rate>0.13</fixed-charge-rate>
+                        <capacity-factor>0.25</capacity-factor>
+                     </input-capital>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>5.71</OM-fixed>
+                        <capacity-factor>0.25</capacity-factor>
+                     </input-OM-fixed>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0</OM-var>
+                     </input-OM-var>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                  </period>
+                  <period year="2065">
+                     <share-weight>0</share-weight>
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0.0075</shutdown-rate>
+                     </phased-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <minicam-energy-input name="backup_electricity">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <lifetime>30</lifetime>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <input-capital name="capital">
+                        <capital-overnight>586</capital-overnight>
+                        <fixed-charge-rate>0.13</fixed-charge-rate>
+                        <capacity-factor>0.25</capacity-factor>
+                     </input-capital>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>5.36</OM-fixed>
+                        <capacity-factor>0.25</capacity-factor>
+                     </input-OM-fixed>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0</OM-var>
+                     </input-OM-var>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                  </period>
+                  <period year="2080">
+                     <share-weight>0</share-weight>
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0.0075</shutdown-rate>
+                     </phased-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <minicam-energy-input name="backup_electricity">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <lifetime>30</lifetime>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <input-capital name="capital">
+                        <capital-overnight>544</capital-overnight>
+                        <fixed-charge-rate>0.13</fixed-charge-rate>
+                        <capacity-factor>0.25</capacity-factor>
+                     </input-capital>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>5.00</OM-fixed>
+                        <capacity-factor>0.25</capacity-factor>
+                     </input-OM-fixed>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0</OM-var>
+                     </input-OM-var>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                  </period>
+                  <period year="2095">
+                     <share-weight>0</share-weight>
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0.0075</shutdown-rate>
+                     </phased-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <minicam-energy-input name="backup_electricity">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <lifetime>30</lifetime>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <input-capital name="capital">
+                        <capital-overnight>505</capital-overnight>
+                        <fixed-charge-rate>0.13</fixed-charge-rate>
+                        <capacity-factor>0.25</capacity-factor>
+                     </input-capital>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>4.29</OM-fixed>
+                        <capacity-factor>0.25</capacity-factor>
+                     </input-OM-fixed>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0</OM-var>
+                     </input-OM-var>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                  </period>
+               </intermittent-technology>
+               <intermittent-technology name="csp_int">
+                  <period year="1975">
+                     <share-weight>0</share-weight>
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0.0075</shutdown-rate>
+                     </phased-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <minicam-energy-input name="csp_backup">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <lifetime>-1</lifetime>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>0</backup-capital-cost>
                      <backup-capacity-factor>0.05</backup-capacity-factor>
                      <input-capital name="capital">
                         <capital-overnight>1073</capital-overnight>
@@ -2392,18 +2709,18 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
-                     <minicam-energy-input name="backup_electricity">
+                     <minicam-energy-input name="csp_backup">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <lifetime>-1</lifetime>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capital-cost>0</backup-capital-cost>
                      <backup-capacity-factor>0.05</backup-capacity-factor>
                      <input-capital name="capital">
                         <capital-overnight>1073</capital-overnight>
@@ -2426,18 +2743,18 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
-                     <minicam-energy-input name="backup_electricity">
+                     <minicam-energy-input name="csp_backup">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <lifetime>-1</lifetime>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capital-cost>0</backup-capital-cost>
                      <backup-capacity-factor>0.05</backup-capacity-factor>
                      <input-capital name="capital">
                         <capital-overnight>1073</capital-overnight>
@@ -2456,22 +2773,22 @@
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2020">
-                     <share-weight>0</share-weight>
+                     <share-weight>1</share-weight>
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
-                     <minicam-energy-input name="backup_electricity">
+                     <minicam-energy-input name="csp_backup">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <lifetime>30</lifetime>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capital-cost>0</backup-capital-cost>
                      <backup-capacity-factor>0.05</backup-capacity-factor>
                      <input-capital name="capital">
                         <capital-overnight>792</capital-overnight>
@@ -2490,22 +2807,22 @@
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2035">
-                     <share-weight>0</share-weight>
+                     <share-weight>1</share-weight>
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
-                     <minicam-energy-input name="backup_electricity">
+                     <minicam-energy-input name="csp_backup">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <lifetime>30</lifetime>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capital-cost>0</backup-capital-cost>
                      <backup-capacity-factor>0.05</backup-capacity-factor>
                      <input-capital name="capital">
                         <capital-overnight>682</capital-overnight>
@@ -2524,22 +2841,22 @@
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2050">
-                     <share-weight>0</share-weight>
+                     <share-weight>1</share-weight>
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
-                     <minicam-energy-input name="backup_electricity">
+                     <minicam-energy-input name="csp_backup">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <lifetime>30</lifetime>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capital-cost>0</backup-capital-cost>
                      <backup-capacity-factor>0.05</backup-capacity-factor>
                      <input-capital name="capital">
                         <capital-overnight>632</capital-overnight>
@@ -2558,22 +2875,22 @@
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2065">
-                     <share-weight>0</share-weight>
+                     <share-weight>1</share-weight>
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
-                     <minicam-energy-input name="backup_electricity">
+                     <minicam-energy-input name="csp_backup">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <lifetime>30</lifetime>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capital-cost>0</backup-capital-cost>
                      <backup-capacity-factor>0.05</backup-capacity-factor>
                      <input-capital name="capital">
                         <capital-overnight>586</capital-overnight>
@@ -2592,22 +2909,22 @@
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2080">
-                     <share-weight>0</share-weight>
+                     <share-weight>1</share-weight>
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
-                     <minicam-energy-input name="backup_electricity">
+                     <minicam-energy-input name="csp_backup">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <lifetime>30</lifetime>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capital-cost>0</backup-capital-cost>
                      <backup-capacity-factor>0.05</backup-capacity-factor>
                      <input-capital name="capital">
                         <capital-overnight>544</capital-overnight>
@@ -2626,22 +2943,22 @@
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2095">
-                     <share-weight>0</share-weight>
+                     <share-weight>1</share-weight>
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
-                     <minicam-energy-input name="backup_electricity">
+                     <minicam-energy-input name="csp_backup">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <lifetime>30</lifetime>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capital-cost>0</backup-capital-cost>
                      <backup-capacity-factor>0.05</backup-capacity-factor>
                      <input-capital name="capital">
                         <capital-overnight>505</capital-overnight>
@@ -2651,314 +2968,6 @@
                      <input-OM-fixed name="OM-fixed">
                         <OM-fixed>7.82</OM-fixed>
                         <capacity-factor>0.31</capacity-factor>
-                     </input-OM-fixed>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0</OM-var>
-                     </input-OM-var>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.25</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-               </intermittent-technology>
-               <intermittent-technology name="csp_int">
-                  <period year="1975">
-                     <share-weight>0</share-weight>
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider>
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
-                     <CO2 name="CO2"/>
-                     <minicam-energy-input name="csp_backup">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <lifetime>-1</lifetime>
-                     <trial-market-name>renewable</trial-market-name>
-                     <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>0</backup-capital-cost>
-                     <backup-capacity-factor>0.05</backup-capacity-factor>
-                     <input-capital name="capital">
-                        <capital-overnight>3016</capital-overnight>
-                        <fixed-charge-rate>0.13</fixed-charge-rate>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-capital>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>8.93</OM-fixed>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-OM-fixed>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0</OM-var>
-                     </input-OM-var>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.25</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="1990">
-                     <share-weight>0</share-weight>
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider>
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
-                     <CO2 name="CO2"/>
-                     <minicam-energy-input name="csp_backup">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <lifetime>-1</lifetime>
-                     <trial-market-name>renewable</trial-market-name>
-                     <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>0</backup-capital-cost>
-                     <backup-capacity-factor>0.05</backup-capacity-factor>
-                     <input-capital name="capital">
-                        <capital-overnight>3016</capital-overnight>
-                        <fixed-charge-rate>0.13</fixed-charge-rate>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-capital>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>8.93</OM-fixed>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-OM-fixed>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0</OM-var>
-                     </input-OM-var>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.25</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2005">
-                     <share-weight>0</share-weight>
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider>
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
-                     <CO2 name="CO2"/>
-                     <minicam-energy-input name="csp_backup">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <lifetime>-1</lifetime>
-                     <trial-market-name>renewable</trial-market-name>
-                     <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>0</backup-capital-cost>
-                     <backup-capacity-factor>0.05</backup-capacity-factor>
-                     <input-capital name="capital">
-                        <capital-overnight>3016</capital-overnight>
-                        <fixed-charge-rate>0.13</fixed-charge-rate>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-capital>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>8.93</OM-fixed>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-OM-fixed>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0</OM-var>
-                     </input-OM-var>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.25</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2020">
-                     <share-weight>1</share-weight>
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider>
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
-                     <CO2 name="CO2"/>
-                     <minicam-energy-input name="csp_backup">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <lifetime>30</lifetime>
-                     <trial-market-name>renewable</trial-market-name>
-                     <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>0</backup-capital-cost>
-                     <backup-capacity-factor>0.05</backup-capacity-factor>
-                     <input-capital name="capital">
-                        <capital-overnight>1454</capital-overnight>
-                        <fixed-charge-rate>0.13</fixed-charge-rate>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-capital>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>7.86</OM-fixed>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-OM-fixed>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0</OM-var>
-                     </input-OM-var>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.25</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2035">
-                     <share-weight>1</share-weight>
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider>
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
-                     <CO2 name="CO2"/>
-                     <minicam-energy-input name="csp_backup">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <lifetime>30</lifetime>
-                     <trial-market-name>renewable</trial-market-name>
-                     <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>0</backup-capital-cost>
-                     <backup-capacity-factor>0.05</backup-capacity-factor>
-                     <input-capital name="capital">
-                        <capital-overnight>819</capital-overnight>
-                        <fixed-charge-rate>0.13</fixed-charge-rate>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-capital>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>6.43</OM-fixed>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-OM-fixed>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0</OM-var>
-                     </input-OM-var>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.25</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2050">
-                     <share-weight>1</share-weight>
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider>
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
-                     <CO2 name="CO2"/>
-                     <minicam-energy-input name="csp_backup">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <lifetime>30</lifetime>
-                     <trial-market-name>renewable</trial-market-name>
-                     <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>0</backup-capital-cost>
-                     <backup-capacity-factor>0.05</backup-capacity-factor>
-                     <input-capital name="capital">
-                        <capital-overnight>539</capital-overnight>
-                        <fixed-charge-rate>0.13</fixed-charge-rate>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-capital>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>5.71</OM-fixed>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-OM-fixed>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0</OM-var>
-                     </input-OM-var>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.25</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2065">
-                     <share-weight>1</share-weight>
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider>
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
-                     <CO2 name="CO2"/>
-                     <minicam-energy-input name="csp_backup">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <lifetime>30</lifetime>
-                     <trial-market-name>renewable</trial-market-name>
-                     <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>0</backup-capital-cost>
-                     <backup-capacity-factor>0.05</backup-capacity-factor>
-                     <input-capital name="capital">
-                        <capital-overnight>413</capital-overnight>
-                        <fixed-charge-rate>0.13</fixed-charge-rate>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-capital>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>5.36</OM-fixed>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-OM-fixed>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0</OM-var>
-                     </input-OM-var>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.25</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2080">
-                     <share-weight>1</share-weight>
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider>
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
-                     <CO2 name="CO2"/>
-                     <minicam-energy-input name="csp_backup">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <lifetime>30</lifetime>
-                     <trial-market-name>renewable</trial-market-name>
-                     <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>0</backup-capital-cost>
-                     <backup-capacity-factor>0.05</backup-capacity-factor>
-                     <input-capital name="capital">
-                        <capital-overnight>355</capital-overnight>
-                        <fixed-charge-rate>0.13</fixed-charge-rate>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-capital>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>5.00</OM-fixed>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-OM-fixed>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0</OM-var>
-                     </input-OM-var>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.25</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2095">
-                     <share-weight>1</share-weight>
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider>
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
-                     <CO2 name="CO2"/>
-                     <minicam-energy-input name="csp_backup">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <lifetime>30</lifetime>
-                     <trial-market-name>renewable</trial-market-name>
-                     <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>0</backup-capital-cost>
-                     <backup-capacity-factor>0.05</backup-capacity-factor>
-                     <input-capital name="capital">
-                        <capital-overnight>329</capital-overnight>
-                        <fixed-charge-rate>0.13</fixed-charge-rate>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-capital>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>4.29</OM-fixed>
-                        <capacity-factor>0.25</capacity-factor>
                      </input-OM-fixed>
                      <input-OM-var name="OM-var">
                         <OM-var>0</OM-var>
@@ -2978,10 +2987,10 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
@@ -2990,314 +2999,6 @@
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
                      <backup-capital-cost>30</backup-capital-cost>
-                     <backup-capacity-factor>0.05</backup-capacity-factor>
-                     <input-capital name="capital">
-                        <capital-overnight>1073</capital-overnight>
-                        <fixed-charge-rate>0.13</fixed-charge-rate>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-capital>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>16.62</OM-fixed>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-OM-fixed>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0</OM-var>
-                     </input-OM-var>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.25</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="1990">
-                     <share-weight>1</share-weight>
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider>
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
-                     <CO2 name="CO2"/>
-                     <minicam-energy-input name="backup_electricity">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <lifetime>-1</lifetime>
-                     <trial-market-name>renewable</trial-market-name>
-                     <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>30</backup-capital-cost>
-                     <backup-capacity-factor>0.05</backup-capacity-factor>
-                     <input-capital name="capital">
-                        <capital-overnight>1073</capital-overnight>
-                        <fixed-charge-rate>0.13</fixed-charge-rate>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-capital>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>16.62</OM-fixed>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-OM-fixed>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0</OM-var>
-                     </input-OM-var>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.25</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2005">
-                     <share-weight>1</share-weight>
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider>
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
-                     <CO2 name="CO2"/>
-                     <minicam-energy-input name="backup_electricity">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <lifetime>-1</lifetime>
-                     <trial-market-name>renewable</trial-market-name>
-                     <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>30</backup-capital-cost>
-                     <backup-capacity-factor>0.05</backup-capacity-factor>
-                     <input-capital name="capital">
-                        <capital-overnight>1073</capital-overnight>
-                        <fixed-charge-rate>0.13</fixed-charge-rate>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-capital>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>16.62</OM-fixed>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-OM-fixed>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0</OM-var>
-                     </input-OM-var>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.25</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2020">
-                     <share-weight>1</share-weight>
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider>
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
-                     <CO2 name="CO2"/>
-                     <minicam-energy-input name="backup_electricity">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <lifetime>30</lifetime>
-                     <trial-market-name>renewable</trial-market-name>
-                     <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>30</backup-capital-cost>
-                     <backup-capacity-factor>0.05</backup-capacity-factor>
-                     <input-capital name="capital">
-                        <capital-overnight>792</capital-overnight>
-                        <fixed-charge-rate>0.13</fixed-charge-rate>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-capital>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>12.28</OM-fixed>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-OM-fixed>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0</OM-var>
-                     </input-OM-var>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.25</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2035">
-                     <share-weight>1</share-weight>
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider>
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
-                     <CO2 name="CO2"/>
-                     <minicam-energy-input name="backup_electricity">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <lifetime>30</lifetime>
-                     <trial-market-name>renewable</trial-market-name>
-                     <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>30</backup-capital-cost>
-                     <backup-capacity-factor>0.05</backup-capacity-factor>
-                     <input-capital name="capital">
-                        <capital-overnight>682</capital-overnight>
-                        <fixed-charge-rate>0.13</fixed-charge-rate>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-capital>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>10.56</OM-fixed>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-OM-fixed>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0</OM-var>
-                     </input-OM-var>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.25</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2050">
-                     <share-weight>1</share-weight>
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider>
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
-                     <CO2 name="CO2"/>
-                     <minicam-energy-input name="backup_electricity">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <lifetime>30</lifetime>
-                     <trial-market-name>renewable</trial-market-name>
-                     <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>30</backup-capital-cost>
-                     <backup-capacity-factor>0.05</backup-capacity-factor>
-                     <input-capital name="capital">
-                        <capital-overnight>632</capital-overnight>
-                        <fixed-charge-rate>0.13</fixed-charge-rate>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-capital>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>9.79</OM-fixed>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-OM-fixed>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0</OM-var>
-                     </input-OM-var>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.25</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2065">
-                     <share-weight>1</share-weight>
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider>
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
-                     <CO2 name="CO2"/>
-                     <minicam-energy-input name="backup_electricity">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <lifetime>30</lifetime>
-                     <trial-market-name>renewable</trial-market-name>
-                     <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>30</backup-capital-cost>
-                     <backup-capacity-factor>0.05</backup-capacity-factor>
-                     <input-capital name="capital">
-                        <capital-overnight>586</capital-overnight>
-                        <fixed-charge-rate>0.13</fixed-charge-rate>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-capital>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>9.08</OM-fixed>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-OM-fixed>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0</OM-var>
-                     </input-OM-var>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.25</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2080">
-                     <share-weight>1</share-weight>
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider>
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
-                     <CO2 name="CO2"/>
-                     <minicam-energy-input name="backup_electricity">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <lifetime>30</lifetime>
-                     <trial-market-name>renewable</trial-market-name>
-                     <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>30</backup-capital-cost>
-                     <backup-capacity-factor>0.05</backup-capacity-factor>
-                     <input-capital name="capital">
-                        <capital-overnight>544</capital-overnight>
-                        <fixed-charge-rate>0.13</fixed-charge-rate>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-capital>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>8.43</OM-fixed>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-OM-fixed>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0</OM-var>
-                     </input-OM-var>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.25</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-                  <period year="2095">
-                     <share-weight>1</share-weight>
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider>
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
-                     <CO2 name="CO2"/>
-                     <minicam-energy-input name="backup_electricity">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <lifetime>30</lifetime>
-                     <trial-market-name>renewable</trial-market-name>
-                     <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>30</backup-capital-cost>
-                     <backup-capacity-factor>0.05</backup-capacity-factor>
-                     <input-capital name="capital">
-                        <capital-overnight>505</capital-overnight>
-                        <fixed-charge-rate>0.13</fixed-charge-rate>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-capital>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>7.82</OM-fixed>
-                        <capacity-factor>0.25</capacity-factor>
-                     </input-OM-fixed>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0</OM-var>
-                     </input-OM-var>
-                     <capacity-limit-backup-calculator>
-                        <capacity-limit>0.25</capacity-limit>
-                     </capacity-limit-backup-calculator>
-                  </period>
-               </intermittent-technology>
-               <intermittent-technology name="csp_subpeak">
-                  <period year="1975">
-                     <share-weight>0</share-weight>
-                     <minicam-energy-input name="global solar resource">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider>
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
-                     <CO2 name="CO2"/>
-                     <minicam-energy-input name="csp_backup">
-                        <efficiency>1</efficiency>
-                     </minicam-energy-input>
-                     <lifetime>-1</lifetime>
-                     <trial-market-name>renewable</trial-market-name>
-                     <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>0</backup-capital-cost>
                      <backup-capacity-factor>0.05</backup-capacity-factor>
                      <input-capital name="capital">
                         <capital-overnight>3016</capital-overnight>
@@ -3316,22 +3017,22 @@
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="1990">
-                     <share-weight>0</share-weight>
+                     <share-weight>1</share-weight>
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
-                     <minicam-energy-input name="csp_backup">
+                     <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>30</lifetime>
+                     <lifetime>-1</lifetime>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>0</backup-capital-cost>
+                     <backup-capital-cost>30</backup-capital-cost>
                      <backup-capacity-factor>0.05</backup-capacity-factor>
                      <input-capital name="capital">
                         <capital-overnight>3016</capital-overnight>
@@ -3350,22 +3051,22 @@
                      </capacity-limit-backup-calculator>
                   </period>
                   <period year="2005">
-                     <share-weight>0</share-weight>
+                     <share-weight>1</share-weight>
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
-                     <minicam-energy-input name="csp_backup">
+                     <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <lifetime>30</lifetime>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>0</backup-capital-cost>
+                     <backup-capital-cost>30</backup-capital-cost>
                      <backup-capacity-factor>0.05</backup-capacity-factor>
                      <input-capital name="capital">
                         <capital-overnight>3016</capital-overnight>
@@ -3388,18 +3089,18 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
-                     <minicam-energy-input name="csp_backup">
+                     <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <lifetime>30</lifetime>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>0</backup-capital-cost>
+                     <backup-capital-cost>30</backup-capital-cost>
                      <backup-capacity-factor>0.05</backup-capacity-factor>
                      <input-capital name="capital">
                         <capital-overnight>1454</capital-overnight>
@@ -3422,18 +3123,18 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
-                     <minicam-energy-input name="csp_backup">
+                     <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <lifetime>30</lifetime>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>0</backup-capital-cost>
+                     <backup-capital-cost>30</backup-capital-cost>
                      <backup-capacity-factor>0.05</backup-capacity-factor>
                      <input-capital name="capital">
                         <capital-overnight>819</capital-overnight>
@@ -3456,18 +3157,18 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
-                     <minicam-energy-input name="csp_backup">
+                     <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <lifetime>30</lifetime>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>0</backup-capital-cost>
+                     <backup-capital-cost>30</backup-capital-cost>
                      <backup-capacity-factor>0.05</backup-capacity-factor>
                      <input-capital name="capital">
                         <capital-overnight>539</capital-overnight>
@@ -3490,18 +3191,18 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
-                     <minicam-energy-input name="csp_backup">
+                     <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <lifetime>30</lifetime>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>0</backup-capital-cost>
+                     <backup-capital-cost>30</backup-capital-cost>
                      <backup-capacity-factor>0.05</backup-capacity-factor>
                      <input-capital name="capital">
                         <capital-overnight>413</capital-overnight>
@@ -3524,18 +3225,18 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
-                     <minicam-energy-input name="csp_backup">
+                     <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <lifetime>30</lifetime>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
-                     <backup-capital-cost>0</backup-capital-cost>
+                     <backup-capital-cost>30</backup-capital-cost>
                      <backup-capacity-factor>0.05</backup-capacity-factor>
                      <input-capital name="capital">
                         <capital-overnight>355</capital-overnight>
@@ -3558,10 +3259,148 @@
                      <minicam-energy-input name="global solar resource">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <phased-shutdown-decider>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
                         <shutdown-rate>0.0075</shutdown-rate>
                      </phased-shutdown-decider>
-                     <profit-shutdown-decider/>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <minicam-energy-input name="backup_electricity">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <lifetime>30</lifetime>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>30</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <input-capital name="capital">
+                        <capital-overnight>329</capital-overnight>
+                        <fixed-charge-rate>0.13</fixed-charge-rate>
+                        <capacity-factor>0.25</capacity-factor>
+                     </input-capital>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>4.29</OM-fixed>
+                        <capacity-factor>0.25</capacity-factor>
+                     </input-OM-fixed>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0</OM-var>
+                     </input-OM-var>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                  </period>
+               </intermittent-technology>
+               <intermittent-technology name="csp_subpeak">
+                  <period year="1975">
+                     <share-weight>0</share-weight>
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0.0075</shutdown-rate>
+                     </phased-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <minicam-energy-input name="csp_backup">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <lifetime>-1</lifetime>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>0</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <input-capital name="capital">
+                        <capital-overnight>1073</capital-overnight>
+                        <fixed-charge-rate>0.13</fixed-charge-rate>
+                        <capacity-factor>0.31</capacity-factor>
+                     </input-capital>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>16.62</OM-fixed>
+                        <capacity-factor>0.31</capacity-factor>
+                     </input-OM-fixed>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0</OM-var>
+                     </input-OM-var>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                  </period>
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0.0075</shutdown-rate>
+                     </phased-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <minicam-energy-input name="csp_backup">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <lifetime>-1</lifetime>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>0</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <input-capital name="capital">
+                        <capital-overnight>1073</capital-overnight>
+                        <fixed-charge-rate>0.13</fixed-charge-rate>
+                        <capacity-factor>0.31</capacity-factor>
+                     </input-capital>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>16.62</OM-fixed>
+                        <capacity-factor>0.31</capacity-factor>
+                     </input-OM-fixed>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0</OM-var>
+                     </input-OM-var>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0.0075</shutdown-rate>
+                     </phased-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <minicam-energy-input name="csp_backup">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <lifetime>-1</lifetime>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>0</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <input-capital name="capital">
+                        <capital-overnight>1073</capital-overnight>
+                        <fixed-charge-rate>0.13</fixed-charge-rate>
+                        <capacity-factor>0.31</capacity-factor>
+                     </input-capital>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>16.62</OM-fixed>
+                        <capacity-factor>0.31</capacity-factor>
+                     </input-OM-fixed>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0</OM-var>
+                     </input-OM-var>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                  </period>
+                  <period year="2020">
+                     <share-weight>1</share-weight>
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0.0075</shutdown-rate>
+                     </phased-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="csp_backup">
                         <efficiency>1</efficiency>
@@ -3572,13 +3411,183 @@
                      <backup-capital-cost>0</backup-capital-cost>
                      <backup-capacity-factor>0.05</backup-capacity-factor>
                      <input-capital name="capital">
-                        <capital-overnight>329</capital-overnight>
+                        <capital-overnight>792</capital-overnight>
                         <fixed-charge-rate>0.13</fixed-charge-rate>
-                        <capacity-factor>0.25</capacity-factor>
+                        <capacity-factor>0.31</capacity-factor>
                      </input-capital>
                      <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>4.29</OM-fixed>
-                        <capacity-factor>0.25</capacity-factor>
+                        <OM-fixed>12.28</OM-fixed>
+                        <capacity-factor>0.31</capacity-factor>
+                     </input-OM-fixed>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0</OM-var>
+                     </input-OM-var>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                  </period>
+                  <period year="2035">
+                     <share-weight>1</share-weight>
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0.0075</shutdown-rate>
+                     </phased-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <minicam-energy-input name="csp_backup">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <lifetime>30</lifetime>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>0</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <input-capital name="capital">
+                        <capital-overnight>682</capital-overnight>
+                        <fixed-charge-rate>0.13</fixed-charge-rate>
+                        <capacity-factor>0.31</capacity-factor>
+                     </input-capital>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>10.56</OM-fixed>
+                        <capacity-factor>0.31</capacity-factor>
+                     </input-OM-fixed>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0</OM-var>
+                     </input-OM-var>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                  </period>
+                  <period year="2050">
+                     <share-weight>1</share-weight>
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0.0075</shutdown-rate>
+                     </phased-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <minicam-energy-input name="csp_backup">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <lifetime>30</lifetime>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>0</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <input-capital name="capital">
+                        <capital-overnight>632</capital-overnight>
+                        <fixed-charge-rate>0.13</fixed-charge-rate>
+                        <capacity-factor>0.31</capacity-factor>
+                     </input-capital>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>9.79</OM-fixed>
+                        <capacity-factor>0.31</capacity-factor>
+                     </input-OM-fixed>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0</OM-var>
+                     </input-OM-var>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                  </period>
+                  <period year="2065">
+                     <share-weight>1</share-weight>
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0.0075</shutdown-rate>
+                     </phased-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <minicam-energy-input name="csp_backup">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <lifetime>30</lifetime>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>0</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <input-capital name="capital">
+                        <capital-overnight>586</capital-overnight>
+                        <fixed-charge-rate>0.13</fixed-charge-rate>
+                        <capacity-factor>0.31</capacity-factor>
+                     </input-capital>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>9.08</OM-fixed>
+                        <capacity-factor>0.31</capacity-factor>
+                     </input-OM-fixed>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0</OM-var>
+                     </input-OM-var>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                  </period>
+                  <period year="2080">
+                     <share-weight>1</share-weight>
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0.0075</shutdown-rate>
+                     </phased-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <minicam-energy-input name="csp_backup">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <lifetime>30</lifetime>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>0</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <input-capital name="capital">
+                        <capital-overnight>544</capital-overnight>
+                        <fixed-charge-rate>0.13</fixed-charge-rate>
+                        <capacity-factor>0.31</capacity-factor>
+                     </input-capital>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>8.43</OM-fixed>
+                        <capacity-factor>0.31</capacity-factor>
+                     </input-OM-fixed>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0</OM-var>
+                     </input-OM-var>
+                     <capacity-limit-backup-calculator>
+                        <capacity-limit>0.25</capacity-limit>
+                     </capacity-limit-backup-calculator>
+                  </period>
+                  <period year="2095">
+                     <share-weight>1</share-weight>
+                     <minicam-energy-input name="global solar resource">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0.0075</shutdown-rate>
+                     </phased-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <minicam-energy-input name="csp_backup">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <lifetime>30</lifetime>
+                     <trial-market-name>renewable</trial-market-name>
+                     <electric-sector-name>electricity</electric-sector-name>
+                     <backup-capital-cost>0</backup-capital-cost>
+                     <backup-capacity-factor>0.05</backup-capacity-factor>
+                     <input-capital name="capital">
+                        <capital-overnight>505</capital-overnight>
+                        <fixed-charge-rate>0.13</fixed-charge-rate>
+                        <capacity-factor>0.31</capacity-factor>
+                     </input-capital>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>7.82</OM-fixed>
+                        <capacity-factor>0.31</capacity-factor>
                      </input-OM-fixed>
                      <input-OM-var name="OM-var">
                         <OM-var>0</OM-var>
