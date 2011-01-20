@@ -1599,7 +1599,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.375</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.215</output-ratio>
@@ -1615,7 +1615,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.375</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.200</output-ratio>
@@ -1630,7 +1630,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.310</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.182</output-ratio>
@@ -1645,7 +1645,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.246</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.178</output-ratio>
@@ -1660,7 +1660,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.183</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.176</output-ratio>
@@ -1675,7 +1675,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.120</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.173</output-ratio>
@@ -1690,7 +1690,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.059</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.170</output-ratio>
@@ -1705,7 +1705,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.999</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.168</output-ratio>
@@ -1740,7 +1740,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.955</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.132</output-ratio>
@@ -1756,7 +1756,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.955</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.126</output-ratio>
@@ -1771,7 +1771,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.896</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.118</output-ratio>
@@ -1786,7 +1786,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.838</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.113</output-ratio>
@@ -1801,7 +1801,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.781</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.113</output-ratio>
@@ -1816,7 +1816,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.724</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.113</output-ratio>
@@ -1831,7 +1831,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.669</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.113</output-ratio>
@@ -1846,7 +1846,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.614</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.113</output-ratio>
@@ -1874,7 +1874,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>9.336</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.051</output-ratio>
@@ -1890,7 +1890,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>9.336</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.051</output-ratio>
@@ -1905,7 +1905,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>9.336</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.051</output-ratio>
@@ -1920,7 +1920,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>8.992</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.049</output-ratio>
@@ -1935,7 +1935,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>8.661</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.047</output-ratio>
@@ -1950,7 +1950,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>8.341</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.045</output-ratio>
@@ -1965,7 +1965,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>8.034</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.044</output-ratio>
@@ -1980,7 +1980,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>7.738</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.042</output-ratio>
@@ -2015,7 +2015,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.375</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.207</output-ratio>
@@ -2031,7 +2031,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.375</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.195</output-ratio>
@@ -2046,7 +2046,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.310</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.144</output-ratio>
@@ -2061,7 +2061,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.246</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.132</output-ratio>
@@ -2076,7 +2076,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.183</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.130</output-ratio>
@@ -2091,7 +2091,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.120</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.128</output-ratio>
@@ -2106,7 +2106,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>4.059</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.126</output-ratio>
@@ -2121,7 +2121,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>3.999</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.124</output-ratio>
@@ -2164,7 +2164,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>40.851</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>38.165</output-ratio>
@@ -2180,7 +2180,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>40.851</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>38.165</output-ratio>
@@ -2195,7 +2195,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>40.243</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>37.597</output-ratio>
@@ -2210,7 +2210,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>39.643</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>37.038</output-ratio>
@@ -2225,7 +2225,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>39.053</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>36.487</output-ratio>
@@ -2240,7 +2240,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>38.471</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>35.944</output-ratio>
@@ -2255,7 +2255,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>37.898</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>35.409</output-ratio>
@@ -2270,7 +2270,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>37.334</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>34.882</output-ratio>
@@ -2298,7 +2298,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>33.840</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>5.995</output-ratio>
@@ -2314,7 +2314,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>33.840</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>5.995</output-ratio>
@@ -2329,7 +2329,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>33.336</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>5.906</output-ratio>
@@ -2344,7 +2344,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>32.839</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>5.818</output-ratio>
@@ -2359,7 +2359,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>32.350</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>5.731</output-ratio>
@@ -2374,7 +2374,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>31.868</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>5.646</output-ratio>
@@ -2389,7 +2389,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>31.394</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>5.562</output-ratio>
@@ -2404,7 +2404,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>30.926</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>5.479</output-ratio>
@@ -2432,7 +2432,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>238.673</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.694</output-ratio>
@@ -2448,7 +2448,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>238.673</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.694</output-ratio>
@@ -2463,7 +2463,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>235.118</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>4.512</output-ratio>
@@ -2478,7 +2478,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>231.616</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>4.346</output-ratio>
@@ -2493,7 +2493,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>228.166</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>4.186</output-ratio>
@@ -2508,7 +2508,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>224.767</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>4.032</output-ratio>
@@ -2523,7 +2523,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>221.419</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>3.884</output-ratio>
@@ -2538,7 +2538,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>218.121</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>3.741</output-ratio>
@@ -2581,7 +2581,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.135</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.639</output-ratio>
@@ -2597,7 +2597,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.135</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.632</output-ratio>
@@ -2612,7 +2612,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>10.970</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.628</output-ratio>
@@ -2627,7 +2627,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>10.806</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.623</output-ratio>
@@ -2642,7 +2642,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>10.645</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.614</output-ratio>
@@ -2657,7 +2657,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>10.487</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.605</output-ratio>
@@ -2672,7 +2672,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>10.330</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.596</output-ratio>
@@ -2687,7 +2687,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>10.177</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.587</output-ratio>
@@ -2722,7 +2722,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>10.968</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.892</output-ratio>
@@ -2738,7 +2738,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>10.968</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.632</output-ratio>
@@ -2753,7 +2753,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>10.805</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.571</output-ratio>
@@ -2768,7 +2768,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>10.644</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.560</output-ratio>
@@ -2783,7 +2783,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>10.485</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.540</output-ratio>
@@ -2798,7 +2798,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>10.329</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.520</output-ratio>
@@ -2813,7 +2813,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>10.175</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.501</output-ratio>
@@ -2828,7 +2828,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>10.024</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.482</output-ratio>
@@ -2863,7 +2863,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>13.145</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.632</output-ratio>
@@ -2879,7 +2879,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>13.145</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.632</output-ratio>
@@ -2894,7 +2894,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>12.949</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.632</output-ratio>
@@ -2909,7 +2909,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>12.756</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.632</output-ratio>
@@ -2924,7 +2924,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>12.566</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.632</output-ratio>
@@ -2939,7 +2939,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>12.379</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.632</output-ratio>
@@ -2954,7 +2954,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>12.195</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.632</output-ratio>
@@ -2969,7 +2969,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>12.013</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.632</output-ratio>
@@ -3012,7 +3012,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>201.269</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.866</output-ratio>
@@ -3028,7 +3028,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>201.269</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.866</output-ratio>
@@ -3043,7 +3043,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>198.271</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.948</output-ratio>
@@ -3058,7 +3058,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>195.318</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.913</output-ratio>
@@ -3073,7 +3073,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>192.409</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.880</output-ratio>
@@ -3088,7 +3088,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>189.543</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.847</output-ratio>
@@ -3103,7 +3103,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>186.719</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.816</output-ratio>
@@ -3118,7 +3118,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>183.938</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.786</output-ratio>
@@ -3161,7 +3161,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.000</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.866</output-ratio>
@@ -3177,7 +3177,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.000</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.866</output-ratio>
@@ -3192,7 +3192,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.702</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.866</output-ratio>
@@ -3207,7 +3207,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.409</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.866</output-ratio>
@@ -3222,7 +3222,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.120</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.866</output-ratio>
@@ -3237,7 +3237,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>18.835</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.866</output-ratio>
@@ -3252,7 +3252,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>18.554</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.866</output-ratio>
@@ -3267,7 +3267,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>18.278</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.866</output-ratio>
@@ -3302,7 +3302,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>66.774</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.866</output-ratio>
@@ -3318,7 +3318,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>66.774</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.866</output-ratio>
@@ -3333,7 +3333,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>65.779</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.794</output-ratio>
@@ -3348,7 +3348,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>64.800</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.765</output-ratio>
@@ -3363,7 +3363,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>63.834</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.736</output-ratio>
@@ -3378,7 +3378,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>62.884</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.709</output-ratio>
@@ -3393,7 +3393,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>61.947</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.683</output-ratio>
@@ -3408,7 +3408,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>61.024</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.658</output-ratio>
@@ -3443,7 +3443,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.000</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.866</output-ratio>
@@ -3459,7 +3459,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.000</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.866</output-ratio>
@@ -3474,7 +3474,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.702</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.866</output-ratio>
@@ -3489,7 +3489,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.409</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.866</output-ratio>
@@ -3504,7 +3504,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.120</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.866</output-ratio>
@@ -3519,7 +3519,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>18.835</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.866</output-ratio>
@@ -3534,7 +3534,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>18.554</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.866</output-ratio>
@@ -3549,7 +3549,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>18.278</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_res heating</heating-market>
                         <cooling-market>bld_res cooling</cooling-market>
                         <output-ratio>0.866</output-ratio>
@@ -4308,7 +4308,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.426</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.021</output-ratio>
@@ -4324,7 +4324,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.426</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.021</output-ratio>
@@ -4339,7 +4339,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.420</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.020</output-ratio>
@@ -4354,7 +4354,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.414</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.020</output-ratio>
@@ -4369,7 +4369,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.407</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.019</output-ratio>
@@ -4384,7 +4384,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.401</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.019</output-ratio>
@@ -4399,7 +4399,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.395</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.019</output-ratio>
@@ -4414,7 +4414,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.389</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.018</output-ratio>
@@ -4449,7 +4449,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.491</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.017</output-ratio>
@@ -4465,7 +4465,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.491</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.017</output-ratio>
@@ -4480,7 +4480,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.484</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.017</output-ratio>
@@ -4495,7 +4495,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.476</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.017</output-ratio>
@@ -4510,7 +4510,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.469</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.017</output-ratio>
@@ -4525,7 +4525,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.462</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.017</output-ratio>
@@ -4540,7 +4540,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.455</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.017</output-ratio>
@@ -4555,7 +4555,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.449</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.017</output-ratio>
@@ -4583,7 +4583,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>5.872</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.017</output-ratio>
@@ -4599,7 +4599,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>5.872</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.017</output-ratio>
@@ -4614,7 +4614,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>5.785</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.008</output-ratio>
@@ -4629,7 +4629,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>5.698</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.007</output-ratio>
@@ -4644,7 +4644,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>5.614</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.007</output-ratio>
@@ -4659,7 +4659,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>5.530</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.007</output-ratio>
@@ -4674,7 +4674,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>5.448</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.007</output-ratio>
@@ -4689,7 +4689,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>5.366</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.007</output-ratio>
@@ -4724,7 +4724,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.491</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.022</output-ratio>
@@ -4740,7 +4740,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.491</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.022</output-ratio>
@@ -4755,7 +4755,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.484</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.021</output-ratio>
@@ -4770,7 +4770,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.476</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.021</output-ratio>
@@ -4785,7 +4785,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.469</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.021</output-ratio>
@@ -4800,7 +4800,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.462</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.020</output-ratio>
@@ -4815,7 +4815,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.455</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.020</output-ratio>
@@ -4830,7 +4830,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>0.449</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.020</output-ratio>
@@ -4873,7 +4873,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.000</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.000</output-ratio>
@@ -4889,7 +4889,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.000</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.000</output-ratio>
@@ -4904,7 +4904,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.702</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.000</output-ratio>
@@ -4919,7 +4919,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.409</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.000</output-ratio>
@@ -4934,7 +4934,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.120</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.000</output-ratio>
@@ -4949,7 +4949,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>18.835</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.000</output-ratio>
@@ -4964,7 +4964,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>18.554</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.000</output-ratio>
@@ -4979,7 +4979,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>18.278</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.000</output-ratio>
@@ -5022,7 +5022,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>25.774</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.973</output-ratio>
@@ -5038,7 +5038,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>25.774</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.973</output-ratio>
@@ -5053,7 +5053,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>25.390</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.949</output-ratio>
@@ -5068,7 +5068,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>25.012</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.937</output-ratio>
@@ -5083,7 +5083,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>24.640</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.923</output-ratio>
@@ -5098,7 +5098,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>24.273</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.910</output-ratio>
@@ -5113,7 +5113,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>23.911</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.896</output-ratio>
@@ -5128,7 +5128,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>23.555</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.883</output-ratio>
@@ -5163,7 +5163,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>42.604</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.970</output-ratio>
@@ -5179,7 +5179,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>42.604</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.982</output-ratio>
@@ -5194,7 +5194,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>41.969</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.936</output-ratio>
@@ -5209,7 +5209,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>41.344</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.928</output-ratio>
@@ -5224,7 +5224,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>40.728</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.914</output-ratio>
@@ -5239,7 +5239,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>40.122</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.900</output-ratio>
@@ -5254,7 +5254,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>39.524</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.887</output-ratio>
@@ -5269,7 +5269,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>38.935</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.874</output-ratio>
@@ -5312,7 +5312,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>23.975</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>46.837</output-ratio>
@@ -5328,7 +5328,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>23.975</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>46.837</output-ratio>
@@ -5343,7 +5343,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>23.618</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>46.140</output-ratio>
@@ -5358,7 +5358,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>23.266</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>45.454</output-ratio>
@@ -5373,7 +5373,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>22.920</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>44.777</output-ratio>
@@ -5388,7 +5388,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>22.578</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>44.111</output-ratio>
@@ -5403,7 +5403,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>22.242</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>43.455</output-ratio>
@@ -5418,7 +5418,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>21.911</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>42.808</output-ratio>
@@ -5446,7 +5446,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>14.972</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>7.314</output-ratio>
@@ -5462,7 +5462,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>14.972</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>7.314</output-ratio>
@@ -5477,7 +5477,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>14.749</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>7.205</output-ratio>
@@ -5492,7 +5492,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>14.529</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>7.098</output-ratio>
@@ -5507,7 +5507,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>14.313</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>6.992</output-ratio>
@@ -5522,7 +5522,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>14.099</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>6.888</output-ratio>
@@ -5537,7 +5537,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>13.889</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>6.786</output-ratio>
@@ -5552,7 +5552,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>13.682</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>6.685</output-ratio>
@@ -5580,7 +5580,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>105.917</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.846</output-ratio>
@@ -5596,7 +5596,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>105.917</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.846</output-ratio>
@@ -5611,7 +5611,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>104.339</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>5.505</output-ratio>
@@ -5626,7 +5626,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>102.785</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>5.302</output-ratio>
@@ -5641,7 +5641,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>101.254</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>5.107</output-ratio>
@@ -5656,7 +5656,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>99.745</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>4.920</output-ratio>
@@ -5671,7 +5671,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>98.260</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>4.739</output-ratio>
@@ -5686,7 +5686,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>96.796</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>4.565</output-ratio>
@@ -5729,7 +5729,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>13.553</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.716</output-ratio>
@@ -5745,7 +5745,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>13.553</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.509</output-ratio>
@@ -5760,7 +5760,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>13.351</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.403</output-ratio>
@@ -5775,7 +5775,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>13.152</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.375</output-ratio>
@@ -5790,7 +5790,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>12.956</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.361</output-ratio>
@@ -5805,7 +5805,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>12.763</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.348</output-ratio>
@@ -5820,7 +5820,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>12.573</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.335</output-ratio>
@@ -5835,7 +5835,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>12.386</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.323</output-ratio>
@@ -5878,7 +5878,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>44.188</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.800</output-ratio>
@@ -5894,7 +5894,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>44.188</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.800</output-ratio>
@@ -5909,7 +5909,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>43.530</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.771</output-ratio>
@@ -5924,7 +5924,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>42.881</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.742</output-ratio>
@@ -5939,7 +5939,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>42.243</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.715</output-ratio>
@@ -5954,7 +5954,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>41.613</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.689</output-ratio>
@@ -5969,7 +5969,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>40.993</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.663</output-ratio>
@@ -5984,7 +5984,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>40.383</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.639</output-ratio>
@@ -6027,7 +6027,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.000</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.048</output-ratio>
@@ -6043,7 +6043,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.000</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.048</output-ratio>
@@ -6058,7 +6058,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.702</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.047</output-ratio>
@@ -6073,7 +6073,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.409</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.045</output-ratio>
@@ -6088,7 +6088,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.120</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.043</output-ratio>
@@ -6103,7 +6103,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>18.835</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.042</output-ratio>
@@ -6118,7 +6118,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>18.554</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.040</output-ratio>
@@ -6133,7 +6133,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>18.278</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.039</output-ratio>
@@ -6168,7 +6168,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>40.064</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.048</output-ratio>
@@ -6184,7 +6184,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>40.064</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.048</output-ratio>
@@ -6199,7 +6199,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>39.468</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.050</output-ratio>
@@ -6214,7 +6214,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>38.880</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.048</output-ratio>
@@ -6229,7 +6229,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>38.301</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.046</output-ratio>
@@ -6244,7 +6244,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>37.730</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.044</output-ratio>
@@ -6259,7 +6259,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>37.168</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.043</output-ratio>
@@ -6274,7 +6274,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>36.614</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.041</output-ratio>
@@ -6309,7 +6309,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.000</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.048</output-ratio>
@@ -6325,7 +6325,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.000</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.048</output-ratio>
@@ -6340,7 +6340,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.702</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.047</output-ratio>
@@ -6355,7 +6355,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.409</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.045</output-ratio>
@@ -6370,7 +6370,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.120</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.043</output-ratio>
@@ -6385,7 +6385,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>18.835</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.042</output-ratio>
@@ -6400,7 +6400,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>18.554</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.040</output-ratio>
@@ -6415,7 +6415,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>18.278</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.039</output-ratio>
@@ -6451,7 +6451,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.000</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.048</output-ratio>
@@ -6467,7 +6467,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.000</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.048</output-ratio>
@@ -6482,7 +6482,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.000</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.048</output-ratio>
@@ -6497,7 +6497,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.000</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.048</output-ratio>
@@ -6512,7 +6512,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.000</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.048</output-ratio>
@@ -6527,7 +6527,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.000</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.048</output-ratio>
@@ -6542,7 +6542,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.000</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.048</output-ratio>
@@ -6557,7 +6557,7 @@
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.000</input-cost>
                      </minicam-non-energy-input>
-                     <internal-gains>
+                     <internal-gains name="internal-gains">
                         <heating-market>bld_comm heating</heating-market>
                         <cooling-market>bld_comm cooling</cooling-market>
                         <output-ratio>0.048</output-ratio>
