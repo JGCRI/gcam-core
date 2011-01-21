@@ -655,7 +655,9 @@ bool Market::shouldSolve() const {
 * \return Whether or not to solve the market for Newton-Rhaphson.
 */
 bool Market::shouldSolveNR() const {
-   return ( solveMarket && price > 0 && demand > 0 && supply > 0 );
+   // Solves all solvable markets with the following conditions
+   // including those with null demand.
+   return ( solveMarket && price > 0 && supply > 0 );
 }
 
 /*! \brief Return whether a market is solved according to market type specific

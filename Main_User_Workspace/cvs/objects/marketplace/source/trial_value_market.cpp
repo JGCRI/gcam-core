@@ -148,10 +148,8 @@ bool TrialValueMarket::shouldSolve() const {
     bool doSolveMarket = false;
     // Check if this market is a type that is solved.
     if ( solveMarket ) {
-        // If trial demand exists, then solve.
-        if( demand > 0 ) {
-            doSolveMarket = true;
-        }
+        // Solve all solvable markets.
+        doSolveMarket = true;
     }
     return doSolveMarket;
 }
@@ -160,10 +158,8 @@ bool TrialValueMarket::shouldSolveNR() const {
     bool doSolveMarket = false;
     // Check if this market is a type that is solved.
     if ( solveMarket ) {
-        // If trial demand exists, then solve.
-        if( demand > 0 ) {
-            doSolveMarket = true;
-        }
+        // Solve all solvable markets including those with null demand.
+        doSolveMarket = true;
     }
     return doSolveMarket;
 }

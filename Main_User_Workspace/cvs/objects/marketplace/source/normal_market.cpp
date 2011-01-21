@@ -106,14 +106,14 @@ bool NormalMarket::shouldSolve() const {
     bool doSolveMarket = false;
     // Check if this market is a type that is solved.
     if ( solveMarket ) {
-        // If demand exists, then solve.
-        if( demand > 0 ) {
-            doSolveMarket = true;
-        }
+        // Solve all solvable markets.
+        doSolveMarket = true;
     }
     return doSolveMarket;
 }
 
 bool NormalMarket::shouldSolveNR() const {
-   return ( solveMarket && price > 0 && demand > 0 && supply > 0 );
+   // Solves all solvable markets with the following conditions
+   // including those with null demand.
+   return ( solveMarket && price > 0 && supply > 0 );
 }

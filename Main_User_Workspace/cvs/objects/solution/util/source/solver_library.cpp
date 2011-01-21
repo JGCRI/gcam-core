@@ -97,12 +97,6 @@ double SolverLibrary::getRelativeED( const double excessDemand, const double dem
         retValue = fabs( excessDemand ) / tempDemand;
     }
 
-    // This case should not occur (demand null but with supply),
-    // but check and return 0.
-    if( demand == 0 && excessDemand <= util::getSmallNumber() ){
-        retValue = 0;
-    }
-
     return retValue;
 }
 
