@@ -76,6 +76,7 @@ public class XMLDB {
 		EnvironmentConfig envConfig = new EnvironmentConfig();
 		envConfig.setAllowCreate(true);
 		envConfig.setCacheSize(100 * 1024 * 1024 );
+		envConfig.setCacheMax( 4 * 1024 * 1024 * 1024 );
 		envConfig.setInitializeCache(true);
 		envConfig.setInitializeLocking(true);
 		//envConfig.setVerboseDeadlock(true);
@@ -240,10 +241,20 @@ public class XMLDB {
 	public boolean exportDoc(final String aDocName, final File aLocation) {
 		try {
 			XmlDocument doc = myContainer.getDocument(aDocName);
-			OutputStream fileOutput = new BufferedOutputStream(new FileOutputStream(aLocation));
-			fileOutput.write(doc.getContent());
+            final int BUFFER_SIZE = 10 * 1024 * 1024;
+            byte[] buffer = new byte[BUFFER_SIZE];
+            int numRead;
+            InputStream in = doc.getContentAsInputStream();
+			OutputStream fileOutput = new FileOutputStream(aLocation);
+            do {
+                numRead = in.read(buffer, 0, BUFFER_SIZE);
+                if(numRead > 0) {
+                    fileOutput.write(buffer, 0 , numRead);
+                }
+            } while(numRead >= 0 );
 			doc.delete();
 			fileOutput.close();
+            in.close();
 			return true;
 		}
 		catch(XmlException e) {
@@ -428,7 +439,7 @@ public class XMLDB {
 		//printLockStats("getAttr(XmlValue, String)2"); should be lock safe, now can make it static
 		return null;
 	}
-	private static Map<String, Map<String, String>> attrCache = new LRUCacheMap<String, Map<String, String>>(500);
+	private static Map<String, Map<String, String>> attrCache = Collections.synchronizedMap(new LRUCacheMap<String, Map<String, String>>(500));
 	//private static Map<String, Map<String, String>> attrCache = new TreeMap<String, Map<String, String>>();
 	private static int misses = 0;
 	private static int hits = 0;
