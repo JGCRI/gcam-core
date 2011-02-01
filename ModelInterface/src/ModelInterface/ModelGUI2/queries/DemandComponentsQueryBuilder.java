@@ -375,9 +375,6 @@ public class DemandComponentsQueryBuilder extends QueryBuilder {
 			ret.append(regionQueryPortion+"/");
 			//regionSel = new int[0]; 
 			regions = new Object[0];
-			qg.isGlobal = true;
-		} else {
-			qg.isGlobal = false;
 		}
 		for(int i = 0; i < regions.length; ++i) {
 			if(!added) {
@@ -409,14 +406,14 @@ public class DemandComponentsQueryBuilder extends QueryBuilder {
 	public List<String> getDefaultCollpaseList() {
 		return new Vector<String>();
 	}
-	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue) throws Exception {
+	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
 		// stop point for recursion is when we reach the root
 		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
 			return dataTree;
 		}
 
 		// recursively process parents first
-		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree, axisValue);
+		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree, axisValue, isGlobal);
 
 		final String nodeName = currNode.getNodeName();
 		final Map<String, String> attrMap = XMLDB.getAttrMap(currNode);

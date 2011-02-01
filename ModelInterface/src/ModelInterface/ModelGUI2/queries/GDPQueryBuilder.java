@@ -179,10 +179,8 @@ public class GDPQueryBuilder extends QueryBuilder {
 		strBuff.append(regionQueryPortion.substring(0, regionQueryPortion.length()-1));
 		if(((String)regions[0]).equals("Global")) {
 			strBuff.append("]/").append(qg.xPath);
-			qg.isGlobal = true;
 			return strBuff.toString();
 		} else {
-			qg.isGlobal = false;
 			strBuff.append(" and (");
 			for(int i = 0; i < regions.length; ++i) {
 				strBuff.append(" (@name='").append(regions[i]).append("') or ");
@@ -198,14 +196,14 @@ public class GDPQueryBuilder extends QueryBuilder {
 	public List<String> getDefaultCollpaseList() {
 		return new Vector<String>();
 	}
-	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue) throws Exception {
+	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
 		// stop point for recursion is the root
 		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
 			return dataTree;
 		}
 
 		// recursively process parents first
-		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree, axisValue);
+		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree, axisValue, isGlobal);
 
 		// cache node properties
 		final String nodeName = currNode.getNodeName();
@@ -217,7 +215,7 @@ public class GDPQueryBuilder extends QueryBuilder {
 		boolean addedYearLevel = false;
 		if(qg.nodeLevel.getKey().equals(type)) {
 			addedNodeLevel = true;
-			if(qg.nodeLevel.getKey().equals("region") && qg.isGlobal) {
+			if(qg.nodeLevel.getKey().equals("region") && isGlobal) {
 				axisValue.setValue("Global");
 			} else {
 				axisValue.setValue(attrMap.get(qg.nodeLevel.getValue() != null ? qg.nodeLevel.getValue() : "name"));

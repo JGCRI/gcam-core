@@ -345,9 +345,6 @@ public class ResourceQueryBuilder extends QueryBuilder {
 			ret.append(regionQueryPortion).append("/");
 			//regionSel = new int[0]; 
 			regions = new Object[0];
-			qg.isGlobal = true;
-		} else {
-			qg.isGlobal = false;
 		}
 		for(int i = 0; i < regions.length; ++i) {
 			if(!added) {

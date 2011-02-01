@@ -383,13 +383,14 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 	public String getCompleteXPath(Object[] regions) {
 		boolean added = false;
 		StringBuffer ret = new StringBuffer();
+        boolean isGlobal;
 		if(((String)regions[0]).equals("Global")) {
 			ret.append(regionQueryPortion+"/");
 			//regionSel = new int[0]; 
 			regions = new Object[0];
-			qg.isGlobal = true;
+			isGlobal = true;
 		} else {
-			qg.isGlobal = false;
+			isGlobal = false;
 		}
 		for(int i = 0; i < regions.length; ++i) {
 			if(!added) {
@@ -400,7 +401,7 @@ public class EmissionsQueryBuilder extends QueryBuilder {
 			}
 			ret.append("(@name='").append(regions[i]).append("')");
 		}
-		if(!qg.isGlobal) {
+		if(!isGlobal) {
 			ret.append(" )]/");
 		}
 		return ret.append(qg.getXPath()).toString();

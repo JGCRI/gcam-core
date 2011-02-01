@@ -343,13 +343,14 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 	public String getCompleteXPath(Object[] regions)  {
 		boolean added = false;
 		StringBuffer ret = new StringBuffer();
+        boolean isGlobal;
 		if(((String)regions[0]).equals("Global")) {
 			ret.append(regionQueryPortion+"/");
 			//regionSel = new int[0]; 
 			regions = new Object[0];
-			qg.isGlobal = true;
+			isGlobal = true;
 		} else {
-			qg.isGlobal = false;
+			isGlobal = false;
 		}
 		for(int i = 0; i < regions.length; ++i) {
 			if(!added) {
@@ -360,7 +361,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 			}
 			ret.append("(@name='").append(regions[i]).append("')");
 		}
-		if(!qg.isGlobal) {
+		if(!isGlobal) {
 			ret.append(" )]/");
 		}
 		return ret.append(qg.getXPath()).toString();
@@ -373,14 +374,14 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		ret.add("total-population");
 		return ret;
 	}
-	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue) throws Exception {
+	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
 		// stop point for recursion is the root
 		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
 			return dataTree;
 		}
 
 		// recursively process parents first
-		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree, axisValue);
+		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree, axisValue, isGlobal);
 
 		// cache node properties
 		final String nodeName = currNode.getNodeName();
@@ -392,7 +393,7 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 		boolean addedYearLevel = false;
 		if(qg.nodeLevel.getKey().equals(type)) {
 			addedNodeLevel = true;
-			if(qg.nodeLevel.getKey().equals("region") && qg.isGlobal) {
+			if(qg.nodeLevel.getKey().equals("region") && isGlobal) {
 				axisValue.setValue("Global");
 			} else {
 				axisValue.setValue(attrMap.get(qg.nodeLevel.getValue() != null ? qg.nodeLevel.getValue() : "name"));

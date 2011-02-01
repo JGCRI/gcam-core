@@ -179,10 +179,8 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 				.append("s/").append(qg.nodeLevel.getKey());
 			if(((String)regions[0]).equals("Global")) {
 				strBuff.append("/").append(qg.xPath);
-				qg.isGlobal = true;
 				return strBuff.toString();
 			} else {
-				qg.isGlobal = false;
 				strBuff.append("[");
 				for(int i = 0; i < regions.length; ++i) {
 					strBuff.append(" (@name='").append(regions[i]).append("') or ");
@@ -195,10 +193,8 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 			strBuff.append("CostCurvesInfo/RegionalCostCurvesByPeriod/Curve");
 			if(((String)regions[0]).equals("Global")) {
 				strBuff.append("/").append(qg.xPath);
-				qg.isGlobal = true;
 				return strBuff.toString();
 			} else {
-				qg.isGlobal = false;
 				strBuff.append("[ child::title[");
 				for(int i = 0; i < regions.length; ++i) {
 					strBuff.append(" (child::text()='").append(regions[i]).append("') or ");
@@ -212,10 +208,8 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 			strBuff.append("CostCurvesInfo/PeriodCostCurves/CostCurves/Curve");
 			if(((String)regions[0]).equals("Global")) {
 				strBuff.append("/").append(qg.xPath);
-				qg.isGlobal = true;
 				return strBuff.toString();
 			} else {
-				qg.isGlobal = false;
 				strBuff.append("[ child::title[");
 				for(int i = 0; i < regions.length; ++i) {
 					strBuff.append(" (matches(child::text(),'").append(regions[i]).append("')) or ");
@@ -235,12 +229,12 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 		ret.add("PointSet");
 		return ret;
 	}
-	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue) throws Exception {
+	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
 		// stop condition for recursion when we hit the root of the tree
 		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
 			return dataTree;
 		}
-		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree, axisValue);
+		Map tempMap = addToDataTree(currNode.getParentNode(), dataTree, axisValue, isGlobal);
 
 		// cache node properties
 		final String nodeName = currNode.getNodeName();
@@ -259,7 +253,7 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 				// check the locks after this line, It might leave some
 				ret.add(n.getFirstChild().getFirstChild().getNodeValue());
 				*/
-			} else if(qg.isGlobal) {
+			} else if(isGlobal) {
 				axisValue.setValue("Global");
 			} else {
 				// check the locks after this line, It might leave some
@@ -299,7 +293,7 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 		if(nodeName.equals(qg.yearLevel.getKey())) {
 			addedYearLevel = true;
 			if(qg.nodeLevel.getKey().equals("UndiscountedCost") || qg.nodeLevel.getKey().equals("DiscountedCost")) {
-				if(qg.isGlobal) {
+				if(isGlobal) {
 					// TODO: check if it should be key
 					axisValue.setKey("Global");
 				} else {

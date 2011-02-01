@@ -752,19 +752,19 @@ public class QueryGenerator implements java.io.Serializable{
 			return defaultCompleteXPath(regions);
 		}
 	}
-	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue) throws Exception {
+	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
 		if(qb != null) {
-			return qb.addToDataTree(currNode, dataTree, axisValue);
+			return qb.addToDataTree(currNode, dataTree, axisValue, isGlobal);
 		} else {
-			return defaultAddToDataTree(currNode, dataTree, axisValue);
+			return defaultAddToDataTree(currNode, dataTree, axisValue, isGlobal);
 		}
 	}
-	Map defaultAddToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue) throws Exception {
+	Map defaultAddToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
 		if (currNode.getNodeType() == XmlValue.DOCUMENT_NODE) {
 			return dataTree;
 		}
 		// recursively process parents first
-		Map tempMap = defaultAddToDataTree(currNode.getParentNode(), dataTree, axisValue);
+		Map tempMap = defaultAddToDataTree(currNode.getParentNode(), dataTree, axisValue, isGlobal);
 
 		// cache node properties since these may need to go back to the database which could
 		// be expensive
@@ -816,7 +816,7 @@ public class QueryGenerator implements java.io.Serializable{
 		} 
 		return tempMap;
 	}
-	protected boolean isGlobal;
+	//protected boolean isGlobal;
 	protected String defaultCompleteXPath(Object[] regions) {
 		boolean added = false;
 		StringBuffer ret = new StringBuffer();
@@ -824,9 +824,9 @@ public class QueryGenerator implements java.io.Serializable{
 			ret.append("region/");
 			//regionSel = new int[0]; 
 			regions = new Object[0];
-			isGlobal = true;
+			//isGlobal = true;
 		} else {
-			isGlobal = false;
+			//isGlobal = false;
 		}
 		for(int i = 0; i < regions.length; ++i) {
 			if(!added) {
@@ -1135,9 +1135,11 @@ public class QueryGenerator implements java.io.Serializable{
 		}
 	}
 
+    /*
 	public void setGlobal(boolean newGlobal) {
 		isGlobal = newGlobal;
 	}
+    */
 
 	/**
 	 * Gets a path which will result in a list

@@ -460,7 +460,8 @@ public class MultiTableModel extends BaseTableModel{
 		wild.add(qgIn.getNodeLevel());
 		wild.add(qgIn.getYearLevel());
 		System.out.println("Before Function: "+System.currentTimeMillis());
-		buildTable(XMLDB.getInstance().createQuery(qgIn, scenarios, regions, context), qgIn.isSumAll());
+        boolean isGlobal = regions.length == 1 && regions[0].equals("Global");
+		buildTable(XMLDB.getInstance().createQuery(qgIn, scenarios, regions, context), qgIn.isSumAll(), isGlobal);
 		tableEditor = new TableEditor();
 		tableRenderer = new TableRenderer();
 		activeRows = new Vector(tables.size());
@@ -477,7 +478,7 @@ public class MultiTableModel extends BaseTableModel{
 		}
 		title += "</body></html>";
 	}
-	private void buildTable(XmlResults res, boolean sumAll) throws Exception {
+	private void buildTable(XmlResults res, boolean sumAll, boolean isGlobal) throws Exception {
 		System.out.println("In Function: "+System.currentTimeMillis());
 	  XmlValue tempNode;
 	  final Set<String> yearLevelAxis = new TreeSet<String>();
@@ -493,7 +494,7 @@ public class MultiTableModel extends BaseTableModel{
 			  // catgorize this result
 			  axisValues.setKey(null);
 			  axisValues.setValue(null);
-			  Map retMap = qg.addToDataTree(tempNode.getParentNode(), dataTree, axisValues);
+			  Map retMap = qg.addToDataTree(tempNode.getParentNode(), dataTree, axisValues, isGlobal);
 			  if(axisValues.getKey() == null || axisValues.getValue() == null) {
 				  throw new Exception("<html><body>Could not determine how to categorize the results.<br> Please check your axis node values.</body></html>");
 			  }

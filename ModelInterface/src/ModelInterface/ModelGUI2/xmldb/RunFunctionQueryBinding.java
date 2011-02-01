@@ -27,9 +27,6 @@ public class RunFunctionQueryBinding implements QueryBinding {
 		scenarioListBuilder.delete(scenarioListBuilder.length()-2, scenarioListBuilder.length()).append(")");
 		for(int i = 0; i < regions.length; ++i) {
 			String currRegion = (String)regions[i];
-			if(currRegion.equals("Global")) {
-				qg.setGlobal(true);
-			}
 			regionListBuilder.append("'").append(currRegion).append("', ");
 		}
 		regionListBuilder.delete(regionListBuilder.length()-2, regionListBuilder.length()).append(")");

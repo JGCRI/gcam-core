@@ -361,13 +361,14 @@ public class SAMQueryBuilder extends QueryBuilder {
 		boolean added = false;
 		StringBuilder ret = new StringBuilder();
 		StringBuffer marketRegionQ = new StringBuffer();
+        boolean isGlobal;
 		if(((String)regions[0]).equals("Global")) {
 			ret.append(regionQueryPortion+"/");
-			qg.isGlobal = true;
+			isGlobal = true;
 		} else {
-			qg.isGlobal = false;
+			isGlobal = false;
 		}
-		for(int i = 0; i < regions.length && !qg.isGlobal; ++i) {
+		for(int i = 0; i < regions.length && !isGlobal; ++i) {
 			if(!added) {
 				ret.append(regionQueryPortion.substring(0, regionQueryPortion.length()-1)).append(" and (");
 				marketRegionQ.append(" and ContainedRegion[");
@@ -409,7 +410,7 @@ public class SAMQueryBuilder extends QueryBuilder {
 	public List<String> getDefaultCollpaseList() {
 		return new Vector<String>();
 	}
-	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue) throws Exception {
+	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
 		throw new UnsupportedOperationException("Have not converted this query builder yet");
 	}
 }

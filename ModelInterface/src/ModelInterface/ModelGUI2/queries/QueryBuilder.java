@@ -56,7 +56,7 @@ public abstract class QueryBuilder implements java.io.Serializable {
 		qg = qgIn;
 	}
 	public abstract List<String> getDefaultCollpaseList();
-	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue) throws Exception {
-		return qg.defaultAddToDataTree(currNode, dataTree, axisValue);
+	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
+		return qg.defaultAddToDataTree(currNode, dataTree, axisValue, isGlobal);
 	}
 }

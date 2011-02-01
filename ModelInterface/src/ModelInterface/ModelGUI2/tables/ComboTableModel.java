@@ -778,15 +778,16 @@ public class ComboTableModel extends BaseTableModel{
 		//title = qgIn.getVariable();
 		title = qgIn.toString();
 		boolean isTotal = false;
+        boolean isGlobal = regions.length == 1 && regions[0].equals("Global");
 		System.out.println("Before Function: "+System.currentTimeMillis());
 		if(singleBinding == null) {
 			buildTable(XMLDB.getInstance().createQuery(qgIn, scenarios, regions, context), qgIn.isSumAll(), 
-					isTotal);
+					isTotal, isGlobal);
 		} else {
 			// TODO: figure out a better way of telling if this is a Total
 			isTotal = !(singleBinding instanceof ModelInterface.ModelGUI2.xmldb.SingleQueryQueryBinding);
 			buildTable(XMLDB.getInstance().createQuery(singleBinding, scenarios, regions, context), 
-					qgIn.isSumAll(), isTotal);
+					qgIn.isSumAll(), isTotal, isGlobal);
 		}
 		ind2Name = qgIn.getVariable();
 		indCol.add(0, ind1Name);
@@ -811,7 +812,7 @@ public class ComboTableModel extends BaseTableModel{
 		}
 		setColNameIndex(qg.getChartLabelColumnName());
 	}
-	private void buildTable(XmlResults res, boolean sumAll, boolean isTotal) throws Exception{
+	private void buildTable(XmlResults res, boolean sumAll, boolean isTotal, boolean isGlobal) throws Exception{
 		System.out.println("In Function: "+System.currentTimeMillis());
 	  XmlValue tempNode;
 	  final Set<String> yearLevelAxis = new TreeSet<String>();
@@ -827,7 +828,7 @@ public class ComboTableModel extends BaseTableModel{
 			  // catgorize this result
 			  axisValues.setKey(null);
 			  axisValues.setValue(null);
-			  Map retMap = qg.addToDataTree(tempNode.getParentNode(), dataTree, axisValues);
+			  Map retMap = qg.addToDataTree(tempNode.getParentNode(), dataTree, axisValues, isGlobal);
 			  if(axisValues.getKey() == null || axisValues.getValue() == null) {
 				  System.out.println("Key: "+axisValues.getKey());
 				  System.out.println("Value: "+axisValues.getValue());

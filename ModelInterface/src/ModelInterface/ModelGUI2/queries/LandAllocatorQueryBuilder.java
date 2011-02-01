@@ -246,9 +246,6 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 		if(((String)regions[0]).equals("Global")) {
 			ret.append(regionQueryPortion+"/");
 			regions = new Object[0];
-			qg.isGlobal = true;
-		} else {
-			qg.isGlobal = false;
 		}
 		for(int i = 0; i < regions.length; ++i) {
 			if(!added) {
@@ -293,7 +290,7 @@ public class LandAllocatorQueryBuilder extends QueryBuilder {
 	public List<String> getDefaultCollpaseList() {
 		return new Vector<String>();
 	}
-	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue) throws Exception {
+	public Map addToDataTree(XmlValue currNode, Map dataTree, DataPair<String, String> axisValue, boolean isGlobal) throws Exception {
 		axisValue.setKey(XMLDB.getAttr(currNode, "year"));
 		axisValue.setValue(qg.nodeLevel.getKey().split(" ", 2)[1]);
 		return addToDataTreeHelper(currNode, dataTree);
