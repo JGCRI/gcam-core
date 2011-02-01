@@ -22,6 +22,7 @@ import java.util.Vector;
 import java.util.List;
 import java.util.Queue;
 import java.util.LinkedList;
+import java.util.Properties;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.FutureTask;
@@ -65,6 +66,7 @@ import ModelInterface.ModelGUI2.tables.BaseTableModel;
 import ModelInterface.ModelGUI2.tables.ComboTableModel;
 import ModelInterface.ModelGUI2.tables.MultiTableModel;
 import ModelInterface.ModelGUI2.xmldb.XMLDB;
+import ModelInterface.InterfaceMain;
 
 
 
@@ -210,7 +212,12 @@ public class BatchWindow extends Window {
 		this.overwrite = overwriteCheckBox.isSelected();
 
         // Create a thread pool a run queries in
-        queryThreadPool = Executors.newFixedThreadPool(2); // TODO: properties -- num cores
+        final String coresToUsePropertyName = "coresToUse";
+        final int numSystemCores = Runtime.getRuntime().availableProcessors();
+		Properties prop = InterfaceMain.getInstance().getProperties();
+        final int numCoresToUse = Integer.valueOf(prop.getProperty(coresToUsePropertyName, Integer.toString(numSystemCores)));
+		prop.setProperty(coresToUsePropertyName, Integer.toString(numCoresToUse));
+        queryThreadPool = Executors.newFixedThreadPool(numCoresToUse);
 
 		progressBar = new JProgressBar(0, numQueries*toRunScns.size());
 		// TODO: createProgressBarGUI should be moved somewhere else
