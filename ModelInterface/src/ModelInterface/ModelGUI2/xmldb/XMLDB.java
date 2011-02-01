@@ -15,13 +15,10 @@ import com.sleepycat.db.*;
 import com.sleepycat.dbxml.*;
 
 public class XMLDB {
-	public static final boolean lockCheck = false;
 	Environment dbEnv;
 	XmlManager manager;
 	XmlContainer myContainer;
-	XmlUpdateContext uc;
 	String contName;
-	private volatile int numVals;
 	private static XMLDB xmldbInstance = null;
 
 	/**
@@ -79,11 +76,7 @@ public class XMLDB {
 		envConfig.setCacheMax( 4 * 1024 * 1024 * 1024 );
 		envConfig.setInitializeCache(true);
 		envConfig.setInitializeLocking(true);
-		//envConfig.setVerboseDeadlock(true);
-		//envConfig.setVerboseWaitsFor(true);
-		//envConfig.setNoLocking(true);
 
-		numVals = 0;
 		//XmlManager.setLogCategory(XmlManager.CATEGORY_ALL, true);
 		//XmlManager.setLogLevel(XmlManager.LEVEL_ALL, true);
 		String path = dbPath.substring(0, dbPath.lastIndexOf(System.getProperty("file.separator")));
@@ -91,7 +84,7 @@ public class XMLDB {
 		try {
 			dbEnv = new Environment(new File(path), envConfig);
 		} catch(VersionMismatchException vme) {
-			int ans = JOptionPane.showConfirmDialog(parentFrame, "The version of the selected database does not match the version\nof the database library. Do you want to attempt to upgrade?\n\nWarning: Upgrading could cause loss of data, it is recomended\nthat you backup your database first.", "DB Version Mismatch Error", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+			int ans = JOptionPane.showConfirmDialog(parentFrame, "The version of the database environment does not match the current version\nWould you like to reset the environment?", "DB Version Mismatch Error", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
 			if(ans == JOptionPane.YES_OPTION) {
 				System.out.println("Remove Env");
 				Environment.remove(new File(path), true, envConfig);
@@ -118,11 +111,6 @@ public class XMLDB {
 				dbEnv.close();
 				System.out.println("Locking problem, attempting to reset locking subsystem");
 				Environment.remove(new File(dbPath.substring(0, dbPath.lastIndexOf(System.getProperty("file.separator")))), true, envConfig);
-				/*
-				   boolean didDel = new File(path+System.getProperty("file.separator")+"__db.001").delete();
-				   didDel = didDel && new File(path+System.getProperty("file.separator")+"__db.002").delete();
-				   didDel = didDel && new File(path+System.getProperty("file.separator")+"__db.003").delete();
-				   */
 				dbEnv = new Environment(new File(path), envConfig);
 				ls = dbEnv.getLockStats(StatsConfig.DEFAULT);
 				System.out.println("Current Locks: "+ls.getNumLocks());
@@ -142,7 +130,7 @@ public class XMLDB {
 		// java api
 		final String contNameUnmodified = dbPath.substring(dbPath.lastIndexOf(System.getProperty("file.separator"))+1);
 		contName = contNameUnmodified.replaceAll(" ", "%20");
-		uc = manager.createUpdateContext();
+		final XmlUpdateContext uc = manager.createUpdateContext();
 		try {
 			myContainer = manager.openContainer(contNameUnmodified, cconfig);
 			myContainer.addAlias(contName);
@@ -157,24 +145,13 @@ public class XMLDB {
 				if(ans == JOptionPane.YES_OPTION) {
 					System.out.println("Do upgrade");
 					parentFrame.getGlassPane().setVisible(true);
-					// TODO: getting this call to work would be better than the current solution.
-					boolean didUpgradeWork = true;
 					try {
-					manager.upgradeContainer(contName, uc);
-					} catch(XmlException updE) {
-						updE.printStackTrace();
-						didUpgradeWork = false;
-					}
-					//boolean didUpgradeWork = upgradeDatabase(path, contName);
-					parentFrame.getGlassPane().setVisible(false);
-					if(!didUpgradeWork) {
-						JOptionPane.showMessageDialog(parentFrame, 
-								"An error occured while upgrading the database.", 
-								"DB Upgrade Error", JOptionPane.ERROR_MESSAGE);
-						throw new Exception("Could not upgrade database.");
+						manager.upgradeContainer(contNameUnmodified, uc);
+					} finally {
+						parentFrame.getGlassPane().setVisible(false);
 					}
 					System.out.println("Done upgrade");
-					myContainer = manager.openContainer(contName, cconfig);
+					myContainer = manager.openContainer(contNameUnmodified, cconfig);
 					System.out.println("Done open");
 				} else {
 					throw ve;
@@ -186,37 +163,16 @@ public class XMLDB {
 		// TODO: auto indexing leads to a ton of indexes most of which would not be utilized so
 		// turn it off by default for now util farther evaulations
 		myContainer.setAutoIndexing(false);
-		printLockStats("openDB");
 		// will just get any that has already been cached, users will have to 
 		// tell use the gui search manually since they will rarely be used now
 		getVarMetaData(); 
-	}
-	public void printLockStats(String where) {
-		if(!lockCheck) {
-			return;
-		}
-		//System.out.println("At: "+where+" with numVals: "+numVals);
-		try {
-			System.out.println("At: "+where);
-			LockStats ls = manager.getEnvironment().getLockStats(StatsConfig.DEFAULT);
-			System.out.println("Current Locks: "+ls.getNumLocks());
-			System.out.println("Current Lockers: "+ls.getNumLockers());
-			System.out.println("Current Deadlocks: "+ls.getNumDeadlocks());
-			//System.out.println("Current Conflicts: "+ls.getNumConflicts());
-			System.out.println("Locks Requested: "+ls.getNumRequests());
-			System.out.println("Locks Released: "+ls.getNumReleases());
-		} catch (XmlException e) {
-			e.printStackTrace();
-		} catch (DatabaseException dbe) {
-			dbe.printStackTrace();
-		}
 	}
 	public void addFile(String fileName) {
 	    XmlDocumentConfig docConfig = new XmlDocumentConfig();
 	    docConfig.setGenerateName(true);
 	    try {
+		    final XmlUpdateContext uc = manager.createUpdateContext();
 		    myContainer.putDocument("run", manager.createLocalFileInputStream(fileName), uc, docConfig);
-		    printLockStats("addFile");
 		    //myContainer.sync();
 	    } catch(XmlException e) {
 		    e.printStackTrace();
@@ -225,8 +181,8 @@ public class XMLDB {
 	public void removeDoc(String docName) {
 		try {
 			System.out.println("Removing :"+docName);
+			final XmlUpdateContext uc = manager.createUpdateContext();
 			myContainer.deleteDocument(docName, uc);
-			printLockStats("removeDoc");
 		} catch(XmlException e) {
 			e.printStackTrace();
 		}
@@ -252,7 +208,6 @@ public class XMLDB {
                     fileOutput.write(buffer, 0 , numRead);
                 }
             } while(numRead >= 0 );
-			doc.delete();
 			fileOutput.close();
             in.close();
 			return true;
@@ -275,6 +230,7 @@ public class XMLDB {
 		XmlDocumentConfig docConfig = new XmlDocumentConfig();
 		docConfig.setGenerateName(false);
 		try {
+			final XmlUpdateContext uc = manager.createUpdateContext();
 			myContainer.putDocument("cache", content, uc, docConfig);
 			return getDocument(docName);
 		} catch(XmlException e) {
@@ -285,9 +241,8 @@ public class XMLDB {
 
 	public void updateDocument(XmlDocument doc) {
 		try {
-			//uc.setApplyChangesToContainers(true);
+			final XmlUpdateContext uc = manager.createUpdateContext();
 			myContainer.updateDocument(doc, uc);
-			//uc.setApplyChangesToContainers(false);
 		} catch(XmlException e) {
 			e.printStackTrace();
 			// TODO: warn the users
@@ -322,7 +277,6 @@ public class XMLDB {
 		try {
 			return manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Lazy);
 		} catch (XmlException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
@@ -340,10 +294,6 @@ public class XMLDB {
 		   System.out.println("Query Plan: "+qeTemp.getQueryPlan());
 		   return qeTemp.execute(qc);
 		   */
-		/*
-		   System.out.println("Number of values are currently: "+numVals);
-		   return new XmlResultsWrapper(manager.query(queryComplete, qc));
-		   */
 		return manager.query(queryComplete, context);
 	}
 	
@@ -357,10 +307,6 @@ public class XMLDB {
 			System.out.println("Query Plan: "+qeTemp.getQueryPlan());
 			return qeTemp.execute(qc);
 			*/
-			/* Use to debug non-deleted Xml References
-			System.out.println("Number of values are currently: "+numVals);
-			return new XmlResultsWrapper(manager.query(queryComplete, qc));
-			*/
 			return manager.query(queryComplete, qc);
 		} catch(XmlException e) {
 			e.printStackTrace();
@@ -370,12 +316,10 @@ public class XMLDB {
 
 	private void closeDB() throws XmlException {
 		System.out.println("Closing DB");
-		printLockStats("closeDB");
 		if(myContainer == null) {
 			// didn't open sucessfully
 			return;
 		}
-		System.out.println("Number of values are currently: "+numVals);
 		System.out.println("Hits: "+hits+", misses: "+misses);
 		myContainer.close();
 		manager.close();
@@ -386,7 +330,6 @@ public class XMLDB {
 		boolean ret = attrRes.hasNext();
 		attrRes.delete();
 		if(!ret) {
-			//printLockStats("hasNext"); should be lock safe, now can make it static
 			return ret;
 		} else {
 			// have to make sure the values getAllAttr ignores
@@ -400,60 +343,50 @@ public class XMLDB {
 	}
 
 	public static String getAttr(XmlValue node) throws XmlException {
-		XmlResults attrRes = node.getAttributes();
-		XmlValue temp;
-		while(attrRes.hasNext()) {
-			temp = attrRes.next();
-			if(!temp.getNodeName().equals("fillout")) {
-				//String ret = temp.getNodeName()+"="+temp.getNodeValue();
-				String ret = temp.getNodeValue();
-				temp.delete();
-				attrRes.delete();
-				//printLockStats("getAttr(XmlValue)1"); should be lock safe, now can make it static
-				return ret;
+		final XmlResults attrRes = node.getAttributes();
+		try {
+			while(attrRes.hasNext()) {
+				XmlValue temp = attrRes.next();
+				if(!temp.getNodeName().equals("fillout")) {
+					return temp.getNodeValue();
+				}
 			}
-			temp.delete();
+			return null;
+		} finally {
+			attrRes.delete();
 		}
-		attrRes.delete();
-		//printLockStats("getAttr(XmlValue)2"); should be lock safe, now can make it static 
-		return null;
 	}
 
 	public static String getAttr(XmlValue node, String attrKey) throws XmlException {
-		XmlResults attrRes = node.getAttributes();
-		XmlValue temp = null;
-		while(attrRes.hasNext()) {
-			temp = attrRes.next();
-			if(temp.getNodeName().equals(attrKey)) {
-				String ret = temp.getNodeValue();
-				//temp.delete();
-				attrRes.delete();
-				//printLockStats("getAttr(XmlValue, String)1"); should be lock safe, now can make it static
-				return ret;
-				//return temp.getNodeValue();
+		final XmlResults attrRes = node.getAttributes();
+		try {
+			while(attrRes.hasNext()) {
+				XmlValue temp = attrRes.next();
+				if(temp.getNodeName().equals(attrKey)) {
+					return temp.getNodeValue();
+				}
 			}
-			temp.delete();
+			return null;
+		} finally {
+			attrRes.delete();
 		}
-		//temp.delete();
-		attrRes.delete();
-		//printLockStats("getAttr(XmlValue, String)2"); should be lock safe, now can make it static
-		return null;
 	}
 	private static Map<String, Map<String, String>> attrCache = Collections.synchronizedMap(new LRUCacheMap<String, Map<String, String>>(500));
 	//private static Map<String, Map<String, String>> attrCache = new TreeMap<String, Map<String, String>>();
 	private static int misses = 0;
 	private static int hits = 0;
 	public static Map<String, String> getAttrMap(XmlValue node) throws XmlException {
-		XmlResults attrRes = node.getAttributes();
-		XmlValue temp;
-		Map<String, String> ret = new TreeMap<String, String>();
-		while(attrRes.hasNext()) {
-			temp = attrRes.next();
-			ret.put(temp.getNodeName(), temp.getNodeValue());
-			temp.delete();
+		final XmlResults attrRes = node.getAttributes();
+		try {
+			final Map<String, String> ret = new TreeMap<String, String>();
+			while(attrRes.hasNext()) {
+				XmlValue temp = attrRes.next();
+				ret.put(temp.getNodeName(), temp.getNodeValue());
+			}
+			return ret;
+		} finally {
+			attrRes.delete();
 		}
-		attrRes.delete();
-		return ret;
 	}
 	public static Map<String, String> getAttrMapWithCache(XmlValue node) throws XmlException {
 		String nodeId = node.getNodeHandle();
@@ -488,26 +421,26 @@ public class XMLDB {
 		return !ret.equals("") ? ret.substring(1) : ret;
 	}
 	public static String getAllAttr(XmlValue node) throws XmlException {
-		XmlResults attrRes = node.getAttributes();
-		XmlValue temp;
+		final XmlResults attrRes = node.getAttributes();
 		String ret;
 		if((ret = getAttr(node, "name")) != null) {
 			ret = "," + ret;
 		} else {
 			ret = "";
 		}
-		while(attrRes.hasNext()) {
-			temp = attrRes.next();
-			if(temp.getNodeName().indexOf(":") == -1 && !temp.getNodeName().equals("name") &&
-					!temp.getNodeName().equals("type") && 
-					!temp.getNodeName().equals("unit") && 
-					!temp.getNodeName().equals("year")) {
-				ret += ","+temp.getNodeName()+"="+temp.getNodeValue();
+		try {
+			while(attrRes.hasNext()) {
+				XmlValue temp = attrRes.next();
+				if(temp.getNodeName().indexOf(":") == -1 && !temp.getNodeName().equals("name") &&
+						!temp.getNodeName().equals("type") && 
+						!temp.getNodeName().equals("unit") && 
+						!temp.getNodeName().equals("year")) {
+					ret += ","+temp.getNodeName()+"="+temp.getNodeValue();
+				}
 			}
-			temp.delete();
+		} finally {
+			attrRes.delete();
 		}
-		attrRes.delete();
-		//printLockStats("getAllAtr"); should be lock safe, now can make it static
 		if(!ret.equals("")) {
 			return ret.substring(1);
 		} else {
@@ -515,9 +448,6 @@ public class XMLDB {
 		}
 	}
 	public String getQueryFunctionAsDistinctNames() {
-		/* Does not work anymore since BDBXML 2.3
-		return "declare function local:distinct-node-names ($arg as node()*, $before_a as xs:string*) as xs:string* {    for $a at $apos in $arg  let $b := fn:local-name($a), $c_before := fn:count($before_a) + $apos - $apos, $before_a := fn:distinct-values(fn:insert-before($before_a, 0, $b))  where not(fn:count($before_a) = $c_before)  return $b }; local:distinct-node-names";
-		*/
 		return "declare function local:distinct-node-names ($args as node()*) as xs:string* { fn:distinct-values(for $nname in $args return fn:local-name($nname)) }; local:distinct-node-names";
 	}
 	/**
@@ -551,20 +481,13 @@ public class XMLDB {
 			if(qe != null) {
 				qe.delete();
 			}
-			if(qc != null) {
-				qc.delete();
-			}
-			printLockStats("XMLDB.setValue");
 		}
 	}
 	public void addVarMetaData(final Frame parentFrame) {
 		try {
 			XmlQueryContext qc = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Eager);
-			printLockStats("Before check md query");
 			final XmlResults res = manager.query(
 					"collection('"+contName+"')/*[fn:empty(dbxml:metadata('var'))]", qc);
-			printLockStats("after check md query");
-			//uc.setApplyChangesToContainers(true);
 			// instead of having to determine the size of prog bar, should be figured out
 			// by the number of query builders..
 			final JProgressBar progBar = new JProgressBar(0, res.size()*7);
@@ -581,16 +504,12 @@ public class XMLDB {
 					XmlResults getNodeRes;
 					XmlValue tempVal;
 					XmlValue delVal;
-					//XmlDocument docTemp; 
 					java.util.List<String> getVarFromDoucmentNames = new ArrayList<String>();
 					boolean gotVars = false;
 					while(res.hasNext()) {
 						gotVars = true;
 						tempVal = res.next();
-						//docTemp = tempVal.asDocument();
 						getVarFromDoucmentNames.add(tempVal.getNodeHandle());
-						//docTemp.delete();
-						tempVal.delete();
 					}
 					res.delete();
 					for(Iterator<String> it = getVarFromDoucmentNames.iterator(); it.hasNext(); ) {
@@ -603,16 +522,12 @@ public class XMLDB {
 						while(tempRes.hasNext()) {
 							delVal = tempRes.next();
 							strBuff.append(delVal.asString());
-							delVal.delete();
 							strBuff.append(';');
 						}
-						printLockStats("after first var look-up");
 						XmlDocument docTemp = tempVal.asDocument();
-						printLockStats("after get document");
 						docTemp.setMetaData("", "demographicsVar", new XmlValue(strBuff.toString()));
 						tempRes.delete();
 						SwingUtilities.invokeLater(incProgress);
-						printLockStats("After done adding demoVar");
 
 						path = "local:distinct-node-names(/scenario/world/*[@type='region']/*[@type='sector']/*[@type='subsector']/*[@type='technology']/*[fn:count(child::text()) = 1])";
 						tempRes = getVars(tempVal, path);
@@ -621,7 +536,6 @@ public class XMLDB {
 							//System.out.println("adding");
 							delVal = tempRes.next();
 							strBuff.append(delVal.asString());
-							delVal.delete();
 							strBuff.append(';');
 						}
 						tempRes.delete();
@@ -635,7 +549,6 @@ public class XMLDB {
 						while(tempRes.hasNext()) {
 							delVal = tempRes.next();
 							strBuff.append(delVal.asString()).append(';');
-							delVal.delete();
 						}
 						docTemp.setMetaData("", "ghgNames", new XmlValue(strBuff.toString()));
 						tempRes.delete();
@@ -647,7 +560,6 @@ public class XMLDB {
 						while(tempRes.hasNext()) {
 							delVal = tempRes.next();
 							strBuff.append(delVal.asString()).append(';');
-							delVal.delete();
 						}
 						docTemp.setMetaData("", "fuelNames", new XmlValue(strBuff.toString()));
 						tempRes.delete();
@@ -659,7 +571,6 @@ public class XMLDB {
 						while(tempRes.hasNext()) {
 							delVal = tempRes.next();
 							strBuff.append(delVal.asString());
-							delVal.delete();
 							strBuff.append(';');
 						}
 						docTemp.setMetaData("", "ClimateVar", new XmlValue(strBuff.toString()));
@@ -672,7 +583,6 @@ public class XMLDB {
 						while(tempRes.hasNext()) {
 							delVal = tempRes.next();
 							strBuff.append(delVal.asString());
-							delVal.delete();
 							strBuff.append(';');
 						}
 						docTemp.setMetaData("", "LandAllocationVar", new XmlValue(strBuff.toString()));
@@ -685,19 +595,16 @@ public class XMLDB {
 						while(tempRes.hasNext()) {
 							delVal = tempRes.next();
 							strBuff.append(delVal.asString());
-							delVal.delete();
 							strBuff.append(';');
 						}
 						docTemp.setMetaData("", "GDPVar", new XmlValue(strBuff.toString()));
+						final XmlUpdateContext uc = manager.createUpdateContext();
 						myContainer.updateDocument(docTemp, uc);
-						docTemp.delete();
-						tempVal.delete();
 						tempRes.delete();
 						getNodeRes.delete();
 						SwingUtilities.invokeLater(incProgress);
 					}
 					res.delete();
-					printLockStats("addVarMetaData1");
 					getVarMetaData();
 					if(jd != null) {
 						SwingUtilities.invokeLater(new Runnable() {
@@ -718,7 +625,6 @@ public class XMLDB {
 			e.printStackTrace();
 			//closeDB();
 		}
-		printLockStats("addVarMetaData2");
 	}
 
 	protected XmlResults getVars(XmlValue contextVal, String path) {
@@ -726,32 +632,16 @@ public class XMLDB {
 			XmlQueryContext qc = manager.createQueryContext(XmlQueryContext.LiveValues, XmlQueryContext.Lazy);
 
 			/* The xQuery more readable:
-			* declare function local:distinct-node-names ($arg as node()*, $before_a as xs:string*) as xs:string* { 
-			*	for $a at $apos in $arg
-			*	let $b := fn:local-name($a),
-			*	    $c_before := fn:count($before_a) + $apos - $apos,
-			*	    $before_a := fn:distinct-values(fn:insert-before($before_a, 0, $b))
-			*	where not(fn:count($before_a) = $c_before)
-			*	return $b
-			* };
-			* local:distinct-node-names(/scenario/world/region/supplysector/subsector/technology/*[fn:count(child::text()) = 1], ())
-			*/
-			/* The above seems to be broken with the new XQuery lib in dbxml 2.3
-			 * so here goes another shot..
 			 * declare function local:distinct-node-names ($args as node()*) as xs:string* { 
 			 *	fn:distinct-values(for $nname in $args return fn:local-name($nname))
 			 * }; 
 			 * local:distinct-node-names(/scenario/world/region/supplysector/subsector/technology/*[fn:count(child::text()) = 1])
 			 */ 
-			/* Does not work since BDBXML 2.3
-			String queryStr = "declare function local:distinct-node-names ($arg as node()*, $before_a as xs:string*) as xs:string* {    for $a at $apos in $arg  let $b := fn:local-name($a), $c_before := fn:count($before_a) + $apos - $apos, $before_a := fn:distinct-values(fn:insert-before($before_a, 0, $b))  where not(fn:count($before_a) = $c_before)  return $b }; "+path;
-			*/
 			String queryStr = "declare function local:distinct-node-names ($args as node()*) as xs:string* { fn:distinct-values(for $nname in $args return fn:local-name($nname)) }; "+path;
 			XmlQueryExpression qe = manager.prepare(queryStr, qc);
 			return qe.execute(contextVal, qc);
 		} catch(XmlException e) {
 			e.printStackTrace();
-			//closeDB();
 			return null;
 		}
 	}
@@ -759,13 +649,13 @@ public class XMLDB {
 		XmlResults res = createQuery("/*[fn:exists(dbxml:metadata('var'))]", null, null, null);
 		// TODO: is is safe to assume if one is null they are all null?
 		if(SupplyDemandQueryBuilder.varList == null) {
-			SupplyDemandQueryBuilder.varList = new LinkedHashMap();
-			DemographicsQueryBuilder.varList = new LinkedHashMap();
-			EmissionsQueryBuilder.ghgList = new LinkedHashMap();
-			EmissionsQueryBuilder.fuelList = new LinkedHashMap();
-			GDPQueryBuilder.varList = new LinkedHashMap();
-			ClimateQueryBuilder.varList = new LinkedHashMap();
-			LandAllocatorQueryBuilder.varList = new LinkedHashMap();
+			SupplyDemandQueryBuilder.varList = new LinkedHashMap<String, Boolean>();
+			DemographicsQueryBuilder.varList = new LinkedHashMap<String, Boolean>();
+			EmissionsQueryBuilder.ghgList = new LinkedHashMap<String, Boolean>();
+			EmissionsQueryBuilder.fuelList = new LinkedHashMap<String, Boolean>();
+			GDPQueryBuilder.varList = new LinkedHashMap<String, Boolean>();
+			ClimateQueryBuilder.varList = new LinkedHashMap<String, Boolean>();
+			LandAllocatorQueryBuilder.varList = new LinkedHashMap<String, Boolean>();
 		}
 		XmlMetaData md;
 		try {
@@ -814,12 +704,7 @@ public class XMLDB {
 							LandAllocatorQueryBuilder.varList.put(vars[i], new Boolean(false));
 						}
 					}
-					mdVal.delete();
-					//md.delete();
 				}
-				//it.delete();
-				docTemp.delete();
-				vt.delete();
 			}
 		} catch(XmlException e) {
 			e.printStackTrace();
@@ -827,95 +712,27 @@ public class XMLDB {
 		res.delete();
 		// maybe this should be somewhere else..
 		// maybe summable list should be cached..
-		Vector funcTemp = new Vector<String>(1,0);
+		Vector<String> funcTemp = new Vector<String>(1,0);
 		funcTemp.add("distinct-values");
 		res = createQuery("/scenario/output-meta-data/summable/@var", funcTemp, null, null);
-		QueryGenerator.sumableList = new Vector();
+		QueryGenerator.sumableList = new Vector<String>();
 		QueryGenerator.hasYearList = new Vector<String>();
 		XmlValue delValue;
 		try {
 			while(res.hasNext()) {
 				delValue = res.next();
 				QueryGenerator.sumableList.add(delValue.asString());
-				delValue.delete();
 			}
 			res.delete();
 			res = createQuery("/scenario/output-meta-data/has-year/@var", funcTemp, null, null);
 			while(res.hasNext()) {
 				delValue = res.next();
 				QueryGenerator.hasYearList.add(delValue.asString());
-				delValue.delete();
 			}
 			res.delete();
 		} catch(XmlException e) {
 			e.printStackTrace();
 		}
-		printLockStats("getVarMetaData");
-	}
-	/**
-	 * Trys to upgrade the database at the passed in location.  This will
-	 * rely on the db_upgrade database utility to be located in the same directory
-	 * as the jar.
-	 * @param path The path to the directory of where the database is.
-	 * @param name The file name of the database.
-	 * @return True if it worked false otherwise.
-	 */
-	private static boolean upgradeDatabase(String path, String name) {
-		// do I need to worry about escaping the path?
-		final String command = System.getProperty("ModelInterface.ModelGUI2.dbxml.location")+" -h "+path;
-		//System.out.println("Command is: "+command);
-		final String[] env = new String[1];
-		final String upgradeCommand = "upgradeContainer "+name;
-		final String exitCommand = "exit";
-		env[0] = "DYLD_LIBRARY_PATH="+System.getProperty("java.library.path");
-		//System.out.println("env is: "+env[0]);
-		boolean ret = false;
-		try {
-			final Process proc = Runtime.getRuntime().exec(command, env);
-			java.io.BufferedWriter writer = new java.io.BufferedWriter(new java.io.OutputStreamWriter(proc.getOutputStream()));
-			writer.write(upgradeCommand, 0, upgradeCommand.length());
-			writer.newLine();
-			writer.flush();
-			writer.write(exitCommand, 0, exitCommand.length());
-			writer.newLine();
-			writer.flush();
-			/*
-			new Thread(new Runnable() {
-				public void run() {
-					for(int i = 0; i < 5; ++i) {
-						try {
-							System.out.println("Doing stuff");
-					java.io.BufferedReader buff = new java.io.BufferedReader(new java.io.InputStreamReader(proc.getErrorStream()));
-					String read;
-					while(buff.ready() && (read = buff.readLine()) != null) {
-						System.out.println(read);
-					}
-					buff.close();
-					buff = new java.io.BufferedReader(new java.io.InputStreamReader(proc.getInputStream()));
-					while(buff.ready() && (read = buff.readLine()) != null) {
-						System.out.println(read);
-					}
-					buff.close();
-					System.out.println("Before sleep");
-					Thread.sleep(10000);
-					System.out.println("After sleep");
-						} catch(Exception e) {
-							e.printStackTrace();
-						}
-					}
-					System.out.println("Before destroy");
-					proc.destroy();
-					System.out.println("After destroy");
-				}
-			}).start();
-			*/
-
-			ret = proc.waitFor() == 0;
-			//System.out.println("return value: "+proc.exitValue());
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		return ret;
 	}
 	// TODO: this is a util method and should be moved somewhere else
 	public static JDialog createProgressBarGUI(Frame parentFrame, JProgressBar progBar, String title, String labelStr) {
@@ -937,74 +754,5 @@ public class XMLDB {
 		filterDialog.pack();
 		filterDialog.setVisible(true);
 		return filterDialog;
-	}
-	// the following classes can be used in order to figure out if any 
-	// references managed to avoid manual deletion which could lead to
-	// references still alive at db close time which is bad. Use in
-	// conjunction with createQuery so it will create the wrapped
-	// version and the wrapped version will also create wrapped versions
-	public class XmlResultsWrapper extends XmlResults {
-		private boolean didDelete = false;
-		public XmlResultsWrapper(XmlResults in) throws XmlException {
-			// it should copy it right? If so I can delete it.
-			super(in);
-			++numVals;
-			in.delete();
-		}
-		public XmlValue next() throws XmlException {
-			return new XmlValueWrapper(super.next());
-		}
-		public void delete() {
-			// only allow deleting one time to avoid double counting
-			if(!didDelete) {
-				--numVals;
-				super.delete();
-				didDelete = true;
-			}
-		}
-		public void finalize() {
-			// do nothing so I know I don't have to rely on gc
-		}
-	}
-	public class XmlValueWrapper extends XmlValue {
-		private boolean didDelete = false;
-		public XmlValueWrapper(XmlValue in) throws XmlException {
-			// again copies right?
-			super(in);
-			++numVals;
-			in.delete();
-		}
-		public void delete() {
-			// only allow deleting one time to avoid double counting
-			if(!didDelete) {
-				--numVals;
-				super.delete();
-				didDelete = true;
-			}
-		}
-		public XmlResults getAttributes() throws XmlException {
-			return new XmlResultsWrapper(super.getAttributes());
-		}
-		public XmlValue getFirstChild() throws XmlException {
-			return new XmlValueWrapper(super.getFirstChild());
-		}
-		public XmlValue getLastChild() throws XmlException {
-			return new XmlValueWrapper(super.getLastChild());
-		}
-		public XmlValue getNextSibling() throws XmlException {
-			return new XmlValueWrapper(super.getNextSibling());
-		}
-		public XmlValue getOwnerElement() throws XmlException {
-			return new XmlValueWrapper(super.getOwnerElement());
-		}
-		public XmlValue getParentNode() throws XmlException {
-			return new XmlValueWrapper(super.getParentNode());
-		}
-		public XmlValue getPreviousSibling() throws XmlException {
-			return new XmlValueWrapper(super.getPreviousSibling());
-		}
-		public void finalize() {
-			// do nothing so I know I don't have to rely on gc
-		}
 	}
 }
