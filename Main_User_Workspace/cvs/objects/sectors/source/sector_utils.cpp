@@ -475,3 +475,98 @@ double SectorUtils::convertCapacityToEnergy( const double aCapacityFactor,
 	//converts capacity in GW to energy in EJ
     return aCapacity * ( aCapacityFactor * EJ_PER_GWH * HOURS_PER_YEAR );
 }
+
+/*! \brief Fills missing period elements in a Value vector with values linearly 
+*        interpolated from initialized or read-in values.
+* \detail This method is intended for enabling variable time-step capability
+*         and filling in values that have not been read-in or initialized
+*         in a PeriodVector.
+* \param aValueVector a period vector of Values.
+* \author Sonny Kim
+*/
+void SectorUtils::fillMissingPeriodVectorInterpolated( objects::PeriodVector<Value>& aPeriodVector ){
+    const Modeltime* modeltime = scenario->getModeltime();
+    
+    // the periodVector for the final calibration period should be initialized
+    assert( aPeriodVector[ modeltime->getFinalCalibrationPeriod() ].isInited() );
+
+    for( int per = modeltime->getFinalCalibrationPeriod() + 1; per < modeltime->getmaxper(); ++per ) {
+        int currYear = modeltime->getper_to_yr( per );
+        // search for the bounded read-in values
+        // There is always an initialized value for the calibration period.
+        if( !aPeriodVector[ per ].isInited() ) { // not read in
+            int prevPer = per - 1;
+            // find the previous read-in value
+            while( prevPer > modeltime->getBasePeriod() &&
+                !aPeriodVector[ prevPer ].isInited() )
+            {
+                --prevPer;
+            }
+            int prevYear = modeltime->getper_to_yr( prevPer );
+            Value prevValue = aPeriodVector[ prevPer ];
+
+            int nextPer = per + 1;
+            // find the next or following read-in value
+            while( nextPer < modeltime->getmaxper() &&
+                !aPeriodVector[ nextPer ].isInited() )
+            {
+                ++nextPer;
+            }
+            if( nextPer == modeltime->getmaxper() ){
+                // got to end of model time without finding initialized value
+                // set nextPer to previous period with initialized value
+                nextPer = prevPer;
+            }
+            int nextYear = modeltime->getper_to_yr( nextPer );
+            Value nextValue = aPeriodVector[ nextPer ];
+            // Initialize period vector with interpolated values.
+            aPeriodVector[ per ].set( prevYear != nextYear ? util::linearInterpolateY( 
+                currYear, prevYear, nextYear, prevValue, nextValue ) : prevValue.get() );
+        }
+    }
+}
+
+/*! \brief Fills missing period elements in a Value vector with values 
+*         available from next initialized or read-in values.
+* \detail This method is intended for enabling variable time-step capability
+*         and filling in values that have not been read-in or initialized
+*         in a PeriodVector.
+* \param aValueVector a period vector of Values.
+* \author Sonny Kim
+*/
+void SectorUtils::fillMissingPeriodVectorNextAvailable( objects::PeriodVector<Value>& aPeriodVector ){
+    const Modeltime* modeltime = scenario->getModeltime();
+    
+    // the periodVector for the final calibration period should be initialized
+    assert( aPeriodVector[ modeltime->getFinalCalibrationPeriod() ].isInited() );
+
+    for( int per = modeltime->getFinalCalibrationPeriod() + 1; per < modeltime->getmaxper(); ++per ) {
+        // search for the bounded read-in values
+        // There is always an initialized value for the calibration period.
+        if( !aPeriodVector[ per ].isInited() ) { // not read in
+            int prevPer = per - 1;
+            // find the previous read-in value
+            while( prevPer > modeltime->getBasePeriod() &&
+                !aPeriodVector[ prevPer ].isInited() )
+            {
+                --prevPer;
+            }
+
+            int nextPer = per + 1;
+            // find the next or following read-in value
+            while( nextPer < modeltime->getmaxper() &&
+                !aPeriodVector[ nextPer ].isInited() )
+            {
+                ++nextPer;
+            }
+            if( nextPer == modeltime->getmaxper() ){
+                // got to end of model time without finding initialized value
+                // set nextPer to previous period with initialized value
+                nextPer = prevPer;
+            }
+
+            // Set period vector with value from next available initialized period.
+            aPeriodVector[ per ] = aPeriodVector[ nextPer ];
+        }
+    }
+}

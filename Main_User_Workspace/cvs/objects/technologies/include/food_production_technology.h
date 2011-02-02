@@ -67,7 +67,7 @@ public:
     FoodProductionTechnology( const std::string& aName,
                               const int aYear );
     ~FoodProductionTechnology();
-    static const std::string& getXMLNameStatic1D();
+    static const std::string& getXMLNameStatic();
     FoodProductionTechnology* clone() const;    
     
     virtual void completeInit( const std::string& aRegionName,
@@ -75,8 +75,7 @@ public:
                                const std::string& aSubsectorName,
                                DependencyFinder* aDepFinder,
                                const IInfo* aSubsectorIInfo,
-                               ILandAllocator* aLandAllocator,
-                               const GlobalTechnologyDatabase* aGlobalTechDB );
+                               ILandAllocator* aLandAllocator );
     
     virtual void initCalc( const std::string& aRegionName,
                            const std::string& aSectorName,
@@ -107,9 +106,14 @@ public:
 
     virtual double getNonEnergyCost( const std::string& aRegionName,
                                      const int aPeriod ) const;
+    virtual void doInterpolations( const Technology* aPrevTech, const Technology* aNextTech );
+    
+    virtual Value getParsedShareWeight() const;
 protected:
     std::string landType; //!< Type of land that will be used for this product
     double variableCost; //!< The non-land cost of producing a unit of product
+    //! Flag to indicate if the variableCost was set exogenously
+    bool mReadInVariableCost;
     double mNonLandCostTechChange; //!< Annual percent reduction in non-land variableCost
     double calYield; //!< optional input of calibration yield -- used only for sectors with no current production
     double calLandUsed; //!< input calibration value for land use
@@ -139,7 +143,7 @@ protected:
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void acceptDerived( IVisitor* aVisitor, const int aPeriod ) const;    
-    virtual const std::string& getXMLName1D() const;
+    virtual const std::string& getXMLName() const;
     
     virtual double calcProfitRate( const std::string& aRegionName,
                                    const std::string& aProductName,

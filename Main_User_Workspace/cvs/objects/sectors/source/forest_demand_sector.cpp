@@ -172,8 +172,7 @@ void ForestDemandSector::setFinalDemand( const string& aRegionName,
     marketplace->addToDemand( mName, aRegionName, annualServiceDemand, aPeriod );
 
     // Demand for future market period
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int futureMarketIncrement = mRotationPeriod / modeltime->gettimestep( aPeriod );
+    const int futureMarketIncrement = numPeriodsForRotation( aPeriod );
     // Need to calc demand for every intermediate period since demand depends on previous period's demand
     // Could create new demand function that doesn't work like this since demand currently has a fixed pathway for forests
     
@@ -249,7 +248,8 @@ double ForestDemandSector::calcFutureForestDemand( const string& aRegionName,
  
     // This price ratio is for the entire rotation period
     // We want to scale it to represent only the difference in prices in one timestep
-    const int numPeriods = mRotationPeriod / modeltime->gettimestep( aBasePeriod );
+    // TODO: is this even what we want?
+    const int numPeriods = numPeriodsForRotation( aPeriod );
     priceRatio = pow( priceRatio, 1.0 / (double) numPeriods );
 
     const double demandScaler = mDemandFunction->calcDemand( aDemographics,
@@ -322,3 +322,30 @@ double ForestDemandSector::PerCapitaNotAdjGDPDemandFunction::calcDemand(
     return macroEconomicScaler;
 }
 
+/*!
+ * \brief Calculate the number of model periods to reach the year for the rotation
+ *        period.
+ * \details Since time steps can not be assumed to be constant we must calculate
+ *          this value by inceasing the period and checking if that model year is
+ *          greater than or equal to the rotation year.
+ * \param aPeriod The current model period.
+ * \return The number of additional model periods from aPeriod it will take to
+ *         reach the rotation period.
+ */
+int ForestDemandSector::numPeriodsForRotation( const int aPeriod ) const {
+    const Modeltime* modeltime = scenario->getModeltime();
+    if( aPeriod >= modeltime->getmaxper() ) {
+        return ceil( static_cast<double>( mRotationPeriod ) / modeltime->gettimestep( modeltime->getmaxper() - 1 ) );
+    }
+    const int rotationYear = modeltime->getper_to_yr( aPeriod ) + mRotationPeriod;
+    int numPeriods = aPeriod;
+    for( ; numPeriods < modeltime->getmaxper() && modeltime->getper_to_yr( numPeriods ) < rotationYear; ++numPeriods ) {
+    }
+    
+    if( numPeriods == modeltime->getmaxper() ) {
+        const int finalPeriod = modeltime->getmaxper() - 1;
+        numPeriods += ceil( static_cast<double>( rotationYear - modeltime->getper_to_yr( finalPeriod ) )
+                           / modeltime->gettimestep( finalPeriod ) ) - 1;
+    }
+    return numPeriods - aPeriod;
+}

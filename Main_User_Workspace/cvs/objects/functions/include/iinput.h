@@ -442,6 +442,20 @@ public:
     virtual void csvSGMOutputFile( std::ostream& aFile,
                                    const int aPeriod ) const = 0;
     
+    /*!
+     * \brief Hook for an input to do interpolations to fill in any data that
+     *        should be interpolated to a newly created input for the missing
+     *        technology.
+     * \param aYear the year to be filled in.
+     * \param aPreviousYear The year of the last parsed input.
+     * \param aNextYear The year of the next closest parsed input.
+     * \param aPreviousInput The previous parsed input.
+     * \param aNextInput The next parsed input.
+     */
+    virtual void doInterpolations( const int aYear, const int aPreviousYear,
+                                   const int aNextYear, const IInput* aPreviousInput,
+                                   const IInput* aNextInput ) = 0;
+    
     virtual void copyParamsInto( ProductionInput& aInput,
                                  const int aPeriod ) const = 0;
 

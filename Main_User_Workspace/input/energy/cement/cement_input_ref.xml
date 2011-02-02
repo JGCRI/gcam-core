@@ -382,6 +382,7 @@
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -1193,6 +1194,7 @@
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -2004,6 +2006,7 @@
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -2815,6 +2818,7 @@
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -3634,6 +3638,7 @@
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -4453,6 +4458,7 @@
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -5264,6 +5270,7 @@
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -6091,6 +6098,7 @@
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -6910,6 +6918,7 @@
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -7721,6 +7730,7 @@
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -8532,6 +8542,7 @@
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -9343,6 +9354,7 @@
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -10154,6 +10166,7 @@
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -10973,6 +10986,7 @@
                      </standard-capture-component>
                      <CO2 name="CO2">CO2</CO2>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>

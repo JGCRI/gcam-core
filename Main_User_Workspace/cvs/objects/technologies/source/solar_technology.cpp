@@ -253,15 +253,14 @@ void SolarTechnology::completeInit(
    const std::string&              aSubsectorName,
    DependencyFinder*               aDepFinder,
    const IInfo*                    aSubsectorIInfo,
-   ILandAllocator*                 aLandAllocator,
-   const GlobalTechnologyDatabase* aGlobalTechDB )
+   ILandAllocator*                 aLandAllocator )
 {
    // Initialize a non-energy input to hold technology costs
    if( util::searchForValue( mInputs, getTechCostName() ) == mInputs.end() ){
         mInputs.push_back( new NonEnergyInput( getTechCostName() ) );
     }
 
-   parent::completeInit( aRegionName, aSectorName, aSubsectorName, aDepFinder, aSubsectorIInfo, aLandAllocator, aGlobalTechDB );
+   parent::completeInit( aRegionName, aSectorName, aSubsectorName, aDepFinder, aSubsectorIInfo, aLandAllocator );
 
    // Validate input parameters
    typedef ObjECTS::TValidatorInfo<> validator_type;
@@ -284,7 +283,7 @@ void SolarTechnology::completeInit(
       ILogger& mainLog = ILogger::getLogger( "main_log" );
       mainLog.setLevel( ILogger::ERROR );
       mainLog << "Invalid input parameter(s) to "
-         << getXMLNameStatic1D()
+         << getXMLNameStatic()
          << " in sector " << aSectorName
          << ": " << msg << std::endl;
       exit( -1 );
@@ -331,7 +330,7 @@ double SolarTechnology::getSolarEfficiency( const int aPeriod ) const
 // Documentation is inherited
 const std::string& SolarTechnology::getXMLName1D( void ) const
 {
-   return getXMLNameStatic1D();
+   return getXMLNameStatic();
 }
 
 // SolarTechnology::getXMLNameStatic1D ***************************************
@@ -380,7 +379,7 @@ void SolarTechnology::initCalc(
       ILogger& mainLog = ILogger::getLogger( "main_log" );
       mainLog.setLevel( ILogger::ERROR );
       mainLog << "Invalid input parameter(s) to "
-         << getXMLNameStatic1D()
+         << getXMLNameStatic()
          << " in sector " << aSectorName
          << ": " << mTotalAnnualIrradianceKey << std::endl;
    }

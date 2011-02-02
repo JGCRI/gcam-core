@@ -159,6 +159,10 @@ public:
 
     virtual void copyParamsInto( EnergyInput& aInput,
                                  const int aPeriod ) const;
+    
+    virtual void doInterpolations( const int aYear, const int aPreviousYear,
+                                   const int aNextYear, const IInput* aPreviousInput,
+                                   const IInput* aNextInput );
 
 protected:
     EnergyInput( const EnergyInput& aOther );

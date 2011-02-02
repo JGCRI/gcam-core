@@ -274,3 +274,27 @@ void InternalGains::accept( IVisitor* aVisitor,
     aVisitor->startVisitOutput( this, aPeriod );
     aVisitor->endVisitOutput( this, aPeriod );
 }
+
+void InternalGains::doInterpolations( const int aYear, const int aPreviousYear,
+                                      const int aNextYear, const IOutput* aPreviousOutput,
+                                      const IOutput* aNextOutput )
+{
+    // TODO: do we really want to do this?
+    const InternalGains* prevInternalGains = static_cast<const InternalGains*>( aPreviousOutput );
+    const InternalGains* nextInternalGains = static_cast<const InternalGains*>( aNextOutput );
+    
+    /*!
+     * \pre We are given a valid InternalGains for the previous output.
+     */
+    assert( prevInternalGains );
+    
+    /*!
+     * \pre We are given a valid InternalGains for the next output.
+     */
+    assert( nextInternalGains );
+    
+    // interpolate the output ratio
+    mOutputRatio.set( util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
+                                                prevInternalGains->mOutputRatio,
+                                                nextInternalGains->mOutputRatio ) );
+}

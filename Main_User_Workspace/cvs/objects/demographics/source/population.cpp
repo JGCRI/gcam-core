@@ -61,12 +61,17 @@ using namespace xercesc;
 extern Scenario* scenario;
 
 //! Default constructor.
-Population::Population(){
-    mYear = -1;
-    mTotalPop = -1;
-    mWorkingAgeMin = WORKING_AGE_MIN_DEFAULT;
-    mWorkingAgeMax = WORKING_AGE_MAX_DEFAULT;
-    mPopulationUnit = "thous";
+Population::Population():
+    mYear(-1),
+    mTotalPop(-1),
+    mPopulationUnit("thous"),
+    mIsParsed(true),
+    mWorkingAgeMin(WORKING_AGE_MIN_DEFAULT),
+    mWorkingAgeMax(WORKING_AGE_MAX_DEFAULT)
+
+{
+    //mWorkingAgeMin = WORKING_AGE_MIN_DEFAULT;
+    //mWorkingAgeMax = WORKING_AGE_MAX_DEFAULT;
 }
 
 //! Population destructor. 

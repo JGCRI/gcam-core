@@ -55,6 +55,7 @@
 #include "containers/include/info_factory.h"
 #include "containers/include/iinfo.h"
 #include "util/base/include/ivisitor.h"
+#include "sectors/include/sector_utils.h"
 
 using namespace std;
 using namespace xercesc;
@@ -63,17 +64,15 @@ extern Scenario* scenario;
 // static initialize.
 const string SubResource::XML_NAME = "subresource";
 const double GDP_EXPANS_DEFAULT = 1;
+const Value VALUE_DEFAULT = 0.0;
 
 //! Default constructor.
 SubResource::SubResource():
-mPriceAdder( scenario->getModeltime()->getmaxper() , 0.0 ),
+//mPriceAdder( scenario->getModeltime()->getmaxper() , 0.0 ),
 mEffectivePrice( scenario->getModeltime()->getmaxper() , -1.0 ),
 mCalProduction( scenario->getModeltime()->getmaxper() , -1.0 ),
-mTechChange( scenario->getModeltime()->getmaxper() , 0.0 ),
 mCumulativeTechChange( scenario->getModeltime()->getmaxper() , 1.0 ),
 mAnnualProd( scenario->getModeltime()->getmaxper() , 0.0 ),
-mEnvironCost( scenario->getModeltime()->getmaxper() , 0.0 ),
-mSeveranceTax( scenario->getModeltime()->getmaxper() , 0.0 ),
 mAvailable( scenario->getModeltime()->getmaxper() , 0.0 ),
 mCumulProd( scenario->getModeltime()->getmaxper() , 0.0 )
 {
@@ -113,19 +112,19 @@ void SubResource::XMLParse( const DOMNode* node ){
             XMLHelper<double>::insertValueIntoVector( curr, mAnnualProd, modeltime );
         }
         else if( nodeName == "techChange" ){
-            XMLHelper<double>::insertValueIntoVector( curr, mTechChange, modeltime );
+            XMLHelper<Value>::insertValueIntoVector( curr, mTechChange, modeltime );
         }
         else if( nodeName == "environCost" ){
-            XMLHelper<double>::insertValueIntoVector( curr, mEnvironCost, modeltime );
+            XMLHelper<Value>::insertValueIntoVector( curr, mEnvironCost, modeltime );
         }
         else if( nodeName == "severanceTax" ){
-            XMLHelper<double>::insertValueIntoVector( curr, mSeveranceTax, modeltime );
+            XMLHelper<Value>::insertValueIntoVector( curr, mSeveranceTax, modeltime );
         }
         else if( nodeName == "cal-production" ){
             XMLHelper<double>::insertValueIntoVector( curr, mCalProduction, modeltime );
         }
         else if( nodeName == "price-adder" ){
-            XMLHelper<double>::insertValueIntoVector( curr, mPriceAdder, modeltime );
+            XMLHelper<Value>::insertValueIntoVector( curr, mPriceAdder, modeltime );
         }
         else if( !XMLDerivedClassParse( nodeName, curr ) ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -155,6 +154,39 @@ void SubResource::completeInit( const IInfo* aResourceInfo ) {
         ( *gradeIter )->completeInit( mSubresourceInfo.get() );
     }
 
+    // Interpolate and initialized exogenous resource variables created dynamically.
+    const Modeltime* modeltime = scenario->getModeltime();
+
+    // If unitialize, initialize following variables to null for final calibration period.
+    const int FinalCalPer = modeltime->getFinalCalibrationPeriod();
+    if( !mTechChange[ FinalCalPer ].isInited() ) {
+        mTechChange[ FinalCalPer ] = VALUE_DEFAULT;
+    }
+    if( !mEnvironCost[ FinalCalPer ].isInited() ) {
+        mEnvironCost[ FinalCalPer ] = VALUE_DEFAULT;
+    }
+    if( !mSeveranceTax[ FinalCalPer ].isInited() ) {
+        mSeveranceTax[ FinalCalPer ] = VALUE_DEFAULT;
+    }
+
+    // decrement from terminal period to copy backward the technical change for missing periods
+    for( int per = modeltime->getmaxper() - 1; per > modeltime->getFinalCalibrationPeriod(); --per ) {
+        if( !mTechChange[ per ].isInited() ){
+            // Copy backwards.
+            if( per < modeltime->getmaxper() - 1 ){
+                mTechChange[ per ] = mTechChange[ per + 1 ];
+            }
+            // For unitialized terminal period.
+            // This may occur if running GCAM time periods beyond read-in dataset and
+            // fillout is not used.
+            else{
+                mTechChange[ per ] = VALUE_DEFAULT;
+            }
+        }
+    }
+
+    SectorUtils::fillMissingPeriodVectorInterpolated( mEnvironCost );
+    SectorUtils::fillMissingPeriodVectorInterpolated( mSeveranceTax );
 }
 
 /*! \brief Perform any initializations needed for each period.
@@ -184,10 +216,13 @@ void SubResource::initCalc( const string& aRegionName, const string& aResourceNa
             mEnvironCost[ aPeriod ], aPeriod );
     }
 
-    // Copy the price adder forward
-    if ( aPeriod > 0 && mPriceAdder[ aPeriod ] == 0.0 ) {
-        mPriceAdder[ aPeriod ] = mPriceAdder[ aPeriod - 1 ];
+    // Fill price added after it is calibrated.  This will interpolate to any
+    // price adders read in the future or just copy forward if there is nothing
+    // to interpolate to.
+    if( aPeriod == scenario->getModeltime()->getFinalCalibrationPeriod() + 1 ) {
+        SectorUtils::fillMissingPeriodVectorInterpolated( mPriceAdder );
     }
+    
 }
 
 /*! \brief Perform any initializations needed after each period.
@@ -228,15 +263,16 @@ void SubResource::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag( getXMLName(), out, tabs, mName );
 
     // write the xml for the class members.
-    XMLWriteVector( mEnvironCost, "environCost", out, tabs, modeltime, 0.0 );
-    XMLWriteVector( mSeveranceTax, "severanceTax", out, tabs, modeltime, 0.0 );
+    const Value VALUE_DEFAULT = 0.0; // enables template function to recognize Value Class
+    XMLWriteVector( mEnvironCost, "environCost", out, tabs, modeltime, VALUE_DEFAULT );
+    XMLWriteVector( mSeveranceTax, "severanceTax", out, tabs, modeltime, VALUE_DEFAULT );
+    XMLWriteVector( mTechChange, "techChange", out, tabs, modeltime, VALUE_DEFAULT );
     
     // for base year only
     XMLWriteElementCheckDefault(mAnnualProd[0],"annualprod",out, tabs, 0.0 , modeltime->getper_to_yr(0)); 
 
-    XMLWriteVector( mTechChange, "techChange", out, tabs, modeltime, 0.0 );
     XMLWriteVector( mCalProduction, "cal-production", out, tabs, modeltime, -1.0 );
-    XMLWriteVector( mPriceAdder, "price-adder", out, tabs, modeltime, 0.0  );
+    XMLWriteVector( mPriceAdder, "price-adder", out, tabs, modeltime, VALUE_DEFAULT  );
     // finished writing xml for the class members.
 
     // write out anything specific to the derived classes

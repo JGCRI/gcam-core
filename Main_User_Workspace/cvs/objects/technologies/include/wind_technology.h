@@ -113,8 +113,7 @@ public :
       const std::string&              aSubsectorName,
       DependencyFinder*               aDepFinder,
       const IInfo*                    aSubsectorIInfo,
-      ILandAllocator*                 aLandAllocator,
-      const GlobalTechnologyDatabase* aGlobalTechDB );
+      ILandAllocator*                 aLandAllocator );
 
    // Documentation is inherited
    static const std::string& getXMLNameStatic1D( void );

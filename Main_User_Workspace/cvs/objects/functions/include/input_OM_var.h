@@ -127,6 +127,10 @@ public:
     virtual double getPriceElasticity() const;
 
     virtual double getTechChange( const int aPeriod ) const;
+    
+    virtual void doInterpolations( const int aYear, const int aPreviousYear,
+                                   const int aNextYear, const IInput* aPreviousInput,
+                                   const IInput* aNextInput );
 
 protected:
 

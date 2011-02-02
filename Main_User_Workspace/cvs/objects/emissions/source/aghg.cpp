@@ -413,3 +413,20 @@ std::string AGHG::getGHGDriverName() const
 {
     return ( mEmissionsDriver->getXMLName() );
 }
+
+/*!
+ * \brief Hook for a ghg to do interpolations to fill in any data that
+ *        should be interpolated to a newly created ghg for the missing
+ *        technology.
+ * \param aYear the year to be filled in.
+ * \param aPreviousYear The year of the last parsed ghg.
+ * \param aNextYear The year of the next closest parsed ghg.
+ * \param aPreviousGHG The previous parsed ghg.
+ * \param aNextGHG The next parsed ghg.
+ */
+void AGHG::doInterpolations( const int aYear, const int aPreviousYear,
+                             const int aNextYear, const AGHG* aPreviousGHG,
+                             const AGHG* aNextGHG )
+{
+    // the default is to not interpolate anything
+}

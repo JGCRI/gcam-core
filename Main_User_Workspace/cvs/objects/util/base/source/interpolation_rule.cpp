@@ -45,7 +45,6 @@
 #include <xercesc/dom/DOMNodeList.hpp>
 
 #include "util/base/include/interpolation_rule.h"
-#include "util/base/include/iinterpolation_function.h"
 #include "util/base/include/interpolation_function_factory.h"
 #include "util/base/include/fixed_interpolation_function.h" // for the fixed hack
 #include "util/curves/include/xy_data_point.h"
@@ -63,7 +62,8 @@ extern Scenario* scenario;
 InterpolationRule::InterpolationRule():
 mOverwritePolicy( ALWAYS ),
 mWarnWhenOverwritting( false ),
-mIsFixedFunction( false )
+mIsFixedFunction( false ),
+mUseLastModelYearConstant( false )
 {
 }
 
@@ -73,6 +73,17 @@ InterpolationRule::~InterpolationRule() {
 const string& InterpolationRule::getXMLNameStatic() {
     const static string XML_NAME = "interpolation-rule";
     return XML_NAME;
+}
+
+/*!
+ * \brief Return the constant flag that indicates a user wanted to interpolate
+ *        to the last model year.
+ * \return Constant flag used in the input data to be replaced with the last
+ *         model year.
+ */
+const int InterpolationRule::getLastModelYearConstant() {
+    const static int END_MODEL_YEAR_FLAG = 9999;
+    return END_MODEL_YEAR_FLAG;
 }
 
 bool InterpolationRule::XMLParse( const DOMNode* aNode ) {
@@ -85,6 +96,12 @@ bool InterpolationRule::XMLParse( const DOMNode* aNode ) {
     // get the year-range this rule is applicable from the attributes
     mFromYear = XMLHelper<int>::getAttr( aNode, "from-year" );
     mToYear = XMLHelper<int>::getAttr( aNode, "to-year" );
+    
+    // replace to year if it is equal to the last model year flag
+    if( mToYear == getLastModelYearConstant() ) {
+        mToYear = scenario->getModeltime()->getEndYear();
+        mUseLastModelYearConstant = true;
+    }
 
     // get the children of the node.
     DOMNodeList* nodeList = aNode->getChildNodes();
@@ -158,7 +175,8 @@ void InterpolationRule::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     // TODO: create a XMLWriteOpeningTagWithAttributes
     aTabs->writeTabs( aOut );
     aOut << "<" << getXMLNameStatic() << " apply-to=\"" << mApplyTo
-        << "\" from-year=\"" << mFromYear << "\" to-year=\"" << mToYear
+         << "\" from-year=\"" << mFromYear << "\" to-year=\""
+         << ( mUseLastModelYearConstant ? getLastModelYearConstant() : mToYear )
          << "\">" << endl;
     aTabs->increaseIndent();
 
@@ -215,8 +233,7 @@ void InterpolationRule::applyInterpolations( PeriodVector<Value>& aValuesToInter
     }
     const Modeltime* modeltime = scenario->getModeltime();
     int fromPer = 0;
-    // TODO: we must double check isModelYear becuase of the way carbon cycle uses model years
-    if( modeltime->isModelYear( mFromYear ) && modeltime->getper_to_yr( modeltime->getyr_to_per( mFromYear ) ) == mFromYear ) {
+    if( modeltime->isModelYear( mFromYear ) ) {
         // the left bracket is a model year so the fromPer can be converted
         // directly
         fromPer = modeltime->getyr_to_per( mFromYear );
@@ -257,17 +274,12 @@ void InterpolationRule::applyInterpolations( PeriodVector<Value>& aValuesToInter
     }
 
     int toPer = modeltime->getmaxper() - 1;
-    // TODO: we must double check isModelYear becuase of the way carbon cycle uses model years
-    if( modeltime->isModelYear( mToYear ) && modeltime->getper_to_yr( modeltime->getyr_to_per( mToYear ) ) == mToYear ) {
+    if( modeltime->isModelYear( mToYear ) ) {
         // the right bracket is a model year so the toPer can be converted
         // directly
         toPer = modeltime->getyr_to_per( mToYear );
-        // hack to allow the fixed interpolation function to set the value in the to-year
-        // as well
-        if( mIsFixedFunction ) {
-            ++toPer;
-        }
-        else if( !mToValue.isInited() && !aValuesToInterpolate[ toPer ].isInited() ) {
+
+        if( !mIsFixedFunction && !mToValue.isInited() && !aValuesToInterpolate[ toPer ].isInited() ) {
             // if we were to get the to-value from the given period vector
             // then it should have been set already
             // abort to-value has not been set
@@ -307,6 +319,10 @@ void InterpolationRule::applyInterpolations( PeriodVector<Value>& aValuesToInter
     // and perform any interpolations
     XYDataPoint leftBracket( mFromYear, mFromValue.isInited() ? mFromValue : aValuesToInterpolate[ fromPer ] );
     XYDataPoint rightBracket( mToYear, mToValue.isInited() ? mToValue : aValuesToInterpolate[ toPer ] );
+
+    // increment one to interpolate or set the terminal period for the fixed function.
+    if( mIsFixedFunction ){ ++toPer; } 
+
     for( int per = fromPer + 1; per < toPer; ++per ) {
         // determine if we can set a value in this period
         if( !aValuesToInterpolate[ per ].isInited() // no value as been set yet

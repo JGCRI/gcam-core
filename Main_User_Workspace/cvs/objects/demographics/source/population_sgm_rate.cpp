@@ -66,6 +66,12 @@ PopulationSGMRate::~PopulationSGMRate() {
     clear();
 }
 
+Population* PopulationSGMRate::cloneAndInterpolate( const int aNewYear, const Population* aNextPopulation ) const {
+    assert( false );
+    // TODO: not yet supported
+    return 0;
+}
+
 //! Helper member function for the destructor. Performs memory deallocation. 
 void PopulationSGMRate::clear(){
     for( AgeCohortIterator acIter = ageCohort.begin(); acIter != ageCohort.end(); ++acIter ){

@@ -113,7 +113,7 @@ public:
     RegionCGE();
     ~RegionCGE(); 
     static const std::string& getXMLNameStatic();
-    virtual void completeInit( const GlobalTechnologyDatabase* aGlobalTechDB );
+    virtual void completeInit();
     virtual void initCalc( const int period);
     virtual void postCalc( const int aPeriod );
     virtual void calc( const int period );

@@ -61,7 +61,8 @@ class ICalData;
 class ILandAllocator;
 class Demographic;
 class IOutput;
-class GlobalTechnologyDatabase;
+class IInput;
+class Technology;
 
 /*!
 * \brief A structure containing information about the same type Technology
@@ -74,6 +75,9 @@ struct PreviousPeriodInfo {
     //! Cumulative Hicks-Neutral technical change information from the previous
     //! period.
     double mCumulativeHicksNeutralTechChange;
+    
+    //! If info was set by a technology.
+    bool mIsFirstTech;
 };
 
 /*!
@@ -97,15 +101,14 @@ public:
     virtual void toInputXML( std::ostream& out, Tabs* tabs ) const = 0;
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const = 0;
     
-    virtual const std::string& getXMLName1D() const = 0;
+    virtual const std::string& getXMLName() const = 0;
     
     virtual void completeInit( const std::string& aRegionName,
                                const std::string& aSectorName,
                                const std::string& aSubsectorName,
                                DependencyFinder* aDepFinder,
                                const IInfo* aSubsectorIInfo,
-                               ILandAllocator* aLandAllocator,
-                               const GlobalTechnologyDatabase* aGlobalTechDB ) = 0;
+                               ILandAllocator* aLandAllocator ) = 0;
     
     virtual void initCalc( const std::string& aRegionName,
                            const std::string& aSectorName,
@@ -157,7 +160,6 @@ public:
 
     virtual const std::string& getName() const = 0;
 
-    virtual void scaleShareWeight( double scaleValue ) = 0;
     virtual void setShareWeight( double shareWeightValue ) = 0;
 
     virtual bool isOutputFixed( const bool aHasRequiredInput,
@@ -203,6 +205,8 @@ public:
     virtual bool isAvailable( const int aPeriod ) const = 0;
     
     virtual double calcFuelPrefElasticity( const int aPeriod ) const = 0;
+    
+    virtual void doInterpolations( const Technology* aPrevTech, const Technology* aNextTech ) = 0;
 
     protected:
 

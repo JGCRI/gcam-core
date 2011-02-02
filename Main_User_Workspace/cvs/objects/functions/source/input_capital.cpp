@@ -289,3 +289,41 @@ double InputCapital::getTechChange( const int aPeriod ) const
     return mTechChange;
 }
 
+void InputCapital::doInterpolations( const int aYear, const int aPreviousYear,
+                                     const int aNextYear, const IInput* aPreviousInput,
+                                     const IInput* aNextInput )
+{
+    const InputCapital* prevCapInput = static_cast<const InputCapital*>( aPreviousInput );
+    const InputCapital* nextCapInput = static_cast<const InputCapital*>( aNextInput );
+    
+    /*!
+     * \pre We are given a valid InputCapital for the previous input.
+     */
+    assert( prevCapInput );
+    
+    /*!
+     * \pre We are given a valid InputCapital for the next input.
+     */
+    assert( nextCapInput );
+    
+    // tech change is just copied from the next input
+    mTechChange = nextCapInput->mTechChange;
+    
+    // interpolate the costs
+    mCost = util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
+                                      prevCapInput->mCost, nextCapInput->mCost );
+    mCapitalOvernight = util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
+                                                  prevCapInput->mCapitalOvernight,
+                                                  nextCapInput->mCapitalOvernight );
+    mLifetimeCapital = util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
+                                                 prevCapInput->mLifetimeCapital,
+                                                 nextCapInput->mLifetimeCapital );
+    mLevelizedCapitalCost = util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
+                                                      prevCapInput->mLevelizedCapitalCost,
+                                                      nextCapInput->mLevelizedCapitalCost );
+    
+    // interplate capacity factor
+    mCapacityFactor = util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
+                                                prevCapInput->mCapacityFactor,
+                                                nextCapInput->mCapacityFactor );
+}

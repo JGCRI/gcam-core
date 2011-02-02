@@ -259,6 +259,33 @@ void GHGPolicy::completeInit( const string& aRegionName ) {
             currMarketInfo->setDouble( "proportional-tax-rate" + aRegionName, mProportionalTaxRate[ per ] );
         }
     }
+    // check for missing periods in which case interpolate
+    for( int i = 1; i < modeltime->getmaxper(); ++i ) {
+        if( mFixedTax[ i ] == -1 && mFixedTax[ i - 1 ] != -1 ) {
+            int j;
+            for( j = i + 1; j < modeltime->getmaxper() && mFixedTax[ j ] == -1; ++j ) {
+            }
+            if( j < modeltime->getmaxper() ) {
+                mFixedTax[ i ] = util::linearInterpolateY( modeltime->getper_to_yr( i ),
+                                                           modeltime->getper_to_yr( i - 1 ),
+                                                           modeltime->getper_to_yr( j ),
+                                                           mFixedTax[ i - 1 ],
+                                                           mFixedTax[ j ] );
+            }
+        }
+        if( mConstraint[ i ] == -1 && mConstraint[ i - 1 ] != -1 ) {
+            int j;
+            for( j = i + 1; j < modeltime->getmaxper() && mConstraint[ j ] == -1; ++j ) {
+            }
+            if( j < modeltime->getmaxper() ) {
+                mConstraint[ i ] = util::linearInterpolateY( modeltime->getper_to_yr( i ),
+                                                             modeltime->getper_to_yr( i - 1 ),
+                                                             modeltime->getper_to_yr( j ),
+                                                             mConstraint[ i - 1 ],
+                                                             mConstraint[ j ] );
+            }
+        }
+    }
 
     // Loop through each period
     // If it is a fixed tax, set the tax level and set the market not to solve

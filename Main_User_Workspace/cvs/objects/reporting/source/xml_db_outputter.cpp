@@ -119,6 +119,11 @@
 // into the XML database.
 #define DEBUG_XML_DB 0
 
+// Whether to write/update one region at a time when writing to the database.
+// This is a trade of between memeory usage and speed.  Splitting the regions
+// tends to be safer so that is the default.
+#define SPLIT_REGIONS_FOR_INSERT 0
+
 #ifdef DEBUG_XML_DB
 #include "util/base/include/auto_file.h"
 #endif
@@ -165,7 +170,8 @@ XMLDBOutputter::DBContainer::XMLContainerWrapper::XMLContainerWrapper( DbXml::Xm
 */
 XMLDBOutputter::XMLDBOutputter():
 mTabs( new Tabs ),
-mGDP( 0 )
+mGDP( 0 ),
+mIsFirstRegion( true )
 {}
 
 /*!
@@ -184,6 +190,9 @@ XMLDBOutputter::~XMLDBOutputter(){
 * \author Josh Lurz
 */
 void XMLDBOutputter::finish() const {
+    if( !mIsFirstRegion ) {
+        return;
+    }
     // Create the database container and its related structures.
     auto_ptr<DBContainer> dbContainer( createContainer() );
 
@@ -201,6 +210,7 @@ void XMLDBOutputter::finish() const {
 
 #if DEBUG_XML_DB
     {
+        // TODO: Avoid copying memory here
         AutoOutputFile debugOutput( "debug_db.xml" );
         debugOutput << mBuffer.str() << endl;
     }
@@ -208,10 +218,11 @@ void XMLDBOutputter::finish() const {
 
     // Insert the document into the database.
     try {
+        // bufferAdapter's memory is adopted by mContainer once putDocument is called
+        // with it.  Do not delete it's memory here.
+        StringStreamXmlInputStream* bufferAdapter = new StringStreamXmlInputStream( mBuffer );
         dbContainer->mContainerWrapper->mContainer.putDocument( docName,  // The document's name
-                               mBuffer.str(), // This would be more efficient
-                                              // by writing the to stream
-                                              // automatically.
+                               bufferAdapter, // the XmlInputStream that will read from mBuffer
                                context, // The update context
                                0 ); // Flags
     } catch ( const DbXml::XmlException& e ) {
@@ -380,6 +391,67 @@ bool XMLDBOutputter::appendData( const string& aData, const string& aLocation ) 
     return true;
 }
 
+/*! \brief Append data at a given location to an already written database container.
+ * \details
+ * \param aLocation XPath of the location to add the data.
+ * \return Whether the data was added successfully.
+ */
+bool XMLDBOutputter::appendBuffer( const string& aLocation ) {
+    // Check that both data and a location have been set.
+    if( aLocation.empty() ){
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Cannot append data to the XML database because location string is empty." << endl;
+        return false;
+    }
+    
+    // Create a database container to use for the update.
+    auto_ptr<DBContainer> dbContainer( createContainer() );
+    
+    // Check if creating the container failed.
+    if( !dbContainer.get() ){
+        // An error message will have been printed by create container.
+        return false;
+    }
+    
+    // Create a unique document name.
+    const string docName = createContainerName( scenario->getName() );
+    
+    // Try to get the document from the database.
+    try {
+        // Get the document which will be modified.
+        const string docXPath = "doc('dbxml:"
+        + dbContainer->mContainerWrapper->mContainer.getName()
+        + "/" + docName + "')";
+        
+        // Create the XPath will which locate where to insert the content.
+        const string locationXPath = docXPath + aLocation;
+        
+        // finally the XQuery-Update query to insert the node after the given location
+        //const string insertAfterQuery = "insert node " + aData + " after " + locationXPath;
+        const string insertAfterQuery = "insert node $dataToInsertVar after " + locationXPath;
+        
+        // set the var dataToInsertVar to aData and run the query
+        XmlQueryContext queryContext = dbContainer->mManager->createQueryContext();
+        XmlDocument dataAsDoc = dbContainer->mManager->createDocument();
+        XmlInputStream* bufferStream = new StringStreamXmlInputStream( mBuffer );
+        dataAsDoc.setContentAsXmlInputStream( bufferStream );
+        XmlValue dataAsValue( dataAsDoc );
+        queryContext.setVariableValue( "dataToInsertVar", dataAsValue );
+        XmlQueryExpression updateExpr = dbContainer->mManager->prepare( insertAfterQuery,
+                                                                       queryContext );
+        updateExpr.execute( queryContext );
+    }
+    catch ( const DbXml::XmlException& e ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "Failed to insert the cost information into the XML database. "
+        << e.what() << endl;
+        return false;
+    }
+    return true;
+}
+
 void XMLDBOutputter::startVisitScenario( const Scenario* aScenario, const int aPeriod ){
     // write heading for XML input file
     mBuffer << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" << endl;
@@ -466,6 +538,22 @@ void XMLDBOutputter::endVisitRegionMiniCAM( const RegionMiniCAM* aRegionMiniCAM,
 
     // Write the closing region tag.
     XMLWriteClosingTag( aRegionMiniCAM->getXMLName(), mBuffer, mTabs.get() );
+    
+#if SPLIT_REGIONS_FOR_INSERT
+    if( mIsFirstRegion ) {
+        mBuffer << "</world></scenario>" << endl;
+        finish();
+        mIsFirstRegion = false;
+    }
+    else {
+        mBuffer.put(0);
+        appendBuffer( "/scenario/world/region[last()]" );
+    }
+
+    mBuffer.clear();
+    mBuffer.seekg(0);
+    mBuffer.seekp(0);
+#endif
 }
 
 void XMLDBOutputter::startVisitRegionCGE( const RegionCGE* aRegionCGE, const int aPeriod ) {
@@ -543,6 +631,7 @@ void XMLDBOutputter::startVisitSubResource( const SubResource* aSubResource,
     const Modeltime* modeltime = scenario->getModeltime();
     for( int per = 0; per < modeltime->getmaxper(); ++per ){
         writeItem( "production", mCurrentOutputUnit, aSubResource->getAnnualProd( per ), per );
+        writeItem( "cumulative-production", mCurrentOutputUnit, aSubResource->getCumulProd( per ), per );
     }
 }
 
@@ -686,8 +775,6 @@ void XMLDBOutputter::endVisitBaseTechnology( const BaseTechnology* aBaseTech, co
  * \param aPeriod 
  */
 void XMLDBOutputter::startVisitTechnology( const Technology* aTechnology, const int aPeriod ){
-    // Store the fuel name so the GHG can write it out with emissions.
-    mCurrentFuel = aTechnology->mTechData->getFuelName();
     // Store the pointer to the current technology so that children of technology can access 
     // information on current technology.
     mCurrentTechnology = aTechnology;
@@ -700,9 +787,9 @@ void XMLDBOutputter::startVisitTechnology( const Technology* aTechnology, const 
     // the opening tag goes in the parent buffer
     // TODO: Inconsistent use of year attribute.  Technology vintage written out
     // with "year" attribute.
-    XMLWriteOpeningTag( aTechnology->getXMLName1D(), *parentBuffer, mTabs.get(),
+    XMLWriteOpeningTag( aTechnology->getXMLName(), *parentBuffer, mTabs.get(),
         aTechnology->getName(), aTechnology->year,
-        DefaultTechnology::getXMLNameStatic1D() );
+        DefaultTechnology::getXMLNameStatic() );
         
     // put the buffers on a stack so that we have the correct ordering
     mBufferStack.push( parentBuffer );
@@ -714,10 +801,6 @@ void XMLDBOutputter::startVisitTechnology( const Technology* aTechnology, const 
 
     // children of technology go in the child buffer
     for( int curr = 0; curr <= aPeriod; ++curr ){
-        // Calculate the technology's indirect emissions.
- //        mCurrIndirectEmissions[ curr ] = aTechnology->getInput( curr )
- //       * mIndirectEmissCalc->getUpstreamEmissionsCoefficient( mCurrentFuel,
- //                                                              curr );
         // Write out total cost which includes fuel and non-energy costs
         // for new investments only.
         // TODO: Inconsistent use of year attribute.  WriteItemToBuffer writes
@@ -736,7 +819,6 @@ void XMLDBOutputter::endVisitTechnology( const Technology* aTechnology,
                                          const int aPeriod )
 {
     // Clear the stored technology information.
-    mCurrentFuel.clear();
     mCurrentTechnology = 0; // reset technology pointer to null
     fill( mCurrIndirectEmissions.begin(), mCurrIndirectEmissions.end(), 0.0 );
 
@@ -751,7 +833,7 @@ void XMLDBOutputter::endVisitTechnology( const Technology* aTechnology,
         if( !aTechnology->mKeywordMap.empty() ) {
             XMLWriteElementWithAttributes( "", "keyword", mBuffer, mTabs.get(), aTechnology->mKeywordMap );
         }
-        XMLWriteClosingTag( aTechnology->getXMLName1D(), mBuffer, mTabs.get() );
+        XMLWriteClosingTag( aTechnology->getXMLName(), mBuffer, mTabs.get() );
     }
     else {
         // if we don't write the closing tag we still need to decrease the indent
@@ -1953,6 +2035,26 @@ bool XMLDBOutputter::isTechnologyOperating( const int aPeriod ){
     stringstream* ret = mBufferStack.top();
     mBufferStack.pop();
     return ret;
+}
+
+XMLDBOutputter::StringStreamXmlInputStream::StringStreamXmlInputStream( stringstream& aStream )
+:mWrappedStringStream( &aStream )
+{
+}
+
+XMLDBOutputter::StringStreamXmlInputStream::~StringStreamXmlInputStream() {
+    // nothing to do since this class does not manage the memory for
+    // the wrapped stringstream
+}
+
+unsigned int XMLDBOutputter::StringStreamXmlInputStream::curPos() const {
+    return mWrappedStringStream->tellg();
+}
+
+unsigned int XMLDBOutputter::StringStreamXmlInputStream::readBytes( char* aToFill,
+                                                                    const unsigned int aMaxToRead )
+{
+    return mWrappedStringStream->read( aToFill, aMaxToRead ).gcount();
 }
 
 #endif

@@ -80,7 +80,7 @@ class BuildingGenericDmdTechnology : public Technology
 {
     friend class CalibrateShareWeightVisitor;
 public:
-    static const std::string& getXMLNameStatic1D();
+    static const std::string& getXMLNameStatic();
 	static const std::string& getInternalGainsInfoName();
 
     BuildingGenericDmdTechnology( const std::string& aName, const int aYear );
@@ -89,15 +89,14 @@ public:
 
     virtual BuildingGenericDmdTechnology* clone() const;
     virtual ~BuildingGenericDmdTechnology();
-    virtual const std::string& getXMLName1D() const;
+    virtual const std::string& getXMLName() const;
 
     virtual void completeInit( const std::string& aRegionName,
                                const std::string& aSectorName,
                                const std::string& aSubsectorName,
                                DependencyFinder* aDepFinder,
                                const IInfo* aSubsectorInfo,
-                               ILandAllocator* aLandAllocator,
-                               const GlobalTechnologyDatabase* aGlobalTechDB );
+                               ILandAllocator* aLandAllocator );
 
     virtual void initCalc( const std::string& aRegionName,
                            const std::string& aSectorName,
@@ -127,6 +126,8 @@ public:
                               const int aPeriod ) const;
     
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
+    
+    virtual void doInterpolations( const Technology* aPrevTech, const Technology* aNextTech );
 protected:
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;

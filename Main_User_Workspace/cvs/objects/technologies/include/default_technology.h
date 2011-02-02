@@ -71,15 +71,14 @@ public:
 
 	virtual DefaultTechnology* clone() const;
 
-	static const std::string& getXMLNameStatic1D();
+	static const std::string& getXMLNameStatic();
 	
     virtual void completeInit( const std::string& aRegionName,
                                const std::string& aSectorName,
                                const std::string& aSubsectorName,
                                DependencyFinder* aDepFinder,
                                const IInfo* aSubsectorIInfo,
-                               ILandAllocator* aLandAllocator,
-                               const GlobalTechnologyDatabase* aGlobalTechDB );
+                               ILandAllocator* aLandAllocator );
 
     virtual void initCalc( const std::string& aRegionName,
                            const std::string& aSectorName,
@@ -119,7 +118,7 @@ protected:
                                     std::ostream& aOut,
                                     Tabs* aTabs ) const;
 
-	virtual const std::string& getXMLName1D() const;
+	virtual const std::string& getXMLName() const;
 	
     virtual double getTotalInputCost( const std::string& aRegionName,
                                       const std::string& aSectorName,

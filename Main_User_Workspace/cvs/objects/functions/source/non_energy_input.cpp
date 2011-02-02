@@ -273,4 +273,26 @@ double NonEnergyInput::getTechChange( const int aPeriod ) const
     return mTechChange;
 }
 
+void NonEnergyInput::doInterpolations( const int aYear, const int aPreviousYear,
+                                       const int aNextYear, const IInput* aPreviousInput,
+                                       const IInput* aNextInput )
+{
+    const NonEnergyInput* prevNonEneInput = static_cast<const NonEnergyInput*>( aPreviousInput );
+    const NonEnergyInput* nextNonEneInput = static_cast<const NonEnergyInput*>( aNextInput );
+    
+    /*!
+     * \pre We are given a valid NonEnergyInput for the previous input.
+     */
+    assert( prevNonEneInput );
+    
+    /*!
+     * \pre We are given a valid NonEnergyInput for the next input.
+     */
+    assert( nextNonEneInput );
+    
+    // interpolate the base cost
+    mCost.set( util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
+                                         prevNonEneInput->mCost, nextNonEneInput->mCost ) );
+}
+
 

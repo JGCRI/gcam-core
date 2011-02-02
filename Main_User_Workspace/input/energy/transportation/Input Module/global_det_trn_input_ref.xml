@@ -12,7 +12,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="air">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -120,7 +122,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -327,7 +331,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="road">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -435,7 +441,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="domestic ship">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -551,7 +559,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="air">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -659,17 +669,17 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="high speed rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <addTimeValue>1</addTimeValue>
                <speed fillout="1" year="1975">180</speed>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2050">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
-               <share-weight year="1990">0</share-weight>
-               <share-weight year="2005">0</share-weight>
                <share-weight year="2020">0.001</share-weight>
                <share-weight year="2035">0.001</share-weight>
                <share-weight year="2050">0.001</share-weight>
@@ -778,7 +788,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -1072,7 +1084,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="international ship">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -1188,7 +1202,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="LDV">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -1593,7 +1609,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="bus">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -2070,7 +2088,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="air">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -2178,7 +2198,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -2385,7 +2407,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="road">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -2493,7 +2517,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="domestic ship">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -2609,7 +2635,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="air">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -2717,17 +2745,17 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="high speed rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <addTimeValue>1</addTimeValue>
                <speed fillout="1" year="1975">180</speed>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2050">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
-               <share-weight year="1990">0</share-weight>
-               <share-weight year="2005">0</share-weight>
                <share-weight year="2020">0.001</share-weight>
                <share-weight year="2035">0.001</share-weight>
                <share-weight year="2050">0.001</share-weight>
@@ -2836,7 +2864,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -3124,7 +3154,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="international ship">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -3240,7 +3272,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="LDV">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -3645,7 +3679,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="bus">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -4122,7 +4158,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="air">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -4230,7 +4268,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -4443,7 +4483,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="road">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -4551,7 +4593,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="domestic ship">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -4667,7 +4711,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="air">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -4775,7 +4821,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="high speed rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -4883,7 +4931,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -5177,7 +5227,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="international ship">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -5293,7 +5345,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="LDV">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -5698,7 +5752,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="bus">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -6175,7 +6231,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="air">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -6283,7 +6341,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -6490,7 +6550,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="road">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -6598,7 +6660,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="domestic ship">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -6714,7 +6778,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="air">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -6822,7 +6888,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="high speed rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -6930,7 +6998,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -7224,7 +7294,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="international ship">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -7340,7 +7412,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="LDV">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -7745,7 +7819,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="bus">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -8216,7 +8292,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="air">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -8324,7 +8402,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -8537,7 +8617,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="road">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -8645,7 +8727,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="domestic ship">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -8761,7 +8845,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="air">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -8869,17 +8955,17 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="high speed rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <addTimeValue>1</addTimeValue>
                <speed fillout="1" year="1975">180</speed>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2050">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
-               <share-weight year="1990">0</share-weight>
-               <share-weight year="2005">0</share-weight>
                <share-weight year="2020">0.001</share-weight>
                <share-weight year="2035">0.001</share-weight>
                <share-weight year="2050">0.001</share-weight>
@@ -8988,7 +9074,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -9282,7 +9370,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="international ship">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -9398,7 +9488,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="LDV">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -9803,7 +9895,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="bus">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -10280,7 +10374,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="air">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -10388,7 +10484,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -10601,7 +10699,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="road">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -10709,7 +10809,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="domestic ship">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -10825,7 +10927,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="air">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -10933,17 +11037,17 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="high speed rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <addTimeValue>1</addTimeValue>
                <speed fillout="1" year="1975">180</speed>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2050">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
-               <share-weight year="1990">0</share-weight>
-               <share-weight year="2005">0</share-weight>
                <share-weight year="2020">0.001</share-weight>
                <share-weight year="2035">0.001</share-weight>
                <share-weight year="2050">0.001</share-weight>
@@ -11052,7 +11156,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -11346,7 +11452,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="international ship">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -11462,7 +11570,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="LDV">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -11867,7 +11977,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="bus">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -12344,7 +12456,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="air">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -12452,7 +12566,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -12767,7 +12883,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="road">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -12875,7 +12993,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="domestic ship">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -12991,7 +13111,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="air">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -13099,17 +13221,17 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="high speed rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <addTimeValue>1</addTimeValue>
                <speed fillout="1" year="1975">180</speed>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2050">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
-               <share-weight year="1990">0</share-weight>
-               <share-weight year="2005">0</share-weight>
                <share-weight year="2020">0.001</share-weight>
                <share-weight year="2035">0.001</share-weight>
                <share-weight year="2050">0.001</share-weight>
@@ -13218,7 +13340,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -13614,7 +13738,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="international ship">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -13730,7 +13856,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="LDV">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -14135,7 +14263,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="bus">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -14612,7 +14742,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="air">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -14720,17 +14852,17 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <addTimeValue>0</addTimeValue>
                <speed fillout="1" year="1975">40</speed>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2050">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
-               <share-weight year="1990">0</share-weight>
-               <share-weight year="2005">0</share-weight>
                <share-weight year="2020">0.005</share-weight>
                <share-weight year="2035">0.01</share-weight>
                <share-weight year="2050">0.1</share-weight>
@@ -14938,7 +15070,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="road">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -15046,17 +15180,17 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="domestic ship">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <addTimeValue>0</addTimeValue>
                <speed fillout="1" year="1975">16</speed>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2050">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
-               <share-weight year="1990">0</share-weight>
-               <share-weight year="2005">0</share-weight>
                <share-weight year="2020">0</share-weight>
                <share-weight year="2035">0</share-weight>
                <share-weight year="2050">0</share-weight>
@@ -15173,7 +15307,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="air">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -15281,17 +15417,17 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="high speed rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <addTimeValue>1</addTimeValue>
                <speed fillout="1" year="1975">180</speed>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2050">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
-               <share-weight year="1990">0</share-weight>
-               <share-weight year="2005">0</share-weight>
                <share-weight year="2020">0.001</share-weight>
                <share-weight year="2035">0.001</share-weight>
                <share-weight year="2050">0.001</share-weight>
@@ -15400,17 +15536,17 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <addTimeValue>1</addTimeValue>
                <speed fillout="1" year="1975">32</speed>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2050">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
-               <share-weight year="1990">0</share-weight>
-               <share-weight year="2005">0</share-weight>
                <share-weight year="2020">0.005</share-weight>
                <share-weight year="2035">0.005</share-weight>
                <share-weight year="2050">0.005</share-weight>
@@ -15699,7 +15835,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="international ship">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -15815,7 +15953,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="LDV">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -16220,7 +16360,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="bus">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -16697,7 +16839,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="air">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -16805,7 +16949,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -17018,7 +17164,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="road">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -17126,7 +17274,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="domestic ship">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -17242,7 +17392,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="air">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -17350,17 +17502,17 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="high speed rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <addTimeValue>1</addTimeValue>
                <speed fillout="1" year="1975">180</speed>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2050">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
-               <share-weight year="1990">0</share-weight>
-               <share-weight year="2005">0</share-weight>
                <share-weight year="2020">0.001</share-weight>
                <share-weight year="2035">0.001</share-weight>
                <share-weight year="2050">0.001</share-weight>
@@ -17469,7 +17621,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -17763,7 +17917,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="international ship">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -17879,7 +18035,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="LDV">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -18284,7 +18442,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="bus">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -18764,7 +18924,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="air">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -18872,7 +19034,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -19079,7 +19243,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="road">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -19187,7 +19353,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="domestic ship">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -19303,7 +19471,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="air">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -19411,17 +19581,17 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="high speed rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <addTimeValue>1</addTimeValue>
                <speed fillout="1" year="1975">180</speed>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2050">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
-               <share-weight year="1990">0</share-weight>
-               <share-weight year="2005">0</share-weight>
                <share-weight year="2020">0.001</share-weight>
                <share-weight year="2035">0.001</share-weight>
                <share-weight year="2050">0.001</share-weight>
@@ -19530,7 +19700,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -19824,7 +19996,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="international ship">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -19940,7 +20114,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="LDV">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -20345,7 +20521,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="bus">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -20825,7 +21003,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="air">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -20933,7 +21113,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -21140,7 +21322,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="road">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -21248,7 +21432,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="domestic ship">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -21364,17 +21550,17 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="air">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <addTimeValue>1</addTimeValue>
                <speed fillout="1" year="1975">270</speed>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2050">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
-               <share-weight year="1990">1</share-weight>
-               <share-weight year="2005">1</share-weight>
                <share-weight year="2020">0.04</share-weight>
                <share-weight year="2035">0.03</share-weight>
                <share-weight year="2050">0.02</share-weight>
@@ -21483,17 +21669,17 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="high speed rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <addTimeValue>1</addTimeValue>
                <speed fillout="1" year="1975">180</speed>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2050">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
-               <share-weight year="1990">0</share-weight>
-               <share-weight year="2005">0</share-weight>
                <share-weight year="2020">0.001</share-weight>
                <share-weight year="2035">0.001</share-weight>
                <share-weight year="2050">0.001</share-weight>
@@ -21602,7 +21788,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -21896,7 +22084,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="international ship">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -22012,7 +22202,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="LDV">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -22417,7 +22609,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="bus">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -22894,7 +23088,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="air">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -23002,7 +23198,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -23215,7 +23413,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="road">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -23323,7 +23523,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="domestic ship">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -23439,7 +23641,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="air">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -23547,17 +23751,17 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="high speed rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <addTimeValue>1</addTimeValue>
                <speed fillout="1" year="1975">180</speed>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2050">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
-               <share-weight year="1990">0</share-weight>
-               <share-weight year="2005">0</share-weight>
                <share-weight year="2020">0.001</share-weight>
                <share-weight year="2035">0.001</share-weight>
                <share-weight year="2050">0.001</share-weight>
@@ -23666,7 +23870,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -23960,7 +24166,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="international ship">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -24076,7 +24284,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="LDV">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -24481,7 +24691,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="bus">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -24958,7 +25170,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="air">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -25066,7 +25280,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -25273,7 +25489,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="road">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -25381,7 +25599,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="domestic ship">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -25497,7 +25717,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="air">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -25605,7 +25827,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="high speed rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -25713,7 +25937,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -26007,7 +26233,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="international ship">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -26123,7 +26351,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="LDV">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -26528,7 +26758,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="bus">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -27005,7 +27237,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="air">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -27113,7 +27347,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -27326,7 +27562,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="road">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -27434,7 +27672,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="domestic ship">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -27550,7 +27790,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="air">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -27658,17 +27900,17 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="high speed rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <addTimeValue>1</addTimeValue>
                <speed fillout="1" year="1975">180</speed>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2050">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
-               <share-weight year="1990">0</share-weight>
-               <share-weight year="2005">0</share-weight>
                <share-weight year="2020">0.001</share-weight>
                <share-weight year="2035">0.001</share-weight>
                <share-weight year="2050">0.001</share-weight>
@@ -27777,7 +28019,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="rail">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -28071,7 +28315,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="international ship">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -28187,7 +28433,9 @@
             <keyword final-energy="transportation"/>
             <logit-exponent fillout="1" year="1975">-2</logit-exponent>
             <tranSubsector name="LDV">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -28592,7 +28840,9 @@
                </tranTechnology>
             </tranSubsector>
             <tranSubsector name="bus">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>

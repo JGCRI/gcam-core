@@ -85,7 +85,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>39.52</input-cost>
@@ -106,7 +106,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>27.72</input-cost>
@@ -127,7 +127,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>21.02</input-cost>
@@ -148,7 +148,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>16.78</input-cost>
@@ -169,7 +169,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>15.43</input-cost>
@@ -190,7 +190,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>14.54</input-cost>
@@ -292,7 +292,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>48.71</input-cost>
@@ -313,7 +313,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>34.17</input-cost>
@@ -334,7 +334,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>25.91</input-cost>
@@ -355,7 +355,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.68</input-cost>
@@ -376,7 +376,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.02</input-cost>
@@ -397,7 +397,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>17.92</input-cost>
@@ -499,7 +499,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>47.36</input-cost>
@@ -520,7 +520,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>33.22</input-cost>
@@ -541,7 +541,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>25.19</input-cost>
@@ -562,7 +562,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.10</input-cost>
@@ -583,7 +583,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>18.49</input-cost>
@@ -604,7 +604,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>17.42</input-cost>
@@ -706,7 +706,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>42.53</input-cost>
@@ -727,7 +727,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>29.84</input-cost>
@@ -748,7 +748,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>22.62</input-cost>
@@ -769,7 +769,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>18.05</input-cost>
@@ -790,7 +790,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>16.60</input-cost>
@@ -811,7 +811,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>15.64</input-cost>
@@ -913,7 +913,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>33.96</input-cost>
@@ -934,7 +934,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>23.82</input-cost>
@@ -955,7 +955,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>18.06</input-cost>
@@ -976,7 +976,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>14.42</input-cost>
@@ -997,7 +997,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>13.26</input-cost>
@@ -1018,7 +1018,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>12.49</input-cost>
@@ -1120,7 +1120,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>49.38</input-cost>
@@ -1141,7 +1141,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>34.64</input-cost>
@@ -1162,7 +1162,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>26.27</input-cost>
@@ -1183,7 +1183,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.96</input-cost>
@@ -1204,7 +1204,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.28</input-cost>
@@ -1225,7 +1225,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>18.16</input-cost>
@@ -1327,7 +1327,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>40.14</input-cost>
@@ -1348,7 +1348,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>28.16</input-cost>
@@ -1369,7 +1369,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>21.35</input-cost>
@@ -1390,7 +1390,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>17.04</input-cost>
@@ -1411,7 +1411,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>15.67</input-cost>
@@ -1432,7 +1432,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>14.77</input-cost>
@@ -1534,7 +1534,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>29.81</input-cost>
@@ -1555,7 +1555,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.91</input-cost>
@@ -1576,7 +1576,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>15.86</input-cost>
@@ -1597,7 +1597,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>12.66</input-cost>
@@ -1618,7 +1618,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.64</input-cost>
@@ -1639,7 +1639,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>10.97</input-cost>
@@ -1741,7 +1741,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>29.55</input-cost>
@@ -1762,7 +1762,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.73</input-cost>
@@ -1783,7 +1783,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>15.72</input-cost>
@@ -1804,7 +1804,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>12.54</input-cost>
@@ -1825,7 +1825,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.54</input-cost>
@@ -1846,7 +1846,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>10.87</input-cost>
@@ -1948,7 +1948,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>32.39</input-cost>
@@ -1969,7 +1969,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>22.72</input-cost>
@@ -1990,7 +1990,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>17.23</input-cost>
@@ -2011,7 +2011,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>13.75</input-cost>
@@ -2032,7 +2032,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>12.65</input-cost>
@@ -2053,7 +2053,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.92</input-cost>
@@ -2155,7 +2155,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>32.46</input-cost>
@@ -2176,7 +2176,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>22.77</input-cost>
@@ -2197,7 +2197,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>17.27</input-cost>
@@ -2218,7 +2218,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>13.78</input-cost>
@@ -2239,7 +2239,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>12.67</input-cost>
@@ -2260,7 +2260,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>11.94</input-cost>
@@ -2362,7 +2362,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>48.88</input-cost>
@@ -2383,7 +2383,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>34.29</input-cost>
@@ -2404,7 +2404,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>26.00</input-cost>
@@ -2425,7 +2425,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>20.75</input-cost>
@@ -2446,7 +2446,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>19.08</input-cost>
@@ -2467,7 +2467,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>17.98</input-cost>
@@ -2569,7 +2569,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>39.73</input-cost>
@@ -2590,7 +2590,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>27.87</input-cost>
@@ -2611,7 +2611,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>21.13</input-cost>
@@ -2632,7 +2632,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>16.86</input-cost>
@@ -2653,7 +2653,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>15.51</input-cost>
@@ -2674,7 +2674,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>14.61</input-cost>
@@ -2776,7 +2776,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>32.90</input-cost>
@@ -2797,7 +2797,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>23.08</input-cost>
@@ -2818,7 +2818,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>17.50</input-cost>
@@ -2839,7 +2839,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>13.96</input-cost>
@@ -2860,7 +2860,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>12.84</input-cost>
@@ -2881,7 +2881,7 @@
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>15</lifetime>
+                     <lifetime>-1</lifetime>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">
                         <input-cost>12.10</input-cost>

@@ -64,16 +64,15 @@ class NukeFuelTechnology : public Technology
 public:
     NukeFuelTechnology( const std::string& aName, const int aYear );
     virtual NukeFuelTechnology* clone() const;
-    virtual const std::string& getXMLName1D() const;
-    static const std::string& getXMLNameStatic1D();
+    virtual const std::string& getXMLName() const;
+    static const std::string& getXMLNameStatic();
     
     virtual void completeInit( const std::string& aRegionName,
                                const std::string& aSectorName,
                                const std::string& aSubsectorName,
                                DependencyFinder* aDepFinder,
                                const IInfo* aSubsectorIInfo,
-                               ILandAllocator* aLandAllocator,
-                               const GlobalTechnologyDatabase* aGlobalTechDB );
+                               ILandAllocator* aLandAllocator );
 
     virtual void initCalc( const std::string& aRegionName,
                            const std::string& aSectorName,

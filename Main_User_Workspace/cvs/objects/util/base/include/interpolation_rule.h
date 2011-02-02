@@ -51,8 +51,7 @@
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
-
-class IInterpolationFunction;
+#include "util/base/include/iinterpolation_function.h"
 
 /*!
  * \ingroup Objects
@@ -83,6 +82,9 @@ class IInterpolationFunction;
  *                      The left end point for the range of years this rule applies.
  *              - \c to-year InterpolationRule::mToYear
  *                      The right end point for the range of years this rule applies.
+ *                      Note that a to-year that is equal to
+ *                      InterpolationRule::getLastModelYearConstant() will automatically
+ *                      be converted to the last model year.
  *          - Elements:
  *              - \c from
  *                      Value InterpolationRule::mFromValue
@@ -178,8 +180,14 @@ private:
     //! Flag to check if the interpolation function is fixed in which
     //! case we enable the hack to set the value in the from-year as well
     bool mIsFixedFunction;
+    
+    //! Flag to keep track of if we should write the to-year attribute
+    //! as the getLastModelYearConstant() in toInputXML
+    bool mUseLastModelYearConstant;
 
     std::string overwritePolicyEnumToStr( const OverwritePolicy aPolicy ) const;
+    
+    static const int getLastModelYearConstant();
 };
 
 #endif // _INTERPOLATION_RULE_H_

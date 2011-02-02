@@ -119,8 +119,7 @@ public :
       const std::string&              aSubsectorName,
       DependencyFinder*               aDepFinder,
       const IInfo*                    aSubsectorIInfo,
-      ILandAllocator*                 aLandAllocator,
-      const GlobalTechnologyDatabase* aGlobalTechDB );
+      ILandAllocator*                 aLandAllocator );
 
     virtual double getResourceToEnergyRatio( const std::string& aRegionName,
                                              const std::string& aSectorName,

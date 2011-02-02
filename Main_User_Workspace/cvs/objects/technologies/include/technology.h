@@ -58,7 +58,6 @@
 #include "functions/include/ifunction.h" // For TechChange struct.
 #include "util/base/include/iround_trippable.h"
 #include "technologies/include/itechnology.h"
-#include "technologies/include/itechnology_info.h"
 
 // Forward declaration
 class AGHG;
@@ -75,7 +74,6 @@ class Demographic;
 class IProductionState;
 class IOutput;
 class ITechnicalChangeCalc;
-class GlobalTechnologyDatabase;
 class Tabs;
 
 /*! 
@@ -131,13 +129,6 @@ class Tabs;
  *           period, assuming that the period is defined to be a calibration
  *           period by the Modeltime.
  *
- *         - Technology data. Technology details are stored in mTechData and
- *           defined by the ITechnologyData interface. The technology data
- *           object is responsible for storing the initial read-in parameters of
- *           the Technology, such as efficiency and non-energy cost. This may be
- *           a global object, in which case the parameters are shared with other
- *           Technologies.
- *
  *         - Production state. The production state for each period is stored in
  *           the mProductionState vector and represented by the IProductionState
  *           interface. The production state is responsible for determining the
@@ -179,17 +170,16 @@ public:
     bool XMLParse( const xercesc::DOMNode* tempnode );
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    static const std::string& getXMLNameStatic2D();
+    static const std::string& getXMLVintageNameStatic();
     
-    virtual const std::string& getXMLName1D() const = 0;
+    virtual const std::string& getXMLName() const = 0;
     
     virtual void completeInit( const std::string& aRegionName,
                                const std::string& aSectorName,
                                const std::string& aSubsectorName,
                                DependencyFinder* aDepFinder,
                                const IInfo* aSubsectorIInfo,
-                               ILandAllocator* aLandAllocator,
-                               const GlobalTechnologyDatabase* aGlobalTechDB ) = 0;
+                               ILandAllocator* aLandAllocator ) = 0;
     
     virtual void initCalc( const std::string& aRegionName,
                            const std::string& aSectorName,
@@ -225,7 +215,6 @@ public:
 
     const std::string& getName() const;
 
-    void scaleShareWeight( double scaleValue );
     void setShareWeight( double shareWeightValue );
     
     virtual double getCalibrationOutput( const bool aHasRequiredInput,
@@ -245,7 +234,7 @@ public:
                             const int aPeriod ) const;
 
     Value getShareWeight() const;
-    Value getParsedShareWeight() const;
+    virtual Value getParsedShareWeight() const;
 
     virtual int getNumbGHGs() const;
 
@@ -288,6 +277,8 @@ public:
     const std::map<std::string, double> getFuelMap( const int aPeriod ) const;
 
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
+    
+    virtual void doInterpolations( const Technology* aPrevTech, const Technology* aNextTech );
 protected:
     //! Vector of output objects representing the outputs of the technology.
     std::vector<IOutput*> mOutputs;
@@ -302,16 +293,6 @@ protected:
     const std::string mOutputUnit;
     
     std::string mName; //!< Name of this technology.
-
-    /*!
-     * \brief Flag to know whether to get a GlobalTechnology.
-     * \details Because GlobalTechnologies could be parsed after the technology
-     *          we have to wait until complete init to fetch it, however if the
-     *          user decided to parse values which would have gone in the global
-     *          technology, a GenericTechnologyInfo will be created. The
-     *          mTechData used will depend on which was parsed last.
-     */
-    bool mGetGlobalTech;
 
     /*!
      * \brief The calculated cost of the Technology period.
@@ -361,9 +342,6 @@ protected:
     //! throughout a period.
     double mAlphaZero;
 
-    //! The ITechnologyInfo this class will delegate to for shared data.
-    boost::shared_ptr<ITechnologyInfo> mTechData;
-
     int year; //!< period year or vintage
 
     //! Number of years for which the vintage exists.
@@ -409,12 +387,11 @@ protected:
     virtual void acceptDerived( IVisitor* aVisitor, const int aPeriod ) const;
 
     virtual const IInfo* getTechInfo() const;
-
-    void createTechData();
 private:
     void init();
     void copy( const Technology& techIn );
     void clear();
+    int calcDefaultLifetime() const;
 };
 
 #endif // _TECHNOLOGY_H_

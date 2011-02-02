@@ -50,11 +50,9 @@
 
 #include "util/base/include/configuration.h"
 #include "sectors/include/subsector.h"
-#include "technologies/include/technology.h"
-#include "technologies/include/building_generic_dmd_technology.h"
-#include "technologies/include/intermittent_technology.h"
-#include "technologies/include/wind_technology.h"
-#include "technologies/include/solar_technology.h"
+#include "technologies/include/itechnology_container.h"
+#include "technologies/include/technology_container.h"
+#include "technologies/include/stub_technology_container.h"
 #include "technologies/include/itechnology.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
@@ -75,8 +73,6 @@
 #include "technologies/include/technology_type.h"
 #include "investment/include/idistributor.h"
 #include "investment/include/iexpected_profit_calculator.h"
-#include "technologies/include/default_technology.h"
-#include "technologies/include/nuke_fuel_technology.h"
 #include "sectors/include/sector_utils.h"
 #include "investment/include/investment_utils.h"
 #include "reporting/include/indirect_emissions_calculator.h"
@@ -96,7 +92,7 @@ const string Subsector::XML_NAME = "subsector";
 *
 * \author Sonny Kim, Steve Smith, Josh Lurz
 */
-const double LOGIT_EXP_DEFAULT = -6;
+const Value LOGIT_EXP_DEFAULT = -6;
 
 Subsector::Subsector( const string& aRegionName, const string& aSectorName ):
 regionName( aRegionName ),
@@ -126,18 +122,10 @@ Subsector::~Subsector() {
 
 //! Deallocate the subsector memory.
 void Subsector::clear(){
-    for ( vector< vector< ITechnology* > >::iterator outerIter = techs.begin(); outerIter != techs.end(); outerIter++ ) {
-        // delete technology interpolation rules which are stored at the subsector level since they apply to all
-        // periods of a technology
-        TechInterpRuleIterator techNameRuleIter = mTechShareWeightInterpRules.find( findTechName( *outerIter ) );
-        if( techNameRuleIter != mTechShareWeightInterpRules.end() ) {
-            clearInterpolationRules( techNameRuleIter->second );
-        }
-
-        for( vector< ITechnology* >::iterator innerIter = outerIter->begin(); innerIter != outerIter->end(); innerIter++ ) {
-            delete *innerIter;
-        }
+    for( CTechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
+        delete *techIter;
     }
+    
     for( BaseTechIterator delTech = baseTechs.begin(); delTech != baseTechs.end(); ++delTech ){
         delete *delTech;
     }
@@ -146,17 +134,17 @@ void Subsector::clear(){
     {
         delete techType->second;
     }
-    clearInterpolationRules( mShareWeightInterpRules );
+    clearInterpolationRules();
 }
 
 /*!
- * \brief A helper method to delete and clear a vector of interpolation rules.
+ * \brief A helper method to delete and clear the vector of interpolation rules.
  */
-void Subsector::clearInterpolationRules( vector<InterpolationRule*>& aInterpolationRules ) {
-    for( CInterpRuleIterator ruleIter = aInterpolationRules.begin(); ruleIter != aInterpolationRules.end(); ++ruleIter ) {
+void Subsector::clearInterpolationRules() {
+    for( CInterpRuleIterator ruleIter = mShareWeightInterpRules.begin(); ruleIter != mShareWeightInterpRules.end(); ++ruleIter ) {
         delete *ruleIter;
     }
-    aInterpolationRules.clear();
+    mShareWeightInterpRules.clear();
 }
 
 /*! \brief Returns sector name
@@ -194,7 +182,7 @@ void Subsector::XMLParse( const DOMNode* node ) {
             XMLHelper<Value>::insertValueIntoVector( curr, mParsedShareWeights, modeltime );
         }
         else if( nodeName == "logit-exponent" ){
-            XMLHelper<double>::insertValueIntoVector( curr, mTechLogitExp, modeltime );
+            XMLHelper<Value>::insertValueIntoVector( curr, mTechLogitExp, modeltime );
         }
         else if( nodeName == "fuelprefElasticity" ){
             XMLHelper<double>::insertValueIntoVector( curr, fuelPrefElasticity, modeltime );  
@@ -227,164 +215,18 @@ void Subsector::XMLParse( const DOMNode* node ) {
             // if the delete flag is set then for interpolation rules that means to clear
             // out any previously parsed rules
             if( XMLHelper<bool>::getAttr( curr, "delete" ) ) {
-                clearInterpolationRules( mShareWeightInterpRules );
+                clearInterpolationRules();
             }
 
             InterpolationRule* tempRule = new InterpolationRule();
             tempRule->XMLParse( curr );
             mShareWeightInterpRules.push_back( tempRule );
         }
-        else if( isNameOfChild( nodeName ) ){
-            typedef vector<vector<ITechnology*> >::iterator TechVecIterator;
-
-            const string techName = XMLHelper<string>::getAttr( curr, "name" );
-            if( name.empty() ){
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::WARNING );
-                mainLog << "Ignoring technology set because it does not have a name." << endl;
-                continue;
-            }
-
-            // Search the vectors of technologies for a vector with a technology
-            // with the given name. This would be greatly helped by a wrapper.
-            TechVecIterator techPosition = techs.begin();
-            for( ; techPosition != techs.end(); ++techPosition )
-            {
-                // Check if this is the correct technology vector.
-                if( findTechName( *techPosition ) == techName ){
-                    break;
-                }
-            }
-
-            if( techPosition != techs.end() ) {
-                // technology already exists.
-                // Check if we should delete. This is a hack.
-                if( XMLHelper<bool>::getAttr( curr, "delete" ) ){
-                    // Deallocate memory.
-                    for( vector<ITechnology*>::iterator iter = techPosition->begin();
-                         iter != techPosition->end(); ++iter )
-                    {
-                        delete *iter;
-                    }
-
-                    // Wipe the vector.
-                    techs.erase( techPosition );
-                } // end hack.
-                else {
-                    DOMNodeList* childNodeList = curr->getChildNodes();
-
-                    // loop through technologies children.
-                    for( unsigned int j = 0; j < childNodeList->getLength(); j++ ){
-                        DOMNode* currChild = childNodeList->item( j );
-                        string childNodeName = XMLHelper<void>::safeTranscode( currChild->getNodeName() );
-
-                        if( childNodeName == "#text" ){
-                            continue;
-                        }
-                        else if( childNodeName == InterpolationRule::getXMLNameStatic() && XMLHelper<string>::getAttr( currChild, "apply-to" ) == "share-weight" ) {
-                            // if the delete flag is set then for interpolation rules that means to clear
-                            // out any previously parsed rules
-                            if( XMLHelper<bool>::getAttr( currChild, "delete" ) ) {
-                                clearInterpolationRules( mTechShareWeightInterpRules[ techName ] );
-                            }
-
-                            InterpolationRule* tempRule = new InterpolationRule();
-                            tempRule->XMLParse( currChild );
-                            mTechShareWeightInterpRules[ techName ].push_back( tempRule );
-                        }
-                        else if( childNodeName == Technology::getXMLNameStatic2D() ){
-                            int thisPeriod = XMLHelper<void>::getNodePeriod( currChild, modeltime );
-                            // While the vector for this technology has already
-                            // been created, this particular time period may not
-                            // have been initialized. Create the technology for
-                            // the given year if it does not exist.
-                            if( !(*techPosition)[ thisPeriod ] ){
-                                int techYear = modeltime->getper_to_yr( thisPeriod );
-                                (*techPosition)[ thisPeriod ] = createChild( nodeName, techName,
-                                                                             techYear );
-                            }
-                            (*techPosition)[ thisPeriod ]->XMLParse( currChild );
-                        }
-                    }
-                }
-            }
-            else if( XMLHelper<bool>::getAttr( curr, "nocreate" ) ){
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::WARNING );
-                mainLog << "Not creating technology " << techName
-                        << " in subsector " << name << " because nocreate flag is set." << endl;
-            }
-            else {
-                // Technology does not exist, create a new vector of techs.
-
-                DOMNodeList* childNodeList = curr->getChildNodes();
-                vector<ITechnology*> techVec( modeltime->getmaxper() );
-
-                // loop through technologies children.
-                for( unsigned int j = 0; j < childNodeList->getLength(); j++ ){
-                    DOMNode* currChild = childNodeList->item( j );
-                    const string childNodeName = XMLHelper<void>::safeTranscode( currChild->getNodeName() );
-
-                    if( childNodeName == "#text" ){
-                        continue;
-                    }
-                    else if( childNodeName == InterpolationRule::getXMLNameStatic() && XMLHelper<string>::getAttr( currChild, "apply-to" ) == "share-weight" ) {
-                        // if the delete flag is set then for interpolation rules that means to clear
-                        // out any previously parsed rules
-                        if( XMLHelper<bool>::getAttr( currChild, "delete" ) ) {
-                            clearInterpolationRules( mTechShareWeightInterpRules[ techName ] );
-                        }
-
-                        InterpolationRule* tempRule = new InterpolationRule();
-                        tempRule->XMLParse( currChild );
-                        mTechShareWeightInterpRules[ techName ].push_back( tempRule );
-                    }
-                    // 2nd dimension of the tech XML is "period". This is the
-                    // same for all derived technologies.
-                    else if( childNodeName == Technology::getXMLNameStatic2D() ){
-                        int thisPeriod = XMLHelper<void>::getNodePeriod( currChild, modeltime );
-                        int currYear = modeltime->getper_to_yr( thisPeriod );
-                        auto_ptr<ITechnology> tempTech( createChild( nodeName, techName, currYear ) );
-                        tempTech->XMLParse( currChild );
-
-                        // Check that a Technology does not already exist.
-                        if( techVec[ thisPeriod ] ){
-                            ILogger& mainLog = ILogger::getLogger( "main_log" );
-                            mainLog.setLevel( ILogger::DEBUG );
-                            mainLog << "Removing duplicate Technology " << techVec[ thisPeriod ]->getName() 
-                                << " in subsector " << name << " in sector " << sectorName << "." << endl;
-                            delete techVec[ thisPeriod ];
-                        }
-
-                        techVec[ thisPeriod ] = tempTech.release();
-
-                        // copy Technology object for one period to all the periods
-                        if ( XMLHelper<bool>::getAttr( currChild, "fillout" ) ) {
-                            // will not do if period is already last period or maxperiod
-                            for ( int i = thisPeriod + 1; i < modeltime->getmaxper(); i++ ) {
-                                // Check that a Technology does not already exist.
-                                if( techVec[ i ] ){
-                                    ILogger& mainLog = ILogger::getLogger( "main_log" );
-                                    mainLog.setLevel( ILogger::DEBUG );
-                                    mainLog << "Removing duplicate Technology " << techVec[ i ]->getName() 
-                                        << " in subsector " << name << " in sector " << sectorName << "." << endl;
-                                    delete techVec[ i ];
-                                }
-                                techVec[ i ] = techVec[ thisPeriod ]->clone();
-                                techVec[ i ]->setYear( modeltime->getper_to_yr( i ) );
-                            } // end for
-                        } // end if fillout
-                    }
-                    else {
-                        ILogger& mainLog = ILogger::getLogger( "main_log" );
-                        mainLog.setLevel( ILogger::WARNING );
-                        mainLog << "Unknown element " << childNodeName
-                                << " encountered while parsing " << nodeName
-                                << endl;
-                    }
-                } // end for
-                techs.push_back( techVec );
-            }
+        else if( TechnologyContainer::hasTechnologyType( nodeName ) ) {
+            parseContainerNode( curr, mTechContainers, new TechnologyContainer );
+        }
+        else if( nodeName == StubTechnologyContainer::getXMLNameStatic() ) {
+            parseContainerNode( curr, mTechContainers, new StubTechnologyContainer );
         }
         // parsed derived classes
         else if( !XMLDerivedClassParse( nodeName, curr ) ){
@@ -393,62 +235,6 @@ void Subsector::XMLParse( const DOMNode* node ) {
             mainLog << "Unknown element " << nodeName << " encountered while parsing " << getXMLName() << endl;
         }
     }
-}
-
-//! Virtual function which specifies the XML name of the children of this class, the type of Technology.
-bool Subsector::isNameOfChild( const string& aTechnologyType ) const {
-    return ( aTechnologyType == DefaultTechnology::getXMLNameStatic1D() ||
-             aTechnologyType == BuildingGenericDmdTechnology::getXMLNameStatic1D() ||
-             aTechnologyType == IntermittentTechnology::getXMLNameStatic1D() ||
-             aTechnologyType == WindTechnology::getXMLNameStatic1D() ||
-             aTechnologyType == SolarTechnology::getXMLNameStatic1D() ||
-             aTechnologyType == NukeFuelTechnology::getXMLNameStatic1D() );
-} 
-
-/*!
- * \brief Derived helper function to generate a child element or construct the
- *        appropriate technology.
- * \param aTechType The name of the XML node, which is the type of the
- *        technology.
- * \param aTechName The name of the new technology.
- * \param aYear The year of the new technology.
- * \pre isNameOfChild returned that the type could be created.
- * \author Steve Smith
- * \return A newly created technology of the specified type.
- */
-ITechnology* Subsector::createChild( const string& aTechType,
-                                    const string& aTechName,
-                                    const int aTechYear ) const
-{
-    /*! \pre Tech type should be known. */
-    assert( isNameOfChild( aTechType ) );
-
-    if( aTechType == DefaultTechnology::getXMLNameStatic1D() ){
-        return new DefaultTechnology( aTechName, aTechYear );
-    }
-    if( aTechType == BuildingGenericDmdTechnology::getXMLNameStatic1D() ){
-        return new BuildingGenericDmdTechnology( aTechName, aTechYear );
-    }
-    if( aTechType == IntermittentTechnology::getXMLNameStatic1D() ){
-        return new IntermittentTechnology( aTechName, aTechYear );
-    }
-    if( aTechType == WindTechnology::getXMLNameStatic1D() ){
-        return new WindTechnology( aTechName, aTechYear );
-    }
-    if( aTechType == SolarTechnology::getXMLNameStatic1D() ){
-        return new SolarTechnology( aTechName, aTechYear );
-    }
-    if( aTechType == NukeFuelTechnology::getXMLNameStatic1D() ){
-        return new NukeFuelTechnology( aTechName, aTechYear );
-    }
-
-    /*! \invariant createChild should never be called without first checking
-    *              isNameOfChild so this operation should never fail. 
-    */
-    assert( false );
-
-    // Avoid a compiler warning.
-    return 0;
 }
 
 //! Helper function which parses any type of base Technology correctly.
@@ -500,136 +286,6 @@ bool Subsector::XMLDerivedClassParse( const string& nodeName, const DOMNode* cur
     return false;
 }
 
-/*! \brief Complete the initialization
-*
-* This routine is only called once per model run
-* \param aSectorInfo The parent sector info object.
-* \param aDependencyFinder The regional dependency finder.
-* \param aLandAllocator Regional land allocator.
-* \param aGlobalTechDB Global Technology database.
-* \author Josh Lurz
-* \warning markets are not necessarily set when completeInit is called
-*/
-void Subsector::completeInit( const IInfo* aSectorInfo,
-                              DependencyFinder* aDependencyFinder,
-                              ILandAllocator* aLandAllocator,
-                              const GlobalTechnologyDatabase* aGlobalTechDB )
-{
-    mSubsectorInfo.reset( InfoFactory::constructInfo( aSectorInfo, regionName + "-" + sectorName + "-" + name ) );
-    
-    for( unsigned int i = 0; i < baseTechs.size(); i++) {
-        baseTechs[i]->completeInit( regionName, sectorName, name );
-    }
-    // TODO: make sure that isInitialYear() flag on the baseTechs is consistent
-    // They would be consisitent if exactly one technology per tech name had the 
-    // flag set to true.
-
-    for( unsigned int j = 0; j < baseTechs.size(); ++j ){
-        // Remove empty inputs for the initial year of the tech only.
-        // removing unecessary inputs into the future will be handled
-        // by the nested input structure in the technology
-        if( baseTechs[ j ]->isInitialYear() ){
-            baseTechs[ j ]->removeEmptyInputs();
-        }
-    }
-
-    typedef vector<vector<ITechnology*> >::iterator TechVecIterator;
-    for ( TechVecIterator techIter = techs.begin(); techIter != techs.end(); ++techIter ) {
-        bool isInvalid = initializeTechVector( *techIter, regionName, sectorName, name,
-                                               aDependencyFinder,
-                                               mSubsectorInfo.get(), aLandAllocator, aGlobalTechDB );
-        // Erase the entire vector if the technologies were invalid.
-        if( isInvalid ){
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Removing a technology " << findTechName( *techIter ) << " from subsector " << name 
-                    << " in sector " << sectorName << " in region " << regionName
-                    << " because all periods were not filled out." << endl;
-
-            // Adjust the iterator back one position before deleting. This is
-            // because a deleted iterator cannot be incremented.
-            techs.erase( techIter-- );
-        }
-    }
-
-    const Modeltime* modeltime = scenario->getModeltime();
-    for( int per = 0; per <= modeltime->getFinalCalibrationPeriod(); ++per ) {
-       if( mParsedShareWeights[ per ].isInited() ) {
-           mShareWeights[ per ] = mParsedShareWeights[ per ];
-       }
-   }
-}
-
-/*! \brief Completes the initialization of a vector of technologies.
-* \details Static function which completes the initialization of a vector of
-*          technologies. This will first ensure that a technology has been
-*          created for each model period. The function will then call
-*          completeInit on each technology.
-* \param aTechVector Vector of technologies to initialize.
-* \param aRegionName Region name.
-* \param aSectorName Sector name.
-* \param aDependencyFinder Regional dependency finder.
-* \param aLandAllocator Regional land allocator.
-* \param aGlobalTechDB Global Technology database.
-* \return Whether the vector should be removed.
-*/
-bool Subsector::initializeTechVector( vector<ITechnology*>& aTechVector,
-                                      const string& aRegionName,
-                                      const string& aSectorName,
-                                      const string& aSubsectorName,
-                                      DependencyFinder* aDependencyFinder,
-                                      const IInfo* aSubsecInfo,
-                                      ILandAllocator* aLandAllocator,
-                                      const GlobalTechnologyDatabase* aGlobalTechDB )
-{
-    // First check that the entire vector is filled out with technologies.
-    // Each vector is initialized to the number of periods the model will
-    // run, so this search checks whether each position is initialized. This
-    // must be done at this point instead of during parsing because the
-    // complete vector could be initialized through multiple files.
-    typedef vector<ITechnology*>::iterator TechIterator;
-    bool isEmptyPeriod = false;
-    for( TechIterator tech = aTechVector.begin(); tech != aTechVector.end(); ++tech ) {
-        if( !*tech ){
-            isEmptyPeriod = true;
-        }
-    }
-
-    // Instruct the calling function to remove this vector.
-    if( isEmptyPeriod ){
-        return true;
-    }
-
-    // Complete the initialization of a valid vector.
-    for( TechIterator tech = aTechVector.begin(); tech != aTechVector.end(); ++tech ) {
-        ( *tech )->completeInit( aRegionName, aSectorName, aSubsectorName, aDependencyFinder,
-                                 aSubsecInfo, aLandAllocator, aGlobalTechDB );
-    }
-    return false;
-}
-
-/*! \brief Find a valid technology name from a vector of technologies.
-* \param aTechVector A vector of technologies.
-* \return A valid technology name, the empty string if one was not found.
-*/
-const string Subsector::findTechName( const vector<ITechnology*>& aTechVector ){
-    // This will store the value of a technology name if it is
-    // found. Initialized to empty so that if no technology is
-    // found, the name will be empty.
-    string currTechName;
-
-    // Search for an initialized technology to get a name.
-    for( vector<ITechnology*>::const_iterator singleTech = aTechVector.begin();
-        singleTech != aTechVector.end(); ++singleTech )
-    {
-        if( *singleTech ){
-            currTechName = (*singleTech)->getName();
-            break;
-        }
-    }
-    return currTechName;
-}
-
 //! Output the Subsector member variables in XML format.
 void Subsector::toInputXML( ostream& out, Tabs* tabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
@@ -637,34 +293,10 @@ void Subsector::toInputXML( ostream& out, Tabs* tabs ) const {
 
     // TODO: create a XMLWriteVector that skips !Value.isInited() rather than a default value.
     for( unsigned int period = 0; period < mParsedShareWeights.size(); period++ ){
-        // skip values that were not set
-        if( !mParsedShareWeights[ period ].isInited() ) {
-            continue;
-        }
         // Determine the correct year.
         unsigned int year = modeltime->getper_to_yr( period );
 
-        // Determine if we can use fillout.
-        unsigned int canSkip = 0;
-        for( unsigned int checkPer = period + 1; checkPer < mParsedShareWeights.size(); checkPer++ ){
-            if( util::isEqual( mParsedShareWeights[ period ], mParsedShareWeights[ checkPer ] ) ){
-                canSkip++;
-            }
-            else {
-                break;
-            }
-        }
-        if( canSkip > 0 ){
-            // Need to write out the default value because they could be cleared
-            // by an earlier fillout.
-            XMLWriteElement( mParsedShareWeights[ period ], "share-weight", out, tabs, year, "", true );
-            // If canSkip gets to last element in vector, value of i forces breakout of first FOR loop.
-            period += canSkip;
-        }
-        else {
-            // Can't skip at all or can't skip anymore.
-            // Write out default if fillout and other values are being used together,
-            // or if fillout is not used and all values are unique.
+        if( mParsedShareWeights[ period ].isInited() ) {
             XMLWriteElement( mParsedShareWeights[ period ], "share-weight", out, tabs, year, "", false );
         }
     }
@@ -686,29 +318,9 @@ void Subsector::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteVector( mFixedInvestments, "FixedInvestment", out, tabs, modeltime, -1.0 );
 
     // write out the technology objects.
-    for( vector< vector< ITechnology* > >::const_iterator j = techs.begin(); j != techs.end(); j++ ){
-        
-        // If we have an empty vector this won't work, but that should never happen.
-        assert( j->begin() != j->end() );
-        const ITechnology* firstTech = *( j->begin() ); // Get pointer to first element in row. 
-        XMLWriteOpeningTag( firstTech->getXMLName1D(), out, tabs, firstTech->getName() );
-
-        // write technology interpolation rules which are stored at the subsector level since they apply to all
-        // periods of a technology
-        CTechInterpRuleIterator techNameRuleIter = mTechShareWeightInterpRules.find( firstTech->getName() );
-        if( techNameRuleIter != mTechShareWeightInterpRules.end() ) {
-            vector<InterpolationRule*> tempTechRules = techNameRuleIter->second;
-            for( CInterpRuleIterator ruleIter = tempTechRules.begin(); ruleIter != tempTechRules.end(); ++ruleIter ) {
-                (*ruleIter)->toInputXML( out, tabs );
-            }
-        }
-        
-        for( vector<ITechnology*>::const_iterator k = j->begin(); k != j->end(); k++ ){
-            ( *k )->toInputXML( out, tabs );
-        }
-        
-        XMLWriteClosingTag( firstTech->getXMLName1D(), out, tabs );
-    }
+    for( CTechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
+        (*techIter)->toInputXML( out, tabs );
+    }    
     
     // finished writing xml for the class members.
     
@@ -750,11 +362,9 @@ void Subsector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
         }
     }
     
-    for( unsigned int j = 0; j < techs.size(); ++j ){
-        for( unsigned int per = 0; per < techs[ j ].size(); ++per ){
-            techs[ j ][ per ]->toDebugXML( period, out, tabs );
-        }
-    }
+    for( CTechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
+        (*techIter)->toDebugXML( period, out, tabs );
+    }    
     
     // finished writing xml for the class members.
     
@@ -786,6 +396,56 @@ const string& Subsector::getXMLNameStatic() {
     return XML_NAME;
 }
 
+/*! \brief Complete the initialization
+*
+* This routine is only called once per model run
+* \param aSectorInfo The parent sector info object.
+* \param aDependencyFinder The regional dependency finder.
+* \param aLandAllocator Regional land allocator.
+* \author Josh Lurz
+* \warning markets are not necessarily set when completeInit is called
+*/
+void Subsector::completeInit( const IInfo* aSectorInfo,
+                              DependencyFinder* aDependencyFinder,
+                              ILandAllocator* aLandAllocator )
+{
+    mSubsectorInfo.reset( InfoFactory::constructInfo( aSectorInfo, regionName + "-" + sectorName + "-" + name ) );
+    
+    for( unsigned int i = 0; i < baseTechs.size(); i++) {
+        baseTechs[i]->completeInit( regionName, sectorName, name );
+    }
+    // TODO: make sure that isInitialYear() flag on the baseTechs is consistent
+    // They would be consisitent if exactly one technology per tech name had the 
+    // flag set to true.
+
+    for( unsigned int j = 0; j < baseTechs.size(); ++j ){
+        // Remove empty inputs for the initial year of the tech only.
+        // removing unecessary inputs into the future will be handled
+        // by the nested input structure in the technology
+        if( baseTechs[ j ]->isInitialYear() ){
+            baseTechs[ j ]->removeEmptyInputs();
+        }
+    }
+    
+    for ( TechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
+        (*techIter)->completeInit( regionName, sectorName, name, aDependencyFinder, mSubsectorInfo.get(),
+                                   aLandAllocator );
+    }    
+    
+    const Modeltime* modeltime = scenario->getModeltime();
+    // Initialize working share weights with parsed share weights up to and including
+    // final calibration period.
+    for( int per = 0; per <= modeltime->getFinalCalibrationPeriod(); ++per ) {
+       if( mParsedShareWeights[ per ].isInited() ) {
+           mShareWeights[ per ] = mParsedShareWeights[ per ];
+       }
+    }
+
+    // Set missing technology logit exponent using the next available parsed
+    // technology logit exponent.
+    SectorUtils::fillMissingPeriodVectorNextAvailable( mTechLogitExp );
+}
+
 /*!
 * \brief Perform any initializations needed for each period.
 * \details Perform any initializations or calculations that only need to be done
@@ -805,18 +465,8 @@ void Subsector::initCalc( NationalAccount* aNationalAccount,
                           const int aPeriod )
 {
     // Initialize all technologies.
-    for ( unsigned int i = 0; i < techs.size(); ++i ){
-        // Initialize the previous period info as having no input set and
-        // cumulative Hicks neutral, energy of 1.
-        PreviousPeriodInfo prevPeriodInfo = { 0, 1 };
-        // Warning: aPeriod is the current model period and not the technology vintage.
-        // Currently calls initCalc on all vintages past and future.
-        // TODO: Should not call initialization for all future technology vintages beyond the
-        // current period but correction causing error (SHK).
-        for( unsigned int vintage = 0; vintage < techs[ i ].size(); ++vintage ){
-            techs[ i ][ vintage ]->initCalc( regionName, sectorName, mSubsectorInfo.get(),
-                                       aDemographics, prevPeriodInfo, aPeriod );
-        }
+    for( TechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
+        (*techIter)->initCalc( regionName, sectorName, mSubsectorInfo.get(), aDemographics, aPeriod );
     }
 
     // Initialize the baseTechs. This might be better as a loop over tech types. 
@@ -825,7 +475,6 @@ void Subsector::initCalc( NationalAccount* aNationalAccount,
         if( aPeriod == 0 && baseTechs[ j ]->isInitialYear() ){
             // TODO: remove capital stock as it is no longer used
             double totalCapital = 0;
-            //double totalCapital = mTechTypes[ baseTechs[ j ]->getName() ]->getTotalCapitalStock( baseTechs[ j ]->getYear() );
             baseTechs[ j ]->initCalc( aMoreSectorInfo, regionName, sectorName, *aNationalAccount,
                                       aDemographics, totalCapital, aPeriod );
         
@@ -867,12 +516,7 @@ void Subsector::initCalc( NationalAccount* aNationalAccount,
                 << " since calibration values are present." << endl;
             mShareWeights[ aPeriod ] = 1.0;
         }
-        // For subsectors with only fixed output technologies.
-        if( containsOnlyFixedOutputTechnologies( aPeriod ) ){
-            // Reset share weight for all periods to 0 to indicate that it does not have an 
-            // impact on the results.
-            mShareWeights[ aPeriod ] = 0;
-        }
+
         // Reinitialize share weights to 1 for competing subsector with non-zero read-in share weight
         // for calibration periods only, but only if calibration values are read in any of the technologies
         // in this subsector (as there are cases where you want to fix these shares on a pass-through sector).
@@ -884,38 +528,16 @@ void Subsector::initCalc( NationalAccount* aNationalAccount,
         }
     }
 
-    // Apply share weight interpolation rules for the subsector and technologies.
+    // For subsectors with only fixed output technologies or all null technology share weights.
+    if( containsOnlyFixedOutputTechnologies( aPeriod ) ){
+        // Reset share weight for all periods to 0 to indicate that it does not have an 
+        // impact on the results.
+        mParsedShareWeights[ aPeriod ].set( 0 );
+        mShareWeights[ aPeriod ].set( 0 );
+    }
+
+    // Apply share weight interpolation rules and fill in missing share weights.
     interpolateShareWeights( aPeriod );
-
-   // Pass forward any emissions information
-    for ( unsigned int i= 0; i< techs.size() && aPeriod > 0 && aPeriod < modeltime->getmaxper() ; i++ ) {
-        std::vector<std::string> ghgNames;
-        ghgNames = techs[i][aPeriod]->getGHGNames();
-        
-        int numberOfGHGs =  techs[ i ][ aPeriod ]->getNumbGHGs();
-
-        if ( numberOfGHGs != techs[i][ aPeriod - 1 ]->getNumbGHGs() && aPeriod > 1 ) {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << name << " Number of GHG objects changed in period " << aPeriod;
-            mainLog << " to " << numberOfGHGs <<", tech: ";
-            mainLog << techs[i][ aPeriod ]->getName();
-            mainLog << ", sub-s: "<< name << ", sect: " << sectorName << ", region: " << regionName << endl;
-        }
-        // If number of GHG's decreased, then copy GHG objects
-        // This would allow user to input a GHG object only in one period
-        if ( numberOfGHGs < techs[i][ aPeriod - 1 ]->getNumbGHGs() ) {
-            // TODO
-        }
-        
-        // New method
-        if ( aPeriod > 1 ) { // Note the hard coded base period
-         for ( int j=0 ; j<numberOfGHGs; j++ ) {
-            techs[i][ aPeriod ]->copyGHGParameters( techs[i][ aPeriod - 1]->getGHGPointer( ghgNames[j]  ) );
-         } // End For
-        }
-      
-    } // End For
 }
 
 /*! \brief Returns the subsector price.
@@ -928,10 +550,10 @@ void Subsector::initCalc( NationalAccount* aNationalAccount,
 double Subsector::getPrice( const GDP* aGDP, const int aPeriod ) const {
     double subsectorPrice = 0; // initialize to 0 for summing
     const vector<double> techShares = calcTechShares( aGDP, aPeriod );
-    for ( unsigned int i = 0; i < techs.size(); ++i ) {
+    for ( unsigned int i = 0; i < mTechContainers.size(); ++i ) {
         // Technologies with zero share cannot affect the marginal price.
         if( techShares[ i ] > util::getSmallNumber() ){
-            double currCost = techs[i][aPeriod]->getCost( aPeriod );
+            double currCost = mTechContainers[i]->getNewVintageTechnology(aPeriod)->getCost( aPeriod );
             // calculate weighted average price for Subsector
             if( currCost >= util::getSmallNumber() ) {
                 subsectorPrice += techShares[ i ] * currCost;
@@ -965,9 +587,9 @@ double Subsector::getPrice( const GDP* aGDP, const int aPeriod ) const {
 bool Subsector::getCalibrationStatus( const int aPeriod ) const {
     
     // Check all the technologies for the period.
-    for( unsigned int i = 0; i < techs.size(); ++i ){
+    for( unsigned int i = 0; i < mTechContainers.size(); ++i ){
         // Check whether there is any calibration input, not one for a specific fuel.
-        if ( techs[ i ][ aPeriod ]->hasCalibratedValue( aPeriod) ) {
+        if ( mTechContainers[ i ]->getNewVintageTechnology( aPeriod )->hasCalibratedValue( aPeriod) ) {
             return true;
         }
     }
@@ -993,10 +615,10 @@ double Subsector::getAverageFuelPrice( const GDP* aGDP, const int aPeriod ) cons
     const int sharePeriod = ( aPeriod == 0 ) ? aPeriod : aPeriod - 1;
 
     const vector<double> techShares = calcTechShares( aGDP, sharePeriod );
-    for ( unsigned int i = 0; i < techs.size(); ++i) {
+    for ( unsigned int i = 0; i < mTechContainers.size(); ++i) {
         // calculate weighted average price of fuel only
         // Technology shares are based on total cost
-        fuelPrice += techShares[ i ] * techs[i][ aPeriod ]->getEnergyCost( regionName, sectorName, aPeriod );
+        fuelPrice += techShares[ i ] * mTechContainers[i]->getNewVintageTechnology( aPeriod )->getEnergyCost( regionName, sectorName, aPeriod );
     }
     /*! \post Fuel price must be positive. */
     assert( fuelPrice >= 0 );
@@ -1013,10 +635,10 @@ double Subsector::getAverageFuelPrice( const GDP* aGDP, const int aPeriod ) cons
 * \return A vector of technology shares.
 */
 const vector<double> Subsector::calcTechShares( const GDP* aGDP, const int aPeriod ) const {
-    vector<double> techShares( techs.size() );
-    for( unsigned int i = 0; i < techs.size(); ++i ){
+    vector<double> techShares( mTechContainers.size() );
+    for( unsigned int i = 0; i < mTechContainers.size(); ++i ){
         // determine shares based on Technology costs
-        techShares[ i ] = techs[i][aPeriod]->calcShare( regionName, sectorName, aGDP,
+        techShares[ i ] = mTechContainers[i]->getNewVintageTechnology(aPeriod)->calcShare( regionName, sectorName, aGDP,
             mTechLogitExp[ aPeriod ], aPeriod );
 
         // Check that Technology shares are valid.
@@ -1038,9 +660,9 @@ void Subsector::calcCost( const int aPeriod ){
     // Instruct all technologies up to and including the current period to
     // calculate their costs. Future Technologies cannot have a cost as they do
     // not yet exist.
-    for( unsigned int i = 0; i < techs.size(); ++i ){
-        for( int j = 0; j <= aPeriod; ++j ){
-            techs[ i ][ j ]->calcCost( regionName, sectorName, aPeriod );
+    for( TechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
+        for( ITechnologyContainer::TechRangeIterator vintageIter = (*techIter)->getVintageBegin( aPeriod ); vintageIter != (*techIter)->getVintageEnd(); ++vintageIter ) {
+            (*vintageIter).second->calcCost( regionName, sectorName, aPeriod );
         }
     }
 }
@@ -1062,11 +684,6 @@ double Subsector::calcShare(const int aPeriod, const GDP* aGdp, const double aLo
 
     if( subsectorPrice >= util::getSmallNumber() ){
         double scaledGdpPerCapita = aGdp->getBestScaledGDPperCap( aPeriod );
-        // fuelPrefElasticity = 0 for Supply Sector and has no impact
-        // fuelPrefElasticity is for Demand Sector only
-        // TODO: make this explicit, shk 12/15/05
-        // TODO: fuelPrefElasticity should be eliminated now that the
-        // Demand Sector no longer exists.  SHK 7/16/07
         double share = mShareWeights[ aPeriod ] * pow( subsectorPrice, aLogitExp )
                         * pow( scaledGdpPerCapita, fuelPrefElasticity[ aPeriod ] );
         /*! \post Share is zero or positive. */
@@ -1095,9 +712,10 @@ double Subsector::calcShare(const int aPeriod, const GDP* aGdp, const double aLo
 */
 double Subsector::getFixedOutput( const int aPeriod ) const {
     double fixedOutput = 0;
-    for( unsigned int i = 0; i < techs.size(); ++i ){
-        for( int per = 0; per <= aPeriod; ++per ){
-            double currFixedOutput = techs[i][per]->getFixedOutput( regionName, sectorName, false, "", aPeriod );
+    for( CTechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
+        ITechnologyContainer::CTechRangeIterator endIter = (*techIter)->getVintageEnd();
+        for( ITechnologyContainer::CTechRangeIterator vintageIter = (*techIter)->getVintageBegin( aPeriod ); vintageIter != endIter ; ++vintageIter ) {
+            double currFixedOutput = (*vintageIter).second->getFixedOutput( regionName, sectorName, false, "", aPeriod );
             /*! \invariant Fixed output for each Technology must be -1 or
             *              positive. 
             */
@@ -1113,8 +731,7 @@ double Subsector::getFixedOutput( const int aPeriod ) const {
 }
 
 /*!
- * \brief Apply share weight interpolation rules for the subsector and
- *        technologies.
+ * \brief Apply share weight interpolation rules for the subsector
  * \details Rules will only apply in the first period after calibration.  It
  *          is an error to have uninitialized share weights after rules have
  *          been applied.
@@ -1133,13 +750,18 @@ void Subsector::interpolateShareWeights( const int aPeriod ) {
         if( per <= modeltime->getFinalCalibrationPeriod() ) {
             mParsedShareWeights[ per ].set( mShareWeights[ per ] );
         }
-        else {
+        else if( mParsedShareWeights[ per ].isInited() )  {
             mShareWeights[ per ] = mParsedShareWeights[ per ];
         }
     }
     for( CInterpRuleIterator ruleIt = mShareWeightInterpRules.begin(); ruleIt != mShareWeightInterpRules.end(); ++ruleIt ) {
         (*ruleIt)->applyInterpolations( mShareWeights, mParsedShareWeights );
     }
+
+    // Fill in missing period vectors such as from time-step functionality.
+    // All missing values are filled, whether intended or not.
+    SectorUtils::fillMissingPeriodVectorInterpolated( mShareWeights );
+
     // All periods must have set a share weight value at this point, not having one is an error.
     for( int per = modeltime->getFinalCalibrationPeriod() + 1; per < mShareWeights.size(); ++per ) {
         if( !mShareWeights[ per ].isInited() ) {
@@ -1148,93 +770,6 @@ void Subsector::interpolateShareWeights( const int aPeriod ) {
             mainLog << "Found uninitialized share weight in subsector: " << name << " in period " << per << endl;
             exit( 1 );
         }
-    }
-    // Technologies must be processed at the subsector level so that we can have access to all years of a
-    // technology.
-    for( vector< vector< ITechnology* > >::const_iterator techIter = techs.begin(); techIter != techs.end(); techIter++ ){
-        PeriodVector<Value> techShareWeights;
-        PeriodVector<Value> techParsedShareWeights;
-        for( vector<ITechnology*>::const_iterator techYearIter = techIter->begin(); techYearIter != techIter->end(); techYearIter++ ){
-            const int period = techYearIter - techIter->begin();
-            techParsedShareWeights[ period ] = (*techYearIter)->getParsedShareWeight();
-            if( period <= modeltime->getFinalCalibrationPeriod() ) {
-                techShareWeights[ period ] = (*techYearIter)->getShareWeight();
-            }
-            else {
-                techShareWeights[ period ] = techParsedShareWeights[ period ];
-            }
-        }
-        // find any rules associated with the current set of technologies
-        CTechInterpRuleIterator techNameRuleIter = mTechShareWeightInterpRules.find( findTechName( *techIter ) );
-        if( techNameRuleIter != mTechShareWeightInterpRules.end() ) {
-            vector<InterpolationRule*> tempTechRules = techNameRuleIter->second;
-            for( CInterpRuleIterator ruleIter = tempTechRules.begin(); ruleIter != tempTechRules.end();
-                ++ruleIter ) {
-                    (*ruleIter)->applyInterpolations( techShareWeights, techParsedShareWeights );
-            }
-        }
-        // All periods must have set a share weight value at this point, not having one is an error.
-        for( vector<ITechnology*>::const_iterator techYearIter = techIter->begin(); techYearIter != techIter->end(); techYearIter++ ){
-            const int period = techYearIter - techIter->begin();
-            // TODO: checks to make sure all periods got a valid value
-            if( period > modeltime->getFinalCalibrationPeriod() && !techShareWeights[ period ].isInited() ) {
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::ERROR );
-                mainLog << "Found uninitialized share weight in tech: " << (*techYearIter)->getName()
-                        << " subsector " << name << " in period " << period << endl;
-                exit( 1 );
-            }
-            (*techYearIter)->setShareWeight( techShareWeights[ period ] );
-        }
-    }
-}
-
-/*! \brief Scales Technology share weights so that the dominant technology is anchored to 1
-* and the others are relative to the dominant technology.
-*
-* This is needed so that share weights can be easily interpreted and so that
-* future share weights can be consistently applied relative to the dominant technology.
-* Technology share weight greater than 1 implies bias towards the technology even though
-* it is not the dominant technology. The call to normalizeShareWeights() must occur after the
-* period has been solved and technology outputs are known.  
-*
-* \author Steve Smith, Marshall Wise, Kate Calvin, Sonny Kim
-* \param period Model period
-* \warning The routine assumes that all technology outputs are calibrated.
-*/
-void Subsector::normalizeTechShareWeights( const int aPeriod ) {
-        
-    // Dominant technology gets a share weight of one.
-    double maxShareWeight = 0.0;
-    double maxOutput = 0.0;
-    const int NewVintage = aPeriod;
-    for( unsigned int i = 0; i < techs.size(); ++i ){
-        // Fixed output technologies are not included in the normalization.
-        if( !techs[ i ][ NewVintage ]->isFixedOutputTechnology( aPeriod ) ){
-            double techShareWeight = techs[ i ][ NewVintage ]->getShareWeight();
-            if ( techs[ i ][ NewVintage ]->getOutput( aPeriod ) > maxOutput ) {
-                maxShareWeight = techShareWeight;
-                maxOutput = techs[ i ][ NewVintage ]->getOutput( aPeriod );
-            }
-        }
-    }
-
-    if ( maxShareWeight < util::getTinyNumber() ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::DEBUG );
-        //mainLog << "Max shareweight is zero in subsector " << name << " in region " << regionName << "." << endl;
-    } 
-    else {
-        for( unsigned int i = 0; i < techs.size(); ++i ){
-            // Fixed output technologies are not included in the normalization.
-            if( !techs[ i ][ NewVintage ]->isFixedOutputTechnology( aPeriod ) ){
-                techs[ i ][ NewVintage ]->scaleShareWeight( 1 / maxShareWeight );
-            }
-        }
-        ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
-        calibrationLog.setLevel( ILogger::DEBUG );
-        calibrationLog << "Shareweights normalized for technologies in subsector "
-            << name << " in sector " << sectorName << " in region " << regionName << endl;
     }
 }
 
@@ -1258,20 +793,22 @@ void Subsector::setOutput( const double aSubsectorVariableDemand,
     
     // Calculate the technology shares.
     const vector<double> shares = calcTechShares( aGDP, aPeriod );
-    for ( unsigned int i = 0; i < techs.size(); ++i ){
-        // Loop over periods.
-        for( int j = 0; j <= aPeriod; ++j ){
-            // Only pass variable output to current vintage.
-            if( j == aPeriod ){
-                // calculate Technology output and fuel input from Subsector output
-                techs[i][j]->production( regionName, sectorName, aSubsectorVariableDemand * shares[ i ],
-                                         aFixedOutputScaleFactor, aGDP, aPeriod );
-            }
-            else {
-                // calculate Technology output and fuel input for past vintages
-                techs[i][j]->production( regionName, sectorName, 0,
-                                         aFixedOutputScaleFactor, aGDP, aPeriod );
-            }
+    for( TechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
+        ITechnologyContainer::TechRangeIterator vintageIter = (*techIter)->getVintageBegin( aPeriod );
+        
+        // The first year is the current vintage, only pass variable output to current vintage.
+        // Make sure that a new vintage technology exists for production.
+        if( vintageIter != (*techIter)->getVintageEnd() ) {
+            (*vintageIter).second->production( regionName, sectorName,
+                                            aSubsectorVariableDemand * shares[ techIter - mTechContainers.begin() ],
+                                            aFixedOutputScaleFactor, aGDP, aPeriod );
+        }
+        
+        // Loop over old vintages which do not get variable demand.
+        for( ++vintageIter; vintageIter != (*techIter)->getVintageEnd(); ++vintageIter ) {
+            // calculate Technology output and fuel input for past vintages
+            (*vintageIter).second->production( regionName, sectorName, 0,
+                                            aFixedOutputScaleFactor, aGDP, aPeriod );
         }
     }
 }
@@ -1286,8 +823,8 @@ void Subsector::setOutput( const double aSubsectorVariableDemand,
 bool Subsector::isAllCalibrated( const int aPeriod, double aCalAccuracy, const bool aPrintWarnings ) const {
     // Check if each technology is calibrated.
     bool isAllCalibrated = true;
-    for( unsigned int i = 0; i < techs.size(); ++i ){
-        bool isThisTechCalibrated = techs[ i ][ aPeriod ]->isAllCalibrated( aPeriod, aCalAccuracy,
+    for( CTechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
+        bool isThisTechCalibrated = (*techIter)->getNewVintageTechnology( aPeriod )->isAllCalibrated( aPeriod, aCalAccuracy,
                                                regionName, sectorName, name, aPrintWarnings );
  
         // if this (or any) technology not calibrated, indicate that subsector is not calibrated
@@ -1313,8 +850,8 @@ bool Subsector::isAllCalibrated( const int aPeriod, double aCalAccuracy, const b
 */
 double Subsector::getTotalCalOutputs( const int period ) const {
     double sumCalValues = 0;
-    for( unsigned int i = 0; i < techs.size(); ++i ){
-        double currCalOutput = techs[ i ][ period ]->getCalibrationOutput( false, "", period );
+    for( CTechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
+        double currCalOutput = (*techIter)->getNewVintageTechnology( period )->getCalibrationOutput( false, "", period );
         if( currCalOutput > 0 ){
             sumCalValues += currCalOutput;
         }
@@ -1341,8 +878,8 @@ bool Subsector::allOutputFixed( const int period ) const {
     }
 
     // if not fixed at sub-sector level, then check at the Technology level
-    for( unsigned int i = 0; i < techs.size(); ++i ){
-        if ( !techs[ i ][ period ]->isOutputFixed( false, "", period ) ) {
+    for( CTechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
+        if ( !(*techIter)->getNewVintageTechnology( period )->isOutputFixed( false, "", period ) ) {
             return false;
         }
     }
@@ -1357,42 +894,17 @@ bool Subsector::allOutputFixed( const int period ) const {
 bool Subsector::containsOnlyFixedOutputTechnologies( const int aPeriod ) const {
     // Returns true if all technologies in the subsector has fixed exogenous outputs
     // for new investments.
-    const int NewVintage = aPeriod;
-    for( unsigned int i = 0; i < techs.size(); ++i ){
+    for( CTechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
         // If at least one technology does not have fixed output return false.
         // Do not consider a technology that has a zero share weight
-        if ( techs[ i ][ NewVintage ]->getShareWeight() != 0 
-            && !techs[ i ][ NewVintage ]->isFixedOutputTechnology( aPeriod ) ) {
+        const ITechnology* newVintageTech = (*techIter)->getNewVintageTechnology( aPeriod );
+        if ( newVintageTech->getShareWeight() != 0 
+            && !newVintageTech->isFixedOutputTechnology( aPeriod ) ) {
             return false;
         }
     }
-    // Otherwise subsector contains only fixed output technologies.
-    return true;
-}
-
-/*! \brief returns true if inputs are all fixed for this subsector and input
-*          good
-*
-* \author Steve Smith
-* \param period Model period
-* \param goodName market good to return inputs for. If equal to the value
-*        "allInputs" then returns all inputs.
-* \return boolean true if inputs of specified good are fixed
-*/
-bool Subsector::inputsAllFixed( const int aPeriod, const string& goodName ) const {
-    if( mShareWeights[ aPeriod ] == 0 ){
-        return true;
-    }
-
-    // test for each method of fixing output, if none of these are true then
-    // demand is not all fixed
-    bool hasRequiredInput = ( goodName != "allInputs" );
-    for ( unsigned int i=0; i< techs.size(); i++ ) {
-        if ( !techs[ i ][ aPeriod ]->isOutputFixed( hasRequiredInput,
-                                                   hasRequiredInput ? goodName : "", aPeriod ) ) {
-            return false;
-        }
-    }
+    // Otherwise subsector contains only fixed output technologies or all technology share
+    // weights are null.
     return true;
 }
 
@@ -1408,21 +920,6 @@ double Subsector::getShareWeight( const int period ) const {
     /*! \post Shareweight is valid and greater than or equal to zero. */
     assert( util::isValidNumber( mShareWeights[ period ] ) && mShareWeights[ period ] >= 0 );
     return mShareWeights[ period ];
-}
-
-/*! \brief Scales share weight for this Subsector
-*
-* \author Steve Smith
-* \param period Model period
-* \param scaleValue Multipliciatve scale factor for shareweight
-*/
-void Subsector::scaleShareWeight( const double scaleValue, const int period ) {
-    /*! \pre Scale value must be greater than or equal to zero. */
-    assert( scaleValue >= 0 );
-
-    if ( scaleValue != 0 ) {
-        mShareWeights[ period ] *= scaleValue;
-    }
 }
 
 //! write Subsector output to database
@@ -1459,50 +956,50 @@ void Subsector::csvOutputFile( const GDP* aGDP,
     fileoutput3( regionName,sectorName,name," ","CO2 emiss","MTC",temp);
 
     // do for all technologies in the Subsector
-    for( unsigned int i = 0; i < techs.size(); ++i ){
+    for( unsigned int i = 0; i < mTechContainers.size(); ++i ){
         // sjs -- bad coding here, hard-wired period. But is difficult to do
         // something different with current output structure. This is just for
         // csv file. This should just use the emissions map.
         vector<string> ghgNames;
-        ghgNames = techs[i][ 2 ]->getGHGNames();        
+        ghgNames = mTechContainers[i]->getNewVintageTechnology( 2 )->getGHGNames();        
         for ( unsigned int ghgN =0; ghgN < ghgNames.size(); ghgN++ ) {
             if ( ghgNames[ ghgN ] != "CO2" ) {
                 for ( int m=0;m<maxper;m++) {
-                    temp[m] = techs[i][ m ]->getEmissionsByGas( ghgNames[ ghgN ], m );
+                    temp[m] = mTechContainers[i]->getNewVintageTechnology( m )->getEmissionsByGas( ghgNames[ ghgN ], m );
                 }
-                fileoutput3( regionName,sectorName,name,techs[i][ 2 ]->getName(), ghgNames[ ghgN ] + " emiss","Tg",temp);
+                fileoutput3( regionName,sectorName,name,mTechContainers[i]->getName(), ghgNames[ ghgN ] + " emiss","Tg",temp);
             }
         }
 
         // output or demand for each technology
         for ( int m= 0;m<maxper;m++) {
-            temp[m] = techs[i][m]->getOutput( m );
+            temp[m] = mTechContainers[i]->getNewVintageTechnology(m)->getOutput( m );
         }
-        fileoutput3( regionName,sectorName,name,techs[i][ 0 ]->getName(),"production",outputUnit,temp);
+        fileoutput3( regionName,sectorName,name,mTechContainers[i]->getName(),"production",outputUnit,temp);
         // Technology share
-        if( techs.size() > 1 ) {
+        if( mTechContainers.size() > 1 ) {
             for ( int m=0;m<maxper;m++) {
                 double subsecOutput = getOutput( m );
                 if( subsecOutput > 0 ){
-                    temp[m] = techs[i][m]->getOutput( m ) / subsecOutput;
+                    temp[m] = mTechContainers[i]->getNewVintageTechnology(m)->getOutput( m ) / subsecOutput;
                 }
                 else {
                     temp[ m ] = 0;
                 }
             }
-            fileoutput3( regionName,sectorName,name,techs[i][ 0 ]->getName(),"tech share","%",temp);
+            fileoutput3( regionName,sectorName,name,mTechContainers[i]->getName(),"tech share","%",temp);
         }
         // Technology cost
         for ( int m=0;m<maxper;m++) {
-            temp[m] = techs[i][m]->getCost( m );
+            temp[m] = mTechContainers[i]->getNewVintageTechnology(m)->getCost( m );
         }
-        fileoutput3( regionName,sectorName,name,techs[i][ 0 ]->getName(),"price",priceUnit,temp);
+        fileoutput3( regionName,sectorName,name,mTechContainers[i]->getName(),"price",priceUnit,temp);
 
         // Technology CO2 emission
         for ( int m=0;m<maxper;m++) {
-            temp[m] = techs[i][m]->getEmissionsByGas("CO2", m );
+            temp[m] = mTechContainers[i]->getNewVintageTechnology(m)->getEmissionsByGas("CO2", m );
         }
-        fileoutput3( regionName,sectorName,name,techs[i][ 0 ]->getName(),"CO2 emiss","MTC",temp);
+        fileoutput3( regionName,sectorName,name,mTechContainers[i]->getName(),"CO2 emiss","MTC",temp);
     }
 }
 
@@ -1543,31 +1040,31 @@ void Subsector::MCoutputSupplySector( const GDP* aGDP ) const {
     }
     
     // do for all technologies in the Subsector
-    for( unsigned int i = 0; i < techs.size(); ++i ){
+    for( unsigned int i = 0; i < mTechContainers.size(); ++i ){
 
         // secondary energy and price output by tech
         // output or demand for each Technology
         for ( int m=0;m<maxper;m++) {
-            temp[m] = techs[i][m]->getOutput( m );
+            temp[m] = mTechContainers[i]->getNewVintageTechnology(m)->getOutput( m );
         }
 
         dboutput4( regionName, "Secondary Energy Prod", sectorName + "_tech-new-investment", 
-            techs[i][ 0 ]->getName(), outputUnit, temp );
+            mTechContainers[i]->getName(), outputUnit, temp );
         
         // Output for all vintages.
         for ( int m=0; m < maxper;m++) {
             temp[ m ] = 0;
             // Only sum output to the current period.
             for( int j = 0; j <= m; ++j ){
-                temp[m] += techs[i][j]->getOutput( m );
+                temp[m] += mTechContainers[i]->getNewVintageTechnology(j)->getOutput( m );
             }
         }
-        dboutput4( regionName, "Secondary Energy Prod", sectorName + "_tech-total", techs[i][ 0 ]->getName(), outputUnit, temp );
+        dboutput4( regionName, "Secondary Energy Prod", sectorName + "_tech-total", mTechContainers[i]->getName(), outputUnit, temp );
         // Technology cost
         for ( int m=0;m<maxper;m++) {
-            temp[m] = techs[i][m]->getCost( m ) * CVRT_90;
+            temp[m] = mTechContainers[i]->getNewVintageTechnology(m)->getCost( m ) * CVRT_90;
         }
-        dboutput4( regionName, "Price", sectorName + "_tech", techs[i][ 0 ]->getName(), "90$/GJ", temp );
+        dboutput4( regionName, "Price", sectorName + "_tech", mTechContainers[i]->getName(), "90$/GJ", temp );
     }
 }
 
@@ -1601,22 +1098,22 @@ void Subsector::MCoutputDemandSector( const GDP* aGDP ) const {
     dboutput4(regionName,"Price",sectorName,name+" Tot Cost",priceUnit,temp);
     
     // do for all technologies in the Subsector
-    for( unsigned int i = 0; i < techs.size(); ++i ){
-        if( techs.size() > 1 ) {  // write out if more than one Technology
+    for( unsigned int i = 0; i < mTechContainers.size(); ++i ){
+        if( mTechContainers.size() > 1 ) {  // write out if more than one Technology
             // output or demand for each Technology
             for ( int m=0;m<maxper;m++) {
                 temp[ m ] = 0;
-                for( unsigned int j = 0; j < techs[ i ].size(); ++j ){
-                    temp[m] += techs[i][j]->getOutput( m );
+                for( unsigned int j = 0; j <= m; ++j ){
+                    temp[m] += mTechContainers[i]->getNewVintageTechnology(j)->getOutput( m );
                 }
             }
-            dboutput4(regionName,"End-Use Service",sectorName+" "+name,techs[i][ 0 ]->getName(),outputUnit,temp);
+            dboutput4(regionName,"End-Use Service",sectorName+" "+name,mTechContainers[i]->getName(),outputUnit,temp);
             // total Technology cost
             for ( int m=0;m<maxper;m++) {
-                temp[m] = techs[i][m]->getCost( m );
+                temp[m] = mTechContainers[i]->getNewVintageTechnology(m)->getCost( m );
             }
 
-            dboutput4(regionName,"Price",sectorName+" "+name,techs[i][ 0 ]->getName(),priceUnit,temp);
+            dboutput4(regionName,"Price",sectorName+" "+name,mTechContainers[i]->getName(),priceUnit,temp);
         }
     }
 }
@@ -1650,13 +1147,14 @@ void Subsector::MCoutputAllSectors( const GDP* aGDP,
         }
     }
     dboutput4(regionName,"Subsec Share",sectorName,name,"100%", temp );
-    dboutput4(regionName,"Subsec Share Wts",sectorName,name,"NoUnits", convertToVector( mShareWeights ) );
+    
+    dboutput4( regionName, "Subsec Share Wts", sectorName, name, "NoUnits", convertToVector(mShareWeights) );
     // Technology share weight by Subsector-technology for each sector
-    for ( unsigned int i = 0; i < techs.size(); ++i ){
-        for ( unsigned int m = 0; m <  techs[ i ].size(); ++m ) {
-            temp[m] = techs[i][m]->getShareWeight();
+    for ( unsigned int i = 0; i < mTechContainers.size(); ++i ){
+        for ( unsigned int m = 0; m < maxper; ++m ) {
+            temp[m] = mTechContainers[i]->getNewVintageTechnology(m)->getShareWeight();
         }
-        dboutput4( regionName, "Tech Share Wts", sectorName, name+"-"+techs[i][0]->getName(),
+        dboutput4( regionName, "Tech Share Wts", sectorName, name+"-"+mTechContainers[i]->getName(),
             "NoUnits", temp );
     }
 
@@ -1665,11 +1163,11 @@ void Subsector::MCoutputAllSectors( const GDP* aGDP,
     // subsector CO2 emission. How is this different then below?
     for ( int m = 0; m < maxper; m++ ) {
         temp[ m ] = 0;
-        for ( unsigned int i = 0; i < techs.size(); ++i ){
-            for ( unsigned int j = 0; j <  techs[ i ].size(); ++j ) {
+        for ( unsigned int i = 0; i < mTechContainers.size(); ++i ){
+            for ( unsigned int j = 0; j <  maxper; ++j ) {
                 // this gives Subsector total CO2 emissions
                 // get CO2 emissions for each Technology
-                temp[m] += techs[i][j]->getEmissionsByGas("CO2", m );
+                temp[m] += mTechContainers[i]->getNewVintageTechnology(j)->getEmissionsByGas("CO2", m );
             }
         }
     }
@@ -1685,8 +1183,8 @@ void Subsector::MCoutputAllSectors( const GDP* aGDP,
     }
 
     // do for all technologies in the Subsector
-    for( unsigned int i = 0; i < techs.size(); ++i ){
-        const string subsecTechName = name + techs[i][ 0 ]->getName();
+    for( unsigned int i = 0; i < mTechContainers.size(); ++i ){
+        const string subsecTechName = name + mTechContainers[i]->getName();
         dboutput4(regionName,"CO2 Emiss(ind)",sectorName, subsecTechName,"MTC",temp);
 
         // Technology share
@@ -1696,8 +1194,8 @@ void Subsector::MCoutputAllSectors( const GDP* aGDP,
             if( subsecOutput > 0 ){
                 // sums all periods
                 // does this exclude non operating vintages?
-                for( unsigned int j = 0; j < techs[ i ].size(); ++j ){
-                    temp[m] += techs[i][j]->getOutput( m ) / subsecOutput;
+                for( unsigned int j = 0; j < maxper; ++j ){
+                    temp[m] += mTechContainers[i]->getNewVintageTechnology(j)->getOutput( m ) / subsecOutput;
                 }
             }
         }
@@ -1708,7 +1206,7 @@ void Subsector::MCoutputAllSectors( const GDP* aGDP,
             temp[ m ] = 0;
             double subsecOutput = getOutput( m );
             if( subsecOutput > 0 ){
-                temp[m] = techs[i][m]->getOutput( m ) / subsecOutput;
+                temp[m] = mTechContainers[i]->getNewVintageTechnology(m)->getOutput( m ) / subsecOutput;
             }
         }
         dboutput4(regionName,"Tech Share (New)",sectorName, subsecTechName,"%",temp);
@@ -1728,7 +1226,7 @@ void Subsector::MCoutputAllSectors( const GDP* aGDP,
             if( subsecOutput > 0 ){
                 for( int j = 0; j < m; ++j ){
                     // does this exclude non-operating vintages
-                    temp[m] += techs[i][j]->getOutput( m ) / subsecOutput;
+                    temp[m] += mTechContainers[i]->getNewVintageTechnology(j)->getOutput( m ) / subsecOutput;
                 }
             }
         }
@@ -1743,11 +1241,11 @@ void Subsector::MCoutputAllSectors( const GDP* aGDP,
 
         // ghg tax and storage cost applied to Technology if any
         for ( int m = 0; m < maxper; m++) {
-            temp[m] = techs[i][m]->getTotalGHGCost( regionName, sectorName, m );
+            temp[m] = mTechContainers[i]->getNewVintageTechnology(m)->getTotalGHGCost( regionName, sectorName, m );
         }
         dboutput4( regionName, "Total GHG Cost", sectorName, subsecTechName, priceUnit, temp);
     }
-                                    }
+}
 
 //! calculate GHG emissions from annual production of each Technology
 void Subsector::emission( const int period ){
@@ -1756,10 +1254,11 @@ void Subsector::emission( const int period ){
     summary[period].clearemiss(); // clear emissions map
     summary[period].clearemfuelmap(); // clear emissions map
     
-    for( unsigned int i = 0; i < techs.size(); ++i ){
-        for( int j = 0; j <= period; ++j ){
-            summary[period].updateemiss( techs[i][j]->getEmissions( sectorName, period ) );
-            summary[period].updateemfuelmap( techs[i][j]->getEmissionsByFuel( sectorName, period ) );
+    for( CTechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
+        ITechnologyContainer::CTechRangeIterator endIter = (*techIter)->getVintageEnd();
+        for( ITechnologyContainer::CTechRangeIterator vintageIter = (*techIter)->getVintageBegin( period ); vintageIter != endIter; ++vintageIter ) {
+            summary[period].updateemiss( (*vintageIter).second->getEmissions( sectorName, period ) );
+            summary[period].updateemfuelmap( (*vintageIter).second->getEmissionsByFuel( sectorName, period ) );
         }
     }
 }
@@ -1777,11 +1276,10 @@ double Subsector::getOutput( const int period ) const {
     /*! \pre period is less than max period. */
     assert( period < scenario->getModeltime()->getmaxper() );
     double outputSum = 0;
-    for ( unsigned int i = 0; i < techs.size(); i++ ) {
-        // Only sum output up to the current period. Future Technologies cannot
-        // have output.
-        for( int j = 0; j <= period; ++j ){
-            outputSum += techs[i][j]->getOutput( period );
+    for( CTechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
+        ITechnologyContainer::CTechRangeIterator endIter = (*techIter)->getVintageEnd();
+        for( ITechnologyContainer::CTechRangeIterator vintageIter = (*techIter)->getVintageBegin( period ); vintageIter != endIter; ++vintageIter ) {
+            outputSum += (*vintageIter).second->getOutput( period );
         }
     }
 
@@ -1801,9 +1299,10 @@ double Subsector::getOutput( const int period ) const {
  */
 double Subsector::getEnergyInput( const int aPeriod ) const {
     double totalEnergy = 0;
-    for( unsigned int i = 0; i < techs.size(); ++i ){
-        for( int j = 0; j <= aPeriod; ++j ){
-            totalEnergy += techs[ i ][ j ]->getEnergyInput( aPeriod );
+    for( CTechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
+        ITechnologyContainer::CTechRangeIterator endIter = (*techIter)->getVintageEnd();
+        for( ITechnologyContainer::CTechRangeIterator vintageIter = (*techIter)->getVintageBegin( aPeriod ); vintageIter != endIter; ++vintageIter ) {
+            totalEnergy += (*vintageIter).second->getEnergyInput( aPeriod );
         }
     }
     return totalEnergy;
@@ -1853,10 +1352,11 @@ double Subsector::distributeInvestment( const IDistributor* aDistributor,
         actInvestment = mFixedInvestments[ aPeriod ];
     }
 
+    vector<IInvestable*> investables = InvestmentUtils::getTechInvestables( baseTechs, aPeriod );
     // Set the investment amount for the subsector to the quantity actually distributed.
     // Ensure that distribute() for current period is not affected by looping thru future technologies.
     mInvestments[ aPeriod ] = aDistributor->distribute( aExpProfitRateCalc,
-                                                        InvestmentUtils::getTechInvestables( baseTechs, aPeriod ),
+                                                        investables,
                                                         aNationalAccount,
                                                         mTechLogitExp[ aPeriod ],
                                                         aRegionName,
@@ -1922,9 +1422,10 @@ void Subsector::updateSummary( const list<string>& aPrimaryFuelList,
 {
     // clears Subsector fuel consumption map
     summary[period].clearfuelcons();
-    for( unsigned int i = 0; i < techs.size(); ++i ){
-        for( int j = 0; j <= period; ++j ){
-            summary[period].updatefuelcons( aPrimaryFuelList, techs[ i ][ j ]->getFuelMap( period ) );
+    for( CTechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
+        ITechnologyContainer::CTechRangeIterator endIter = (*techIter)->getVintageEnd();
+        for( ITechnologyContainer::CTechRangeIterator vintageIter = (*techIter)->getVintageBegin( period ); vintageIter != endIter; ++vintageIter ) {
+            summary[period].updatefuelcons( aPrimaryFuelList, (*vintageIter).second->getFuelMap( period ) );
         }
     }
 }
@@ -2034,24 +1535,15 @@ void Subsector::updateMarketplace( const int period ) {
 * \author Josh Lurz, Sonny Kim
 */
 void Subsector::postCalc( const int aPeriod ){
+
     // Finalize base technologies.
     for( BaseTechIterator baseTech = baseTechs.begin(); baseTech != baseTechs.end(); ++baseTech ){
         (*baseTech)->postCalc( regionName, sectorName, aPeriod );
     }
 
     // Finalize all technologies in all periods.
-    for( unsigned int i = 0; i < techs.size(); ++i ){
-        for( unsigned int j = 0; j < techs[ i ].size(); ++j ){
-            techs[ i ][ j ]->postCalc( regionName, aPeriod );
-        }
-    }
-
-    // Do only when calibration is on and for calibration periods only.
-    // Normalize technology share weights after model has solved and technology outputs
-    // are known.
-    if( Configuration::getInstance()->getBool( "CalibrationActive" ) &&
-        aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() ){
-            normalizeTechShareWeights( aPeriod );
+    for( TechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
+        (*techIter)->postCalc( regionName, aPeriod );
     }
 }
 
@@ -2084,25 +1576,10 @@ void Subsector::accept( IVisitor* aVisitor, const int period ) const {
             }
         }
     }
-    // If the period is -1 this means to update output containers for all periods.
-    if( period == -1 ){
-        for( unsigned int i = 0; i < techs.size(); ++i ){
-            // Loop through all periods. techs[i].size() happens to be max period.
-            for( int per = 0; per < modeltime->getmaxper(); ++per ){
-                // For each and every vintaged technology, use the last period for
-                // the accept() arguement so that children of technology for all periods
-                // can be visited.
-                techs[ i ][ per ]->accept( aVisitor, modeltime->getmaxper() - 1 );
-            }
-        }
+    for( CTechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
+        (*techIter)->accept( aVisitor, period );
     }
-    else {
-        for( unsigned int i = 0; i < techs.size(); ++i ){
-            for( int j = 0; j <= period; ++j ){
-                techs[ i ][ j ]->accept( aVisitor, period );
-            }
-        }
-    }
+            
     aVisitor->endVisitSubsector( this, period );
 }
 

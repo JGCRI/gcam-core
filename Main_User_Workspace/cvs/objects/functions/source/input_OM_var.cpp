@@ -262,3 +262,27 @@ double InputOMVar::getTechChange( const int aPeriod ) const
     return mTechChange;
 }
 
+void InputOMVar::doInterpolations( const int aYear, const int aPreviousYear,
+                                    const int aNextYear, const IInput* aPreviousInput,
+                                    const IInput* aNextInput )
+{
+    const InputOMVar* prevOMInput = static_cast<const InputOMVar*>( aPreviousInput );
+    const InputOMVar* nextOMInput = static_cast<const InputOMVar*>( aNextInput );
+    
+    /*!
+     * \pre We are given a valid InputOMVar for the previous input.
+     */
+    assert( prevOMInput );
+    
+    /*!
+     * \pre We are given a valid InputOMVar for the next input.
+     */
+    assert( nextOMInput );
+    
+    // tech change is just copied from the next input
+    mTechChange = nextOMInput->mTechChange;
+    
+    // interpolate the costs
+    mOMVar = util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
+                                       prevOMInput->mOMVar, nextOMInput->mOMVar );
+}

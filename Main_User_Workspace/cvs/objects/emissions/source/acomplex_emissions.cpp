@@ -505,6 +505,24 @@ void AComplexEmissions::initCalc( const string& aRegionName,
     mCachedMarket = scenario->getMarketplace()->locateMarket( getName(), aRegionName, aPeriod );
 }
 
-
-
-
+void AComplexEmissions::doInterpolations( const int aYear, const int aPreviousYear,
+                                          const int aNextYear, const AGHG* aPreviousGHG,
+                                          const AGHG* aNextGHG )
+{
+    const AComplexEmissions* prevComplexEmiss = static_cast<const AComplexEmissions*>( aPreviousGHG );
+    const AComplexEmissions* nextComplexEmiss = static_cast<const AComplexEmissions*>( aNextGHG );
+    
+    /*!
+     * \pre We are given a valid AComplexEmissions for the previous ghg.
+     */
+    assert( prevComplexEmiss );
+    
+    /*!
+     * \pre We are given a valid AComplexEmissions for the next ghg.
+     */
+    assert( nextComplexEmiss );
+    
+    // tech diff is a tech change so we just copy from the next ghg to get the same
+    // behavior
+    techDiff = nextComplexEmiss->techDiff;
+}

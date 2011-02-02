@@ -8,7 +8,7 @@
             <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-1</fuelprefElasticity>
@@ -108,7 +108,7 @@
             </subsector>
             <subsector name="coal">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-1.5</fuelprefElasticity>
@@ -208,7 +208,7 @@
             </subsector>
             <subsector name="electricity">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -308,7 +308,7 @@
             </subsector>
             <subsector name="gas">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -408,7 +408,7 @@
             </subsector>
             <subsector name="refined liquids">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -508,7 +508,7 @@
             </subsector>
             <subsector name="trad biomass">
                <share-weight fillout="1" year="1975">0</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -592,7 +592,7 @@
             <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-1</fuelprefElasticity>
@@ -692,7 +692,7 @@
             </subsector>
             <subsector name="coal">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-1.5</fuelprefElasticity>
@@ -792,7 +792,7 @@
             </subsector>
             <subsector name="electricity">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -892,7 +892,7 @@
             </subsector>
             <subsector name="gas">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -992,7 +992,7 @@
             </subsector>
             <subsector name="refined liquids">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -1092,7 +1092,7 @@
             </subsector>
             <subsector name="trad biomass">
                <share-weight fillout="1" year="1975">0</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -1176,7 +1176,7 @@
             <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-1</fuelprefElasticity>
@@ -1276,7 +1276,7 @@
             </subsector>
             <subsector name="coal">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-1.5</fuelprefElasticity>
@@ -1376,7 +1376,7 @@
             </subsector>
             <subsector name="electricity">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -1476,7 +1476,7 @@
             </subsector>
             <subsector name="gas">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -1576,7 +1576,7 @@
             </subsector>
             <subsector name="refined liquids">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -1676,7 +1676,7 @@
             </subsector>
             <subsector name="trad biomass">
                <share-weight fillout="1" year="1975">0</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -1760,7 +1760,7 @@
             <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-1</fuelprefElasticity>
@@ -1860,7 +1860,7 @@
             </subsector>
             <subsector name="coal">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-1.5</fuelprefElasticity>
@@ -1960,7 +1960,7 @@
             </subsector>
             <subsector name="electricity">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -2060,7 +2060,7 @@
             </subsector>
             <subsector name="gas">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -2160,7 +2160,7 @@
             </subsector>
             <subsector name="refined liquids">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -2260,7 +2260,7 @@
             </subsector>
             <subsector name="trad biomass">
                <share-weight fillout="1" year="1975">0</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -2344,7 +2344,7 @@
             <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-1</fuelprefElasticity>
@@ -2444,7 +2444,7 @@
             </subsector>
             <subsector name="coal">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-1.5</fuelprefElasticity>
@@ -2544,7 +2544,7 @@
             </subsector>
             <subsector name="electricity">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -2644,7 +2644,7 @@
             </subsector>
             <subsector name="gas">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -2744,7 +2744,7 @@
             </subsector>
             <subsector name="refined liquids">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -2844,7 +2844,7 @@
             </subsector>
             <subsector name="trad biomass">
                <share-weight fillout="1" year="1975">0</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -2928,7 +2928,7 @@
             <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-0.1</fuelprefElasticity>
@@ -3028,7 +3028,7 @@
             </subsector>
             <subsector name="coal">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-0.25</fuelprefElasticity>
@@ -3128,7 +3128,7 @@
             </subsector>
             <subsector name="electricity">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -3228,7 +3228,7 @@
             </subsector>
             <subsector name="gas">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -3328,7 +3328,7 @@
             </subsector>
             <subsector name="refined liquids">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-0.1</fuelprefElasticity>
@@ -3428,7 +3428,7 @@
             </subsector>
             <subsector name="trad biomass">
                <share-weight fillout="1" year="1975">0</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-1.2</fuelprefElasticity>
@@ -3513,7 +3513,7 @@
             <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-0.1</fuelprefElasticity>
@@ -3613,7 +3613,7 @@
             </subsector>
             <subsector name="coal">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-0.25</fuelprefElasticity>
@@ -3713,7 +3713,7 @@
             </subsector>
             <subsector name="electricity">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -3813,7 +3813,7 @@
             </subsector>
             <subsector name="gas">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -3913,7 +3913,7 @@
             </subsector>
             <subsector name="refined liquids">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-0.1</fuelprefElasticity>
@@ -4013,7 +4013,7 @@
             </subsector>
             <subsector name="trad biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-1.2</fuelprefElasticity>
@@ -4098,7 +4098,7 @@
             <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-0.1</fuelprefElasticity>
@@ -4198,7 +4198,7 @@
             </subsector>
             <subsector name="coal">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-0.25</fuelprefElasticity>
@@ -4298,7 +4298,7 @@
             </subsector>
             <subsector name="electricity">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -4398,7 +4398,7 @@
             </subsector>
             <subsector name="gas">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -4498,7 +4498,7 @@
             </subsector>
             <subsector name="refined liquids">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-0.1</fuelprefElasticity>
@@ -4598,7 +4598,7 @@
             </subsector>
             <subsector name="trad biomass">
                <share-weight fillout="1" year="1975">0</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-1.2</fuelprefElasticity>
@@ -4683,7 +4683,7 @@
             <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-1</fuelprefElasticity>
@@ -4783,7 +4783,7 @@
             </subsector>
             <subsector name="coal">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-0.25</fuelprefElasticity>
@@ -4883,7 +4883,7 @@
             </subsector>
             <subsector name="electricity">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -4983,7 +4983,7 @@
             </subsector>
             <subsector name="gas">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -5083,7 +5083,7 @@
             </subsector>
             <subsector name="refined liquids">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-0.1</fuelprefElasticity>
@@ -5183,7 +5183,7 @@
             </subsector>
             <subsector name="trad biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-2</fuelprefElasticity>
@@ -5268,7 +5268,7 @@
             <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-0.1</fuelprefElasticity>
@@ -5368,7 +5368,7 @@
             </subsector>
             <subsector name="coal">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-0.25</fuelprefElasticity>
@@ -5468,7 +5468,7 @@
             </subsector>
             <subsector name="electricity">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -5568,7 +5568,7 @@
             </subsector>
             <subsector name="gas">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -5668,7 +5668,7 @@
             </subsector>
             <subsector name="refined liquids">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-0.1</fuelprefElasticity>
@@ -5768,7 +5768,7 @@
             </subsector>
             <subsector name="trad biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-1.2</fuelprefElasticity>
@@ -5853,7 +5853,7 @@
             <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-0.1</fuelprefElasticity>
@@ -5953,7 +5953,7 @@
             </subsector>
             <subsector name="coal">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-0.25</fuelprefElasticity>
@@ -6053,7 +6053,7 @@
             </subsector>
             <subsector name="electricity">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -6153,7 +6153,7 @@
             </subsector>
             <subsector name="gas">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -6253,7 +6253,7 @@
             </subsector>
             <subsector name="refined liquids">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-0.1</fuelprefElasticity>
@@ -6353,7 +6353,7 @@
             </subsector>
             <subsector name="trad biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-1.2</fuelprefElasticity>
@@ -6438,7 +6438,7 @@
             <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-0.1</fuelprefElasticity>
@@ -6538,7 +6538,7 @@
             </subsector>
             <subsector name="coal">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-0.25</fuelprefElasticity>
@@ -6638,7 +6638,7 @@
             </subsector>
             <subsector name="electricity">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -6738,7 +6738,7 @@
             </subsector>
             <subsector name="gas">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -6838,7 +6838,7 @@
             </subsector>
             <subsector name="refined liquids">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-0.1</fuelprefElasticity>
@@ -6938,7 +6938,7 @@
             </subsector>
             <subsector name="trad biomass">
                <share-weight fillout="1" year="1975">0</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-1.2</fuelprefElasticity>
@@ -7023,7 +7023,7 @@
             <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-1</fuelprefElasticity>
@@ -7123,7 +7123,7 @@
             </subsector>
             <subsector name="coal">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-1.5</fuelprefElasticity>
@@ -7223,7 +7223,7 @@
             </subsector>
             <subsector name="electricity">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -7323,7 +7323,7 @@
             </subsector>
             <subsector name="gas">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -7423,7 +7423,7 @@
             </subsector>
             <subsector name="refined liquids">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -7523,7 +7523,7 @@
             </subsector>
             <subsector name="trad biomass">
                <share-weight fillout="1" year="1975">0</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -7607,7 +7607,7 @@
             <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-0.1</fuelprefElasticity>
@@ -7707,7 +7707,7 @@
             </subsector>
             <subsector name="coal">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-0.25</fuelprefElasticity>
@@ -7807,7 +7807,7 @@
             </subsector>
             <subsector name="electricity">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -7907,7 +7907,7 @@
             </subsector>
             <subsector name="gas">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
@@ -8007,7 +8007,7 @@
             </subsector>
             <subsector name="refined liquids">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-0.1</fuelprefElasticity>
@@ -8107,7 +8107,7 @@
             </subsector>
             <subsector name="trad biomass">
                <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <fuelprefElasticity fillout="1" year="1975">-1.2</fuelprefElasticity>

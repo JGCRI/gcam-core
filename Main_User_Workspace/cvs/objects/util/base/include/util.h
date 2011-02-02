@@ -207,6 +207,25 @@ namespace objects {
 
         return InterfaceGetter<INamed,T>()( aObject )->getName() == mName;
     }
+    
+    /*!
+     * \brief A binary functor to compare named components by name so that they can be sorted.
+     * \note If objects correctly inherited from the INamed interface this could
+     *       just use that as the template argument instead of templating NameComparator.
+     */
+    template<class T>
+    struct NameComparator : public std::binary_function<T*, T*, bool> {
+        /*!
+         * \brief Determine if the left hand operand is less than the
+         *        right.
+         * \param lhs The left hand side operand for the sort comparison.
+         * \param rhs The right hand side operand for the sort comparison.
+         * \return True if lhs is less than rhs, false otherwise.
+         */
+        bool operator()( const T* lhs, const T* rhs ){
+            return lhs->getName() < rhs->getName();
+        }
+    };
 
     /*! \brief Reorder a container based on an ordering of names.
      *  \details This function is used to reorder a a container using a supplied

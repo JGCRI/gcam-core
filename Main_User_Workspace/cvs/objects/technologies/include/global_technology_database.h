@@ -45,48 +45,71 @@
 * \author Pralit Patel
 */
 
-#include <vector>
-#include <map>
-#include <boost/shared_ptr.hpp>
 #include <xercesc/dom/DOMNode.hpp>
-
-#include "technologies/include/global_technology.h"
+#include "util/base/include/iparsable.h"
+#include "util/base/include/iround_trippable.h"
 
 // Forward declarations
 class Tabs;
+class ITechnologyContainer;
 
 /*! 
-* \ingroup Objects
-* \brief GlobalTechnologyDatabase holds GlobalTechnologies.
-* \details This class contains GlobalTechnologies and allows technologies
-*          to retrieve them on request through the getTechnology method.
-*          Global technologies are read in from XML and are expected in
-*          the following specification.
-*
-*          <b>XML specification for GlobalTechnologyDatabase</b>
-*          - XML name: -c globalTechnologyDatabase
-*          - Contained by: World
-*          - Parsing inherited from class: None
-*          - Attributes: None
-*          - Elements:
-*              - \c GlobalTechnology GlobalTechnologyDatase::mTechnologyList
-* \author Pralit Patel
-*/
-
-
-class GlobalTechnologyDatabase
-{
+ * \ingroup Objects
+ * \brief GlobalTechnologyDatabase holds ITechnologyContainers that can be shared
+ *       globally.
+ * \details This class contains ITechnologyContainers and could but used in conjunction
+ *         with SubTechnologyContainers to retrieve and utilize them through the
+ *         getTechnology method.  The global technologies are categorized by sector
+ *         and subsector names to avoid technology name collisions.
+ *
+ *          <b>XML specification for GlobalTechnologyDatabase</b>
+ *          - XML name: -c GlobalTechnologyDatabase::getXMLNameStatic()
+ *          - Contained by: World
+ *          - Parsing inherited from class: None
+ *          - Attributes: None
+ *          - Elements:
+ *              - \c location-info
+ *                  - Attributes: sector-name, subsector-name
+ *                      The sector and subsector names under which this technology
+ *                      should be contained.
+ *                  - Elements:
+ *                      - \c TechnologyContainer::hasTechnologyType() GlobalTechnologyDatabase::mTechnologyList
+ *                          The technology container that can be accessed through getTechnology
+ *
+ * \author Pralit Patel
+ */
+class GlobalTechnologyDatabase : public IParsable, public IRoundTrippable {
 public:
-    GlobalTechnologyDatabase();
-    void XMLParse( const xercesc::DOMNode* aNode );
-    void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
-    void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
+    // Singleton class will only provide a getInstance method and no constructors
+    static GlobalTechnologyDatabase* getInstance();
+    ~GlobalTechnologyDatabase();
+    
     static const std::string& getXMLNameStatic();
-
-    const boost::shared_ptr<GlobalTechnology>& getTechnology( const std::string& aTechnologyName, const int aYear ) const;
+    
+    const ITechnologyContainer* getTechnology( const std::string& aSectorName,
+                                               const std::string& aSubsectorName,
+                                               const std::string& aTechnologyName ) const;
+    
+    // IParsable methods
+    virtual bool XMLParse( const xercesc::DOMNode* aNode );
+    
+    // IRoundTrippable methods
+    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
+    
 private:
     //! List of GlobalTechnologies
-    std::vector<boost::shared_ptr<GlobalTechnology> > mTechnologyList;
+    std::map<std::pair<std::string, std::string>, std::vector<ITechnologyContainer*> > mTechnologyList;
+    
+    // some useful iterator typedefs
+    typedef std::map<std::pair<std::string, std::string>, std::vector<ITechnologyContainer*> >::const_iterator CTechLocationIterator;
+    typedef std::vector<ITechnologyContainer*>::const_iterator CTechListIterator;
+    
+    // private constructors to enforce a single instance
+    GlobalTechnologyDatabase() {}
+    
+    // intentionally undefined
+    GlobalTechnologyDatabase( const GlobalTechnologyDatabase& );
+    GlobalTechnologyDatabase& operator=( const GlobalTechnologyDatabase& );
 };
 
 #endif // _GLOBAL_TECHNOLOGY_DATABASE_H_

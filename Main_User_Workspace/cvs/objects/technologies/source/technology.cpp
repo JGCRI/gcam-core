@@ -80,9 +80,6 @@
 #include "technologies/include/production_state_factory.h"
 
 #include "technologies/include/marginal_profit_calculator.h"
-#include "technologies/include/generic_technology_info.h"
-#include "technologies/include/global_technology.h"
-#include "technologies/include/global_technology_database.h"
 #include "emissions/include/ghg_factory.h"
 #include "emissions/include/co2_emissions.h"
 
@@ -152,7 +149,6 @@ void Technology::copy( const Technology& techIn ) {
     mLifetimeYears = techIn.mLifetimeYears;
     mShareWeight = techIn.mShareWeight;
     mPMultiplier = techIn.mPMultiplier;
-    mGetGlobalTech = techIn.mGetGlobalTech;
 
     year = techIn.year;
     mCosts = techIn.mCosts;
@@ -185,20 +181,13 @@ void Technology::copy( const Technology& techIn ) {
     {
         mShutdownDeciders.push_back( (*iter)->clone() );
     }
-
-    // all cloning should have been done before completeInit
-    // because during completeInit GlobalTechnologies are fetched
-    // and they cannot be cloned.
-    if( techIn.mTechData.get() ) {
-        mTechData.reset( techIn.mTechData->clone() );
-    }
-    else {
-        mTechData.reset();
-    }
     
     for( COutputIterator iter = techIn.mOutputs.begin(); iter != techIn.mOutputs.end(); ++iter ) {
         mOutputs.push_back( ( *iter )->clone() );
     }
+    
+    // copy keywords for reporting as well
+    mKeywordMap = techIn.mKeywordMap;
 }
 
 //! Clear member variables.
@@ -236,11 +225,10 @@ void Technology::init()
     mPMultiplier = 1;
     mFixedOutput = -1;
     mAlphaZero = 1;
-    mGetGlobalTech = false;
 }
 
 bool Technology::isSameType( const string& aType ) const {
-    return aType == getXMLName1D();
+    return aType == getXMLName();
 }
 
 /*! \brief Default value for mFixedOutput;
@@ -305,9 +293,6 @@ bool Technology::XMLParse( const DOMNode* node )
         else if( OutputFactory::isOfType( nodeName ) ) {
             parseContainerNode( curr, mOutputs, OutputFactory::create( nodeName ).release() );
         }
-        else if( nodeName == GlobalTechnology::getXMLNameStatic() ) {
-            mGetGlobalTech = true;
-        }
         else if( nodeName == "keyword" ){
             DOMNamedNodeMap* keywordAttributes = curr->getAttributes();
             for( unsigned int attrNum = 0; attrNum < keywordAttributes->getLength(); ++attrNum ) {
@@ -321,26 +306,12 @@ bool Technology::XMLParse( const DOMNode* node )
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
             mainLog << "Unrecognized text string: " << nodeName
-                    << " found while parsing " << getXMLName1D() << "." << endl;
+                    << " found while parsing " << getXMLName() << "." << endl;
         }
     }
 
     // TODO: Improve error handling.
     return true;
-}
-
-/*! \brief Creates a generic technology info
- *  \details Will create and set a new generic technology
- *           info if mTechData has not already been set.
- *           Also will reset the flag to get a global technology
- *           to false as the generic technology is overriding it.
- *  \author Pralit Patel
- */
-void Technology::createTechData() {
-    if( !mTechData.get() ) {
-        mTechData.reset( new GenericTechnologyInfo( mName ) );
-    }
-    mGetGlobalTech = false;
 }
 
 /*!
@@ -350,7 +321,6 @@ void Technology::createTechData() {
 * \param aDepDefinder Regional dependency finder.
 * \param aSubsectorInfo Subsector information object.
 * \param aLandAllocator Regional land allocator.
-* \param aGlobalTechDB Global Technology database.
 * \author Josh Lurz
 * \warning Markets are not necessarily set when completeInit is called
 */
@@ -359,8 +329,7 @@ void Technology::completeInit( const string& aRegionName,
                                const string& aSubsectorName,
                                DependencyFinder* aDepFinder,
                                const IInfo* aSubsectorInfo,
-                               ILandAllocator* aLandAllocator,
-                               const GlobalTechnologyDatabase* aGlobalTechDB )
+                               ILandAllocator* aLandAllocator )
 {
     // Inititalize the technology info object
     mTechnologyInfo.reset( InfoFactory::constructInfo( aSubsectorInfo, mName ) );
@@ -375,11 +344,9 @@ void Technology::completeInit( const string& aRegionName,
             << " has an invalid year attribute." << endl;
     }
 
-    // Default the lifetime to be the time step beginning when the Technology is
-    // created.
-    const Modeltime* modeltime = scenario->getModeltime();
+    // If the technology did not read a lifetime calculate a default.
     if( mLifetimeYears == -1 ) {
-        mLifetimeYears = modeltime->gettimestep( modeltime->getyr_to_per( year ) );
+        mLifetimeYears = calcDefaultLifetime();
     }
     
     // Check if both the original MiniCAM non-energy-input and the new input-capital
@@ -430,15 +397,6 @@ void Technology::completeInit( const string& aRegionName,
     // Create the primary output for this technology. All technologies will have
     // a primary output. Always insert the primary output at position 0.
     mOutputs.insert( mOutputs.begin(), new PrimaryOutput( aSectorName ) );
-    
-    if( mGetGlobalTech && aGlobalTechDB ) {
-        mTechData = aGlobalTechDB->getTechnology( mName, year );
-    }
-    if( !mTechData.get() ) {
-        // create one so that it can have default values
-        mTechData.reset( new GenericTechnologyInfo( mName ) );
-    }
-    mTechData->completeInit();
 
     // Check for attempts to calibrate fixed output.
     if( mFixedOutput != getFixedOutputDefault() && mCalValue.get() ) {
@@ -502,6 +460,7 @@ void Technology::completeInit( const string& aRegionName,
     }
 
     if( Configuration::getInstance()->getBool( "CalibrationActive" ) ){
+        const Modeltime* modeltime = scenario->getModeltime();
         bool hasCalInput = false;
         const int periodForYear = modeltime->getyr_to_per( year );
         for( CInputIterator it = mInputs.begin(); it != mInputs.end() && !hasCalInput; ++it ) {
@@ -524,14 +483,14 @@ void Technology::completeInit( const string& aRegionName,
 void Technology::toInputXML( ostream& out,
                              Tabs* tabs ) const
 {
-    XMLWriteOpeningTag( getXMLNameStatic2D(), out, tabs, "", year );
+    XMLWriteOpeningTag( getXMLVintageNameStatic(), out, tabs, "", year );
     
     // write the xml for the class members.
     if( mParsedShareWeight.isInited() ) {
         XMLWriteElement( mParsedShareWeight, "share-weight", out, tabs );
     }
-    const Modeltime* modeltime = scenario->getModeltime();
-    XMLWriteElementCheckDefault( mLifetimeYears, "lifetime", out, tabs, modeltime->gettimestep( modeltime->getyr_to_per( year ) ) );
+    int defualtLifetimeYears = calcDefaultLifetime();
+    XMLWriteElementCheckDefault( mLifetimeYears, "lifetime", out, tabs, defualtLifetimeYears );
     XMLWriteElementCheckDefault( mFixedOutput, "fixedOutput", out, tabs, getFixedOutputDefault() );
     XMLWriteElementCheckDefault( mPMultiplier, "pMultiplier", out, tabs, 1.0 );
     if( !mKeywordMap.empty() ) {
@@ -566,7 +525,7 @@ void Technology::toInputXML( ostream& out,
 
     // finished writing xml for the class members.
     toInputXMLDerived( out, tabs );
-    XMLWriteClosingTag( getXMLNameStatic2D(), out, tabs );
+    XMLWriteClosingTag( getXMLVintageNameStatic(), out, tabs );
 }
 
 //! write object to xml debugging output stream
@@ -579,7 +538,7 @@ void Technology::toDebugXML( const int period,
         return;
     }
 
-    XMLWriteOpeningTag( getXMLName1D(), out, tabs, mName, year );
+    XMLWriteOpeningTag( getXMLName(), out, tabs, mName, year );
     // write the xml for the class members.
 
     XMLWriteElement( mShareWeight, "share-weight", out, tabs );
@@ -595,7 +554,6 @@ void Technology::toDebugXML( const int period,
     for( unsigned int i = 0; i < mInputs.size(); ++i ) {
         mInputs[ i ]->toDebugXML( period, out, tabs );
     }
-    mTechData->toDebugXML( period, out, tabs );
 
 
     if( mCaptureComponent.get() ) {
@@ -622,7 +580,7 @@ void Technology::toDebugXML( const int period,
 
     // finished writing xml for the class members.
     toDebugXMLDerived( period, out, tabs );
-    XMLWriteClosingTag( getXMLName1D(), out, tabs );
+    XMLWriteClosingTag( getXMLName(), out, tabs );
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -634,10 +592,10 @@ void Technology::toDebugXML( const int period,
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const string& Technology::getXMLNameStatic2D()
+const string& Technology::getXMLVintageNameStatic()
 {
-    const static string XML_NAME_2D = "period";
-    return XML_NAME_2D;
+    const static string XML_VINTAGE_NAME = "period";
+    return XML_VINTAGE_NAME;
 }
 
 /*! \brief Perform initializations that only need to be done once per period.
@@ -678,9 +636,9 @@ void Technology::initCalc( const string& aRegionName,
         ghg[ i ]->initCalc( aRegionName, getTechInfo(), aPeriod );
     }
 
-    if( aPeriod > 0 && !aPrevPeriodInfo.mInputs ){
-        // The base period technology should not have any previous technology
-        // information so do not print the warning.
+    if( !aPrevPeriodInfo.mIsFirstTech && !aPrevPeriodInfo.mInputs ){
+        // The first period technology, which is not necessarily in the base year should
+        // not have any previous technology information so do not print the warning.
         if( year != scenario->getModeltime()->getper_to_yr( 0 ) ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog << "Previous period technology from technology " << mName << " in year " << year
@@ -689,7 +647,7 @@ void Technology::initCalc( const string& aRegionName,
     }
 
     // Only copy inputs forward in the starting year of the technology.
-    else if( aPeriod > 0 && mProductionState[ aPeriod ]->isOperating() &&
+    else if( !aPrevPeriodInfo.mIsFirstTech && mProductionState[ aPeriod ]->isOperating() &&
              mProductionState[ aPeriod ]->isNewInvestment() ){
         // Copy information from the previous inputs forward.
         FunctionUtils::copyInputParamsForward( *aPrevPeriodInfo.mInputs, mInputs, aPeriod );
@@ -823,7 +781,6 @@ void Technology::postCalc( const string& aRegionName,
         mProductionState[ aPeriod ]->isNewInvestment() ){
             mParsedShareWeight = mShareWeight;
     }
-
 }
 
 /*! \brief This function calculates the sum of the Carbon Values for all GHG's
@@ -1133,19 +1090,6 @@ Value Technology::getParsedShareWeight() const {
 /*! \brief scale share weight for this Technology
 *
 * \author Steve Smith
-* \param scaleValue multiplicative scaling factor for share weight
-*/
-void Technology::scaleShareWeight( double scaleValue )
-{
-    /*! \pre Share scale value is greater than or equal to zero. */
-    assert( scaleValue >= 0 );
-
-    mShareWeight *= scaleValue;
-}
-
-/*! \brief scale share weight for this Technology
-*
-* \author Steve Smith
 * \param shareWeightValue new value for share weight
 */
 void Technology::setShareWeight( double shareWeightValue )
@@ -1341,13 +1285,16 @@ double Technology::getEnergyCost( const string& aRegionName,
 double Technology::getEnergyInput( const int aPeriod ) const
 {
     double totalEnergy = 0;
-    for( unsigned int i = 0; i < mInputs.size(); ++i ) {
-        if( mInputs[ i ]->hasTypeFlag( IInput::ENERGY ) ) {
-            totalEnergy += mInputs[ i ]->getPhysicalDemand( aPeriod );
+    // If technology is not operating return with zero total energy.
+    if( mProductionState[ aPeriod ]->isOperating() ) {
+        for( unsigned int i = 0; i < mInputs.size(); ++i ) {
+            if( mInputs[ i ]->hasTypeFlag( IInput::ENERGY ) ) {
+                totalEnergy += mInputs[ i ]->getPhysicalDemand( aPeriod );
+            }
         }
+        /*! \post totalEnergy must still be positive. */
+        assert( totalEnergy >= 0 );
     }
-    /*! \post totalEnergy must still be positive. */
-    assert( totalEnergy >= 0 );
     return totalEnergy;
 }
 
@@ -1746,4 +1693,144 @@ void Technology::accept( IVisitor* aVisitor, const int aPeriod ) const {
  */
 void Technology::acceptDerived( IVisitor* aVisitor, const int aPeriod ) const {
     // do nothing
+}
+
+/*!
+ * \brief Call doInterpolations for each object in aInterpolated with the object that
+ *        has the same name as in aPrev and aNext.
+ * \details Any value in aPrev or aNext which does not have a corresponding object
+ *          in the other will be skipped.  Note that since aInterpolated was cloned
+ *          from aPrev in the case of a skip it will be left the same as aPrev.
+ * \param aInterpolated A vector of pointers to objects which need to be interpolated.
+ * \param aPrev A vector of pointers to objects that can be interpolated from.
+ * \param aNext A vector of pointers to objects that can be interpolated to.
+ * \param aYear The year which needs to be interpolated.
+ * \param aPrevYear The year to interpolate from.
+ * \param aNextYear The year to interpolate to.
+ */
+template<class T>
+void interpolateChildVector( std::vector<T*> aInterpolated, std::vector<T*> aPrev,
+                             std::vector<T*> aNext, const int aYear, const int aPrevYear,
+                             const int aNextYear )
+{
+    // Sort each vector by name to help identify mismatches.
+    // Note that the vectors are passed by value on purpose so that these sorts
+    // do not mess with ordering.
+    util::NameComparator<T> comp;
+    sort( aInterpolated.begin(), aInterpolated.end(), comp );
+    sort( aPrev.begin(), aPrev.end(), comp );
+    sort( aNext.begin(), aNext.end(), comp );
+    
+    /*!
+     * \pre We are assuming that the prev and the current contain the same
+     *      elements since the current should have been cloned from the prev.
+     */
+    assert( aInterpolated.size() == aPrev.size() );
+    unsigned int prevIndex = 0;
+    unsigned int nextIndex = 0;
+    while( prevIndex < aPrev.size() && nextIndex < aNext.size() ) {
+        // If the previous name is less than the next then that means the previous
+        // had an additional element which must be skipped.
+        if( aPrev[ prevIndex ]->getName() < aNext[ nextIndex ]->getName() ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Skipping interpolation for " << aPrev[ prevIndex ]->getName()
+                    << " in year " << aYear << " due to mismatch." << endl;
+            ++prevIndex;
+            continue;
+        }
+        
+        // If the next name is less than the previous then that means the next
+        // had an additional element which must be skipped.        
+        if( aNext[ nextIndex ]->getName() < aPrev[ prevIndex ]->getName() ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "Skipping interpolation for " << aNext[ nextIndex ]->getName()
+                    << " in year " << aYear << " due to mismatch." << endl;
+            ++nextIndex;
+            continue;
+        }
+        
+        // The previous and next match up so this value can be interpolated.
+        assert( aInterpolated[ prevIndex ]->getName() == aPrev[ prevIndex ]->getName() );
+        aInterpolated[ prevIndex ]->doInterpolations( aYear, aPrevYear, aNextYear,
+                                                      aPrev[ prevIndex ], aNext[ nextIndex ] );
+        ++prevIndex;
+        ++nextIndex;
+    }
+    
+    // additional error checks
+    for( ; prevIndex < aPrev.size(); ++prevIndex ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Skipping interpolation for " << aPrev[ prevIndex ]->getName()
+                << " in year " << aYear << " due to mismatch." << endl;
+    }
+    for( ; nextIndex < aNext.size(); ++nextIndex ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Skipping interpolation for " << aNext[ nextIndex ]->getName()
+                << " in year " << aYear << " due to mismatch." << endl;
+    }
+}
+
+/*!
+ * \brief Perform any interpolations for any data members that should be interpolated.
+ * \details This technology was created by cloning aPrevTech however some of the data
+ *          members should be interpolated between the previous value and the next.  All
+ *          of those values should be interploated here.
+ * \param aPrevTech The previous technology this one was cloned from.
+ * \param aNextTech The next parsed technology to which values should be interpolated to.
+ */
+void Technology::doInterpolations( const Technology* aPrevTech, const Technology* aNextTech ) {
+    // interpolate share weights
+    // Zero share weights for prevTech or NextTech are valid end points for interpolation.
+    // Do not interpolate from a share-weight in a calibration period as that is
+    // likely to be replaced during calibration.
+    const Modeltime* modeltime  = scenario->getModeltime();
+    if( modeltime->getyr_to_per( aPrevTech->year ) > modeltime->getFinalCalibrationPeriod() 
+        && aPrevTech->mParsedShareWeight.isInited() && aNextTech->mParsedShareWeight.isInited() )
+    {
+        mParsedShareWeight = util::linearInterpolateY( year, aPrevTech->year, aNextTech->year,
+            aPrevTech->mParsedShareWeight, aNextTech->mParsedShareWeight );
+    }
+    
+    // have inputs do any interpolations
+    interpolateChildVector( mInputs, aPrevTech->mInputs, aNextTech->mInputs,
+                            year, aPrevTech->year, aNextTech->year );
+    
+    // have outputs do any interpolations
+    interpolateChildVector( mOutputs, aPrevTech->mOutputs, aNextTech->mOutputs,
+                            year, aPrevTech->year, aNextTech->year );
+    
+    // have ghgs do any interpolations
+    interpolateChildVector( ghg, aPrevTech->ghg, aNextTech->ghg,
+                            year, aPrevTech->year, aNextTech->year );
+
+    // only copy fixed output if the technology did not explicitly set a lifetime
+    // which indicates that the user intended to exogenously set a output path as
+    // apposed to just a single chunk
+    if( mFixedOutput != -1 ) {
+        mFixedOutput = mLifetimeYears == -1 ?
+            util::linearInterpolateY( year, aPrevTech->year, aNextTech->year,
+                                      aPrevTech->mFixedOutput, aNextTech->mFixedOutput ) : 0;
+    }
+    if( aPrevTech->mLifetimeYears != aNextTech->mLifetimeYears ) {
+        mLifetimeYears = aNextTech->mLifetimeYears;
+    }
+}
+
+/*!
+ * \brief Calculates what the default lifetime should be if one was not read-in.
+ * \details The default will be the number of years it takes to get from this
+ *          technology year to the next model year.
+ * \return The appropriate default lifetime for this technology.
+ */
+int Technology::calcDefaultLifetime() const {
+    const Modeltime* modeltime = scenario->getModeltime();
+    // TODO: worry about non-aligned technologies?
+    const int nextTechPeriod = modeltime->getyr_to_per( year ) + 1;
+    return nextTechPeriod < modeltime->getmaxper()
+        ? modeltime->getper_to_yr( nextTechPeriod ) - year
+        : modeltime->gettimestep( modeltime->getmaxper() - 1 );
 }

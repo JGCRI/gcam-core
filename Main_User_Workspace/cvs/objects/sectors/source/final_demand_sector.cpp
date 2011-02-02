@@ -131,12 +131,10 @@ void FinalDemandSector::initCalc( NationalAccount* aNationalAccount,
 * \param aRegionInfo The regional information object.
 * \param aDependencyFinder Region's dependency finder, should be null for CGE regions.
 * \param aLandAllocator Region's land allocator, should be null for CGE regions.
-* \param aGlobalTechDB Global technology database.
 */
 void FinalDemandSector::completeInit( const IInfo* aRegionInfo,
                                       DependencyFinder* aDependencyFinder,
-                                      ILandAllocator* aLandAllocator,
-                                      const GlobalTechnologyDatabase* aGlobalTechDB )
+                                      ILandAllocator* aLandAllocator )
 {
-    Sector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator, aGlobalTechDB );
+    Sector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator );
 }

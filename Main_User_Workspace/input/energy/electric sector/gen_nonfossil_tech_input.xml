@@ -115,225 +115,8 @@
                </technology>
             </subsector>
             <subsector name="nuclear">
-               <technology name="nuc_base_gen2">
-                  <period year="1975">
-                     <share-weight>1</share-weight>
-                     <minicam-energy-input name="nuclearFuelGenII">
-                        <efficiency>0.333</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.025</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider name="profit-shutdown-decider"/>
-                     <CO2 name="CO2"/>
-                     <lifetime>-1</lifetime>
-                     <input-capital name="capital">
-                        <capital-overnight>620</capital-overnight>
-                        <fixed-charge-rate>0.15</fixed-charge-rate>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-capital>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0.046</OM-var>
-                     </input-OM-var>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>22.02</OM-fixed>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-OM-fixed>
-                  </period>
-                  <period year="1990">
-                     <share-weight>1</share-weight>
-                     <minicam-energy-input name="nuclearFuelGenII">
-                        <efficiency>0.333</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.025</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider name="profit-shutdown-decider"/>
-                     <CO2 name="CO2"/>
-                     <lifetime>-1</lifetime>
-                     <input-capital name="capital">
-                        <capital-overnight>620</capital-overnight>
-                        <fixed-charge-rate>0.15</fixed-charge-rate>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-capital>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0.046</OM-var>
-                     </input-OM-var>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>22.02</OM-fixed>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-OM-fixed>
-                  </period>
-                  <period year="2005">
-                     <share-weight>1</share-weight>
-                     <minicam-energy-input name="nuclearFuelGenII">
-                        <efficiency>0.333</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.025</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider name="profit-shutdown-decider"/>
-                     <CO2 name="CO2"/>
-                     <lifetime>45</lifetime>
-                     <input-capital name="capital">
-                        <capital-overnight>620</capital-overnight>
-                        <fixed-charge-rate>0.15</fixed-charge-rate>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-capital>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0.046</OM-var>
-                     </input-OM-var>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>22.02</OM-fixed>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-OM-fixed>
-                  </period>
-                  <period year="2020">
-                     <share-weight>0</share-weight>
-                     <minicam-energy-input name="nuclearFuelGenII">
-                        <efficiency>0.333</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider name="profit-shutdown-decider"/>
-                     <CO2 name="CO2"/>
-                     <lifetime>-1</lifetime>
-                     <input-capital name="capital">
-                        <capital-overnight>620</capital-overnight>
-                        <fixed-charge-rate>0.15</fixed-charge-rate>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-capital>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0.046</OM-var>
-                     </input-OM-var>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>22.02</OM-fixed>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-OM-fixed>
-                  </period>
-                  <period year="2035">
-                     <share-weight>0</share-weight>
-                     <minicam-energy-input name="nuclearFuelGenII">
-                        <efficiency>0.333</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider name="profit-shutdown-decider"/>
-                     <CO2 name="CO2"/>
-                     <lifetime>-1</lifetime>
-                     <input-capital name="capital">
-                        <capital-overnight>620</capital-overnight>
-                        <fixed-charge-rate>0.15</fixed-charge-rate>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-capital>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0.046</OM-var>
-                     </input-OM-var>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>22.02</OM-fixed>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-OM-fixed>
-                  </period>
-                  <period year="2050">
-                     <share-weight>0</share-weight>
-                     <minicam-energy-input name="nuclearFuelGenII">
-                        <efficiency>0.333</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider name="profit-shutdown-decider"/>
-                     <CO2 name="CO2"/>
-                     <lifetime>-1</lifetime>
-                     <input-capital name="capital">
-                        <capital-overnight>620</capital-overnight>
-                        <fixed-charge-rate>0.15</fixed-charge-rate>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-capital>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0.046</OM-var>
-                     </input-OM-var>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>22.02</OM-fixed>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-OM-fixed>
-                  </period>
-                  <period year="2065">
-                     <share-weight>0</share-weight>
-                     <minicam-energy-input name="nuclearFuelGenII">
-                        <efficiency>0.333</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider name="profit-shutdown-decider"/>
-                     <CO2 name="CO2"/>
-                     <lifetime>-1</lifetime>
-                     <input-capital name="capital">
-                        <capital-overnight>620</capital-overnight>
-                        <fixed-charge-rate>0.15</fixed-charge-rate>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-capital>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0.046</OM-var>
-                     </input-OM-var>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>22.02</OM-fixed>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-OM-fixed>
-                  </period>
-                  <period year="2080">
-                     <share-weight>0</share-weight>
-                     <minicam-energy-input name="nuclearFuelGenII">
-                        <efficiency>0.333</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider name="profit-shutdown-decider"/>
-                     <CO2 name="CO2"/>
-                     <lifetime>-1</lifetime>
-                     <input-capital name="capital">
-                        <capital-overnight>620</capital-overnight>
-                        <fixed-charge-rate>0.15</fixed-charge-rate>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-capital>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0.046</OM-var>
-                     </input-OM-var>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>22.02</OM-fixed>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-OM-fixed>
-                  </period>
-                  <period year="2095">
-                     <share-weight>0</share-weight>
-                     <minicam-energy-input name="nuclearFuelGenII">
-                        <efficiency>0.333</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider name="profit-shutdown-decider"/>
-                     <CO2 name="CO2"/>
-                     <lifetime>-1</lifetime>
-                     <input-capital name="capital">
-                        <capital-overnight>620</capital-overnight>
-                        <fixed-charge-rate>0.15</fixed-charge-rate>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-capital>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0.046</OM-var>
-                     </input-OM-var>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>22.02</OM-fixed>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-OM-fixed>
-                  </period>
-               </technology>
                <technology name="nuc_base_gen3">
+                  <initial-available-year>2020</initial-available-year>
                   <period year="1975">
                      <share-weight>0</share-weight>
                      <minicam-energy-input name="nuclearFuelGenIII">
@@ -548,6 +331,225 @@
                      <input-OM-fixed name="OM-fixed">
                         <OM-fixed>20.19</OM-fixed>
                         <capacity-factor>0.90</capacity-factor>
+                     </input-OM-fixed>
+                  </period>
+               </technology>
+               <technology name="nuc_base_gen2">
+                  <final-available-year>2005</final-available-year>
+                  <period year="1975">
+                     <share-weight>1</share-weight>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0.025</shutdown-rate>
+                     </phased-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <input-capital name="capital">
+                        <capital-overnight>620</capital-overnight>
+                        <fixed-charge-rate>0.15</fixed-charge-rate>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-capital>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0.046</OM-var>
+                     </input-OM-var>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>22.02</OM-fixed>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-OM-fixed>
+                  </period>
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0.025</shutdown-rate>
+                     </phased-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <input-capital name="capital">
+                        <capital-overnight>620</capital-overnight>
+                        <fixed-charge-rate>0.15</fixed-charge-rate>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-capital>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0.046</OM-var>
+                     </input-OM-var>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>22.02</OM-fixed>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-OM-fixed>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0.025</shutdown-rate>
+                     </phased-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <lifetime>45</lifetime>
+                     <input-capital name="capital">
+                        <capital-overnight>620</capital-overnight>
+                        <fixed-charge-rate>0.15</fixed-charge-rate>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-capital>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0.046</OM-var>
+                     </input-OM-var>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>22.02</OM-fixed>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-OM-fixed>
+                  </period>
+                  <period year="2020">
+                     <share-weight>0</share-weight>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0.0075</shutdown-rate>
+                     </phased-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <input-capital name="capital">
+                        <capital-overnight>620</capital-overnight>
+                        <fixed-charge-rate>0.15</fixed-charge-rate>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-capital>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0.046</OM-var>
+                     </input-OM-var>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>22.02</OM-fixed>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-OM-fixed>
+                  </period>
+                  <period year="2035">
+                     <share-weight>0</share-weight>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0.0075</shutdown-rate>
+                     </phased-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <input-capital name="capital">
+                        <capital-overnight>620</capital-overnight>
+                        <fixed-charge-rate>0.15</fixed-charge-rate>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-capital>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0.046</OM-var>
+                     </input-OM-var>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>22.02</OM-fixed>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-OM-fixed>
+                  </period>
+                  <period year="2050">
+                     <share-weight>0</share-weight>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0.0075</shutdown-rate>
+                     </phased-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <input-capital name="capital">
+                        <capital-overnight>620</capital-overnight>
+                        <fixed-charge-rate>0.15</fixed-charge-rate>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-capital>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0.046</OM-var>
+                     </input-OM-var>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>22.02</OM-fixed>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-OM-fixed>
+                  </period>
+                  <period year="2065">
+                     <share-weight>0</share-weight>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0.0075</shutdown-rate>
+                     </phased-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <input-capital name="capital">
+                        <capital-overnight>620</capital-overnight>
+                        <fixed-charge-rate>0.15</fixed-charge-rate>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-capital>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0.046</OM-var>
+                     </input-OM-var>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>22.02</OM-fixed>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-OM-fixed>
+                  </period>
+                  <period year="2080">
+                     <share-weight>0</share-weight>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0.0075</shutdown-rate>
+                     </phased-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <input-capital name="capital">
+                        <capital-overnight>620</capital-overnight>
+                        <fixed-charge-rate>0.15</fixed-charge-rate>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-capital>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0.046</OM-var>
+                     </input-OM-var>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>22.02</OM-fixed>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-OM-fixed>
+                  </period>
+                  <period year="2095">
+                     <share-weight>0</share-weight>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0.0075</shutdown-rate>
+                     </phased-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <input-capital name="capital">
+                        <capital-overnight>620</capital-overnight>
+                        <fixed-charge-rate>0.15</fixed-charge-rate>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-capital>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0.046</OM-var>
+                     </input-OM-var>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>22.02</OM-fixed>
+                        <capacity-factor>0.9</capacity-factor>
                      </input-OM-fixed>
                   </period>
                </technology>

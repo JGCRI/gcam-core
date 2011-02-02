@@ -82,6 +82,8 @@ public:
       * \param aSectorName Name of the sector and primary output.
       */
     SGMOutput( const std::string& aSectorName );
+    
+    virtual ~SGMOutput();
 
     /*!
      * \brief Create a clone of this output.
@@ -157,6 +159,10 @@ public:
        const ILandAllocator*    aLandAllocator,
        const std::string& aName,
        const std::string& aLandType ) {}
+    
+    virtual void doInterpolations( const int aYear, const int aPreviousYear,
+                                   const int aNextYear, const IOutput* aPreviousInput,
+                                   const IOutput* aNextInput ) {}
 protected:
     // TODO: switch this to a PeriodVector
     //! Physical output by period.

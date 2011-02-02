@@ -77,8 +77,7 @@ public:
 
     virtual void completeInit( const IInfo* aRegionInfo,
                                DependencyFinder* aDependencyFinder,
-                               ILandAllocator* aLandAllocator,
-                               const GlobalTechnologyDatabase* aGlobalTechDB );
+                               ILandAllocator* aLandAllocator );
 
     virtual void dbOutput( const GDP* aGDP,
                            const IndirectEmissionsCalculator* aIndEmissCalc ) const {}

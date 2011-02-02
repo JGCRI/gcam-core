@@ -61,7 +61,6 @@ class Curve;
 class CalcCounter;
 class IClimateModel;
 class GHGPolicy;
-class GlobalTechnologyDatabase;
 
 namespace objects {
     class Atom;
@@ -132,8 +131,6 @@ private:
     std::map<std::string, int> regionNamesToNumbers; //!< Map of region name to indice used for XML parsing.
     std::vector<Region*> regions; //!< array of pointers to Region objects
     std::auto_ptr<IClimateModel> mClimateModel; //!< The climate model.
-
-    std::auto_ptr<GlobalTechnologyDatabase> globalTechDB; //!< The Global Technology Database.
 
     //! An object which maintains a count of the number of times
     //! calc() has been called.

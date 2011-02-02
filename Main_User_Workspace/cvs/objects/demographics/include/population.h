@@ -68,6 +68,7 @@ class Population: public IRoundTrippable, IVisitable
 public:
     Population();
     virtual ~Population();
+    virtual Population* cloneAndInterpolate( const int aNewYear, const Population* aNextPopulation ) const = 0;
     void XMLParse( const xercesc::DOMNode* node );
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( std::ostream& out, Tabs* tabs ) const;
@@ -85,6 +86,7 @@ public:
     virtual double getWorkingAgePopMale() const = 0;
     virtual double getWorkingAgePopFemale() const = 0;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const = 0;
+    bool mIsParsed; //!< whether population has been read-in
 protected:
     int mYear; //!< year
     double mTotalPop; //!< total population for this year

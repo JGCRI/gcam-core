@@ -1,50 +1,83 @@
-Nuclear reference scenario,,,,,,,,,,,,
-,,,,,,,,,,,,
-Subsector shareweights,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,0.9490157,0.209153583,,,,,,,,
-10,,,,,,,,,,,,
-,,,sharewt,,,,,,,,,
-region,supplysector,subsector,2020,2035,2050,2065,2080,2095,,,2005 sharewt,
-USA,electricity,nuclear,0.4,0.8,0.9,1,1,1,,USA,0.820168,
-Canada,electricity,nuclear,1,1.5,1.25,1,1,1,,Canada,2.4747,
-Western Europe,electricity,nuclear,0.7,0.7,0.85,1,1,1,,Western Europe,1,
-Japan,electricity,nuclear,1.8,1.8,1.5,1.5,1.5,1.5,,Japan,2.44679,
-Australia_NZ,electricity,nuclear,0,0.05,0.5,1,1,1,,Australia_NZ,3.94E-11,
-Former Soviet Union,electricity,nuclear,0.4,0.8,0.9,1,1,1,,Former Soviet Union,0.386189,
-China,electricity,nuclear,0.05,0.35,0.7,1,1,1,,China,0.0509843,
-Middle East,electricity,nuclear,0.01,0.2,0.6,1,1,1,,Middle East,1.77E-10,
-Africa,electricity,nuclear,0.01,0.2,0.6,1,1,1,,Africa,0.0985483,
-Latin America,electricity,nuclear,0.1,0.35,0.6,1,1,1,,Latin America,0.280906,
-Southeast Asia,electricity,nuclear,0.05,0.1,0.5,1,1,1,,Southeast Asia,0.3104,
-Eastern Europe,electricity,nuclear,0.3,0.7,0.85,1,1,1,,Eastern Europe,0.563914,
-Korea,electricity,nuclear,2.25,2.25,1.8,1.5,1.5,1.5,,Korea,2.26396,
-India,electricity,nuclear,0.025,0.12,0.6,1,1,1,,India,0.05585,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-Costs,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-1005,,,,minicam-non-energy-input{non-energy},,,,,,,,
-,,,,input-cost,,,,,,,,
-region,supplysector,subsector,technology,1990,2005,2020,2035,2050,2065,2080,2095,
-USA,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46,
-Canada,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46,
-Western Europe,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46,
-Japan,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46,
-Australia_NZ,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46,
-Former Soviet Union,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46,
-China,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46,
-Middle East,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46,
-Africa,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46,
-Latin America,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46,
-Southeast Asia,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46,
-Eastern Europe,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46,
-Korea,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46,
-India,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46,
-,,,,,,,,,,,,
-,,,,,,,,,,,,
-Efficiencies,,,,,,,,,,,,
+Nuclear reference scenario,,,,,,
+
+Nuclear interpolation rules,,,,,,
+INPUT_TABLE,,,,,,
+Variable ID,,,,,,
+11,,,,,,
+
+region,supplysector,subsector,apply-to,from-year,to-year,function
+USA,electricity,nuclear,share-weight,2065,9999,fixed
+Canada,electricity,nuclear,share-weight,2005,2020,linear
+Canada,electricity,nuclear,share-weight,2065,9999,fixed
+Western Europe,electricity,nuclear,share-weight,2005,2020,linear
+Western Europe,electricity,nuclear,share-weight,2065,9999,fixed
+Japan,electricity,nuclear,share-weight,2005,2020,linear
+Japan,electricity,nuclear,share-weight,2065,9999,fixed
+Australia_NZ,electricity,nuclear,share-weight,2065,9999,fixed
+Former Soviet Union,electricity,nuclear,share-weight,2005,2020,linear
+Former Soviet Union,electricity,nuclear,share-weight,2065,9999,fixed
+China,electricity,nuclear,share-weight,2005,2020,linear
+China,electricity,nuclear,share-weight,2065,9999,fixed
+Middle East,electricity,nuclear,share-weight,2005,2020,linear
+Middle East,electricity,nuclear,share-weight,2065,9999,fixed
+Africa,electricity,nuclear,share-weight,2005,2020,linear
+Africa,electricity,nuclear,share-weight,2065,9999,fixed
+Latin America,electricity,nuclear,share-weight,2005,2020,linear
+Latin America,electricity,nuclear,share-weight,2065,9999,fixed
+Southeast Asia,electricity,nuclear,share-weight,2005,2020,linear
+Southeast Asia,electricity,nuclear,share-weight,2065,9999,fixed
+Eastern Europe,electricity,nuclear,share-weight,2005,2020,linear
+Eastern Europe,electricity,nuclear,share-weight,2065,9999,fixed
+Korea,electricity,nuclear,share-weight,2005,2020,linear
+Korea,electricity,nuclear,share-weight,2065,9999,fixed
+India,electricity,nuclear,share-weight,2005,2020,linear,,,,,
+India,electricity,nuclear,share-weight,2065,9999,fixed,,,,,
+
+Subsector shareweights,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,
+Variable ID,,,0.9490157,0.209153583,,,,,,,
+10,,,,,,,,,,,
+,,,sharewt,,,,,,,,
+region,supplysector,subsector,2020,2035,2050,2065,2080,2095,,,2005 sharewt
+USA,electricity,nuclear,0.4,0.8,0.9,1,1,1,,USA,0.820168
+Canada,electricity,nuclear,1,1.5,1.25,1,1,1,,Canada,2.4747
+Western Europe,electricity,nuclear,0.7,0.7,0.85,1,1,1,,Western Europe,1
+Japan,electricity,nuclear,1.8,1.8,1.5,1.5,1.5,1.5,,Japan,2.44679
+Australia_NZ,electricity,nuclear,0,0.05,0.5,1,1,1,,Australia_NZ,3.94E-11
+Former Soviet Union,electricity,nuclear,0.4,0.8,0.9,1,1,1,,Former Soviet Union,0.386189
+China,electricity,nuclear,0.05,0.35,0.7,1,1,1,,China,0.0509843
+Middle East,electricity,nuclear,0.01,0.2,0.6,1,1,1,,Middle East,1.77E-10
+Africa,electricity,nuclear,0.01,0.2,0.6,1,1,1,,Africa,0.0985483
+Latin America,electricity,nuclear,0.1,0.35,0.6,1,1,1,,Latin America,0.280906
+Southeast Asia,electricity,nuclear,0.05,0.1,0.5,1,1,1,,Southeast Asia,0.3104
+Eastern Europe,electricity,nuclear,0.3,0.7,0.85,1,1,1,,Eastern Europe,0.563914
+Korea,electricity,nuclear,2.25,2.25,1.8,1.5,1.5,1.5,,Korea,2.26396
+India,electricity,nuclear,0.025,0.12,0.6,1,1,1,,India,0.05585
+
+
+Costs,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,
+Variable ID,,,,,,,,,,,
+1005,,,,minicam-non-energy-input{non-energy},,,,,,,
+,,,,input-cost,,,,,,,
+region,supplysector,subsector,technology,1990,2005,2020,2035,2050,2065,2080,2095
+USA,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46
+Canada,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46
+Western Europe,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46
+Japan,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46
+Australia_NZ,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46
+Former Soviet Union,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46
+China,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46
+Middle East,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46
+Africa,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46
+Latin America,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46
+Southeast Asia,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46
+Eastern Europe,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46
+Korea,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46
+India,electricity,nuclear,Gen_III,5.8,5.8,4.81,4.73,4.66,4.59,4.53,4.46
+
+
+Efficiencies,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
 1001,,,,,,,,,,,,
@@ -64,11 +97,53 @@ Southeast Asia,electricity,nuclear,Gen_III,nuclearFuelGenIII,0.34,0.34,0.34,0.34
 Eastern Europe,electricity,nuclear,Gen_III,nuclearFuelGenIII,0.34,0.34,0.34,0.34,0.34,0.34,0.34,0.34
 Korea,electricity,nuclear,Gen_III,nuclearFuelGenIII,0.34,0.34,0.34,0.34,0.34,0.34,0.34,0.34
 India,electricity,nuclear,Gen_III,nuclearFuelGenIII,0.34,0.34,0.34,0.34,0.34,0.34,0.34,0.34
-,,,,,,,,,,,,
+
 gen III shareweights need to be read in,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,
 1010,,,,,,,,,,,,
-,,,,,,,,,,,,
+
 region,supplysector,subsector,technology,2020,2035,2050,2065,2080,2095,,,
 ALL,electricity,nuclear,Gen_III,1,1,1,1,1,1,,,
+
+gen III initial year of availability,,,,,,,,,,,,
+INPUT_TABLE,,,,,,,,,,,,
+Variable ID,,,,,,,,,,,,
+1110,,,,,,,,,,,,
+
+region,supplysector,subsector,technology,initial-available-year
+USA,electricity,nuclear,Gen_III,2020
+Canada,electricity,nuclear,Gen_III,2015
+Western Europe,electricity,nuclear,Gen_III,2015
+Japan,electricity,nuclear,Gen_III,2015
+Australia_NZ,electricity,nuclear,Gen_III,2025
+Former Soviet Union,electricity,nuclear,Gen_III,2015
+China,electricity,nuclear,Gen_III,2010
+Middle East,electricity,nuclear,Gen_III,2015
+Africa,electricity,nuclear,Gen_III,2020
+Latin America,electricity,nuclear,Gen_III,2020
+Southeast Asia,electricity,nuclear,Gen_III,2015
+Eastern Europe,electricity,nuclear,Gen_III,2015
+Korea,electricity,nuclear,Gen_III,2015
+India,electricity,nuclear,Gen_III,2010
+
+gen II final year of availability,,,,
+INPUT_TABLE,,,,
+Variable ID,,,,
+1120,,,,
+
+region,supplysector,subsector,technology,final-available-year
+USA,electricity,nuclear,Gen_II_LWR,2005
+Canada,electricity,nuclear,Gen_II_LWR,2005
+Western Europe,electricity,nuclear,Gen_II_LWR,2005
+Japan,electricity,nuclear,Gen_II_LWR,2005
+Australia_NZ,electricity,nuclear,Gen_II_LWR,2005
+Former Soviet Union,electricity,nuclear,Gen_II_LWR,2005
+China,electricity,nuclear,Gen_II_LWR,2005
+Middle East,electricity,nuclear,Gen_II_LWR,2005
+Africa,electricity,nuclear,Gen_II_LWR,2005
+Latin America,electricity,nuclear,Gen_II_LWR,2005
+Southeast Asia,electricity,nuclear,Gen_II_LWR,2005
+Eastern Europe,electricity,nuclear,Gen_II_LWR,2005
+Korea,electricity,nuclear,Gen_II_LWR,2005
+India,electricity,nuclear,Gen_II_LWR,2005

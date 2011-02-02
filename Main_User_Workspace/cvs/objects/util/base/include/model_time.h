@@ -48,7 +48,7 @@
 
 #include <vector>
 #include <map>
-#include <xercesc/dom/DOMNode.hpp>
+#include "util/base/include/iparsable.h"
 #include "util/base/include/iround_trippable.h"
 /*! 
 * \ingroup Objects
@@ -57,56 +57,64 @@
 * \author Sonny Kim
 */
 
-class Modeltime: public IRoundTrippable
+class Modeltime: public IParsable, public IRoundTrippable
 {
 private:
-    int startYear; //!< Model start year (read-in).
-    int interYear1; //!< First intermediate year.
-    int interYear2; //!< Second intermediate year.
-    int endYear; //!< Model end year (read-in).
+    //! Model start year (read-in).
+    int mStartYear;
+
+    //! Model end year (read-in).
+    int mEndYear;
     
     //! The final year in which calibration occurs.
-    unsigned int mFinalCalibrationYear;
+    int mFinalCalibrationYear;
 
-    int maxPeriod; //!< Maximum number of model periods (calculated).
+    //! Maximum number of model periods (calculated).
+    int mMaxPeriod;
 
-    int timeStep1; //!< Time step from start to first intermediate year.
-    int timeStep2; //!< Time step from first to second intermediate year.
-    int timeStep3; //!< Time step from second intermediate to end year.
-    int numberOfPeriods1;  //!< Number of periods in first time interval.
-    int numberOfPeriods1a; //!< One more in first time interval for remainder year.
-    int numberOfPeriods2;  //!< Number of periods in second time interval.
-    int numberOfPeriods2a; //!< One more in second time interval for remainder year.
-    int numberOfPeriods3;  //!< Number of periods in third time interval.
-    int numberOfPeriods3a; //!< One more in third time interval for remainder year.
-    std::vector<int> periodToTimeStep; //!< Index of time steps.
+    //! Index of time steps.
+    std::vector<int> mPeriodToTimeStep;
 
-    std::vector<int> modelPeriodToYear; //!< Model period to year.
+    //! Model period to year.
+    std::vector<int> mPeriodToYear;
+
+    //! Year to model period map object.
+    std::map<int,int> mYearToPeriod;
     
-    std::map<int,int> yearToModelPeriod; //!< Year to model period map object.
-    static const std::string XML_NAME; //!< node name for toXML methods
+    //! Debugging flag to make sure the modeltime params have been
+    //! set before attempting to get the modeltime attributes.
+    bool mIsInitialized;
 
     // member functions
-    void initElementalMembers();
-    const std::string& getXMLName() const;
-public:
+    void initMembers( const std::map<int, int>& aYearToTimeStep );
+    
+    //! Private constructor to prevent creating a Modeltime.
     Modeltime();
-    void XMLParse( const xercesc::DOMNode* node );
-    void ParseFinalCalYear( const xercesc::DOMNode* node );
-    void toInputXML( std::ostream& out, Tabs* tabs ) const;
-    void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
+    //! Private undefined copy constructor to prevent creating another Modeltime.
+    Modeltime( const Modeltime& aModelTime );
+    //! Private undefined assign operator to prevent creating another Modeltime.
+    Modeltime& operator=( const Modeltime& aModelTime );
+public:
+    static const Modeltime* getInstance();
+    
+    // IParsable methods
+    virtual bool XMLParse( const xercesc::DOMNode* aNode );
+    
+    // IRoundTrippable methods
+    virtual void toInputXML( std::ostream& aOut, Tabs* aTabs ) const;
+    
+    void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 
     static const std::string& getXMLNameStatic();
-    void set(); // calculates parameters
+    
     int getBasePeriod() const;
     int getStartYear() const;
     int getEndYear() const;
-    int gettimestep( const int period ) const { return periodToTimeStep[ period ]; } // years from last to current per
-    int getmaxper() const { return maxPeriod; }  // max modeling periods
-    int getforestmaxper() const { return maxPeriod + 15; }  // max modeling periods
+    int gettimestep( const int aPeriod ) const { return mPeriodToTimeStep[ aPeriod ]; } // years from last to current per
+    int getmaxper() const { return mMaxPeriod; }  // max modeling periods
 
-    int getper_to_yr( const int period ) const;
-    int getyr_to_per( const int year ) const;
+    int getper_to_yr( const int aPeriod ) const;
+    int getyr_to_per( const int aYear ) const;
 
     bool isModelYear( const int aYear ) const;
 
@@ -114,4 +122,3 @@ public:
 };
 
 #endif // _MODEL_TIME_H_
-

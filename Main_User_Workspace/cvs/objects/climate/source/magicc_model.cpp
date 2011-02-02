@@ -125,7 +125,7 @@ void MagiccModel::completeInit( const string& aScenarioName ){
 
     // Resize all the vectors to the number of data points for MAGICC.
     // Add comment here.
-    const int numGasPoints = mModeltime->getmaxper() + 2;
+    const int numGasPoints = mModeltime->getmaxper() + getNumAdditionalGasPoints();
     for( unsigned int i = 0; i < mEmissionsByGas.size(); ++i ){
         mEmissionsByGas[ i ].resize( numGasPoints );
     }
@@ -444,11 +444,55 @@ bool MagiccModel::runModel(){
     // Open the output file.
     ofstream gasFile;
     gasFile.open( Configuration::getInstance()->getFile( "climatFileName" ).c_str(), ios::out );
-
+    // The first 5 lines of the gas file is skipped before the data is read by MAGICC.
     // Calculate the number of points which will be passed to magicc.
-    const int FUTURE_POINTS = 2;
-    const int numPoints = mModeltime->getmaxper() -1 + FUTURE_POINTS;
-    gasFile << numPoints << endl << " Scenario " << mScenarioName << endl << endl << endl << endl;
+    const int NumPoints = mModeltime->getmaxper() + getNumAdditionalGasPoints() - 1;
+    /*line 1*/
+        gasFile << NumPoints << endl 
+    /*line 2*/
+            << " Scenario " << mScenarioName << endl
+    /*line 3*/
+            << endl
+    /*line 4 includes one extra space for commas*/
+            << setw(5) << " ," // Year
+            << setw(9) << "CO2," 
+            << setw(9) << "CO2NLU,"
+            << setw(9) << "CH4," 
+            << setw(9) << "N2O," 
+            << setw(9) << "SOXreg1," 
+            << setw(9) << "SOXreg2," 
+            << setw(9) << "SOXreg3," 
+            << setw(9) << "CF4," 
+            << setw(9) << "C2F6," 
+            << setw(9) << "HFC125," 
+            << setw(9) << "HFC134a," 
+            << setw(9) << "HFC143a," 
+            << setw(9) << "HFC229ea," 
+            << setw(9) << "HFC245ca," 
+            << setw(9) << "SF6," 
+            << setw(9) << "NOx," 
+            << setw(9) << "NMVOCs," 
+            << setw(9) << "CO" << endl
+    /*line 5*/
+            << setw(5) << "Year," 
+            << setw(9) << "(Pg C)," 
+            << setw(9) << "(Pg C)," 
+            << setw(9) << "(Tg)," 
+            << setw(9) << "(Tg N)," 
+            << setw(9) << "(Tg S),"
+            << setw(9) << "(Tg S)," 
+            << setw(9) << "(Tg S)," 
+            << setw(9) << "(kton)," 
+            << setw(9) << "(kton)," 
+            << setw(9) << "(kton)," 
+            << setw(9) << "(kton)," 
+            << setw(9) << "(kton)," 
+            << setw(9) << "(kton)," 
+            << setw(9) << "(kton)," 
+            << setw(9) << "(kton),"	
+            << setw(9) << "(Mt N)," 
+            << setw(9) << "(Mt)," 
+            << setw(9) << "(Mt)" << endl;
     
     // Setup the output.
     gasFile.setf( ios::right, ios::adjustfield );
@@ -456,26 +500,30 @@ bool MagiccModel::runModel(){
     gasFile.setf( ios::showpoint );
     
     // Write out all the gases.
-    for( unsigned int period = 0; period < static_cast<unsigned int>( mModeltime->getmaxper() + 1 ); ++period ) {
+    for( unsigned int period = 0; period < static_cast<unsigned int>( NumPoints ); ++period ) {
         // Write out the year.
         int year;
         if( period < static_cast<unsigned int>( mModeltime->getmaxper() - 1 ) ){
-            year = mModeltime->getStartYear() + ( period + 1 ) * mModeltime->gettimestep( period );
+            // Note that 1975 is skipped and the array indices are shifted so we
+            // lookup the year using period + 1.
+            year = mModeltime->getper_to_yr( period + 1 );
         }
         // Set the year differently for the two periods past the end of the
         // model. The year should equal the last model year plus the timestep
         // plus 140 times 1 for the first point and times 2 for the second
         // point.
         else {
-            int lastPeriod = mModeltime->getmaxper() - 2;
-            int lastYear = mModeltime->getStartYear() + ( lastPeriod + 2 ) * mModeltime->gettimestep( lastPeriod );
-            year = lastYear + 140 * ( period - lastPeriod ) - 100;
+            // I don't belive the year calculated here matters in magicc so the
+            // calculation will be as stated above regradless of variable timesteps.
+            int lastPeriod = mModeltime->getmaxper() - 1;
+            int lastYear = mModeltime->getEndYear() + mModeltime->gettimestep( lastPeriod );
+            year = lastYear + 140 * ( period - lastPeriod + 1 ) - 100;
         }
 
         gasFile << setw( 4 ) << year << ",";
         // Write out all the gases.
         for( unsigned int gasNumber = 0; gasNumber < mEmissionsByGas.size(); ++gasNumber ){
-            gasFile << setw( 7 ) << setprecision( 2 ) << mEmissionsByGas[ gasNumber ][ period ];
+            gasFile << setw( 8 ) << setprecision( 2 ) << mEmissionsByGas[ gasNumber ][ period ];
             // Write a comma as long as this is not the last gas.
             if( gasNumber != mEmissionsByGas.size() - 1 ){
                 gasFile << ",";
@@ -812,34 +860,64 @@ void MagiccModel::readFile(){
     inputGasFile.open( gasFileName.c_str(), ios::in ); // open input file for reading
     util::checkIsOpen( inputGasFile, gasFileName );
 
-    // read in all other gases from fossil fuels. Ignore initial header lines of
-    // file.
+    // Read in all other gases from fossil fuels. The first line will tell us how many
+    // lines to parse.  We are assuming there are a maximum of getNumAdditionalGasPoints()
+    // years beyond the end of the model years.
+    int remainingExtraGasPoints = getNumAdditionalGasPoints();
+    int numInputGasPoints;
+    inputGasFile >> numInputGasPoints;  //reads the # of data points in the first line
+    
+    // Ignore initial header lines of file.
     const int SKIP_LINES = 5;
     for ( unsigned int i = 0; i < SKIP_LINES; ++i ){
         inputGasFile.ignore( 200, '\n' );
     }
     
     // Now read in all the gases. 
-    for ( unsigned int period = 0; period < static_cast<unsigned int>( mModeltime->getmaxper() - 1 ); ++period ) {
+    for ( int gasInputIndex = 0; gasInputIndex <= numInputGasPoints; ++gasInputIndex ) {
         // Parse the year as a double so that the comma after the year does
         // not cause parsing to fail.
         double year = 0;
         inputGasFile >> year;
         inputGasFile.ignore( 80, ',' ); // skip comma
         int yearAsInteger = static_cast<int>( floor( year ) );
-        if ( yearAsInteger != mModeltime->getper_to_yr( period + 1 )
-            && yearAsInteger < mModeltime->getEndYear() )
-        {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Invalid Year: " << year << " found while parsing MAGICC input file " << gasFileName.c_str() << endl;
+        int gasYearIndex = -1;
+        
+        if( yearAsInteger > mModeltime->getEndYear() ) {
+            // parsing a year beyond the last model year
+            if( remainingExtraGasPoints == 0 ) {
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::WARNING );
+                mainLog << "Invalid Year: " << year << " found while parsing MAGICC input file " << gasFileName.c_str() << endl;
+                mainLog << "The maximum: " << getNumAdditionalGasPoints()
+                    << " points beyond the last model year have already been parsed" << endl;
+            }
+            else {
+                gasYearIndex = mModeltime->getmaxper() + getNumAdditionalGasPoints()
+                    - remainingExtraGasPoints - 1;
+                // Decrement the remaining allowed lines beyond the last model year.
+                --remainingExtraGasPoints;
+            }
+        }
+        else {
+            // A potential model year.  If an invalid model year was parsed modeltime
+            // will print the warning and return 0.  Note that 1975 is ignored and the
+            // indices are then shift over by 1 so we must subtract 1 here.
+            gasYearIndex = mModeltime->getyr_to_per( yearAsInteger ) - 1;
         }
         
         // Loop through all the gases.
         for( unsigned int gasNumber = 0; gasNumber < getNumGases(); ++gasNumber ){
-            inputGasFile >> mEmissionsByGas[ gasNumber ][ period ];
+            double value;
+            inputGasFile >> value;
+            // Only set the parsed value if we have a valid year, no warnings are necessary
+            // as they should have already been given.
+            if( gasYearIndex != -1 ) {
+                mEmissionsByGas[ gasNumber ][ gasYearIndex ] = value;
+            }
             inputGasFile.ignore( 80, ','); // skip comma
         }
+
         inputGasFile.ignore( 80, '\n' ); // next line
     }
     inputGasFile.close();
@@ -851,4 +929,15 @@ void MagiccModel::readFile(){
 const string& MagiccModel::getnetDefor80sName(){
     const static string NET_DEF_80s_NAME = "netDef80s";
     return NET_DEF_80s_NAME;
+}
+
+/*!
+ * \brief Get the maximum number of data points that we are expecting beyond the
+ *        last model year.
+ * \return The constant number of additional data points that will be read-in and
+ *         written-out for MAGICC input files.
+ */
+int MagiccModel::getNumAdditionalGasPoints() {
+    static const int ADDITIONAL_POINTS = 2;
+    return ADDITIONAL_POINTS;
 }

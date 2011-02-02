@@ -118,7 +118,9 @@ void Demographic::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag ( getXMLName(), out, tabs );
 
     for( CPopulationIterator i = population.begin(); i != population.end(); ++i ){
-        ( *i )->toInputXML( out, tabs );
+        if( ( *i )->mIsParsed ){
+            ( *i )->toInputXML( out, tabs );
+        }
     }
 
     // finished writing xml for the class members.
@@ -139,6 +141,41 @@ void Demographic::toDebugXML( const int period, ostream& out, Tabs* tabs ) const
 
 //! Complete the initialization.
 void Demographic::completeInit(){
+    // First make sure we have a population for each model period.  If we do not have one in a given
+    // period interpolate between ones we do have.
+    const Modeltime* modeltime = scenario->getModeltime();
+    Population* prevPopulation = 0;
+    for( int period = 0; period < modeltime->getmaxper(); ++period ) {
+        int modelYear = modeltime->getper_to_yr( period );
+        CYearMapIterator iter = yearToMapIndex.find( util::toString( modelYear ) );
+        if( iter == yearToMapIndex.end() ) {
+            // the user must have read in the population for the first model period
+            assert( period > 0 );
+            
+            iter = ++yearToMapIndex.find( util::toString( prevPopulation->getYear() ) );
+            // the user must have read in the population for the final model period
+            assert( iter != yearToMapIndex.end() );
+            prevPopulation = prevPopulation->cloneAndInterpolate( modelYear, population[ (*iter).second ] );
+            population.push_back( prevPopulation );
+            yearToMapIndex[ util::toString( modelYear ) ] = population.size() - 1;
+        }
+        else {
+            prevPopulation = population[ (*iter).second ];
+        }
+    }
+
+    // Sort the population vector by year after cloning and interpolating.
+    // If population is not interpolated sort is not required.
+    YearComparator comp;
+    sort( population.begin(), population.end(), comp );
+
+    // remap year to map index after sorting
+    int index = 0;
+    for( CPopulationIterator i = population.begin(); i != population.end(); ++i ){
+        yearToMapIndex[ util::toString( ( *i )->getYear() ) ] = index;
+        ++index;
+    }
+    
     for( PopulationIterator popIter = population.begin(); popIter != population.end(); ++popIter ) {
         if( popIter == population.begin() ){
             ( *popIter )->completeInit();

@@ -126,6 +126,7 @@ private:
     static unsigned int getNumGases();
     void readFile();
     void overwriteMAGICCParameters( );
+    static int getNumAdditionalGasPoints();
 
     //! A fixed list of the gases Magicc reads in.
     static const std::string sGasNames[];

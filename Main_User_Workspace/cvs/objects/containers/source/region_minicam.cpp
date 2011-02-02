@@ -269,12 +269,11 @@ bool RegionMiniCAM::XMLDerivedClassParse( const std::string& nodeName, const xer
 /*! Complete the initialization. Get the size of vectors, initialize AGLU,
 *   create all markets, call complete initialization
 *  functions for nested objects, update the fuel map, and find simultaneities.
-* \param aGlobalTechDB Global Technology database.
 * \todo I think since there is one indirect ghg object for each sector, it might
 *       be better in sector. This may require deriving supply sector.
 */
-void RegionMiniCAM::completeInit( const GlobalTechnologyDatabase* aGlobalTechDB ) {
-    Region::completeInit( aGlobalTechDB );
+void RegionMiniCAM::completeInit() {
+    Region::completeInit();
 
     // Region info has no parent Info.
     mRegionInfo.reset( InfoFactory::constructInfo( 0, name ) );
@@ -312,7 +311,7 @@ void RegionMiniCAM::completeInit( const GlobalTechnologyDatabase* aGlobalTechDB 
     SectorCycleBreaker sectorCycleBreaker( scenario->getMarketplace(), name );
     DependencyFinder depFinder( &sectorCycleBreaker );
     for( SectorIterator sectorIter = supplySector.begin(); sectorIter != supplySector.end(); ++sectorIter ) {
-        ( *sectorIter )->completeInit( mRegionInfo.get(), &depFinder, mLandAllocator.get(), aGlobalTechDB );
+        ( *sectorIter )->completeInit( mRegionInfo.get(), &depFinder, mLandAllocator.get() );
     }
 
     // Finish initializing agLu

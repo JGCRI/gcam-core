@@ -81,6 +81,10 @@ public:
 					           const GDP* aGDP,
 					           ICaptureComponent* aSequestrationDevice,
                                const int aPeriod );
+    
+    virtual void doInterpolations( const int aYear, const int aPreviousYear,
+                                   const int aNextYear, const AGHG* aPreviousGHG,
+                                   const AGHG* aNextGHG );
 protected:
 
     AComplexEmissions();

@@ -285,3 +285,26 @@ double ByProduct::calcPhysicalOutputInternal( const double aPrimaryOutput,
     return ( 1.0 - removeFraction ) * ( aPrimaryOutput * mCoef );
 }
 
+void ByProduct::doInterpolations( const int aYear, const int aPreviousYear,
+                                  const int aNextYear, const IOutput* aPreviousOutput,
+                                  const IOutput* aNextOutput )
+{
+    // TODO: do we really want to do this?
+    const ByProduct* prevByProduct = static_cast<const ByProduct*>( aPreviousOutput );
+    const ByProduct* nextByProduct = static_cast<const ByProduct*>( aNextOutput );
+    
+    /*!
+     * \pre We are given a valid ByProduct for the previous output.
+     */
+    assert( prevByProduct );
+    
+    /*!
+     * \pre We are given a valid ByProduct for the next output.
+     */
+    assert( nextByProduct );
+    
+    // interpolate the coefficient
+    mCoef.set( util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
+                                         prevByProduct->mCoef, nextByProduct->mCoef ) );
+}
+

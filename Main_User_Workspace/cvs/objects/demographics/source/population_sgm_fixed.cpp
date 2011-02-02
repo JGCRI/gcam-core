@@ -67,6 +67,12 @@ PopulationSGMFixed::~PopulationSGMFixed(){
     clear();
 }
 
+Population* PopulationSGMFixed::cloneAndInterpolate( const int aNewYear, const Population* aNextPopulation ) const {
+    assert( false );
+    // TODO: not yet supported
+    return 0;
+}
+
 //! Helper member function for the destructor. Performs memory deallocation. 
 void PopulationSGMFixed::clear(){
     for(AgeCohortIterator acIter = ageCohort.begin(); acIter != ageCohort.end(); ++acIter){

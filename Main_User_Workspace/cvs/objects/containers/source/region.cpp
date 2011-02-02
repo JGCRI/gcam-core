@@ -297,12 +297,11 @@ const std::string& Region::getXMLNameStatic() {
 /*! \brief Complete the initialization. 
  *
  * Completes the initialization for this regions data members.
- * \param aGlobalTechDB Global Technology database.
  * \todo Figure out if Demographics and supplysectors calls to completeInit can
  *       be moved down from RegionMiniCAM and RegionCGE.
  * \author Pralit Patel
  */
-void Region::completeInit( const GlobalTechnologyDatabase *aGlobalTechDB ) {    
+void Region::completeInit() {    
     for( GHGPolicyIterator ghgPolicy = mGhgPolicies.begin(); ghgPolicy != mGhgPolicies.end(); ++ghgPolicy ){
         (*ghgPolicy)->completeInit( name );
     }

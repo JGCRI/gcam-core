@@ -428,3 +428,26 @@ void BuildingDemandInput::copyParamsInto( BuildingDemandInput& aInput,
         aInput.mCoefficientAdjustment = mCoefficientAdjustment;
     }
 }
+
+void BuildingDemandInput::doInterpolations( const int aYear, const int aPreviousYear,
+                                            const int aNextYear, const IInput* aPreviousInput,
+                                            const IInput* aNextInput )
+{
+    const BuildingDemandInput* prevBldInput = static_cast<const BuildingDemandInput*>( aPreviousInput );
+    const BuildingDemandInput* nextBldInput = static_cast<const BuildingDemandInput*>( aNextInput );
+    
+    /*!
+     * \pre We are given a valid BuildingDemandInput for the previous input.
+     */
+    assert( prevBldInput );
+    
+    /*!
+     * \pre We are given a valid BuildingDemandInput for the next input.
+     */
+    assert( nextBldInput );
+    
+    // interpolate the saturation
+    mSaturation = util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
+                                            prevBldInput->mSaturation,
+                                            nextBldInput->mSaturation );
+}

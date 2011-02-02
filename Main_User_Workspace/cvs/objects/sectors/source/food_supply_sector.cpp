@@ -118,8 +118,7 @@ void FoodSupplySector::toDebugXMLDerived( const int period, std::ostream& out, T
 */
 void FoodSupplySector::completeInit( const IInfo* aRegionInfo,
                                     DependencyFinder* aDependencyFinder,
-                                    ILandAllocator* aLandAllocator,
-                                    const GlobalTechnologyDatabase* aGlobalTechDB )
+                                    ILandAllocator* aLandAllocator )
 {
     if ( !aLandAllocator ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -133,7 +132,7 @@ void FoodSupplySector::completeInit( const IInfo* aRegionInfo,
         mainLog << "Market name for sector " << name << " was not set. Defaulting to regional market." << endl;
         mMarketName = regionName;
     }
-    SupplySector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator, aGlobalTechDB );
+    SupplySector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator );
 }
 
 /*! \brief Calculate the sector price.

@@ -62,7 +62,10 @@ class DependencyFinder;
 * This class allows secondary products to be produced from land leaves as well as
 * ghg emissions from unmanaged land leaves. "Input" GHG objects will be driven
 * by land area while "Output" GHG objects will be driven by land-area change
-* (e.g. deforestation).
+* (e.g. deforestation).  Note that this class has NO primary output and is here merely
+* to allow calcultion of byproducts of land processes.  Values setin the primary
+* output object are just for the sake of emissions calculations and will be removed
+* immediately after those calculations are done.
 * \todo Need to change from land-area driver to net-CO2 emissions driver
 * \todo Need to fully implement land as a new type of physical input. 
 *       Once that is done remove UnmanagedLandTechnology as a friend class in RenewableInput 
@@ -75,8 +78,9 @@ public:
                                 const int aYear );
 
     ~UnmanagedLandTechnology();
-    static const std::string& getXMLNameStatic1D();
-    const std::string& getXMLName1D() const;
+    UnmanagedLandTechnology( const UnmanagedLandTechnology& aOther );
+    static const std::string& getXMLNameStatic();
+    const std::string& getXMLName() const;
     UnmanagedLandTechnology* clone() const;
 
     virtual void completeInit( const std::string& aRegionName,
@@ -84,8 +88,7 @@ public:
                                const std::string& aSubsectorName,
                                DependencyFinder* aDepFinder,
                                const IInfo* aSubsectorIInfo,
-                               ILandAllocator* aLandAllocator,
-                               const GlobalTechnologyDatabase* aGlobalTechDB );
+                               ILandAllocator* aLandAllocator );
     
     virtual void initCalc( const std::string& aRegionName,
                            const std::string& aSectorName,

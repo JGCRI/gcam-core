@@ -61,6 +61,10 @@ const string MoreSectorInfo::XML_NAME = "moreSectorInfo";
 MoreSectorInfo::MoreSectorInfo() {
 }
 
+//! Destructor
+MoreSectorInfo::~MoreSectorInfo() {
+}
+
 //! parse SOME xml data
 void MoreSectorInfo::XMLParse( const DOMNode* node ) {
     /*! \pre make sure we were passed a valid node. */

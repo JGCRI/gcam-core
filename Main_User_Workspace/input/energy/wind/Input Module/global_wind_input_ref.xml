@@ -4,7 +4,7 @@
       <region name="Africa">
          <supplysector name="electricity">
             <subsector name="wind">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -317,7 +317,7 @@
       <region name="Australia_NZ">
          <supplysector name="electricity">
             <subsector name="wind">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -630,7 +630,7 @@
       <region name="Canada">
          <supplysector name="electricity">
             <subsector name="wind">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -943,7 +943,7 @@
       <region name="China">
          <supplysector name="electricity">
             <subsector name="wind">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -1256,7 +1256,7 @@
       <region name="Eastern Europe">
          <supplysector name="electricity">
             <subsector name="wind">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -1569,7 +1569,7 @@
       <region name="Former Soviet Union">
          <supplysector name="electricity">
             <subsector name="wind">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -1882,7 +1882,7 @@
       <region name="India">
          <supplysector name="electricity">
             <subsector name="wind">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -2195,7 +2195,7 @@
       <region name="Japan">
          <supplysector name="electricity">
             <subsector name="wind">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -2508,7 +2508,7 @@
       <region name="Korea">
          <supplysector name="electricity">
             <subsector name="wind">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -2821,7 +2821,7 @@
       <region name="Latin America">
          <supplysector name="electricity">
             <subsector name="wind">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -3134,7 +3134,7 @@
       <region name="Middle East">
          <supplysector name="electricity">
             <subsector name="wind">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -3447,7 +3447,7 @@
       <region name="Southeast Asia">
          <supplysector name="electricity">
             <subsector name="wind">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -3760,7 +3760,7 @@
       <region name="USA">
          <supplysector name="electricity">
             <subsector name="wind">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -4073,7 +4073,7 @@
       <region name="Western Europe">
          <supplysector name="electricity">
             <subsector name="wind">
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
                   <interpolation-function name="linear"/>
                </interpolation-rule>

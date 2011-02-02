@@ -63,7 +63,6 @@ class Demographic;
 class Sector;
 class GHGPolicy;
 class PolicyPortfolioStandard;
-class GlobalTechnologyDatabase;
 class Curve;
 class AResource;
 class IInfo;
@@ -84,7 +83,7 @@ public:
     void toInputXML( std::ostream& out, Tabs* tabs ) const;
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
-    virtual void completeInit( const GlobalTechnologyDatabase* aGlobalTechDB );
+    virtual void completeInit();
     const std::string& getName() const;
 
     virtual void calc( const int period ) = 0;

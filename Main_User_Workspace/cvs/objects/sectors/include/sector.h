@@ -73,7 +73,6 @@ class MoreSectorInfo;
 class SocialAccountingMatrix;
 class ILandAllocator;
 class IndirectEmissionsCalculator;
-class GlobalTechnologyDatabase;
 
 /*! 
 * \ingroup Objects
@@ -138,7 +137,6 @@ protected:
 
     static double getDefaultSubsectorLogitExp();
 
-    void normalizeShareWeights( const int period );
     virtual void toInputXMLDerived( std::ostream& aOut, Tabs* aTabs ) const = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& aOut, Tabs* aTabs ) const = 0;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ) = 0;
@@ -166,8 +164,7 @@ public:
 
     virtual void completeInit( const IInfo* aRegionInfo,
                                DependencyFinder* aDepFinder,
-                               ILandAllocator* aLandAllocator,
-                               const GlobalTechnologyDatabase* aGlobalTechDB ) = 0;
+                               ILandAllocator* aLandAllocator ) = 0;
 
     virtual void initCalc( NationalAccount* aNationalAccount,
                            const Demographic* aDemographics,
@@ -181,8 +178,6 @@ public:
     void calcCosts( const int aPeriod );
 
     virtual double getOutput( const int period ) const = 0;
-
-    bool inputsAllFixed( const int period, const std::string& goodName ) const;
 
     virtual void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ) = 0;
 

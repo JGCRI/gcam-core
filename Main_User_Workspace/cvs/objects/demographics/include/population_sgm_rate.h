@@ -66,6 +66,8 @@ class PopulationSGMRate : public Population
 public:
     PopulationSGMRate();
     virtual ~PopulationSGMRate();
+    
+    virtual Population* cloneAndInterpolate( const int aNewYear, const Population* aNextPopulation ) const;
 
     virtual void completeInit( const std::vector<double>& femalePopFromPrev = std::vector<double>(),
         const std::vector<double>& malePopFromPrev = std::vector<double>() );

@@ -84,6 +84,29 @@ mBaseService( scenario->getModeltime()->getmaxper() )
 EnergyFinalDemand::~EnergyFinalDemand(){
 }
 
+const string& EnergyFinalDemand::getXMLName() const {
+    return getXMLNameStatic();
+}
+
+/*! \brief Get the XML node name in static form for comparison when parsing XML.
+*
+* This public function accesses the private constant string, XML_NAME. This way
+* the tag is always consistent for both read-in and output and can be easily
+* changed. The "==" operator that is used when parsing, required this second
+* function to return static.
+* \note A function cannot be static and virtual.
+* \author Josh Lurz, James Blackwood
+* \return The constant XML_NAME as a static.
+*/
+const string& EnergyFinalDemand::getXMLNameStatic() {
+    const static string XML_NAME = "energy-final-demand";
+    return XML_NAME;
+}
+
+const string& EnergyFinalDemand::getName() const {
+    return mName;
+}
+
 bool EnergyFinalDemand::XMLParse( const DOMNode* aNode ) {
 
     assert( aNode );
@@ -114,11 +137,11 @@ bool EnergyFinalDemand::XMLParse( const DOMNode* aNode ) {
             }
         }
         else if( nodeName == "price-elasticity" ) {
-            XMLHelper<double>::insertValueIntoVector( curr, mPriceElasticity,
+            XMLHelper<Value>::insertValueIntoVector( curr, mPriceElasticity,
                                                       modeltime );
         }
         else if( nodeName == "income-elasticity" ){
-            XMLHelper<double>::insertValueIntoVector( curr, mIncomeElasticity,
+            XMLHelper<Value>::insertValueIntoVector( curr, mIncomeElasticity,
                                                       modeltime );
         }
         else if( nodeName == FinalEnergyConsumer::getXMLNameStatic() ){
@@ -156,13 +179,13 @@ void EnergyFinalDemand::toInputXML( ostream& aOut, Tabs* aTabs ) const {
 
     // TODO: XMLWriteVector
     for( unsigned int i = 0; i < mPriceElasticity.size(); ++i ){
-        XMLWriteElementCheckDefault( mPriceElasticity[ i ], "price-elasticity",
+        XMLWriteElementCheckDefault<double>( mPriceElasticity[ i ], "price-elasticity",
                                      aOut, aTabs, 0.0,
                                      modeltime->getper_to_yr( i ) );
     }
 
     for( unsigned int i = 0; i < mIncomeElasticity.size(); ++i ){
-        XMLWriteElementCheckDefault( mIncomeElasticity[ i ], "income-elasticity",
+        XMLWriteElementCheckDefault<double>( mIncomeElasticity[ i ], "income-elasticity",
                                      aOut, aTabs, 0.0,
                                      modeltime->getper_to_yr( i ) );
     }
@@ -218,29 +241,6 @@ void EnergyFinalDemand::toDebugXMLDerived( const int period, std::ostream& out, 
 
 }
 
-const string& EnergyFinalDemand::getXMLName() const {
-    return getXMLNameStatic();
-}
-
-/*! \brief Get the XML node name in static form for comparison when parsing XML.
-*
-* This public function accesses the private constant string, XML_NAME. This way
-* the tag is always consistent for both read-in and output and can be easily
-* changed. The "==" operator that is used when parsing, required this second
-* function to return static.
-* \note A function cannot be static and virtual.
-* \author Josh Lurz, James Blackwood
-* \return The constant XML_NAME as a static.
-*/
-const string& EnergyFinalDemand::getXMLNameStatic() {
-    const static string XML_NAME = "energy-final-demand";
-    return XML_NAME;
-}
-
-const string& EnergyFinalDemand::getName() const {
-    return mName;
-}
-
 void EnergyFinalDemand::completeInit( const string& aRegionName,
                                       const IInfo* aRegionInfo )
 {
@@ -260,6 +260,38 @@ void EnergyFinalDemand::completeInit( const string& aRegionName,
     // initialize base year mPreTechChangeServiceDemand.
     else{
         mPreTechChangeServiceDemand[ 0 ] = mBaseService[ 0 ];
+    }
+    
+    // Make sure that we have income and price elasticities for each model period.
+    // If not we should interpolate between model periods that we do have.
+    const Modeltime* modeltime = scenario->getModeltime();
+    for( int per = modeltime->getFinalCalibrationPeriod()+1; per < modeltime->getmaxper(); ++per ) {
+        if( !mIncomeElasticity[ per ].isInited() ) {
+            int iFound = per + 1; // start with next per
+            // Look for index of existing elasticity
+            while( iFound < modeltime->getmaxper() && 
+                   !mIncomeElasticity[ iFound ].isInited()) {
+                ++iFound;
+            }
+            // If not found, then use previous existing elasticity.
+            if( iFound == modeltime->getmaxper() ) {
+                iFound = per - 1;
+            }
+            mIncomeElasticity[ per ].set( mIncomeElasticity[ iFound ] );
+        }
+        if( !mPriceElasticity[ per ].isInited() ) {
+            int iFound = per + 1; // start with next per
+            // Look for index of existing elasticity
+            while( iFound < modeltime->getmaxper() && 
+                   !mPriceElasticity[ iFound ].isInited() ) {
+                ++iFound;
+            }
+            // If not found, then use previous existing elasticity.
+            if( iFound == modeltime->getmaxper() ) {
+                iFound = per - 1;
+            }
+            mPriceElasticity[ per ].set( mPriceElasticity[ iFound ] );
+        }
     }
 
     if( mFinalEnergyConsumer.get() ){
@@ -486,14 +518,24 @@ void EnergyFinalDemand::dbOutput( const string& aRegionName ) const {
     // total sector output
     dboutput4( aRegionName,"End-Use Service","by Sector", mName, "Ser Unit",
                mServiceDemands );
+    
+    temp.clear();
+    for( int i = 0; i < maxper; ++i ) {
+        temp.push_back( mPriceElasticity[ i ] );
+    }
 
     // End-use service price elasticity
     dboutput4( aRegionName,"End-Use Service","Elasticity", mName + "_price" ,
-               " ", mPriceElasticity );
+               " ", temp );
+    
+    temp.clear();
+    for( int i = 0; i < maxper; ++i ) {
+        temp.push_back( mIncomeElasticity[ i ] );
+    }
 
     // End-use service income elasticity
     dboutput4( aRegionName,"End-Use Service","Elasticity", mName + "_income",
-               " ", mIncomeElasticity );
+               " ", temp );
 }
 
 EnergyFinalDemand::FinalEnergyConsumer::FinalEnergyConsumer( const string& aFinalDemandName ) {
@@ -574,6 +616,25 @@ void EnergyFinalDemand::FinalEnergyConsumer::completeInit( const string& aRegion
 
     SectorUtils::setFinalEnergyFlag( aRegionName, aFinalDemandName );
     const Modeltime* modeltime = scenario->getModeltime();
+    
+    // Make sure that we have an aeei for all model periods.  Use the one from the
+    // next period where one exists.  If none exists then use the one from the
+    // previous period.
+    for( int per = modeltime->getFinalCalibrationPeriod()+1; per < modeltime->getmaxper(); ++per ) {
+        if( !mAEEI[ per ].isInited() ) {
+            int iFound = per + 1; // start with next per
+            // Look for index of existing aeei
+            while( iFound < modeltime->getmaxper() && 
+                   !mAEEI[ iFound ].isInited() ) {
+                ++iFound;
+            }
+            // If not found, then use previous existing aeei.
+            if( iFound == modeltime->getmaxper() ) {
+                iFound = per - 1;
+            }
+            mAEEI[ per ].set( mAEEI[ iFound ] );
+        }
+    }
 
     for( unsigned int i = ( modeltime->getFinalCalibrationPeriod() + 1 );
         i < mCalFinalEnergy.size(); ++i ){
@@ -661,7 +722,7 @@ bool EnergyFinalDemand::FinalEnergyConsumer::XMLParse( const DOMNode* aNode ) {
             continue;
         }
         else if( nodeName == "aeei" ) {
-            XMLHelper<double>::insertValueIntoVector( curr, mAEEI, modeltime );
+            XMLHelper<Value>::insertValueIntoVector( curr, mAEEI, modeltime );
         }
         else if( nodeName == "cal-final-energy" ){
             XMLHelper<Value>::insertValueIntoVector( curr, mCalFinalEnergy,
@@ -685,7 +746,7 @@ void EnergyFinalDemand::FinalEnergyConsumer::toInputXML( ostream& aOut,
    
     // TODO: Use XMLWriteVector here.
     for( unsigned int i = 0; i < mAEEI.size(); ++i ){
-        XMLWriteElementCheckDefault( mAEEI[ i ], "aeei", aOut, aTabs, 0.0,
+        XMLWriteElementCheckDefault<double>( mAEEI[ i ], "aeei", aOut, aTabs, 0.0,
                                      modeltime->getper_to_yr( i ) );
     }
 
@@ -711,4 +772,3 @@ void EnergyFinalDemand::FinalEnergyConsumer::toDebugXML( const int aPeriod,
                      aTabs );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
-

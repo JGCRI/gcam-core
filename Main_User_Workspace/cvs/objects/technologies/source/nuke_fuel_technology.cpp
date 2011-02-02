@@ -85,8 +85,8 @@ NukeFuelTechnology* NukeFuelTechnology::clone() const {
     return new NukeFuelTechnology( *this );
 }
 
-const string& NukeFuelTechnology::getXMLName1D() const {
-    return getXMLNameStatic1D();
+const string& NukeFuelTechnology::getXMLName() const {
+    return getXMLNameStatic();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -98,7 +98,7 @@ const string& NukeFuelTechnology::getXMLName1D() const {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const string& NukeFuelTechnology::getXMLNameStatic1D() {
+const string& NukeFuelTechnology::getXMLNameStatic() {
     const static string XML_NAME = "nuclearFuelTechnology";
     return XML_NAME;
 }
@@ -217,11 +217,10 @@ void NukeFuelTechnology::completeInit( const string& aRegionName,
                                       const string& aSubsectorName,
                                       DependencyFinder* aDepFinder,
                                       const IInfo* aSubsectorInfo,
-                                      ILandAllocator* aLandAllocator,
-                                      const GlobalTechnologyDatabase* aGlobalTechDB )
+                                      ILandAllocator* aLandAllocator )
 {
     Technology::completeInit( aRegionName, aSectorName, aSubsectorName, aDepFinder,
-        aSubsectorInfo, aLandAllocator, aGlobalTechDB );
+        aSubsectorInfo, aLandAllocator );
 
     for( OutputIterator i = mOutputs.begin(); i != mOutputs.end(); ++i ){
         ( *i )->scaleCoefficient( getInitialMass() );

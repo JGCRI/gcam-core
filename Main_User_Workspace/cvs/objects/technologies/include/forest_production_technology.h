@@ -68,8 +68,8 @@ public:
                                 const int aYear );
 
     ~ForestProductionTechnology();
-    static const std::string& getXMLNameStatic1D();
-    const std::string& getXMLName1D() const;
+    static const std::string& getXMLNameStatic();
+    const std::string& getXMLName() const;
     ForestProductionTechnology* clone() const;
 
     virtual void completeInit( const std::string& aRegionName,
@@ -77,8 +77,7 @@ public:
                                const std::string& aSubsectorName,
                                DependencyFinder* aDepFinder,
                                const IInfo* aSubsectorIInfo,
-                               ILandAllocator* aLandAllocator,
-                               const GlobalTechnologyDatabase* aGlobalTechDB );
+                               ILandAllocator* aLandAllocator );
     
     virtual void initCalc( const std::string& aRegionName,
                            const std::string& aSectorName,
@@ -123,7 +122,7 @@ private:
 
     virtual double calcDiscountFactor() const;
 
-    int getNRotationPeriodSteps( ) const;
+    int getNRotationPeriodSteps( const int aPeriod ) const;
 
     const std::string getFutureMarket( const std::string& aProductName ) const;
 

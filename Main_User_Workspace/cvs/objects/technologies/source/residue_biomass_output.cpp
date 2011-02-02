@@ -557,6 +557,13 @@ bool ResidueBiomassOutput::XMLParse( const xercesc::DOMNode* aNode )
    return true;
 }
 
+void ResidueBiomassOutput::doInterpolations( const int aYear, const int aPreviousYear,
+                                             const int aNextYear, const IOutput* aPreviousOutput,
+                                             const IOutput* aNextOutput )
+{
+    // TODO: what to interpolate?
+}
+
 // end of residue_biomass_output.cpp ***********************************
 
 

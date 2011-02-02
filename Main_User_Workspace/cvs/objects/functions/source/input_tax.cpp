@@ -126,6 +126,9 @@ InputTax::InputTax( const InputTax& aOther ){
     // Resize vectors to the correct size.
     mPhysicalDemand.resize( scenario->getModeltime()->getmaxper() );
     mAdjustedCoefficients.resize( scenario->getModeltime()->getmaxper() );
+    
+    // copy keywords
+    mKeywordMap = aOther.mKeywordMap;
 }
 
 InputTax* InputTax::clone() const {

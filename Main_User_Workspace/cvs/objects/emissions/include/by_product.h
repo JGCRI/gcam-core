@@ -149,6 +149,10 @@ public:
        const ILandAllocator*    aLandAllocator,
        const std::string& aName,
        const std::string& aLandType ) {}
+    
+    virtual void doInterpolations( const int aYear, const int aPreviousYear,
+                                   const int aNextYear, const IOutput* aPreviousInput,
+                                   const IOutput* aNextInput );
 protected:
 
     /*!

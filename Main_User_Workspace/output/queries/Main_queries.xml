@@ -412,7 +412,7 @@
       <supplyDemandQuery title="Electricity Fuel Consumption">
          <axis1 name="fuel">input</axis1>
          <axis2 name="Year">demand-physical[@vintage]</axis2>
-         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and ((@name='base load generation') or (@name='peak generation') or (@name = 'intermediate generation') or (@name='subpeak generation') or @name='electricity')]//*[@type = 'technology']//*[@type='input']/demand-physical/node()</xPath>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and ((@name='base load generation') or (@name='peak generation') or (@name = 'intermediate generation') or (@name='subpeak generation') or @name='electricity')]//*[@type = 'technology']/*[@type='input']/demand-physical/node()</xPath>
          <comments/>
       </supplyDemandQuery>
       <supplyDemandQuery title="Central electricity demand by demand sector">
@@ -488,7 +488,7 @@
       <supplyDemandQuery title="Cogeneration by region">
          <axis1 name="region">region</axis1>
          <axis2 name="Year">physical-output[@vintage]</axis2>
-         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (:collapse:)]//*[@type = 'technology' (:collapse:)]/output-secondary[@name='electricity' and @type='output']/physical-output/node()</xPath>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (:collapse:)]//*[@type = 'technology' (:collapse:)]/output-secondary[@name='electricity']/physical-output/node()</xPath>
          <comments>all techs of the same name aggregated</comments>
       </supplyDemandQuery>
       <supplyDemandQuery title="Total electricity delivered">

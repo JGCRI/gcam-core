@@ -236,19 +236,9 @@ void TreeLandAllocator::resetToCalibrationData( const string& aRegionName, const
  * \param aRegionInfo Region info.
  */
 void TreeLandAllocator::checkRotationPeriod( const IInfo* aRegionInfo ) const {
-    // Check that all model periods are equal, which is required for this land
-    // allocator.
-    const Modeltime* modeltime = scenario->getModeltime();
-    for( int period = 1; period < modeltime->getmaxper(); ++period ) {
-        if ( modeltime->gettimestep( period ) != modeltime->gettimestep( period - 1 ) ) {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "All time steps are not constant." << endl;
-        }
-    }
-
     // A check to verify that the rotation period is a multiple of the model's
     // time step.
+    const Modeltime* modeltime = scenario->getModeltime();
     const int rotationPeriod = aRegionInfo->getInteger( "rotationPeriod", true );
     for( int period = 0; period < modeltime->getmaxper(); ++period ) {
         if( rotationPeriod % modeltime->gettimestep( period ) != 0 ){

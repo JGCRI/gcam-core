@@ -55,6 +55,9 @@
 * \brief A class which defines a single ForestSupplySubsector of the model.
 * \details The forest supply subsector exists solely to create
 *          ForestProductTechnologies.
+* \todo Now that the technology creation has been moved to TechnologyContainer
+*       this class can probably go.  The data should then just be switched to
+*       use FoodSupplySubsector.
 * \author James Blackwood
 */
 
@@ -73,11 +76,6 @@ public:
 protected:
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual const std::string& getXMLName() const;
-    bool isNameOfChild( const std::string& nodename ) const;
-
-    virtual ITechnology* createChild( const std::string& aTechType,
-                                     const std::string& aTechName,
-                                     const int aTechYear ) const;
 
     virtual void interpolateShareWeights( const int aPeriod );
 private:

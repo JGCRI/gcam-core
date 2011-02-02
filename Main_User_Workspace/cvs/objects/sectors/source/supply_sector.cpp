@@ -170,12 +170,10 @@ void SupplySector::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aT
 /*! \brief Complete the initialization of the supply sector.
 * \param aRegionInfo Regional information object.
 * \param aDependencyFinder Regional dependency finder.
-* \param aGlobalTechDB Global technology database.
 */
 void SupplySector::completeInit( const IInfo* aRegionInfo,
                                  DependencyFinder* aDependencyFinder,
-                                 ILandAllocator* aLandAllocator,
-                                 const GlobalTechnologyDatabase* aGlobalTechDB )
+                                 ILandAllocator* aLandAllocator )
 {
 	// default unit to EJ
 	if ( mOutputUnit.empty() ) {
@@ -189,7 +187,7 @@ void SupplySector::completeInit( const IInfo* aRegionInfo,
 	if ( mPriceUnit.empty() ) {
 		mPriceUnit = "75$/GJ"; 
 	}
-	Sector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator, aGlobalTechDB );	
+	Sector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator );	
     setMarket();
 }
 

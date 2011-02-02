@@ -177,6 +177,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="coal to liquids CCS Level 2">
                   <period year="1975">
@@ -351,6 +352,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-ethanol">
@@ -527,6 +529,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-ethanol CCS Level 2">
                   <period year="1975">
@@ -701,6 +704,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-FT">
@@ -877,6 +881,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-FT CCS Level 2">
                   <period year="1975">
@@ -1051,6 +1056,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -1229,6 +1235,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="coal to liquids CCS Level 2">
                   <period year="1975">
@@ -1403,6 +1410,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-ethanol">
@@ -1579,6 +1587,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-ethanol CCS Level 2">
                   <period year="1975">
@@ -1753,6 +1762,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-FT">
@@ -1929,6 +1939,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-FT CCS Level 2">
                   <period year="1975">
@@ -2103,6 +2114,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -2283,6 +2295,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="coal to liquids CCS Level 2">
                   <period year="1975">
@@ -2457,6 +2470,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-ethanol">
@@ -2633,6 +2647,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-ethanol CCS Level 2">
                   <period year="1975">
@@ -2807,6 +2822,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-FT">
@@ -2983,6 +2999,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-FT CCS Level 2">
                   <period year="1975">
@@ -3157,6 +3174,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -3335,6 +3353,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="coal to liquids CCS Level 2">
                   <period year="1975">
@@ -3509,6 +3528,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-ethanol">
@@ -3685,6 +3705,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-ethanol CCS Level 2">
                   <period year="1975">
@@ -3859,6 +3880,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-FT">
@@ -4035,6 +4057,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-FT CCS Level 2">
                   <period year="1975">
@@ -4209,6 +4232,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -4389,6 +4413,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="coal to liquids CCS Level 2">
                   <period year="1975">
@@ -4563,6 +4588,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-ethanol">
@@ -4739,6 +4765,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-ethanol CCS Level 2">
                   <period year="1975">
@@ -4913,6 +4940,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-FT">
@@ -5089,6 +5117,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-FT CCS Level 2">
                   <period year="1975">
@@ -5263,6 +5292,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -5441,6 +5471,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="coal to liquids CCS Level 2">
                   <period year="1975">
@@ -5615,6 +5646,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-ethanol">
@@ -5791,6 +5823,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-ethanol CCS Level 2">
                   <period year="1975">
@@ -5965,6 +5998,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-FT">
@@ -6141,6 +6175,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-FT CCS Level 2">
                   <period year="1975">
@@ -6315,6 +6350,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -6495,6 +6531,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="coal to liquids CCS Level 2">
                   <period year="1975">
@@ -6669,6 +6706,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-ethanol">
@@ -6845,6 +6883,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-ethanol CCS Level 2">
                   <period year="1975">
@@ -7019,6 +7058,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-FT">
@@ -7195,6 +7235,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-FT CCS Level 2">
                   <period year="1975">
@@ -7369,6 +7410,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -7547,6 +7589,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="coal to liquids CCS Level 2">
                   <period year="1975">
@@ -7721,6 +7764,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-ethanol">
@@ -7897,6 +7941,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-ethanol CCS Level 2">
                   <period year="1975">
@@ -8071,6 +8116,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-FT">
@@ -8247,6 +8293,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-FT CCS Level 2">
                   <period year="1975">
@@ -8421,6 +8468,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -8601,6 +8649,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="coal to liquids CCS Level 2">
                   <period year="1975">
@@ -8775,6 +8824,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-ethanol">
@@ -8951,6 +9001,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-ethanol CCS Level 2">
                   <period year="1975">
@@ -9125,6 +9176,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-FT">
@@ -9301,6 +9353,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-FT CCS Level 2">
                   <period year="1975">
@@ -9475,6 +9528,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -9653,6 +9707,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="coal to liquids CCS Level 2">
                   <period year="1975">
@@ -9827,6 +9882,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-ethanol">
@@ -10003,6 +10059,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-ethanol CCS Level 2">
                   <period year="1975">
@@ -10177,6 +10234,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-FT">
@@ -10353,6 +10411,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-FT CCS Level 2">
                   <period year="1975">
@@ -10527,6 +10586,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -10707,6 +10767,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="coal to liquids CCS Level 2">
                   <period year="1975">
@@ -10881,6 +10942,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-ethanol">
@@ -11057,6 +11119,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-ethanol CCS Level 2">
                   <period year="1975">
@@ -11231,6 +11294,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-FT">
@@ -11407,6 +11471,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-FT CCS Level 2">
                   <period year="1975">
@@ -11581,6 +11646,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -11759,6 +11825,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="coal to liquids CCS Level 2">
                   <period year="1975">
@@ -11933,6 +12000,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-ethanol">
@@ -12109,6 +12177,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-ethanol CCS Level 2">
                   <period year="1975">
@@ -12283,6 +12352,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-FT">
@@ -12459,6 +12529,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-FT CCS Level 2">
                   <period year="1975">
@@ -12633,6 +12704,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -12813,6 +12885,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="coal to liquids CCS Level 2">
                   <period year="1975">
@@ -12987,6 +13060,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-ethanol">
@@ -13163,6 +13237,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-ethanol CCS Level 2">
                   <period year="1975">
@@ -13337,6 +13412,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-FT">
@@ -13513,6 +13589,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-FT CCS Level 2">
                   <period year="1975">
@@ -13687,6 +13764,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -13865,6 +13943,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="coal to liquids CCS Level 2">
                   <period year="1975">
@@ -14039,6 +14118,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-ethanol">
@@ -14215,6 +14295,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-ethanol CCS Level 2">
                   <period year="1975">
@@ -14389,6 +14470,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-FT">
@@ -14565,6 +14647,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-FT CCS Level 2">
                   <period year="1975">
@@ -14739,6 +14822,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -14919,6 +15003,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="coal to liquids CCS Level 2">
                   <period year="1975">
@@ -15093,6 +15178,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-ethanol">
@@ -15269,6 +15355,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-ethanol CCS Level 2">
                   <period year="1975">
@@ -15443,6 +15530,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-FT">
@@ -15619,6 +15707,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-FT CCS Level 2">
                   <period year="1975">
@@ -15793,6 +15882,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -15971,6 +16061,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="coal to liquids CCS Level 2">
                   <period year="1975">
@@ -16145,6 +16236,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-ethanol">
@@ -16321,6 +16413,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-ethanol CCS Level 2">
                   <period year="1975">
@@ -16495,6 +16588,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-FT">
@@ -16671,6 +16765,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-FT CCS Level 2">
                   <period year="1975">
@@ -16845,6 +16940,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -17025,6 +17121,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="coal to liquids CCS Level 2">
                   <period year="1975">
@@ -17199,6 +17296,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-ethanol">
@@ -17375,6 +17473,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-ethanol CCS Level 2">
                   <period year="1975">
@@ -17549,6 +17648,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-FT">
@@ -17725,6 +17825,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-FT CCS Level 2">
                   <period year="1975">
@@ -17899,6 +18000,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -18077,6 +18179,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="coal to liquids CCS Level 2">
                   <period year="1975">
@@ -18251,6 +18354,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-ethanol">
@@ -18427,6 +18531,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-ethanol CCS Level 2">
                   <period year="1975">
@@ -18601,6 +18706,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-FT">
@@ -18777,6 +18883,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-FT CCS Level 2">
                   <period year="1975">
@@ -18951,6 +19058,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -19131,6 +19239,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="coal to liquids CCS Level 2">
                   <period year="1975">
@@ -19305,6 +19414,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-ethanol">
@@ -19481,6 +19591,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-ethanol CCS Level 2">
                   <period year="1975">
@@ -19655,6 +19766,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-FT">
@@ -19831,6 +19943,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-FT CCS Level 2">
                   <period year="1975">
@@ -20005,6 +20118,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -20183,6 +20297,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="coal to liquids CCS Level 2">
                   <period year="1975">
@@ -20357,6 +20472,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-ethanol">
@@ -20533,6 +20649,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-ethanol CCS Level 2">
                   <period year="1975">
@@ -20707,6 +20824,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-FT">
@@ -20883,6 +21001,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-FT CCS Level 2">
                   <period year="1975">
@@ -21057,6 +21176,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -21237,6 +21357,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="coal to liquids CCS Level 2">
                   <period year="1975">
@@ -21411,6 +21532,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-ethanol">
@@ -21587,6 +21709,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-ethanol CCS Level 2">
                   <period year="1975">
@@ -21761,6 +21884,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-FT">
@@ -21937,6 +22061,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-FT CCS Level 2">
                   <period year="1975">
@@ -22111,6 +22236,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -22289,6 +22415,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="coal to liquids CCS Level 2">
                   <period year="1975">
@@ -22463,6 +22590,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-ethanol">
@@ -22639,6 +22767,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-ethanol CCS Level 2">
                   <period year="1975">
@@ -22813,6 +22942,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-FT">
@@ -22989,6 +23119,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-FT CCS Level 2">
                   <period year="1975">
@@ -23163,6 +23294,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -23343,6 +23475,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="coal to liquids CCS Level 2">
                   <period year="1975">
@@ -23517,6 +23650,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-ethanol">
@@ -23693,6 +23827,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-ethanol CCS Level 2">
                   <period year="1975">
@@ -23867,6 +24002,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-FT">
@@ -24043,6 +24179,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-FT CCS Level 2">
                   <period year="1975">
@@ -24217,6 +24354,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -24395,6 +24533,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="coal to liquids CCS Level 2">
                   <period year="1975">
@@ -24569,6 +24708,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-ethanol">
@@ -24745,6 +24885,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-ethanol CCS Level 2">
                   <period year="1975">
@@ -24919,6 +25060,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-FT">
@@ -25095,6 +25237,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-FT CCS Level 2">
                   <period year="1975">
@@ -25269,6 +25412,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -25449,6 +25593,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="coal to liquids CCS Level 2">
                   <period year="1975">
@@ -25623,6 +25768,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-ethanol">
@@ -25799,6 +25945,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-ethanol CCS Level 2">
                   <period year="1975">
@@ -25973,6 +26120,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-FT">
@@ -26149,6 +26297,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-FT CCS Level 2">
                   <period year="1975">
@@ -26323,6 +26472,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -26501,6 +26651,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="coal to liquids CCS Level 2">
                   <period year="1975">
@@ -26675,6 +26826,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-ethanol">
@@ -26851,6 +27003,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-ethanol CCS Level 2">
                   <period year="1975">
@@ -27025,6 +27178,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-FT">
@@ -27201,6 +27355,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-FT CCS Level 2">
                   <period year="1975">
@@ -27375,6 +27530,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -27555,6 +27711,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="coal to liquids CCS Level 2">
                   <period year="1975">
@@ -27729,6 +27886,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-ethanol">
@@ -27905,6 +28063,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-ethanol CCS Level 2">
                   <period year="1975">
@@ -28079,6 +28238,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-FT">
@@ -28255,6 +28415,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-FT CCS Level 2">
                   <period year="1975">
@@ -28429,6 +28590,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -28607,6 +28769,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="coal to liquids CCS Level 2">
                   <period year="1975">
@@ -28781,6 +28944,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-ethanol">
@@ -28957,6 +29121,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-ethanol CCS Level 2">
                   <period year="1975">
@@ -29131,6 +29296,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass liquids-FT">
@@ -29307,6 +29473,7 @@
                         <intensity-penalty>0.040</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
                <technology name="biomass liquids-FT CCS Level 2">
                   <period year="1975">
@@ -29481,6 +29648,7 @@
                         <intensity-penalty>0.100</intensity-penalty>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>

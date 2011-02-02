@@ -11,8 +11,10 @@
                <value>0.6</value>
             </object-meta-info>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -82,6 +84,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Coal (conv pul)">
                   <period year="1975">
@@ -385,11 +388,14 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -459,6 +465,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Gas (peak load conv)">
                   <period year="1975">
@@ -845,11 +852,14 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="oil">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -928,6 +938,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
@@ -1350,11 +1361,17 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2050" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <interpolation-rule apply-to="share-weight" from-year="2035" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2020">0.333</share-weight>
@@ -1424,6 +1441,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Biomass (conv)">
                   <period year="1975">
@@ -1781,6 +1799,7 @@
                      <profit-shutdown-decider/>
                      <CO2 name="CO2"/>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -1795,8 +1814,10 @@
                <value>0.6</value>
             </object-meta-info>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -1866,6 +1887,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Coal (conv pul)">
                   <period year="1975">
@@ -2169,11 +2191,14 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -2243,6 +2268,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Gas (peak load conv)">
                   <period year="1975">
@@ -2629,11 +2655,14 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="oil">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -2712,6 +2741,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
@@ -3134,11 +3164,17 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2050" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <interpolation-rule apply-to="share-weight" from-year="2035" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2020">0.333</share-weight>
@@ -3208,6 +3244,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Biomass (conv)">
                   <period year="1975">
@@ -3565,6 +3602,7 @@
                      <profit-shutdown-decider/>
                      <CO2 name="CO2"/>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -3579,8 +3617,10 @@
                <value>0.6</value>
             </object-meta-info>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -3650,6 +3690,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Coal (conv pul)">
                   <period year="1975">
@@ -3953,11 +3994,14 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -4027,6 +4071,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Gas (peak load conv)">
                   <period year="1975">
@@ -4413,11 +4458,14 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="oil">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -4496,6 +4544,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
@@ -4918,11 +4967,17 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2050" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <interpolation-rule apply-to="share-weight" from-year="2035" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2020">0.333</share-weight>
@@ -4992,6 +5047,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Biomass (conv)">
                   <period year="1975">
@@ -5349,6 +5405,7 @@
                      <profit-shutdown-decider/>
                      <CO2 name="CO2"/>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -5363,8 +5420,10 @@
                <value>0.6</value>
             </object-meta-info>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -5434,6 +5493,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Coal (conv pul)">
                   <period year="1975">
@@ -5737,11 +5797,14 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -5811,6 +5874,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Gas (peak load conv)">
                   <period year="1975">
@@ -6197,11 +6261,14 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="oil">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -6280,6 +6347,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
@@ -6702,11 +6770,17 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2050" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <interpolation-rule apply-to="share-weight" from-year="2035" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2020">0.333</share-weight>
@@ -6776,6 +6850,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Biomass (conv)">
                   <period year="1975">
@@ -7133,6 +7208,7 @@
                      <profit-shutdown-decider/>
                      <CO2 name="CO2"/>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -7147,8 +7223,10 @@
                <value>0.6</value>
             </object-meta-info>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -7218,6 +7296,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Coal (conv pul)">
                   <period year="1975">
@@ -7521,11 +7600,14 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -7595,6 +7677,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Gas (peak load conv)">
                   <period year="1975">
@@ -7981,11 +8064,14 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="oil">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -8064,6 +8150,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
@@ -8486,11 +8573,17 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2050" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <interpolation-rule apply-to="share-weight" from-year="2035" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2020">0.333</share-weight>
@@ -8560,6 +8653,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Biomass (conv)">
                   <period year="1975">
@@ -8917,6 +9011,7 @@
                      <profit-shutdown-decider/>
                      <CO2 name="CO2"/>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -8931,8 +9026,10 @@
                <value>0.6</value>
             </object-meta-info>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -9002,6 +9099,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Coal (conv pul)">
                   <period year="1975">
@@ -9305,11 +9403,14 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -9379,6 +9480,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Gas (peak load conv)">
                   <period year="1975">
@@ -9765,11 +9867,14 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="oil">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -9848,6 +9953,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
@@ -10270,11 +10376,17 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2050" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <interpolation-rule apply-to="share-weight" from-year="2035" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2020">0.333</share-weight>
@@ -10344,6 +10456,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Biomass (conv)">
                   <period year="1975">
@@ -10701,6 +10814,7 @@
                      <profit-shutdown-decider/>
                      <CO2 name="CO2"/>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -10715,8 +10829,10 @@
                <value>0.6</value>
             </object-meta-info>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -10786,6 +10902,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Coal (conv pul)">
                   <period year="1975">
@@ -11089,11 +11206,14 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -11163,6 +11283,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Gas (peak load conv)">
                   <period year="1975">
@@ -11549,11 +11670,14 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="oil">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -11632,6 +11756,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
@@ -12054,11 +12179,17 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2050" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <interpolation-rule apply-to="share-weight" from-year="2035" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2020">0.333</share-weight>
@@ -12128,6 +12259,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Biomass (conv)">
                   <period year="1975">
@@ -12485,6 +12617,7 @@
                      <profit-shutdown-decider/>
                      <CO2 name="CO2"/>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -12499,8 +12632,10 @@
                <value>0.6</value>
             </object-meta-info>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -12570,6 +12705,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Coal (conv pul)">
                   <period year="1975">
@@ -12873,11 +13009,14 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -12947,6 +13086,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Gas (peak load conv)">
                   <period year="1975">
@@ -13333,11 +13473,14 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="oil">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -13416,6 +13559,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
@@ -13838,11 +13982,17 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2050" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <interpolation-rule apply-to="share-weight" from-year="2035" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2020">0.05</share-weight>
@@ -13912,6 +14062,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Biomass (conv)">
                   <period year="1975">
@@ -14269,6 +14420,7 @@
                      <profit-shutdown-decider/>
                      <CO2 name="CO2"/>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -14283,8 +14435,10 @@
                <value>0.6</value>
             </object-meta-info>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -14354,6 +14508,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Coal (conv pul)">
                   <period year="1975">
@@ -14657,11 +14812,14 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -14731,6 +14889,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Gas (peak load conv)">
                   <period year="1975">
@@ -15117,11 +15276,14 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="oil">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -15200,6 +15362,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
@@ -15622,11 +15785,17 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2050" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <interpolation-rule apply-to="share-weight" from-year="2035" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2020">0.333</share-weight>
@@ -15696,6 +15865,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Biomass (conv)">
                   <period year="1975">
@@ -16053,6 +16223,7 @@
                      <profit-shutdown-decider/>
                      <CO2 name="CO2"/>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -16067,8 +16238,10 @@
                <value>0.6</value>
             </object-meta-info>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -16138,6 +16311,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Coal (conv pul)">
                   <period year="1975">
@@ -16441,11 +16615,14 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -16515,6 +16692,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Gas (peak load conv)">
                   <period year="1975">
@@ -16901,11 +17079,14 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="oil">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -16984,6 +17165,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
@@ -17406,11 +17588,17 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2050" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <interpolation-rule apply-to="share-weight" from-year="2035" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2020">0.333</share-weight>
@@ -17480,6 +17668,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Biomass (conv)">
                   <period year="1975">
@@ -17837,6 +18026,7 @@
                      <profit-shutdown-decider/>
                      <CO2 name="CO2"/>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -17851,8 +18041,10 @@
                <value>0.6</value>
             </object-meta-info>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -17922,6 +18114,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Coal (conv pul)">
                   <period year="1975">
@@ -18225,11 +18418,14 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -18299,6 +18495,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Gas (peak load conv)">
                   <period year="1975">
@@ -18685,11 +18882,14 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="oil">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -18768,6 +18968,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
@@ -19190,11 +19391,17 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2050" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <interpolation-rule apply-to="share-weight" from-year="2035" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2020">0.333</share-weight>
@@ -19264,6 +19471,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Biomass (conv)">
                   <period year="1975">
@@ -19621,6 +19829,7 @@
                      <profit-shutdown-decider/>
                      <CO2 name="CO2"/>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -19635,8 +19844,10 @@
                <value>0.6</value>
             </object-meta-info>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -19706,6 +19917,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Coal (conv pul)">
                   <period year="1975">
@@ -20009,11 +20221,14 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -20083,6 +20298,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Gas (peak load conv)">
                   <period year="1975">
@@ -20469,11 +20685,14 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="oil">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -20552,6 +20771,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
@@ -20974,11 +21194,17 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2050" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <interpolation-rule apply-to="share-weight" from-year="2035" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2020">0.333</share-weight>
@@ -21048,6 +21274,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Biomass (conv)">
                   <period year="1975">
@@ -21405,6 +21632,7 @@
                      <profit-shutdown-decider/>
                      <CO2 name="CO2"/>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -21419,8 +21647,10 @@
                <value>0.6</value>
             </object-meta-info>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -21490,6 +21720,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Coal (conv pul)">
                   <period year="1975">
@@ -21793,11 +22024,14 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -21867,6 +22101,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Gas (peak load conv)">
                   <period year="1975">
@@ -22253,11 +22488,14 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="oil">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -22336,6 +22574,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
@@ -22758,11 +22997,17 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2050" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <interpolation-rule apply-to="share-weight" from-year="2035" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2020">0.333</share-weight>
@@ -22832,6 +23077,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Biomass (conv)">
                   <period year="1975">
@@ -23189,6 +23435,7 @@
                      <profit-shutdown-decider/>
                      <CO2 name="CO2"/>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -23203,8 +23450,10 @@
                <value>0.6</value>
             </object-meta-info>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -23274,6 +23523,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Coal (conv pul)">
                   <period year="1975">
@@ -23577,11 +23827,14 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -23651,6 +23904,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Gas (peak load conv)">
                   <period year="1975">
@@ -24037,11 +24291,14 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="oil">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -24120,6 +24377,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Oil (peak load conv)">
                   <period year="1975">
@@ -24542,11 +24800,17 @@
                      </power-plant-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2050" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <interpolation-rule apply-to="share-weight" from-year="2035" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2020">0.333</share-weight>
@@ -24616,6 +24880,7 @@
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Biomass (conv)">
                   <period year="1975">
@@ -24973,6 +25238,7 @@
                      <profit-shutdown-decider/>
                      <CO2 name="CO2"/>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>

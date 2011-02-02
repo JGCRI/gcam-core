@@ -44,8 +44,6 @@
 #include <xercesc/dom/DOMNode.hpp>
 
 #include "sectors/include/food_supply_subsector.h"
-#include "technologies/include/food_production_technology.h"
-#include "technologies/include/unmanaged_land_technology.h"
 #include "util/base/include/xml_helper.h"
 
 using namespace std;
@@ -65,42 +63,6 @@ FoodSupplySubsector::FoodSupplySubsector( const string& regionName,
 }
 
 FoodSupplySubsector::~FoodSupplySubsector() {
-}
-
-/*! \brief Returns true if the nodename is a valid child for this class.
-*
-* Virtual function which specifies the XML name of the possible technology children of this class.
-* This function allows all technologies to be properly parsed using the base subsector code.
-* \author Steve Smith
-* \pre Needs corresponding createChild() function
-* \return True if nodename is a valid child of this class.
-*/
-bool FoodSupplySubsector::isNameOfChild( const string& nodename ) const {
-    return ( nodename == FoodProductionTechnology::getXMLNameStatic1D() ) ||
-           ( nodename == UnmanagedLandTechnology::getXMLNameStatic1D() );
-}
-
-/*!
- * \brief Derived helper function to generate a child element or construct the
- *        appropriate technology.
- * \param aTechType The name of the XML node, which is the type of the
- *        technology.
- * \param aTechName The name of the new technology.
- * \param aYear The year of the new technology.
- * \pre isNameOfChild returned that the type could be created.
- * \author Steve Smith
- * \return A newly created technology of the specified type.
- */
-ITechnology* FoodSupplySubsector::createChild( const string& aTechType,
-                                               const string& aTechName,
-                                               const int aTechYear ) const
-{
-    if ( aTechType == FoodProductionTechnology::getXMLNameStatic1D() ) {
-      return new FoodProductionTechnology( aTechName, aTechYear );
-    }
-    else if ( aTechType == UnmanagedLandTechnology::getXMLNameStatic1D() ) {
-      return new UnmanagedLandTechnology( aTechName, aTechYear );
-    }
 }
 
 //! Parses any input variables specific to derived classes

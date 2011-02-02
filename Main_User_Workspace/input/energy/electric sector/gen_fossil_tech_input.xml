@@ -221,6 +221,7 @@
                         <capacity-factor>0.83</capacity-factor>
                      </input-OM-fixed>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="coal_base_conv">
                   <period year="1975">
@@ -916,6 +917,7 @@
                         <storage-market>carbon-storage</storage-market>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass">
@@ -1136,6 +1138,7 @@
                         <capacity-factor>0.83</capacity-factor>
                      </input-OM-fixed>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="bio_base_conv">
                   <period year="1975">
@@ -1831,6 +1834,7 @@
                         <storage-market>carbon-storage</storage-market>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas">
@@ -2051,6 +2055,7 @@
                         <capacity-factor>0.83</capacity-factor>
                      </input-OM-fixed>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="gas_base_CC">
                   <period year="1975">
@@ -2528,6 +2533,7 @@
                         <storage-market>carbon-storage</storage-market>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -2750,6 +2756,7 @@
                         <capacity-factor>0.52</capacity-factor>
                      </input-OM-fixed>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="gas_int_CC">
                   <period year="1975">
@@ -3227,6 +3234,7 @@
                         <storage-market>carbon-storage</storage-market>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass">
@@ -3447,6 +3455,7 @@
                         <capacity-factor>0.52</capacity-factor>
                      </input-OM-fixed>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="bio_int_conv">
                   <period year="1975">
@@ -4142,6 +4151,7 @@
                         <storage-market>carbon-storage</storage-market>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="coal">
@@ -4362,6 +4372,7 @@
                         <capacity-factor>0.52</capacity-factor>
                      </input-OM-fixed>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="coal_int_conv">
                   <period year="1975">
@@ -5057,6 +5068,7 @@
                         <storage-market>carbon-storage</storage-market>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="oil">
@@ -5536,6 +5548,7 @@
                         <storage-market>carbon-storage</storage-market>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -5758,6 +5771,7 @@
                         <capacity-factor>0.25</capacity-factor>
                      </input-OM-fixed>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="gas_subpeak_turbine">
                   <period year="1975">
@@ -6453,6 +6467,7 @@
                         <storage-market>carbon-storage</storage-market>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="oil">
@@ -6673,6 +6688,7 @@
                         <capacity-factor>0.25</capacity-factor>
                      </input-OM-fixed>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="oil_subpeak_turbine">
                   <period year="1975">
@@ -7368,6 +7384,7 @@
                         <storage-market>carbon-storage</storage-market>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass">
@@ -8065,6 +8082,7 @@
                         <storage-market>carbon-storage</storage-market>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="coal">
@@ -8544,6 +8562,7 @@
                         <storage-market>carbon-storage</storage-market>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -8766,6 +8785,7 @@
                         <capacity-factor>0.06</capacity-factor>
                      </input-OM-fixed>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="gas_peak_turbine">
                   <period year="1975">
@@ -9461,6 +9481,7 @@
                         <storage-market>carbon-storage</storage-market>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="oil">
@@ -9681,6 +9702,7 @@
                         <capacity-factor>0.06</capacity-factor>
                      </input-OM-fixed>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="oil_peak_turbine">
                   <period year="1975">
@@ -10376,6 +10398,7 @@
                         <storage-market>carbon-storage</storage-market>
                      </standard-capture-component>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
          </supplysector>

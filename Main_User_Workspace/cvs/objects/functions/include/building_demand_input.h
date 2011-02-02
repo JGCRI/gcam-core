@@ -152,6 +152,10 @@ public:
 
     virtual void copyParamsInto( BuildingDemandInput& aInput,
                                  const int aPeriod ) const;
+    
+    virtual void doInterpolations( const int aYear, const int aPreviousYear,
+                                   const int aNextYear, const IInput* aPreviousInput,
+                                   const IInput* aNextInput );
 protected:
     BuildingDemandInput();
     

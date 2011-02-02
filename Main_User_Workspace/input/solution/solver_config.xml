@@ -105,5 +105,6 @@
     <solution-info-param-parser>
         <!-- applies to all regions since region attribute is not included -->
         <max-price-change fillout="1" market-type="Trial-Value" period="1">10</max-price-change>
+        <bracket-interval region="global" good="unconventional oil" period="3">.01</bracket-interval>
     </solution-info-param-parser>
 </scenario>

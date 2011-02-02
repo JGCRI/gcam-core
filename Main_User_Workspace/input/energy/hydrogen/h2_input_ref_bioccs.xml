@@ -259,6 +259,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas chemical">
@@ -509,6 +510,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass to H2">
@@ -759,6 +761,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="electrolysis">
@@ -979,6 +982,7 @@
                      <CO2 name="CO2"/>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="wind">
@@ -2014,6 +2018,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas chemical">
@@ -2264,6 +2269,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass to H2">
@@ -2514,6 +2520,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="electrolysis">
@@ -2734,6 +2741,7 @@
                      <CO2 name="CO2"/>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="wind">
@@ -3769,6 +3777,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas chemical">
@@ -4019,6 +4028,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass to H2">
@@ -4269,6 +4279,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="electrolysis">
@@ -4489,6 +4500,7 @@
                      <CO2 name="CO2"/>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="wind">
@@ -5524,6 +5536,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas chemical">
@@ -5774,6 +5787,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass to H2">
@@ -6024,6 +6038,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="electrolysis">
@@ -6244,6 +6259,7 @@
                      <CO2 name="CO2"/>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="wind">
@@ -7279,6 +7295,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas chemical">
@@ -7529,6 +7546,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass to H2">
@@ -7779,6 +7797,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="electrolysis">
@@ -7999,6 +8018,7 @@
                      <CO2 name="CO2"/>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="wind">
@@ -9034,6 +9054,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas chemical">
@@ -9284,6 +9305,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass to H2">
@@ -9534,6 +9556,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="electrolysis">
@@ -9754,6 +9777,7 @@
                      <CO2 name="CO2"/>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="wind">
@@ -10789,6 +10813,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas chemical">
@@ -11039,6 +11064,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass to H2">
@@ -11289,6 +11315,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="electrolysis">
@@ -11509,6 +11536,7 @@
                      <CO2 name="CO2"/>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="wind">
@@ -12544,6 +12572,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas chemical">
@@ -12794,6 +12823,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass to H2">
@@ -13044,6 +13074,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="electrolysis">
@@ -13264,6 +13295,7 @@
                      <CO2 name="CO2"/>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="wind">
@@ -14299,6 +14331,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas chemical">
@@ -14549,6 +14582,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass to H2">
@@ -14799,6 +14833,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="electrolysis">
@@ -15019,6 +15054,7 @@
                      <CO2 name="CO2"/>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="wind">
@@ -16054,6 +16090,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas chemical">
@@ -16304,6 +16341,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass to H2">
@@ -16554,6 +16592,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="electrolysis">
@@ -16774,6 +16813,7 @@
                      <CO2 name="CO2"/>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="wind">
@@ -17809,6 +17849,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas chemical">
@@ -18059,6 +18100,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass to H2">
@@ -18309,6 +18351,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="electrolysis">
@@ -18529,6 +18572,7 @@
                      <CO2 name="CO2"/>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="wind">
@@ -19564,6 +19608,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas chemical">
@@ -19814,6 +19859,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass to H2">
@@ -20064,6 +20110,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="electrolysis">
@@ -20284,6 +20331,7 @@
                      <CO2 name="CO2"/>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="wind">
@@ -21319,6 +21367,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas chemical">
@@ -21569,6 +21618,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass to H2">
@@ -21819,6 +21869,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="electrolysis">
@@ -22039,6 +22090,7 @@
                      <CO2 name="CO2"/>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="wind">
@@ -23074,6 +23126,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="gas chemical">
@@ -23324,6 +23377,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="biomass to H2">
@@ -23574,6 +23628,7 @@
                      </standard-capture-component>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="electrolysis">
@@ -23794,6 +23849,7 @@
                      <CO2 name="CO2"/>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
                </technology>
             </subsector>
             <subsector name="wind">

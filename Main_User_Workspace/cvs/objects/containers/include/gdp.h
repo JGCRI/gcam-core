@@ -48,6 +48,7 @@
 #include <vector>
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/ivisitable.h"
+#include "util/base/include/value.h"
 
 class Demographic;
 
@@ -67,8 +68,8 @@ class GDP: public IRoundTrippable, public IVisitable
 {
     friend class XMLDBOutputter;
 private:
-    std::vector<double> laborProdGrowthRate; //!< labor productivity growth rate
-    std::vector<double> laborForceParticipationPercent; //!< labor force participation percent
+    std::vector<Value> laborProdGrowthRate; //!< labor productivity growth rate
+    std::vector<Value> laborForceParticipationPercent; //!< labor force participation percent
     std::vector<double> laborForce; //!< actual labor force
     std::vector<double> gdpValue; //!< approximate regional gross domestic product in constant dollars, not adjusted for energy price for this period
     std::vector<double> gdpPerCapita; //!< regional gross domestic product per capita in constant dollars ($)
@@ -91,7 +92,8 @@ private:
     double calculatePPPPerCap( const int period,const double marketGDPperCap ); // function to calculate PPP values
     double getPPPMERRatio( const int period, const double marketGDPperCap ); // function to calculate PPP/MER ratio
     double getTotalLaborProductivity( const int period ) const;
-    double getLaborForce( const int per ) const;    
+    double getLaborForce( const int per ) const;
+    int findNextPeriodWithValue( const int aStartPeriod, const std::vector<Value>& aValueVector ) const;
 public:
     GDP();
     void XMLParse( const xercesc::DOMNode* node );

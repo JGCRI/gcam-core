@@ -67,6 +67,20 @@ PopulationMiniCAM::PopulationMiniCAM():
 mFractionWorking( 1.0 ) {
 }
 
+Population* PopulationMiniCAM::cloneAndInterpolate( const int aNewYear, const Population* aNextPopulation ) const {
+    /*!
+     * \pre aNewYear is between the year of this population and aNextPopulation.
+     */
+    assert( this->mYear < aNewYear < aNextPopulation->getYear() );
+    
+    PopulationMiniCAM* newInterpolatedPop = new PopulationMiniCAM();
+    newInterpolatedPop->mYear = aNewYear;
+    newInterpolatedPop->mTotalPop = util::linearInterpolateY( aNewYear, this->mYear, aNextPopulation->getYear(),
+                                                              this->mTotalPop, aNextPopulation->getTotal() );
+    newInterpolatedPop->mIsParsed = false;
+    return newInterpolatedPop;
+}
+
 //! parses the rest of PopuationMiniCAM xml object
 bool PopulationMiniCAM::XMLDerivedClassParse( const string &nodeName, const xercesc::DOMNode* curr ){
     if ( nodeName == "totalPop" ) {

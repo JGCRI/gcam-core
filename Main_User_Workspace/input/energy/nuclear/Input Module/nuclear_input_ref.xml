@@ -4,6 +4,9 @@
       <region name="USA">
          <supplysector name="electricity">
             <subsector name="nuclear">
+               <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
                <share-weight year="2020">0.4</share-weight>
                <share-weight year="2035">0.8</share-weight>
                <share-weight year="2050">0.9</share-weight>
@@ -81,6 +84,10 @@
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
+               </technology>
+               <technology name="Gen_II_LWR">
+                  <final-available-year>2005</final-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -88,6 +95,12 @@
       <region name="Canada">
          <supplysector name="electricity">
             <subsector name="nuclear">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
                <share-weight year="2020">1</share-weight>
                <share-weight year="2035">1.5</share-weight>
                <share-weight year="2050">1.25</share-weight>
@@ -165,6 +178,10 @@
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2015</initial-available-year>
+               </technology>
+               <technology name="Gen_II_LWR">
+                  <final-available-year>2005</final-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -172,6 +189,12 @@
       <region name="Western Europe">
          <supplysector name="electricity">
             <subsector name="nuclear">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
                <share-weight year="2020">0.7</share-weight>
                <share-weight year="2035">0.7</share-weight>
                <share-weight year="2050">0.85</share-weight>
@@ -249,6 +272,10 @@
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2015</initial-available-year>
+               </technology>
+               <technology name="Gen_II_LWR">
+                  <final-available-year>2005</final-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -256,6 +283,12 @@
       <region name="Japan">
          <supplysector name="electricity">
             <subsector name="nuclear">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
                <share-weight year="2020">1.8</share-weight>
                <share-weight year="2035">1.8</share-weight>
                <share-weight year="2050">1.5</share-weight>
@@ -333,6 +366,10 @@
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2015</initial-available-year>
+               </technology>
+               <technology name="Gen_II_LWR">
+                  <final-available-year>2005</final-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -340,6 +377,9 @@
       <region name="Australia_NZ">
          <supplysector name="electricity">
             <subsector name="nuclear">
+               <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
                <share-weight year="2020">0</share-weight>
                <share-weight year="2035">0.05</share-weight>
                <share-weight year="2050">0.5</share-weight>
@@ -417,6 +457,10 @@
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2025</initial-available-year>
+               </technology>
+               <technology name="Gen_II_LWR">
+                  <final-available-year>2005</final-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -424,6 +468,12 @@
       <region name="Former Soviet Union">
          <supplysector name="electricity">
             <subsector name="nuclear">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
                <share-weight year="2020">0.4</share-weight>
                <share-weight year="2035">0.8</share-weight>
                <share-weight year="2050">0.9</share-weight>
@@ -501,6 +551,10 @@
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2015</initial-available-year>
+               </technology>
+               <technology name="Gen_II_LWR">
+                  <final-available-year>2005</final-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -508,6 +562,12 @@
       <region name="China">
          <supplysector name="electricity">
             <subsector name="nuclear">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
                <share-weight year="2020">0.05</share-weight>
                <share-weight year="2035">0.35</share-weight>
                <share-weight year="2050">0.7</share-weight>
@@ -585,6 +645,10 @@
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2010</initial-available-year>
+               </technology>
+               <technology name="Gen_II_LWR">
+                  <final-available-year>2005</final-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -592,6 +656,12 @@
       <region name="Middle East">
          <supplysector name="electricity">
             <subsector name="nuclear">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
                <share-weight year="2020">0.01</share-weight>
                <share-weight year="2035">0.2</share-weight>
                <share-weight year="2050">0.6</share-weight>
@@ -669,6 +739,10 @@
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2015</initial-available-year>
+               </technology>
+               <technology name="Gen_II_LWR">
+                  <final-available-year>2005</final-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -676,6 +750,12 @@
       <region name="Africa">
          <supplysector name="electricity">
             <subsector name="nuclear">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
                <share-weight year="2020">0.01</share-weight>
                <share-weight year="2035">0.2</share-weight>
                <share-weight year="2050">0.6</share-weight>
@@ -753,6 +833,10 @@
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
+               </technology>
+               <technology name="Gen_II_LWR">
+                  <final-available-year>2005</final-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -760,6 +844,12 @@
       <region name="Latin America">
          <supplysector name="electricity">
             <subsector name="nuclear">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
                <share-weight year="2020">0.1</share-weight>
                <share-weight year="2035">0.35</share-weight>
                <share-weight year="2050">0.6</share-weight>
@@ -837,6 +927,10 @@
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2020</initial-available-year>
+               </technology>
+               <technology name="Gen_II_LWR">
+                  <final-available-year>2005</final-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -844,6 +938,12 @@
       <region name="Southeast Asia">
          <supplysector name="electricity">
             <subsector name="nuclear">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
                <share-weight year="2020">0.05</share-weight>
                <share-weight year="2035">0.1</share-weight>
                <share-weight year="2050">0.5</share-weight>
@@ -921,6 +1021,10 @@
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2015</initial-available-year>
+               </technology>
+               <technology name="Gen_II_LWR">
+                  <final-available-year>2005</final-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -928,6 +1032,12 @@
       <region name="Eastern Europe">
          <supplysector name="electricity">
             <subsector name="nuclear">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
                <share-weight year="2020">0.3</share-weight>
                <share-weight year="2035">0.7</share-weight>
                <share-weight year="2050">0.85</share-weight>
@@ -1005,6 +1115,10 @@
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2015</initial-available-year>
+               </technology>
+               <technology name="Gen_II_LWR">
+                  <final-available-year>2005</final-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -1012,6 +1126,12 @@
       <region name="Korea">
          <supplysector name="electricity">
             <subsector name="nuclear">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
                <share-weight year="2020">2.25</share-weight>
                <share-weight year="2035">2.25</share-weight>
                <share-weight year="2050">1.8</share-weight>
@@ -1089,6 +1209,10 @@
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2015</initial-available-year>
+               </technology>
+               <technology name="Gen_II_LWR">
+                  <final-available-year>2005</final-available-year>
                </technology>
             </subsector>
          </supplysector>
@@ -1096,6 +1220,12 @@
       <region name="India">
          <supplysector name="electricity">
             <subsector name="nuclear">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
                <share-weight year="2020">0.025</share-weight>
                <share-weight year="2035">0.12</share-weight>
                <share-weight year="2050">0.6</share-weight>
@@ -1173,6 +1303,10 @@
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
+                  <initial-available-year>2010</initial-available-year>
+               </technology>
+               <technology name="Gen_II_LWR">
+                  <final-available-year>2005</final-available-year>
                </technology>
             </subsector>
          </supplysector>

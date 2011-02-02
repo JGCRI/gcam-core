@@ -77,6 +77,7 @@ FoodProductionTechnology::FoodProductionTechnology( const string& aName, const i
     mMatureAge = 1;        
     mHarvestedToCroppedLandRatio = 1;
     mLUCPenaltyMultiplier = 0;
+    mReadInVariableCost = false;
 }
 
 // ! Destructor
@@ -86,6 +87,7 @@ FoodProductionTechnology::~FoodProductionTechnology() {
 //! Parses any input variables specific to derived classes
 bool FoodProductionTechnology::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
     if ( nodeName == "variableCost" ) {
+        mReadInVariableCost = true;
         variableCost = XMLHelper<double>::getValue( curr );
     }
     else if( nodeName == "NonLandCostTechChange" ) {
@@ -142,10 +144,12 @@ void FoodProductionTechnology::acceptDerived( IVisitor* aVisitor, const int aPer
 //! write object to xml output stream
 void FoodProductionTechnology::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     XMLWriteElement( landType, "landType", out, tabs );
-    XMLWriteElement( variableCost, "variableCost", out, tabs );
+    if( mReadInVariableCost ) {
+        XMLWriteElement( variableCost, "variableCost", out, tabs );
+    }
     XMLWriteElementCheckDefault( mNonLandCostTechChange, "NonLandCostTechChange", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( calYield, "calYield", out, tabs, -1.0 );
-    if ( getXMLName1D() != "ForestProductionTechnology" ) {
+    if ( getXMLName() != "ForestProductionTechnology" ) {
         XMLWriteElementCheckDefault( calLandUsed, "calLandUsed", out, tabs, -1.0 );
     }
     XMLWriteElementCheckDefault( agProdChange, "agProdChange", out, tabs, 0.0 );   
@@ -180,8 +184,8 @@ void FoodProductionTechnology::toDebugXMLDerived( const int period, ostream& out
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
-const string& FoodProductionTechnology::getXMLName1D() const {
-    return getXMLNameStatic1D();
+const string& FoodProductionTechnology::getXMLName() const {
+    return getXMLNameStatic();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -193,7 +197,7 @@ const string& FoodProductionTechnology::getXMLName1D() const {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const string& FoodProductionTechnology::getXMLNameStatic1D() {
+const string& FoodProductionTechnology::getXMLNameStatic() {
     const static string XML_NAME1D = "FoodProductionTechnology";
     return XML_NAME1D;
 }
@@ -316,8 +320,7 @@ void FoodProductionTechnology::completeInit( const std::string& aRegionName,
                                              const std::string& aSubsectorName,
                                              DependencyFinder* aDepFinder,
                                              const IInfo* aSubsectorInfo,
-                                             ILandAllocator* aLandAllocator,
-                                             const GlobalTechnologyDatabase* aGlobalTechDB )
+                                             ILandAllocator* aLandAllocator )
 {
     // Store away the land allocator.
     mLandAllocator = aLandAllocator;
@@ -335,7 +338,7 @@ void FoodProductionTechnology::completeInit( const std::string& aRegionName,
     //       Therefore, if any of the outputs need the land allocator,
     //       the call to Technology::completeInit() must come afterwards
     Technology::completeInit( aRegionName, aSectorName, aSubsectorName, aDepFinder, aSubsectorInfo,
-                              aLandAllocator, aGlobalTechDB );
+                              aLandAllocator );
 
     // Setup the land usage for this production.
     int techPeriod = scenario->getModeltime()->getyr_to_per( year );
@@ -615,5 +618,33 @@ double FoodProductionTechnology::getTotalInputCost( const string& aRegionName, c
                                        const int aPeriod ) const
 {
     return Technology::getTotalInputCost( aRegionName, aSectorName, aPeriod );
+}
+
+void FoodProductionTechnology::doInterpolations( const Technology* aPrevTech, const Technology* aNextTech ) {
+    Technology::doInterpolations( aPrevTech, aNextTech );
+    
+    const FoodProductionTechnology* nextFoodTech = static_cast<const FoodProductionTechnology*> ( aNextTech );
+    
+    /*!
+     * \pre We were given a valid next food production technology.
+     */
+    assert( nextFoodTech );
+    
+    // productivity change is a tech change and should be held constant at the next
+    // technologies values to retain the same behavior
+    agProdChange = nextFoodTech->agProdChange;
+    
+    mNonLandCostTechChange = nextFoodTech->mNonLandCostTechChange;
+    
+    // max yield is also just the next technologies value TODO: ask Kate/Marshall why again
+    mMaxYield = nextFoodTech->mMaxYield;
+}
+
+Value FoodProductionTechnology::getParsedShareWeight() const {
+    // Food production technologies do not have shares and thus no share
+    // weights.  We are going to return an intialized share-weight here
+    // anyways so that consistency checks don't fail.
+    const Value defaultShareWeight( 1.0 );
+    return defaultShareWeight;
 }
 

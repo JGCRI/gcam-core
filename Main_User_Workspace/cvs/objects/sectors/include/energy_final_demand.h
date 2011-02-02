@@ -187,7 +187,7 @@ protected:
         std::string mTFEMarketName;
 
         //! Autonomous end-use energy intensity parameter.
-        objects::PeriodVector<double> mAEEI;
+        objects::PeriodVector<Value> mAEEI;
 
         //! Final energy to calibrate to.
         objects::PeriodVector<Value> mCalFinalEnergy;
@@ -200,10 +200,10 @@ protected:
     std::vector<double> mServiceDemands;
 
     //! Income elasticity 
-    std::vector<double> mIncomeElasticity;
+    std::vector<Value> mIncomeElasticity;
 
     //! Price elasticity.
-    std::vector<double> mPriceElasticity;
+    std::vector<Value> mPriceElasticity;
 
     //! Service demand without technical change applied.
     std::vector<double> mPreTechChangeServiceDemand;

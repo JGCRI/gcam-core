@@ -77,6 +77,8 @@
 #include <xercesc/dom/DOMAttr.hpp>
 #include <xercesc/dom/DOMElement.hpp>
 #include <xercesc/dom/DOMException.hpp>
+#include <xercesc/dom/DOMNamedNodeMap.hpp>
+#include <xercesc/dom/DOMNodeList.hpp>
 #include <xercesc/sax/HandlerBase.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
 
@@ -84,13 +86,15 @@
 #include <xqilla/utils/XQillaPlatformUtils.hpp>
 #endif
 
-#include "boost/lexical_cast.hpp"
+#include <boost/lexical_cast.hpp>
+#include <boost/algorithm/string/trim.hpp>
 
 #include "util/base/include/model_time.h"
 #include "util/base/include/util.h"
 #include "util/logger/include/ilogger.h"
 #include "util/base/include/iparsable.h"
 #include "util/base/include/time_vector.h"
+#include "util/base/include/value.h"
 
 /*!
  * \ingroup Objects
@@ -179,12 +183,16 @@ public:
    static const std::string& text();
    static const std::string& name();
    static void cleanupParser();
+   static void printXMLTrace( const xercesc::DOMNode* aNode, std::ostream& aOut );
+   static void serializeNode( const xercesc::DOMNode* aNode, std::ostream& aOut, Tabs* aTabs,
+                              const bool aDeep );
 private:
     static xercesc::XercesDOMParser** getParserPointerInternal();
     static xercesc::ErrorHandler** getErrorHandlerPointerInternal();
     static void initParser();
     static xercesc::XercesDOMParser* getParser();
 };
+
 
 /*! \brief Returns the data value associated with the element node.
 * \details This function first finds the child node of this element, a text node which contains the data value.
@@ -323,10 +331,10 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* node, std::vec
 
    // Check to make sure the year attribute returned non-zero.
    if (  year == 0 ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Year value not set for vector input tag >>" << XMLHelper<std::string>::safeTranscode( node->getNodeName() ) << "<<" << std::endl;
-        return;
+       ILogger& mainLog = ILogger::getLogger( "main_log" );
+       mainLog.setLevel( ILogger::ERROR );
+       mainLog << "Year value not set for vector input tag >>" << XMLHelper<std::string>::safeTranscode( node->getNodeName() ) << "<<" << std::endl;
+       return;
    }
 
    const int maxperiod = modeltime->getmaxper();
@@ -335,10 +343,10 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* node, std::vec
    // Check that the period returned correctly.
    // Check to make sure the year attribute returned non-zero.
    if ( !( ( period >= 0 ) && ( period < modeltime->getmaxper() ) ) ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Period value is out of bounds for vector input tag >>" << XMLHelper<std::string>::safeTranscode( node->getNodeName() ) << "<<" << std::endl;
-        return;
+       ILogger& mainLog = ILogger::getLogger( "main_log" );
+       mainLog.setLevel( ILogger::ERROR );
+       mainLog << "Period value is out of bounds for vector input tag >>" << XMLHelper<std::string>::safeTranscode( node->getNodeName() ) << "<<" << std::endl;
+       return;
    }
 
    // Check that the period is less than the size of the vector.
@@ -383,22 +391,22 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* aNode,
 
    // Check to make sure the year attribute returned non-zero.
    if( year == 0 ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Year value not set for vector input tag: "
-                 << XMLHelper<std::string>::safeTranscode( aNode->getNodeName() )
-                 << "." << std::endl;
-        return;
+       ILogger& mainLog = ILogger::getLogger( "main_log" );
+       mainLog.setLevel( ILogger::ERROR );
+       mainLog << "Year value not set for vector input tag: "
+           << XMLHelper<std::string>::safeTranscode( aNode->getNodeName() )
+           << "." << std::endl;
+       return;
    }
    // Ensure that the year is legal.
    typename objects::YearVector<T>::iterator pos = aYearVector.find( year );
    if( pos == aYearVector.end() ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Year value is out of bounds for input tag:"
-                << XMLHelper<std::string>::safeTranscode( aNode->getNodeName() )
-                << "." << std::endl;
-        return;
+       ILogger& mainLog = ILogger::getLogger( "main_log" );
+       mainLog.setLevel( ILogger::ERROR );
+       mainLog << "Year value is out of bounds for input tag:"
+           << XMLHelper<std::string>::safeTranscode( aNode->getNodeName() )
+           << "." << std::endl;
+       return;
    }
 
    // Get the value for the node.
@@ -445,12 +453,12 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* aNode,
 
    // Check to make sure the year attribute returned non-zero.
    if( year == 0 ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Year value not set for vector input tag >>"
-                << XMLHelper<std::string>::safeTranscode( aNode->getNodeName() )
-                << "<<" << std::endl;
-        return;
+       ILogger& mainLog = ILogger::getLogger( "main_log" );
+       mainLog.setLevel( ILogger::ERROR );
+       mainLog << "Year value not set for vector input tag >>"
+           << XMLHelper<std::string>::safeTranscode( aNode->getNodeName() )
+           << "<<" << std::endl;
+       return;
    }
 
    int period = aModeltime->getyr_to_per( year );
@@ -458,21 +466,21 @@ void XMLHelper<T>::insertValueIntoVector( const xercesc::DOMNode* aNode,
    // Check that the period returned correctly.
    // Check to make sure the year attribute returned non-zero.
    if ( !( ( period >= 0 ) && ( period < static_cast<int>( aPeriodVector.size() ) ) ) ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Period value is out of bounds for vector input tag >>"
-                << XMLHelper<std::string>::safeTranscode( aNode->getNodeName() )
-                << "<<" << std::endl;
-        return;
+       ILogger& mainLog = ILogger::getLogger( "main_log" );
+       mainLog.setLevel( ILogger::ERROR );
+       mainLog << "Period value is out of bounds for vector input tag >>"
+           << XMLHelper<std::string>::safeTranscode( aNode->getNodeName() )
+           << "<<" << std::endl;
+       return;
    }
 
    aPeriodVector[ period ] =  XMLHelper<T>::getValue( aNode );
 
    if( fillout ) {
-      // will not do if period is already last period or maxperiod
-      for ( unsigned int i = period + 1; i < aPeriodVector.size(); ++i ) {
-         aPeriodVector[ i ] =  aPeriodVector[ period ];
-      }
+       // will not do if period is already last period or maxperiod
+       for ( unsigned int i = period + 1; i < aPeriodVector.size(); ++i ) {
+           aPeriodVector[ i ] =  aPeriodVector[ period ];
+       }
    }
 }
 
@@ -1054,6 +1062,7 @@ bool parseContainerNode( const xercesc::DOMNode* aNode,
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Did not create node " << objName << " as the nocreate input flag was set." << std::endl;
+        XMLHelper<void>::printXMLTrace( aNode, mainLog );
     }
     else {
         aNewObject->XMLParse( aNode );
@@ -1143,6 +1152,7 @@ void parseContainerNode( const xercesc::DOMNode* aNode,
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::NOTICE );
             mainLog << "Did not create node " << aObjName << " as the nocreate input flag was set." << std::endl;
+            XMLHelper<void>::printXMLTrace( aNode, mainLog );
         }
         else {
             aNewObject->XMLParse( aNode );
@@ -1213,6 +1223,7 @@ void parseContainerNode( const xercesc::DOMNode* node, std::vector<U>& insertToV
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::NOTICE );
             mainLog << "Did not create node " << objName << " as the nocreate input flag was set." << std::endl;
+            XMLHelper<void>::printXMLTrace( node, mainLog );
         }
         else {
             newNode->XMLParse( node );
@@ -1275,6 +1286,7 @@ void parseSingleNode( const xercesc::DOMNode* aNode, std::auto_ptr<U>& aContaine
             mainLog.setLevel( ILogger::NOTICE );
             mainLog << "Did not create node " << XMLHelper<std::string>::getAttr( aNode, aAttrName )
                     << " as the nocreate input flag was set." << std::endl;
+            XMLHelper<void>::printXMLTrace( aNode, mainLog );
         }
         else {
             aContainer = newNodePtr;
@@ -1293,6 +1305,103 @@ template<class T>
 xercesc::ErrorHandler** XMLHelper<T>::getErrorHandlerPointerInternal(){
     static xercesc::ErrorHandler* errorHandler;
     return &errorHandler;
+}
+
+
+/*!
+ * \brief Print a trace of the XML ancestors to the give node.
+ * \details For each ancestor the node name and any attributes will be printed
+ *          to the given output stream to be able to better identify where the
+ *          node comes from.  This information would be useful to go along with
+ *          error messages during parsing.  The file from which the node comes
+ *          from is also printed.
+ * \param aNode The DOM node to print hierarchy information for.
+ * \param aOut The output stream to write messages to.
+ */
+template<class T>
+void XMLHelper<T>::printXMLTrace( const xercesc::DOMNode* aNode, std::ostream& aOut ){
+    // start with the parent of the current node? should I start at the given node?
+    const xercesc::DOMNode* currNode = aNode->getParentNode();
+    
+    // Process all the way up the tree until we get to the document node.
+    while( currNode->getNodeType() != xercesc::DOMNode::DOCUMENT_NODE ) {
+        // print the node name and all attributes
+        aOut << "\tat " << safeTranscode( currNode->getNodeName() ) << " ";
+        xercesc::DOMNamedNodeMap* attrMap = currNode->getAttributes();
+        for( int attrIndex = 0; attrIndex < attrMap->getLength(); ++attrIndex ) {
+            aOut << safeTranscode( attrMap->item( attrIndex )->getNodeName() )
+                 << " = " << safeTranscode( attrMap->item( attrIndex )->getNodeValue() );
+            if( attrIndex != attrMap->getLength() - 1 ) {
+                aOut << ", ";
+            }
+        }
+        aOut << std::endl;
+        currNode = currNode->getParentNode();
+    }
+    
+    // Print the file this document was contained in.
+    aOut << "\tin " << safeTranscode( 
+      static_cast<const xercesc::DOMDocument*>( currNode )->getDocumentURI() ) << std::endl;
+}
+                                      
+
+/*!
+ * \brief Write the given XML node into the given stream.
+ * \details This method does a very basic serialization of nodes, attributes, 
+ *          and text data.  Children can be optionally processed when the deep
+ *          parameter is set.
+ * \param aNode The DOM node to serialize.
+ * \param aOut The output stream to serialize to.
+ * \param aTabs The tabs object to control the number of tabs to use for indentation.
+ * \param aDeep If all children of the given node should be processed as well.
+ */
+template<class T>
+void XMLHelper<T>::serializeNode( const xercesc::DOMNode* aNode, std::ostream& aOut,
+                                  Tabs* aTabs, const bool aDeep )
+{
+    switch( aNode->getNodeType() ) {
+        case xercesc::DOMNode::TEXT_NODE: {
+            // TODO: additional logic here what about newlines?
+            std::string textData = safeTranscode( aNode->getNodeValue() );
+            boost::algorithm::trim( textData );
+            aOut << textData;
+            break;
+        }
+        case xercesc::DOMNode::ELEMENT_NODE: {
+            // write the first tag
+            aTabs->writeTabs( aOut );
+            const std::string nodeName = safeTranscode( aNode->getNodeName() );
+            aOut << '<' << nodeName;
+            
+            // write any attributes
+            xercesc::DOMNamedNodeMap* attrMap = aNode->getAttributes();
+            for( int attrIndex = 0; attrIndex < attrMap->getLength(); ++attrIndex ) {
+                aOut << ' ' << safeTranscode( attrMap->item( attrIndex )->getNodeName() )
+                     << "=\"" << safeTranscode( attrMap->item( attrIndex )->getNodeValue() ) << '"';
+            }
+            
+            if( aDeep ) {
+                // Process children as well so go ahead and close this tag then recursively
+                // process them.
+                aOut << '>' << std::endl;
+                aTabs->increaseIndent();
+                xercesc::DOMNodeList* childNodes = aNode->getChildNodes();
+                for( int childIndex = 0; childIndex < childNodes->getLength(); ++childIndex ) {
+                    serializeNode( childNodes->item( childIndex ), aOut, aTabs, aDeep );
+                }
+                
+                // write the closing tag
+                XMLWriteClosingTag( nodeName, aOut, aTabs );
+            }
+            else {
+                // just put a close tag on this to make it valid XML
+                aOut << " />" << std::endl;
+            }
+            break;
+        }
+            
+        // otherwise not handled by this serializer
+    }
 }
 
 #endif // _XML_HELPER_H_

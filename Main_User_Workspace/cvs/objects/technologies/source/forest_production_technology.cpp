@@ -126,8 +126,8 @@ void ForestProductionTechnology::toDebugXMLDerived( const int period, ostream& o
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
-const string& ForestProductionTechnology::getXMLName1D() const {
-    return getXMLNameStatic1D();
+const string& ForestProductionTechnology::getXMLName() const {
+    return getXMLNameStatic();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -139,7 +139,7 @@ const string& ForestProductionTechnology::getXMLName1D() const {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const string& ForestProductionTechnology::getXMLNameStatic1D() {
+const string& ForestProductionTechnology::getXMLNameStatic() {
     const static string XML_NAME = "ForestProductionTechnology";
     return XML_NAME;
 }
@@ -169,12 +169,7 @@ void ForestProductionTechnology::initCalc( const string& aRegionName,
 
     // Apply technical change for forests
     // This function needs to be called again because forest tech change must be applied from now until the rotation period
-    mLandAllocator->applyAgProdChange( landType, mName, agProdChange, aPeriod + getNRotationPeriodSteps() , aPeriod );
-    
-
-    // Apply technical change for forests
-    // This function needs to be called again because forest tech change must be applied from now until the rotation period
-    mLandAllocator->applyAgProdChange( landType, mName, agProdChange, aPeriod + getNRotationPeriodSteps() , aPeriod );
+    mLandAllocator->applyAgProdChange( landType, mName, agProdChange, aPeriod + getNRotationPeriodSteps( scenario->getModeltime()->getyr_to_per( year ) ) , aPeriod );
     
 }
 
@@ -186,7 +181,6 @@ void ForestProductionTechnology::initCalc( const string& aRegionName,
 * \param aDepDefinder Regional dependency finder.
 * \param aSubsectorInfo Subsector information object.
 * \param aLandAllocator Regional land allocator.
-* \param aGlobalTechDB Global Technology database.
 * \author Josh Lurz
 * \warning Markets are not necessarily set when completeInit is called
 * \author James Blackwood
@@ -197,8 +191,7 @@ void ForestProductionTechnology::completeInit( const std::string& aRegionName,
                                                const std::string& aSubsectorName,
                                                DependencyFinder* aDepFinder,
                                                const IInfo* aSubsectorInfo,
-                                               ILandAllocator* aLandAllocator,
-                                               const GlobalTechnologyDatabase* aGlobalTechDB )
+                                               ILandAllocator* aLandAllocator )
 {
     // Setup the land allocators for the secondary outputs
     if ( mOutputs.size() ) {
@@ -222,7 +215,7 @@ void ForestProductionTechnology::completeInit( const std::string& aRegionName,
     
     Technology::completeInit( aRegionName, aSectorName, aSubsectorName,
                               aDepFinder, aSubsectorInfo,
-                              aLandAllocator, aGlobalTechDB );
+                              aLandAllocator );
 
     // Store away the land allocator.
     mLandAllocator = aLandAllocator;
@@ -237,19 +230,29 @@ void ForestProductionTechnology::completeInit( const std::string& aRegionName,
     setCalLandValues();
 }
 
-int ForestProductionTechnology::getNRotationPeriodSteps( ) const {
+int ForestProductionTechnology::getNRotationPeriodSteps( const int aPeriod ) const {
    const Modeltime* modeltime = scenario->getModeltime();
-   int timestep = modeltime->gettimestep( modeltime->getyr_to_per(year));
-   if ( timestep == 0 ) {
-      cout << "Timestep of " << timestep << " returned for year " << year << " and period " << modeltime->getyr_to_per(year) << endl;
-   }
-
-   int nRotPeriodSteps = mRotationPeriod / timestep;
-   if ( !mFutureProduction.isInited() ) {
-      nRotPeriodSteps = 0;
-   }
+    
+    int ret = 0;
+    if( aPeriod >= modeltime->getmaxper() ) {
+        ret = ceil( static_cast<double>( mRotationPeriod ) / modeltime->gettimestep( modeltime->getmaxper() - 1 ) );
+    }
+    const int rotationYear = modeltime->getper_to_yr( aPeriod ) + mRotationPeriod;
+    int numPeriods = aPeriod;
+    for( ; numPeriods < modeltime->getmaxper() && modeltime->getper_to_yr( numPeriods ) < rotationYear; ++numPeriods ) {
+    }
+    
+    if( numPeriods == modeltime->getmaxper() ) {
+        const int aFinalPeriod = modeltime->getmaxper() - 1;
+        numPeriods += ceil( static_cast<double>( rotationYear - modeltime->getper_to_yr( aFinalPeriod ) )
+                           / modeltime->gettimestep( aFinalPeriod ) ) - 1;
+    }
+    ret = numPeriods - aPeriod;
+    if ( !mFutureProduction.isInited() ) {
+        ret = 0;
+    }
    
-   return nRotPeriodSteps;
+   return ret;
 }
 
 /*! \brief Sets calibrated land values to land allocator.
@@ -266,17 +269,17 @@ void ForestProductionTechnology::setCalLandValues() {
     // -1 means not read in
     if ( mCalValue.get() && ( calYield != -1 )) {
         const Modeltime* modeltime = scenario->getModeltime();
-        int timestep = modeltime->gettimestep( modeltime->getyr_to_per(year));
 
         // Operating period of this technology
         int thisPeriod = modeltime->getyr_to_per(year);
         // Number of model timesteps for rotation period
-        int nRotPeriodSteps = getNRotationPeriodSteps();
+        int nRotPeriodSteps = getNRotationPeriodSteps( thisPeriod );
+        int finalRotPeriodSteps = getNRotationPeriodSteps( modeltime->getmaxper() - 1 );
         
         // Make sure that calibrated land-use for periods beyond rotation period is set to zero.
         // Land allocator does not know rotation period information at this point, so it sums over all
         // periods to determine calibrated land use, so zero out information for all these periods.
-        for ( int aHarvestPeriod = thisPeriod + nRotPeriodSteps + 1; aHarvestPeriod < modeltime->getmaxper() + nRotPeriodSteps; aHarvestPeriod++ ) {
+        for ( int aHarvestPeriod = thisPeriod + nRotPeriodSteps + 1; aHarvestPeriod < modeltime->getmaxper() + finalRotPeriodSteps; aHarvestPeriod++ ) {
             mLandAllocator->setCalLandAllocation( landType, mName, 0.0, aHarvestPeriod, thisPeriod );
         }
         
@@ -295,10 +298,12 @@ void ForestProductionTechnology::setCalLandValues() {
             // calibration + future harvest periods (could test in applyAgProdChange)
             if ( aHarvestPeriod > thisPeriod ) {
                 // increment production linearly between current and future production years
-                calProductionTemp += ( mFutureProduction - mCalValue->getCalOutput() ) / nRotPeriodSteps;
+                calProductionTemp += ( mFutureProduction - mCalValue->getCalOutput() )
+                    / ( static_cast<double>( mRotationPeriod ) / modeltime->gettimestep( aHarvestPeriod ) );
                 // Apply ag productivity change to yield assuming same productivity applies to all years
                 // Apply ag prod change relative to this period
-                calYieldTemp = calYield * pow( 1 + mSavedAgProdChange, double( timestep * ( aHarvestPeriod - thisPeriod ) ) );
+                calYieldTemp = calYield * pow( 1 + mSavedAgProdChange, 
+                    double( modeltime->getper_to_yr( aHarvestPeriod ) - modeltime->getper_to_yr( thisPeriod ) ) );
             }
             // Calculate land harvested in the harvest period
             calLandUsed = calProductionTemp / calYieldTemp;
@@ -430,7 +435,17 @@ double ForestProductionTechnology::calcDiscountFactor() const {
 */
 int ForestProductionTechnology::getHarvestPeriod( const int aCurrentPeriod ) const {
     const Modeltime* modeltime = scenario->getModeltime();
-    return aCurrentPeriod + mRotationPeriod / modeltime->gettimestep( modeltime->getyr_to_per( year ) );
+    const int rotationYear = modeltime->getper_to_yr( aCurrentPeriod ) + mRotationPeriod;
+    int numPeriods = aCurrentPeriod;
+    for( ; numPeriods < modeltime->getmaxper() && modeltime->getper_to_yr( numPeriods ) < rotationYear; ++numPeriods ) {
+    }
+    
+    if( numPeriods == modeltime->getmaxper() ) {
+        const int aFinalPeriod = modeltime->getmaxper() - 1;
+        numPeriods += ceil( static_cast<double>( rotationYear - modeltime->getper_to_yr( aFinalPeriod ) )
+                           / modeltime->gettimestep( aFinalPeriod ) ) - 1;
+    }
+    return numPeriods;
 }
 
 /*! \brief Get the future market for a given product name.

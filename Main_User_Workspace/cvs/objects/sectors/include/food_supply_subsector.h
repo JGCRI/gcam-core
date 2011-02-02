@@ -68,11 +68,6 @@ public:
 protected:
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual const std::string& getXMLName() const;
-    bool isNameOfChild( const std::string& nodename ) const;
-
-    virtual ITechnology* createChild( const std::string& aTechType,
-                                      const std::string& aTechName,
-                                      const int aTechYear ) const;
 
     virtual void interpolateShareWeights( const int aPeriod );
 };

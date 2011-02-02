@@ -43,13 +43,10 @@
 #include <iostream>
 #include <fstream>
 
-#include <vector>
-#include <map>
 #include <string>
 #include <cassert>
 
 // xml headers
-#include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/model_time.h"
@@ -58,40 +55,43 @@
 using namespace std;
 using namespace xercesc;
 
-// static initialize.
-const string Modeltime::XML_NAME = "modeltime";
-
-//! Default constructor.
-Modeltime::Modeltime(){
-    initElementalMembers();
+const Modeltime* Modeltime::getInstance() {
+    const static Modeltime modeltime;
+    return &modeltime;
 }
 
-//! Initialize elemental type datamembers.
-void Modeltime::initElementalMembers(){
-    startYear = 0;
-    interYear1 = 0;
-    interYear2 = 0;
-    endYear = 0;
-    mFinalCalibrationYear = 2005; // last historical year
-    maxPeriod = 0;
-    timeStep1 = 0;
-    timeStep2 = 0;
-    timeStep3 = 0;
-    numberOfPeriods1 = 0;
-    numberOfPeriods1a = 0;
-    numberOfPeriods2 = 0;
-    numberOfPeriods2a = 0;
-    numberOfPeriods3 = 0;
-    numberOfPeriods3a = 0;
+//! Default constructor.
+Modeltime::Modeltime()
+:mIsInitialized( false ),
+mStartYear( -1 ),
+mEndYear( -1 ),
+mFinalCalibrationYear( 2005 )
+{
 }
 
 //! Set the data members from the XML input.
-void Modeltime::XMLParse( const DOMNode* node ) {
+bool Modeltime::XMLParse( const DOMNode* aNode ) {
+    
+    // It is important that Modeltime only be parse once as the very first
+    // object since the rest of the model will rely on it to initialize some
+    // datastructures.
+    if( mIsInitialized ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Modeltime can only be parsed once." << endl;
+        return false;
+    }
+    
+    // Temparary sorted map of years to their time step to keep track of
+    // them while we are parsing.  After parsing we will use them to initialize
+    // the Modeltime with the initMembers method.
+    map<int, int> yearToTimeStep;
+        
     // assume node is valid.
-    assert( node );
+    assert( aNode );
 
     // get all children of the node.
-    DOMNodeList* nodeList = node->getChildNodes();
+    DOMNodeList* nodeList = aNode->getChildNodes();
 
     // loop through the children
     for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
@@ -103,17 +103,18 @@ void Modeltime::XMLParse( const DOMNode* node ) {
             continue;
         }
 
-        else if ( nodeName == "startyear" ){
-            startYear = XMLHelper<int>::getValue( curr );
+        else if ( nodeName == "start-year" ){
+            mStartYear = XMLHelper<int>::getValue( curr );
+            yearToTimeStep[ mStartYear ]  = XMLHelper<int>::getAttr( curr, "time-step" );
         } 
-        else if ( nodeName == "interyear1" ){
-            interYear1 = XMLHelper<int>::getValue( curr );
+        else if ( nodeName == "inter-year" ){
+            int interYear = XMLHelper<int>::getValue( curr );
+            yearToTimeStep[ interYear ]  = XMLHelper<int>::getAttr( curr, "time-step" );
         } 
-        else if ( nodeName == "interyear2" ){
-            interYear2 = XMLHelper<int>::getValue( curr );
-        } 
-        else if ( nodeName == "endyear" ){
-            endYear = XMLHelper<int>::getValue( curr );
+        else if ( nodeName == "end-year" ){
+            mEndYear = XMLHelper<int>::getValue( curr );
+            // the end year does not have a time step
+            yearToTimeStep[ mEndYear ]  = -1;
         }
         else if ( nodeName == "final-calibration-year" ){
             int tempCalibrationYear = XMLHelper<int>::getValue( curr ); 
@@ -125,15 +126,6 @@ void Modeltime::XMLParse( const DOMNode* node ) {
                     << ") and not the last historical year (" << mFinalCalibrationYear << ")." << endl;
                 mFinalCalibrationYear = tempCalibrationYear;
             }
-        }
-        else if ( nodeName == "timestep1" ){
-            timeStep1 = XMLHelper<int>::getValue( curr );
-        } 
-        else if ( nodeName == "timestep2" ){
-            timeStep2 = XMLHelper<int>::getValue( curr );
-        } 
-        else if ( nodeName == "timestep3" ){
-            timeStep3 = XMLHelper<int>::getValue( curr );
         } 
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -141,84 +133,61 @@ void Modeltime::XMLParse( const DOMNode* node ) {
             mainLog << "Unrecognized text string: " << nodeName << " found while parsing modeltime." << endl;
         }
     }
-}
-
-//! Set the data members from the XML input.
-void Modeltime::ParseFinalCalYear( const DOMNode* node ) {
-    // assume node is valid.
-    assert( node );
-
-    // get all children of the node.
-    DOMNodeList* nodeList = node->getChildNodes();
-
-    // loop through the children
-    for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        // select the type of node.
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if ( nodeName == "final-calibration-year" ){
-            mFinalCalibrationYear = XMLHelper<int>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Modeltime information other than final calibration year cannot be modified in a scenario add-on." << endl;
-        }
-    }
+    
+    // initialize the data members and finalize the Modeltime
+    initMembers( yearToTimeStep );
+    return true;
 }
 
 //! Write data members to datastream in XML format.
-void Modeltime::toInputXML( ostream& out, Tabs* tabs ) const {
+void Modeltime::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     
-    XMLWriteOpeningTag( getXMLName(), out, tabs );
+    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
 
-    XMLWriteElement( startYear, "startyear", out, tabs );
-    XMLWriteElement( interYear1, "interyear1", out, tabs );
-    XMLWriteElement( interYear2, "interyear2", out, tabs );
-    XMLWriteElement( endYear, "endyear", out, tabs );
-    XMLWriteElement( mFinalCalibrationYear, "final-calibration-year", out, tabs );
-    XMLWriteElement( timeStep1, "timestep1", out, tabs );
-    XMLWriteElement( timeStep2, "timestep2", out, tabs );
-    XMLWriteElement( timeStep3, "timestep3", out, tabs );
+    // note that all redundant inter-year will not be written back out even if they were read in
+    map<string, int> attrs;
+    for( int period = 0; period < mMaxPeriod; ++period ) {
+        // skip writting out unnecessary inter-year elements
+        if( period != 0 && period < mMaxPeriod - 1 && mPeriodToTimeStep[ period + 1 ] == mPeriodToTimeStep[ period ] ) {
+            continue;
+        }
+        attrs[ "time-step" ] = period != mMaxPeriod - 1 ? mPeriodToTimeStep[ period + 1 ] : 0;
+        if( period == 0 ) {
+            XMLWriteElementWithAttributes( mStartYear, "start-year", aOut, aTabs, attrs );
+        }
+        else if( period == mMaxPeriod - 1 ) {
+            XMLWriteElement( mEndYear, "end-year", aOut, aTabs );
+        }
+        else {
+            XMLWriteElementWithAttributes( mPeriodToYear[ period ], "inter-year", aOut, aTabs, attrs );
+        }
+    }
     
-    XMLWriteClosingTag( getXMLName(), out, tabs );
+    XMLWriteElement( mFinalCalibrationYear, "final-calibration-year", aOut, aTabs );
+    
+    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
 //! Write out object to output stream for debugging.
-void Modeltime::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
+void Modeltime::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     
-    XMLWriteOpeningTag( getXMLName(), out, tabs );
+    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
 
-    XMLWriteElement( startYear, "startyear", out, tabs );
-    XMLWriteElement( interYear1, "interyear1", out, tabs );
-    XMLWriteElement( interYear2, "interyear2", out, tabs );
-    XMLWriteElement( endYear, "endyear", out, tabs );
-    XMLWriteElement( mFinalCalibrationYear, "final-calibration-year", out, tabs );
-    XMLWriteElement( timeStep1, "timestep1", out, tabs );
-    XMLWriteElement( timeStep2, "timestep2", out, tabs );
-    XMLWriteElement( timeStep3, "timestep3", out, tabs );
-    XMLWriteElement( periodToTimeStep[ period ], "periodToTimeStep", out, tabs );
+    // write all info for the given period to debug
+    map<string, int> attrs;
+    attrs[ "time-step" ] = mPeriodToTimeStep[ aPeriod ];
+    if( aPeriod == 0 ) {
+        XMLWriteElementWithAttributes( mStartYear, "start-year", aOut, aTabs, attrs );
+    }
+    else if( aPeriod == mMaxPeriod - 1 ) {
+        XMLWriteElement( mEndYear, "end-year", aOut, aTabs );
+    }
+    else {
+        XMLWriteElementWithAttributes( mPeriodToYear[ aPeriod ], "inter-year", aOut, aTabs, attrs );
+    }
+    XMLWriteElement( mFinalCalibrationYear, "final-calibration-year", aOut, aTabs );
 
-    // Write out the three vectors associated with the model period.
-    XMLWriteElement( modelPeriodToYear[ period ], "modelPeriodToYear", out, tabs );
-
-    XMLWriteClosingTag( getXMLName(), out, tabs );
-}
-
-/*! \brief Get the XML node name for output to XML.
-*
-* This public function accesses the private constant string, XML_NAME.
-* This way the tag is always consistent for both read-in and output and can be easily changed.
-* This function may be virtual to be overridden by derived class pointers.
-* \author Josh Lurz, James Blackwood
-* \return The constant XML_NAME.
-*/
-const std::string& Modeltime::getXMLName() const {
-    return XML_NAME;
+    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -231,111 +200,114 @@ const std::string& Modeltime::getXMLName() const {
 * \return The constant XML_NAME as a static.
 */
 const std::string& Modeltime::getXMLNameStatic() {
+    const static string XML_NAME = "modeltime";
     return XML_NAME;
 }
 
-void Modeltime::set() {
-    
-    numberOfPeriods1 = (interYear1 - startYear)/timeStep1 + 1; // +1 for first year
-    numberOfPeriods2 = (interYear2 - interYear1)/timeStep2; 
-    numberOfPeriods3 = (endYear - interYear2)/timeStep3;
-    
-    numberOfPeriods1a = numberOfPeriods1; // initialize
-    numberOfPeriods2a = numberOfPeriods2;
-    numberOfPeriods3a = numberOfPeriods3;
-    // write message if time intervals are not divisible by their
-    // relative time steps, model will still run okay
-    int rem1 = (interYear1 - startYear)%timeStep1;
-    int rem2 = (interYear2 - interYear1)%timeStep2;
-    int rem3 = (endYear - interYear2)%timeStep3;
-    
-    if(rem1 != 0) {
-        numberOfPeriods1a++; // one more for remainder year
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "first time interval not divisible timeStep1" << endl; 
+/*!
+ * \brief Initialize all modeltime parameters based on years and the year increment
+ *        from that year to break up the span of years in between.
+ * \details This method can only be called one time and at the very beginning of the
+ *          model (such as right after parsing modeltime data but before parsing
+ *          data for anything else).  Error checking will take place and is not forgiving
+ *          such that any error will leave the modeltime uninitialized.
+ * \param aYearToTimeStep A sorted by year map that relates a year to a year interval
+ *                        which is used to break up each span of years in the map.
+ */
+void Modeltime::initMembers( const map<int, int>& aYearToTimeStep ) {
+    // start with some error checking
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::ERROR );
+    if( mIsInitialized ) {
+        mainLog << getXMLNameStatic() << " can only be initialized once." << endl;
+        exit( 1 );
     }
-    if(rem2 != 0) {
-        numberOfPeriods2a++; // one more for remainder year
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Second time interval not divisible timeStep2" << endl; 
+    if( aYearToTimeStep.size() == 0 ) {
+        mainLog << "No year information has been parsed in " << getXMLNameStatic() << endl;
+        exit( 1 );
     }
-    if(rem3 != 0) {
-        numberOfPeriods3a++; // one more for remainder year
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Third time interval not divisible timeStep3" << endl; 
+    if( mStartYear == -1 ) {
+        mainLog << "No start year information has been parsed in " << getXMLNameStatic() << endl;
+        exit( 1 );
     }
-    maxPeriod = numberOfPeriods1a + numberOfPeriods2a + numberOfPeriods3a; // calculate total number of periods
-
-    // initialize per_timeStep vector
-    // retrieve timeStep for each modeling period
-    periodToTimeStep.resize(maxPeriod);
-
-    for( int i=0;i<numberOfPeriods1;i++){
-        periodToTimeStep[i]=timeStep1;
+    if( mEndYear == -1 ) {
+        mainLog << "No end year information has been parsed in " << getXMLNameStatic() << endl;
+        exit( 1 );
     }
-    for( int i=numberOfPeriods1;i<numberOfPeriods1a;i++){
-        periodToTimeStep[i]=rem1;
+    if( aYearToTimeStep.begin()->first != mStartYear ) {
+        mainLog << "Parsed invalid year: " << aYearToTimeStep.begin()->first << " which is before the start year: "
+            << mStartYear << endl;
+        exit( 1 );
     }
-    for( int i=numberOfPeriods1a;i<(numberOfPeriods1a+numberOfPeriods2);i++) { 
-        periodToTimeStep[i]=timeStep2;
+    if( ( --aYearToTimeStep.end() )->first != mEndYear ) {
+        mainLog << "Parsed invalid year: " << ( --aYearToTimeStep.end() )->first << " which is after the end year: "
+            << mEndYear << endl;
+        exit( 1 );
     }
-    for( int i=(numberOfPeriods1a+numberOfPeriods2);i<(numberOfPeriods1a+numberOfPeriods2a);i++) { 
-        periodToTimeStep[i]=rem2;
-    }
-    for( int i=(numberOfPeriods1a+numberOfPeriods2a);i<(numberOfPeriods1a+numberOfPeriods2a+numberOfPeriods3);i++){
-        periodToTimeStep[i]=timeStep3;
-    }
-    for( int i=(numberOfPeriods1a+numberOfPeriods2a+numberOfPeriods3);i<(numberOfPeriods1a+numberOfPeriods2a+numberOfPeriods3a);i++){
-        periodToTimeStep[i]=rem3;
+    if( mFinalCalibrationYear < mStartYear || mFinalCalibrationYear > mEndYear ) {
+        mainLog << "Parsed invalid final calibration year: " << mFinalCalibrationYear << endl;
+        exit( 1 );
     }
     
-    // initialize map object
-    // retrieve model period from year
-    int baseyr = startYear;
-    yearToModelPeriod[baseyr] = 0; // map object, no resize required
-    modelPeriodToYear.resize(maxPeriod);
-
-    modelPeriodToYear[0] = baseyr;
+    // start processing not to say no more errors are possible however
+    mMaxPeriod = 0;
+    // the timesteps are shifted by one and so the time step in period 0 does not make sense
+    // note that the 15 is arbitrary here but a valid timestep is necessary for period 0
+    mPeriodToTimeStep.push_back( 15 );
+    for( map<int, int>::const_iterator yearIt = aYearToTimeStep.begin(); yearIt != --aYearToTimeStep.end(); ) {
+        int currYear = yearIt->first;
+        int currTimeStep = yearIt->second;
+        int nextYear = ( ++yearIt )->first;
+        if( ( ( nextYear - currYear ) % currTimeStep ) != 0 ) {
+            mainLog << "Specified time step of " << currTimeStep << " does not evenly divide years from "
+                << currYear << " to " << nextYear << endl;
+            exit( 1 );
+        }
+        
+        int numInbetweenPeriods = ( nextYear - currYear ) / currTimeStep;
+        for( int periodOffset = 0; periodOffset < numInbetweenPeriods; ++periodOffset ) {
+            int offsetYear = currYear + periodOffset * currTimeStep;
+            mPeriodToYear.push_back( offsetYear );
+            mPeriodToTimeStep.push_back( currTimeStep );
+            mYearToPeriod[ offsetYear ] = mMaxPeriod++;
+        }
+    }
     
-    for ( int i=1;i<maxPeriod;i++) {
-        yearToModelPeriod[baseyr + periodToTimeStep[i]] = i;
-        modelPeriodToYear[i] = baseyr + periodToTimeStep[i];
-        // set years between two time periods to correspond to the
-        // second time period
-        if(periodToTimeStep[i]>1) {
-            for(int y=1;y<periodToTimeStep[i];y++){
-                yearToModelPeriod[baseyr + y] = i;
-            }
-        } 
-        baseyr += periodToTimeStep[i];
+    // add info for the end year
+    mPeriodToYear.push_back( mEndYear );
+    mYearToPeriod[ mEndYear ] = mMaxPeriod++;
+    
+    // Fill non-model years in 1 year timesteps into the year to period map with the period of the next
+    // model year. Required for the carbon box model.
+    for( int currPeriod = 1; currPeriod < mMaxPeriod; ++currPeriod ) {
+        for( int inBetweenYear = mPeriodToYear[ currPeriod - 1 ] + 1; inBetweenYear < mPeriodToYear[ currPeriod ]; ++inBetweenYear ) {
+            mYearToPeriod[ inBetweenYear ] = currPeriod;
+        }
     }
-
-    // Check that the final calibration year has been initialized.
-    if( static_cast<int>( mFinalCalibrationYear ) < startYear ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Final calibration year not read-in, defaulting to 2005." << endl;
-        // set to last historical year
-        mFinalCalibrationYear = 2005;
-    }
+    
+    // finally set the flag that we are initialized
+    mIsInitialized = true;
 }
 
 //! Get the base period
 int Modeltime::getBasePeriod() const {
-    return getyr_to_per( startYear );
+    assert( mIsInitialized );
+    
+    return getyr_to_per( mStartYear );
 }
 
 //! Get the start year.
 int Modeltime::getStartYear() const {
-    return startYear;
+    assert( mIsInitialized );
+    
+    return mStartYear;
 }
 
 //! Get the end year.
 int Modeltime::getEndYear() const {
-    return endYear;
+    assert( mIsInitialized );
+    
+    return mEndYear;
 }
 
 /*!
@@ -346,8 +318,10 @@ int Modeltime::getEndYear() const {
 * \return The first year of the period, 0 if the year is invalid.
 */
 int Modeltime::getper_to_yr( const int aPeriod ) const {
-    if( aPeriod >= 0 && aPeriod < static_cast<int>( modelPeriodToYear.size() ) ){
-        return modelPeriodToYear[ aPeriod ];
+    assert( mIsInitialized );
+    
+    if( aPeriod >= 0 && aPeriod < static_cast<int>( mPeriodToYear.size() ) ){
+        return mPeriodToYear[ aPeriod ];
     }
 
     ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -357,13 +331,15 @@ int Modeltime::getper_to_yr( const int aPeriod ) const {
 }
 
 //! Convert a year to a period.
-int Modeltime::getyr_to_per( const int year ) const {
-    map<int,int>::const_iterator iter = yearToModelPeriod.find( year );
+int Modeltime::getyr_to_per( const int aYear ) const {
+    assert( mIsInitialized );
+    
+    map<int,int>::const_iterator iter = mYearToPeriod.find( aYear );
     // Check for an invalid time period.
-    if( iter == yearToModelPeriod.end() ){
+    if( iter == mYearToPeriod.end() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Invalid year: " << year << " passed to Modeltime::getyr_to_per. " << endl;
+        mainLog << "Invalid year: " << aYear << " passed to Modeltime::getyr_to_per. " << endl;
         return 0;
     }
     return iter->second; 
@@ -375,7 +351,15 @@ int Modeltime::getyr_to_per( const int year ) const {
  * \return True if aYear is a model year, false otherwise.
  */
 bool Modeltime::isModelYear( const int aYear ) const {
-    return yearToModelPeriod.find( aYear ) != yearToModelPeriod.end();
+    assert( mIsInitialized );
+    
+    // Note that simply checking the year to period map will not work as intended.
+    // This is due to values being filled into the mYearToPeriod map for in between
+    // years.  A work around is to convert the year to a period and back again to
+    // make sure that year is the same as aYear.
+    map<int, int>::const_iterator lookupYearIter = mYearToPeriod.find( aYear );
+    return lookupYearIter != mYearToPeriod.end()
+        && mPeriodToYear[ (*lookupYearIter).second ] == aYear;
 }
 
 /*!
@@ -383,6 +367,8 @@ bool Modeltime::isModelYear( const int aYear ) const {
  * \return Final period in which base year calibration will occur.
  */
 int Modeltime::getFinalCalibrationPeriod() const {
+    assert( mIsInitialized );
+    
     return getyr_to_per( mFinalCalibrationYear );
 }
 

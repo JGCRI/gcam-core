@@ -125,7 +125,7 @@ int CarbonModelUtils::getStartYear(){
     }
     else {
         //TODO: try and get the land use history start year
-        return 1975;
+        return scenario->getModeltime()->getStartYear();
     }
 }
 
@@ -136,7 +136,7 @@ int CarbonModelUtils::getStartYear(){
  * \return The last year of the climate calculation.
  */
 int CarbonModelUtils::getEndYear(){
-    return 2095;
+    return scenario->getModeltime()->getEndYear();
 }
 
 /*

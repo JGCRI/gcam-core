@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.10"
-	Name="objects-main"
+	Name="objects-main-timestep"
 	ProjectGUID="{C6E84727-E04B-48EC-B119-EE4A2C0DB34B}"
 	Keyword="Win32Proj">
 	<Platforms>
@@ -19,28 +19,28 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				AdditionalOptions="/WL"
-				Optimization="0"
+				Optimization="2"
 				FavorSizeOrSpeed="1"
-				AdditionalIncludeDirectories="&quot;..\..\..\..\libs\xerces-c-src_2_7_0\src&quot;;&quot;..\..\..\..\libs\boost-lib\&quot;;..\..\..\..\libs\dbxml2.3.10\include;&quot;..\..\..\..\libs\mtl-2.1.2-21&quot;;..\.."
+				AdditionalIncludeDirectories="&quot;C:\PNNL\ObjECTS\Libs\xerces-c-src_2_7_0\lib&quot;;C:\PNNL\ObjECTS\Libs\dbxml2.5.16\include;&quot;..\..\..\..\..\libs\boost-lib\&quot;;..\.."
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_AFXDLL"
 				MinimalRebuild="TRUE"
-				BasicRuntimeChecks="3"
+				BasicRuntimeChecks="0"
 				RuntimeLibrary="3"
 				RuntimeTypeInfo="FALSE"
 				UsePrecompiledHeader="2"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="FALSE"
-				DebugInformationFormat="4"/>
+				DebugInformationFormat="0"/>
 			<Tool
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libdb45d.lib libdbxml23d.lib ddao36D.lib xerces-c_2D.lib magiccd.lib aglud.lib xqilla10d.lib"
+				AdditionalDependencies="libdb48d.lib libdbxml25d.lib ddao36D.lib xerces-c_3D.lib magiccd.lib aglud.lib xqilla22d.lib"
 				OutputFile="$(OutDir)/../Objects-Main-D.exe"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="..\..\..\..\libs\access;..\..\..\..\libs\dbxml2.3.10\lib;&quot;..\..\..\..\libs\xerces-c-src_2_7_0\lib&quot;;..\..\..\..\libs\magicclib\lib;..\..\..\..\libs\AgLib\lib"
+				AdditionalLibraryDirectories="..\..\..\..\..\libs\access;..\..\..\..\..\libs\dbxml2.5.16\lib;..\..\..\..\..\libs\AgLib\lib;..\..\..\..\..\libs\magicclib\lib"
 				GenerateDebugInformation="TRUE"
-				ProgramDatabaseFile="$(OutDir)/CIAM-Scratch.pdb"
+				ProgramDatabaseFile="$(OutDir)/Object-main-d.pdb"
 				SubSystem="1"
 				TargetMachine="1"/>
 			<Tool
@@ -48,7 +48,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"/>
 			<Tool
-			Name="VCPreBuildEventTool"/>
+				Name="VCPreBuildEventTool"/>
 			<Tool
 				Name="VCPreLinkEventTool"/>
 			<Tool
@@ -76,7 +76,7 @@
 				Optimization="2"
 				InlineFunctionExpansion="1"
 				OmitFramePointers="TRUE"
-				AdditionalIncludeDirectories="&quot;..\..\..\..\libs\xerces-c-src_2_7_0\src&quot;;&quot;..\..\..\..\libs\boost-lib&quot;;..\..\..\..\libs\dbxml2.3.10\include;&quot;..\..\..\..\libs\mtl-2.1.2-21&quot;;..\.."
+				AdditionalIncludeDirectories="..\..\..\..\..\libs\dbxml2.5.16\include;&quot;..\..\..\..\..\libs\boost-lib\&quot;;..\.."
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_AFXDLL"
 				StringPooling="TRUE"
 				MinimalRebuild="TRUE"
@@ -91,11 +91,11 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="libdb45.lib libdbxml23.lib ddao36.lib xerces-c_2.lib magicc.lib aglu.lib xqilla10.lib"
+				AdditionalDependencies="libdb48.lib libdbxml25.lib ddao36.lib xerces-c_3.lib magicc.lib aglu.lib xqilla22.lib"
 				OutputFile="$(OutDir)/../Objects-Main.exe"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="..\..\..\..\libs\access;..\..\..\..\libs\dbxml2.3.10\lib;&quot;..\..\..\..\libs\xerces-c-src_2_7_0\lib&quot;;..\..\..\..\libs\AgLib\lib;..\..\..\..\libs\magicclib\lib"
+				AdditionalLibraryDirectories="..\..\..\..\..\libs\access;..\..\..\..\..\libs\dbxml2.5.16\lib;..\..\..\..\..\libs\AgLib\lib;..\..\..\..\..\libs\magicclib\lib"
 				GenerateDebugInformation="TRUE"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -547,6 +547,9 @@
 					RelativePath="..\..\technologies\source\default_technology.cpp">
 				</File>
 				<File
+					RelativePath="..\..\technologies\source\empty_technology.cpp">
+				</File>
+				<File
 					RelativePath="..\..\technologies\source\expenditure.cpp">
 				</File>
 				<File
@@ -628,7 +631,13 @@
 					RelativePath="..\..\technologies\source\standard_technical_change_calc.cpp">
 				</File>
 				<File
+					RelativePath="..\..\technologies\source\stub_technology_container.cpp">
+				</File>
+				<File
 					RelativePath="..\..\technologies\source\technology.cpp">
+				</File>
+				<File
+					RelativePath="..\..\technologies\source\technology_container.cpp">
 				</File>
 				<File
 					RelativePath="..\..\technologies\source\technology_type.cpp">
@@ -671,10 +680,25 @@
 						RelativePath="..\..\util\base\source\configuration.cpp">
 					</File>
 					<File
+						RelativePath="..\..\util\base\source\fixed_interpolation_function.cpp">
+					</File>
+					<File
 						RelativePath="..\..\util\base\source\input_finder.cpp">
 					</File>
 					<File
+						RelativePath="..\..\util\base\source\interpolation_function_factory.cpp">
+					</File>
+					<File
+						RelativePath="..\..\util\base\source\interpolation_rule.cpp">
+					</File>
+					<File
+						RelativePath="..\..\util\base\source\linear_interpolation_function.cpp">
+					</File>
+					<File
 						RelativePath="..\..\util\base\source\model_time.cpp">
+					</File>
+					<File
+						RelativePath="..\..\util\base\source\s_curve_interpolation_function.cpp">
 					</File>
 					<File
 						RelativePath="..\..\util\base\source\summary.cpp">
@@ -893,7 +917,16 @@
 					RelativePath="..\..\functions\source\household_demand_function.cpp">
 				</File>
 				<File
+					RelativePath="..\..\functions\source\input_capital.cpp">
+				</File>
+				<File
 					RelativePath="..\..\technologies\source\input_factory.cpp">
+				</File>
+				<File
+					RelativePath="..\..\functions\source\input_OM_fixed.cpp">
+				</File>
+				<File
+					RelativePath="..\..\functions\source\input_OM_var.cpp">
 				</File>
 				<File
 					RelativePath="..\..\functions\source\input_subsidy.cpp">
@@ -1536,6 +1569,9 @@
 					RelativePath="..\..\technologies\include\default_technology.h">
 				</File>
 				<File
+					RelativePath="..\..\technologies\include\empty_technology.h">
+				</File>
+				<File
 					RelativePath="..\..\technologies\include\expenditure.h">
 				</File>
 				<File
@@ -1546,6 +1582,15 @@
 				</File>
 				<File
 					RelativePath="..\..\technologies\include\forest_production_technology.h">
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\generic_technology_info.h">
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\global_technology.h">
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\global_technology_database.h">
 				</File>
 				<File
 					RelativePath="..\..\technologies\include\ical_data.h">
@@ -1578,7 +1623,13 @@
 					RelativePath="..\..\technologies\include\itechnology.h">
 				</File>
 				<File
+					RelativePath="..\..\technologies\include\itechnology_container.h">
+				</File>
+				<File
 					RelativePath="..\..\technologies\include\itechnology_info.h">
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\marginal_profit_calculator.h">
 				</File>
 				<File
 					RelativePath="..\..\technologies\include\non_energy_use_capture_component.h">
@@ -1632,7 +1683,13 @@
 					RelativePath="..\..\technologies\include\standard_technical_change_calc.h">
 				</File>
 				<File
+					RelativePath="..\..\technologies\include\stub_technology_container.h">
+				</File>
+				<File
 					RelativePath="..\..\technologies\include\technology.h">
+				</File>
+				<File
+					RelativePath="..\..\technologies\include\technology_container.h">
 				</File>
 				<File
 					RelativePath="..\..\technologies\include\technology_type.h">
@@ -1687,13 +1744,25 @@
 						RelativePath="..\..\util\base\include\definitions.h">
 					</File>
 					<File
+						RelativePath="..\..\util\base\include\fixed_interpolation_function.h">
+					</File>
+					<File
 						RelativePath="..\..\util\base\include\hash_map.h">
+					</File>
+					<File
+						RelativePath="..\..\util\base\include\iinterpolation_function.h">
 					</File>
 					<File
 						RelativePath="..\..\util\base\include\inamed.h">
 					</File>
 					<File
 						RelativePath="..\..\util\base\include\input_finder.h">
+					</File>
+					<File
+						RelativePath="..\..\util\base\include\interpolation_function_factory.h">
+					</File>
+					<File
+						RelativePath="..\..\util\base\include\interpolation_rule.h">
 					</File>
 					<File
 						RelativePath="..\..\util\base\include\iparsable.h">
@@ -1711,10 +1780,16 @@
 						RelativePath="..\..\util\base\include\ivisitor.h">
 					</File>
 					<File
+						RelativePath="..\..\util\base\include\linear_interpolation_function.h">
+					</File>
+					<File
 						RelativePath="..\..\util\base\include\model_time.h">
 					</File>
 					<File
 						RelativePath="..\..\util\base\include\object_meta_info.h">
+					</File>
+					<File
+						RelativePath="..\..\util\base\include\s_curve_interpolation_function.h">
 					</File>
 					<File
 						RelativePath="..\..\util\base\include\string_hash.h">
@@ -1739,6 +1814,9 @@
 					</File>
 					<File
 						RelativePath="..\..\util\base\include\value.h">
+					</File>
+					<File
+						RelativePath="..\..\util\base\include\version.h">
 					</File>
 					<File
 						RelativePath="..\..\util\base\include\xml_helper.h">
@@ -1910,6 +1988,15 @@
 				</File>
 				<File
 					RelativePath="..\..\functions\include\inested_input.h">
+				</File>
+				<File
+					RelativePath="..\..\functions\include\input_capital.h">
+				</File>
+				<File
+					RelativePath="..\..\functions\include\input_OM_fixed.h">
+				</File>
+				<File
+					RelativePath="..\..\functions\include\input_OM_var.h">
 				</File>
 				<File
 					RelativePath="..\..\functions\include\input_subsidy.h">

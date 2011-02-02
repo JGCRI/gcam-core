@@ -17,8 +17,10 @@
                <logit-exponent fillout="1" year="1975">-10</logit-exponent>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <share-weight fillout="1" year="1975">0</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">0</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">0</share-weight>
@@ -32,8 +34,10 @@
                <logit-exponent fillout="1" year="1975">-10</logit-exponent>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -47,8 +51,10 @@
                <logit-exponent fillout="1" year="1975">-10</logit-exponent>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -62,9 +68,14 @@
                <logit-exponent fillout="1" year="1975">-10</logit-exponent>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2050" to-year="2095">
+               <share-weight year="1975">0.333</share-weight>
+               <share-weight year="1990">0.333</share-weight>
+               <share-weight year="2005">0.333</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
                   <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <interpolation-rule apply-to="share-weight" from-year="2035" to-year="9999">
+                  <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">0.333</share-weight>
                <share-weight year="2035">1</share-weight>
@@ -77,6 +88,12 @@
                <logit-exponent fillout="1" year="1975">-10</logit-exponent>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
+               <share-weight year="1975">0</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0.4</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
                <share-weight year="2020">0.4</share-weight>
                <share-weight year="2035">0.8</share-weight>
                <share-weight year="2050">0.9</share-weight>
@@ -88,7 +105,9 @@
                <logit-exponent fillout="1" year="1975">-10</logit-exponent>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">0.17</share-weight>
+               <share-weight year="1990">0.17</share-weight>
+               <share-weight year="2005">0.17</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2050">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -103,7 +122,9 @@
                <logit-exponent fillout="1" year="1975">-10</logit-exponent>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">0.25</share-weight>
+               <share-weight year="1990">0.25</share-weight>
+               <share-weight year="2005">0.25</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -118,7 +139,9 @@
                <logit-exponent fillout="1" year="1975">-10</logit-exponent>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">0.25</share-weight>
+               <share-weight year="1990">0.25</share-weight>
+               <share-weight year="2005">0.25</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -145,8 +168,10 @@
                <logit-exponent fillout="1" year="1975">-10</logit-exponent>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -160,8 +185,10 @@
                <logit-exponent fillout="1" year="1975">-10</logit-exponent>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -175,8 +202,10 @@
                <logit-exponent fillout="1" year="1975">-10</logit-exponent>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -190,7 +219,12 @@
                <logit-exponent fillout="1" year="1975">-10</logit-exponent>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">0.333</share-weight>
+               <share-weight year="1990">0.333</share-weight>
+               <share-weight year="2005">0.333</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
+                  <interpolation-function name="linear"/>
+               </interpolation-rule>
                <interpolation-rule apply-to="share-weight" from-year="2050" to-year="2095">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -205,7 +239,9 @@
                <logit-exponent fillout="1" year="1975">-10</logit-exponent>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">0.25</share-weight>
+               <share-weight year="1990">0.25</share-weight>
+               <share-weight year="2005">0.25</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -232,8 +268,10 @@
                <logit-exponent fillout="1" year="1975">-10</logit-exponent>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -247,8 +285,10 @@
                <logit-exponent fillout="1" year="1975">-10</logit-exponent>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -262,9 +302,14 @@
                <logit-exponent fillout="1" year="1975">-10</logit-exponent>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2050" to-year="2095">
+               <share-weight year="1975">0.333</share-weight>
+               <share-weight year="1990">0.333</share-weight>
+               <share-weight year="2005">0.333</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
                   <interpolation-function name="linear"/>
+               </interpolation-rule>
+               <interpolation-rule apply-to="share-weight" from-year="2035" to-year="9999">
+                  <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">0.333</share-weight>
                <share-weight year="2035">1</share-weight>
@@ -277,8 +322,10 @@
                <logit-exponent fillout="1" year="1975">-10</logit-exponent>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
+               <share-weight year="1975">0.25</share-weight>
+               <share-weight year="1990">0.25</share-weight>
+               <share-weight year="2005">0.25</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2020">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2020">0.25</share-weight>
@@ -289,8 +336,10 @@
                <share-weight year="2095">0.5</share-weight>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">0</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">0</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">0</share-weight>
@@ -316,8 +365,10 @@
                <logit-exponent fillout="1" year="1975">-10</logit-exponent>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -331,8 +382,10 @@
                <logit-exponent fillout="1" year="1975">-10</logit-exponent>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <share-weight year="2020">1</share-weight>
@@ -346,7 +399,9 @@
                <logit-exponent fillout="1" year="1975">-10</logit-exponent>
                <fuelprefElasticity fillout="1" year="1975">0</fuelprefElasticity>
                <FixedInvestment fillout="1" year="1975">-1</FixedInvestment>
-               <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2035">
                   <interpolation-function name="linear"/>
                </interpolation-rule>

@@ -116,7 +116,7 @@ void World::XMLParse( const DOMNode* node ){
             continue;
         }
         else if( nodeName == GlobalTechnologyDatabase::getXMLNameStatic() ) {
-            parseSingleNode( curr, globalTechDB, new GlobalTechnologyDatabase() );
+            GlobalTechnologyDatabase::getInstance()->XMLParse( curr );
         }
         // MiniCAM regions
         else if( nodeName == RegionMiniCAM::getXMLNameStatic() ){
@@ -151,7 +151,7 @@ void World::completeInit() {
 
     // Finish initializing all the regions.
     for( RegionIterator regionIter = regions.begin(); regionIter != regions.end(); regionIter++ ) {
-        ( *regionIter )->completeInit( globalTechDB.get() );
+        ( *regionIter )->completeInit();
     }
 
     // Initialize AgLU
@@ -221,9 +221,7 @@ void World::toInputXML( ostream& out, Tabs* tabs ) const {
 
     XMLWriteOpeningTag ( getXMLNameStatic(), out, tabs );
 
-    if( globalTechDB.get() ) {
-        globalTechDB->toInputXML( out, tabs );
-    }
+    GlobalTechnologyDatabase::getInstance()->toInputXML( out, tabs );
 	
     // Climate model parameters
     // note that due to a dependency in the carbon cycle model this
@@ -250,10 +248,6 @@ void World::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     // write the xml for the class members.
 
     scenario->getMarketplace()->toDebugXML( period, out, tabs );
-
-    if( globalTechDB.get() ) {
-        globalTechDB->toDebugXML( period, out, tabs );
-    }
 
     // Only print debug XML information for the specified region to avoid
     // unmanagably large XML files.

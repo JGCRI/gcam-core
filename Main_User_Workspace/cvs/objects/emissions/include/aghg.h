@@ -190,6 +190,10 @@ public:
 
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     void setEmissionsDriver( std::auto_ptr<AEmissionsDriver>& aEmissionsDriver );
+    
+    virtual void doInterpolations( const int aYear, const int aPreviousYear,
+                                   const int aNextYear, const AGHG* aPreviousGHG,
+                                   const AGHG* aNextGHG );
 
 protected:
 

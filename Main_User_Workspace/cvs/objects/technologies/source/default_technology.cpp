@@ -65,8 +65,8 @@ DefaultTechnology* DefaultTechnology::clone() const {
     return new DefaultTechnology( *this );
 }
 
-const string& DefaultTechnology::getXMLName1D() const {
-    return getXMLNameStatic1D();
+const string& DefaultTechnology::getXMLName() const {
+    return getXMLNameStatic();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -79,7 +79,7 @@ const string& DefaultTechnology::getXMLName1D() const {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const string& DefaultTechnology::getXMLNameStatic1D() {
+const string& DefaultTechnology::getXMLNameStatic() {
     const static string XML_NAME1D = "technology";
     return XML_NAME1D;
 }
@@ -99,11 +99,10 @@ void DefaultTechnology::completeInit( const std::string& aRegionName,
                                       const std::string& aSubsectorName,
                                       DependencyFinder* aDepFinder,
                                       const IInfo* aSubsectorInfo,
-                                      ILandAllocator* aLandAllocator,
-                                      const GlobalTechnologyDatabase* aGlobalTechDB )
+                                      ILandAllocator* aLandAllocator )
 {
     Technology::completeInit( aRegionName, aSectorName, aSubsectorName, aDepFinder,
-                              aSubsectorInfo, aLandAllocator, aGlobalTechDB );
+                              aSubsectorInfo, aLandAllocator );
 }
 
 void DefaultTechnology::initCalc( const string& aRegionName,

@@ -363,11 +363,10 @@ void Sector::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
 * \param aRegionInfo Regional information object.
 * \param aDepFinder Regional dependency finder.
 * \param aLandAllocator Regional land allocator.
-* \param aGlobalTechDB Global Technology database.
 * \warning markets are not necessarily set when completeInit is called
 */
 void Sector::completeInit( const IInfo* aRegionInfo, DependencyFinder* aDepFinder,
-                           ILandAllocator* aLandAllocator, const GlobalTechnologyDatabase* aGlobalTechDB )
+                           ILandAllocator* aLandAllocator )
 {
     // Allocate the sector info.
     // Do not reset if mSectorInfo contains information from derived sector classes.
@@ -392,7 +391,7 @@ void Sector::completeInit( const IInfo* aRegionInfo, DependencyFinder* aDepFinde
 
     // Complete the subsector initializations.
     for( vector<Subsector*>::iterator subSecIter = subsec.begin(); subSecIter != subsec.end(); subSecIter++ ) {
-        ( *subSecIter )->completeInit( mSectorInfo.get(), aDepFinder, aLandAllocator, aGlobalTechDB );
+        ( *subSecIter )->completeInit( mSectorInfo.get(), aDepFinder, aLandAllocator );
     }
 }
 
@@ -411,58 +410,6 @@ void Sector::initCalc( NationalAccount* aNationalAccount,
     // do any sub-Sector initializations
     for ( unsigned int i = 0; i < subsec.size(); ++i ){
         subsec[ i ]->initCalc( aNationalAccount, aDemographics, moreSectorInfo.get(), aPeriod );
-    }
-}
- 
-/*! \brief Normalize subsector share weights such that the share weight of the dominant
-* subsector is anchored to 1 while the others are relative to the dominant subsector. 
-*
-* This is needed so that share weights can be easily interpreted and so that
-* future share weights can be consistently applied relative to the dominant subsector.
-* Subsector share weight greater than 1 implies bias towards the subsector even though
-* it is not the dominant subsector. The call to normalizeShareWeights must occur after the
-* period has been solved and subsector outputs are known.  
-*
-* \author Steve Smith, Marshall Wise, Kate Calvin, Sonny Kim
-* \param aPeriod Model period
-*/
-void Sector::normalizeShareWeights( const int aPeriod ) {
-
-    static const bool calActive = Configuration::getInstance()->getBool( "CalibrationActive" );
-    // Check on calibration active status is redundant but leave in here to guard against
-    // calling normalization routine without checking status.
-    if ( aPeriod > 0 && calActive ) {
-        if ( inputsAllFixed( aPeriod, "allInputs" ) && ( getCalOutput ( aPeriod ) > 0 ) ) {
-            // Dominant subsector should get a share weight of one
-            double maxShareWeight = 0.0;
-            double maxOutput = 0.0;
-            for ( unsigned int i = 0; i < subsec.size(); ++i ){
-                // Normalize only if subsector is not fully fixed.
-                if( !subsec[ i ]->containsOnlyFixedOutputTechnologies( aPeriod ) ){
-                    double subsectShareWeight = subsec[ i ]->getShareWeight( aPeriod );
-                    if ( subsec[ i ]->getOutput( aPeriod ) > maxOutput ) {
-                        maxShareWeight = subsectShareWeight;
-                        maxOutput = subsec[ i ]->getOutput( aPeriod );
-                    }
-                }
-            }
-            if ( maxShareWeight < util::getTinyNumber() ) {
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::ERROR );
-                mainLog << "Max shareweight is zero for sector " << name << "." << endl;
-            }
-            else {
-                for ( int unsigned i= 0; i< subsec.size(); i++ ) {
-                    // Normalize only if subsector is not fully fixed.
-                    if( !subsec[ i ]->containsOnlyFixedOutputTechnologies( aPeriod ) ){
-                        subsec[ i ]->scaleShareWeight( 1 / maxShareWeight, aPeriod );
-                    }
-                }
-                ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
-                calibrationLog.setLevel( ILogger::DEBUG );
-                calibrationLog << "Shareweights normalized for sector " << name << " in region " << regionName << endl;
-            }
-        }
     }
 }
 
@@ -657,24 +604,6 @@ double Sector::getCalOutput( const int period  ) const {
     return totalCalOutput;
 }
 
-/*! \brief Returns true if all subsector inputs for the the specified good are fixed.
-*
-* Fixed inputs can be by either fixedCapacity, calibration, or zero share.
-*
-* \author Steve Smith
-* \param period Model period
-* \param goodName market good to return inputs for. If equal to the value "allInputs" then returns all inputs.
-* \return total calibrated inputs
-*/
-bool Sector::inputsAllFixed( const int period, const string& goodName ) const {
-    for ( unsigned int i = 0; i < subsec.size(); ++i ){
-        if ( !(subsec[ i ]->inputsAllFixed( period, goodName ) ) ){
-            return false;
-        }
-    }
-    return true;
-}
-
 /*! \brief Calculate GHG emissions for each Sector from subsectors.
 *
 * Calculates emissions for subsectors and technologies, then updates emissions maps for emissions by gas and emissions by fuel & gas.
@@ -813,14 +742,6 @@ void Sector::postCalc( const int aPeriod ){
     // Finalize sectors.
     for( SubsectorIterator subsector = subsec.begin(); subsector != subsec.end(); ++subsector ){
         (*subsector)->postCalc( aPeriod );
-    }
-    // Normalize subsector share weights after model has solved and subsector outputs
-    // are known.
-    // Do only when calibration is on and for calibration periods.
-    if( Configuration::getInstance()->getBool( "CalibrationActive" ) &&
-        aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() )
-    {
-        normalizeShareWeights( aPeriod );
     }
     // Set member price vector to solved market prices
     if( aPeriod > 0 ){

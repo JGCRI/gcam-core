@@ -88,7 +88,7 @@ class IInfo;
  */
 class IntermittentTechnology: public Technology {
 public:
-    static const std::string& getXMLNameStatic1D();
+    static const std::string& getXMLNameStatic();
 
     IntermittentTechnology( const std::string& aName,
                             const int aYear );
@@ -97,15 +97,14 @@ public:
     
     virtual IntermittentTechnology* clone() const;
 
-    virtual const std::string& getXMLName1D() const;
+    virtual const std::string& getXMLName() const;
     
     virtual void completeInit( const std::string& aRegionName,
                                const std::string& aSectorName,
                                const std::string& aSubsectorName,
                                DependencyFinder* aDepFinder,
                                const IInfo* aSubsectorInfo,
-                               ILandAllocator* aLandAllocator,
-                               const GlobalTechnologyDatabase* aGlobalTechDB );
+                               ILandAllocator* aLandAllocator );
 
     virtual void initCalc( const std::string& aRegionName,
                            const std::string& aSectorName,

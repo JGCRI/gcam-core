@@ -45,6 +45,7 @@
                      <fixedOutput>2.9186136</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Gen_III">
                   <period year="2020">
@@ -118,6 +119,7 @@
                      <fixedOutput>0.331344</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Gen_III">
                   <period year="2020">
@@ -191,6 +193,7 @@
                      <fixedOutput>3.3275592</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Gen_III">
                   <period year="2020">
@@ -264,6 +267,7 @@
                      <fixedOutput>1.097118</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Gen_III">
                   <period year="2020">
@@ -337,6 +341,7 @@
                      <fixedOutput>0</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Gen_III">
                   <period year="2020">
@@ -410,6 +415,7 @@
                      <fixedOutput>0.8947404</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Gen_III">
                   <period year="2020">
@@ -483,6 +489,7 @@
                      <fixedOutput>0.1911168</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Gen_III">
                   <period year="2020">
@@ -556,6 +563,7 @@
                      <fixedOutput>0</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Gen_III">
                   <period year="2020">
@@ -629,6 +637,7 @@
                      <fixedOutput>0.0406548</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Gen_III">
                   <period year="2020">
@@ -702,6 +711,7 @@
                      <fixedOutput>0.0991188</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Gen_III">
                   <period year="2020">
@@ -775,6 +785,7 @@
                      <fixedOutput>0.1528416</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Gen_III">
                   <period year="2020">
@@ -848,6 +859,7 @@
                      <fixedOutput>0.3109716</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Gen_III">
                   <period year="2020">
@@ -921,6 +933,7 @@
                      <fixedOutput>0.5284044</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Gen_III">
                   <period year="2020">
@@ -994,6 +1007,7 @@
                      <fixedOutput>0.0623268</fixedOutput>
                      <share-weight>0</share-weight>
                   </period>
+                  <final-available-year>2005</final-available-year>
                </technology>
                <technology name="Gen_III">
                   <period year="2020">

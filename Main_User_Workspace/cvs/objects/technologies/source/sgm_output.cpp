@@ -62,6 +62,9 @@ SGMOutput::SGMOutput( const string& aSectorName )
 {
 }
 
+SGMOutput::~SGMOutput() {
+}
+
 SGMOutput* SGMOutput::clone() const
 {
     // we do not actually want to copy any of the stored

@@ -78,6 +78,7 @@ public:
     };
 
 	MoreSectorInfo();
+    virtual ~MoreSectorInfo();
 	void XMLParse( const xercesc::DOMNode* node );
 	void toInputXML( std::ostream& out, Tabs* tabs ) const;
 	void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;

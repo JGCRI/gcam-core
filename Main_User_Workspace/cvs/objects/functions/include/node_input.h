@@ -262,6 +262,10 @@ public:
     virtual void csvSGMOutputFile( std::ostream& aFile,
         const int aPeriod ) const {}
     
+    virtual void doInterpolations( const int aYear, const int aPreviousYear,
+                                   const int aNextYear, const IInput* aPreviousInput,
+                                   const IInput* aNextInput ) {}
+    
     virtual void copyParamsInto( ProductionInput& aInput,
         const int aPeriod ) const {}
 

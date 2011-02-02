@@ -117,6 +117,8 @@ private:
     //! Adjusts the service calculation in calibration years to account for the
     //! macro scaler
     double mMacroScalerCalAdjust;
+    
+    int numPeriodsForRotation( const int aPeriod ) const;
 };
 
 #endif // _FOREST_DEMAND_SECTOR_H_

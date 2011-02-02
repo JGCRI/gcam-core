@@ -683,6 +683,13 @@ void SGMInput::csvSGMOutputFile( ostream& aFile, const int period ) const {
     aFile << mPricePaid[ period ] << endl;
 }
 
+void SGMInput::doInterpolations( const int aYear, const int aPerviousYear,
+                                 const int aNextYear, const IInput* aPreviousInput,
+                                 const IInput* aNextInput )
+{
+    // TODO: have not even considered what this will mean for SGM
+}
+
 void SGMInput::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitSGMInput( this, aPeriod );
     aVisitor->endVisitSGMInput( this, aPeriod );

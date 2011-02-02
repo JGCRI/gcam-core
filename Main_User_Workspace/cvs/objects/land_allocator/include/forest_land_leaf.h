@@ -107,9 +107,15 @@ public:
                                     const int aHarvestPeriod,
                                     const int aCurrentPeriod );
     
+    virtual void setMaxYield( const std::string& aLandType,
+                              const std::string& aProductName,
+                              const double aMaxYield, 
+                              const int aPeriod );
+    
 protected:
     // TODO: Create a Value class for ints and use it here.
     int mSteps; //!< number of model time steps for a rotation period
+    int mRotationPeriod;
 
     //! Land allocation set aside for future production. 
     //  This is land harvested to produce one year of production.
@@ -120,6 +126,7 @@ protected:
                                     Tabs* aTabs ) const;
 
     virtual const std::string& getXMLName() const;
+    int numPeriodsForRotation( const int aPeriod ) const;
 };
 
 #endif // _FOREST_LAND_LEAF_H_

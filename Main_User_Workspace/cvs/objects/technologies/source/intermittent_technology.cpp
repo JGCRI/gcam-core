@@ -84,7 +84,10 @@ mAveGridCapacityFactor( 0.60 )
  * \param aOther Technology from which to copy data.
  */
 IntermittentTechnology::IntermittentTechnology( const IntermittentTechnology& aOther )
-: Technology( aOther ),mElectricSectorName( aOther.mElectricSectorName )
+: Technology( aOther ),mElectricSectorName( aOther.mElectricSectorName ),
+mTrialMarketNameParsed( aOther.mTrialMarketNameParsed ),
+mBackupCapacityFactor( aOther.mBackupCapacityFactor ),
+mBackupCapitalCost( aOther.mBackupCapitalCost )
 // Only copy member variables that are read-in. The rest will be filled in by
 // initialization methods.
 {
@@ -97,8 +100,8 @@ IntermittentTechnology* IntermittentTechnology::clone() const {
     return new IntermittentTechnology( *this );
 }
 
-const string& IntermittentTechnology::getXMLName1D() const {
-    return getXMLNameStatic1D();
+const string& IntermittentTechnology::getXMLName() const {
+    return getXMLNameStatic();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -111,7 +114,7 @@ const string& IntermittentTechnology::getXMLName1D() const {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const string& IntermittentTechnology::getXMLNameStatic1D() {
+const string& IntermittentTechnology::getXMLNameStatic() {
     const static string XML_NAME = "intermittent-technology";
     return XML_NAME;
 }
@@ -221,7 +224,6 @@ void IntermittentTechnology::toDebugXMLDerived( const int period, ostream& aOut,
 * \param aSectorInfo Sector information object.
 * \param aDependencyFinder Regional dependency finder.
 * \param aLandAllocator Regional land allocator.
-* \param aGlobalTechDB Global technology database.
 * \author Marshall Wise, Sonny Kim
 * \detail A trial market for the intermittent technology is created here,  
 *         as well as the completetion of technology initialization. 
@@ -238,12 +240,11 @@ void IntermittentTechnology::completeInit( const string& aRegionName,
                                            const string& aSubsectorName,
                                            DependencyFinder* aDepFinder,
                                            const IInfo* aSubsectorInfo,
-                                           ILandAllocator* aLandAllocator,
-                                           const GlobalTechnologyDatabase* aGlobalTechDB )
+                                           ILandAllocator* aLandAllocator )
 {
 	// The parent method must be called first due to sequence issues
     Technology::completeInit( aRegionName, aSectorName, aSubsectorName, aDepFinder, aSubsectorInfo,
-							 aLandAllocator, aGlobalTechDB );	
+							 aLandAllocator );	
 	
 	// Initialize electric reserve margin and average grid capacity factor from the Sector.
     mElecReserveMargin = aSubsectorInfo->getDouble( "electricity-reserve-margin", true );
@@ -320,6 +321,10 @@ void IntermittentTechnology::postCalc( const string& aRegionName,
         mTrialMarketPrice.set( scenario->getMarketplace()->getPrice(
             SectorUtils::getTrialMarketName(mTrialMarketName),
             aRegionName, aPeriod, true) );
+    }
+    // TODO: hack since interpolated intermittent technologies are written out
+    if( !mParsedShareWeight.isInited() ) {
+        mParsedShareWeight = mShareWeight;
     }
 }
 

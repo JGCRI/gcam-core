@@ -71,8 +71,7 @@ public:
 
     virtual void completeInit( const IInfo* aSectorInfo,
                                DependencyFinder* aDependencyFinder,
-                               ILandAllocator* aLandAllocator,
-                               const GlobalTechnologyDatabase* aGlobalTechDB );
+                               ILandAllocator* aLandAllocator );
     
     virtual void initCalc( NationalAccount* aNationalAccount,
                            const Demographic* aDemographics,
@@ -100,11 +99,6 @@ protected:
     void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     const std::string& getXMLName() const;
-    bool isNameOfChild  ( const std::string& nodename ) const;
-    
-    virtual ITechnology* createChild( const std::string& aTechType,
-                                      const std::string& aTechName,
-		                              const int aTechYear ) const;
 
 	double getTimeValue( const GDP* aGDP, const int aPeriod ) const;
 	double getTimeInTransit( const int aPeriod ) const;

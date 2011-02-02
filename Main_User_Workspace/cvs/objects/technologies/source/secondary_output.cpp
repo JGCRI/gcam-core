@@ -271,3 +271,27 @@ void SecondaryOutput::accept( IVisitor* aVisitor, const int aPeriod ) const
 double SecondaryOutput::calcPhysicalOutputInternal( const double aPrimaryOutput ) const {
     return aPrimaryOutput * mOutputRatio;
 }
+
+void SecondaryOutput::doInterpolations( const int aYear, const int aPreviousYear,
+                                        const int aNextYear, const IOutput* aPreviousOutput,
+                                        const IOutput* aNextOutput )
+{
+    // TODO: do we really want to do this?
+    const SecondaryOutput* prevSecOutput = static_cast<const SecondaryOutput*>( aPreviousOutput );
+    const SecondaryOutput* nextSecOutput = static_cast<const SecondaryOutput*>( aNextOutput );
+    
+    /*!
+     * \pre We are given a valid SecondaryOutput for the previous output.
+     */
+    assert( prevSecOutput );
+    
+    /*!
+     * \pre We are given a valid SecondaryOutput for the next output.
+     */
+    assert( nextSecOutput );
+    
+    // interpolate the output ratio
+    mOutputRatio.set( util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
+                                                prevSecOutput->mOutputRatio,
+                                                nextSecOutput->mOutputRatio ) );
+}

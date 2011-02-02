@@ -259,6 +259,20 @@ public:
     virtual void setLandAllocator( const ILandAllocator* aLandAllocator,
                                    const std::string& aName,
                                    const std::string& aLandType ) = 0;
+    
+    /*!
+     * \brief Hook for an output to do interpolations to fill in any data that
+     *        should be interpolated to a newly created output for the missing
+     *        technology.
+     * \param aYear the year to be filled in.
+     * \param aPreviousYear The year of the last parsed input.
+     * \param aNextYear The year of the next closest parsed input.
+     * \param aPreviousOutput The previous parsed output.
+     * \param aNextOutput The next parsed output.
+     */
+    virtual void doInterpolations( const int aYear, const int aPreviousYear,
+                                   const int aNextYear, const IOutput* aPreviousInput,
+                                   const IOutput* aNextInput ) = 0;
 };
 
 // Inline function definitions.

@@ -83,6 +83,9 @@ Scenario::Scenario() {
 
 //! Destructor
 Scenario::~Scenario() {
+    // model time is really a singleton and so don't
+    // try to delete it
+    modeltime.release();
 }
 
 /*! \brief Get the static XML name of the Scenario.
@@ -139,12 +142,13 @@ bool Scenario::XMLParse( const DOMNode* node ){
         }
         else if ( nodeName == Modeltime::getXMLNameStatic() ){
             if( !modeltime.get() ) {
-                modeltime.reset( new Modeltime() );
-                modeltime->XMLParse( curr );
-                modeltime->set(); // This call cannot be delayed until completeInit() because it is needed first. 
+                modeltime.reset( Modeltime::getInstance() );
+                const_cast<Modeltime*>( modeltime.get() )->XMLParse( curr );
             }
             else {
-                modeltime->ParseFinalCalYear( curr );
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::WARNING );
+                mainLog << "Modeltime can only be parsed once." << endl;
             }
         }
         else if ( nodeName == World::getXMLNameStatic() ){

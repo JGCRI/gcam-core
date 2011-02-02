@@ -157,6 +157,10 @@ public:
     virtual double getCalibrationQuantity( const int aPeriod ) const = 0;
 
     virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
+    
+    virtual void doInterpolations( const int aYear, const int aPreviousYear,
+                                   const int aNextYear, const IInput* aPreviousInput,
+                                   const IInput* aNextInput );
 
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 

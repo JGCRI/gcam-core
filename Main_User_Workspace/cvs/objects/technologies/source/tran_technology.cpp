@@ -75,7 +75,7 @@ TranTechnology* TranTechnology::clone() const {
     return new TranTechnology( *this );
 }
 
-const std::string& TranTechnology::getXMLName1D() const {
+const std::string& TranTechnology::getXMLName() const {
     return XML_NAME;
 }
 
@@ -88,7 +88,7 @@ const std::string& TranTechnology::getXMLName1D() const {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const std::string& TranTechnology::getXMLNameStatic1D() {
+const std::string& TranTechnology::getXMLNameStatic() {
     return XML_NAME;
 }
 
@@ -122,11 +122,10 @@ void TranTechnology::completeInit( const string& aRegionName,
                                    const string& aSubsectorName,
                                    DependencyFinder* aDepFinder,
                                    const IInfo* aSubsectorInfo,
-                                   ILandAllocator* aLandAllocator,
-                                   const GlobalTechnologyDatabase* aGlobalTechDB )
+                                   ILandAllocator* aLandAllocator )
 {
     Technology::completeInit( aRegionName, aSectorName, aSubsectorName, aDepFinder,
-                              aSubsectorInfo, aLandAllocator, aGlobalTechDB );
+                              aSubsectorInfo, aLandAllocator );
 }
 
 void TranTechnology::initCalc( const string& aRegionName,

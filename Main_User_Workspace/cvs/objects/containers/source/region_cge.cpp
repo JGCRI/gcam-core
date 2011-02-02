@@ -230,21 +230,21 @@ void RegionCGE::toDebugXMLDerived( const int period, std::ostream& out, Tabs* ta
 }
 
 //! Complete the initialization.
-void RegionCGE::completeInit( const GlobalTechnologyDatabase* aGlobalTechDB ) {
-    Region::completeInit( aGlobalTechDB );
+void RegionCGE::completeInit() {
+    Region::completeInit();
 
     // initialize demographic
     if( demographic.get() ){
         demographic->completeInit();
     }
     for( SectorIterator sectorIter = supplySector.begin(); sectorIter != supplySector.end(); ++sectorIter ) {
-        ( *sectorIter )->completeInit( 0, 0, 0, aGlobalTechDB );
+        ( *sectorIter )->completeInit( 0, 0, 0 );
     }
     for( unsigned int i = 0; i < finalDemandSector.size(); i++) {
         // Pass null for the dependency finder argument as CGE regions don't
         // have dependencies. Pass null for the regional land allocator 
         // because CGE regions do not currently use one.
-        finalDemandSector[i]->completeInit( 0, 0, 0, aGlobalTechDB );
+        finalDemandSector[i]->completeInit( 0, 0, 0 );
     }
     for( unsigned int i = 0; i < factorSupply.size(); i++) {
         factorSupply[i]->completeInit( name );

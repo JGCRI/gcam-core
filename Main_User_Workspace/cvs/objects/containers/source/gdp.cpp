@@ -55,6 +55,7 @@
 #include "util/base/include/xml_helper.h"
 #include "util/logger/include/ilogger.h"
 #include "util/base/include/ivisitor.h"
+#include "sectors/include/sector_utils.h"
 
 using namespace std;
 using namespace xercesc;
@@ -63,7 +64,7 @@ extern Scenario* scenario;
 // static initialize.
 const string GDP::XML_NAME = "GDP";
 const int BASE_PPP_YEAR = 1990;   // Base year for PPP conversion. PPP values are not known before about this time.
-/*! \todo There are uninitialized memory reads all over this file. Lines: 308, 307, 285 (roughly) */
+
 //! Default Constructor
 GDP::GDP() {
     // Resize all vectors to the max period.
@@ -126,11 +127,11 @@ void GDP::XMLParse( const DOMNode* node ){
         }
         // labor force participation rate
         else if ( nodeName == "laborproductivity" ){
-            XMLHelper<double>::insertValueIntoVector( curr, laborProdGrowthRate, modeltime );
+            XMLHelper<Value>::insertValueIntoVector( curr, laborProdGrowthRate, modeltime );
         }
         // labor force participation rate
         else if( nodeName == "laborforce" ){
-            XMLHelper<double>::insertValueIntoVector( curr, laborForceParticipationPercent, modeltime );
+            XMLHelper<Value>::insertValueIntoVector( curr, laborForceParticipationPercent, modeltime );
         } 
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -165,17 +166,6 @@ void GDP::toInputXML( ostream& out, Tabs* tabs ) const {
 
     for( unsigned int iter = 0; iter < laborForceParticipationPercent.size(); ++iter ){
         XMLWriteElement( laborForceParticipationPercent[ iter ], "laborforce", out, tabs, modeltime->getper_to_yr( iter ) );
-    }
-
-    // Would want these in an xml-output file, but not in the input file.
-    // write out MER-based GDP
-    for( int m = 0; m < static_cast<int>( gdpValueAdjusted.size() ); m++ ){
-        // XMLWriteElementCheckDefault( gdpValueAdjusted[ m ], "GDP(MER)", out, tabs, 0, modeltime->getper_to_yr( m ) );
-    }
-
-    // write out PPP-based GDP
-    for( int m = 0; m < static_cast<int>( gdpValueAdjusted.size() ); m++ ){
-        // XMLWriteElementCheckDefault( gdpValueAdjustedPPP[ m ], "GDP(PPP)", out, tabs, 0, modeltime->getper_to_yr( m ) );
     }
 
     XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
@@ -235,8 +225,31 @@ const std::string& GDP::getXMLNameStatic() {
 void GDP::initData( const Demographic* regionalPop ){
     assert( regionalPop );
     const Modeltime* modeltime = scenario->getModeltime();
+
+    // TODO: Consider using Sector::Util for filling in laborProdGrowthRate and
+    // laborForceParticipationPercent.
+    for( int per = modeltime->getmaxper() - 2; per >= 0; --per ) {
+        if( !laborProdGrowthRate[ per ].isInited() ) {
+            laborProdGrowthRate[ per ].set( laborProdGrowthRate[ per + 1 ] );
+        }
+    }
     for ( int i = 0; i < modeltime->getmaxper(); i++ ) {
         double population = regionalPop->getTotal( i );
+        // make sure that we have laborForceParticipationPercent and laborProdGrowthRate
+        // for this model period.  If not, interpolate between model periods
+        // that we do have.
+        if( !laborForceParticipationPercent[ i ].isInited() ) {
+            // we must have the labor participation percent for the base year
+            assert( i > 0 );
+            int nextValuePeriod = findNextPeriodWithValue( i + 1, laborForceParticipationPercent );
+            // we must have the labor participation percent in the last model year
+            assert( nextValuePeriod != -1 );
+            laborForceParticipationPercent[ i ].set( util::linearInterpolateY( modeltime->getper_to_yr( i ),
+                                                                   modeltime->getper_to_yr( i - 1 ),
+                                                                   modeltime->getper_to_yr( nextValuePeriod ),
+                                                                   laborForceParticipationPercent[ i - 1 ],
+                                                                   laborForceParticipationPercent[ nextValuePeriod ] ) );
+        }
         assert( population > 0 );
         assert( laborForceParticipationPercent[ i ] > 0 );
         laborForce[ i ] = population * laborForceParticipationPercent[ i ];
@@ -693,4 +706,20 @@ double GDP::getBestScaledGDPperCap( const int period ) const {
 void GDP::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitGDP( this, aPeriod );
     aVisitor->endVisitGDP( this, aPeriod );
+}
+
+/*!
+ * \brief Find the next period after aStartPeriod that has an initialized value.
+ * \param aStartPeriod The first period to start looking in.
+ * \param aValueVector A vector of Value objects to check in.
+ * \return The first period with an initialized value or -1 if none were found.
+ */
+int GDP::findNextPeriodWithValue( const int aStartPeriod, const vector<Value>& aValueVector ) const {
+    const Modeltime* modeltime = scenario->getModeltime();
+    for( int searchPeriod = aStartPeriod; searchPeriod < modeltime->getmaxper(); ++searchPeriod ) {
+        if( aValueVector[ searchPeriod ].isInited() ) {
+            return searchPeriod;
+        }
+    }
+    return -1;
 }

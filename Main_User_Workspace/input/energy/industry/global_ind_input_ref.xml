@@ -11,8 +11,10 @@
             <keyword final-energy="industry"/>
             <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -226,8 +228,10 @@
                </technology>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -441,8 +445,10 @@
                </technology>
             </subsector>
             <subsector name="electricity">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -543,8 +549,10 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -758,8 +766,10 @@
                </technology>
             </subsector>
             <subsector name="refined liquids">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -973,7 +983,9 @@
                </technology>
             </subsector>
             <subsector name="hydrogen">
-               <share-weight fillout="1" year="1975">0</share-weight>
+               <share-weight year="1975">0</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2050">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -1112,6 +1124,9 @@
                         <input-cost>4.5</input-cost>
                      </minicam-non-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="electricity">
+                        <output-ratio>1</output-ratio>
+                     </secondary-output>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="H2 Enduse">
@@ -1202,8 +1217,10 @@
             <keyword final-energy="industry"/>
             <logit-exponent fillout="1" year="1975">-1</logit-exponent>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -1336,8 +1353,10 @@
                </technology>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -1470,8 +1489,10 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -1604,8 +1625,10 @@
                </technology>
             </subsector>
             <subsector name="refined liquids">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -1744,8 +1767,10 @@
             <price-unit>1975$/GJ</price-unit>
             <price year="1975">3.5</price>
             <subsector name="industry">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <technology name="industry">
@@ -1862,8 +1887,10 @@
             <keyword final-energy="industry"/>
             <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -2077,8 +2104,10 @@
                </technology>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -2292,8 +2321,10 @@
                </technology>
             </subsector>
             <subsector name="electricity">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -2394,8 +2425,10 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -2609,8 +2642,10 @@
                </technology>
             </subsector>
             <subsector name="refined liquids">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -2824,7 +2859,9 @@
                </technology>
             </subsector>
             <subsector name="hydrogen">
-               <share-weight fillout="1" year="1975">0</share-weight>
+               <share-weight year="1975">0</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2050">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -2963,6 +3000,9 @@
                         <input-cost>4.5</input-cost>
                      </minicam-non-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="electricity">
+                        <output-ratio>1</output-ratio>
+                     </secondary-output>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="H2 Enduse">
@@ -3053,8 +3093,10 @@
             <keyword final-energy="industry"/>
             <logit-exponent fillout="1" year="1975">-1</logit-exponent>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -3187,8 +3229,10 @@
                </technology>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -3321,8 +3365,10 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -3455,8 +3501,10 @@
                </technology>
             </subsector>
             <subsector name="refined liquids">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -3595,8 +3643,10 @@
             <price-unit>1975$/GJ</price-unit>
             <price year="1975">3.5</price>
             <subsector name="industry">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <technology name="industry">
@@ -3713,8 +3763,10 @@
             <keyword final-energy="industry"/>
             <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -3928,8 +3980,10 @@
                </technology>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -4143,8 +4197,10 @@
                </technology>
             </subsector>
             <subsector name="electricity">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -4245,8 +4301,10 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -4460,8 +4518,10 @@
                </technology>
             </subsector>
             <subsector name="refined liquids">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -4675,7 +4735,9 @@
                </technology>
             </subsector>
             <subsector name="hydrogen">
-               <share-weight fillout="1" year="1975">0</share-weight>
+               <share-weight year="1975">0</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2050">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -4814,6 +4876,9 @@
                         <input-cost>4.5</input-cost>
                      </minicam-non-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="electricity">
+                        <output-ratio>1</output-ratio>
+                     </secondary-output>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="H2 Enduse">
@@ -4904,8 +4969,10 @@
             <keyword final-energy="industry"/>
             <logit-exponent fillout="1" year="1975">-1</logit-exponent>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -5038,8 +5105,10 @@
                </technology>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -5172,8 +5241,10 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -5306,8 +5377,10 @@
                </technology>
             </subsector>
             <subsector name="refined liquids">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -5446,8 +5519,10 @@
             <price-unit>1975$/GJ</price-unit>
             <price year="1975">3.5</price>
             <subsector name="industry">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <technology name="industry">
@@ -5564,8 +5639,10 @@
             <keyword final-energy="industry"/>
             <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -5779,8 +5856,10 @@
                </technology>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -5994,8 +6073,10 @@
                </technology>
             </subsector>
             <subsector name="electricity">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -6096,8 +6177,10 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -6311,8 +6394,10 @@
                </technology>
             </subsector>
             <subsector name="refined liquids">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -6526,7 +6611,9 @@
                </technology>
             </subsector>
             <subsector name="hydrogen">
-               <share-weight fillout="1" year="1975">0</share-weight>
+               <share-weight year="1975">0</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2050">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -6665,6 +6752,9 @@
                         <input-cost>4.5</input-cost>
                      </minicam-non-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="electricity">
+                        <output-ratio>1</output-ratio>
+                     </secondary-output>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="H2 Enduse">
@@ -6755,8 +6845,10 @@
             <keyword final-energy="industry"/>
             <logit-exponent fillout="1" year="1975">-1</logit-exponent>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -6889,8 +6981,10 @@
                </technology>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -7023,8 +7117,10 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -7157,8 +7253,10 @@
                </technology>
             </subsector>
             <subsector name="refined liquids">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -7297,8 +7395,10 @@
             <price-unit>1975$/GJ</price-unit>
             <price year="1975">3.5</price>
             <subsector name="industry">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <technology name="industry">
@@ -7415,8 +7515,10 @@
             <keyword final-energy="industry"/>
             <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -7630,8 +7732,10 @@
                </technology>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -7845,8 +7949,10 @@
                </technology>
             </subsector>
             <subsector name="electricity">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -7947,8 +8053,10 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -8162,8 +8270,10 @@
                </technology>
             </subsector>
             <subsector name="refined liquids">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -8377,7 +8487,9 @@
                </technology>
             </subsector>
             <subsector name="hydrogen">
-               <share-weight fillout="1" year="1975">0</share-weight>
+               <share-weight year="1975">0</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2050">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -8516,6 +8628,9 @@
                         <input-cost>4.5</input-cost>
                      </minicam-non-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="electricity">
+                        <output-ratio>1</output-ratio>
+                     </secondary-output>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="H2 Enduse">
@@ -8606,8 +8721,10 @@
             <keyword final-energy="industry"/>
             <logit-exponent fillout="1" year="1975">-1</logit-exponent>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -8740,8 +8857,10 @@
                </technology>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -8874,8 +8993,10 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -9008,8 +9129,10 @@
                </technology>
             </subsector>
             <subsector name="refined liquids">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -9148,8 +9271,10 @@
             <price-unit>1975$/GJ</price-unit>
             <price year="1975">3.5</price>
             <subsector name="industry">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <technology name="industry">
@@ -9266,8 +9391,10 @@
             <keyword final-energy="industry"/>
             <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -9481,8 +9608,10 @@
                </technology>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -9696,8 +9825,10 @@
                </technology>
             </subsector>
             <subsector name="electricity">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -9798,8 +9929,10 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -10013,8 +10146,10 @@
                </technology>
             </subsector>
             <subsector name="refined liquids">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -10228,7 +10363,9 @@
                </technology>
             </subsector>
             <subsector name="hydrogen">
-               <share-weight fillout="1" year="1975">0</share-weight>
+               <share-weight year="1975">0</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2050">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -10367,6 +10504,9 @@
                         <input-cost>4.5</input-cost>
                      </minicam-non-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="electricity">
+                        <output-ratio>1</output-ratio>
+                     </secondary-output>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="H2 Enduse">
@@ -10457,8 +10597,10 @@
             <keyword final-energy="industry"/>
             <logit-exponent fillout="1" year="1975">-1</logit-exponent>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -10591,8 +10733,10 @@
                </technology>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -10725,8 +10869,10 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -10859,8 +11005,10 @@
                </technology>
             </subsector>
             <subsector name="refined liquids">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -10999,8 +11147,10 @@
             <price-unit>1975$/GJ</price-unit>
             <price year="1975">3.5</price>
             <subsector name="industry">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <technology name="industry">
@@ -11117,8 +11267,10 @@
             <keyword final-energy="industry"/>
             <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -11332,8 +11484,10 @@
                </technology>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -11547,8 +11701,10 @@
                </technology>
             </subsector>
             <subsector name="electricity">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -11649,8 +11805,10 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -11864,8 +12022,10 @@
                </technology>
             </subsector>
             <subsector name="refined liquids">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -12079,7 +12239,9 @@
                </technology>
             </subsector>
             <subsector name="hydrogen">
-               <share-weight fillout="1" year="1975">0</share-weight>
+               <share-weight year="1975">0</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2050">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -12218,6 +12380,9 @@
                         <input-cost>4.5</input-cost>
                      </minicam-non-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="electricity">
+                        <output-ratio>1</output-ratio>
+                     </secondary-output>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="H2 Enduse">
@@ -12308,8 +12473,10 @@
             <keyword final-energy="industry"/>
             <logit-exponent fillout="1" year="1975">-1</logit-exponent>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -12442,8 +12609,10 @@
                </technology>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -12576,8 +12745,10 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -12710,8 +12881,10 @@
                </technology>
             </subsector>
             <subsector name="refined liquids">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -12850,8 +13023,10 @@
             <price-unit>1975$/GJ</price-unit>
             <price year="1975">3.5</price>
             <subsector name="industry">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <technology name="industry">
@@ -12968,8 +13143,10 @@
             <keyword final-energy="industry"/>
             <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -13183,8 +13360,10 @@
                </technology>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -13398,8 +13577,10 @@
                </technology>
             </subsector>
             <subsector name="electricity">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -13500,8 +13681,10 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -13715,8 +13898,10 @@
                </technology>
             </subsector>
             <subsector name="refined liquids">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -13930,7 +14115,9 @@
                </technology>
             </subsector>
             <subsector name="hydrogen">
-               <share-weight fillout="1" year="1975">0</share-weight>
+               <share-weight year="1975">0</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2050">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -14069,6 +14256,9 @@
                         <input-cost>4.5</input-cost>
                      </minicam-non-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="electricity">
+                        <output-ratio>1</output-ratio>
+                     </secondary-output>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="H2 Enduse">
@@ -14159,8 +14349,10 @@
             <keyword final-energy="industry"/>
             <logit-exponent fillout="1" year="1975">-1</logit-exponent>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -14293,8 +14485,10 @@
                </technology>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -14427,8 +14621,10 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -14561,8 +14757,10 @@
                </technology>
             </subsector>
             <subsector name="refined liquids">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -14701,8 +14899,10 @@
             <price-unit>1975$/GJ</price-unit>
             <price year="1975">3.5</price>
             <subsector name="industry">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <technology name="industry">
@@ -14819,8 +15019,10 @@
             <keyword final-energy="industry"/>
             <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -15035,8 +15237,10 @@
                </technology>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -15251,8 +15455,10 @@
                </technology>
             </subsector>
             <subsector name="electricity">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -15353,8 +15559,10 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -15568,8 +15776,10 @@
                </technology>
             </subsector>
             <subsector name="refined liquids">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -15783,7 +15993,9 @@
                </technology>
             </subsector>
             <subsector name="hydrogen">
-               <share-weight fillout="1" year="1975">0</share-weight>
+               <share-weight year="1975">0</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2050">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -15922,6 +16134,9 @@
                         <input-cost>4.5</input-cost>
                      </minicam-non-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="electricity">
+                        <output-ratio>1</output-ratio>
+                     </secondary-output>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="H2 Enduse">
@@ -16012,8 +16227,10 @@
             <keyword final-energy="industry"/>
             <logit-exponent fillout="1" year="1975">-1</logit-exponent>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -16146,8 +16363,10 @@
                </technology>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -16280,8 +16499,10 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -16414,8 +16635,10 @@
                </technology>
             </subsector>
             <subsector name="refined liquids">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -16554,8 +16777,10 @@
             <price-unit>1975$/GJ</price-unit>
             <price year="1975">3.5</price>
             <subsector name="industry">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <technology name="industry">
@@ -16672,8 +16897,10 @@
             <keyword final-energy="industry"/>
             <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -16888,8 +17115,10 @@
                </technology>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -17103,8 +17332,10 @@
                </technology>
             </subsector>
             <subsector name="electricity">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -17205,8 +17436,10 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -17420,8 +17653,10 @@
                </technology>
             </subsector>
             <subsector name="refined liquids">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -17635,7 +17870,9 @@
                </technology>
             </subsector>
             <subsector name="hydrogen">
-               <share-weight fillout="1" year="1975">0</share-weight>
+               <share-weight year="1975">0</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2050">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -17774,6 +18011,9 @@
                         <input-cost>4.5</input-cost>
                      </minicam-non-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="electricity">
+                        <output-ratio>1</output-ratio>
+                     </secondary-output>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="H2 Enduse">
@@ -17864,8 +18104,10 @@
             <keyword final-energy="industry"/>
             <logit-exponent fillout="1" year="1975">-1</logit-exponent>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -17998,8 +18240,10 @@
                </technology>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -18132,8 +18376,10 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -18266,8 +18512,10 @@
                </technology>
             </subsector>
             <subsector name="refined liquids">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -18406,8 +18654,10 @@
             <price-unit>1975$/GJ</price-unit>
             <price year="1975">3.5</price>
             <subsector name="industry">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <technology name="industry">
@@ -18524,8 +18774,10 @@
             <keyword final-energy="industry"/>
             <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -18739,8 +18991,10 @@
                </technology>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -18954,8 +19208,10 @@
                </technology>
             </subsector>
             <subsector name="electricity">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -19056,8 +19312,10 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -19271,8 +19529,10 @@
                </technology>
             </subsector>
             <subsector name="refined liquids">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -19486,7 +19746,9 @@
                </technology>
             </subsector>
             <subsector name="hydrogen">
-               <share-weight fillout="1" year="1975">0</share-weight>
+               <share-weight year="1975">0</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2050">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -19625,6 +19887,9 @@
                         <input-cost>4.5</input-cost>
                      </minicam-non-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="electricity">
+                        <output-ratio>1</output-ratio>
+                     </secondary-output>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="H2 Enduse">
@@ -19715,8 +19980,10 @@
             <keyword final-energy="industry"/>
             <logit-exponent fillout="1" year="1975">-1</logit-exponent>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -19849,8 +20116,10 @@
                </technology>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -19983,8 +20252,10 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -20117,8 +20388,10 @@
                </technology>
             </subsector>
             <subsector name="refined liquids">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -20257,8 +20530,10 @@
             <price-unit>1975$/GJ</price-unit>
             <price year="1975">3.5</price>
             <subsector name="industry">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <technology name="industry">
@@ -20375,8 +20650,10 @@
             <keyword final-energy="industry"/>
             <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -20590,8 +20867,10 @@
                </technology>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -20805,8 +21084,10 @@
                </technology>
             </subsector>
             <subsector name="electricity">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -20907,8 +21188,10 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -21122,8 +21405,10 @@
                </technology>
             </subsector>
             <subsector name="refined liquids">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -21337,7 +21622,9 @@
                </technology>
             </subsector>
             <subsector name="hydrogen">
-               <share-weight fillout="1" year="1975">0</share-weight>
+               <share-weight year="1975">0</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2050">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -21476,6 +21763,9 @@
                         <input-cost>4.5</input-cost>
                      </minicam-non-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="electricity">
+                        <output-ratio>1</output-ratio>
+                     </secondary-output>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="H2 Enduse">
@@ -21566,8 +21856,10 @@
             <keyword final-energy="industry"/>
             <logit-exponent fillout="1" year="1975">-1</logit-exponent>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -21700,8 +21992,10 @@
                </technology>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -21834,8 +22128,10 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -21968,8 +22264,10 @@
                </technology>
             </subsector>
             <subsector name="refined liquids">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -22108,8 +22406,10 @@
             <price-unit>1975$/GJ</price-unit>
             <price year="1975">3.5</price>
             <subsector name="industry">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <technology name="industry">
@@ -22226,8 +22526,10 @@
             <keyword final-energy="industry"/>
             <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -22441,8 +22743,10 @@
                </technology>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -22656,8 +22960,10 @@
                </technology>
             </subsector>
             <subsector name="electricity">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -22758,8 +23064,10 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -22973,8 +23281,10 @@
                </technology>
             </subsector>
             <subsector name="refined liquids">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -23188,7 +23498,9 @@
                </technology>
             </subsector>
             <subsector name="hydrogen">
-               <share-weight fillout="1" year="1975">0</share-weight>
+               <share-weight year="1975">0</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2050">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -23327,6 +23639,9 @@
                         <input-cost>4.5</input-cost>
                      </minicam-non-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="electricity">
+                        <output-ratio>1</output-ratio>
+                     </secondary-output>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="H2 Enduse">
@@ -23417,8 +23732,10 @@
             <keyword final-energy="industry"/>
             <logit-exponent fillout="1" year="1975">-1</logit-exponent>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -23551,8 +23868,10 @@
                </technology>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -23685,8 +24004,10 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -23819,8 +24140,10 @@
                </technology>
             </subsector>
             <subsector name="refined liquids">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -23959,8 +24282,10 @@
             <price-unit>1975$/GJ</price-unit>
             <price year="1975">3.5</price>
             <subsector name="industry">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <technology name="industry">
@@ -24077,8 +24402,10 @@
             <keyword final-energy="industry"/>
             <logit-exponent fillout="1" year="1975">-3</logit-exponent>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -24292,8 +24619,10 @@
                </technology>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -24507,8 +24836,10 @@
                </technology>
             </subsector>
             <subsector name="electricity">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -24609,8 +24940,10 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -24824,8 +25157,10 @@
                </technology>
             </subsector>
             <subsector name="refined liquids">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -25039,7 +25374,9 @@
                </technology>
             </subsector>
             <subsector name="hydrogen">
-               <share-weight fillout="1" year="1975">0</share-weight>
+               <share-weight year="1975">0</share-weight>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2050">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
@@ -25178,6 +25515,9 @@
                         <input-cost>4.5</input-cost>
                      </minicam-non-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="electricity">
+                        <output-ratio>1</output-ratio>
+                     </secondary-output>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="H2 Enduse">
@@ -25268,8 +25608,10 @@
             <keyword final-energy="industry"/>
             <logit-exponent fillout="1" year="1975">-1</logit-exponent>
             <subsector name="biomass">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -25402,8 +25744,10 @@
                </technology>
             </subsector>
             <subsector name="coal">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -25536,8 +25880,10 @@
                </technology>
             </subsector>
             <subsector name="gas">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -25670,8 +26016,10 @@
                </technology>
             </subsector>
             <subsector name="refined liquids">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <logit-exponent fillout="1" year="1975">-6</logit-exponent>
@@ -25810,8 +26158,10 @@
             <price-unit>1975$/GJ</price-unit>
             <price year="1975">3.5</price>
             <subsector name="industry">
-               <share-weight fillout="1" year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
                <technology name="industry">

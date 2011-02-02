@@ -275,6 +275,10 @@ public :
 
    // Documentation is inherited.
    virtual bool XMLParse( const xercesc::DOMNode* aNode );
+    
+    virtual void doInterpolations( const int aYear, const int aPreviousYear,
+                                   const int aNextYear, const IOutput* aPreviousInput,
+                                   const IOutput* aNextInput );
 
 private :
 

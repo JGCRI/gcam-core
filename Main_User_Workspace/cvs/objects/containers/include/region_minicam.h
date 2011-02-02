@@ -73,7 +73,6 @@ class GDP;
 class Curve;
 class DependencyFinder;
 class TotalSectorEmissions;
-class GlobalTechnologyDatabase;
 class AFinalDemand;
 
 #define SORT_TESTING 0
@@ -113,7 +112,7 @@ public:
     RegionMiniCAM();
     virtual ~RegionMiniCAM();
     static const std::string& getXMLNameStatic();
-    virtual void completeInit( const GlobalTechnologyDatabase* aGlobalTechDB );
+    virtual void completeInit();
     virtual void calc( const int period );
     
     virtual void initCalc( const int period );

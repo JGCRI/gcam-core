@@ -397,7 +397,7 @@ void Resource::calcSupply( const string& aRegionName, const GDP* aGDP, const int
 
     // There is only one primary output at the first position.
     // Setting market supply of resource occurs in setPhysicalOutput().
-    mOutputs[0]->setPhysicalOutput( mAnnualProd[ aPeriod ], aRegionName, 0, aPeriod );
+    mOutputs[0]->setPhysicalOutput( aPeriod > 0 ? mAnnualProd[ aPeriod ] : 0, aRegionName, 0, aPeriod );
     vector<IInput*> inputs; // empty vector
 
     for( unsigned int i = 0; i < ghg.size(); ++i ) {

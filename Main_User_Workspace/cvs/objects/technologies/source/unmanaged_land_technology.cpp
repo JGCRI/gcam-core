@@ -71,6 +71,20 @@ mCarbonToEnergy( 1 ) {
 UnmanagedLandTechnology::~UnmanagedLandTechnology() {
 }
 
+/*!
+ * \brief Copy Constructor.
+ * \details Need to define the copy constructor here to ensure that the
+ *          compiler does not try to copy mResourceInput which will result
+ *          in an error.
+ * \param aOther The UnmanagedLandTechnology to copy.
+ */
+UnmanagedLandTechnology::UnmanagedLandTechnology( const UnmanagedLandTechnology& aOther ):
+FoodProductionTechnology( aOther ),
+mLandItemName( aOther.mLandItemName ),
+mCarbonToEnergy( aOther.mCarbonToEnergy)
+{
+}
+
 //! Parses any input variables specific to derived classes
 bool UnmanagedLandTechnology::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
     if( nodeName == "itemName" ) {
@@ -108,8 +122,8 @@ void UnmanagedLandTechnology::toDebugXMLDerived( const int period, ostream& out,
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
-const string& UnmanagedLandTechnology::getXMLName1D() const {
-    return getXMLNameStatic1D();
+const string& UnmanagedLandTechnology::getXMLName() const {
+    return getXMLNameStatic();
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -121,7 +135,7 @@ const string& UnmanagedLandTechnology::getXMLName1D() const {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const string& UnmanagedLandTechnology::getXMLNameStatic1D() {
+const string& UnmanagedLandTechnology::getXMLNameStatic() {
     const static string XML_NAME = "UnmanagedLandTechnology";
     return XML_NAME;
 }
@@ -178,7 +192,6 @@ void UnmanagedLandTechnology::initCalc( const string& aRegionName,
 * \param aDepDefinder Regional dependency finder.
 * \param aSubsectorInfo Subsector information object.
 * \param aLandAllocator Regional land allocator.
-* \param aGlobalTechDB Global Technology database.
 * \author Steve Smith
 */
 void UnmanagedLandTechnology::completeInit( const string& aRegionName,
@@ -186,8 +199,7 @@ void UnmanagedLandTechnology::completeInit( const string& aRegionName,
                                                const std::string& aSubsectorName,
                                                DependencyFinder* aDepFinder,
                                                const IInfo* aSubsectorInfo,
-                                               ILandAllocator* aLandAllocator,
-                                               const GlobalTechnologyDatabase* aGlobalTechDB )
+                                               ILandAllocator* aLandAllocator )
 {
     // Setup the land allocators for the secondary outputs
     if ( mOutputs.size() ) {
@@ -218,7 +230,7 @@ void UnmanagedLandTechnology::completeInit( const string& aRegionName,
     // create the proper land leaf type.
     
     Technology::completeInit( aRegionName, aSectorName, aSubsectorName, aDepFinder, aSubsectorInfo,
-                              aLandAllocator, aGlobalTechDB );
+                              aLandAllocator );
 
     // Store away the land allocator.
     mLandAllocator = aLandAllocator;
@@ -295,8 +307,15 @@ void UnmanagedLandTechnology::production( const string& aRegionName,
       previousLandAllocation = mLandAllocator->getLandAllocation( landType, mLandItemName, aPeriod - 1 );
     }
 
-    double landUseDecrease = previousLandAllocation - landInput ;
-    if ( landUseDecrease < 0 ) {
+    // Land use decrease will be temporarily set as the primary output and is only
+    // used when calculating deforestation emissions.
+    double landUseDecrease = previousLandAllocation - landInput;
+    const Modeltime* modeltime = scenario->getModeltime();
+    // Get the average per year decrease.  Note that the coefficients have the base
+    // year time-step already included so we must adjust for that.
+    landUseDecrease *= modeltime->gettimestep( modeltime->getFinalCalibrationPeriod() )
+        / modeltime->gettimestep( aPeriod );
+    if ( landUseDecrease < 0 ){
       landUseDecrease = 0;
    }
 

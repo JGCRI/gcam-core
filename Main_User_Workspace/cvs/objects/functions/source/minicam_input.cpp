@@ -110,6 +110,13 @@ void MiniCAMInput::csvSGMOutputFile( ostream& aFile,
     assert( false );
 }
 
+void MiniCAMInput::doInterpolations( const int aYear, const int aPreviousYear,
+                                     const int aNextYear, const IInput* aPreviousInput,
+                                     const IInput* aNextInput )
+{
+    // most inputs will not need to do anything
+}
+
 void MiniCAMInput::accept( IVisitor* aVisitor, const int period ) const
 {
     aVisitor->startVisitMiniCAMInput( this, period );

@@ -66,6 +66,7 @@ class PopulationMiniCAM : public Population
 {
 public:
     PopulationMiniCAM();
+    virtual Population* cloneAndInterpolate( const int aNewYear, const Population* aNextPopulation ) const;
     virtual void completeInit( const std::vector<double>& femalePopFromPrev = std::vector<double>(), 
         const std::vector<double>& malePopFromPrev = std::vector<double>() );
     const std::vector<double> getSurvMalePop() const { return std::vector<double>(); } // TEMP

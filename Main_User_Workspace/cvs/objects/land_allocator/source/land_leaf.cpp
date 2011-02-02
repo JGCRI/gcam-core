@@ -77,12 +77,10 @@ ALandAllocatorItem( aParent, eLeaf ),
 mIntrinsicYieldMode(),
 mYield( scenario->getModeltime()->getmaxper(), -1 ),
 mCalObservedYield(),
-mMaxYield( scenario->getModeltime()->getforestmaxper(), -1.0 ),
+mMaxYield( scenario->getModeltime()->getmaxper(), -1 ),
 mLandUseHistory( 0 ),
 mCalDataExists( false ),
 mIntrinsicYieldModeAgProdMultiplier ( 1 ),
-// Give enough room and re-size later
-mAgProdChange( scenario->getModeltime()->getforestmaxper() ),
 mIntrinsicYieldMult( 1 ),
 mActCarbonMult( 1 ),
 mCarbonPriceIncreaseRate( 0.0 )
@@ -386,8 +384,8 @@ void LandLeaf::setIntrinsicRate( const string& aRegionName,
                                  const int aPeriod )
 {
     assert( aProductName == mName );
-    assert( mIntrinsicYieldMode[ aPeriod ].isInited() &&
-            mIntrinsicYieldMode[ aPeriod ] >= 0 );
+    assert( aPeriod == 0 || (mIntrinsicYieldMode[ aPeriod ].isInited() &&
+            mIntrinsicYieldMode[ aPeriod ] >= 0) );
 
     // aIntrinsicRate [$/GCal] * intrinsicYieldMode [GCal/kHa] = [$/kHa]
     // The intrinsicRate that is passed in is $/Gcal. 
@@ -572,7 +570,7 @@ void LandLeaf::applyAgProdChange( const string& aLandType,
                                   const int aCurrentPeriod )
 {
     assert( aProductName == mName );
-    assert( mIntrinsicYieldMode[ aCurrentPeriod ].isInited() );
+    assert( aCurrentPeriod == 0 || mIntrinsicYieldMode[ aCurrentPeriod ].isInited() );
 
     double previousAgProdChange = 1;
     if ( aCurrentPeriod >= 1 ) {
@@ -580,7 +578,6 @@ void LandLeaf::applyAgProdChange( const string& aLandType,
     }
 
     const Modeltime* modeltime = scenario->getModeltime();
-    int timestep = modeltime->gettimestep( aCurrentPeriod );
 
     // Calculate Cumulative prod change from current to harvest period.
     // This means that calculated yields for current period are assumed to be applied
@@ -588,6 +585,7 @@ void LandLeaf::applyAgProdChange( const string& aLandType,
     // aAgProdChange must be constant if aHarvestPeriod != aCurrentPeriod
     for ( int aPeriod = aCurrentPeriod; aPeriod <= aHarvestPeriod; ++aPeriod ) {
         // Don't apply prod change in a calibration period
+        int timestep = modeltime->gettimestep( aPeriod );
         if ( !( mCalDataExists[ aCurrentPeriod ] && aPeriod == aCurrentPeriod ) ) {
             mAgProdChange[ aPeriod ] = previousAgProdChange * pow( 1 + aAgProdChange, timestep );
         }
@@ -788,7 +786,7 @@ void LandLeaf::calcYieldInternal( const string& aLandType,
                                   const int aCurrentPeriod )
 {
     assert( aHarvestPeriod >= aCurrentPeriod );
-    assert( mIntrinsicYieldMode[ aCurrentPeriod ].isInited() );
+    assert( aCurrentPeriod == 0 || mIntrinsicYieldMode[ aCurrentPeriod ].isInited() );
 
     // Add carbon value
     // ProfitRate[$/GCal] = aProfitRate[$/GCal] + carbonValue[$/kHa] / intrinsicYieldMode[GCal/kHa]

@@ -48,7 +48,6 @@
 #include <xercesc/dom/DOMNodeList.hpp>
 
 #include "sectors/include/tran_subsector.h"
-#include "technologies/include/tran_technology.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "containers/include/info_factory.h"
@@ -58,6 +57,8 @@
 #include "util/base/include/summary.h"
 #include "containers/include/gdp.h"
 #include "demographics/include/demographic.h"
+#include "technologies/include/itechnology_container.h"
+#include "technologies/include/itechnology.h"
 
 using namespace std;
 using namespace xercesc;
@@ -136,36 +137,6 @@ bool TranSubsector::XMLDerivedClassParse( const string& nodeName, const DOMNode*
 	return true;
 }
 
-/*! \brief Returns true if the nodename is a valid child for this class.
-*
-* Virtual function which specifies the XML name of the possible technology children of this class.
-* This function allows all technologies to be properly parsed using the base subsector code.
-* \author Steve Smith
-* \pre Needs corresponding createChild() function
-* \return True if nodename is a valid child of this class.
-*/
-bool TranSubsector::isNameOfChild  ( const string& nodename ) const {
-	return nodename == TranTechnology::getXMLNameStatic1D();
-}
-
-/*!
- * \brief Derived helper function to generate a child element or construct the
- *        appropriate technology.
- * \param aTechType The name of the XML node, which is the type of the
- *        technology.
- * \param aTechName The name of the new technology.
- * \param aYear The year of the new technology.
- * \pre isNameOfChild returned that the type could be created.
- * \author Steve Smith
- * \return A newly created technology of the specified type.
- */
-ITechnology* TranSubsector::createChild( const string& aTechType,
-                                         const string& aTechName,
-                                         const int aTechYear ) const
-{
-    return new TranTechnology( aTechName, aTechYear );
-}
-
 /*! \brief XML output stream for derived classes
 *
 * Function writes output due to any variables specific to derived classes to XML
@@ -206,11 +177,10 @@ void TranSubsector::toDebugXMLDerived( const int period, ostream& out, Tabs* tab
 */
 void TranSubsector::completeInit( const IInfo* aSectorInfo,
                                   DependencyFinder* aDependencyFinder,
-                                  ILandAllocator* aLandAllocator,
-                                  const GlobalTechnologyDatabase* aGlobalTechDB )
+                                  ILandAllocator* aLandAllocator )
 {
     // Only call base class completeInit.
-    Subsector::completeInit( aSectorInfo, aDependencyFinder, aLandAllocator, aGlobalTechDB );
+    Subsector::completeInit( aSectorInfo, aDependencyFinder, aLandAllocator );
 }
 
 /*!
@@ -365,31 +335,31 @@ void TranSubsector::MCoutputSupplySector( const GDP* aGDP ) const {
     dboutput4(regionName,"Price",sectorName,name,priceUnit,temp);
     
     // do for all technologies in the Subsector
-    for( unsigned int i = 0; i < techs.size(); ++i ){
+    for( unsigned int i = 0; i < mTechContainers.size(); ++i ){
 
         // secondary energy and price output by tech
         // output or demand for each Technology
         for ( int m=0;m<maxper;m++) {
-            temp[m] = techs[i][m]->getOutput( m );
+            temp[m] = mTechContainers[i]->getNewVintageTechnology(m)->getOutput( m );
         }
 
         dboutput4( regionName, "Secondary Energy Prod", sectorName + "_tech-new-investment", 
-            techs[i][ 0 ]->getName(), outputUnit, temp );
+            mTechContainers[i]->getName(), outputUnit, temp );
 		
 		// Output for all vintages.
         for ( int m=0; m < maxper;m++) {
 			temp[ m ] = 0;
             // Only sum output to the current period.
 			for( int j = 0; j <= m; ++j ){
-				temp[m] += techs[i][j]->getOutput( m );
+				temp[m] += mTechContainers[i]->getNewVintageTechnology(j)->getOutput( m );
 			}
         }
-        dboutput4( regionName, "Secondary Energy Prod", sectorName + "_tech-total", techs[i][ 0 ]->getName(), outputUnit, temp );
+        dboutput4( regionName, "Secondary Energy Prod", sectorName + "_tech-total", mTechContainers[i]->getName(), outputUnit, temp );
         // Transportation technology cost already in 1990 $.
         for ( int m=0;m<maxper;m++) {
-            temp[m] = techs[i][m]->getCost( m );
+            temp[m] = mTechContainers[i]->getNewVintageTechnology(m)->getCost( m );
         }
-        dboutput4( regionName, "Price", sectorName + "_tech", techs[i][ 0 ]->getName(), priceUnit, temp );
+        dboutput4( regionName, "Price", sectorName + "_tech", mTechContainers[i]->getName(), priceUnit, temp );
     }
 }
 

@@ -49,48 +49,50 @@
 // User headers
 #include "technologies/include/global_technology_database.h"
 #include "util/base/include/xml_helper.h"
-#include "containers/include/scenario.h"
-#include "util/base/include/model_time.h"
+#include "technologies/include/itechnology_container.h"
+#include "technologies/include/technology_container.h"
+#include "util/base/include/util.h"
 
 using namespace std;
 using namespace xercesc;
 
-extern Scenario* scenario;
-
-typedef std::vector<boost::shared_ptr<GlobalTechnology> >::iterator GlobalTechListIterator;
-typedef std::vector<boost::shared_ptr<GlobalTechnology> >::const_iterator CGlobalTechListIterator;
-
-//! Default constructor
-GlobalTechnologyDatabase::GlobalTechnologyDatabase() {
+/*!
+ * \brief Get the instance of the global technology database.
+ * \return The single instance of the global technology database.
+ */
+GlobalTechnologyDatabase* GlobalTechnologyDatabase::getInstance() {
+    static GlobalTechnologyDatabase INSTANCE;
+    
+    return &INSTANCE;
 }
 
-/*! \brief Get GlobalTechnology for the given name and year.
-*
-* This public function returns a GlobalTechnology with the corresponding name and year.
-* If a GlobalTechnology could not be found with the
-* passed in technology name and year NULL is returned.
-* \author Pralit Patel
-* \param aTechnologyName The technology name to look for.
-* \param aYear The year of the technology requested.
-* \return A new GlobalTechnology, or NULL if there is no GlobalTechnology for the tech name and year.
-*/
-const boost::shared_ptr<GlobalTechnology>& GlobalTechnologyDatabase::getTechnology( const string& aTechnologyName, const int aYear ) const {
-    for( CGlobalTechListIterator it = mTechnologyList.begin(); it != mTechnologyList.end(); ++it ) {
-        if( (*it)->getName() == aTechnologyName && (*it)->getYear() == aYear ) {
-            return *it;
+//! Destructor
+GlobalTechnologyDatabase::~GlobalTechnologyDatabase() {
+    for( CTechLocationIterator locIter = mTechnologyList.begin(); locIter != mTechnologyList.end(); ++locIter ) {
+        const vector<ITechnologyContainer*>& tempTechs = ( *locIter ).second;
+        for( CTechListIterator techIter = tempTechs.begin(); techIter != tempTechs.end(); ++techIter ) {
+            delete *techIter;
         }
     }
-    // did not find..
-    ILogger& mainLog = ILogger::getLogger( "main_log" );
-    mainLog.setLevel( ILogger::ERROR );
-    mainLog << "Couldn't find " << aTechnologyName << " for year " << aYear 
-        << " in GlobalTechnologyDatabase." << endl;
-    static const boost::shared_ptr<GlobalTechnology> nullPtr;
-    return nullPtr;
+    mTechnologyList.clear();
+}
+
+/*! \brief Get the XML node name in static form for comparison when parsing XML.
+ *
+ * This public function accesses the private constant string, XML_NAME.
+ * This way the tag is always consistent for both read-in and output and can be easily changed.
+ * The "==" operator that is used when parsing, required this second function to return static.
+ * \note A function cannot be static and virtual.
+ * \author Josh Lurz, James Blackwood
+ * \return The constant XML_NAME as a static.
+ */
+const std::string& GlobalTechnologyDatabase::getXMLNameStatic() {
+    const static string XML_NAME = "global-technology-database";
+    return XML_NAME;
 }
 
 //! parses GlobalTechnologyDatabase xml object
-void GlobalTechnologyDatabase::XMLParse( const DOMNode* aNode ){
+bool GlobalTechnologyDatabase::XMLParse( const DOMNode* aNode ){
     // assume we are passed a valid node.
     assert( aNode );
 
@@ -101,12 +103,53 @@ void GlobalTechnologyDatabase::XMLParse( const DOMNode* aNode ){
         DOMNode* curr = nodeList->item( i );
         const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
 
-        if( nodeName == "#text" ) {
+        if( nodeName == XMLHelper<void>::text() ) {
             continue;
         }
-        else if( nodeName == GlobalTechnology::getXMLNameStatic() ) {
-            boost::shared_ptr<GlobalTechnology> tmpTech ( new GlobalTechnology() );
-            parseContainerNode( curr, mTechnologyList, tmpTech, &GlobalTechnology::parseIdentifier );
+        else if( nodeName == "location-info" ) {
+            string sectorName = XMLHelper<string>::getAttr( curr, "sector-name" );
+            string subsectorName = XMLHelper<string>::getAttr( curr, "subsector-name" );
+            
+            if( sectorName.empty() ) {
+                // warn missing sector name
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::ERROR );
+                mainLog << "Missing sector-name attribute while parsing location-info in "
+                        << getXMLNameStatic();
+            }
+            else if( subsectorName.empty() ) {
+                // warn missing subsector name
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::ERROR );
+                mainLog << "Missing subsector-name attribute while parsing location-info in "
+                        << getXMLNameStatic();
+            }
+            else {
+                // try to find the contained technology
+                DOMNodeList* innerNodeList = curr->getChildNodes();
+                for( int innerIndex = 0; innerIndex < innerNodeList->getLength(); ++innerIndex ) {
+                    DOMNode* currInner = innerNodeList->item( innerIndex );
+                    const string innerNodeName = XMLHelper<string>::safeTranscode( currInner->getNodeName() );
+                    
+                    if( innerNodeName == XMLHelper<void>::text() ) {
+                        continue;
+                    }
+                    else if( TechnologyContainer::hasTechnologyType( innerNodeName ) ) {
+                        // note only technology containers are considered, no stubs
+                        pair<string, string> locationInfo( sectorName, subsectorName );
+                        
+                        // Get the tech list by reference so that updates are reflected
+                        // in mTechnologyList as well.
+                        vector<ITechnologyContainer*>& tempTechList = mTechnologyList[ locationInfo ];
+                        parseContainerNode( currInner, tempTechList, new TechnologyContainer );
+                    }
+                    else {
+                        ILogger& mainLog = ILogger::getLogger( "main_log" );
+                        mainLog.setLevel( ILogger::ERROR );
+                        mainLog << "Unknown element " << innerNodeName << " encountered while parsing location-info" << endl;
+                    }
+                }
+            }
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -114,15 +157,26 @@ void GlobalTechnologyDatabase::XMLParse( const DOMNode* aNode ){
             mainLog << "Unknown element " << nodeName << " encountered while parsing " << getXMLNameStatic() << endl;
         }
     }
+    
+    return true;
 }
 
 //! Write out datamembers to XML output stream.
 void GlobalTechnologyDatabase::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
 
-    for( CGlobalTechListIterator i = mTechnologyList.begin(); i != mTechnologyList.end(); ++i ){
-        ( *i )->toInputXML( aOut, aTabs );
+    for( CTechLocationIterator locIter = mTechnologyList.begin(); locIter != mTechnologyList.end(); ++locIter ) {
+        // TODO: create an XML helper to write an opening tag with arbitrary attributes
+        aTabs->writeTabs( aOut );
+        aOut << "<location-info sector-name=\"" << ( *locIter ).first.first << "\" subsector-name=\""
+             << ( *locIter ).first.second << "\">" << endl;
+        aTabs->increaseIndent();
+        
+        const vector<ITechnologyContainer*>& tempTechs = ( *locIter ).second;
+        for( CTechListIterator techIter = tempTechs.begin(); techIter != tempTechs.end(); ++techIter ) {
+            ( *techIter )->toInputXML( aOut, aTabs );
+        }
+        XMLWriteClosingTag( "location-info", aOut, aTabs );
     }
 
     // finished writing xml for the class members.
@@ -130,29 +184,39 @@ void GlobalTechnologyDatabase::toInputXML( ostream& aOut, Tabs* aTabs ) const {
 
 }
 
-//! Write out XML for debugging purposes.
-void GlobalTechnologyDatabase::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
-
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
-
-    for( CGlobalTechListIterator i = mTechnologyList.begin(); i != mTechnologyList.end(); ++i ) { 
-        ( *i )->toDebugXML( aPeriod, aOut, aTabs );
+/*!
+ * \brief Get the global technology identified by the given sector, subsector,
+ *        and technology name.
+ * \details A const pointer to the technology will be returned.  A user should clone
+ *          the returned technology.  If the technology was not found null will be
+ *          returned.
+ * \param aSectorName The name of the sector this technology should be located under.
+ * \param aSubsectorName The name of the Subsector this technology should be located under.
+ * \param aTechnologyName The technology name to find.
+ * \return A pointer to the global technology container or null if not found.
+ */
+const ITechnologyContainer* GlobalTechnologyDatabase::getTechnology( const string& aSectorName,
+                                                                     const string& aSubsectorName,
+                                                                     const string& aTechnologyName ) const
+{
+    const pair<string, string> locationToFind( aSectorName, aSubsectorName );
+    // functor to find a technology in a vector by name
+    util::NameEquals<INamed*> nameComparison( aTechnologyName );
+    
+    CTechLocationIterator techLocationIter = mTechnologyList.find( locationToFind );
+    if( techLocationIter != mTechnologyList.end() ) {
+        const vector<ITechnologyContainer*>& tempTechContainers = ( *techLocationIter ).second;
+        CTechListIterator techIter = find_if( tempTechContainers.begin(), tempTechContainers.end(),
+                                              nameComparison );
+        if( techIter != tempTechContainers.end() ) {
+            return *techIter;
+        }
     }
-
-    // finished writing xml for the class members.
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
-}
-
-/*! \brief Get the XML node name in static form for comparison when parsing XML.
-*
-* This public function accesses the private constant string, XML_NAME.
-* This way the tag is always consistent for both read-in and output and can be easily changed.
-* The "==" operator that is used when parsing, required this second function to return static.
-* \note A function cannot be static and virtual.
-* \author Josh Lurz, James Blackwood
-* \return The constant XML_NAME as a static.
-*/
-const std::string& GlobalTechnologyDatabase::getXMLNameStatic() {
-    const static string XML_NAME = "global-technology-database";
-    return XML_NAME;
+    
+    // otherwise the lookup was unsucessful
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::ERROR );
+    mainLog << "Could not find global technology for sector: " << aSectorName << ", subsector: "
+            << aSubsectorName << ", technology: " << aTechnologyName << endl;
+    return 0;
 }

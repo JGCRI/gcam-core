@@ -76,7 +76,7 @@ typedef vector<IInput*>::const_iterator CInputIterator;
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const string& BuildingGenericDmdTechnology::getXMLNameStatic1D() {
+const string& BuildingGenericDmdTechnology::getXMLNameStatic() {
 	const static string XML_NAME1D = "building-demand-technology";
 	return XML_NAME1D;
 }
@@ -121,8 +121,8 @@ BuildingGenericDmdTechnology* BuildingGenericDmdTechnology::clone() const {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME.
 */
-const std::string& BuildingGenericDmdTechnology::getXMLName1D() const {
-	return getXMLNameStatic1D();
+const std::string& BuildingGenericDmdTechnology::getXMLName() const {
+	return getXMLNameStatic();
 }
 
 void BuildingGenericDmdTechnology::completeInit( const string& aRegionName,
@@ -130,8 +130,7 @@ void BuildingGenericDmdTechnology::completeInit( const string& aRegionName,
                                                  const string& aSubsectorName,
                                                  DependencyFinder* aDepFinder,
                                                  const IInfo* aSubsectorInfo,
-                                                 ILandAllocator* aLandAllocator,
-                                                 const GlobalTechnologyDatabase* aGlobalTechDB )
+                                                 ILandAllocator* aLandAllocator )
 {
     // Construct the info object before calling Technology::completeInit so that
     // the info object can be used in the Technology.
@@ -157,8 +156,7 @@ void BuildingGenericDmdTechnology::completeInit( const string& aRegionName,
     mInfo->setDouble( "floor-to-surface-area", mFloorToSurfaceArea );
 
     Technology::completeInit( aRegionName, aSectorName, aSubsectorName, 
-                              aDepFinder, aSubsectorInfo, aLandAllocator,
-                              aGlobalTechDB );
+                              aDepFinder, aSubsectorInfo, aLandAllocator );
 }
 
 void BuildingGenericDmdTechnology::initCalc( const string& aRegionName,
@@ -300,4 +298,25 @@ void BuildingGenericDmdTechnology::accept( IVisitor* aVisitor, const int aPeriod
     aVisitor->startVisitBuildingGenericDmdTechnology( this, aPeriod );
     Technology::accept( aVisitor, aPeriod );
     aVisitor->endVisitBuildingGenericDmdTechnology( this, aPeriod );
+}
+
+void BuildingGenericDmdTechnology::doInterpolations( const Technology* aPrevTech, const Technology* aNextTech )
+{
+    Technology::doInterpolations( aPrevTech, aNextTech );
+    
+    const BuildingGenericDmdTechnology* prevBldTech = static_cast<const BuildingGenericDmdTechnology*>( aPrevTech );
+    const BuildingGenericDmdTechnology* nextBldTech = static_cast<const BuildingGenericDmdTechnology*>( aNextTech );
+    
+    /*!
+     * \pre We are given a valid BuildingGenericDmdTechnology for the previous tech.
+     */
+    assert( prevBldTech );
+    
+    /*!
+     * \pre We are given a valid BuildingGenericDmdTechnology for the next tech.
+     */
+    assert( nextBldTech );
+    
+    mAveInsulation = util::linearInterpolateY( year, prevBldTech->year, nextBldTech->year,
+                                               prevBldTech->mAveInsulation, nextBldTech->mAveInsulation );
 }

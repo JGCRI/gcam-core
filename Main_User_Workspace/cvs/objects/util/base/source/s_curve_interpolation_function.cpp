@@ -54,7 +54,7 @@ using namespace xercesc;
 
 //! Default Constructor
 SCurveInterpolationFunction::SCurveInterpolationFunction():
-mSteepness( 5 ),
+mSteepness( 10 ),
 mMedianXValue( 0 )
 {
 }
@@ -134,6 +134,11 @@ double SCurveInterpolationFunction::interpolate( const DataPoint* aLeftPoint, co
                                                  const double aXValue ) const
 {
     // TODO: error checking
+    double medianX = mMedianXValue;
+    if( mMedianXValue < aLeftPoint->getX() || mMedianXValue > aRightPoint->getX() ) {
+        // TODO: warn?
+        medianX = ( aRightPoint->getX() - aLeftPoint->getX() ) / 2 + aLeftPoint->getX();
+    }
     return aRightPoint->getY() - ( aRightPoint->getY() - aLeftPoint->getY() )
-        / ( 1.0 + exp( mSteepness * ( ( aXValue - mMedianXValue ) / ( aRightPoint->getX() - aLeftPoint->getX() ) ) ) );
+        / ( 1.0 + exp( mSteepness * ( ( aXValue - medianX ) / ( aRightPoint->getX() - aLeftPoint->getX() ) ) ) );
 }

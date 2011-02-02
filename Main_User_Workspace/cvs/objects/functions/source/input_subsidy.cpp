@@ -126,6 +126,9 @@ InputSubsidy::InputSubsidy( const InputSubsidy& aOther ){
     // Resize vectors to the correct size.
     mPhysicalDemand.resize( scenario->getModeltime()->getmaxper() );
     mAdjustedCoefficients.resize( scenario->getModeltime()->getmaxper() );
+    
+    // copy keywords
+    mKeywordMap = aOther.mKeywordMap;
 }
 
 InputSubsidy* InputSubsidy::clone() const {

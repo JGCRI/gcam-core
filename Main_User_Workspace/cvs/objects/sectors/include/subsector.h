@@ -58,7 +58,7 @@
 
 // Forward declarations
 class Summary;
-class ITechnology;
+class ITechnologyContainer;
 class GDP;
 class IInfo;
 class DependencyFinder;
@@ -73,7 +73,6 @@ class Tabs;
 class ILandAllocator;
 class Demographics;
 class IndirectEmissionsCalculator;
-class GlobalTechnologyDatabase;
 class InterpolationRule;
 
 /*! 
@@ -103,7 +102,7 @@ class Subsector: public IInvestable,
 private:
     static const std::string XML_NAME; //!< node name for toXML methods
     void clear();
-    void clearInterpolationRules( std::vector<InterpolationRule*>& aInterpolationRules );
+    void clearInterpolationRules();
     //! A flag for convenience to know whether this Subsector created a market
     //! for calibration
     bool doCalibration;
@@ -113,7 +112,11 @@ protected:
     std::string sectorName; //!< sector name
     std::auto_ptr<IInfo> mSubsectorInfo; //!< The subsector's information store.
 
-    std::vector<std::vector<ITechnology*> > techs; //!< vector of technology by period
+    //! Vector of technology containers by name
+    std::vector<ITechnologyContainer*> mTechContainers;
+    // Some typedefs for technology interators
+    typedef std::vector<ITechnologyContainer*>::iterator TechIterator;
+    typedef std::vector<ITechnologyContainer*>::const_iterator CTechIterator;
 
     //! Subsector logit share weights
     objects::PeriodVector<Value> mShareWeights;
@@ -121,14 +124,10 @@ protected:
     objects::PeriodVector<Value> mParsedShareWeights;
     //! Interpolation rules for subsector share weight values.
     std::vector<InterpolationRule*> mShareWeightInterpRules;
-    //! Interpolation rules for technology share weight values by tech name.
-    std::map<std::string, std::vector<InterpolationRule*> > mTechShareWeightInterpRules;
     // Some typedefs to make using interpolation rules more readable.
     typedef std::vector<InterpolationRule*>::const_iterator CInterpRuleIterator;
-    typedef std::map<std::string, std::vector<InterpolationRule*> >::iterator TechInterpRuleIterator;
-    typedef std::map<std::string, std::vector<InterpolationRule*> >::const_iterator CTechInterpRuleIterator;
     //! Logit exponential used for the technology competition.
-    objects::PeriodVector<double> mTechLogitExp;
+    objects::PeriodVector<Value> mTechLogitExp;
     std::vector<double> fuelPrefElasticity; //!< Fuel preference elasticity
 
     std::vector<double> mInvestments; //!< Investment by period.
@@ -148,26 +147,9 @@ protected:
     virtual const std::string& getXMLName() const;
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const {};
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {};
-    void normalizeTechShareWeights( const int period );
     void parseBaseTechHelper( const xercesc::DOMNode* curr, BaseTechnology* aNewTech );
-    virtual bool isNameOfChild  ( const std::string& nodename ) const;
-    
-    virtual ITechnology* createChild( const std::string& aTechType,
-                                     const std::string& aTechName,
-                                     const int aTechYear ) const;
     
     virtual const std::vector<double> calcTechShares ( const GDP* gdp, const int period ) const;
-   
-    static bool initializeTechVector( std::vector<ITechnology*>& aTechVector,
-                                      const std::string& aRegionName,
-                                      const std::string& aSectorName,
-                                      const std::string& aSubsectorName,
-                                      DependencyFinder* aDependencyFinder,
-                                      const IInfo* aSubsecInfo,
-                                      ILandAllocator* aLandAllocator,
-                                      const GlobalTechnologyDatabase* aGlobalTechDB );
-
-    static const std::string findTechName( const std::vector<ITechnology*>& aTechVector );
 
 public:
     Subsector( const std::string& regionName, const std::string& sectorName );
@@ -178,8 +160,7 @@ public:
 
     virtual void completeInit( const IInfo* aSectorInfo,
                                DependencyFinder* aDependencyFinder,
-                               ILandAllocator* aLandAllocator,
-                               const GlobalTechnologyDatabase* aGlobalTechDB );
+                               ILandAllocator* aLandAllocator );
     
     virtual void initCalc( NationalAccount* aNationalAccount,
                            const Demographic* aDemographics,
@@ -199,7 +180,6 @@ public:
 
     virtual double calcShare( const int aPeriod, const GDP* aGdp, const double aLogitExp ) const; 
     virtual double getShareWeight( const int period ) const;
-    virtual void scaleShareWeight( const double scaleValue, const int period );
 
     virtual void setOutput( const double aVariableDemand,
                             const double aFixedOutputScaleFactor,
@@ -210,8 +190,6 @@ public:
     double getFixedOutput( const int period ) const;
 
     virtual double getTotalCalOutputs( const int period ) const;
-
-    bool inputsAllFixed( const int period, const std::string& goodName ) const;
 
     void csvOutputFile( const GDP* aGDP,
                         const IndirectEmissionsCalculator* aIndirectEmissCalc ) const; 

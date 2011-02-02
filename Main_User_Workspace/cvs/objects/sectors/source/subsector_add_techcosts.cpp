@@ -45,7 +45,8 @@
 #include <xercesc/dom/DOMNode.hpp>
 
 #include "sectors/include/subsector_add_techcosts.h"
-#include "technologies/include/technology.h"
+#include "technologies/include/itechnology_container.h"
+#include "technologies/include/itechnology.h"
 
 using namespace std;
 using namespace xercesc;
@@ -106,8 +107,9 @@ const string& SubsectorAddTechCosts::getXMLNameStatic() {
 */
 double SubsectorAddTechCosts::getPrice( const GDP* aGDP, const int aPeriod ) const {
     double subsectorPrice = 0;
-    for ( unsigned int i = 0; i < techs.size(); ++i) {
-		double currCost = techs[ i ][ aPeriod ]->getCost( aPeriod );
+    for ( unsigned int i = 0; i < mTechContainers.size(); ++i) {
+        const ITechnology* newVintageTech = mTechContainers[ i ]->getNewVintageTechnology( aPeriod );
+		double currCost = newVintageTech->getCost( aPeriod );
         // calculate total price for SubsectorAddTechCosts
 		// subsector price is additive of all technology costs
 		// **** Beware of Share Weights
@@ -115,7 +117,7 @@ double SubsectorAddTechCosts::getPrice( const GDP* aGDP, const int aPeriod ) con
 		// **** to adjust total technology cost and its additive contribution to
 		// **** subsector price.
 		if( currCost > 0 ){
-			subsectorPrice += techs[ i ][ aPeriod ]->getShareWeight() * currCost;
+			subsectorPrice += newVintageTech->getShareWeight() * currCost;
 		}
     }
 	// Check for the condition where all technologies were fixed.

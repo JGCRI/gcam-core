@@ -116,7 +116,7 @@ public:
 private:
     //! A vector booleans, one per period, which denotes whether each period is valid.
     std::vector<bool> mIsValidPeriod;
-    std::auto_ptr<Modeltime> modeltime; //!< The modeltime for the scenario
+    std::auto_ptr<const Modeltime> modeltime; //!< The modeltime for the scenario
     std::auto_ptr<World> world; //!< The world object
     std::auto_ptr<Marketplace> marketplace; //!< The goods and services marketplace.
     

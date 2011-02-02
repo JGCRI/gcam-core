@@ -48,6 +48,8 @@
 #include <string>
 #include <vector>
 #include "util/base/include/hash_map.h"
+#include "util/base/include/value.h"
+#include "util/base/include/time_vector.h"
 
 class IInfo;
 
@@ -110,6 +112,24 @@ public:
                                            const double aCapacity );
 
     static const std::string getTrialMarketName( const std::string& aSectorName );
+
+     /*! \brief Fills missing period elements in a Value vector with values linearly 
+     *        interpolated from initialized or read-in values.
+     * \detail This method is intended for enabling variable time-step capability
+     *         and filling in values that have not been read-in or initialized
+     *         in a PeriodVector.
+     * \param aValueVector a period vector of Values.
+     */
+    static void fillMissingPeriodVectorInterpolated( objects::PeriodVector<Value>& aPeriodVector );
+
+     /*! \brief Fills missing period elements in a Value vector with values 
+     *         available from the next initialized or read-in values.
+     * \detail This method is intended for enabling variable time-step capability
+     *         and filling in values that have not been read-in or initialized
+     *         in a PeriodVector.
+     * \param aValueVector a period vector of Values.
+     */
+    static void fillMissingPeriodVectorNextAvailable( objects::PeriodVector<Value>& aPeriodVector );
 
 protected:
 

@@ -70,6 +70,9 @@ LandNode::LandNode( const ALandAllocatorItem* aParent )
 
 //! Destructor
 LandNode::~LandNode() {
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+        delete mChildren[ i ];
+    }
 }
 
 size_t LandNode::getNumChildren() const {

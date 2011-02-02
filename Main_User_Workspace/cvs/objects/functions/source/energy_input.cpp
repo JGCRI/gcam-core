@@ -118,8 +118,18 @@ EnergyInput::~EnergyInput() {
  * \param aOther Energy input from which to copy.
  */
 EnergyInput::EnergyInput( const EnergyInput& aOther ){
-    // Do not clone the input coefficient as the calculated
-    // coeffient will be filled out later.
+    /*!
+     * \warning Copying the coefficient here could break technical change.  We
+     *          have done it this way because it is currently unused (coefficients
+     *          are exogenously specified).  There should be some disscussion on
+     *          on how we want to treat technical change with interpolated
+     *          technologies.  Also note that when reconsidering this change we
+     *          must also consider CCS and the way it makes adjustments to the
+     *          coefficient.
+     */
+    if( aOther.mCoefficient.get() ) {
+        mCoefficient.reset( aOther.mCoefficient->clone() );
+    }
 
     // Do not copy calibration values into the future
     // as they are only valid for one period.
@@ -132,6 +142,9 @@ EnergyInput::EnergyInput( const EnergyInput& aOther ){
     mPhysicalDemand.resize( scenario->getModeltime()->getmaxper() );
     mCarbonContent.resize( scenario->getModeltime()->getmaxper() );
     mAdjustedCoefficients.resize( scenario->getModeltime()->getmaxper() );
+    
+    // copy keywords
+    mKeywordMap = aOther.mKeywordMap;
 }
 
 EnergyInput* EnergyInput::clone() const {
@@ -277,6 +290,7 @@ void EnergyInput::initCalc( const string& aRegionName,
     // There must be a valid region name.
     assert( !aRegionName.empty() );
 
+    mPhysicalDemand[ aPeriod ].set( 0 );// initialize to 0 shk
     // Initialize the coefficient from the marketplace.
     mCO2Coefficient = FunctionUtils::getCO2Coef( aRegionName, mName, aPeriod );
 
@@ -305,10 +319,9 @@ void EnergyInput::copyParamsInto( EnergyInput& aInput,
     // If the current input did not explicitly read in a coefficient, copy
     // forward the coefficient from the previous period. This results in any
     // technical change from the previous periods being applied.
-    // TODO: This has some strange consequences.
+    // TODO: This has some strange consequences. See the comment in copy.
     if( !aInput.mCoefficient.get() ){
-        aInput.mAdjustedCoefficients[ aPeriod ] =
-            mAdjustedCoefficients[ aPeriod - 1 ];
+        aInput.mCoefficient.reset( mCoefficient.get() ? mCoefficient->clone() : new Intensity( 1 ) );
     }
 }
 
@@ -392,6 +405,34 @@ double EnergyInput::getPriceElasticity() const {
 double EnergyInput::getTechChange( const int aPeriod ) const
 {
     return mTechChange;
+}
+
+void EnergyInput::doInterpolations( const int aYear, const int aPreviousYear,
+                                    const int aNextYear, const IInput* aPreviousInput,
+                                    const IInput* aNextInput )
+{
+    const EnergyInput* prevEneInput = static_cast<const EnergyInput*>( aPreviousInput );
+    const EnergyInput* nextEneInput = static_cast<const EnergyInput*>( aNextInput );
+    
+    /*!
+     * \pre We are given a valid EnergyInput for the previous input.
+     */
+    assert( prevEneInput );
+    
+    /*!
+     * \pre We are given a valid EnergyInput for the next input.
+     */
+    assert( nextEneInput );
+    
+    // Interpolate the coefficient if it exisits in the previous technology.  It
+    // may not if it was just the default in which case no interpolations are 
+    // necessary.
+    if( prevEneInput->mCoefficient.get() ) {
+        double newCoef = util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
+                                                   prevEneInput->mCoefficient->getCoefficient(),
+                                                   nextEneInput->mCoefficient->getCoefficient() );
+        mCoefficient.reset( new Intensity( newCoef ) );
+    }
 }
 
 

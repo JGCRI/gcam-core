@@ -184,6 +184,10 @@ public:
     virtual double getIncomeElasticity() const = 0;
 
     virtual double getCalibrationQuantity( const int aPeriod ) const;
+    
+    virtual void doInterpolations( const int aYear, const int aPreviousYear,
+                                   const int aNextYear, const IInput* aPreviousInput,
+                                   const IInput* aNextInput );
 
     void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     virtual void accept( IVisitor* aVistior, const int aPeriod ) const = 0;

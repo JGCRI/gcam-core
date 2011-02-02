@@ -61,12 +61,7 @@ extern Scenario* scenario;
 ForestLandLeaf::ForestLandLeaf( const ALandAllocatorItem* aParent,
                                 const string& aName  ):
 LandLeaf( aParent, aName ),
-mSteps( -1 ),
-// size to some reasonable maximum number for future forest rotation period
-// Will be re-sized later to appropriate number. Used 15 since could, at some point,
-// use this with smaller (say 5 year) time steps. This results in a slight oversize
-// of the forest leaf, but there are not many of these.
-mLandToBeHarvested( scenario->getModeltime()->getmaxper() + 15 )
+mSteps( -1 )
 {
 }
 
@@ -87,12 +82,23 @@ void ForestLandLeaf::completeInit( const string& aRegionName,
     // rotationPeriod is passed through regionInfo which is then used to
     // calculate the number of steps.
     int rotationPeriod = aRegionInfo->getInteger( "rotationPeriod", true );
-    mSteps = rotationPeriod / modeltime->gettimestep( 0 );
+    mRotationPeriod = rotationPeriod;
     
     // reset yield and land variables to be larger
     int maxper = modeltime->getmaxper();
+    // Note: this is assuming constant steps equal to that of the last model period
+    // for periods after the last model period.
+    mSteps = rotationPeriod / modeltime->gettimestep( maxper -1  );
     mYield.resize( maxper + mSteps );
-    mLandToBeHarvested.resize( maxper + mSteps );
+    
+    // these may or may not have been sized by now
+    if( ( maxper + mSteps ) > mMaxYield.size() ) {
+        // resize and don't forget the fill new periods with -1
+        mMaxYield.resize( maxper + mSteps, -1 );
+    }
+    if( ( maxper + mSteps ) > mLandToBeHarvested.size() ) {
+        mLandToBeHarvested.resize( maxper + mSteps );
+    }
 
     LandLeaf::completeInit( aRegionName, aRegionInfo );
 
@@ -134,18 +140,22 @@ void ForestLandLeaf::calcLandAllocation( const string& aRegionName,
     // market period mSteps into the future.
     // This land cannot be used for harvest in the future market period
     // because it is already designated for intermediate period harvest
+    mSteps = numPeriodsForRotation( aPeriod );
+    // Cumulative forest land set aside.
     double forestLandAside = 0;
+    const Modeltime* modeltime = scenario->getModeltime();
     for( int i = aPeriod + 1; i < aPeriod + mSteps; ++i ){
-        forestLandAside += mLandToBeHarvested[ i ];
+        // Use the time step from the last model period if the period is greater
+        // than the maximum model period.
+        int modelPeriod = min( modeltime->getmaxper() - 1, static_cast<int>( i ) );
+        forestLandAside += mLandToBeHarvested[ i ] * modeltime->gettimestep( modelPeriod );
     }
     
-    // Calculate the amount of land to be harvested per year.
-    const Modeltime* modeltime = scenario->getModeltime();
-    // Land to be harvested in the future market period is the amount of land that 
-    // can be used for harvests in each year ( mLandAllocation / timestep )
-    // minus the amount designated for harvests in the intermediate periods
-    double annualizedLand = mLandAllocation[ aPeriod ] / modeltime->gettimestep( aPeriod )
-                            - forestLandAside;
+    // Calculate the land that can be harvested in the harvest period by subtracting the cumulative
+    // land allocated in this period by the cumulative land set aside for inbetween harvest periods.
+    // We can then annualize that land amount by dividing by the timestep in the harvest period.
+    int modelPeriod = min( modeltime->getmaxper() - 1, static_cast<int>( aPeriod + mSteps ) );
+    double annualizedLand = ( mLandAllocation[ aPeriod ] - forestLandAside ) / modeltime->gettimestep( modelPeriod );
 
     // Store the land to be harvested in the future period.
     // This is land harvested to produce one year of production.
@@ -153,7 +163,8 @@ void ForestLandLeaf::calcLandAllocation( const string& aRegionName,
 
     // TODO -- could improve forest allocation calculations by linearly interpolating
     // instead of using averages by model period, although an estimate of the difference  
-    // indicates this would not have a large impact on the results.
+    // indicates this would not have a large impact on the results.  It does have an
+    // effect on the land necessary for calibration particularly with changing time-steps
     
 }
 
@@ -198,6 +209,13 @@ void ForestLandLeaf::setCalLandAllocation( const string& aLandType,
 {
     assert( aProductName == mName );
     const Modeltime* modeltime = scenario->getModeltime();
+    
+    // Since setCalLandAllocation is called before completeInit we must make sure
+    // that there is enough space in the mLandToBeHarvested vector and expand if not.
+    // Note that rotation period is also not available yet.
+    if( aHarvestPeriod >= mLandToBeHarvested.size() ) {
+        mLandToBeHarvested.resize( aHarvestPeriod + 1 );
+    }
 
     mLandToBeHarvested[ aHarvestPeriod ] = aCalLandUsed;
 
@@ -351,4 +369,37 @@ void ForestLandLeaf::calcYieldInternal( const string& aLandType,
         }
 
     } */
+}
+
+int ForestLandLeaf::numPeriodsForRotation( const int aPeriod ) const {
+    const Modeltime* modeltime = scenario->getModeltime();
+    if( aPeriod >= modeltime->getmaxper() ) {
+        return ceil( static_cast<double>( mRotationPeriod ) / modeltime->gettimestep( modeltime->getmaxper() - 1 ) );
+    }
+    const int rotationYear = modeltime->getper_to_yr( aPeriod ) + mRotationPeriod;
+    int numPeriods = aPeriod;
+    for( ; numPeriods < modeltime->getmaxper() && modeltime->getper_to_yr( numPeriods ) < rotationYear; ++numPeriods ) {
+    }
+    
+    if( numPeriods == modeltime->getmaxper() ) {
+        const int finalPeriod = modeltime->getmaxper() - 1;
+        numPeriods += ceil( static_cast<double>( rotationYear - modeltime->getper_to_yr( finalPeriod ) )
+                           / modeltime->gettimestep( finalPeriod ) ) - 1;
+    }
+    return numPeriods - aPeriod;
+}
+
+void ForestLandLeaf::setMaxYield( const string& aLandType,
+                                  const string& aProductName,
+                                  const double aMaxYield,
+                                  const int aPeriod )
+{
+    // Since setMaxYield is called before completeInit we must make sure that there
+    // is enough space in the mMaxYield vector and expand if not.
+    // Note that rotation period is also not available yet.
+    if( aPeriod >= mMaxYield.size() ) {
+        // resize and don't forget the fill new periods with -1
+        mMaxYield.resize( aPeriod + 1, -1 );
+    }
+    LandLeaf::setMaxYield( aLandType, aProductName, aMaxYield, aPeriod );
 }

@@ -42,6 +42,7 @@
 #include "util/base/include/definitions.h"
 #include <cassert>
 #include "util/base/include/calibrate_share_weight_visitor.h"
+#include "technologies/include/technology_container.h"
 #include "technologies/include/itechnology.h"
 #include "sectors/include/subsector.h"
 #include "sectors/include/sector.h"
@@ -167,13 +168,13 @@ void CalibrateShareWeightVisitor::startVisitSubsector( const Subsector* aSubsect
     double maxCalValue = -1;
     int numlCalTechs = 0;
     double totalCalValue = 0;
-    for( int techIndex = 0; techIndex < aSubsector->techs.size(); ++techIndex ) {
+    for( int techIndex = 0; techIndex < aSubsector->mTechContainers.size(); ++techIndex ) {
+        ITechnology* currTech = aSubsector->mTechContainers[ techIndex ]->getNewVintageTechnology( aPeriod );
         // call calc cost to make sure they are up to date
-        aSubsector->techs[ techIndex ][ aPeriod ]->calcCost( mCurrentRegionName, mCurrentSectorName, aPeriod );
+        currTech->calcCost( mCurrentRegionName, mCurrentSectorName, aPeriod );
 
-        double currCalValue = aSubsector->techs[ techIndex ] [ aPeriod ]->getCalibrationOutput( hasRequired, requiredName,
-                                                                                               aPeriod );
-        bool isAvailable = aSubsector->techs[ techIndex ][ aPeriod ]->isAvailable( aPeriod );
+        double currCalValue = currTech->getCalibrationOutput( hasRequired, requiredName, aPeriod );
+        bool isAvailable = currTech->isAvailable( aPeriod );
 
         // check if we have calibrated technologies
         if( hasCalValues && currCalValue == -1 && isAvailable ) {
@@ -184,10 +185,10 @@ void CalibrateShareWeightVisitor::startVisitSubsector( const Subsector* aSubsect
             calibrationLog.setLevel( ILogger::WARNING );
             mainLog << "Mixed calibrated and variable subsectors in Region: " << mCurrentRegionName
                 << " in sector: " << mCurrentSectorName
-                << " for technology: " << aSubsector->techs[ techIndex ][ aPeriod ]->getName()  << endl;
+                << " for technology: " << currTech->getName()  << endl;
             calibrationLog << "Mixed calibrated and variable subsectors in Region: " << mCurrentRegionName
                 << " in sector: " << mCurrentSectorName
-                << " for technology: " << aSubsector->techs[ techIndex ][ aPeriod ]->getName()  << endl;
+                << " for technology: " << currTech->getName()  << endl;
         }
         else if( isAvailable && currCalValue != -1 ) {
             hasCalValues = true;
@@ -211,13 +212,13 @@ void CalibrateShareWeightVisitor::startVisitSubsector( const Subsector* aSubsect
     if( hasCalValues && numlCalTechs > 1 ) {
         // we should have found a technology to have share weights anchored by
         assert( anchorTechIndex != -1 );
-        const ITechnology* anchorTech = aSubsector->techs[ anchorTechIndex ][ aPeriod ];
+        const ITechnology* anchorTech = aSubsector->mTechContainers[ anchorTechIndex ]->getNewVintageTechnology( aPeriod );
         const double scaledGdpPerCapita = mGDP->getBestScaledGDPperCap( aPeriod );
         const double anchorPrice = anchorTech->getCost( aPeriod );
         const double anchorShare = ( anchorTech->getCalibrationOutput( hasRequired, requiredName, aPeriod )
             / totalCalValue ) / pow( scaledGdpPerCapita, anchorTech->calcFuelPrefElasticity( aPeriod ) );
-        for( int techIndex = 0; techIndex < aSubsector->techs.size(); ++techIndex ) {
-            ITechnology* currTech = aSubsector->techs[ techIndex ][ aPeriod ];
+        for( int techIndex = 0; techIndex < aSubsector->mTechContainers.size(); ++techIndex ) {
+            ITechnology* currTech = aSubsector->mTechContainers[ techIndex ]->getNewVintageTechnology( aPeriod );
             double currShare = ( currTech->getCalibrationOutput( hasRequired, requiredName, aPeriod ) / totalCalValue )
                 / pow( scaledGdpPerCapita, currTech->calcFuelPrefElasticity( aPeriod ) );
 

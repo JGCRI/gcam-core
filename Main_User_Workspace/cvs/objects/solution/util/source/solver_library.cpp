@@ -480,11 +480,6 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
                              const ISolutionInfoFilter* aSolutionInfoFilter, const int aPeriod )
 {
     bool code = false;
-    // Return with code true if all markets are bracketed.
-    if( aSolutionSet.isAllBracketed() ){
-        return code = true;
-    }
-
     static const double LOWER_BOUND = util::getVerySmallNumber();
 
     // Make sure the markets are up to date before starting.
@@ -493,6 +488,10 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
     aWorld->calc( aPeriod );
     aSolutionSet.updateFromMarkets();
     aSolutionSet.updateSolvable( aSolutionInfoFilter );
+    // Return with code true if all markets are bracketed.
+    if( aSolutionSet.isAllBracketed() ){
+        return code = true;
+    }
     aSolutionSet.resetBrackets();
 
     ILogger& solverLog = ILogger::getLogger( "solver_log" );

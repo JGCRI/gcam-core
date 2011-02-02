@@ -51,8 +51,7 @@
 #include <map>
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/iround_trippable.h"
-
-class Population;
+#include "demographics/include/population.h"
 
 /*! 
 * \ingroup Objects
@@ -102,6 +101,20 @@ private:
     typedef std::map<std::string,int>::const_iterator CYearMapIterator;
     typedef std::vector<Population*>::iterator PopulationIterator;
     typedef std::vector<Population*>::const_iterator CPopulationIterator;
+
+    //! A binary functor to compare Population years so that they can be sorted.
+    struct YearComparator : public std::binary_function<Population*, Population*, bool> {
+        /*!
+        * \brief Determine if the left hand operand is less than the right.
+        * \param lhs The left hand side operand for the sort comparison.
+        * \param rhs The right hand side operand for the sort comparison.
+        * \return True if lhs is less than rhs, false otherwise.
+        */
+        bool operator()( const Population* lhs, const Population* rhs ){
+            return lhs->getYear() < rhs->getYear();
+        }
+    };
+
 };
 
 #endif // _DEMOGRAPHIC_H_

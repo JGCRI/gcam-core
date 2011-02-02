@@ -275,3 +275,34 @@ double InputOMFixed::getTechChange( const int aPeriod ) const
     return mTechChange;
 }
 
+void InputOMFixed::doInterpolations( const int aYear, const int aPreviousYear,
+                                     const int aNextYear, const IInput* aPreviousInput,
+                                     const IInput* aNextInput )
+{
+    const InputOMFixed* prevOMInput = static_cast<const InputOMFixed*>( aPreviousInput );
+    const InputOMFixed* nextOMInput = static_cast<const InputOMFixed*>( aNextInput );
+    
+    /*!
+     * \pre We are given a valid InputOMFixed for the previous input.
+     */
+    assert( prevOMInput );
+    
+    /*!
+     * \pre We are given a valid InputOMFixed for the next input.
+     */
+    assert( nextOMInput );
+    
+    // tech change is just copied from the next input
+    mTechChange = nextOMInput->mTechChange;
+    
+    // interpolate the costs
+    mOMFixed = util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
+                                         prevOMInput->mOMFixed, nextOMInput->mOMFixed );
+    mLevelizedOMFixedCost = util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
+                                                      prevOMInput->mLevelizedOMFixedCost,
+                                                      nextOMInput->mLevelizedOMFixedCost );
+    
+    // interpolate capacity factor
+    mCapacityFactor = util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
+                                                prevOMInput->mCapacityFactor, nextOMInput->mCapacityFactor );
+}
