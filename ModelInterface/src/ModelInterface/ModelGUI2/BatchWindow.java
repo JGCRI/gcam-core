@@ -70,7 +70,6 @@ import ModelInterface.InterfaceMain;
 
 
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class batchWindow. This class creates a new window with a progress 
  * bar when a batch query is run. If this window is exited before it is 
@@ -214,12 +213,15 @@ public class BatchWindow extends Window {
 		this.overwriteCheckBox = overwriteCheckBox;
 		this.overwrite = overwriteCheckBox.isSelected();
 
-        // Create a thread pool a run queries in
+        // determine the proper number of threads to use for queries by
+        // checking the configuration parameter which defaults to the
+        // total number of cores on the system
         final String coresToUsePropertyName = "coresToUse";
         final int numSystemCores = Runtime.getRuntime().availableProcessors();
 		Properties prop = InterfaceMain.getInstance().getProperties();
         final int numCoresToUse = Integer.valueOf(prop.getProperty(coresToUsePropertyName, Integer.toString(numSystemCores)));
 		prop.setProperty(coresToUsePropertyName, Integer.toString(numCoresToUse));
+        // Create a thread pool to run queries in
         queryThreadPool = Executors.newFixedThreadPool(numCoresToUse);
 
 		progressBar = new JProgressBar(0, numQueries*toRunScns.size());
@@ -373,7 +375,6 @@ public class BatchWindow extends Window {
                                 } catch(ExecutionException ee) {
                                     ee.printStackTrace();
                                     HSSFRow row = sheet.createRow(sheet.getLastRowNum());
-                                    // TODO: how to get query?
                                     row.createCell((short)0).setCellValue(results.peek().getQueryName()+" had error: "+ee.getMessage());
                                     // avoid reporting the same error twice in the case of extra runs
                                     if(!results.peek().isTaskAnExtraRun()) {
