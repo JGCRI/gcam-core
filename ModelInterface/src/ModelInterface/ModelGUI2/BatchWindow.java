@@ -129,6 +129,9 @@ public class BatchWindow extends Window {
         boolean isTaskAnExtraRun() {
             return isExtraRun;
         }
+        String getQueryName() {
+            return qg.toString();
+        }
 
         // RunnableFuture methods
         public boolean cancel(boolean mayInterruptIfRunning) {
@@ -338,85 +341,83 @@ public class BatchWindow extends Window {
                 //Option to add results to an existing file has been added.
                 if(wb == null || (excelFile.exists() && (overwrite))) {
                     wb = new HSSFWorkbook();
-                    /* necessary?
-                    for(int i = 1; i < wb.getNumberOfSheets(); i++)
-                        wb.removeSheetAt(i);
-                        */
                 }
                 try {
-                for(Iterator<Object[]> itScn = toRunScns.iterator(); itScn.hasNext(); itScn.next()) {
-                    if(!singleSheetCheckBox.isSelected()) { 
-                        sheet = wb.createSheet("Sheet"+String.valueOf(wb.getNumberOfSheets()+1));
-                        drawingPat = drawPicsCheckBox.isSelected() ? sheet.createDrawingPatriarch() : null;
-                    }
-					for(int snapshotIndex = 0; snapshotIndex < numQueries; ++snapshotIndex) {
-						tempNode = res.snapshotItem(snapshotIndex);
-						if(tempNode.getNodeType() == Node.COMMENT_NODE) {
-							// skip comments
-							continue;
-						}
-						if(isInterrupted())
-							return;
-
-						if(singleSheetCheckBox.isSelected()) {
-							sheet = wb.createSheet("Sheet"+String.valueOf(wb.getNumberOfSheets()+1));
-							drawingPat = drawPicsCheckBox.isSelected() ? sheet.createDrawingPatriarch() : null;
-						}
-
-                        try {
-                            // get will block until the query is done processing
-                            results.peek().get().exportToExcel(sheet, wb, drawingPat);
-                            // remove after the get to ensure all tasks get cancelled in the event we are
-                            // interrupted
-                            results.remove();
-                            // if we created an extra run for global we must base
-                            // sure those results are on the same sheet
-                            if(!results.isEmpty() && results.peek().isTaskAnExtraRun()) {
-                                results.peek().get().exportToExcel(sheet, wb, drawingPat);
-                                results.remove();
-                            }
-                        } catch(ExecutionException ee) {
-                            ee.printStackTrace();
-							HSSFRow row = sheet.createRow(sheet.getLastRowNum());
-                            // TODO: how to get query?
-							row.createCell((short)0).setCellValue("Error: "+ee.getMessage());
-							++numErrors;
+                    // actually get the query results and write them into the spreadsheet
+                    for(Iterator<Object[]> itScn = toRunScns.iterator(); itScn.hasNext(); itScn.next()) {
+                        if(!singleSheetCheckBox.isSelected()) { 
+                            sheet = wb.createSheet("Sheet"+String.valueOf(wb.getNumberOfSheets()+1));
+                            drawingPat = drawPicsCheckBox.isSelected() ? sheet.createDrawingPatriarch() : null;
                         }
-					}
+                        for(int snapshotIndex = 0; snapshotIndex < numQueries; ++snapshotIndex) {
+                            tempNode = res.snapshotItem(snapshotIndex);
+                            if(tempNode.getNodeType() == Node.COMMENT_NODE) {
+                                // skip comments
+                                continue;
+                            }
+                            if(isInterrupted())
+                                return;
 
-				}
-				if(isInterrupted())
-					return;
+                            if(singleSheetCheckBox.isSelected()) {
+                                sheet = wb.createSheet("Sheet"+String.valueOf(wb.getNumberOfSheets()+1));
+                                drawingPat = drawPicsCheckBox.isSelected() ? sheet.createDrawingPatriarch() : null;
+                            }
+
+                            // may need to get two results if the task was an extra run for global
+                            for(int extra = 0; extra < 1 || (!results.isEmpty() && results.peek().isTaskAnExtraRun()); ++extra) {
+                                try {
+                                    // get will block until the query is done processing
+                                    // just peek now and remove after the get to ensure all tasks get cancelled 
+                                    // in the event we are interrupted
+                                    results.peek().get().exportToExcel(sheet, wb, drawingPat);
+                                } catch(ExecutionException ee) {
+                                    ee.printStackTrace();
+                                    HSSFRow row = sheet.createRow(sheet.getLastRowNum());
+                                    // TODO: how to get query?
+                                    row.createCell((short)0).setCellValue(results.peek().getQueryName()+" had error: "+ee.getMessage());
+                                    // avoid reporting the same error twice in the case of extra runs
+                                    if(!results.peek().isTaskAnExtraRun()) {
+                                        ++numErrors;
+                                    }
+                                } finally {
+                                    results.remove();
+                                }
+                            }
+                        }
+
+                    }
+                    if(isInterrupted())
+                        return;
 
 
-				try {
-					String fileName = excelFile.toString();
-					if(fileName.contains(".xml"))
-						fileName = fileName.replace(".xml", "");
-					if(fileName.contains(".xls"))
-						fileName = fileName.replace(".xls", "");
+                    try {
+                        String fileName = excelFile.toString();
+                        if(fileName.contains(".xml"))
+                            fileName = fileName.replace(".xml", "");
+                        if(fileName.contains(".xls"))
+                            fileName = fileName.replace(".xls", "");
 
-					FileOutputStream fos = new FileOutputStream(fileName+".xls");
-					wb.write(fos);
-					fos.close();
-					if(numErrors == 0) {
-						JOptionPane.showMessageDialog(parentFrame,
-								"Sucessfully ran batch query",
-								"Batch Query", JOptionPane.INFORMATION_MESSAGE);
-					} else {
-						// warn the users that some queries had errors
-						JOptionPane.showMessageDialog(parentFrame,
-								"Batch queries finished with "+numErrors+" error"+(numErrors == 1 ? "." : "s."),
-								"Batch Query", JOptionPane.WARNING_MESSAGE);
-					}
-				} catch(IOException ioe) {
-					ioe.printStackTrace();
-					JOptionPane.showMessageDialog(parentFrame,
-							"There was an error while trying to write results",
-							"Batch Query Error", JOptionPane.ERROR_MESSAGE);
-				} finally {
-					progressDialog.dispose();
-				}
+                        FileOutputStream fos = new FileOutputStream(fileName+".xls");
+                        wb.write(fos);
+                        fos.close();
+                        if(numErrors == 0) {
+                            JOptionPane.showMessageDialog(parentFrame,
+                                    "Sucessfully ran batch query",
+                                    "Batch Query", JOptionPane.INFORMATION_MESSAGE);
+                        } else {
+                            // warn the users that some queries had errors
+                            JOptionPane.showMessageDialog(parentFrame,
+                                    "Batch queries finished with "+numErrors+" error"+(numErrors == 1 ? "." : "s."),
+                                    "Batch Query", JOptionPane.WARNING_MESSAGE);
+                        }
+                    } catch(IOException ioe) {
+                        ioe.printStackTrace();
+                        JOptionPane.showMessageDialog(parentFrame,
+                                "There was an error while trying to write results",
+                                "Batch Query Error", JOptionPane.ERROR_MESSAGE);
+                    } finally {
+                        progressDialog.dispose();
+                    }
                 } catch(InterruptedException ie) {
                     ie.printStackTrace();
                     // make sure all of the query tasks are cancelled since the thread pool will
