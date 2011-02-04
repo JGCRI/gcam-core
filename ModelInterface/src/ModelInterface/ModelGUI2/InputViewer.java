@@ -1332,7 +1332,7 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		((InterfaceMain)parentFrame).fireControlChange(controlStr);
 
 		// TODO: get rid of the dependency on file
-		file = headerFiles[0];
+		file = csvFiles[0];
 		readCSVFile(csvFiles, headerFiles[0]);
 		return true;
 	}
@@ -1345,8 +1345,12 @@ public class InputViewer implements ActionListener, TableModelListener, MenuAdde
 		// save as..
 
 		FileChooser fc = FileChooserFactory.getFileChooser();
+        String saveAsDefault = file.getAbsolutePath();
+        if(!saveAsDefault.endsWith(".xml")) {
+            saveAsDefault = saveAsDefault.replaceAll("\\....$", ".xml");
+        }
 		File[] result = fc.doFilePrompt(parentFrame, null, FileChooser.SAVE_DIALOG, 
-				new File(((InterfaceMain)parentFrame).getProperties().getProperty("lastDirectory", ".")),
+				new File(saveAsDefault),
 				xmlFilter);
 		if(result == null) {
 			return true;
