@@ -195,7 +195,7 @@ public class BatchWindow extends Window {
 	 * @param parentFrame the parent frame GUI
 	 * @param overwriteCheckBox option to overwrite existing file
 	 */
-	public BatchWindow(final File excelFile, final Vector<Object[]> toRunScns,
+	public BatchWindow(final File excelFileIn, final Vector<Object[]> toRunScns,
 			final JCheckBox singleSheetCheckBox, final JCheckBox drawPicsCheckBox,
 			final int numQueries, final XPathResult res, final JFrame parentFrame,
 			JCheckBox overwriteCheckBox) {
@@ -203,7 +203,7 @@ public class BatchWindow extends Window {
 
 
 		super(parentFrame);
-		this.excelFile = excelFile;
+		this.excelFile = new File(excelFileIn.getName().endsWith(".xls") ? excelFileIn.getAbsolutePath() : excelFileIn.getAbsolutePath()+".xls");
 		this.toRunScns = toRunScns;
 		this.singleSheetCheckBox = singleSheetCheckBox;
 		this.drawPicsCheckBox = drawPicsCheckBox;
