@@ -316,15 +316,20 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		} else if(e.getActionCommand().equals("Batch File")) {
 			// TODO: make it so recent files could work with this
 			FileChooser fc = FileChooserFactory.getFileChooser();
-			File[] result = fc.doFilePrompt(this, "Open Batch File", FileChooser.LOAD_DIALOG, 
+			final File[] result = fc.doFilePrompt(this, "Open Batch File", FileChooser.LOAD_DIALOG, 
 					new File(getProperties().getProperty("lastDirectory", ".")),
 					new XMLFilter());
-			if(result != null) {
-				for(File file : result) {
-					runBatch(file);
-				}
-			}
-			// TODO: message that all were run
+            // these should be run off the GUI thread
+            new Thread(new Runnable() {
+                public void run() {
+                    if(result != null) {
+                        for(File file : result) {
+                            runBatch(file);
+                        }
+                    }
+                    // TODO: message that all were run
+                }
+            }).start();
 		}
 	}
 	public static InterfaceMain getInstance() {

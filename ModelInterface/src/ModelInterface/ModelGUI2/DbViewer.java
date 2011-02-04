@@ -19,6 +19,7 @@ import ModelInterface.common.RecentFilesList.RecentFile;
 import ModelInterface.MenuAdder;
 import ModelInterface.InterfaceMain;
 import ModelInterface.ModelGUI2.QueryResultsPanel;
+import ModelInterface.BatchRunner;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
@@ -93,7 +94,7 @@ import org.apache.poi.hssf.usermodel.*;
 
 import com.sleepycat.dbxml.*;
 
-public class DbViewer implements ActionListener, MenuAdder {
+public class DbViewer implements ActionListener, MenuAdder, BatchRunner {
 	private JFrame parentFrame;
 
 	private Document queriesDoc;
@@ -1170,7 +1171,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		}
 	}
 
-	protected void batchQuery(File queryFile, final File excelFile) {
+	protected BatchWindow batchQuery(File queryFile, final File excelFile) {
 		final Vector tempScns = getScenarios();
 		final String singleSheetCheckBoxPropName = "batchQueryResultsInDifferentSheets";
 		final String includeChartsPropName ="batchQueryIncludeCharts";
@@ -1243,7 +1244,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		scenarioDialog.setVisible(true);
 
 		if(scenarioList.isSelectionEmpty()) {
-			return;
+			return null;
 		}
 		// save the check box options back into the properties
 		prop.setProperty(singleSheetCheckBoxPropName, Boolean.toString(singleSheetCheckBox.isSelected()));
@@ -1260,7 +1261,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		if(numQueries == 0) {
 			JOptionPane.showMessageDialog(parentFrame, "Could not find queries to run in batch file:\n"+queryFile,
 					"Batch Query Error", JOptionPane.ERROR_MESSAGE);
-			return;
+			return null;
 		}
 		final Vector<Object[]> toRunScns = new Vector<Object[]>();
 		if(!seperateRunsCheckBox.isSelected()) {
@@ -1279,6 +1280,7 @@ public class DbViewer implements ActionListener, MenuAdder {
 		//create listener for window
 
 
+        return bWindow;
 	}
 
 	public boolean writeFile(File file, Document theDoc) {
@@ -1642,5 +1644,80 @@ public class DbViewer implements ActionListener, MenuAdder {
 		scanDialog.setResizable(false);
 		scanDialog.setContentPane(all);
 		scanDialog.setVisible(true);
+	}
+	public void runBatch(Node command) {
+		NodeList children = command.getChildNodes();
+		for(int i = 0; i < children.getLength(); ++i ) {
+			Node child = children.item(i);
+			// TODO: put in a parse filter for this
+			if(child.getNodeType() != Node.ELEMENT_NODE) {
+				continue;
+			}
+			String actionCommand = ((Element)child).getAttribute("name");
+			if(actionCommand == null) {
+				continue;
+			}
+			if(actionCommand.equals("XMLDB Batch File")) {
+				File queryFile = null;
+				File outFile = null;
+				String dbFile = null;
+				//ArrayList<ScenarioListItem> scenarios = new ArrayList<ScenarioListItem>();
+				// read file names for header file, csv files, and the output file
+				NodeList fileNameChildren = child.getChildNodes();
+				for(int j = 0; j < fileNameChildren.getLength(); ++j) {
+					Node fileNode = fileNameChildren.item(j);
+					if(fileNode.getNodeType() != Node.ELEMENT_NODE) {
+						continue;
+					}
+					if(fileNode.getNodeName().equals("queryFile")) {
+						queryFile = new File(fileNode.getTextContent());
+					} else if(fileNode.getNodeName().equals("outFile")) {
+						outFile = new File(fileNode.getTextContent());
+					} else if(fileNode.getNodeName().equals("xmldbLocation")) {
+						//dbFile = new File(fileNode.getTextContent());
+                        dbFile = fileNode.getTextContent();
+                        /*
+					} else if(fileNode.getNodeName().equals("scenario")) {
+                        scenarios.add(new ScenarioListItem("", ((Element)fileNode).getAttribute("name"),
+                                    ((Element)fileNode).getAttribute("date")));
+                                    */
+					} else {
+						System.out.println("Unknown tag: "+fileNode.getNodeName());
+						// should I print this error to the screen?
+					}
+				}
+				// make sure we have enough to run the batch query 
+				// which means we have a query file, output file, and
+				// at database location
+				if(queryFile != null && outFile != null && dbFile != null /*&& !scenarios.isEmpty()*/) {
+                    try {
+                        XMLDB.openDatabase(dbFile, parentFrame);
+
+                        // run the queries and wait for them to finish so that we
+                        // can close the database
+                        BatchWindow runner = batchQuery(queryFile, outFile);
+                        if(runner != null) {
+                            runner.waitForFinish();
+                        }
+                    } catch(Exception e) {
+                        e.printStackTrace();
+                        JOptionPane.showMessageDialog(parentFrame,
+                                "Recieved error while running: "+e.getMessage(),
+                                "Batch File Error", JOptionPane.ERROR_MESSAGE);
+                    } finally {
+                        XMLDB.closeDatabase();
+                    }
+				} else {
+					JOptionPane.showMessageDialog(parentFrame,
+							"Not enough info to run batch query.",
+							"Batch File Error", JOptionPane.ERROR_MESSAGE);
+				}
+			} else {
+				System.out.println("Unknown command: "+actionCommand);
+				JOptionPane.showMessageDialog(parentFrame,
+						"Unknown command: "+actionCommand,
+						"Batch File Error", JOptionPane.ERROR_MESSAGE);
+			}
+		}
 	}
 }

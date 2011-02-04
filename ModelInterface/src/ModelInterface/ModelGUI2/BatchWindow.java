@@ -498,4 +498,16 @@ public class BatchWindow extends Window {
 		exportThread.interrupt();
 	}
 
+    /**
+     * Wait for the runner to finish.  This will block until it can join with the
+     * export thread.
+     */
+    public void waitForFinish() {
+        try {
+            exportThread.join();
+        } catch (InterruptedException ie) {
+            ie.printStackTrace();
+        }
+    }
+
 }
