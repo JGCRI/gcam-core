@@ -427,7 +427,8 @@ public class DemographicsQueryBuilder extends QueryBuilder {
 			}
 			tempMap = (Map)tempMap.get(attr);
 		} else if(!addedNodeLevel && !addedYearLevel && !attrMap.isEmpty() && !qg.getCollapseOnList().contains(type)) {
-			String attr = XMLDB.getAllAttr(attrMap);
+            // TODO: add the ability to use showAttrMap
+			String attr = XMLDB.getAllAttr(attrMap, null);
 			// check for rewrites
 			if(qg.labelRewriteMap != null && qg.labelRewriteMap.containsKey(type)) {
 				Map<String, String> currRewriteMap = qg.labelRewriteMap.get(type);

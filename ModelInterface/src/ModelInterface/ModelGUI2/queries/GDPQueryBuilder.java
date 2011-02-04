@@ -232,7 +232,8 @@ public class GDPQueryBuilder extends QueryBuilder {
 		}
 		// special case since male and female do not actually have attributes
 		if(!addedNodeLevel && !addedYearLevel && !attrMap.isEmpty()) {
-			String attr = XMLDB.getAllAttr(attrMap);
+            // TODO: add ability to use showAttrMap
+			String attr = XMLDB.getAllAttr(attrMap, null);
 			// check for rewrites
 			if(qg.labelRewriteMap != null && qg.labelRewriteMap.containsKey(type)) {
 				Map<String, String> currRewriteMap = qg.labelRewriteMap.get(type);

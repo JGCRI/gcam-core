@@ -336,7 +336,8 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 
 		// check if we need to collapse this level
 		if(!addedNodeLevel && !addedYearLevel && !attrMap.isEmpty()) {
-			String attr = XMLDB.getAllAttr(attrMap);
+            // TODO: add the ability to use showAttrMap
+			String attr = XMLDB.getAllAttr(attrMap, null);
 			attr = nodeName+"@"+attr;
 			if(!tempMap.containsKey(attr)) {
 				tempMap.put(attr, new TreeMap());
