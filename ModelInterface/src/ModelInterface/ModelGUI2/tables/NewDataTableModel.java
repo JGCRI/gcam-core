@@ -506,12 +506,14 @@ public class NewDataTableModel extends BaseTableModel{
 
 			// Split out the name attribute if it contains it.
 			String rowName;
+            /*
 			if( rowNameFull.indexOf('=') != -1 ){
 				rowName = rowNameFull.split("=")[ 1 ];
 			}
 			else {
+            */
 				rowName = rowNameFull;
-			}
+			//}
 			XYSeries currSeries = new XYSeries(rowName, false, false);
 			// Skip column 1 because it contained the label.
 			for( int col = 1; col < getColumnCount(); ++col ){

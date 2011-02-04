@@ -67,6 +67,11 @@ public class QueryGenerator implements java.io.Serializable{
 	 * the results.  The default value is to not use this behavoir.
 	 */
 	private boolean doAppendRewriteValues = false;
+    /**
+     * A map to keep track of node attributes which should not get
+     * collapsed by getAllAttr.
+     */
+    Map<String, List<String>> showAttrMap;
 
 	// The level has a pair of a nodename
 	// and the attribute name to pull data from
@@ -90,10 +95,12 @@ public class QueryGenerator implements java.io.Serializable{
 		parentFrame = parentFrameIn;
 		sumAll = false;
 		labelRewriteMap = null;
+        showAttrMap = new TreeMap<String, List<String>>();
 		isRunFunction = false;
 		getQueryDialog();
 	}
 	public QueryGenerator(Node queryIn) {
+        showAttrMap = new TreeMap<String, List<String>>();
 		if(queryIn.getNodeName().equals(MarketQueryBuilder.xmlName)) {
 			qb = new MarketQueryBuilder(this);
 		} else if(queryIn.getNodeName().equals(SupplyDemandQueryBuilder.xmlName)) {
@@ -164,6 +171,16 @@ public class QueryGenerator implements java.io.Serializable{
 					labelRewriteMap.put(((Element)rewriteLevelList.item(levelNum)).getAttribute("name"),
 							currMap);
 				}
+			} else if (nl.item(i).getNodeName().equals("showAttribute")) {
+				String level = ((Element)nl.item(i)).getAttribute("level");
+                List<String> attrNames;
+                if(showAttrMap.containsKey(level)) {
+                    attrNames = showAttrMap.get(level);
+                } else {
+                    attrNames = new Vector<String>();
+                    showAttrMap.put(level, attrNames);
+                }
+				attrNames.add(((Element)nl.item(i)).getAttribute("attribute-name"));
 			} else if (nl.item(i).getNodeName().equals("xPath")) {
 				var = ((Element)nl.item(i)).getAttribute("dataName");
 				if( ((Element)nl.item(i)).getAttribute("sumAll").equals("true")) {
@@ -675,6 +692,15 @@ public class QueryGenerator implements java.io.Serializable{
 			}
 			queryNode.appendChild(temp);
 		}
+        for(Iterator<Map.Entry<String, List<String>>> levelIt = showAttrMap.entrySet().iterator(); levelIt.hasNext(); ) {
+            Map.Entry<String, List<String>> currLevel = levelIt.next();
+            for(Iterator<String> attrIt = currLevel.getValue().iterator(); attrIt.hasNext(); ) {
+                temp = doc.createElement("showAttribute");
+                temp.setAttribute("level", currLevel.getKey() );
+                temp.setAttribute("attribute-name", attrIt.next());
+                queryNode.appendChild(temp);
+            }
+        }
 		return queryNode;
 	}
 	/**
@@ -773,13 +799,22 @@ public class QueryGenerator implements java.io.Serializable{
 		// which is not available in those kinds of queries
 		Map<String, String> attrMap = !isRunFunction ? XMLDB.getAttrMapWithCache(currNode) : XMLDB.getAttrMap(currNode);
 
-		// try to find the axis values at the current node
+		// set the type as the node name if it does not have a type attribute
 		String type = attrMap.get("type");
+		if(type == null) {
+			type = nodeName;
+		}
+
+		// try to find the axis values at the current node
 		boolean setNodeLevel = false;
 		boolean setYearLevel = false;
 		if(nodeLevel.getKey().equals(type) || nodeLevel.getKey().equals(nodeName)) {
 			setNodeLevel = true;
-			axisValue.setValue(attrMap.get(nodeLevel.getValue() != null ? nodeLevel.getValue() : "name"));
+            if(!showAttrMap.containsKey(type)) {
+                axisValue.setValue(attrMap.get(nodeLevel.getValue() != null ? nodeLevel.getValue() : "name"));
+            } else {
+                axisValue.setValue(XMLDB.getAllAttr(attrMap, showAttrMap.get(type)));
+            }
 		} 
 		if(yearLevel.getKey().equals(type) || yearLevel.getKey().equals(nodeName)) {
 			setYearLevel = true;
@@ -794,13 +829,9 @@ public class QueryGenerator implements java.io.Serializable{
 		// 	- This node has no attributes (since it would not differentiate itself)
 		// TODO: checking if the map is empty alone does not seem correct since getAllAttr
 		//       ignores some attributes
-		// set the type as the node name if it does not have a type attribute
-		if(type == null) {
-			type = nodeName;
-		}
 		if(!setNodeLevel && !setYearLevel && !(isGlobal && type.equals("region")) &&
 				!attrMap.isEmpty() && !getCollapseOnList().contains(type)) {
-			String attr = XMLDB.getAllAttr(attrMap);
+			String attr = XMLDB.getAllAttr(attrMap, showAttrMap.get(type));
 			// check for rewrites
 			if(labelRewriteMap != null && labelRewriteMap.containsKey(type)) {
 				Map<String, String> currRewriteMap = labelRewriteMap.get(type);
@@ -813,7 +844,7 @@ public class QueryGenerator implements java.io.Serializable{
 				tempMap.put(attr, new TreeMap(String.CASE_INSENSITIVE_ORDER));
 			}
 			tempMap = (Map)tempMap.get(attr);
-		} 
+        }
 		return tempMap;
 	}
 	//protected boolean isGlobal;

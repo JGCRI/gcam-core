@@ -9,7 +9,10 @@ import java.io.*;
 import java.util.*;
 
 import javax.swing.*;
-import java.awt.*;
+import java.awt.Frame;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.BorderLayout;
 
 import com.sleepycat.db.*;
 import com.sleepycat.dbxml.*;
@@ -402,7 +405,7 @@ public class XMLDB {
 		}
 		return ret;
 	}
-	public static String getAllAttr(Map<String, String> attrMap) {
+	public static String getAllAttr(Map<String, String> attrMap, List<String> showAttrList) {
 		String ret;
 		if((ret = attrMap.get("name")) != null) {
 			ret = "," + ret;
@@ -411,10 +414,10 @@ public class XMLDB {
 		}
 		for(Iterator<Map.Entry<String, String>> it = attrMap.entrySet().iterator(); it.hasNext(); ) {
 			Map.Entry<String, String> currAttr = it.next();
-			if(currAttr.getKey().indexOf(":") == -1 && !currAttr.getKey().equals("name") &&
+			if((!currAttr.getKey().equals("name") &&
 					!currAttr.getKey().equals("type") && 
 					!currAttr.getKey().equals("unit") && 
-					!currAttr.getKey().equals("year")) {
+					!currAttr.getKey().equals("year")) || (showAttrList != null && showAttrList.contains(currAttr.getKey()))) {
 				ret += ","+currAttr.getKey()+"="+currAttr.getValue();
 			}
 		}

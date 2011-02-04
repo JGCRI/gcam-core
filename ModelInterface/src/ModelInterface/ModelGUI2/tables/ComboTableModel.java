@@ -675,12 +675,14 @@ public class ComboTableModel extends BaseTableModel{
 			
 			// Split out the name attribute if it contains it.
 			String rowName;
+            /*
 			if( !(qg != null && qg.isGroup()) && rowNameFull.indexOf('=') != -1 ){
 				rowName = rowNameFull.split("=")[ 1 ];
 			}
 			else {
+            */
 				rowName = rowNameFull;
-			}
+			//}
 			XYSeries currSeries = new XYSeries(rowName);
 			// Skip column 1 because it contained the label.
 			for( int col = leftHeaderVector.size() + 1; col < getColumnCount(); ++col ){
