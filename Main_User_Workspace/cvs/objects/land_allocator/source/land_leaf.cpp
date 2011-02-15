@@ -585,8 +585,9 @@ void LandLeaf::applyAgProdChange( const string& aLandType,
     // aAgProdChange must be constant if aHarvestPeriod != aCurrentPeriod
     for ( int aPeriod = aCurrentPeriod; aPeriod <= aHarvestPeriod; ++aPeriod ) {
         // Don't apply prod change in a calibration period
-        int timestep = modeltime->gettimestep( aPeriod );
         if ( !( mCalDataExists[ aCurrentPeriod ] && aPeriod == aCurrentPeriod ) ) {
+            int timestep = aPeriod < modeltime->getmaxper() ? modeltime->gettimestep( aPeriod )
+                : modeltime->gettimestep( modeltime->getmaxper() - 1 );
             mAgProdChange[ aPeriod ] = previousAgProdChange * pow( 1 + aAgProdChange, timestep );
         }
         else {

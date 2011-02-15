@@ -495,7 +495,7 @@ ITechnologyContainer::TechRangeIterator TechnologyContainer::getVintageBegin( co
     // year.  In those cases decrease the iterator to make sure we don't go include
     // a technology beyond aPeriod.
     VintageIterator vintageIter = mVintages.lower_bound( year );
-    if( ( *vintageIter ).first > year || vintageIter == mVintages.end() ) {
+    if( vintageIter == mVintages.end() || ( *vintageIter ).first > year ) {
         --vintageIter;
     }
     
@@ -512,7 +512,7 @@ ITechnologyContainer::CTechRangeIterator TechnologyContainer::getVintageBegin( c
     // year.  In those cases decrease the iterator to make sure we don't go include
     // a technology beyond aPeriod.
     CVintageIterator vintageIter = mVintages.lower_bound( year );
-    if( ( *vintageIter ).first > year || vintageIter == mVintages.end() ) {
+    if( vintageIter == mVintages.end() || ( *vintageIter ).first > year ) {
         --vintageIter;
     }
     
