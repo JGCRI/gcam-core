@@ -122,20 +122,26 @@ private:
 
     bool isValidClimateModelYear( const int aYear ) const;
 
-    int getGasIndex( const std::string& aGasName ) const;
-    static unsigned int getNumGases();
+    int getInputGasIndex( const std::string& aGasName ) const;
+    static unsigned int getNumInputGases();
     void readFile();
     void overwriteMAGICCParameters( );
     static int getNumAdditionalGasPoints();
 
     //! A fixed list of the gases Magicc reads in.
-    static const std::string sGasNames[];
+    static const std::string sInputGasNames[];
+    
+    //! A fixed list of the units for gases Magicc reads in.
+    static const std::string sInputGasUnits[];
 
     //! A map of the gases Magicc can report out.
     std::map<std::string,int> mOutputGasNameMap; 
 
     //! Return value of getGasIndex if it cannot find the gas.
     static const int INVALID_GAS_NAME = -1;
+    
+    //! MAGICC critcal start year in gas.emk that must be present
+    static const int GAS_EMK_CRIT_YEAR;
 
     //! Emissions levels by gas and period.
     std::vector<std::vector<double> > mEmissionsByGas;

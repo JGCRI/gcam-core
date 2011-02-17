@@ -1343,8 +1343,6 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
         writeItemUsingYear( "forcing-Kyoto", "W/m^2",
                              aClimateModel->getForcing( "CO2", util::round( year ) )
         + aClimateModel->getForcing( "CH4", util::round( year ) )
-        - aClimateModel->getForcing( "TropO3CH4", util::round( year ) )
-        - aClimateModel->getForcing( "StratH2OCH4", util::round( year ) )
         + aClimateModel->getForcing( "N2O", util::round( year ) )
         + aClimateModel->getForcing( "HCFC125", util::round( year ) )
         + aClimateModel->getForcing( "HCFC134A", util::round( year ) )
@@ -1354,15 +1352,13 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
         + aClimateModel->getForcing( "SF6", util::round( year ) )
         + aClimateModel->getForcing( "CF4", util::round( year ) )
         + aClimateModel->getForcing( "C2F6", util::round( year ) )
-        + aClimateModel->getForcing( "otherHC", util::round( year ) ),
+        + aClimateModel->getForcing( "OtherHC", util::round( year ) ),
                              year );
 
         // Long-lived Forcing
         writeItemUsingYear( "forcing-longlived", "W/m^2",
                              aClimateModel->getForcing( "CO2", util::round( year ) )
         + aClimateModel->getForcing( "CH4", util::round( year ) )
-        - aClimateModel->getForcing( "TropO3CH4", util::round( year ) )
-        - aClimateModel->getForcing( "StratH2OCH4", util::round( year ) )
         + aClimateModel->getForcing( "N2O", util::round( year ) )
         + aClimateModel->getForcing( "HCFC125", util::round( year ) )
         + aClimateModel->getForcing( "HCFC134A", util::round( year ) )
@@ -1372,7 +1368,7 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
         + aClimateModel->getForcing( "SF6", util::round( year ) )
         + aClimateModel->getForcing( "CF4", util::round( year ) )
         + aClimateModel->getForcing( "C2F6", util::round( year ) )
-        + aClimateModel->getForcing( "otherHC", util::round( year ) )
+        + aClimateModel->getForcing( "OtherHC", util::round( year ) )
         + aClimateModel->getForcing( "Montreal", util::round( year ) ),
                              year );
 
@@ -1386,7 +1382,7 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
         + aClimateModel->getForcing( "SF6", util::round( year ) )
         + aClimateModel->getForcing( "CF4", util::round( year ) )
         + aClimateModel->getForcing( "C2F6", util::round( year ) )
-        + aClimateModel->getForcing( "otherHC", util::round( year ) )
+        + aClimateModel->getForcing( "OtherHC", util::round( year ) )
         + aClimateModel->getForcing( "Montreal", util::round( year ) ),
                              year );
 

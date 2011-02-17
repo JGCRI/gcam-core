@@ -45,7 +45,6 @@
 #include <cassert>
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
-#include <deque>
 
 #include "util/base/include/xml_helper.h"
 #include "marketplace/include/marketplace.h"
@@ -694,8 +693,6 @@ void LandLeaf::calcLUCCarbonFlowsIn( const string& aRegionName,
 */
 void LandLeaf::calcCarbonBoxModel( const string& aRegionName,
                                            const int aYear ){
-    // KVC: CARBONCYCLE remove this if statement if not using sjs carbon model
-    // Change the carbon contents only if operating within the IA model period
    if ( aYear >= scenario->getModeltime()->getStartYear() ) {
        // We need to change the carbon content in the carbon calculator to
        // actual carbon. Actual carbon varies with yield/land size.
@@ -813,10 +810,10 @@ void LandLeaf::calcYieldInternal( const string& aLandType,
         mYield[ aHarvestPeriod ] = 0;
     }
 
-    // KVC: We want to prevent the fat tails associated with a log-Gumbel
+    // We want to prevent the fat tails associated with a log-Gumbel
     // distribution, so we are putting an upper bound on yield.
     int yieldPer = aHarvestPeriod;
-    // KVC: This is a hack.  The maximum yield for forests is not
+    // The maximum yield for forests is not
     // set until after the harvest period.  So, we are using the maximum
     // yield from 2005 for all periods.  This is okay, since we have zero
     // tech change on forests, but should be fixed in the future.

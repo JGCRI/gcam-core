@@ -60,35 +60,50 @@ using namespace xercesc;
 
 extern Scenario* scenario;
 
-#if(__HAVE_FORTRAN__)
-extern "C" { void _stdcall CLIMAT(void); };
-extern "C" { double _stdcall GETGHGCONC(int&, int&); };
-extern "C" { double _stdcall GETGMTEMP(int&); };
-extern "C" { double _stdcall GETFORCING(int&, int&); };
-extern "C" { double _stdcall GETCARBONRESULTS(int&, int&); };
-extern "C" { double _stdcall SETPARAMETERVALUES(int&, double&); }
-#endif
+#include "climate/include/ObjECTS_MAGICC.h"
+
+// MAGICC 5.3 expects a 2000 year line in gas.emk
+const int MagiccModel::GAS_EMK_CRIT_YEAR = 2000;
 
 // Setup the gas name vector.
-const string MagiccModel::sGasNames[] = { "CO2",
-                                       "CO2NetLandUse",
-                                       "CH4",
-                                       "N2O",
-                                       "SOXreg1",
-                                       "SOXreg2",
-                                       "SOXreg3",
-                                       "CF4",
-                                       "C2F6",
-                                       "HFC125",
-                                       "HFC134a",
-                                       "HFC143a",
-                                       "HFC227ea",
-                                       "HFC245ca",
-                                       "SF6",
-                                       "NOx",
-                                       "NMVOCs",
-                                       "CO" };
+const string MagiccModel::sInputGasNames[] = { "CO2",
+                                               "CO2NetLandUse",
+                                               "CH4",
+                                               "N2O",
+                                               "SOXreg1",
+                                               "SOXreg2",
+                                               "SOXreg3",
+                                               "CF4",
+                                               "C2F6",
+                                               "HFC125",
+                                               "HFC134a",
+                                               "HFC143a",
+                                               "HFC227ea",
+                                               "HFC245ca",
+                                               "SF6",
+                                               "NOx",
+                                               "NMVOCs",
+                                               "CO" };
 
+// Setup the gas units vector.
+const string MagiccModel::sInputGasUnits[] = { "(Pg C)",
+                                               "(Pg C)",
+                                               "(Tg)",
+                                               "(Tg N)",
+                                               "(Tg S)",
+                                               "(Tg S)",
+                                               "(Tg S)",
+                                               "(kton)",
+                                               "(kton)",
+                                               "(kton)",
+                                               "(kton)",
+                                               "(kton)",
+                                               "(kton)",
+                                               "(kton)",
+                                               "(kton)",
+                                               "(Mt N)",
+                                               "(Mt)",
+                                               "(Mt)" };
 
 /*! \brief Constructor
 * \param aModeltime Pointer to the global modeltime object.
@@ -121,7 +136,7 @@ void MagiccModel::completeInit( const string& aScenarioName ){
 
     mScenarioName = aScenarioName;
     // Resize to the number of gases based on the gas name vector.
-    mEmissionsByGas.resize( getNumGases() );
+    mEmissionsByGas.resize( getNumInputGases() );
 
     // Resize all the vectors to the number of data points for MAGICC.
     // Add comment here.
@@ -134,10 +149,9 @@ void MagiccModel::completeInit( const string& aScenarioName ){
     mIsValid = false;
     
     // Set up correspondence for output gas names
-    // Setup the gas name vector.
     mOutputGasNameMap[ "total" ] = 0;
     mOutputGasNameMap[ "CO2" ] = 1;
-    mOutputGasNameMap[ "CH4" ] = 2;
+    mOutputGasNameMap[ "CH4" ] = 2;  // Direct CH4 only
     mOutputGasNameMap[ "N2O" ] = 3;
     mOutputGasNameMap[ "C2F6" ] = 4;
     mOutputGasNameMap[ "HCFC125" ] = 5;
@@ -146,9 +160,23 @@ void MagiccModel::completeInit( const string& aScenarioName ){
     mOutputGasNameMap[ "HCFC245fa" ] = 8;
     mOutputGasNameMap[ "SF6" ] = 9;
     mOutputGasNameMap[ "CF4" ] = 10;
-    mOutputGasNameMap[ "SO2" ] = 11;
-    mOutputGasNameMap[ "TropO3" ] = 12;
-    mOutputGasNameMap[ "BioBurn" ] = 13;
+    mOutputGasNameMap[ "HFC227ea" ] = 11;
+    mOutputGasNameMap[ "OtherHC" ] = 12; // Other halocarbon
+    mOutputGasNameMap[ "SO2" ] = 13; // Total SO2
+    mOutputGasNameMap[ "DirSO2" ] = 14; // Direct SO2
+    mOutputGasNameMap[ "TropO3" ] = 15; 
+    mOutputGasNameMap[ "O3_CH4" ] = 16; // Ozone from CH4
+    mOutputGasNameMap[ "H2O_CH4" ] = 17; // Water vapor from CH4
+    mOutputGasNameMap[ "Montreal" ] = 18; // Montreal Gases
+    mOutputGasNameMap[ "O3_CFC" ] = 19; // Ozone from CFCs
+    mOutputGasNameMap[ "BioBurn" ] = 20;
+    mOutputGasNameMap[ "FOC" ] = 21; // Fossil BC/OC
+    mOutputGasNameMap[ "Land" ] = 22; // Land surface albedo
+    mOutputGasNameMap[ "MinNOx" ] = 23; // Mineral Dust and Nitrate
+    mOutputGasNameMap[ "BC" ] = 24; // Total BC (land and combustion)
+    mOutputGasNameMap[ "OC" ] = 25; // Total OC (land and combustion)
+    mOutputGasNameMap[ "EXTRA" ] = 26; // Extra forcing
+    mOutputGasNameMap[ "RCP" ] = 27; // RCP radiative forcing (total - nitrate, albedo, mineral dust)
     
     overwriteMAGICCParameters( );
 }
@@ -156,7 +184,6 @@ void MagiccModel::completeInit( const string& aScenarioName ){
 /*! \brief Overwrite MAGICC default parameters with new values.
 */
 void MagiccModel::overwriteMAGICCParameters( ){
-#if(__HAVE_FORTRAN__)    
     // Override parameters in MAGICC if necessary
     int varIndex = 1;
     SETPARAMETERVALUES( varIndex, mClimateSensitivity );
@@ -170,7 +197,6 @@ void MagiccModel::overwriteMAGICCParameters( ){
     SETPARAMETERVALUES( varIndex, mNetDeforestCarbFlux80s );
     varIndex = 6;
     SETPARAMETERVALUES( varIndex, mOceanCarbFlux80s );
-#endif
 }
 
 //! parse MAGICC xml object
@@ -313,7 +339,7 @@ bool MagiccModel::isValidClimateModelYear( const int aYear ) const {
 */
 bool MagiccModel::setEmissions( const string& aGasName, const int aPeriod, const double aEmission ){
     // Lookup the gas index.
-    const int gasIndex = getGasIndex( aGasName );
+    const int gasIndex = getInputGasIndex( aGasName );
     
     // Capture special case where are setting 80s deforestation. 
     // If carbon-model is present, set 80s deforestation to be consistent with this model
@@ -323,14 +349,12 @@ bool MagiccModel::setEmissions( const string& aGasName, const int aPeriod, const
              // Set 80s netDeforestation parameters in MAGICC
             int varIndex = 5;
             double tempValue = aEmission; // must pass to fortran by ref
-#if(__HAVE_FORTRAN__)
             SETPARAMETERVALUES( varIndex, tempValue );
-#endif // __HAVE_FORTRAN__
         } 
         else {
             // Check if are tring to set netDeforestation emissions and return if so
             // since carbon model is not present.
-            if ( gasIndex == getGasIndex( "CO2NetLandUse" ) ) {
+            if ( gasIndex == getInputGasIndex( "CO2NetLandUse" ) ) {
                 return true;
             }
         }
@@ -367,16 +391,28 @@ bool MagiccModel::setEmissions( const string& aGasName, const int aPeriod, const
     return true;
 }
 
+/*!
+ * \brief Get the emissions that are currently set to be sent to MAGICC.
+ * \details This method only retrieves the values that are currently set and
+ *          provides no indication if they are the latest emissions from GCAM nor
+ *          if they were the actual emissions MAGICC ran with.  This DOES NOT
+ *          attempt to retrieve emissions from within MAGICC.
+ * \param aGasName The name of the gas to get emissions for.
+ * \param aYear Any valid year.  Emissions may be linearly interpolated if they
+ *              are not stored in the given year.
+ * \return The emissions for the given gas and year or -1 if an unknown gas or
+ *         invalid year was given.
+ */
 double MagiccModel::getEmissions( const string& aGasName,
                                   const int aYear ) const
 {
-    // Check if the climate model has been run and that valid year is passed in.
-    if( !mIsValid || !isValidClimateModelYear( aYear ) ){
+    // Check if a valid year is passed in.
+    if( !isValidClimateModelYear( aYear ) ){
         return -1;
     }
 
     // Lookup the gas index.
-    const int gasIndex = getGasIndex( aGasName );
+    const int gasIndex = getInputGasIndex( aGasName );
     
     // Check for error.
     if( gasIndex == INVALID_GAS_NAME ){
@@ -386,7 +422,6 @@ double MagiccModel::getEmissions( const string& aGasName,
         return -1;
     }
 
-    // TODO: Use MAGICC's internal arrays instead of interpolating.
     const Modeltime* modeltime = scenario->getModeltime();
 
     int currPeriod = modeltime->getyr_to_per( aYear );
@@ -436,71 +471,52 @@ bool MagiccModel::runModel(){
     for ( unsigned int period = mModeltime->getmaxper() - 1; 
           period < static_cast<unsigned int>( mModeltime->getmaxper() + 1 ); ++period ){
         // Loop through the gases and copy forward emissions.
-        for( unsigned int gasNumber = 0; gasNumber < getNumGases(); ++gasNumber ){
+        for( unsigned int gasNumber = 0; gasNumber < getNumInputGases(); ++gasNumber ){
             mEmissionsByGas[ gasNumber ][ period ] = mEmissionsByGas[ gasNumber ][ period - 1 ];
         }
     }
     
-    // Open the output file.
+    // Open the gas file to write emissions into so that MAGICC can get them by
+    // reading this file.
     ofstream gasFile;
     gasFile.open( Configuration::getInstance()->getFile( "climatFileName" ).c_str(), ios::out );
     // The first 5 lines of the gas file is skipped before the data is read by MAGICC.
     // Calculate the number of points which will be passed to magicc.
-    const int NumPoints = mModeltime->getmaxper() + getNumAdditionalGasPoints() - 1;
-    /*line 1*/
-        gasFile << NumPoints << endl 
-    /*line 2*/
-            << " Scenario " << mScenarioName << endl
-    /*line 3*/
-            << endl
-    /*line 4 includes one extra space for commas*/
-            << setw(5) << " ," // Year
-            << setw(9) << "CO2," 
-            << setw(9) << "CO2NLU,"
-            << setw(9) << "CH4," 
-            << setw(9) << "N2O," 
-            << setw(9) << "SOXreg1," 
-            << setw(9) << "SOXreg2," 
-            << setw(9) << "SOXreg3," 
-            << setw(9) << "CF4," 
-            << setw(9) << "C2F6," 
-            << setw(9) << "HFC125," 
-            << setw(9) << "HFC134a," 
-            << setw(9) << "HFC143a," 
-            << setw(9) << "HFC229ea," 
-            << setw(9) << "HFC245ca," 
-            << setw(9) << "SF6," 
-            << setw(9) << "NOx," 
-            << setw(9) << "NMVOCs," 
-            << setw(9) << "CO" << endl
-    /*line 5*/
-            << setw(5) << "Year," 
-            << setw(9) << "(Pg C)," 
-            << setw(9) << "(Pg C)," 
-            << setw(9) << "(Tg)," 
-            << setw(9) << "(Tg N)," 
-            << setw(9) << "(Tg S),"
-            << setw(9) << "(Tg S)," 
-            << setw(9) << "(Tg S)," 
-            << setw(9) << "(kton)," 
-            << setw(9) << "(kton)," 
-            << setw(9) << "(kton)," 
-            << setw(9) << "(kton)," 
-            << setw(9) << "(kton)," 
-            << setw(9) << "(kton)," 
-            << setw(9) << "(kton)," 
-            << setw(9) << "(kton),"	
-            << setw(9) << "(Mt N)," 
-            << setw(9) << "(Mt)," 
-            << setw(9) << "(Mt)" << endl;
+    const int numPoints = mModeltime->getmaxper() + getNumAdditionalGasPoints() - 1;
+    bool needToInterpolate = !mModeltime->isModelYear( GAS_EMK_CRIT_YEAR );
+    /*line 1: Number of years to read*/
+    if( needToInterpolate ) {
+        // There will be an extra row to read for the interpolated year.
+        gasFile << numPoints + 1 << endl;
+    }
+    else {
+        gasFile << numPoints << endl;
+    }
+    /*line 2: Name of the scenario*/
+    gasFile << " Scenario " << mScenarioName << endl;
+    /*line 3: Blank line*/
+    gasFile << endl;
+    /*line 4: Gas names includes one extra space for commas*/
+    gasFile << setw(5) << " ,"; // Year
+    for( unsigned int gasNumber = 0; gasNumber < getNumInputGases(); ++gasNumber ) {
+        gasFile << setw(9) << sInputGasNames[ gasNumber ] << ',';
+    }
+    gasFile << endl;
+    /*line 5: Gas units*/
+    gasFile << setw(5) << "Year,";
+    for( unsigned int gasNumber = 0; gasNumber < getNumInputGases(); ++gasNumber ) {
+        gasFile << setw(9) << sInputGasUnits[ gasNumber ] << ',';
+    }
+    gasFile << endl;
     
-    // Setup the output.
+    // Setup the output format.
     gasFile.setf( ios::right, ios::adjustfield );
     gasFile.setf( ios::fixed, ios::floatfield );
     gasFile.setf( ios::showpoint );
     
-    // Write out all the gases.
-    for( unsigned int period = 0; period < static_cast<unsigned int>( NumPoints ); ++period ) {
+    // Write out all the emissions.  The columns are the gasses and the rows are
+    // the years.
+    for( unsigned int period = 0; period < static_cast<unsigned int>( numPoints ); ++period ) {
         // Write out the year.
         int year;
         if( period < static_cast<unsigned int>( mModeltime->getmaxper() - 1 ) ){
@@ -519,13 +535,39 @@ bool MagiccModel::runModel(){
             int lastYear = mModeltime->getEndYear() + mModeltime->gettimestep( lastPeriod );
             year = lastYear + 140 * ( period - lastPeriod + 1 ) - 100;
         }
+        
+        // If the critical year which MAGICC will be looking for in gas.emk is not
+        // a model year we will have to interpolate it and write it to avoid errors
+        // in MAGICC.
+        if( needToInterpolate && year > GAS_EMK_CRIT_YEAR && period > 0 ) {
+            // note period is offset by 1
+            int prevYear = mModeltime->getper_to_yr( period -1 + 1 );
+            gasFile << setw( 4 ) << GAS_EMK_CRIT_YEAR << ",";
+            // Write out all the gases.
+            for( unsigned int gasNumber = 0; gasNumber < getNumInputGases(); ++gasNumber ){
+                gasFile << setw( 8 ) << setprecision( 2 )
+                    << util::linearInterpolateY( GAS_EMK_CRIT_YEAR, prevYear, year,
+                                                 mEmissionsByGas[ gasNumber ][ period -1 ],
+                                                 mEmissionsByGas[ gasNumber ][ period ] );
+                // Write a comma as long as this is not the last gas.
+                if( gasNumber != getNumInputGases() - 1 ){
+                    gasFile << ",";
+                }
+                else {
+                    gasFile << endl;
+                }
+            }
+            
+            // make sure we only interpolate once
+            needToInterpolate = false;
+        }
 
         gasFile << setw( 4 ) << year << ",";
         // Write out all the gases.
-        for( unsigned int gasNumber = 0; gasNumber < mEmissionsByGas.size(); ++gasNumber ){
+        for( unsigned int gasNumber = 0; gasNumber < getNumInputGases(); ++gasNumber ){
             gasFile << setw( 8 ) << setprecision( 2 ) << mEmissionsByGas[ gasNumber ][ period ];
             // Write a comma as long as this is not the last gas.
-            if( gasNumber != mEmissionsByGas.size() - 1 ){
+            if( gasNumber != getNumInputGases() - 1 ){
                 gasFile << ",";
             }
             else {
@@ -539,7 +581,6 @@ bool MagiccModel::runModel(){
     overwriteMAGICCParameters( );
 
     // now actually run the model.
-#if(__HAVE_FORTRAN__)    
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
     mainLog << "Calling the climate model..."<< endl;
@@ -547,17 +588,16 @@ bool MagiccModel::runModel(){
     mainLog.setLevel( ILogger::DEBUG );
     mainLog << "Finished with CLIMAT()" << endl;
     mIsValid = true;
-#endif
     return true;
 }
 
 /* \brief Get the number of input gases to MAGICC.
 * \return The fixed number of gases.
 */
-unsigned int MagiccModel::getNumGases(){
+unsigned int MagiccModel::getNumInputGases(){
     // This is a C++ trick to find the number of elements in
     // an array by dividing its size by the size of the first element.
-    return sizeof( sGasNames ) / sizeof( sGasNames[ 0 ] );
+    return sizeof( sInputGasNames ) / sizeof( sInputGasNames[ 0 ] );
 }
 
 double MagiccModel::getConcentration( const string& aGasName,
@@ -571,13 +611,11 @@ double MagiccModel::getConcentration( const string& aGasName,
         return -1;
     }
 
-#if( __HAVE_FORTRAN__ )
     int year = aYear;
     int gasNumber = util::searchForValue( mOutputGasNameMap, aGasName );
     if ( gasNumber != 0 ) {
         return GETGHGCONC( gasNumber, year );
     }
-#endif
     return -1;
 }
 
@@ -587,13 +625,9 @@ double MagiccModel::getTemperature( const int aYear ) const {
         return -1;
     }
 
-#if( __HAVE_FORTRAN__ )
     // Need to store the year locally so it can be passed by reference.
     int year = aYear;
     return GETGMTEMP( year );
-#else
-    return -1;
-#endif
 }
 
 double MagiccModel::getForcing( const string& aGasName, const int aYear ) const {
@@ -602,13 +636,11 @@ double MagiccModel::getForcing( const string& aGasName, const int aYear ) const 
         return -1;
     }
 
-#if( __HAVE_FORTRAN__ )
     int year = aYear;
     int gasNumber = util::searchForValue( mOutputGasNameMap, aGasName );
     if ( gasNumber != 0 ) {
         return GETFORCING( gasNumber, year );
     }
-#endif
     return -1;
 }
 
@@ -617,14 +649,16 @@ double MagiccModel::getNetTerrestrialUptake( const int aYear ) const {
     if( !mIsValid || !isValidClimateModelYear( aYear ) ){
         return -1;
     }
+    
+    // MAGICC array is not sized to include 1990 for net terrestrial uptake
+    // so just return 0.
+    if( aYear < 1990 ) {
+        return 0;
+    }
 
-#if( __HAVE_FORTRAN__ )
     int year = aYear;
     int itemNumber = 10;
     return GETCARBONRESULTS( itemNumber, year );
-#else
-    return -1;
-#endif
 }
 
 double MagiccModel::getNetOceanUptake( const int aYear ) const {
@@ -632,14 +666,16 @@ double MagiccModel::getNetOceanUptake( const int aYear ) const {
     if( !mIsValid || !isValidClimateModelYear( aYear ) ){
         return -1;
     }
+    
+    // MAGICC array is not sized to include 1990 for net ocean uptake
+    // so just return 0.
+    if( aYear < 1990 ) {
+        return 0;
+    }
 
-#if( __HAVE_FORTRAN__ )
     int year = aYear;
     int itemNumber = 4;
     return GETCARBONRESULTS( itemNumber, year );
-#else
-    return -1;
-#endif
 }
 
 double MagiccModel::getNetLandUseChangeEmission( const int aYear ) const {
@@ -647,14 +683,16 @@ double MagiccModel::getNetLandUseChangeEmission( const int aYear ) const {
     if( !mIsValid || !isValidClimateModelYear( aYear ) ){
         return -1;
     }
+    
+    // MAGICC array is not sized to include 1990 for net land use change emissions
+    // so just return 0.
+    if( aYear < 1990 ) {
+        return 0;
+    }
 
-#if( __HAVE_FORTRAN__ )    
     int itemNumber = 2;
     int year = aYear;
     return GETCARBONRESULTS( itemNumber, year );
-#else
-    return -1;
-#endif
 }
 
 double MagiccModel::getTotalForcing( const int aYear ) const {
@@ -663,14 +701,10 @@ double MagiccModel::getTotalForcing( const int aYear ) const {
         return -1;
     }
 
-#if( __HAVE_FORTRAN__ )
     // Need to store the year and gas number locally so it can be passed by reference.
     int year = aYear;
     int gasNumber = 0; // global forcing
     return GETFORCING( gasNumber, year );
-#else
-    return -1;
-#endif
 }
 
 
@@ -831,10 +865,10 @@ const string& MagiccModel::getXMLNameStatic(){
 * \param aGasName Name of the gas to search for.
 * \return The index of the gas or INVALID_GAS_NAME if it is not found.
 */
-int MagiccModel::getGasIndex( const string& aGasName ) const {
+int MagiccModel::getInputGasIndex( const string& aGasName ) const {
     // Search the gas name vector.
-    for( unsigned int i = 0; i < getNumGases(); ++i ){
-        if( sGasNames[ i ] == aGasName ){
+    for( unsigned int i = 0; i < getNumInputGases(); ++i ){
+        if( sInputGasNames[ i ] == aGasName ){
             return i;
         }
     }
@@ -907,7 +941,7 @@ void MagiccModel::readFile(){
         }
         
         // Loop through all the gases.
-        for( unsigned int gasNumber = 0; gasNumber < getNumGases(); ++gasNumber ){
+        for( unsigned int gasNumber = 0; gasNumber < getNumInputGases(); ++gasNumber ){
             double value;
             inputGasFile >> value;
             // Only set the parsed value if we have a valid year, no warnings are necessary
