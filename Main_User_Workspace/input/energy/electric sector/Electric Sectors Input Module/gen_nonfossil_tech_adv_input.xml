@@ -115,232 +115,15 @@
                </technology>
             </subsector>
             <subsector name="nuclear">
-               <technology name="nuc_base_gen2">
-                  <period year="1975">
-                     <share-weight>1</share-weight>
-                     <minicam-energy-input name="nuclearFuelGenII">
-                        <efficiency>0.333</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.025</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider name="profit-shutdown-decider"/>
-                     <CO2 name="CO2"/>
-                     <lifetime>-1</lifetime>
-                     <input-capital name="capital">
-                        <capital-overnight>620</capital-overnight>
-                        <fixed-charge-rate>0.15</fixed-charge-rate>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-capital>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0.046</OM-var>
-                     </input-OM-var>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>22.02</OM-fixed>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-OM-fixed>
-                  </period>
-                  <period year="1990">
-                     <share-weight>1</share-weight>
-                     <minicam-energy-input name="nuclearFuelGenII">
-                        <efficiency>0.333</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.025</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider name="profit-shutdown-decider"/>
-                     <CO2 name="CO2"/>
-                     <lifetime>-1</lifetime>
-                     <input-capital name="capital">
-                        <capital-overnight>620</capital-overnight>
-                        <fixed-charge-rate>0.15</fixed-charge-rate>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-capital>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0.046</OM-var>
-                     </input-OM-var>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>22.02</OM-fixed>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-OM-fixed>
-                  </period>
-                  <period year="2005">
-                     <share-weight>1</share-weight>
-                     <minicam-energy-input name="nuclearFuelGenII">
-                        <efficiency>0.333</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.025</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider name="profit-shutdown-decider"/>
-                     <CO2 name="CO2"/>
-                     <lifetime>45</lifetime>
-                     <input-capital name="capital">
-                        <capital-overnight>620</capital-overnight>
-                        <fixed-charge-rate>0.15</fixed-charge-rate>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-capital>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0.046</OM-var>
-                     </input-OM-var>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>22.02</OM-fixed>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-OM-fixed>
-                  </period>
-                  <period year="2020">
-                     <share-weight>0</share-weight>
-                     <minicam-energy-input name="nuclearFuelGenII">
-                        <efficiency>0.333</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider name="profit-shutdown-decider"/>
-                     <CO2 name="CO2"/>
-                     <lifetime>-1</lifetime>
-                     <input-capital name="capital">
-                        <capital-overnight>620</capital-overnight>
-                        <fixed-charge-rate>0.15</fixed-charge-rate>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-capital>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0.046</OM-var>
-                     </input-OM-var>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>22.02</OM-fixed>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-OM-fixed>
-                  </period>
-                  <period year="2035">
-                     <share-weight>0</share-weight>
-                     <minicam-energy-input name="nuclearFuelGenII">
-                        <efficiency>0.333</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider name="profit-shutdown-decider"/>
-                     <CO2 name="CO2"/>
-                     <lifetime>-1</lifetime>
-                     <input-capital name="capital">
-                        <capital-overnight>620</capital-overnight>
-                        <fixed-charge-rate>0.15</fixed-charge-rate>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-capital>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0.046</OM-var>
-                     </input-OM-var>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>22.02</OM-fixed>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-OM-fixed>
-                  </period>
-                  <period year="2050">
-                     <share-weight>0</share-weight>
-                     <minicam-energy-input name="nuclearFuelGenII">
-                        <efficiency>0.333</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider name="profit-shutdown-decider"/>
-                     <CO2 name="CO2"/>
-                     <lifetime>-1</lifetime>
-                     <input-capital name="capital">
-                        <capital-overnight>620</capital-overnight>
-                        <fixed-charge-rate>0.15</fixed-charge-rate>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-capital>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0.046</OM-var>
-                     </input-OM-var>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>22.02</OM-fixed>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-OM-fixed>
-                  </period>
-                  <period year="2065">
-                     <share-weight>0</share-weight>
-                     <minicam-energy-input name="nuclearFuelGenII">
-                        <efficiency>0.333</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider name="profit-shutdown-decider"/>
-                     <CO2 name="CO2"/>
-                     <lifetime>-1</lifetime>
-                     <input-capital name="capital">
-                        <capital-overnight>620</capital-overnight>
-                        <fixed-charge-rate>0.15</fixed-charge-rate>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-capital>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0.046</OM-var>
-                     </input-OM-var>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>22.02</OM-fixed>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-OM-fixed>
-                  </period>
-                  <period year="2080">
-                     <share-weight>0</share-weight>
-                     <minicam-energy-input name="nuclearFuelGenII">
-                        <efficiency>0.333</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider name="profit-shutdown-decider"/>
-                     <CO2 name="CO2"/>
-                     <lifetime>-1</lifetime>
-                     <input-capital name="capital">
-                        <capital-overnight>620</capital-overnight>
-                        <fixed-charge-rate>0.15</fixed-charge-rate>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-capital>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0.046</OM-var>
-                     </input-OM-var>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>22.02</OM-fixed>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-OM-fixed>
-                  </period>
-                  <period year="2095">
-                     <share-weight>0</share-weight>
-                     <minicam-energy-input name="nuclearFuelGenII">
-                        <efficiency>0.333</efficiency>
-                     </minicam-energy-input>
-                     <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
-                     </phased-shutdown-decider>
-                     <profit-shutdown-decider name="profit-shutdown-decider"/>
-                     <CO2 name="CO2"/>
-                     <lifetime>-1</lifetime>
-                     <input-capital name="capital">
-                        <capital-overnight>620</capital-overnight>
-                        <fixed-charge-rate>0.15</fixed-charge-rate>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-capital>
-                     <input-OM-var name="OM-var">
-                        <OM-var>0.046</OM-var>
-                     </input-OM-var>
-                     <input-OM-fixed name="OM-fixed">
-                        <OM-fixed>22.02</OM-fixed>
-                        <capacity-factor>0.9</capacity-factor>
-                     </input-OM-fixed>
-                  </period>
-               </technology>
                <technology name="nuc_base_gen3">
+                  <initial-available-year>2020</initial-available-year>
                   <period year="1975">
                      <share-weight>0</share-weight>
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -364,7 +147,7 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -388,7 +171,7 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -412,7 +195,7 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -436,7 +219,7 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -460,7 +243,7 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -484,7 +267,7 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -508,7 +291,7 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -532,7 +315,7 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -551,6 +334,234 @@
                      </input-OM-fixed>
                   </period>
                </technology>
+               <technology name="nuc_base_gen2">
+                  <final-available-year>2005</final-available-year>
+                  <period year="1975">
+                     <share-weight>1</share-weight>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                     <s-curve-shutdown-decider name="s-curve-shutdown-decider">
+                        <steepness>0.1</steepness>
+                        <half-life>-1</half-life>
+                     </s-curve-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <input-capital name="capital">
+                        <capital-overnight>620</capital-overnight>
+                        <fixed-charge-rate>0.15</fixed-charge-rate>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-capital>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0.046</OM-var>
+                     </input-OM-var>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>22.02</OM-fixed>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-OM-fixed>
+                  </period>
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                     <s-curve-shutdown-decider name="s-curve-shutdown-decider">
+                        <steepness>0.1</steepness>
+                        <half-life>-1</half-life>
+                     </s-curve-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <input-capital name="capital">
+                        <capital-overnight>620</capital-overnight>
+                        <fixed-charge-rate>0.15</fixed-charge-rate>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-capital>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0.046</OM-var>
+                     </input-OM-var>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>22.02</OM-fixed>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-OM-fixed>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                     <s-curve-shutdown-decider name="s-curve-shutdown-decider">
+                        <steepness>0.1</steepness>
+                        <half-life>45</half-life>
+                     </s-curve-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <lifetime>75</lifetime>
+                     <input-capital name="capital">
+                        <capital-overnight>620</capital-overnight>
+                        <fixed-charge-rate>0.15</fixed-charge-rate>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-capital>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0.046</OM-var>
+                     </input-OM-var>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>22.02</OM-fixed>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-OM-fixed>
+                  </period>
+                  <period year="2020">
+                     <share-weight>0</share-weight>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                     <s-curve-shutdown-decider name="s-curve-shutdown-decider">
+                        <steepness>0.1</steepness>
+                        <half-life>-1</half-life>
+                     </s-curve-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <input-capital name="capital">
+                        <capital-overnight>620</capital-overnight>
+                        <fixed-charge-rate>0.15</fixed-charge-rate>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-capital>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0.046</OM-var>
+                     </input-OM-var>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>22.02</OM-fixed>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-OM-fixed>
+                  </period>
+                  <period year="2035">
+                     <share-weight>0</share-weight>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                     <s-curve-shutdown-decider name="s-curve-shutdown-decider">
+                        <steepness>0.1</steepness>
+                        <half-life>-1</half-life>
+                     </s-curve-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <input-capital name="capital">
+                        <capital-overnight>620</capital-overnight>
+                        <fixed-charge-rate>0.15</fixed-charge-rate>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-capital>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0.046</OM-var>
+                     </input-OM-var>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>22.02</OM-fixed>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-OM-fixed>
+                  </period>
+                  <period year="2050">
+                     <share-weight>0</share-weight>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                     <s-curve-shutdown-decider name="s-curve-shutdown-decider">
+                        <steepness>0.1</steepness>
+                        <half-life>-1</half-life>
+                     </s-curve-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <input-capital name="capital">
+                        <capital-overnight>620</capital-overnight>
+                        <fixed-charge-rate>0.15</fixed-charge-rate>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-capital>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0.046</OM-var>
+                     </input-OM-var>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>22.02</OM-fixed>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-OM-fixed>
+                  </period>
+                  <period year="2065">
+                     <share-weight>0</share-weight>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                     <s-curve-shutdown-decider name="s-curve-shutdown-decider">
+                        <steepness>0.1</steepness>
+                        <half-life>-1</half-life>
+                     </s-curve-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <input-capital name="capital">
+                        <capital-overnight>620</capital-overnight>
+                        <fixed-charge-rate>0.15</fixed-charge-rate>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-capital>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0.046</OM-var>
+                     </input-OM-var>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>22.02</OM-fixed>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-OM-fixed>
+                  </period>
+                  <period year="2080">
+                     <share-weight>0</share-weight>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                     <s-curve-shutdown-decider name="s-curve-shutdown-decider">
+                        <steepness>0.1</steepness>
+                        <half-life>-1</half-life>
+                     </s-curve-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <input-capital name="capital">
+                        <capital-overnight>620</capital-overnight>
+                        <fixed-charge-rate>0.15</fixed-charge-rate>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-capital>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0.046</OM-var>
+                     </input-OM-var>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>22.02</OM-fixed>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-OM-fixed>
+                  </period>
+                  <period year="2095">
+                     <share-weight>0</share-weight>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                     <s-curve-shutdown-decider name="s-curve-shutdown-decider">
+                        <steepness>0.1</steepness>
+                        <half-life>-1</half-life>
+                     </s-curve-shutdown-decider>
+                     <profit-shutdown-decider name="profit-shutdown-decider"/>
+                     <CO2 name="CO2"/>
+                     <lifetime>-1</lifetime>
+                     <input-capital name="capital">
+                        <capital-overnight>620</capital-overnight>
+                        <fixed-charge-rate>0.15</fixed-charge-rate>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-capital>
+                     <input-OM-var name="OM-var">
+                        <OM-var>0.046</OM-var>
+                     </input-OM-var>
+                     <input-OM-fixed name="OM-fixed">
+                        <OM-fixed>22.02</OM-fixed>
+                        <capacity-factor>0.9</capacity-factor>
+                     </input-OM-fixed>
+                  </period>
+               </technology>
             </subsector>
             <subsector name="wind">
                <technology name="wind_base_storage">
@@ -560,7 +571,7 @@
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -584,7 +595,7 @@
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -608,11 +619,11 @@
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
-                     <lifetime>60</lifetime>
+                     <lifetime>30</lifetime>
                      <input-capital name="capital">
                         <capital-overnight>916</capital-overnight>
                         <fixed-charge-rate>0.13</fixed-charge-rate>
@@ -632,11 +643,11 @@
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
-                     <lifetime>60</lifetime>
+                     <lifetime>30</lifetime>
                      <input-capital name="capital">
                         <capital-overnight>748</capital-overnight>
                         <fixed-charge-rate>0.13</fixed-charge-rate>
@@ -656,11 +667,11 @@
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
-                     <lifetime>60</lifetime>
+                     <lifetime>30</lifetime>
                      <input-capital name="capital">
                         <capital-overnight>619</capital-overnight>
                         <fixed-charge-rate>0.13</fixed-charge-rate>
@@ -680,11 +691,11 @@
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
-                     <lifetime>60</lifetime>
+                     <lifetime>30</lifetime>
                      <input-capital name="capital">
                         <capital-overnight>555</capital-overnight>
                         <fixed-charge-rate>0.13</fixed-charge-rate>
@@ -704,11 +715,11 @@
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
-                     <lifetime>60</lifetime>
+                     <lifetime>30</lifetime>
                      <input-capital name="capital">
                         <capital-overnight>506</capital-overnight>
                         <fixed-charge-rate>0.13</fixed-charge-rate>
@@ -728,11 +739,11 @@
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
-                     <lifetime>60</lifetime>
+                     <lifetime>30</lifetime>
                      <input-capital name="capital">
                         <capital-overnight>469</capital-overnight>
                         <fixed-charge-rate>0.13</fixed-charge-rate>
@@ -752,11 +763,11 @@
                         <efficiency>0.96</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
-                     <lifetime>60</lifetime>
+                     <lifetime>30</lifetime>
                      <input-capital name="capital">
                         <capital-overnight>443</capital-overnight>
                         <fixed-charge-rate>0.13</fixed-charge-rate>
@@ -778,7 +789,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -812,7 +823,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -846,14 +857,14 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>60</lifetime>
+                     <lifetime>30</lifetime>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
                      <backup-capital-cost>30</backup-capital-cost>
@@ -880,14 +891,14 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>60</lifetime>
+                     <lifetime>30</lifetime>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
                      <backup-capital-cost>30</backup-capital-cost>
@@ -914,14 +925,14 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>60</lifetime>
+                     <lifetime>30</lifetime>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
                      <backup-capital-cost>30</backup-capital-cost>
@@ -948,14 +959,14 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>60</lifetime>
+                     <lifetime>30</lifetime>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
                      <backup-capital-cost>30</backup-capital-cost>
@@ -982,14 +993,14 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>60</lifetime>
+                     <lifetime>30</lifetime>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
                      <backup-capital-cost>30</backup-capital-cost>
@@ -1016,14 +1027,14 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>60</lifetime>
+                     <lifetime>30</lifetime>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
                      <backup-capital-cost>30</backup-capital-cost>
@@ -1050,14 +1061,14 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="backup_electricity">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
-                     <lifetime>60</lifetime>
+                     <lifetime>30</lifetime>
                      <trial-market-name>renewable</trial-market-name>
                      <electric-sector-name>electricity</electric-sector-name>
                      <backup-capital-cost>30</backup-capital-cost>
@@ -1088,7 +1099,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1112,7 +1123,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1136,7 +1147,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1160,7 +1171,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1184,7 +1195,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1208,7 +1219,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1232,7 +1243,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1256,7 +1267,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1280,7 +1291,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1306,7 +1317,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1330,7 +1341,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1354,7 +1365,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1378,7 +1389,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1402,7 +1413,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1426,7 +1437,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1450,7 +1461,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1474,7 +1485,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1498,7 +1509,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1528,7 +1539,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1562,7 +1573,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1596,7 +1607,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1630,7 +1641,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1664,7 +1675,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1698,7 +1709,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1732,7 +1743,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1766,7 +1777,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1800,7 +1811,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1836,7 +1847,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1870,7 +1881,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1904,7 +1915,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1938,7 +1949,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -1972,7 +1983,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2006,7 +2017,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2040,7 +2051,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2074,7 +2085,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2108,7 +2119,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2146,7 +2157,7 @@
                         <efficiency>0.89</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2170,7 +2181,7 @@
                         <efficiency>0.89</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2194,7 +2205,7 @@
                         <efficiency>0.89</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2218,7 +2229,7 @@
                         <efficiency>0.89</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2242,7 +2253,7 @@
                         <efficiency>0.89</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2266,7 +2277,7 @@
                         <efficiency>0.89</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2290,7 +2301,7 @@
                         <efficiency>0.89</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2314,7 +2325,7 @@
                         <efficiency>0.89</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2338,7 +2349,7 @@
                         <efficiency>0.89</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2368,7 +2379,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2402,7 +2413,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2436,7 +2447,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2470,7 +2481,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2504,7 +2515,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2538,7 +2549,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2572,7 +2583,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2606,7 +2617,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2640,7 +2651,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2676,7 +2687,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2710,7 +2721,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2744,7 +2755,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2778,7 +2789,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2812,7 +2823,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2846,7 +2857,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2880,7 +2891,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2914,7 +2925,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2948,7 +2959,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -2988,7 +2999,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -3022,7 +3033,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -3056,7 +3067,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -3090,7 +3101,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -3124,7 +3135,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -3158,7 +3169,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -3192,7 +3203,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -3226,7 +3237,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -3260,7 +3271,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -3296,7 +3307,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -3330,7 +3341,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -3364,7 +3375,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -3398,7 +3409,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -3432,7 +3443,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -3466,7 +3477,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -3500,7 +3511,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -3534,7 +3545,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>
@@ -3568,7 +3579,7 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
-                        <shutdown-rate>0.0075</shutdown-rate>
+                        <shutdown-rate>0</shutdown-rate>
                      </phased-shutdown-decider>
                      <profit-shutdown-decider name="profit-shutdown-decider"/>
                      <CO2 name="CO2"/>

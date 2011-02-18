@@ -47,7 +47,7 @@
 
 410,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,technology/+{year}period,period/+share-weight,phased-shutdown-decider/+shutdown-rate,period/+{name}minicam-energy-input,minicam-energy-input/+efficiency,period/{name=phased-shutdown-decider}phased-shutdown-decider,period/{name=profit-shutdown-decider}profit-shutdown-decider,period/{name=CO2}CO2,world/{name=USA}region,scenario/world,scenario
 
-411,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}electricity-technology,electricity-technology/+{year}period,minicam-non-energy-input/+input-cost,period/+lifetime,period/{name=non-energy}minicam-non-energy-input,world/{name=USA}region,scenario/world,scenario
+411,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,technology/+{year}period,period/+share-weight,s-curve-shutdown-decider/+steepness,period/+{name}minicam-energy-input,minicam-energy-input/+efficiency,period/{name=s-curve-shutdown-decider}s-curve-shutdown-decider,period/{name=profit-shutdown-decider}profit-shutdown-decider,period/{name=CO2}CO2,world/{name=USA}region,scenario/world,scenario
 
 412,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,technology/+{year}period,input-capital/+capital-overnight,period/+lifetime,input-OM-fixed/+OM-fixed,input-OM-var/+OM-var,input-capital/+fixed-charge-rate,input-capital/+capacity-factor,input-OM-fixed/+capacity-factor,period/{name=capital}input-capital,period/{name=OM-var}input-OM-var,period/{name=OM-fixed}input-OM-fixed,world/{name=USA}region,scenario/world,scenario
 
@@ -65,7 +65,7 @@
 417,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,period/+share-weight,period/{name=CO2}CO2,technology/{year=1975}period,technology/{year=1990}period,technology/{year=2005}period,technology/{year=2020}period,technology/{year=2035}period,technology/{year=2050}period,technology/{year=2065}period,technology/{year=2080}period,technology/{year=2095}period,world/{name=USA}region,scenario/world,scenario
 
 
-418,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}electricity-technology,electricity-technology/+{year}period,period/+{name}minicam-energy-input,minicam-energy-input/+efficiency,period/{name=CO2}CO2,world/{name=USA}region,scenario/world,scenario
+418,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,technology/+{year}period,input-capital/+capital-overnight,s-curve-shutdown-decider/+half-life,period/+lifetime,input-OM-fixed/+OM-fixed,input-OM-var/+OM-var,input-capital/+fixed-charge-rate,input-capital/+capacity-factor,input-OM-fixed/+capacity-factor,period/{name=capital}input-capital,period/{name=OM-var}input-OM-var,period/{name=OM-fixed}input-OM-fixed,period/{name=s-curve-shutdown-decider}s-curve-shutdown-decider,world/{name=USA}region,scenario/world,scenario
 
 420,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,technology/+{year}period,standard-capture-component/+storage-market,period/standard-capture-component,world/{name=USA}region,scenario/world,scenario
 

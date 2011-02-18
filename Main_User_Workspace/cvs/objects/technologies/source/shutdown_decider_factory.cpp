@@ -48,6 +48,8 @@
 // Add new types here.
 #include "technologies/include/profit_shutdown_decider.h"
 #include "technologies/include/phased_shutdown_decider.h"
+#include "technologies/include/s_curve_shutdown_decider.h"
+
 
 using namespace std;
 
@@ -60,7 +62,8 @@ using namespace std;
 bool ShutdownDeciderFactory::isOfType( const string& aType ) {
     // Search the list of known types.
     return ( ( aType == ProfitShutdownDecider::getXMLNameStatic() )
-        || ( aType == PhasedShutdownDecider::getXMLNameStatic() ) );
+        || ( aType == PhasedShutdownDecider::getXMLNameStatic() ) 
+        || ( aType == S_CurveShutdownDecider::getXMLNameStatic() ) );
 }
 
 /*!
@@ -76,6 +79,9 @@ auto_ptr<IShutdownDecider> ShutdownDeciderFactory::create( const string& aType )
     }
     if( aType == PhasedShutdownDecider::getXMLNameStatic() ){
         return auto_ptr<IShutdownDecider>( new PhasedShutdownDecider );
+    }
+    if( aType == S_CurveShutdownDecider::getXMLNameStatic() ){
+        return auto_ptr<IShutdownDecider>( new S_CurveShutdownDecider );
     }
     // Unknown type. Check for consistency between methods.
     assert( !isOfType( aType ) );
