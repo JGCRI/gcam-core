@@ -21,6 +21,9 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
@@ -29,6 +32,9 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
@@ -38,6 +44,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -47,6 +56,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
@@ -56,6 +68,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
@@ -65,6 +80,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
@@ -74,6 +92,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
@@ -83,8 +104,16 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <initial-available-year>2020</initial-available-year>
+                  <period year="1975">
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
+                  </period>
                </technology>
                <technology name="Gen_II_LWR">
                   <final-available-year>2005</final-available-year>
@@ -115,6 +144,9 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
@@ -123,6 +155,9 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
@@ -132,6 +167,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -141,6 +179,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
@@ -150,6 +191,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
@@ -159,6 +203,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
@@ -168,6 +215,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
@@ -177,8 +227,16 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <initial-available-year>2015</initial-available-year>
+                  <period year="1975">
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
+                  </period>
                </technology>
                <technology name="Gen_II_LWR">
                   <final-available-year>2005</final-available-year>
@@ -209,6 +267,9 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
@@ -217,6 +278,9 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
@@ -226,6 +290,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -235,6 +302,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
@@ -244,6 +314,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
@@ -253,6 +326,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
@@ -262,6 +338,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
@@ -271,8 +350,16 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <initial-available-year>2015</initial-available-year>
+                  <period year="1975">
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
+                  </period>
                </technology>
                <technology name="Gen_II_LWR">
                   <final-available-year>2005</final-available-year>
@@ -303,6 +390,9 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
@@ -311,6 +401,9 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
@@ -320,6 +413,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -329,6 +425,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
@@ -338,6 +437,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
@@ -347,6 +449,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
@@ -356,6 +461,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
@@ -365,8 +473,16 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <initial-available-year>2015</initial-available-year>
+                  <period year="1975">
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
+                  </period>
                </technology>
                <technology name="Gen_II_LWR">
                   <final-available-year>2005</final-available-year>
@@ -394,6 +510,9 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
@@ -402,6 +521,9 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
@@ -411,6 +533,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -420,6 +545,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
@@ -429,6 +557,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
@@ -438,6 +569,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
@@ -447,6 +581,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
@@ -456,8 +593,16 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <initial-available-year>2025</initial-available-year>
+                  <period year="1975">
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
+                  </period>
                </technology>
                <technology name="Gen_II_LWR">
                   <final-available-year>2005</final-available-year>
@@ -488,6 +633,9 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
@@ -496,6 +644,9 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
@@ -505,6 +656,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -514,6 +668,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
@@ -523,6 +680,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
@@ -532,6 +692,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
@@ -541,6 +704,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
@@ -550,8 +716,16 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <initial-available-year>2015</initial-available-year>
+                  <period year="1975">
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
+                  </period>
                </technology>
                <technology name="Gen_II_LWR">
                   <final-available-year>2005</final-available-year>
@@ -582,6 +756,9 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
@@ -590,6 +767,9 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
@@ -599,6 +779,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -608,6 +791,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
@@ -617,6 +803,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
@@ -626,6 +815,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
@@ -635,6 +827,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
@@ -644,8 +839,16 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <initial-available-year>2010</initial-available-year>
+                  <period year="1975">
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
+                  </period>
                </technology>
                <technology name="Gen_II_LWR">
                   <final-available-year>2005</final-available-year>
@@ -676,6 +879,9 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
@@ -684,6 +890,9 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
@@ -693,6 +902,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -702,6 +914,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
@@ -711,6 +926,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
@@ -720,6 +938,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
@@ -729,6 +950,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
@@ -738,8 +962,16 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <initial-available-year>2015</initial-available-year>
+                  <period year="1975">
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
+                  </period>
                </technology>
                <technology name="Gen_II_LWR">
                   <final-available-year>2005</final-available-year>
@@ -770,6 +1002,9 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
@@ -778,6 +1013,9 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
@@ -787,6 +1025,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -796,6 +1037,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
@@ -805,6 +1049,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
@@ -814,6 +1061,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
@@ -823,6 +1073,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
@@ -832,8 +1085,16 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <initial-available-year>2020</initial-available-year>
+                  <period year="1975">
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
+                  </period>
                </technology>
                <technology name="Gen_II_LWR">
                   <final-available-year>2005</final-available-year>
@@ -864,6 +1125,9 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
@@ -872,6 +1136,9 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
@@ -881,6 +1148,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -890,6 +1160,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
@@ -899,6 +1172,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
@@ -908,6 +1184,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
@@ -917,6 +1196,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
@@ -926,8 +1208,16 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <initial-available-year>2020</initial-available-year>
+                  <period year="1975">
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
+                  </period>
                </technology>
                <technology name="Gen_II_LWR">
                   <final-available-year>2005</final-available-year>
@@ -958,6 +1248,9 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
@@ -966,6 +1259,9 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
@@ -975,6 +1271,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -984,6 +1283,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
@@ -993,6 +1295,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
@@ -1002,6 +1307,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
@@ -1011,6 +1319,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
@@ -1020,8 +1331,16 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <initial-available-year>2015</initial-available-year>
+                  <period year="1975">
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
+                  </period>
                </technology>
                <technology name="Gen_II_LWR">
                   <final-available-year>2005</final-available-year>
@@ -1052,6 +1371,9 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
@@ -1060,6 +1382,9 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
@@ -1069,6 +1394,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -1078,6 +1406,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
@@ -1087,6 +1418,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
@@ -1096,6 +1430,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
@@ -1105,6 +1442,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
@@ -1114,8 +1454,16 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <initial-available-year>2015</initial-available-year>
+                  <period year="1975">
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
+                  </period>
                </technology>
                <technology name="Gen_II_LWR">
                   <final-available-year>2005</final-available-year>
@@ -1146,6 +1494,9 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
@@ -1154,6 +1505,9 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
@@ -1163,6 +1517,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -1172,6 +1529,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
@@ -1181,6 +1541,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
@@ -1190,6 +1553,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
@@ -1199,6 +1565,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
@@ -1208,8 +1577,16 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <initial-available-year>2015</initial-available-year>
+                  <period year="1975">
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
+                  </period>
                </technology>
                <technology name="Gen_II_LWR">
                   <final-available-year>2005</final-available-year>
@@ -1240,6 +1617,9 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2005">
                      <minicam-non-energy-input name="non-energy">
@@ -1248,6 +1628,9 @@
                      <minicam-energy-input name="nuclearFuelGenIII">
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2020">
                      <minicam-non-energy-input name="non-energy">
@@ -1257,6 +1640,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2035">
                      <minicam-non-energy-input name="non-energy">
@@ -1266,6 +1652,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2050">
                      <minicam-non-energy-input name="non-energy">
@@ -1275,6 +1664,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2065">
                      <minicam-non-energy-input name="non-energy">
@@ -1284,6 +1676,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2080">
                      <minicam-non-energy-input name="non-energy">
@@ -1293,6 +1688,9 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <period year="2095">
                      <minicam-non-energy-input name="non-energy">
@@ -1302,8 +1700,16 @@
                         <efficiency>0.34</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
                   </period>
                   <initial-available-year>2010</initial-available-year>
+                  <period year="1975">
+                     <phased-shutdown-decider name="phased-shutdown-decider">
+                        <shutdown-rate>0</shutdown-rate>
+                     </phased-shutdown-decider>
+                  </period>
                </technology>
                <technology name="Gen_II_LWR">
                   <final-available-year>2005</final-available-year>
