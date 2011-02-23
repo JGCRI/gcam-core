@@ -71,7 +71,20 @@ public class AWTFileChooserWrapper implements FileChooser {
 				return fileFilter != null ? fileFilter.accept(new File(dir, name)) : true;
 			}
 		});
+
+		// TODO: find a better way as this is a hack
+        String canSelectDirectories = "false";
+		if(fileFilter != null && fileFilter.getDescription().startsWith("Directory")) {
+            canSelectDirectories = "true";
+            // Must be set to LOAD to select a directory
+			toWrap.setMode(FileDialog.LOAD);
+		}
+        
+        // TODO: this is a marginal hack to work for Macs only
+        final String propName = "apple.awt.fileDialogForDirectories";
+        System.setProperty(propName, canSelectDirectories);
 		toWrap.setVisible(true);
+        System.setProperty(propName, "false");
 		String result = toWrap.getFile();
 		if(result == null) {
 			return null;
