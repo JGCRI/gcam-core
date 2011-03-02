@@ -141,6 +141,7 @@ public:
     virtual bool meetsSpecialSolutionCriteria() const = 0;
     virtual bool shouldSolve() const = 0;
     virtual bool shouldSolveNR() const = 0;
+    bool isSolvable() const;
 
     /*!
     * \brief Return the type of the market as defined by the IMarketTypeEnum

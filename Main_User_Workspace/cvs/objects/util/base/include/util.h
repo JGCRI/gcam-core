@@ -302,7 +302,7 @@ namespace objects {
                 // There was a name in the order that did not correspond to
                 // and object in the container.
                 depFinderLog.setLevel( ILogger::DEBUG );
-                depFinderLog << *nameIter << " is not that name of an "
+                depFinderLog << *nameIter << " is not the name of an "
                              << "object in the container. "
                              << "It will not be included in the ordering."
                              << std::endl;
@@ -314,7 +314,7 @@ namespace objects {
              orderIter != isOrdered.end(); ++orderIter ){
             ILogger& mainLog = ILogger::getLogger( "main_log");
             mainLog.setLevel( ILogger::ERROR );
-            mainLog << "ERROR:" << orderIter->first
+            mainLog << orderIter->first
                     << " was not assigned a position in the explicit ordering list." << std::endl;
             success = false;
         }

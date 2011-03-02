@@ -44,20 +44,28 @@
 #include "marketplace/include/market.h"
 #include "marketplace/include/price_market.h"
 #include "util/base/include/xml_helper.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 
 //! Constructor
 PriceMarket::PriceMarket( const string& goodNameIn, const string& regionNameIn, const int periodIn, Market* demandMarketIn ) :
-Market( goodNameIn, regionNameIn, periodIn ) {
+Market( goodNameIn, regionNameIn, periodIn ),
+mIsPriceNegative( false )
+{
     assert( demandMarketIn );
     demandMarketPointer = demandMarketIn;
+    mMarketInfo->setBoolean( "has-split-market", true );
 }
 
 //! Copy Constructor.
-PriceMarket::PriceMarket( const Market& marketIn, Market* demandMarketIn ) : Market( marketIn ) {
+PriceMarket::PriceMarket( const Market& marketIn, Market* demandMarketIn ) : 
+Market( marketIn ),
+mIsPriceNegative( false )
+{
     assert( demandMarketIn );
     demandMarketPointer = demandMarketIn;
+    mMarketInfo->setBoolean( "has-split-market", true );
 }
 
 void PriceMarket::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {
@@ -87,7 +95,16 @@ void PriceMarket::initPrice() {
 * \sa setPriceToLast
 */
 void PriceMarket::setPrice( const double priceIn ) {
-    demand = priceIn;
+    // If the model thinks the price should be negative store that information
+    // and hide the fact from the solver.
+    if( priceIn < 0 ) {
+        mIsPriceNegative = true;
+        demand = abs( priceIn );
+    }
+    else {
+        mIsPriceNegative = false;
+        demand = priceIn;
+    }
     supply = price;
 }
 
@@ -100,7 +117,8 @@ void PriceMarket::set_price_to_last( const double lastPrice ) {
 }
 
 double PriceMarket::getPrice() const {
-    return price; 
+    // This is the model facing price so if it should be negative make it so now.
+    return mIsPriceNegative ? -price : price; 
 }
 
 void PriceMarket::addToDemand( const double demandIn ) {

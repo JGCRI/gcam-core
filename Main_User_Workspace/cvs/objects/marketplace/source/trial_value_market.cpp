@@ -42,9 +42,6 @@
 #include "util/base/include/definitions.h"
 #include "util/base/include/util.h"
 #include <string>
-#include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
 #include "marketplace/include/trial_value_market.h"
 
 using namespace std;
@@ -66,10 +63,7 @@ IMarketType::Type TrialValueMarket::getType() const {
 }
 
 void TrialValueMarket::initPrice() {
-    // If trial price is null, reinitialize to 0.001.
-    if( price < util::getSmallNumber() ) {
-        price = 0.001;
-    }
+    // Note zero may be a valid price for a trial value.
 }
 
 void TrialValueMarket::setPrice( const double priceIn ) {
@@ -83,11 +77,7 @@ void TrialValueMarket::set_price_to_last_if_default( const double lastPrice ) {
     if( price == 0.001 ){
         price = lastPrice;
     }
-    // If current price is null, reset to small number so that solver
-    // has a value to start with.
-    else if( price == 0 ){
-        price = 0.001;
-    }
+    // Note zero may be a valid price for a trial value.
 }
 
 void TrialValueMarket::set_price_to_last( const double lastPrice ) {
@@ -96,11 +86,7 @@ void TrialValueMarket::set_price_to_last( const double lastPrice ) {
     if( price > 0 ){
         price = lastPrice;
     }
-    // If current price is null, reset to small number so that solver
-    // has a value to start with.
-    else if( price == 0 ){
-        price = 0.001;
-    }
+    // Note zero may be a valid price for a trial value.
 }
 
 double TrialValueMarket::getPrice() const {

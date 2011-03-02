@@ -90,9 +90,10 @@ public:
     void createOrdering();
     const std::vector<std::string>& getOrdering() const;
 private:
-    bool findAndBreakCycle();
+    bool findAndBreakCycle( const std::list<size_t>& aStartPoints );
+    bool markCycles( const size_t aCurrVertex, std::list<size_t>& aPath,
+                     std::map<std::pair<size_t, size_t>, int>& aEdgesVisited ) const;
     void removeDependency( const size_t aObject, const size_t aDependency );
-    void printPath( const std::list<size_t>& aPath ) const;
     const std::string& getNameFromIndex( const size_t aIndex ) const;
     
     // Need the typedef here as addTrackedItem returns a ObjectIndexMap

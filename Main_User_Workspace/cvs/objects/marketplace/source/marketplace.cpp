@@ -183,10 +183,10 @@ bool Marketplace::createMarket( const string& regionName, const string& marketNa
 * It also adds a corresponding demand market that provides a trial value for demand.
 * Markets are subclassed to allow Market::addToDemand, Market::getDemand, Market::getPrice, etc. to act 
 * differently for PriceMarket and DemandMarket so that these changes are transparent to the 
-* rest of the code.
+* rest of the code.  Only secondary goods are allowed to restructure their markets;
+* any markets set to solve will be ignored.
 * 
 * \author Steve Smith
-* \todo This currently will not work for global markets. 
 * \param goodName The name of the good of the market to be restructured.
 * \param regionName The region of the market to be restructured.
 */
@@ -204,9 +204,15 @@ void Marketplace::resetToPriceMarket( const string& goodName, const string& regi
         mainLog << "Cannot reset Market "<< goodName << " to a price market because it does not exist."  << endl;
     }
     else if( markets[ marketNumber][ 0 ]->getType() != IMarketType::NORMAL ){
-        ILogger& mainLog = ILogger::getLogger( "mainLog" );
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Cannot reset market type other than normal to a price market." << endl;
+    }
+    else if( markets[ marketNumber ][ 1 ]->isSolvable() ) {
+        // Solved markets do not need to be split.
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::NOTICE );
+        mainLog << "Solved markets do not need trial price/demand markets." << endl;
     }
     else {
         // Setup the corresponding demand markets
@@ -227,12 +233,19 @@ void Marketplace::resetToPriceMarket( const string& goodName, const string& regi
             // Get the pointer of the new demand market.
             Market* newDemandMarket = markets[ demandMarketNumber ][ per ];
             assert( newDemandMarket );
+            
+            // Check if the old market had set an initial trial demand which we
+            // could use as the initial price.
+            Market* oldMarket = markets[ marketNumber ][ per ];
+            marketInfoFrom = oldMarket->getMarketInfo();
+            double initialDemand = marketInfoFrom->getDouble( "initial-trial-demand", false );
+            newDemandMarket->setPrice( initialDemand );
 
             // Create a new price market from the old market.
-            Market* newPriceMarket = new PriceMarket( *markets[ marketNumber ][ per ], newDemandMarket );
+            Market* newPriceMarket = new PriceMarket( *oldMarket, newDemandMarket );
 
             // Delete the old market.
-            delete markets[ marketNumber ][ per ];
+            delete oldMarket;
 
             // Insert the new price market. 
             markets[ marketNumber ][ per ] = newPriceMarket;

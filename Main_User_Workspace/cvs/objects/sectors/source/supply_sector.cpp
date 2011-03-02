@@ -73,11 +73,10 @@ const string SupplySector::XML_NAME = "supplysector";
 */
 SupplySector::SupplySector( const string& aRegionName ):
 Sector( aRegionName ),mHasTrialSupplyMarket( false ),
-mBiomassAdder( scenario->getModeltime()->getmaxper() )
+mBiomassAdder( scenario->getModeltime()->getmaxper() ),
+// The default price for a trial supply market is 0.001
+mPriceTrialSupplyMarket( scenario->getModeltime()->getmaxper(), 0.001  )
 {
-    // Resize price vector for the trial markets that may or maynot be created.
-    // Note, vector initialized to null by default (i.e. trial quantity is null).
-    mPriceTrialSupplyMarket.resize( scenario->getModeltime()->getmaxper() );
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -141,11 +140,15 @@ bool SupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNode* 
 */
 void SupplySector::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {  
 
+    const Modeltime* modeltime = scenario->getModeltime();
     // Temporary CCTP hack.
-    XMLWriteVector( mBiomassAdder, "biomass-price-adder", aOut, aTabs, scenario->getModeltime(), 0.0 );
+    XMLWriteVector( mBiomassAdder, "biomass-price-adder", aOut, aTabs, modeltime, 0.0 );
     if( mHasTrialSupplyMarket ){
         XMLWriteElement( mHasTrialSupplyMarket, "has-trial-supply-market", aOut, aTabs );
-        XMLWriteVector( mPriceTrialSupplyMarket, "price-trial-supply", aOut, aTabs, scenario->getModeltime(), 0.0 );
+    }
+    for( int period = 0; period < modeltime->getmaxper(); ++period ) {
+        XMLWriteElementCheckDefault( mPriceTrialSupplyMarket[ period ], "price-trial-supply",
+                                     aOut, aTabs, 0.001, modeltime->getper_to_yr( period ) );
     }
 }
 
@@ -220,6 +223,20 @@ void SupplySector::setMarket() {
                 regionName, mPriceTrialSupplyMarket );
         }
     }
+    else {
+        // If this sector does not explicitly create a trial supply it may still
+        // have had trial demands because the dependency finder choose to make one
+        // for this sector.  In that case we will store the initial trial demand
+        // in the market info and if the dependency finder decides to make a trial
+        // market again for this sector it can utilize this value.
+        const Modeltime* modeltime = scenario->getModeltime();
+        for( int period = 1; period < modeltime->getmaxper(); ++period ) {
+            if( mPriceTrialSupplyMarket[ period ] != 0.001 ) {
+                marketplace->getMarketInfo( name, regionName, period, true )
+                    ->setDouble( "initial-trial-demand", mPriceTrialSupplyMarket[ period ] );
+            }
+        }
+    }
 }
 
 /*! \brief Initialize the SupplySector.
@@ -232,7 +249,6 @@ void SupplySector::initCalc( NationalAccount* aNationalAccount,
                             const Demographic* aDemographics,
                             const int aPeriod )
 {
-    Marketplace* marketplace = scenario->getMarketplace();
     Sector::initCalc( aNationalAccount, aDemographics, aPeriod );
 
     // Check if the sector should create a trial supply market or energy final
@@ -439,12 +455,20 @@ void SupplySector::FinalEnergySupplier::setFinalEnergy( const string& aRegionNam
 */
 void SupplySector::postCalc( const int aPeriod ){
     Sector::postCalc( aPeriod );
+    const Marketplace* marketplace = scenario->getMarketplace();
     // If trial supply market exists, get solved trial "prices" and set to member
     // price vector.
     if( aPeriod > 0 && mHasTrialSupplyMarket ){
-        mPriceTrialSupplyMarket[ aPeriod ] = scenario->getMarketplace()->getPrice(
+        mPriceTrialSupplyMarket[ aPeriod ] = marketplace->getPrice(
             SectorUtils::getTrialMarketName(name),
             regionName, aPeriod, true );
+    }
+    else if( aPeriod > 0 && marketplace->getMarketInfo( name, regionName, aPeriod, true )
+             ->getBoolean( "has-split-market", false ) )
+    {
+        // We may still have trial "prices" if the dependency finder generated a
+        // trial market for this sector.
+        mPriceTrialSupplyMarket[ aPeriod ] = marketplace->getDemand( name, regionName, aPeriod );
     }
 }
 

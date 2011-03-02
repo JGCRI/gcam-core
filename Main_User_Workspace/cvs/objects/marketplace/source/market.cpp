@@ -275,7 +275,7 @@ const vector<const Atom*>& Market::getContainedRegions() const {
 *          period unless that method is overridden.
 */
 void Market::initPrice() {
-    if ( price < util::getSmallNumber() ) {
+    if ( price == 0 ) {
         price = 1;  
     }
 }
@@ -707,4 +707,14 @@ const string& Market::convert_type_to_string( const IMarketType::Type aType ) {
     assert( sizeof( types ) / sizeof( types[ 0 ] ) == IMarketType::END );
 
     return types[ aType ];
+}
+
+/*!
+ * \brief Returns if the flag which indicate that this market should be solved is set.
+ * \details This method should not be used by a solver to determine if it should
+ *          attempt to solve this market.  Instead it should use Market::shouldSolve().
+ * \return The current value of the solveMarket flag.
+ */
+bool Market::isSolvable() const {
+    return solveMarket;
 }

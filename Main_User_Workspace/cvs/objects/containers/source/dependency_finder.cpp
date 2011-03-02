@@ -159,8 +159,29 @@ void DependencyFinder::createOrdering() {
             ILogger& depFinderLog = ILogger::getLogger( "dependency_finder_log" );
             depFinderLog.setLevel( ILogger::DEBUG );
             depFinderLog << "Graph has at least one cycle, attempting to remove." << endl;
-            // should the removed vector be passed to find and break cycle?
-            if( !findAndBreakCycle() ){
+            
+            // We will start our cycle searches from the vertices that do not
+            // have anything dependant on it.  Note that this is pretty much an
+            // arbitrary decision.
+            list<size_t> startPoints;
+            for( size_t col = 0; col < mDependencyMatrix.size(); ++col ) {
+                if( !removed[ col ] ) {
+                    bool dependsOnCol = false;
+                    for( size_t row = 0; row < mDependencyMatrix.size() && !dependsOnCol; ++row ) {
+                        if( mDependencyMatrix[ row ][ col ] ) {
+                            dependsOnCol = true;
+                        }
+                    }
+                    if( !dependsOnCol ) {
+                        startPoints.push_back( col );
+                    }
+                }
+            }
+            
+            // Find and break cycle does not need to know about the vertices that
+            // have already been removed since they are guaranteed to not be part
+            // of a cycle.
+            if( !findAndBreakCycle( startPoints) ){
                 // There was a cycle but it could not be broken.
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
                 mainLog.setLevel( ILogger::ERROR );
@@ -257,102 +278,74 @@ DependencyFinder::ObjectIndexMap::iterator DependencyFinder::addTrackedItem( con
 /*!
  * \brief Function which locates and breaks a single cycle in the dependency
  *          matrix.
- * \details This function performs a depth first search through the dependency
- *          graph, starting at each node so that all independent sub-graphs are
- *          searched, and stops when it finds an edge which leads back to a node
- *          in the current search path. Once this cycle is found, it calls
- *          breakCycle to remove the edges between two nodes in the cycle.
- *          Control is then returned to the ordering algorithm, which may call
- *          this function again if multiple cycles exist.
- * \todo This search is not completely optimal either in performance or in
- *       minimizing the number of cycles broken.
+ * \details This function performs a search through the dependency graph starting
+ *          at the given start points to find the most commonly traversed edges
+ *          involved in a cycle.  See DependencyFinder::markCycles
+ *          for more details on the alogorithm.  Once we have finished our searches
+ *          we will remove the most traversed dependency.  However since the start
+ *          and end points are some what arbitrary we weight the visit counts to
+ *          boost out edges from a vertex that combines many highly traversed edges
+ *          into fewer edges.  It calls breakCycle to remove the edges between two
+ *          nodes in the cycle. Control is then returned to the ordering algorithm,
+ *          which may call this function again if multiple cycles exist.
+ * \param aStartPoints The vertices to start our cycle searches from.
+ * \todo Although this search attempts to remove the optimal edge there still is
+ *       no garuntee that it minimizes the number of dependencies broken to remove
+ *       all cycles.
  * \return Whether a cycle was found and broken.
  */
-bool DependencyFinder::findAndBreakCycle() {
+bool DependencyFinder::findAndBreakCycle( const list<size_t>& aStartPoints ) {
     if( mCycleBreaker ){
-        // Perform a depth first search using each node as a starting point to
-        // detect all possible cycles.
-        for( unsigned int startingNode = 0;
-             startingNode < mDependencyMatrix.size(); ++startingNode ){
-            // Keep track of the current path we are on to determine the path of the
-            // cycle.
+        // Set up a data structure that counts the number of traversals of edges
+        // which are part of a cycle.
+        map<pair<size_t, size_t>, int> edgeVisits;
+        typedef list<size_t>::const_iterator StartIterator;
+        for( StartIterator startIter = aStartPoints.begin(); startIter != aStartPoints.end(); ++startIter ) {
             list<size_t> path;
-
-            // Create a list of vertices which we have already visited.
-            list<size_t> visitedVertices;
-
-            // Create a stack object to control the search. Each item in the stack
-            // is the index of the node in the matrix, and a flag representing
-            // whether the node is the first child of its parent. This flag is
-            // needed to keep the search path correct.
-            stack<pair<size_t, bool> > searchStack;
-            
-            // Push the starting node on to the stack.
-            searchStack.push( make_pair( startingNode, false ) );
-
-            // Continue the search until we run out of nodes to search.
-            while( !searchStack.empty() ){
-                // Store the index and first-child flag.
-                size_t currentNode = searchStack.top().first;
-                bool popPath = searchStack.top().second;
-                
-                // Pop the top node off the stack, its the next node to search.
-                searchStack.pop();
-                
-                // Skip the node if the search has already visited it.
-                if( find( visitedVertices.begin(), visitedVertices.end(), currentNode ) != visitedVertices.end() ){
-                    continue;
-                }
-                // Add the current node to the list of searched nodes.
-                visitedVertices.push_back( currentNode );
-                
-                // Add the node to the current path.
-                path.push_back( currentNode );
-
-                // Search the row of the matrix for dependencies.
-                bool firstChild = true;
-                for( unsigned int i = 0;
-                     i < mDependencyMatrix[ currentNode ].size(); ++i ){
-                    // Check if there is a dependency at this vertex.
-                    if( mDependencyMatrix[ currentNode ][ i ] ){
-                        // Check if the back edge points back to a node in the
-                        // current path. This is a cycle.
-                        if( find( path.begin(), path.end(), i ) != path.end() ){
-                            // Print the path for debugging.
-                            printPath( path );
-                            // Break the cycle between the current node and the
-                            // current child.
-                            mCycleBreaker->breakCycle( *this, i, currentNode );
-                            
-                            // A cycle was found and broken successfully.
-                            return true;
-                        }
-                        // Otherwise add the child to the list of vertices to
-                        // search. Checking for duplicates is performed before the
-                        // vertex is searched from, which avoids having to search
-                        // the stack and the list of visited vertices here. Set a
-                        // flag on the stack if this is the first child of a node so
-                        // that we know when to remove an element from the path.
-                        searchStack.push( make_pair( i, firstChild ) );
-                        firstChild = false;
-                    }
-                }
-                // If we just searched a childless node, or the last child of a
-                // node, pop the node off the path.
-                if( firstChild || popPath ){
-                    path.pop_back();
-                }
+            markCycles( *startIter, path, edgeVisits );
+        }
+        
+        // Create a weighting factor to benefit out-edges from a vertex which
+        // combines edges.
+        typedef map<pair<size_t, size_t>, int>::const_iterator EdgeVisitIter;
+        vector<int> countIn( mDependencyMatrix.size(), 0 );
+        vector<int> countOut( mDependencyMatrix.size(), 0 );
+        vector<double> countRatio( mDependencyMatrix.size(), 0.0 );
+        for( EdgeVisitIter edgeIter = edgeVisits.begin(); edgeIter != edgeVisits.end(); ++edgeIter ) {
+            countOut[ (*edgeIter).first.first ] += (*edgeIter).second;
+            countIn[ (*edgeIter).first.second ] += (*edgeIter).second;
+        }
+        for( size_t row = 0; row < mDependencyMatrix.size(); ++row ) {
+            if( countIn[ row ] > 0 && countOut[ row ] > 0 ) {
+                countRatio[ row ] = static_cast<double>( countIn[ row ] )
+                    / static_cast<double>( countOut[ row ] );
             }
         }
-
-        // The loop exited without finding a cycle.
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        ILogger& depFinderLog = ILogger::getLogger( "dependency_finder_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        depFinderLog.setLevel( ILogger::ERROR );
-        mainLog << "Could not find a cycle in the dependency matrix." << endl;
-        depFinderLog << "Could not find a cycle in the dependency matrix." << endl;
-        return false;
+        
+        // Find the most traversed edge with weighting.
+        EdgeVisitIter maxVisits = edgeVisits.end();
+        for( EdgeVisitIter edgeIter = edgeVisits.begin(); edgeIter != edgeVisits.end(); ++edgeIter ) {
+            if( maxVisits == edgeVisits.end() || ( (*edgeIter).second * countRatio[ (*edgeIter).first.first ] ) 
+                >= ( (*maxVisits).second * countRatio[ (*maxVisits).first.first ] ) )
+            {
+                maxVisits = edgeIter;
+            }
+        }
+        if( maxVisits != edgeVisits.end() ) {
+            // break this dependency
+            mCycleBreaker->breakCycle( *this, (*maxVisits).first.first, (*maxVisits).first.second );
+            return true;
+        }
+        else {
+            // The searches did not find any cycles.
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            ILogger& depFinderLog = ILogger::getLogger( "dependency_finder_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            depFinderLog.setLevel( ILogger::ERROR );
+            mainLog << "Could not find a cycle in the dependency matrix." << endl;
+            depFinderLog << "Could not find a cycle in the dependency matrix." << endl;
+            return false;
+        }
     }
 
     // A cycle was found, but there is no way to break it so output an error.
@@ -363,32 +356,70 @@ bool DependencyFinder::findAndBreakCycle() {
     return false;
 }
 
-/*!
- * \brief Print a list of objects which represents an ordered path.
- * \details Prints an ordering of objects to the dependency finder log at DEBUG level. This is
- *          useful for determining where cycles exist.
- * \param aPath Path of indexes to print.
+/*
+ * \brief Updates the count for the number of times an edge was found to be part
+ *        of a cycle.
+ * \details Performas a depth first search that stops when it finds an edge which
+ *          leads back to a node in the current search path.  It will then increase
+ *          a count on that edge to indicate it was part of a cycle.  As it unwinds
+ *          the search path if an edge was part of a found cycle it will also increase
+ *          that edge's count.
+ * \param aCurrVertex The current vertex we are checking.
+ * \param aPath The current path through the graph which can be used to check for
+ *              if a cycle has been found.
+ * \param aEdgesVisited A map to keep track of the number of times an edge has been
+ *                      visited while being part of a cycle.
+ * \return True if a search from aCurrVertex lead to a cycle.
  */
-void DependencyFinder::printPath( const list<size_t>& aPath ) const {
-    // Get the main log.
-    ILogger& depFinderLog = ILogger::getLogger( "dependency_finder_log" );
-    depFinderLog.setLevel( ILogger::DEBUG );
-
-    // Make sure we didn't get an empty list.
-    if( aPath.empty() ){
-        depFinderLog << "Cannot print an empty path." << endl;
-        return;
+bool DependencyFinder::markCycles( const size_t aCurrVertex, list<size_t>& aPath,
+                                   map<pair<size_t, size_t>, int>& aEdgesVisited ) const
+{
+    // Check to see if the current vertex is already in the path in which case a
+    // cycle is found.
+    if( find( aPath.begin(), aPath.end(), aCurrVertex ) != aPath.end() ){
+        // Increase the count of this edge and return true that this path was part
+        // of a cycle.
+        pair<size_t, size_t> currEdge( aPath.back(), aCurrVertex );
+        map<pair<size_t, size_t>, int>::iterator edgeIter = aEdgesVisited.find( currEdge );
+        if( edgeIter == aEdgesVisited.end() ) {
+            aEdgesVisited[ currEdge ] = 1;
+        }
+        else {
+            ++(*edgeIter).second;
+        }
+        
+        // A cycle was found
+        return true;
     }
-
-    // Print the path.
-    depFinderLog << "Path: ";
-    // Loop through the vertices and print the path.
-    for( list<size_t>::const_iterator iter = aPath.begin(); iter != aPath.end(); ++iter ){
-        depFinderLog << getNameFromIndex( *iter ) << "->";
+    else {
+        // Recursively search all dependencies from this vertex for a cycle.
+        aPath.push_back( aCurrVertex );
+        bool didFindCycle = false;
+        for( size_t potentialDep = 0; potentialDep < mDependencyMatrix.size(); ++potentialDep ) {
+            if( mDependencyMatrix[ aCurrVertex ][ potentialDep ] ) {
+                if( markCycles( potentialDep, aPath, aEdgesVisited ) ) {
+                    didFindCycle = true;
+                }
+            }
+        }
+        aPath.pop_back();
+        
+        // Check if at least one of the out-edges from this vertex was part of a
+        // cycle.
+        if( didFindCycle && !aPath.empty() ) {
+            // This path was part of a cycle so increase the count of the edge
+            // which led here just once.
+            pair<size_t, size_t> currEdge( aPath.back(), aCurrVertex );
+            map<pair<size_t, size_t>, int>::iterator edgeIter = aEdgesVisited.find( currEdge );
+            if( edgeIter == aEdgesVisited.end() ) {
+                aEdgesVisited[ currEdge ] = 1;
+            }
+            else {
+                ++(*edgeIter).second;
+            }
+        }
+        return didFindCycle;
     }
-    
-    // Add the first item to clearly show the cycle.
-    depFinderLog << getNameFromIndex( *aPath.begin() ) << endl;
 }
 
 /*!
