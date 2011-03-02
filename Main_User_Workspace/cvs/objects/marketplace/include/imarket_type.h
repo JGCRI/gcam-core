@@ -121,15 +121,26 @@ public:
       TAX,
 
       /*!
-       * \brief A portfolio standard market.
-       * \details The price parameter represents the tax on the gas. The market
+       * \brief A renewable energy portfolio standard market.
+       * \details The price parameter represents a subsidy on targeted resource. The market
+       *          may be a fixed tax market which is not solved, or a market
+       *          which solves for a constraint on emissions. If it is a
+       *          constraint market, demand should be set to the constraint and
+       *          supply should be updated to the current supply. Supply
+       *          should increase with price.
+       */
+      RES,
+
+      /*!
+       * \brief A subsidy market.
+       * \details The price parameter represents the pricesof a subsidy credit. The market
        *          may be a fixed tax market which is not solved, or a market
        *          which solves for a constraint on emissions. If it is a
        *          constraint market, supply should be set to the constraint and
        *          demand should be updated to the current emissions. Demand
        *          should decrease with price.
        */
-      SUBSIDY,
+	   SUBSIDY,
 
       /*!
        * \brief A market which provides a trial value for a parameter.

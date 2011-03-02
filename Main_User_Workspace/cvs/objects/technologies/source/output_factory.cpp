@@ -47,6 +47,7 @@
 
 // Add new types here.
 #include "technologies/include/secondary_output.h"
+#include "technologies/include/res_secondary_output.h"
 #include "technologies/include/residue_biomass_output.h"
 // #include "emissions/include/by_product.h"
 #include "technologies/include/internal_gains.h"
@@ -62,6 +63,7 @@ using namespace std;
 bool OutputFactory::isOfType( const string& aType ) {
     // Search the list of known types.
     return ( aType == SecondaryOutput::getXMLNameStatic() )
+        || ( aType == RESSecondaryOutput::getXMLNameStatic() )
         || ( aType == InternalGains::getXMLNameStatic() )
         || ( aType == ResidueBiomassOutput::getXMLNameStatic() );
     // TODO: Enable byproducts code when nuclear is committed.
@@ -78,6 +80,9 @@ auto_ptr<IOutput> OutputFactory::create( const string& aType ) {
     // Search the list of known types.
     if( aType == SecondaryOutput::getXMLNameStatic() ){
         return auto_ptr<IOutput>( new SecondaryOutput );
+    }
+    if( aType == RESSecondaryOutput::getXMLNameStatic() ){
+        return auto_ptr<IOutput>( new RESSecondaryOutput );
     }
   if ( aType == ResidueBiomassOutput::getXMLNameStatic() ) {
     return auto_ptr<IOutput>( new ResidueBiomassOutput );

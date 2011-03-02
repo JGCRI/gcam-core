@@ -54,6 +54,7 @@
 #include "util/base/include/model_time.h"
 #include "policy/include/policy_portfolio_standard.h"
 #include "marketplace/include/marketplace.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 using namespace xercesc;
@@ -262,9 +263,13 @@ void PolicyPortfolioStandard::completeInit( const string& aRegionName ) {
     // Create the policy market, a solved market of GHG type which
     // sets the supply side as the constraint and the demand side
     // as the calculated value.
-    if ( mPolicyType == "tax") {
+
+	if ( mPolicyType == "tax") {
         marketplace->createMarket( aRegionName, mMarket, mName, IMarketType::TAX );
     }
+	else if ( mPolicyType == "RES") {
+        marketplace->createMarket( aRegionName, mMarket, mName, IMarketType::RES );	
+	} 
     else {
         marketplace->createMarket( aRegionName, mMarket, mName, IMarketType::SUBSIDY );
     }
@@ -312,7 +317,13 @@ void PolicyPortfolioStandard::completeInit( const string& aRegionName ) {
             if( tempConstraint[ per ] != -1 ){
                 if ( mPolicyType == "tax" ){
                     marketplace->setMarketToSolve( mName, aRegionName, per );
-                    marketplace->addToSupply( mName, aRegionName, tempConstraint[ per ] - 
+					marketplace->addToSupply( mName, aRegionName, tempConstraint[ per ] - 
+                        marketplace->getSupply( mName, aRegionName, per ), per, false );
+                }
+				else if ( mPolicyType == "RES" ){  // maw doesn't understand this
+                    marketplace->setMarketToSolve( mName, aRegionName, per );
+				//	maw doesn't understand this.  But it doesn;t work otherwise
+					marketplace->addToSupply( mName, aRegionName, tempConstraint[ per ] - 
                         marketplace->getSupply( mName, aRegionName, per ), per, false );
                 }
                 else {

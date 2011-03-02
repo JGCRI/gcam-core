@@ -56,6 +56,7 @@
 #include "marketplace/include/inverse_calibration_market.h"
 #include "marketplace/include/market_tax.h"
 #include "marketplace/include/market_subsidy.h"
+#include "marketplace/include/market_RES.h"
 #include "marketplace/include/normal_market.h"
 #include "marketplace/include/trial_value_market.h"
 #include "util/base/include/ivisitor.h"
@@ -63,6 +64,7 @@
 #include "util/base/include/atom_registry.h"
 #include "util/base/include/atom.h"
 #include "containers/include/iinfo.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 using namespace objects;
@@ -146,7 +148,10 @@ auto_ptr<Market> Market::createMarket( const IMarketType::Type aType,
     else if ( aType == IMarketType::TAX ) {
         rNewMarket.reset( new MarketTax( aGoodName, aRegionName, aPeriod ) );
     }
-    else if ( aType == IMarketType::SUBSIDY ) {
+    else if ( aType == IMarketType::RES ) {
+        rNewMarket.reset( new MarketRES( aGoodName, aRegionName, aPeriod ) );
+    }
+	else if ( aType == IMarketType::SUBSIDY ) {
         rNewMarket.reset( new MarketSubsidy( aGoodName, aRegionName, aPeriod ) );
     }
     else if ( aType == IMarketType::CALIBRATION ) {
@@ -695,7 +700,7 @@ const string& Market::convert_type_to_string( const IMarketType::Type aType ) {
     // IMarketType array make sure to add to this array as well and keep this in
     // the same order as the IMarketType enum.
     static const string types[] = { "Normal", "Calibration", "Inverse-Calibration",
-                                    "Tax", "Subsidy", "Trial-Value",
+                                    "Tax", "RES", "Subsidy", "Trial-Value",
                                     "Demand", "Price" };
 
     // Check that the types array is up to date.
