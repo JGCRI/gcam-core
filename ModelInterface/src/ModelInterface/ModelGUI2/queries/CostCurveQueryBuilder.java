@@ -27,6 +27,11 @@ import com.sleepycat.dbxml.XmlException;
 public class CostCurveQueryBuilder extends QueryBuilder {
 	public static Map varList;
 	public static String xmlName = "costCurveQuery";
+    private static final List<String> showAttrList = new Vector<String>(2);
+    static {
+        showAttrList.add("year");
+        showAttrList.add("type");
+    }
 	public CostCurveQueryBuilder(QueryGenerator qgIn) {
 		super(qgIn);
 		varList = new HashMap();
@@ -337,7 +342,7 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 		// check if we need to collapse this level
 		if(!addedNodeLevel && !addedYearLevel && !attrMap.isEmpty()) {
             // TODO: add the ability to use showAttrMap
-			String attr = XMLDB.getAllAttr(attrMap, null);
+			String attr = XMLDB.getAllAttr(attrMap, showAttrList);
 			attr = nodeName+"@"+attr;
 			if(!tempMap.containsKey(attr)) {
 				tempMap.put(attr, new TreeMap());
