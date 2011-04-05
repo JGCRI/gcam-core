@@ -48,6 +48,7 @@
 #include <vector>
 #include <iosfwd>
 #include <string>
+#include <memory>
 #include "marketplace/include/imarket_type.h"
 #include "util/base/include/ivisitable.h"
 

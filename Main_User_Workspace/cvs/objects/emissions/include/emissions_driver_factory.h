@@ -38,6 +38,8 @@
  * by User.
  */
 
+#include <memory>
+
 /*!
  * \file emissions_driver_factory.h
  * \ingroup Objects

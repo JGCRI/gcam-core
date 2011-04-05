@@ -181,13 +181,13 @@ void Logger::toDebugXML( ostream& out, Tabs* tabs ) const {
 void Logger::parseHeader( string& aHeader ) {
 	
 	static const basic_string <char>::size_type npos = static_cast<char>( -1 );
-	unsigned int offset = 0;
+	int offset = 0;
 
 	// Loop through the string.
 	while( offset < aHeader.size() && offset != npos ){
 		
 		// Find the first left bracket.
-		unsigned int leftBracket = static_cast<unsigned int>( aHeader.find_first_of( "{", offset ) );
+		int leftBracket = static_cast<unsigned int>( aHeader.find_first_of( "{", offset ) );
 		offset = leftBracket;
 
 		// Exit if we do not find it.
@@ -195,7 +195,7 @@ void Logger::parseHeader( string& aHeader ) {
 			break;
 		}
 		
-		unsigned int rightBracket = rightBracket = static_cast<unsigned int>( aHeader.find_first_of( "}", offset ) );
+		int rightBracket = rightBracket = static_cast<unsigned int>( aHeader.find_first_of( "}", offset ) );
 		offset = rightBracket;
 
 		// Exit if we do not find it.

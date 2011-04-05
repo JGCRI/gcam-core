@@ -1,0 +1,64 @@
+### Compile settings for MiniCAM on Linux ###
+### William.Gustafson@pnl.gov; 9-Sep-2008 ###
+
+### gcc compiler settings (testing with v4.1.2) ###
+CXX             = g++
+CXXOPTIM        = -O3
+CXXDEBUG        = -DNDEBUG
+CXXBASEOPTS     = $(CXXDEBUG)
+
+FC              = gfortran
+FCOPTIM         = -O3
+FCDEBUG         = -ffpe-trap=invalid,zero,overflow #-g -fbounds-check
+FCBASEOPTS      = -fno-underscoring $(FCDEBUG) #-fno-align-commons
+
+ARCH_FLAGS      = -DFORTRAN_LOWER
+ENVLIBS         = -lgfortran
+
+### locations of library include files
+# BOOST_INCLUDE should be set in the user environment on Evergreen by running 'tap boost'.
+BOOSTINC	      = $(BOOST_INCLUDE)
+# Eventually we should be able to get DBXML installed and available by a tap command, 
+# but until then it will have to be set manually
+DBXMLINC	      = $(DBXML_INCLUDE)
+
+### locations of libraries
+LIBDIR		= -L/usr/local/lib -L$(DBXML_LIB) -L$(BUILDPATH)
+
+### Portland compiler settings (tested with v7.1-6) ###
+#FC              = pgf90
+#FCOPTIM         = -O0
+#FCDEBUG         = -Ktrap=fp #-g -Mbounds
+#FCBASEOPTS      = $(FCDEBUG)
+
+### The rest should be mostly compiler independent
+## Note $(PROF) will be set as needed if we are building the gcam-prof target
+CPPFLAGS	= $(INCLUDE) $(ARCH_FLAGS)
+CXXFLAGS        = $(CXXOPTIM) $(CXXBASEOPTS) $(PROF) -MMD
+FCFLAGS         = $(FCOPTIM) $(FCBASEOPTS) $(PROF)
+LD              = $(CXX) $(PROF)
+LDFLAGS         = $(CXXFLAGS) -Wl,-rpath=$(DBXML_LIB)
+AR              = ar ru
+#MAKE            = make -i -r
+RANLIB          = ranlib
+LIB             = ${ENVLIBS} $(LIBDIR) -lxerces-c -ldb -ldb_cxx -ldbxml -lxqilla
+INCLUDE         = -I$(BOOSTINC) \
+                  -I$(DBXMLINC) \
+                  -I${PATHOFFSET}
+
+### rule for building the dependency information
+# %.d: %.cpp
+# 	@set -e; rm -f $@; \
+# 	$(CC) -MM $(CPPFLAGS) $< > $@.$$$$; \
+# 	sed 's,\($*\)\.o[ :]*,\1.o $@ : ,g' < $@.$$$$ > $@; \
+# 	rm -f $@.$$$$
+
+
+### These will be expanded with whatever the value of OBJS happens to be when they 
+### are referenced.  Each leaf-directory Makefile sets OBJS as appropriate, so this
+### will do the right thing.
+SRCS	 = $(OBJS:.o=.cpp)
+DEPS	 = $(OBJS:.o=.d)
+
+%.o: %.f90
+	$(FC) -c $(FCFLAGS) $(INCLUDE) $<

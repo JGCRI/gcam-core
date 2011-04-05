@@ -47,6 +47,7 @@
 */
 
 #include <vector>
+#include <memory>
 #include <xercesc/dom/DOMNode.hpp>
 #include "util/base/include/ivisitable.h"
 class Tabs;

@@ -79,7 +79,12 @@
 using namespace std;
 using namespace xercesc;
 
+//wig: add capability to use lower-case fortran names
+#ifdef FORTRAN_LOWER
+extern "C" { void _stdcall ag2initc( double[14][12] ); };
+#else
 extern "C" { void _stdcall AG2INITC( double[14][12] ); };
+#endif
 extern Scenario* scenario;
 
 //! Default constructor.
@@ -205,7 +210,11 @@ void World::initAgLu() {
 
     double prices[ 14 ][ 12 ]; 
 #if(__HAVE_FORTRAN__)
+#ifdef FORTRAN_LOWER
+    ag2initc( prices );
+#else
     AG2INITC( prices );
+#endif    
 #endif
     for ( unsigned int j = 0; j < regions.size(); j++ ) {
         vector<double> tempVec( 12 );

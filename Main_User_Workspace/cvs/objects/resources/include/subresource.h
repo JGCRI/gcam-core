@@ -45,6 +45,7 @@
 * \brief The SubResource class header file.
 * \author Sonny Kim
 */
+#include <memory>
 #include <xercesc/dom/DOMNode.hpp>
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/value.h"

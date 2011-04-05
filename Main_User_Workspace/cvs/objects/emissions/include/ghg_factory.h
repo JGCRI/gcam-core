@@ -38,6 +38,8 @@
  * by User.
  */
 
+#include <memory>
+
 /*!
  * \file ghg_factory.h
  * \ingroup Objects

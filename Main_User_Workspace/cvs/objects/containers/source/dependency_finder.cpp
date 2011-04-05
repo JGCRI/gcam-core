@@ -43,6 +43,7 @@
 #include <cassert>
 #include <stack>
 #include <algorithm>
+#include <limits.h>		// INT_MAX and other goodies
 #include "containers/include/dependency_finder.h"
 #include "util/logger/include/ilogger.h"
 #include "containers/include/icycle_breaker.h"

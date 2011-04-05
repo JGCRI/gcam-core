@@ -45,6 +45,7 @@
  * \author Jim Naslund
  */
 
+#include <memory>
 #include <xercesc/dom/DOMNode.hpp>
 #include <boost/noncopyable.hpp>
 #include "containers/include/iscenario_runner.h"

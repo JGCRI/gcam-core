@@ -48,6 +48,7 @@
 
 #include <string>
 #include <vector>
+#include <memory>
 #include <xercesc/dom/DOMNode.hpp>
 #include <cassert>
 #include <map>

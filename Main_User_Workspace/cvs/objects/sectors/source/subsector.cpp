@@ -1352,9 +1352,9 @@ double Subsector::distributeInvestment( const IDistributor* aDistributor,
         actInvestment = mFixedInvestments[ aPeriod ];
     }
 
-    vector<IInvestable*> investables = InvestmentUtils::getTechInvestables( baseTechs, aPeriod );
     // Set the investment amount for the subsector to the quantity actually distributed.
     // Ensure that distribute() for current period is not affected by looping thru future technologies.
+    vector<IInvestable*> investables = InvestmentUtils::getTechInvestables( baseTechs, aPeriod );
     mInvestments[ aPeriod ] = aDistributor->distribute( aExpProfitRateCalc,
                                                         investables,
                                                         aNationalAccount,

@@ -68,6 +68,7 @@
 #include <map>
 #include <vector>
 #include <cassert>
+#include <algorithm>
 
 #ifndef _MSC_VER
 #include "util/logger/include/ilogger.h"

@@ -46,6 +46,7 @@
  */
 
 #include <string>
+#include <memory>
 #include <xercesc/dom/DOMNode.hpp>
 
 class Tabs;

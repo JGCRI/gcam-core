@@ -46,6 +46,7 @@
  */
 
 #include <string>
+#include <memory>
 
 class ACarbonFlow;
 

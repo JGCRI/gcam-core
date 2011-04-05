@@ -3,6 +3,7 @@
 #include <fstream>
 #include <math.h>
 #include <time.h>
+#include <stdlib.h>
 
 
 #include "climate/include/ObjECTS_MAGICC.h"

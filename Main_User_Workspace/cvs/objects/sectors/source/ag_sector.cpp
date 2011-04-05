@@ -53,7 +53,17 @@
 #include "containers/include/iinfo.h"
 
 // Fortran calls.
+//wig: add capability to use lower-case fortran names
 #if(__HAVE_FORTRAN__)
+#ifdef FORTRAN_LOWER
+extern "C" { void _stdcall setgnp( int&, double[] ); };
+extern "C" { double _stdcall getgnp( int&, int& ); };
+extern "C" { void _stdcall setpop( int&, double[] ); };
+extern "C" { double _stdcall getpop( int&, int& ); };
+extern "C" { void _stdcall ag2run( double[], int&, int&, double[], double[] ); };
+extern "C" { double _stdcall ag2co2emissions( int&, int& ); };
+extern "C" { void _stdcall ag2linkout( void ); };
+#else
 extern "C" { void _stdcall SETGNP( int&, double[] ); };
 extern "C" { double _stdcall GETGNP( int&, int& ); };
 extern "C" { void _stdcall SETPOP( int&, double[] ); };
@@ -61,6 +71,7 @@ extern "C" { double _stdcall GETPOP( int&, int& ); };
 extern "C" { void _stdcall AG2RUN( double[], int&, int&, double[], double[] ); };
 extern "C" { double _stdcall AG2CO2EMISSIONS( int&, int& ); };
 extern "C" { void _stdcall AG2LINKOUT( void ); };
+#endif
 #endif
 
 using namespace std;
@@ -179,10 +190,20 @@ void AgSector::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
    #if(__HAVE_FORTRAN__)
    int tempRegion = regionNumber; // Needed b/c function is constant.
    for ( int iter = 0; iter < modeltime->getmaxper(); iter++ ){
+//wig: add capability to use lower-case fortran names
+#ifdef FORTRAN_LOWER
+      XMLWriteElement( getgnp( tempRegion, iter ), "gdpFromFortran", out, tabs, modeltime->getper_to_yr( iter ) );
+#else
       XMLWriteElement( GETGNP( tempRegion, iter ), "gdpFromFortran", out, tabs, modeltime->getper_to_yr( iter ) );
+#endif
    }
    for ( int iter = 1; iter < modeltime->getmaxper(); iter++ ){
+//wig: add capability to use lower-case fortran names
+#ifdef FORTRAN_LOWER
+      XMLWriteElement( getpop( tempRegion, iter ), "popFromFortran", out, tabs, modeltime->getper_to_yr( iter ) );
+#else
       XMLWriteElement( GETPOP( tempRegion, iter ), "popFromFortran", out, tabs, modeltime->getper_to_yr( iter ) );
+#endif
    }
    #endif
    
@@ -254,7 +275,12 @@ void AgSector::setGNP( const vector<double>& gdpsToFortran ) {
       // toFortran[ i ] = readGDPS[ regionNumber ][ i ];
    }
    
+//wig: add capability to use lower-case fortran names
+#ifdef FORTRAN_LOWER
+   setgnp( regionNumber, toFortran );
+#else
    SETGNP( regionNumber, toFortran );
+#endif
    delete[] toFortran;
    #endif
 }
@@ -270,7 +296,12 @@ void AgSector::setPop( const vector<double>& popsToFortran ) {
       toFortran[ i ] = popsToFortran[ i ];
    }
    
+//wig: add capability to use lower-case fortran names
+#ifdef FORTRAN_LOWER
+   setpop( regionNumber, toFortran );
+#else
    SETPOP( regionNumber, toFortran );
+#endif
    delete[] toFortran;
    #endif
 }
@@ -299,7 +330,12 @@ void AgSector::runModel( const int period, const string& regionName ) {
    #if(__HAVE_FORTRAN__)
    int tempRegionNumber = regionNumber;
    int tempPeriod = period;
+//wig: add capability to use lower-case fortran names
+#ifdef FORTRAN_LOWER
+   ag2run( priceArray, tempRegionNumber, tempPeriod, demandArray, supplyArray );
+#else
    AG2RUN( priceArray, tempRegionNumber, tempPeriod, demandArray, supplyArray );
+#endif
    #endif
    
    for( int j = 0; j < numAgMarkets; j++ ) {
@@ -327,7 +363,12 @@ void AgSector::carbLand( const int period, const string& regionName ) {
    int tempRegionNumber = regionNumber;
    int tempPeriod = period;
    
+//wig: add capability to use lower-case fortran names
+#ifdef FORTRAN_LOWER
+   CO2Emissions[ period ] = ag2co2emissions( tempPeriod, tempRegionNumber );
+#else
    CO2Emissions[ period ] = AG2CO2EMISSIONS( tempPeriod, tempRegionNumber );
+#endif
    #endif
 }
 
@@ -374,7 +415,12 @@ void AgSector::setMarket( const string& regionName ) {
 //! Call the Ag modules internal output subroutine
 void AgSector::internalOutput() {
 #if(__HAVE_FORTRAN__)
+//wig: add capability to use lower-case fortran names
+#ifdef FORTRAN_LOWER
+   ag2linkout();
+#else
    AG2LINKOUT();
+#endif
 #endif
 }
 

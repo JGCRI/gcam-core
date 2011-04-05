@@ -7,6 +7,8 @@
  *
  */
 #include <iostream>
+#include <stdlib.h>
+#include <string.h>
 
 #include "climate/include/MAGICC_array.h"
 
