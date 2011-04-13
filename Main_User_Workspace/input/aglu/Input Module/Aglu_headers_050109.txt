@@ -70,7 +70,7 @@
 
 55,scenario,region/+{name}supplysector,supplysector/+output-unit,supplysector/+input-unit,supplysector/+price-unit,supplysector/+sectorType,world/{name=USA}region,world/{name=Canada}region,world/{name=Western Europe}region,world/{name=Japan}region,world/{name=Former Soviet Union}region,world/{name=Australia_NZ}region,world/{name=China}region,world/{name=Middle East}region,world/{name=Africa}region,world/{name=Latin America}region,world/{name=Southeast Asia}region,world/{name=Eastern Europe}region,world/{name=Korea}region,world/{name=India}region,scenario/world
 
-500,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{year=1975;fillout=1}share-weight,subsector/+{apply-to}interpolation-rule,subsector/+{from-year}interpolation-rule,subsector/+{to-year}interpolation-rule,interpolation-rule/+{name}interpolation-function,scenario/world,scenario
+500,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{year=1975}share-weight,subsector/+{year=1990}share-weight,subsector/+{year=2005}share-weight,subsector/+{apply-to}interpolation-rule,subsector/+{from-year}interpolation-rule,subsector/+{to-year}interpolation-rule,interpolation-rule/+{name}interpolation-function,scenario/world,scenario
 
 501,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{year=1975;fillout=1}share-weight,scenario/world,scenario
 
@@ -99,7 +99,7 @@
 
 71,world/+{name}region,region/+{name}supplysector,supplysector/+{year=1975;fillout=1}logit-exponent,scenario,scenario/world
 
-700,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{year=1975;fillout=1}share-weight,subsector/+{apply-to}interpolation-rule,subsector/+{from-year}interpolation-rule,subsector/+{to-year}interpolation-rule,interpolation-rule/+{name}interpolation-function,scenario/world,scenario
+700,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{year=1975}share-weight,subsector/+{year=1990}share-weight,subsector/+{year=2005}share-weight,subsector/+{apply-to}interpolation-rule,subsector/+{from-year}interpolation-rule,subsector/+{to-year}interpolation-rule,interpolation-rule/+{name}interpolation-function,scenario/world,scenario
 
 702,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{year=1975;fillout=1}logit-exponent,scenario/world,scenario
 
