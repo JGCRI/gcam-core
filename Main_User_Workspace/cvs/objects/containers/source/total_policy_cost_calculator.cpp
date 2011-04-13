@@ -286,6 +286,11 @@ void TotalPolicyCostCalculator::createRegionalCostCurves() {
 
     const int maxPeriod = modeltime->getmaxper();
     
+    //Reset these to zero so that global costs don't accumulate across batch runs
+    mGlobalCost = 0;
+    mGlobalDiscountedCost = 0;
+    
+    
     for( map<const string, const Curve*>::const_iterator rNameIter = mPeriodCostCurves[ 0 ].begin(); rNameIter != mPeriodCostCurves[ 0 ].end(); ++rNameIter ){
         // Skip the global curve which is only calculated for reporting.
         if( rNameIter->first == "global" ){
