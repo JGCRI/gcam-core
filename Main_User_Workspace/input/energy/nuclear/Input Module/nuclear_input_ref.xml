@@ -116,6 +116,70 @@
                   </period>
                </technology>
                <technology name="Gen_II_LWR">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
                   <final-available-year>2005</final-available-year>
                </technology>
             </subsector>
@@ -239,6 +303,70 @@
                   </period>
                </technology>
                <technology name="Gen_II_LWR">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
                   <final-available-year>2005</final-available-year>
                </technology>
             </subsector>
@@ -362,6 +490,70 @@
                   </period>
                </technology>
                <technology name="Gen_II_LWR">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
                   <final-available-year>2005</final-available-year>
                </technology>
             </subsector>
@@ -485,6 +677,70 @@
                   </period>
                </technology>
                <technology name="Gen_II_LWR">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
                   <final-available-year>2005</final-available-year>
                </technology>
             </subsector>
@@ -605,6 +861,70 @@
                   </period>
                </technology>
                <technology name="Gen_II_LWR">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
                   <final-available-year>2005</final-available-year>
                </technology>
             </subsector>
@@ -728,6 +1048,70 @@
                   </period>
                </technology>
                <technology name="Gen_II_LWR">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
                   <final-available-year>2005</final-available-year>
                </technology>
             </subsector>
@@ -851,6 +1235,70 @@
                   </period>
                </technology>
                <technology name="Gen_II_LWR">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
                   <final-available-year>2005</final-available-year>
                </technology>
             </subsector>
@@ -974,6 +1422,70 @@
                   </period>
                </technology>
                <technology name="Gen_II_LWR">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
                   <final-available-year>2005</final-available-year>
                </technology>
             </subsector>
@@ -1097,6 +1609,70 @@
                   </period>
                </technology>
                <technology name="Gen_II_LWR">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
                   <final-available-year>2005</final-available-year>
                </technology>
             </subsector>
@@ -1220,6 +1796,70 @@
                   </period>
                </technology>
                <technology name="Gen_II_LWR">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
                   <final-available-year>2005</final-available-year>
                </technology>
             </subsector>
@@ -1343,6 +1983,70 @@
                   </period>
                </technology>
                <technology name="Gen_II_LWR">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
                   <final-available-year>2005</final-available-year>
                </technology>
             </subsector>
@@ -1466,6 +2170,70 @@
                   </period>
                </technology>
                <technology name="Gen_II_LWR">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
                   <final-available-year>2005</final-available-year>
                </technology>
             </subsector>
@@ -1589,6 +2357,70 @@
                   </period>
                </technology>
                <technology name="Gen_II_LWR">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
                   <final-available-year>2005</final-available-year>
                </technology>
             </subsector>
@@ -1712,6 +2544,70 @@
                   </period>
                </technology>
                <technology name="Gen_II_LWR">
+                  <period year="1990">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2020">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2035">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2050">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2065">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2080">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2095">
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>5.8</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="nuclearFuelGenII">
+                        <efficiency>0.333</efficiency>
+                     </minicam-energy-input>
+                  </period>
                   <final-available-year>2005</final-available-year>
                </technology>
             </subsector>
