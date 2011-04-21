@@ -83,7 +83,9 @@ const string MagiccModel::sInputGasNames[] = { "CO2",
                                                "SF6",
                                                "NOx",
                                                "NMVOCs",
-                                               "CO" };
+                                               "CO",
+                                               "BC",
+                                               "OC" };
 
 // Setup the gas units vector.
 const string MagiccModel::sInputGasUnits[] = { "(Pg C)",
@@ -102,6 +104,8 @@ const string MagiccModel::sInputGasUnits[] = { "(Pg C)",
                                                "(kton)",
                                                "(kton)",
                                                "(Mt N)",
+                                               "(Mt)",
+                                               "(Mt)",
                                                "(Mt)",
                                                "(Mt)" };
 

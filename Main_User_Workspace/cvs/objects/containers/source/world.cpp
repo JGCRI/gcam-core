@@ -441,6 +441,10 @@ void World::runClimateModel() {
     EmissionsSummer vocSummer( "NMVOC" );
     EmissionsSummer vocagrSummer( "NMVOC_AGR" );
     EmissionsSummer vocawbSummer( "NMVOC_AWB" );
+    EmissionsSummer bcSummer( "BC" );
+    EmissionsSummer ocSummer( "OC" );
+    EmissionsSummer bcawbSummer( "BC_AWB" );
+    EmissionsSummer ocawbSummer( "OC_AWB" );
 
    const double TG_TO_PG = 1000;
    const double N_TO_N2O = 1.571132; 
@@ -492,6 +496,10 @@ void World::runClimateModel() {
         accept( &vocSummer, period );
         accept( &vocagrSummer, period );
         accept( &vocawbSummer, period );
+        accept( &bcSummer, period );
+        accept( &ocSummer, period );
+        accept( &bcawbSummer, period );
+        accept( &ocawbSummer, period );
 
         // Only set emissions if they are valid. If these are not set
         // MAGICC will use the default values.
@@ -608,6 +616,22 @@ void World::runClimateModel() {
                                           ( vocSummer.getEmissions( period ) +
                                           vocagrSummer.getEmissions( period ) +
                                           vocawbSummer.getEmissions( period ) ));
+        }
+        
+        // MAGICC needs this in GgC. Model output is in TgC
+        if( bcSummer.areEmissionsSet( period ) ){
+            mClimateModel->setEmissions( "BC", period,
+                                         ( bcSummer.getEmissions( period ) +
+                                         bcawbSummer.getEmissions( period ) )
+                                         * TG_TO_PG );
+        }
+        
+        // MAGICC needs this in GgC. Model output is in TgC
+        if( ocSummer.areEmissionsSet( period ) ){
+            mClimateModel->setEmissions( "OC", period,
+                                         ( ocSummer.getEmissions( period ) +
+                                         ocawbSummer.getEmissions( period ) )
+                                         * TG_TO_PG );
         }
 
     }

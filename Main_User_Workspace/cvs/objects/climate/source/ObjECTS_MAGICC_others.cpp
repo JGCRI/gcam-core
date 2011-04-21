@@ -1337,9 +1337,9 @@ void runmod( Limits_block* Limits, CLIM_block* CLIM, CONCS_block* CONCS, CARB_bl
         //F3888      IF( IFOC.GE.3 .AND. IQREAD.NE.2 )THEN
         if( Sulph->IFOC >= 3 && QADD->IQREAD != 2 ) {
             //F3889         ! Save total BC and OC Forcing
-//REVERT            //F3890         QBC(JC) = EHistBC(JC) * aBCUnitForcing
+            //F3890         QBC(JC) = EHistBC(JC) * aBCUnitForcing
             FORCE->QBC[ JC ] = QSPLIT->EHistBC[ JC ] * BCOC->aBCUnitForcing;
-//REVERT            //F3891         QOC(JC) = EHistOC(JC) * aOCUnitForcing
+            //F3891         QOC(JC) = EHistOC(JC) * aOCUnitForcing
             FORCE->QOC[ JC ] = QSPLIT->EHistOC[ JC ] * BCOC->aOCUnitForcing;
             //F3892 
             //F3893 !  A IS THE NH/SH FORCING RATIO
@@ -1368,9 +1368,9 @@ void runmod( Limits_block* Limits, CLIM_block* CLIM, CONCS_block* CONCS, CARB_bl
             //F3908         ! Input values are in units of Tg
             //F3909         IF ( JC .GT. 225 ) THEN
             if( JC > 225 ) {
-//REVERT                //F3910             QBC(JC) = EBC(JC) * aBCUnitForcing
+                //F3910             QBC(JC) = EBC(JC) * aBCUnitForcing
                 FORCE->QBC[ JC ] = CONCS->EBC.getval( JC ) * BCOC->aBCUnitForcing;
-//REVERT                //F3911             QOC(JC) = EOC(JC) * aOCUnitForcing
+                //F3911             QOC(JC) = EOC(JC) * aOCUnitForcing
                 FORCE->QOC[ JC ] = CONCS->EOC.getval( JC ) * BCOC->aOCUnitForcing;
                 //F3912             
                 //F3913             QBCOCP = QBC(JPREV) + QOC(JPREV)
@@ -4963,22 +4963,22 @@ float GETFORCING( const int iGasNumber, const int inYear )
     //F6244      QEXSH(0:iTp),QEXNHO(0:iTp),QEXNHL(0:iTp),QEXSHO(0:iTp), &
     //F6245      QEXSHL(0:iTp),IOLDTZ
     //F6246 
-//REVERT    //F6247       COMMON /METH1/emeth(226:iTp),imeth,ch4l(225:iTp),ch4b(225:iTp), &
-//REVERT    //F6248      ch4h(225:iTp),ef4(226:iTp),StratH2O,TCH4(iTp),iO3feed, &
-//REVERT    //F6249      ednet(226:iTp+1),DUSER,FUSER,CORRUSER,CORRMHI,CORRMMID,CORRMLO
-//REVERT    //F6250 
+    //F6247       COMMON /METH1/emeth(226:iTp),imeth,ch4l(225:iTp),ch4b(225:iTp), &
+    //F6248      ch4h(225:iTp),ef4(226:iTp),StratH2O,TCH4(iTp),iO3feed, &
+    //F6249      ednet(226:iTp+1),DUSER,FUSER,CORRUSER,CORRMHI,CORRMMID,CORRMLO
+    //F6250 
     //F6251 	  REAL*4 getForcing
     //F6252         
-//REVERT    //F6253       IYRQALL=1990 ! Duplicated hard coded value from main routine
-//REVERT    const int IYRQALL = 1990;
+    //F6253       IYRQALL=1990 ! Duplicated hard coded value from main routine
+    const int IYRQALL = 1990;
     //F6254       IYR = inYear-1990+226
     const int IYR = inYear - 1990 + 226;
     //F6255       IYRP = IYR - 1
     const int IYRP = IYR - 1;
-//REVERT    //F6256       M00=IYRQALL-1764
-//REVERT    const int M00 = IYRQALL - 1764;
-//REVERT    //F6257       M01=M00-1
-//REVERT    const int M01 = M00 - 1;
+    //F6256       M00=IYRQALL-1764
+    const int M00 = IYRQALL - 1764;
+    //F6257       M01=M00-1
+    const int M01 = M00 - 1;
     //F6258       
     //F6259 ! Calculate mid-year forcing components
     //F6260         QQQCO2 = (QCO2(IYR)+QCO2(IYRP))/2.
@@ -4991,7 +4991,7 @@ float GETFORCING( const int iGasNumber, const int inYear )
     const float QQQCFC = ( G_FORCE->QCFC[ IYR ] + G_FORCE->QCFC[ IYRP ] ) / 2.0;
     //F6264         QQQOZ  = (QOZ(IYR)+QOZ(IYRP))/2.
     /* const */ float QQQOZ = ( G_TANDSL->QOZ[ IYR ] + G_TANDSL->QOZ[ IYRP ] ) / 2.0;
-//REVERT    //F6265         QQQFOCR  = (QFOC(IYR)     +QFOC(IYRP))     /2.
+    //F6265         QQQFOCR  = (QFOC(IYR)     +QFOC(IYRP))     /2.
     const float QQQFOCR = ( G_JSTART->QFOC[ IYR ] + G_JSTART->QFOC[ IYRP ] ) / 2.0;
     //F6266 
     //F6267         QQQSO2 = 0.0
@@ -5182,11 +5182,11 @@ float GETGMTEMP( int inYear )
     //F6371 
     //F6372 	  REAL*4 getGMTemp
     //F6373 
-//REVERT    //F6374       KREF  = KYRREF-1764
-//REVERT    const int KREF = G_STOREDVALS->KYRREF - 1764;
+    //F6374       KREF  = KYRREF-1764
+    const int KREF = G_STOREDVALS->KYRREF - 1764;
     //F6375       IYR = inYear-1990+226
     const int IYR = inYear - 1990 + 226;
-//REVERT    //F6376       getGMTemp = TEMUSER(IYR)+TGAV(226)
+    //F6376       getGMTemp = TEMUSER(IYR)+TGAV(226)
     return( G_STOREDVALS->TEMUSER[ IYR ] + G_TANDSL->TGAV[ 226 ] );
     //F6377 
     //F6378       RETURN 

@@ -28,9 +28,9 @@ void CLIMAT()
     //F   6 !    (2) THE FOUR SCENGEN DRIVER FILES lo/mid/hi/usrdrive.out.
     //F   7 !
     //F   8 ! Revision history:
-//REVERTED    //F   9 ! 082009  *  Added fix to MAGOUT file that accounts for USER choice for output
-//REVERTED    //F  10 !            reference years other than 1990
-//REVERTED    //F  11 ! 062309  *  Added pre-industrial emissions point read-in for to BC-OC forcing. 
+    //F   9 ! 082009  *  Added fix to MAGOUT file that accounts for USER choice for output
+    //F  10 !            reference years other than 1990
+    //F  11 ! 062309  *  Added pre-industrial emissions point read-in for to BC-OC forcing. 
     //F  12 ! 022409  *  Added read-in and calc of BC+OC forcing directly from emissions
     //F  13 !            Enable by setting MAGICC input parameter IFOC = 3
     //F  14 ! 013009  *  Updated output arrays for ObjECTS MiniCAM
@@ -158,7 +158,7 @@ void CLIMAT()
     //F 122       COMMON/BCOC/FBC1990, FOC1990, FSO2_dir1990,FSO2_ind1990, aBCUnitForcing, aOCUnitForcing, &
     //F 123              aBCBaseEmissions, aOCBaseEmissions !sjs
     BCOC_block BCOC;
-//REVERTED    //F 124       DATA aBCUnitForcing/0.0/,aOCUnitForcing/0.0/
+    //F 124       DATA aBCUnitForcing/0.0/,aOCUnitForcing/0.0/
     //F 125 
     //F 126       DIMENSION EESS1(iTp),EESS2(iTp),EESS3(iTp),EESST(iTp),QTROZ(iTp), &
     float QTROZ[ iTp+1 ];
@@ -594,11 +594,11 @@ void CLIMAT()
     //F 345       close(lun)
     infile.close();
     //F 346 
-//REVERT    ! Initiailize internal BC-OC vars
-//REVERT    aBCUnitForcing = 0
-//REVERT    aOCUnitForcing = 0
-//REVERT    aNewSO2dir1990 = 0
-//REVERT    aNewSO2ind1990 = 0
+    //! Initiailize internal BC-OC vars
+    //aBCUnitForcing = 0
+    //aOCUnitForcing = 0
+    //aNewSO2dir1990 = 0
+    //aNewSO2ind1990 = 0
     BCOC.aBCUnitForcing = BCOC.aOCUnitForcing = NEWPARAMS.aNewSO2dir1990 = NEWPARAMS.aNewSO2ind1990 = 0.0;
 	BCOC.FSO2_dir1990 = BCOC.FSO2_ind1990 = BCOC.FBC1990 = 0.0;
     
@@ -1553,11 +1553,11 @@ void CLIMAT()
         //F 914 !
         //F 915         READ(LUN,*)QtempBCUnitForcing, aBCBaseEmissions
         float QtempBCUnitForcing, QtempOCUnitForcing;
-        QtempBCUnitForcing = read_and_discard( &infile, false );
-//REVERT        BCOC.aBCBaseEmissions = read_and_discard( &infile, false );
+        QtempBCUnitForcing = read_csv_value( &infile, false );
+        BCOC.aBCBaseEmissions = read_and_discard( &infile, false );
         //F 916         READ(LUN,*)QtempOCUnitForcing, aOCBaseEmissions
-        QtempOCUnitForcing = read_and_discard( &infile, false );
-//REVERT        BCOC.aOCBaseEmissions = read_and_discard( &infile, false );
+        QtempOCUnitForcing = read_csv_value( &infile, false );
+        BCOC.aOCBaseEmissions = read_and_discard( &infile, false );
         //F 917 
         //F 918 ! Convert to W/m^2 per Gg
         //F 919         QtempBCUnitForcing = QtempBCUnitForcing / 1000.
@@ -1565,9 +1565,9 @@ void CLIMAT()
         //F 920         QtempOCUnitForcing = QtempOCUnitForcing / 1000.
         QtempOCUnitForcing /= 1000.0;
         //F 921         aOCUnitForcing = aOCUnitForcing / 1000.
-//REVERT        BCOC.aOCUnitForcing /= 1000.0;
+        BCOC.aOCUnitForcing /= 1000.0;
         //F 922         aBCUnitForcing = aBCUnitForcing / 1000.
-//REVERT        BCOC.aBCUnitForcing /= 1000.0;
+        BCOC.aBCUnitForcing /= 1000.0;
         //F 923         
         //F 924 ! Use default read-in values if have not been otherwise set.
         //F 925         IF(aBCUnitForcing.EQ.0)THEN
@@ -1714,9 +1714,9 @@ void CLIMAT()
             //F 997        DNOX(I),DVOC(I),DCO(I), DBC(I), DOC(I)  ! Change to match order of writeout -- this is different than magicc default - sjs
             DNOX[ i ] = read_csv_value( &infile, DEBUG_IO );
             DVOC[ i ] = read_csv_value( &infile, DEBUG_IO );
-            DCO[ i ] = read_and_discard( &infile, DEBUG_IO );
-            //DBC[ i ] = read_csv_value( &infile, DEBUG_IO );
-            //DOC[ i ] = read_and_discard( &infile, DEBUG_IO );
+            DCO[ i ] = read_csv_value( &infile, DEBUG_IO );
+            DBC[ i ] = read_csv_value( &infile, DEBUG_IO );
+            DOC[ i ] = read_and_discard( &infile, DEBUG_IO );
             //F 998   	 END IF
         }
         //F 999  
@@ -2096,7 +2096,7 @@ void CLIMAT()
     //F1231       IF(IQREAD.EQ.0)WRITE(8,756)
     if( QADD.IQREAD == 0 ) outfile8 << "NO EXTRA FORCING ADDED" << endl;
     //F1232       IF(OrgIQREAD.GE.1)THEN
-    if( QADD.IQREAD >= 1 ) {
+    if( QADD.OrgIQREAD >= 1 ) {
         //F1233         IF(NCOLS.EQ.1)WRITE(8,757)IQFIRST,IQLAST
         if( NCOLS == 1 ) outfile8 << "EXTRA GLOBAL MEAN FORCING ADDED FROM QEXTRA.IN OVER " 
             << IQFIRST << " TO " << IQLAST << " INCLUSIVE" << endl;
@@ -3025,6 +3025,10 @@ void CLIMAT()
         //F1979          QQROTHER = (QOTHER(M00)   +QOTHER(M01))   /2.
         const float QQROTHER = ( FORCE.QOTHER[ M00 ] + FORCE.QOTHER[ M01 ] ) / 2.0;
         
+        // Store 1990 BC and OC values for later use.
+        const float QQQBCR = ( FORCE.QBC[ M00 ] + FORCE.QBC[ M01 ] ) / 2.0;
+        const float QQQOCR = ( FORCE.QOC[ M00 ] + FORCE.QOC[ M01 ] ) / 2.0;
+        
         //F1763 !  PRINT OUT EMISSIONS, CONCS AND FORCING DETAILS
         //F1764 !
         //F1765 !  PRINT OUT INPUT EMISSIONS
@@ -3360,7 +3364,7 @@ void CLIMAT()
             //F1991          IF(IO3FEED.EQ.0)write(8,563)
             outfile8 << "HALOtot (AND QTOTAL) DOES NOT INCLUDE STRAT O3" << endl;
             //F1992          write(8,57)
-            outfile8 << "YEAR,CO2,CH4tot,N2O, HALOtot,TROPOZ,SO4DIR,SO4IND,BIOAER,FOC+FBC,QAERMN,QLAND, TOTAL, YEAR,CH4-O3, STRATO3, MONTDIR,QKYOTO" << endl;
+            outfile8 << "YEAR,CO2,CH4tot,N2O, HALOtot,TROPOZ,SO4DIR,SO4IND,BIOAER,FOC+FBC,QAERMN,QLAND, TOTAL, YEAR,CH4-O3, STRATO3, MONTDIR,QKYOTO,BC,OC" << endl;
             //F1993 !
             //F1994 !  PRINTOUT INTERVAL IS DET BY VALUE OF IQGASPRT
             //F1995 !
@@ -3438,13 +3442,20 @@ void CLIMAT()
                 float DELOTHER = ( FORCE.QOTHER[ IYR ] + FORCE.QOTHER[ IYRP ] ) / 2.0 - QQROTHER;
                 //F2038            DELKYOTO = DELKYMAG+DELOTHER
                 float DELKYOTO = DELKYMAG + DELOTHER;
+                
+                // Adding BC OC to this table.
+                float DELQBC = ( FORCE.QBC[ IYR ] + FORCE.QBC[ IYRP ] ) / 2.0 - QQQBCR;
+                float DELQOC = ( FORCE.QOC[ IYR ] + FORCE.QOC[ IYRP ] ) / 2.0 - QQQOCR;
+                // Add BC and OC to total.
+                DELQTOT += DELQBC + DELQOC;
                 //F2039 !
                 //F2040            WRITE(8,571)K,DELQCO2,DELQM,DELQN,DELQCFC,DELQOZ, &
                 //F2041             DELQD,DELQIND,DELQBIO,DELQFOC,DELQMN,DELQLAND,DELQTOT, &
                 //F2042             K,DQCH4O3,DELSTROZ,DELMONT,DELKYOTO
                 outfile8 << K << "," << DELQCO2 << "," << DELQM << "," << DELQN << "," << DELQCFC << "," << DELQOZ << "," 
                 << DELQD << "," << DELQIND << "," << DELQBIO << "," << DELQFOC << "," << DELQMN << "," << DELQLAND << "," 
-                << DELQTOT << "," << K << "," << DQCH4O3 << "," << DELSTROZ << "," << DELMONT << "," << DELKYOTO << endl;
+                << DELQTOT << "," << K << "," << DQCH4O3 << "," << DELSTROZ << "," << DELMONT << "," << DELKYOTO << ","
+                << DELQBC << "," << DELQOC << endl;
                 //F2043          END DO
             }
             //F2044 !
@@ -3480,7 +3491,7 @@ void CLIMAT()
             //F2063 !  NOW PRINT OUT FORCING CHANGES FROM MID 1765.
             //F2064 !
             //F2065          WRITE(8,57)
-            outfile8 << "YEAR,CO2,CH4tot,N2O, HALOtot,','TROPOZ,SO4DIR,SO4IND,BIOAER,FOC+FBC,QAERMN,QLAND, TOTAL, YEAR,CH4-O3, STRATO3, MONTDIR,QKYOTO" << endl;
+            outfile8 << "YEAR,CO2,CH4tot,N2O, HALOtot,TROPOZ,SO4DIR,SO4IND,BIOAER,FOC+FBC,QAERMN,QLAND, TOTAL, YEAR,CH4-O3, STRATO3, MONTDIR,QKYOTO,BC,OC" << endl;
             //F2066          write(8,30)
             //F2067          write(8,31)
             //F2068          WRITE(8,30)
@@ -3572,7 +3583,7 @@ void CLIMAT()
                 //F2117          QQQKYOTO = QQQKYMAG+QQQOTHER
                 float QQQKYOTO = QQQKYMAG + QQQOTHER;
                 //F2118 !
-                //F2119 ! Add BC, OC, and QExtra forcing to output. Note this is not included in foring total since is in QExtra instead
+//REVERT                //F2119 ! Add BC, OC, and QExtra forcing to output. Note this is not included in foring total since is in QExtra instead
                 //F2120          QQQEXTRA = ( QEXNH(IYR)+QEXSH(IYR)+QEXNHO(IYR)+QEXNHL(IYR) + &
                 //F2121                       QEXNH(IYRP)+QEXSH(IYRP)+QEXNHO(IYRP)+QEXNHL(IYRP) )/2.
                 float QQQEXTRA = ( QADD.QEXNH[ IYR ] + QADD.QEXSH[ IYR ] + QADD.QEXNHO[ IYR ] + QADD.QEXNHL[ IYR ] 
@@ -3581,6 +3592,8 @@ void CLIMAT()
                 float QQQBC = ( FORCE.QBC[ IYR ] + FORCE.QBC[ IYRP ] ) / 2.0;
                 //F2123          QQQOC = ( QOC(IYR) + QOC(IYRP) )/2.
                 float QQQOC = ( FORCE.QOC[ IYR ] + FORCE.QOC[ IYRP ] ) / 2.0;
+                // Add BC and OC to total forcing.
+                QQQTOT += QQQOC + QQQBC;
                 //F2124 
                 //F2125          WRITE(8,571)K,QQQCO2,QQQM,QQQN,QQQCFC,QQQOZ,QQQD,QQQIND, &
                 //F2126          QQQBIO,QQQFOC,QQQMN,QQQLAND,QQQTOT,K,QQCH4O3,QQQSTROZ,QQQMONT, &
@@ -3591,8 +3604,8 @@ void CLIMAT()
                 //F2128        END DO
             }
             //F2129 !
-//REVERT            //F2130        WRITE(8,573)
-            outfile8 << "YEAR,CO2,CH4tot,N2O, HALOtot,TROPOZ,SO4DIR,SO4IND,BIOAER,FOC+FBC,QAERMN,QLAND, TOTAL, YEAR,CH4-O3," << endl;
+            //F2130        WRITE(8,573)
+            outfile8 << "YEAR,CO2,CH4tot,N2O, HALOtot,TROPOZ,SO4DIR,SO4IND,BIOAER,FOC+FBC,QAERMN,QLAND, TOTAL, YEAR,CH4-O3, STRATO3, MONTDIR,QKYOTO,BC,OC,QEXTRA" << endl;
             //F2131 
             //F2132 
             //F2133 ! *******************************************************************************************
@@ -3843,15 +3856,15 @@ void CLIMAT()
             MAGICCCResults[ 17 ][ yrindex ] = CONCS.ESO23.getval( IYR ) - Sulph.ES1990;
 
             // TEMPERATURE AND SEA LEVEL RISE
-//REVERT            //F2258 	 MAGICCCResults(1,(K-1990)/IIPRT+1) = TEMUSER(IYR)+TGAV(226)
+            //F2258 	 MAGICCCResults(1,(K-1990)/IIPRT+1) = TEMUSER(IYR)+TGAV(226)
             MAGICCCResults[ 18 ][ yrindex ] = STOREDVALS.TEMUSER[ IYR ] + TANDSL.TGAV[ 226 ];
-//REVERT            //F2281 	 MAGICCCResults(21,(K-1990)/IIPRT+1) = getSLR( IYR ) ! getSLR is external fn with acutal year as argument
+            //F2281 	 MAGICCCResults(21,(K-1990)/IIPRT+1) = getSLR( IYR ) ! getSLR is external fn with acutal year as argument
             MAGICCCResults[ 19 ][ yrindex ] = getSLR( K );
 
             // BC/OC FORCING
-//REVERT            //F2293 	 MAGICCCResults(26,(K-1990)/IIPRT+1) = GETFORCING( 24, K )	! BC forcing 
+            //F2293 	 MAGICCCResults(26,(K-1990)/IIPRT+1) = GETFORCING( 24, K )	! BC forcing 
          //   MAGICCCResults[ 20 ][ yrindex ] = GETFORCING( 24, K );
-//REVERT            //F2294 	 MAGICCCResults(27,(K-1990)/IIPRT+1) = GETFORCING( 25, K )	! OC forcing 
+            //F2294 	 MAGICCCResults(27,(K-1990)/IIPRT+1) = GETFORCING( 25, K )	! OC forcing 
          //   MAGICCCResults[ 21 ][ yrindex ] = GETFORCING( 25, K );
             // Fossil BC/OC Forcing
             MAGICCCResults[ 20 ][ yrindex ] = GETFORCING( 28, K );
@@ -3861,7 +3874,7 @@ void CLIMAT()
             //F2295 
             //F2296 ! now we can write stuff out
             //F2297 
-//REVERT            //F2298 	   WRITE (9,100) K,MAGICCCResults(1:25,(K-1990)/IIPRT+1)
+            //F2298 	   WRITE (9,100) K,MAGICCCResults(1:25,(K-1990)/IIPRT+1)
             outfile9 << K << ", ";
             for( int i=1; i<=21; i++ )
                 outfile9 << MAGICCCResults[ i ][ yrindex ] << ",";

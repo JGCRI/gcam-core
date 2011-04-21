@@ -33,7 +33,7 @@ typedef struct {
     //F       COMMON/BCOC/FBC1990, FOC1990, FSO2_dir1990,FSO2_ind1990, aBCUnitForcing, aOCUnitForcing, &
     float FBC1990, FSO2_dir1990, FSO2_ind1990, aBCUnitForcing, aOCUnitForcing;
     //F              aBCBaseEmissions, aOCBaseEmissions !sjs
-//REVERTED    float aBCBaseEmissions, aOCBaseEmissions;
+    float aBCBaseEmissions, aOCBaseEmissions;
 } BCOC_block;
 
 typedef struct {
@@ -244,7 +244,7 @@ typedef struct {
     //F 229       COMMON/STOREDVALS/ TEMUSER(iTp),QSO2SAVE(0:iTp+1),QDIRSAVE(0:iTp+1), &
     //F 230       KYRREF
     float TEMUSER[ iTp+1 ], QSO2SAVE[ iTp+1+1 ], QDIRSAVE[ iTp+1+1 ]
-//REVERTED, KYRREF
+        , KYRREF
     ;
 } STOREDVALS_block;
 
