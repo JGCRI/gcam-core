@@ -2721,9 +2721,9 @@ void deltaq( Limits_block* Limits, OZ_block* OZ, CLIM_block* CLIM, CONCS_block* 
         //F4791       QH2O=STRATH2O*QCH4
         const float QH2O = METH1->STRATH2O * QCH4;
         //F4792       
-//REVERT        //F4793 ! Save this value to Kyoto Forcing can be calculated
-//REVERT        //F4794       QCH4H2O(J) = QH2O
-//REVERT        FORCE->QCH4H2O[ J ] = QH2O;
+        //F4793 ! Save this value to Kyoto Forcing can be calculated
+        //F4794       QCH4H2O(J) = QH2O
+        FORCE->QCH4H2O[ J ] = QH2O;
         //F4795 !
         //F4796 !  QCH4OZ IS THE TROP OZONE FORCING FROM CH4 CHANGES.
         //F4797 !   HISTORY : USE THE TAR LOGARITHMIC RELATIONSHIP, SCALED TO
@@ -5009,7 +5009,7 @@ float GETFORCING( const int iGasNumber, const int inYear )
     //F6273          QQQIND = QQQSO2-QQQDIR
     //UNUSED const float QQQIND = QQQSO2 - QQQDIR;
     //F6274          DELQFOC = (QFOC(IYR)+QFOC(IYRP))/2.-QQQFOCR
-    const float DELQFOC = ( G_JSTART->QFOC[ IYR ] + G_JSTART->QFOC[ IYRP ] ) / 2.0 - QQQFOCR;
+    const float DELQFOC = ( G_JSTART->QFOC[ IYR ] + G_JSTART->QFOC[ IYRP ] ) / 2.0;
     //F6275 !
     //F6276          QQQCO2 = (QCO2(IYR)+QCO2(IYRP))/2.
     //UNNECESSARY const float QQQCO2 = ( FORCE->QCO2[ IYR ] + FORCE->QCO2[ IYRP ] ) / 2.0;
@@ -5134,7 +5134,7 @@ float GETFORCING( const int iGasNumber, const int inYear )
         case 23: returnValue = QQQMN; break;
             //F6343       case(24); getForcing = QQQBC	! Custom BC forcing (total BC; land + combustion)
         case 24: returnValue = QQQBC; break;
-            //F6344       case(25); getForcing = QQQOC	! Custom OC forcing (total BC; land + combustion)
+            //F6344       case(25); getForcing = QQQOC	! Custom OC forcing (total OC; land + combustion)
         case 25: returnValue = QQQOC; break;
             //F6345       ! Note, QEXTRA is not included in total (since this is not always anthropogenic).
             //F6346       case(26); getForcing = QQQEXTRA	! User (exogenous) input forcing

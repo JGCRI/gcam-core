@@ -600,7 +600,8 @@ void CLIMAT()
 //REVERT    aNewSO2dir1990 = 0
 //REVERT    aNewSO2ind1990 = 0
     BCOC.aBCUnitForcing = BCOC.aOCUnitForcing = NEWPARAMS.aNewSO2dir1990 = NEWPARAMS.aNewSO2ind1990 = 0.0;
-	
+	BCOC.FSO2_dir1990 = BCOC.FSO2_ind1990 = BCOC.FBC1990 = 0.0;
+    
     //F 347 !
     //F 348 !   Call overrite subroutine after each file that may have parameters to overwrite
     //F 349       call overrideParameters( )	! sjs
@@ -2143,12 +2144,12 @@ void CLIMAT()
     //F1255       IF(S90BIO.EQ.0.0) write(8,*) 'BIOMASS AEROSOL FORCING IGNORED'
     if( Sulph.S90BIO == 0.0 ) outfile8 << "BIOMASS AEROSOL FORCING IGNORED" << endl;
     //F1256       IF(ABS(S90BIO).GT.0.0) write(8,62)S90BIO
-    if( fabs( Sulph.S90BIO ) > 0.0 ) outfile8 << "1990 BIOMASS AEROSOL FORCING         =" << Sulph.S90IND << "W/m**2" << endl;
+    if( fabs( Sulph.S90BIO ) > 0.0 ) outfile8 << "1990 BIOMASS AEROSOL FORCING         =" << Sulph.S90BIO << "W/m**2" << endl;
     //F1257       IF(FOC90.EQ.0.0) write(8,*) 'FOSSIL OB+BC AEROSOL FORCING', &
     //F1258       ' IGNORED'
     if( Sulph.FOC90 == 0.0 ) outfile8 << "FOSSIL OB+BC AEROSOL FORCING IGNORED" << endl;
     //F1259       IF(ABS(FOC90).GT.0.0) write(8,63)FOC90
-    if( fabs( Sulph.FOC90 ) > 0.0 ) outfile8 << "1990 FOSSIL ORG C + BLACK C FORCING  =" << Sulph.S90IND << "W/m**2" << endl;
+    if( fabs( Sulph.FOC90 ) > 0.0 ) outfile8 << "1990 FOSSIL ORG C + BLACK C FORCING  =" << Sulph.FOC90 << "W/m**2" << endl;
     //F1260       write(8,53)STRATH2O
     outfile8 << "STRAT H2O FROM CH4 : DELQH2O/DELQCH4 = " << METH1.STRATH2O << endl;
     //F1261 !
@@ -3519,7 +3520,7 @@ void CLIMAT()
                     //F2086          ENDIF
                 }
                 //F2087          QQQIND = QQQSO2-QQQDIR
-                float QQQIND = QQQSO2 + QQQDIR;
+                float QQQIND = QQQSO2 - QQQDIR;
                 //F2088 ! 
                 //F2089          QQQCO2 = (QCO2(IYR)+QCO2(IYRP))/2.
                 float QQQCO2 = ( FORCE.QCO2[ IYR ] + FORCE.QCO2[ IYRP ] ) / 2.0;
