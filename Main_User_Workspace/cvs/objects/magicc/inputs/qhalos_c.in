@@ -476,3 +476,8 @@ X123451234567890123456789012345678901234567890123456789012345678901234567890
 
                               QKYOTO              QKYOTO
                                   A1                  A1
+
+"Other halocarbons" (OTHERCON above) include methyl chloroform, HCFC-22, HCFC-123, HCFC-141b, HCFC-142b, HFC-23, HFC-32, HFC-43-10mee.
+(Wigley et al. 2002)
+
+These are all small contributors that were not added explicitly into the MAGICC input files, but instead read-in exogenously in this file.
