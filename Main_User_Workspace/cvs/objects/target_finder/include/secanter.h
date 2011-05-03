@@ -1,5 +1,5 @@
-#ifndef _EMISSIONS_STABALIZATION_TARGET_H_
-#define _EMISSIONS_STABALIZATION_TARGET_H_
+#ifndef _SECANTER_H_
+#define _SECANTER_H_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -39,45 +39,64 @@
  */
 
 /*!
- * \file emissions_stabalization_target.h
+ * \file secanter.h
  * \ingroup Objects
- * \brief The EmissionsStabalizationTarget class header file.
- * \author Josh Lurz
+ * \brief The Secanter class header file.
+ * \author Pralit Patel
  */
 
-#include "target_finder/include/itarget.h"
-#include <string>
+#include "target_finder/include/itarget_solver.h"
 
-class IClimateModel;
+class ITarget;
 
-/*!
- * \brief An emissions stabilization target.
- * \details A target for stabilizing emissions such that industrial emissions
- *          in the target period are equal to the net land use emissions plus
- *          the rate of ocean uptake.
+/*! \brief Object which performs the secant method on a given target until it
+ *          reaches a tolerance.
  */
-class EmissionsStabalizationTarget: public ITarget {
+class Secanter : public ITargetSolver {
 public:
-    EmissionsStabalizationTarget( const IClimateModel* aClimateModel,
-                                  const double aTargetValue,
-                                  const int aFirstTaxYear );
+    Secanter( const ITarget* aTarget,
+              const double aTolerance,
+              const double aInitialPrice,
+              const double aInitialValue,
+              const double aInitialPriceChange,
+              const int aYear );
     
-    static const std::string& getXMLNameStatic();
-
-    // ITarget methods
-    virtual double getStatus( const int aYear ) const;
+    // ITargetSolver methods
+    std::pair<double, bool> getNextValue();
     
-    virtual int getYearOfMaxTargetValue() const;
+    unsigned int getIterations() const;
 private:
-    //! The name of the target gas.
-    std::string mTargetGas;
-
-    //! The climate model.
-    const IClimateModel* mClimateModel;
+    /*
+     * \brief An enumeration of all states the secant algorithm may be in at
+     *        the end of an iteration.
+     */
+    enum SolvedState {
+        //! Solution has been found.
+        eSolved,
+        
+        //! Solution has not been found.
+        eUnsolved
+    };
     
-    //! The first policy year which would be the first valid year to check
-    //! getStatus in.
-    const int mFirstTaxYear;
+    //! The target.
+    const ITarget* mTarget;
+    
+    //! The tolerance of the target.
+    const double mTolerance;
+    
+    //! The current trial price and value.
+    std::pair<double, double> mCurrentTrial;
+    
+    //! The previous trial price and value.
+    std::pair<double, double> mPrevTrial;
+    
+    //! The current number of trial values returned.
+    unsigned int mIterations;
+    
+    //! Year in which the secant is operating.
+    unsigned int mYear;
+    
+    void printState( const SolvedState aState ) const;
 };
 
-#endif // _EMISSIONS_STABALIZATION_TARGET_H_
+#endif // _SECANTER_H_

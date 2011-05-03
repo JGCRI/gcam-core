@@ -172,10 +172,14 @@ bool TotalPolicyCostCalculator::runTrials(){
     const int maxPeriod = modeltime->getmaxper();
 
     bool success = true;
+    const static bool usingRestartPeriod = Configuration::getInstance()->getInt(
+        "restart-period", -1 ) != -1;
     // Store original solved market prices before looping.
-    mSingleScenario->getInternalScenario()->getMarketplace()->store_prices_for_cost_calculation();
+    if( !usingRestartPeriod ) {
+        mSingleScenario->getInternalScenario()->getMarketplace()->store_prices_for_cost_calculation();
+    }
     // Loop through for each point.
-    for( unsigned int currPoint = 0; currPoint < mNumPoints; currPoint++ ){
+    for( int currPoint = mNumPoints - 1; currPoint >= 0; currPoint-- ){
         // Determine the fraction of the full tax this tax will be.
         const double fraction = static_cast<double>( currPoint ) / static_cast<double>( mNumPoints );
         // Iterate through the regions to set different taxes for each if necessary.
@@ -211,7 +215,9 @@ bool TotalPolicyCostCalculator::runTrials(){
 
         // Restore original solved market prices after each cost iteration to ensure same
         // starting prices for each iteration.  This is necessary due to changing initial prices.
-        mSingleScenario->getInternalScenario()->getMarketplace()->restore_prices_for_cost_calculation();
+        if( !usingRestartPeriod || ( currPoint - 1 ) == 0 ) {
+            mSingleScenario->getInternalScenario()->getMarketplace()->restore_prices_for_cost_calculation();
+        }
     }
     return success;
 }

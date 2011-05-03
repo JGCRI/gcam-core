@@ -119,3 +119,57 @@ double EmissionsSummer::getEmissions( const int aPeriod ) const {
 double EmissionsSummer::areEmissionsSet( const int aPeriod ) const {
     return mEmissionsByPeriod[ aPeriod ].isInited();
 }
+
+/*! \brief Get the GHG name.
+ * \return The name of the GHG that is summed by this object.
+ */
+const string& EmissionsSummer::getGHGName() const {
+    return mGHGName;
+}
+
+/*!
+ * \brief Add an EmissionsSummer to the group.
+ * \details The given EmissionsSummer will be updated for all model periods.  The
+ *          memory for the given EmissionsSummer will not be managed by this object.
+ * \param A refernce to an EmissionsSummer to update when this group is updated.
+ */
+void GroupedEmissionsSummer::addEmissionsSummer( EmissionsSummer* aEmissionsSummer ) {
+    mEmissionsSummers[ aEmissionsSummer->getGHGName() ] = aEmissionsSummer;
+}
+
+void GroupedEmissionsSummer::startVisitGHG( const AGHG* aGHG, const int aPeriod ) {
+    // We are currently assuming all periods should be updated.
+    assert( aPeriod == -1 );
+    
+    CSummerIterator it = mEmissionsSummers.find( aGHG->getName() );
+    if( it != mEmissionsSummers.end() ) {
+        for( int period = 1; period < scenario->getModeltime()->getmaxper(); ++period ) {
+            (*it).second->startVisitGHG( aGHG, period );
+        }
+    }
+}
+
+void GroupedEmissionsSummer::startVisitAgSector( const AgSector* aAgSector, const int aPeriod ) {
+    // We are currently assuming all periods should be updated.
+    assert( aPeriod == -1 );
+    
+    CSummerIterator it = mEmissionsSummers.find( "CO2NetLandUse" );
+    if( it != mEmissionsSummers.end() ) {
+        for( int period = 1; period < scenario->getModeltime()->getmaxper(); ++period ) {
+            (*it).second->startVisitAgSector( aAgSector, period );
+        }
+    }
+}
+
+void GroupedEmissionsSummer::startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod ) {
+    // We are currently assuming all periods should be updated.
+    assert( aPeriod == -1 );
+    
+    CSummerIterator it = mEmissionsSummers.find( "CO2NetLandUse" );
+    if( it != mEmissionsSummers.end() ) {
+        for( int period = 1; period < scenario->getModeltime()->getmaxper(); ++period ) {
+            (*it).second->startVisitCarbonCalc( aCarbonCalc, period );
+        }
+    }
+    // TODO: 80s net deforestation has some hard coded behavior should I put that here?
+}

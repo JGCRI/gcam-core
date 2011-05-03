@@ -445,6 +445,45 @@ void World::runClimateModel() {
     EmissionsSummer ocSummer( "OC" );
     EmissionsSummer bcawbSummer( "BC_AWB" );
     EmissionsSummer ocawbSummer( "OC_AWB" );
+    
+    // Group the EmissionsSummer together for improved performance.
+    GroupedEmissionsSummer allSummer;
+    allSummer.addEmissionsSummer( &co2Summer );
+    allSummer.addEmissionsSummer( &co2LandUseSummer );
+    //allSummer.addEmissionsSummer( &netDef80sSummer );
+    allSummer.addEmissionsSummer( &ch4Summer );
+    allSummer.addEmissionsSummer( &ch4agrSummer );
+    allSummer.addEmissionsSummer( &ch4awbSummer );
+    allSummer.addEmissionsSummer( &coSummer );
+    allSummer.addEmissionsSummer( &coagrSummer );
+    allSummer.addEmissionsSummer( &coawbSummer );
+    allSummer.addEmissionsSummer( &n2oSummer );
+    allSummer.addEmissionsSummer( &n2oagrSummer );
+    allSummer.addEmissionsSummer( &n2oawbSummer );
+    allSummer.addEmissionsSummer( &noxSummer );
+    allSummer.addEmissionsSummer( &noxagrSummer );
+    allSummer.addEmissionsSummer( &noxawbSummer );
+    allSummer.addEmissionsSummer( &so21Summer );
+    allSummer.addEmissionsSummer( &so22Summer );
+    allSummer.addEmissionsSummer( &so23Summer );
+    allSummer.addEmissionsSummer( &so24Summer );
+    allSummer.addEmissionsSummer( &so21awbSummer );
+    allSummer.addEmissionsSummer( &so22awbSummer );
+    allSummer.addEmissionsSummer( &so23awbSummer );
+    allSummer.addEmissionsSummer( &so24awbSummer );
+    allSummer.addEmissionsSummer( &cf4Summer );
+    allSummer.addEmissionsSummer( &c2f6Summer );
+    allSummer.addEmissionsSummer( &sf6Summer );
+    allSummer.addEmissionsSummer( &hfc125Summer );
+    allSummer.addEmissionsSummer( &hfc134aSummer );
+    allSummer.addEmissionsSummer( &hfc245faSummer );
+    allSummer.addEmissionsSummer( &vocSummer );
+    allSummer.addEmissionsSummer( &vocagrSummer );
+    allSummer.addEmissionsSummer( &vocawbSummer );
+    allSummer.addEmissionsSummer( &bcSummer );
+    allSummer.addEmissionsSummer( &ocSummer );
+    allSummer.addEmissionsSummer( &bcawbSummer );
+    allSummer.addEmissionsSummer( &ocawbSummer );
 
    const double TG_TO_PG = 1000;
    const double N_TO_N2O = 1.571132; 
@@ -460,46 +499,12 @@ void World::runClimateModel() {
                                     netDef80sSummer.getEmissions( dummyPeriod )
                                     / TG_TO_PG );
     }
+    
+    // Update all emissions values.
+    accept( &allSummer, -1 );
 
     // The Climate model reads in data for the base period, so skip passing it in.
     for( int period = 1; period < scenario->getModeltime()->getmaxper(); ++period){
-
-        // Sum the emissions for the period.
-        accept( &co2Summer, period );
-        accept( &co2LandUseSummer, period );
-        accept( &ch4Summer, period );
-        accept( &ch4agrSummer, period );
-        accept( &ch4awbSummer, period );
-        accept( &coSummer, period );
-        accept( &coagrSummer, period );
-        accept( &coawbSummer, period );
-        accept( &n2oSummer, period );
-        accept( &n2oagrSummer, period );
-        accept( &n2oawbSummer, period );
-        accept( &noxSummer, period );
-        accept( &noxagrSummer, period );
-        accept( &noxawbSummer, period );
-        accept( &so21Summer, period );
-        accept( &so22Summer, period );
-        accept( &so23Summer, period );
-        accept( &so24Summer, period );
-        accept( &so21awbSummer, period );
-        accept( &so22awbSummer, period );
-        accept( &so23awbSummer, period );
-        accept( &so24awbSummer, period );
-        accept( &cf4Summer, period );
-        accept( &c2f6Summer, period );
-        accept( &sf6Summer, period );
-        accept( &hfc125Summer, period );
-        accept( &hfc134aSummer, period );
-        accept( &hfc245faSummer, period );
-        accept( &vocSummer, period );
-        accept( &vocagrSummer, period );
-        accept( &vocawbSummer, period );
-        accept( &bcSummer, period );
-        accept( &ocSummer, period );
-        accept( &bcawbSummer, period );
-        accept( &ocawbSummer, period );
 
         // Only set emissions if they are valid. If these are not set
         // MAGICC will use the default values.

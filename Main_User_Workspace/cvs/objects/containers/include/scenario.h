@@ -110,6 +110,7 @@ public:
     const IClimateModel* getClimateModel() const;
     static const std::string& getXMLNameStatic();
     void printOutputXML() const;
+    const std::vector<int>& getUnsolvedPeriods() const;
 
     //! Constant which when passed to the run method means to run all model periods.
     const static int RUN_ALL_PERIODS = -1;

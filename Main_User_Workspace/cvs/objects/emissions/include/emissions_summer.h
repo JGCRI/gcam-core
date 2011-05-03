@@ -76,12 +76,50 @@ public:
     double getEmissions( const int aPeriod ) const;
 
     double areEmissionsSet( const int aPeriod ) const;
+    
+    const std::string& getGHGName() const;
 private:
     //! The name of the GHG being summed.
     const std::string mGHGName;
 
     //! The current sum.
     objects::PeriodVector<Value> mEmissionsByPeriod;
+};
+
+/*!
+ * \brief A container for EmissionsSummer objects so that the model can only be
+ *        visited once and have all of the EmissionsSummers updated.
+ * \details Visitors tend to be slow performance wise due to the fact that they
+ *          have to visit all objects within the model.  This becomes noticeable
+ *          when a large number of EmissionsSummers need to be updated for all
+ *          model periods.  Using this class to visit just once for all gasses
+ *          and all periods drastically reducing runtime.
+ * \note Unlike the EmissionsSummer visitor this class assumes it is visited with
+ *       the aPeriod -1 flag to indicate that it will be updated for all periods.
+ *       Although this behavior could easily be changed.
+ * \author Pralit Patel
+ */
+class GroupedEmissionsSummer : public DefaultVisitor {
+public:
+    void addEmissionsSummer( EmissionsSummer* aEmissionsSummer );
+    
+    // DefaultVisitor methods
+    virtual void startVisitGHG( const AGHG* aGHG,
+                                const int aPeriod );
+    
+    // TODO: Remove this when the Fortran land allocator is removed.
+    virtual void startVisitAgSector( const AgSector* aAgSector,
+                                     const int aPeriod );
+    
+    virtual void startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc,
+                                       const int aPeriod );
+    
+private:
+    //! A map of emissions summer by GHG name.  The memory for the EmissionsSummer
+    //! is not managed by this class.
+    std::map<std::string, EmissionsSummer*> mEmissionsSummers;
+    
+    typedef std::map<std::string, EmissionsSummer*>::const_iterator CSummerIterator;
 };
 
 #endif // _EMISSIONS_SUMMER_H_

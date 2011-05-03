@@ -19,6 +19,10 @@ magicc_array::magicc_array()
     initialized = 0;    // Users must call init, below, to set up array(s)
 }
 
+magicc_array::~magicc_array() {
+    delete[] data;
+}
+
 void magicc_array::init( const char* s, int l1, int h1, int l2, int h2 )
 {
     if( l1 > h1 || l2 > h2 || initialized )    // Could get fancier and allow this

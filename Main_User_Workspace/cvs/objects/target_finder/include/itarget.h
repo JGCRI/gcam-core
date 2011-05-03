@@ -45,43 +45,18 @@
  * \author Josh Lurz
  */
 
-#include <cassert>
-
 /*!
  * \brief Interface to represent a target.
  */
 class ITarget {
 public:
-    //! Enum representation of the trial.
-    enum TrialStatus {
-        //! Trial value is too high.
-        HIGH,
-        //! Trial value is too low.
-        LOW,
-        //! Trial value is within the tolerance.
-        SOLVED,
-        //! Trial status is unknown.
-        UNKNOWN
-    };
-
     /*!
-     * \brief Convert a TrialStatus to a string.
-     * \param aTrialStatus Trial status enum.
-     * \return String representation of the enum.
+     * \brief A year flag to indicate that getStatus should use getYearOfMaxTargetValue
+     *        to figure out the appropriate year to get the status in.
      */
-    static const std::string& toString( const TrialStatus aTrialStatus ){
-        assert( aTrialStatus >= 0 );
-
-        static const std::string names[] = {
-            "High",
-            "Low",
-            "Solved"
-            "Unknown"
-        };
-
-        assert( aTrialStatus < sizeof( names ) / sizeof( names[ 0 ] ) );
-
-        return names[ aTrialStatus ];
+    static int getUseMaxTargetYearFlag() {
+        static const int MAX_TARGET_YEAR = -1;
+        return MAX_TARGET_YEAR;
     }
 
     /*!
@@ -92,8 +67,16 @@ public:
      * \param aYear Year in which to check the target.
      * \return The status of the last trial.
      */
-    virtual TrialStatus getStatus( const double aTolerance,
-                                   const double aYear ) const = 0;
+    virtual double getStatus( const int aYear ) const = 0;
+    
+    /*!
+     * \brief Find the year in which the target is at it's maximum value over all
+     *        valid model years.
+     * \details Should getStatus be called with year equal to getUseMaxTargetYearFlag()
+     *          it will use this method to find the appropriate year to check.
+     * \return The year in which the target is at it's maximum.
+     */
+    virtual int getYearOfMaxTargetValue() const = 0;
 };
 
 #endif // _ITARGET_H_

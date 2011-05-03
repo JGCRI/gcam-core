@@ -42,23 +42,37 @@
 #include "util/base/include/definitions.h"
 #include <cassert>
 #include <string>
-#include <cmath>
+#include "containers/include/scenario.h"
+#include "util/base/include/model_time.h"
 #include "climate/include/iclimate_model.h"
 #include "target_finder/include/temperature_target.h"
 #include "util/logger/include/ilogger.h"
-#include "util/base/include/util.h"
 
 using namespace std;
+
+extern Scenario* scenario;
 
 /*!
  * \brief Constructor
  * \param aClimateModel The climate model.
  * \param aTargetValue The target value.
+ * \param aFirstTaxYear The first tax year.
  */
 TemperatureTarget::TemperatureTarget( const IClimateModel* aClimateModel,
-                                      const double aTargetValue ):
+                                      const double aTargetValue,
+                                      const int aFirstTaxYear ):
 mClimateModel( aClimateModel ),
-mTargetValue( aTargetValue ){
+mTargetValue( aTargetValue ),
+mFirstTaxYear( aFirstTaxYear )
+{
+}
+
+/*! \brief Return the static name of the object.
+ * \return The static name of the object.
+ */
+const string& TemperatureTarget::getXMLNameStatic(){
+    static const string XML_NAME = "temperature-target";
+    return XML_NAME;
 }
 
 /*!
@@ -67,13 +81,16 @@ mTargetValue( aTargetValue ){
  * \param aYear Year in which to get the status.
  * \return Status of the last trial.
  */
-ITarget::TrialStatus TemperatureTarget::getStatus( const double aTolerance,
-                                                   const double aYear ) const
-{
-    // Check if we are above or below the target.
-    // TODO: Avoid loss of precision.
-    const double currTemperature =
-        mClimateModel->getTemperature( util::round( aYear ) );
+double TemperatureTarget::getStatus( const int aYear ) const {
+    // Make sure we are using the correct year.
+    const int year = aYear == ITarget::getUseMaxTargetYearFlag() ? getYearOfMaxTargetValue()
+        : aYear;
+    /*!
+     * \pre year must be greater than mFirstTaxYear otherwise we will have no
+     *      ability to change the status in that year.
+     */
+    assert( year >= mFirstTaxYear );
+    const double currTemperature = mClimateModel->getTemperature( year );
 
     // Determine how how far away from the target the current estimate is.
     double percentOff = ( currTemperature - mTargetValue ) / mTargetValue * 100;
@@ -84,25 +101,20 @@ ITarget::TrialStatus TemperatureTarget::getStatus( const double aTolerance,
     targetLog << "Currently " << percentOff << " percent away from the temperature target." << endl
               << "Current: " << currTemperature << " Target: " << mTargetValue << endl;
 
-    TrialStatus status = UNKNOWN;
-    // Check if the target is solved.
-    if( fabs( percentOff ) < aTolerance ){
-        status = SOLVED;
-    }
-    else if( percentOff > 0 ){
-        status = HIGH;
-    }
-    else {
-        status = LOW;
-    }
-
-    return status;
+    return percentOff;
 }
 
-/*! \brief Return the static name of the object.
-* \return The static name of the object.
-*/
-const string& TemperatureTarget::getXMLNameStatic(){
-    static const string XML_NAME = "temperature-target";
-    return XML_NAME;
+int TemperatureTarget::getYearOfMaxTargetValue() const {
+    const int finalYearToCheck = scenario->getModeltime()->getEndYear();
+    double maxTemp = 0;
+    int maxYear = mFirstTaxYear - 1;
+    
+    // Loop over possible year and find the max temp and the year it occurs in.
+    for( int year = mFirstTaxYear; year <= finalYearToCheck; ++year ) {
+        if( maxTemp < mClimateModel->getTemperature( year ) ) {
+            maxTemp = mClimateModel->getTemperature( year );
+            maxYear = year;
+        }
+    }
+    return maxYear;
 }

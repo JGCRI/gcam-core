@@ -311,6 +311,9 @@ bool Scenario::run( const int aSinglePeriod,
                     const bool aPrintDebugging,
                     const string& aFilenameEnding )
 {
+    // Avoid accumulating unsolved periods.
+    unsolvedPeriods.clear();
+    
     // Open the debugging files.
     ofstream XMLDebugFile;
     ofstream SGMDebugFile;
@@ -354,6 +357,24 @@ bool Scenario::run( const int aSinglePeriod,
         // Now run the requested period. Results past this period will no longer
         // be valid. Do not attempt to use them!
         success &= calculatePeriod( aSinglePeriod, XMLDebugFile, SGMDebugFile, &tabs, aPrintDebugging );
+    }
+    
+    // Print any unsolved periods.
+    // TODO: This should be added to the db.
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::WARNING );
+    
+    // Report if all model periods solved correctly.
+    if( unsolvedPeriods.empty() ) {
+        mainLog << "All model periods solved correctly." << endl;
+    }
+    else {
+        // Otherwise print all model periods which did not solve correctly.
+        mainLog << "The following model periods did not solve: ";
+        for( vector<int>::const_iterator i = unsolvedPeriods.begin(); i != unsolvedPeriods.end(); i++ ) {
+            mainLog << *i << ", ";
+        }
+        mainLog << endl;
     }
 
     // Run the climate model.
@@ -401,6 +422,12 @@ bool Scenario::calculatePeriod( const int aPeriod,
         marketplace->nullSuppliesAndDemands( aPeriod );
     }
 
+    world->calc( aPeriod ); // call to calculate initial supply and demand
+    
+    // TODO: This second call is a hack to allow LUC emissions to get properly
+    // calculated when using restart.  This should be unnecessary with the new
+    // AgLU code.
+    marketplace->nullSuppliesAndDemands( aPeriod ); // initialize market demand to null
     world->calc( aPeriod ); // call to calculate initial supply and demand
 
     bool success = solve( aPeriod ); // solution uses Bisect and NR routine to clear markets
@@ -666,7 +693,7 @@ const map<const string,const Curve*> Scenario::getEmissionsPriceCurves( const st
 *          object that was created in the constructor. This method then checks
 *          for any errors that occurred while solving and reports the errors if
 *          it is the last period. 
-* \return Whether all model periods solved successfully.
+* \return Whether the model period solved successfully.
 * \param period Period of the model to solve.
 */
 
@@ -677,32 +704,12 @@ bool Scenario::solve( const int period ){
     // Solve the marketplace. If the return code is false than the model did not
     // solve for the period. Add the period to the scenario list of unsolved
     // periods. 
-    if( !mSolvers[ period ]->solve( period, mSolutionInfoParamParser.get() ) ) {
+    const bool success = mSolvers[ period ]->solve( period, mSolutionInfoParamParser.get() );
+    if( !success ) {
         unsolvedPeriods.push_back( period );
     }
-    // TODO: This should be added to the db.
-    // If it was the last period print the ones that did not solve.
-    if( modeltime->getmaxper() - 1 == period  ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-
-        // Report if all model periods solved correctly.
-        if( unsolvedPeriods.empty() ) {
-            mainLog << "All model periods solved correctly." << endl;
-            return true;
-        }
-
-        // Otherwise print all model periods which did not solve correctly.
-        mainLog << "The following model periods did not solve: ";
-        for( vector<int>::const_iterator i = unsolvedPeriods.begin(); i != unsolvedPeriods.end(); i++ ) {
-            mainLog << *i << ", ";
-        }
-        mainLog << endl;
-        return false;
-    }
-    // If this is not the last period return success. If there was an error it
-    // will be sent after the last iteration.
-    return true;
+    
+    return success;
 }
 
 //! Output Scenario members to a CSV file.
@@ -838,4 +845,12 @@ void Scenario::initSolvers() {
         // Complete the init of the solution object.
         (*solverIt)->init();
     }
+}
+
+/*!
+ * \brief Get the periods that did not solve in the last call to run.
+ * \return A vector of model periods that did not solve.
+ */
+const vector<int>& Scenario::getUnsolvedPeriods() const {
+    return unsolvedPeriods;
 }

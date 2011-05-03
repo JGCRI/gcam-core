@@ -65,7 +65,8 @@ public:
     static bool isOfType( const std::string& aType );
     static std::auto_ptr<ITarget> create( const std::string& aType,
                                           const IClimateModel* aClimateModel,
-                                          double aTargetValue );
+                                          double aTargetValue,
+                                          int aFirstTaxYear );
 };
 
 #endif // _TARGET_FACTORY_H_

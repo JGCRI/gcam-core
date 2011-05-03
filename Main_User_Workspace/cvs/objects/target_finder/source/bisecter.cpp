@@ -50,13 +50,6 @@
 
 using namespace std;
 
-/*! \brief Value to use for undefined minimums, maximums and trial values.
-* \return Undefined value.
-*/
-double Bisecter::undefined(){
-    return -1;
-}
-
 /*!
  * \brief Construct the Bisecter.
  * \param aTarget The policy target.
@@ -78,8 +71,8 @@ mTarget( aTarget ),
 mTolerance( aTolerance ),
 mMinimum( aMinimum ),
 mMaximum( aMaximum ),
-mLowerBound( Bisecter::undefined() ),
-mUpperBound( Bisecter::undefined() ),
+mLowerBound( ITargetSolver::undefined() ),
+mUpperBound( ITargetSolver::undefined() ),
 mInitialGuess( aInitialValue ),
 mMultiple( aMultiple ),
 mCurrentTrial( 0 ),
@@ -115,103 +108,97 @@ mIterations( 0 ){
 pair<double, bool> Bisecter::getNextValue() {
     // Get the status of the current trial.
 
-    // If the target year is set to -1 this is means that the trial value should
-    // be used as the target year. TODO: This is a little hackish.
-    double targetYear = mYear != -1 ? mYear : mCurrentTrial;
-
-    ITarget::TrialStatus currTrial = mTarget->getStatus( mTolerance, targetYear );
+    double percentOff = mTarget->getStatus( mYear );
 
     ILogger& mainLog = ILogger::getLogger( "target_finder_log" );
     mainLog.setLevel( ILogger::WARNING );
-    mainLog << "Current trial status is " << ITarget::toString( currTrial )
-            << endl;
+    mainLog << "Current trial status is " << percentOff << endl;
     
     SolvedState state = eUnsolved;
 
-    switch( currTrial ){
-        case ITarget::SOLVED:
-            state = eSolved;
-            break;
-        case ITarget::LOW:
-            // Set the upper bound to the current value.
-            mUpperBound = mCurrentTrial;
+    if( fabs( percentOff ) < mTolerance ) {
+        state = eSolved;
+    }
+    else if( percentOff < 0 ) {
+        //case ITarget::LOW:
+        // Set the upper bound to the current value.
+        mUpperBound = mCurrentTrial;
 
-            // If the lower bound is unknown set it to the minimum value.
-            if( mLowerBound == Bisecter::undefined() ){
-                // If the minimum was defined by the value use that as the true
-                // lower bound. Otherwise use zero.
-                if( mMinimum != undefined() ){
-                    mLowerBound = mMinimum;
-                }
-                else {
-                    mLowerBound = 0;
+        // If the lower bound is unknown set it to the minimum value.
+        if( mLowerBound == ITargetSolver::undefined() ){
+            // If the minimum was defined by the value use that as the true
+            // lower bound. Otherwise use zero.
+            if( mMinimum != undefined() ){
+                mLowerBound = mMinimum;
+            }
+            else {
+                mLowerBound = 0;
+            }
+        }
+
+        // Check if the bracket is too small to contain any values.
+        if( mUpperBound - mLowerBound < mTolerance ){
+            state = eEmptyBracket;
+        }
+        // Check if the constraint is not binding. If the minimum was set by
+        // the caller, use a minimum of the minimum plus a small number. If
+        // the minimum was not set, use just the small number.
+        else if( mCurrentTrial <
+            ( mMinimum != undefined() ? mMinimum + mTolerance : mTolerance ) )
+        {
+            state = eLowerBoundReached;
+        }
+        else {
+            // Calculate the new current trial. This will be ignored if the target is
+            // solved.
+            mCurrentTrial = mLowerBound + ( mUpperBound - mLowerBound ) / 2.0;
+        }
+    }
+    else {
+        //case ITarget::HIGH:
+        // Set the lower bound to the current value.
+        mLowerBound = mCurrentTrial;
+
+        // If the upper bound is currently unknown set the trial to twice
+        // it's current value or minimum if it is currently zero.
+        if( mUpperBound == ITargetSolver::undefined() ){
+            if( mCurrentTrial == mInitialGuess ){
+                mCurrentTrial = mInitialGuess;
+                // Clear the initial guess so we do not use it again.
+                // TODO: Also hackish.
+                mInitialGuess = undefined();
+            }
+            // If the maximum was defined by the value use that as the true
+            // lower bound. Otherwise multiply upwards until the solution is bounded.
+            else if( mMaximum != undefined() ){
+                mUpperBound = mMaximum;
+                mCurrentTrial = mLowerBound + ( mUpperBound - mLowerBound ) / 2.0;
+            }
+            else if( mCurrentTrial == 0 ){
+                mCurrentTrial = max( mMinimum, 1.0 );
+            }
+            else {
+                mCurrentTrial *= ( 1 + mMultiple );
+                // Don't allow the current trial to exceed the maximum.
+                if( mMaximum != undefined() ){
+                    mCurrentTrial = min( mCurrentTrial, mMaximum );
                 }
             }
-
+        }
+        else {
             // Check if the bracket is too small to contain any values.
             if( mUpperBound - mLowerBound < mTolerance ){
                 state = eEmptyBracket;
             }
-            // Check if the constraint is not binding. If the minimum was set by
-            // the caller, use a minimum of the minimum plus a small number. If
-            // the minimum was not set, use just the small number.
-            else if( mCurrentTrial <
-                ( mMinimum != undefined() ? mMinimum + mTolerance : mTolerance ) )
-            {
-                state = eLowerBoundReached;
+            // Check if the upper bound has already been reached.
+            else if( mUpperBound - mCurrentTrial < mTolerance ){
+                state = eUpperBoundReached;
             }
             else {
-                // Calculate the new current trial. This will be ignored if the target is
-                // solved.
+                // Calculate the new current trial.
                 mCurrentTrial = mLowerBound + ( mUpperBound - mLowerBound ) / 2.0;
             }
-            break;
-        case ITarget::HIGH:
-            // Set the lower bound to the current value.
-            mLowerBound = mCurrentTrial;
-
-            // If the upper bound is currently unknown set the trial to twice
-            // it's current value or minimum if it is currently zero.
-            if( mUpperBound == Bisecter::undefined() ){
-                if( mCurrentTrial == mInitialGuess ){
-                    mCurrentTrial = mInitialGuess;
-                    // Clear the initial guess so we do not use it again.
-                    // TODO: Also hackish.
-                    mInitialGuess = undefined();
-                }
-                // If the maximum was defined by the value use that as the true
-                // lower bound. Otherwise multiply upwards until the solution is bounded.
-                else if( mMaximum != undefined() ){
-                    mUpperBound = mMaximum;
-                    mCurrentTrial = mLowerBound + ( mUpperBound - mLowerBound ) / 2.0;
-                }
-                else if( mCurrentTrial == 0 ){
-                    mCurrentTrial = max( mMinimum, 1.0 );
-                }
-                else {
-                    mCurrentTrial *= ( 1 + mMultiple );
-                    // Don't allow the current trial to exceed the maximum.
-                    if( mMaximum != undefined() ){
-                        mCurrentTrial = min( mCurrentTrial, mMaximum );
-                    }
-                }
-            }
-            else {
-                // Check if the bracket is too small to contain any values.
-                if( mUpperBound - mLowerBound < mTolerance ){
-                    state = eEmptyBracket;
-                }
-                // Check if the upper bound has already been reached.
-                else if( mUpperBound - mCurrentTrial < mTolerance ){
-                    state = eUpperBoundReached;
-                }
-                else {
-                    // Calculate the new current trial.
-                    mCurrentTrial = mLowerBound + ( mUpperBound - mLowerBound ) / 2.0;
-                }
-            }
-
-            break;
+        }
     }
 
     // Increment the number of trials.

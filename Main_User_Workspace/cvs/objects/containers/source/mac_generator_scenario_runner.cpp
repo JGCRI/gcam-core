@@ -49,6 +49,7 @@
 #include "containers/include/total_policy_cost_calculator.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/auto_file.h"
+#include "marketplace/include/marketplace.h"
 
 using namespace std;
 using namespace xercesc;
@@ -117,6 +118,14 @@ bool MACGeneratorScenarioRunner::runScenarios( const int aSinglePeriod,
                                                const bool aPrintDebugging,
                                                Timer& aTimer )
 {
+    // TODO: This is only necessary because the cost calculator has trouble solving
+    // a zero carbon tax with restart turned on.  This should be unnecessary with
+    // a better solver.
+    const static bool usingRestartPeriod = Configuration::getInstance()->getInt(
+        "restart-period", -1 ) != -1;
+    if( usingRestartPeriod ) {
+        mSingleScenario->getInternalScenario()->getMarketplace()->store_prices_for_cost_calculation();
+    }
     // Run the base scenario. Print debugging for the base scenario run.
     bool success = mSingleScenario->runScenarios( Scenario::RUN_ALL_PERIODS,
                                                   aPrintDebugging, aTimer );

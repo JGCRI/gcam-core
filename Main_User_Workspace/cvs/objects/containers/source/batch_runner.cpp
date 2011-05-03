@@ -470,40 +470,30 @@ const Scenario* BatchRunner::getInternalScenario() const {
 bool BatchRunner::ParseHelper::XMLParse( const xercesc::DOMNode* aNode ){
     // assume we were passed a valid node.
     assert( aNode );
-    
-    // get the children of the node.
-    DOMNodeList* nodeList = aNode->getChildNodes();
 
     // loop through the children
     bool success = true;
-    for ( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        const DOMNode* curr = nodeList->item( i );
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == XMLHelper<void>::text() ) {
-            continue;
-        }
-        if( ScenarioRunnerFactory::isOfType( nodeName ) ){
-            if( nodeName == getXMLNameStatic() ){
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::ERROR );
-                mainLog << "Batch scenario runners cannot create Batch scenario runners." << endl;
-                success = false;
-            }
-            else {
-                mScenarioRunner = ScenarioRunnerFactory::create( nodeName );
-
-                // Allow the IScenarioRunner to parse its own data.
-                success &= mScenarioRunner->XMLParse( curr );
-            }
-        }
-        else {
+    const string nodeName = XMLHelper<string>::safeTranscode( aNode->getNodeName() );
+    if( ScenarioRunnerFactory::isOfType( nodeName ) ){
+        if( nodeName == getXMLNameStatic() ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName
-                    << " found while parsing a scenario runner configuration file." << endl;
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "Batch scenario runners cannot create Batch scenario runners." << endl;
             success = false;
         }
+        else {
+            mScenarioRunner = ScenarioRunnerFactory::create( nodeName );
+
+            // Allow the IScenarioRunner to parse its own data.
+            success &= mScenarioRunner->XMLParse( /*curr*/aNode );
+        }
+    }
+    else {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Unrecognized text string: " << nodeName
+                << " found while parsing a scenario runner configuration file." << endl;
+        success = false;
     }
     return success;
 }

@@ -27,7 +27,7 @@ private:
     int computepos( int, int );
 public:
     magicc_array();
-//    ~magicc_array();
+    ~magicc_array();
     void init( const char*, int, int, int=0, int=0 );
     void setval( float, int, int=0 );
     float getval( int, int=0 );    

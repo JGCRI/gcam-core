@@ -42,27 +42,41 @@
 #include "util/base/include/definitions.h"
 #include <cassert>
 #include <string>
-#include <cmath>
+#include "containers/include/scenario.h"
+#include "util/base/include/model_time.h"
 #include "climate/include/iclimate_model.h"
 #include "target_finder/include/concentration_target.h"
 #include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
-#include "util/base/include/util.h"
 
 using namespace std;
+
+extern Scenario* scenario;
 
 /*!
  * \brief Constructor
  * \param aClimateModel The climate model.
  * \param aTargetValue The target value.
+ * \param aFirstTaxYear The first tax year.
  */
 ConcentrationTarget::ConcentrationTarget( const IClimateModel* aClimateModel,
-                                          const double aTargetValue ):
+                                          const double aTargetValue,
+                                          const int aFirstTaxYear ):
 mClimateModel( aClimateModel ),
-mTargetValue( aTargetValue ) {
+mTargetValue( aTargetValue ),
+mFirstTaxYear( aFirstTaxYear )
+{
     // Store configuration variables.
     const Configuration* conf = Configuration::getInstance();
     mTargetGas = conf->getString( "concentration-target-gas", "CO2" );
+}
+
+/*! \brief Return the static name of the object.
+ * \return The static name of the object.
+ */
+const string& ConcentrationTarget::getXMLNameStatic(){
+	static const string XML_NAME = "concentration-target";
+	return XML_NAME;
 }
 
 /*!
@@ -71,13 +85,17 @@ mTargetValue( aTargetValue ) {
  * \param aYear Year in which to get the status.
  * \return Status of the last trial.
  */
-ITarget::TrialStatus ConcentrationTarget::getStatus( const double aTolerance,
-                                                     const double aYear ) const
+double ConcentrationTarget::getStatus( const int aYear ) const
 {
-    // Check if we are above or below the target.
-    // TODO: Avoid loss of precision.
-    const double currConcentration =
-        mClimateModel->getConcentration( mTargetGas, util::round( aYear ) );
+    // Make sure we are using the correct year.
+    const int year = aYear == ITarget::getUseMaxTargetYearFlag() ? getYearOfMaxTargetValue()
+        : aYear;
+    /*!
+     * \pre year must be greater than mFirstTaxYear otherwise we will have no
+     *      ability to change the status in that year.
+     */
+    assert( year >= mFirstTaxYear );
+    const double currConcentration = mClimateModel->getConcentration( mTargetGas, year );
 
     // Determine how how far away from the target the current estimate is.
     double percentOff = ( currConcentration - mTargetValue ) / mTargetValue * 100;
@@ -86,31 +104,28 @@ ITarget::TrialStatus ConcentrationTarget::getStatus( const double aTolerance,
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
     mainLog << "Currently " << percentOff << " percent away from the concentration target." << endl;
-    mainLog << "Current: " << currConcentration << " Target: " << mTargetValue << endl;
+    mainLog << "Current: " << currConcentration << " Target: " << mTargetValue
+            << " In year " << year << endl;
     // Print information to target log since target info is not available elsewhere
     ILogger& targetLog = ILogger::getLogger( "target_finder_log" );
     targetLog.setLevel( ILogger::NOTICE );
-    targetLog << "Target Values - Current: " << currConcentration << " Target: " << mTargetValue << endl;
+    targetLog << "Target Values - Current: " << currConcentration << " Target: " << mTargetValue
+              << " In year: " << year << endl;
 
-    TrialStatus status = UNKNOWN;
-    // Check if the target is solved.
-    if( fabs( percentOff ) < aTolerance ){
-        status = SOLVED;
-    }
-    else if( percentOff > 0 ){
-        status = HIGH;
-    }
-    else {
-        status = LOW;
-    }
-
-    return status;
+    return percentOff;
 }
 
-/*! \brief Return the static name of the object.
-* \return The static name of the object.
-*/
-const string& ConcentrationTarget::getXMLNameStatic(){
-	static const string XML_NAME = "concentration-target";
-	return XML_NAME;
+int ConcentrationTarget::getYearOfMaxTargetValue() const {
+    const int finalYearToCheck = scenario->getModeltime()->getEndYear();
+    double maxConc = 0;
+    int maxYear = mFirstTaxYear - 1;
+    
+    // Loop over possible year and find the max concentration and the year it occurs in.
+    for( int year = mFirstTaxYear; year <= finalYearToCheck; ++year ) {
+        if( maxConc < mClimateModel->getConcentration( mTargetGas, year ) ) {
+            maxConc = mClimateModel->getConcentration( mTargetGas, year );
+            maxYear = year;
+        }
+    }
+    return maxYear;
 }

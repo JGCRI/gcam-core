@@ -534,23 +534,31 @@ void TreeLandAllocator::calcFinalLandAllocation( const string& aRegionName,
                         aPeriod );
 
     const Modeltime* modeltime = scenario->getModeltime();
-    const int timeStep = modeltime->gettimestep( aPeriod );
     const int calcYear = modeltime->getper_to_yr( aPeriod );
-    // Find any years up to the current period that have not been calculated.
-    for( int i = CarbonModelUtils::getStartYear(); i <= calcYear - timeStep; ++i ){
-        // If model crashes here on an assert in the YearVector then this is likely because 
-        // mCarbonModelStartYear was read in after the first item in the landallocator.
-        if( !mCalculated[ i ] ){
-            calcFinalLandAllocationHelper( aRegionName, i );
-            mCalculated[ i ] = true;
+    if( aPeriod == 0 ) {
+        // Find any years up to the current period that have not been calculated.
+        /*!
+         * \warning Land use history emissions can NEVER be cleared so they can only
+         *          be calculated one time despite the number of times the model runs.
+         */
+        for( int i = CarbonModelUtils::getStartYear(); i <= calcYear; ++i ){
+            // If model crashes here on an assert in the YearVector then this is likely because 
+            // mCarbonModelStartYear was read in after the first item in the landallocator.
+            if( !mCalculated[ i ] ){
+                calcFinalLandAllocationHelper( aRegionName, i );
+                // The first model year can be recalculated.
+                if( i != calcYear ) {
+                    mCalculated[ i ] = true;
+                }
+            }
         }
-    }
-    
-    // Always calculate for the years since the previous time step
-    int start = calcYear - modeltime->gettimestep( modeltime->getyr_to_per( calcYear ) ) + 1;
-    start = max( start, static_cast<int>(CarbonModelUtils::getStartYear()) );
-    for( int i = start; i <= calcYear; ++i ){
-        calcFinalLandAllocationHelper( aRegionName, i );
+    } else {
+        // Always calculate for the years since the previous time step
+        int start = calcYear - modeltime->gettimestep( modeltime->getyr_to_per( calcYear ) ) + 1;
+        start = max( start, static_cast<int>(CarbonModelUtils::getStartYear()) );
+        for( int i = start; i <= calcYear; ++i ){
+            calcFinalLandAllocationHelper( aRegionName, i );
+        }
     }
 }
 

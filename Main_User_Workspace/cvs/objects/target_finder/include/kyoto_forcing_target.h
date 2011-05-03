@@ -1,5 +1,5 @@
-#ifndef _EMISSIONS_STABALIZATION_TARGET_H_
-#define _EMISSIONS_STABALIZATION_TARGET_H_
+#ifndef _KYOTO_FORCING_TARGET_H_
+#define _KYOTO_FORCING_TARGET_H_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -39,10 +39,10 @@
  */
 
 /*!
- * \file emissions_stabalization_target.h
+ * \file kyoto_forcing_target.h
  * \ingroup Objects
- * \brief The EmissionsStabalizationTarget class header file.
- * \author Josh Lurz
+ * \brief The KyotoForcingTarget class header file.
+ * \author Pralit Patel
  */
 
 #include "target_finder/include/itarget.h"
@@ -50,34 +50,33 @@
 
 class IClimateModel;
 
-/*!
- * \brief An emissions stabilization target.
- * \details A target for stabilizing emissions such that industrial emissions
- *          in the target period are equal to the net land use emissions plus
- *          the rate of ocean uptake.
+/*! \brief A class representing a kyoto forcing target.
+ * \details A target for a climate forcing of kyoto gasses.
  */
-class EmissionsStabalizationTarget: public ITarget {
+class KyotoForcingTarget: public ITarget {
 public:
-    EmissionsStabalizationTarget( const IClimateModel* aClimateModel,
-                                  const double aTargetValue,
-                                  const int aFirstTaxYear );
+    KyotoForcingTarget( const IClimateModel* aClimateModel,
+                        const double aTargetValue,
+                        const int aFirstTaxYear );
     
     static const std::string& getXMLNameStatic();
-
+    
     // ITarget methods
     virtual double getStatus( const int aYear ) const;
     
     virtual int getYearOfMaxTargetValue() const;
 private:
-    //! The name of the target gas.
-    std::string mTargetGas;
-
     //! The climate model.
     const IClimateModel* mClimateModel;
+    
+    //! The target value.
+    const double mTargetValue;
     
     //! The first policy year which would be the first valid year to check
     //! getStatus in.
     const int mFirstTaxYear;
+    
+    double calcKyotoForcing( const int aYear ) const;
 };
 
-#endif // _EMISSIONS_STABALIZATION_TARGET_H_
+#endif // _KYOTO_FORCING_TARGET_H_

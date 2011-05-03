@@ -33,11 +33,11 @@
  */
 
 /*! 
-* \file forcing_target.cpp
-* \ingroup Objects
-* \brief ForcingTarget class source file.
-* \author Josh Lurz
-*/
+ * \file kyoto_forcing_target.cpp
+ * \ingroup Objects
+ * \brief KyotoForcingTarget class source file.
+ * \author Pralit Patel
+ */
 
 #include "util/base/include/definitions.h"
 #include <cassert>
@@ -45,7 +45,7 @@
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "climate/include/iclimate_model.h"
-#include "target_finder/include/forcing_target.h"
+#include "target_finder/include/kyoto_forcing_target.h"
 #include "util/logger/include/ilogger.h"
 
 using namespace std;
@@ -58,9 +58,9 @@ extern Scenario* scenario;
  * \param aTargetValue The target value.
  * \param aFirstTaxYear The first tax year.
  */
-ForcingTarget::ForcingTarget( const IClimateModel* aClimateModel,
-                              const double aTargetValue,
-                              const int aFirstTaxYear ):
+KyotoForcingTarget::KyotoForcingTarget( const IClimateModel* aClimateModel,
+                                        const double aTargetValue,
+                                        const int aFirstTaxYear ):
 mClimateModel( aClimateModel ),
 mTargetValue( aTargetValue ),
 mFirstTaxYear( aFirstTaxYear )
@@ -70,8 +70,8 @@ mFirstTaxYear( aFirstTaxYear )
 /*! \brief Return the static name of the object.
  * \return The static name of the object.
  */
-const string& ForcingTarget::getXMLNameStatic(){
-    static const string XML_NAME = "forcing-target";
+const string& KyotoForcingTarget::getXMLNameStatic(){
+    static const string XML_NAME = "kyoto-forcing-target";
     return XML_NAME;
 }
 
@@ -81,7 +81,7 @@ const string& ForcingTarget::getXMLNameStatic(){
  * \param aYear Year in which to get the status.
  * \return Status of the last trial.
  */
-double ForcingTarget::getStatus( const int aYear ) const {
+double KyotoForcingTarget::getStatus( const int aYear ) const {
     // Make sure we are using the correct year.
     const int year = aYear == ITarget::getUseMaxTargetYearFlag() ? getYearOfMaxTargetValue()
         : aYear;
@@ -90,8 +90,8 @@ double ForcingTarget::getStatus( const int aYear ) const {
      *      ability to change the status in that year.
      */
     assert( year >= mFirstTaxYear );
-    const double currForcing = mClimateModel->getTotalForcing( year );
-
+    const double currForcing = calcKyotoForcing( year );
+    
     // Determine how how far away from the target the current estimate is.
     double percentOff = ( currForcing - mTargetValue ) / mTargetValue * 100;
     
@@ -99,22 +99,48 @@ double ForcingTarget::getStatus( const int aYear ) const {
     ILogger& targetLog = ILogger::getLogger( "target_finder_log" );
     targetLog.setLevel( ILogger::NOTICE );
     targetLog << "Currently " << percentOff << " percent away from the forcing target." << endl
-              << "Current: " << currForcing << " Target: " << mTargetValue << " In year: " << year << endl;
-
+    << "Current: " << currForcing << " Target: " << mTargetValue << " In year: " << year << endl;
+    
     return percentOff;
 }
 
-int ForcingTarget::getYearOfMaxTargetValue() const {
+int KyotoForcingTarget::getYearOfMaxTargetValue() const {
     const int finalYearToCheck = scenario->getModeltime()->getEndYear();
     double maxForcing = 0;
     int maxYear = mFirstTaxYear - 1;
     
     // Loop over possible year and find the max forcing and the year it occurs in.
     for( int year = mFirstTaxYear; year <= finalYearToCheck; ++year ) {
-        if( maxForcing < mClimateModel->getTotalForcing( year ) ) {
-            maxForcing = mClimateModel->getTotalForcing( year );
+        if( maxForcing < calcKyotoForcing( year ) ) {
+            maxForcing = calcKyotoForcing( year );
             maxYear = year;
         }
     }
     return maxYear;
+}
+
+/*!
+ * \brief Sums forcing from Kyoto gasses to caclulate the Kyoto forcing.
+ * \param aYear The year in which to calculate.  This must be a real,
+ *              ITarget::getUseMaxTargetYearFlag() is not allowed.
+ * \return The Kyoto forcing in the given year.
+ */
+double KyotoForcingTarget::calcKyotoForcing( const int aYear ) const {
+    /*!
+     * \pre aYear must be a valid year.
+     */
+    assert( aYear != ITarget::getUseMaxTargetYearFlag() );
+    
+    return mClimateModel->getForcing( "CO2", aYear )
+        + mClimateModel->getForcing( "CH4", aYear )
+        + mClimateModel->getForcing( "N2O", aYear )
+        + mClimateModel->getForcing( "HCFC125", aYear )
+        + mClimateModel->getForcing( "HCFC134A", aYear )
+        + mClimateModel->getForcing( "HCFC143A", aYear )
+        + mClimateModel->getForcing( "HFC227ea", aYear )
+        + mClimateModel->getForcing( "HCFC245fa", aYear )
+        + mClimateModel->getForcing( "SF6", aYear )
+        + mClimateModel->getForcing( "CF4", aYear )
+        + mClimateModel->getForcing( "C2F6", aYear )
+        + mClimateModel->getForcing( "OtherHC", aYear );
 }

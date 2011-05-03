@@ -1,5 +1,5 @@
-#ifndef _EMISSIONS_STABALIZATION_TARGET_H_
-#define _EMISSIONS_STABALIZATION_TARGET_H_
+#ifndef _ITARGET_SOLVER_H_
+#define _ITARGET_SOLVER_H_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -39,45 +39,41 @@
  */
 
 /*!
- * \file emissions_stabalization_target.h
+ * \file itarget_solver.h
  * \ingroup Objects
- * \brief The EmissionsStabalizationTarget class header file.
- * \author Josh Lurz
+ * \brief The ITargetSolver interface file.
+ * \author Pralit Patel
  */
-
-#include "target_finder/include/itarget.h"
-#include <string>
-
-class IClimateModel;
 
 /*!
- * \brief An emissions stabilization target.
- * \details A target for stabilizing emissions such that industrial emissions
- *          in the target period are equal to the net land use emissions plus
- *          the rate of ocean uptake.
+ * \brief Interface to represent a target finder solution algorithm.
  */
-class EmissionsStabalizationTarget: public ITarget {
+class ITargetSolver {
 public:
-    EmissionsStabalizationTarget( const IClimateModel* aClimateModel,
-                                  const double aTargetValue,
-                                  const int aFirstTaxYear );
+    /*!
+     * \brief A flag to indicate an undefined parameter.
+     */
+    static int undefined() {
+        static const int UNDEFINED = -1;
+        return UNDEFINED;
+    }
     
-    static const std::string& getXMLNameStatic();
-
-    // ITarget methods
-    virtual double getStatus( const int aYear ) const;
+    /*!
+     * \brief Get the next trial price to use.
+     * \details The first value of the return is the next trial price to use,
+     *          the second is a boolean to indicate if we have already solved
+     *          the target.
+     * \return A pair of values including the next trial value to use and if we
+     *         have arrived at the target.
+     */
+    virtual std::pair<double, bool> getNextValue() = 0;
     
-    virtual int getYearOfMaxTargetValue() const;
-private:
-    //! The name of the target gas.
-    std::string mTargetGas;
-
-    //! The climate model.
-    const IClimateModel* mClimateModel;
-    
-    //! The first policy year which would be the first valid year to check
-    //! getStatus in.
-    const int mFirstTaxYear;
+    /*!
+     * \brief Get the number of attempts this algorithm has taken at finding a
+     *        solution.
+     * \return The number of iterations by this solver.
+     */
+    virtual unsigned int getIterations() const = 0;
 };
 
-#endif // _EMISSIONS_STABALIZATION_TARGET_H_
+#endif // _ITARGET_SOLVER_H_

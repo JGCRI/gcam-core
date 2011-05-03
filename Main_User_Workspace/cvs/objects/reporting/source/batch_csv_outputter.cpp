@@ -89,14 +89,35 @@ void BatchCSVOutputter::startVisitScenario( const Scenario* aScenario, const int
             // TODO: hard coding CO2
             const int year = modeltime->getper_to_yr( period );
             mFile << year << ' '<< "CO2 Price" << ',';
-            mFile << year << ' '<< "CO2 Emissions" << ',';
         }
-
         for( int period = 0; period < modeltime->getmaxper(); ++period ) {
             // TODO: hard coding CO2
             const int year = modeltime->getper_to_yr( period );
+            mFile << year << ' '<< "CO2 Emissions" << ',';
+        }
+
+        int outputInterval = Configuration::getInstance()->getInt( "climateOutputInterval",
+                                               scenario->getModeltime()->gettimestep( 0 ) );
+        
+        // print at least to 2100 if interval is set appropriately
+        int endingYear = max( scenario->getModeltime()->getEndYear(), 2100 );
+        
+        for( int year = scenario->getModeltime()->getStartYear();
+             year <= endingYear; year += outputInterval )
+        {
+            // TODO: hard coding CO2
             mFile << year << ' '<< "CO2 Concentration" << ',';
+        }
+        for( int year = scenario->getModeltime()->getStartYear();
+             year <= endingYear; year += outputInterval )
+        {
+            // TODO: hard coding CO2
             mFile << year << ' '<< "CO2 Radiative Forcing" << ',';
+        }
+        for( int year = scenario->getModeltime()->getStartYear();
+             year <= endingYear; year += outputInterval )
+        {
+            // TODO: hard coding CO2
             mFile << year << ' '<< "CO2 Temperature Change" << ',';
         }
         mFile << "Solved" << endl;
@@ -115,24 +136,38 @@ void BatchCSVOutputter::startVisitMarket( const Market* aMarket, const int aPeri
         mFile << "" << aMarket->getPrice() << ',';
         
         // would this be wrong if it didn't solve?
-        mFile << "" << aMarket->getDemand() << ',';
+        //mFile << "" << aMarket->getDemand() << ',';
     }
 }
 
 void BatchCSVOutputter::startVisitClimateModel( const IClimateModel* aClimateModel, const int aPeriod ) {
+    const Modeltime* modeltime = scenario->getModeltime();
+    for( int period = 0; period < modeltime->getmaxper(); ++period ) {
+        const int year = modeltime->getper_to_yr( period );
+        mFile << "" << aClimateModel->getEmissions( "CO2", year ) << ',';
+    }
+    
     int outputInterval
         = Configuration::getInstance()->getInt( "climateOutputInterval",
-                                   scenario->getModeltime()->gettimestep( 0 ) );
+                                   modeltime->gettimestep( 0 ) );
 
     // print at least to 2100 if interval is set appropriately
-    int endingYear = max( scenario->getModeltime()->getEndYear(), 2100 );
+    int endingYear = max( modeltime->getEndYear(), 2100 );
 
-    // Write the concentrations for the request period.
-    for( int year = scenario->getModeltime()->getStartYear();
+    // Write the climate variables for all applicable years.
+    for( int year = modeltime->getStartYear();
          year <= endingYear; year += outputInterval )
     {
         mFile << "" << aClimateModel->getConcentration( "CO2", year ) << ',';
+    }
+    for( int year = modeltime->getStartYear();
+         year <= endingYear; year += outputInterval )
+    {
         mFile << "" << aClimateModel->getForcing( "CO2", year) << ',';
+    }
+    for( int year = modeltime->getStartYear();
+         year <= endingYear; year += outputInterval )
+    {
         mFile << "" << aClimateModel->getTemperature( year ) << ',';
     }
 }

@@ -51,6 +51,7 @@
 #include "target_finder/include/forcing_target.h"
 #include "target_finder/include/temperature_target.h"
 #include "target_finder/include/emissions_stabalization_target.h"
+#include "target_finder/include/kyoto_forcing_target.h"
 
 using namespace std;
 
@@ -64,6 +65,7 @@ bool TargetFactory::isOfType( const string& aType ) {
 	return ( ( aType == ConcentrationTarget::getXMLNameStatic() )
 		|| ( aType == ForcingTarget::getXMLNameStatic() )
 		|| ( aType == TemperatureTarget::getXMLNameStatic() )
+        || ( aType == KyotoForcingTarget::getXMLNameStatic() )
         || ( aType == EmissionsStabalizationTarget::getXMLNameStatic() ) );
 }
 
@@ -72,30 +74,42 @@ bool TargetFactory::isOfType( const string& aType ) {
  * \param aType Type of ITarget to return.
  * \param aClimateModel Scenario's climate model.
  * \param aTargetValue The target value.
+ * \param aFirstTaxYear The first year in which the target could be checked.
  * \return A newly created ITarget wrapped in an auto_ptr. The pointer
  *         is null if the type is unknown.
  */
 auto_ptr<ITarget> TargetFactory::create( const string& aType,
                                          const IClimateModel* aClimateModel,
-                                         double aTargetValue )
+                                         double aTargetValue,
+                                         int aFirstTaxYear )
 {
 	// Search the list of known types.
 	if( aType == ConcentrationTarget::getXMLNameStatic() ) {
 		return auto_ptr<ITarget>( new ConcentrationTarget( aClimateModel,
-                                                           aTargetValue ) );
+                                                           aTargetValue,
+                                                           aFirstTaxYear ) );
 	}
 	if( aType == ForcingTarget::getXMLNameStatic() ){
 		return auto_ptr<ITarget>( new ForcingTarget( aClimateModel,
-                                                     aTargetValue ) );
+                                                     aTargetValue,
+                                                     aFirstTaxYear ) );
 	}
 	if( aType == TemperatureTarget::getXMLNameStatic() ){
 		return auto_ptr<ITarget>( new TemperatureTarget( aClimateModel,
-                                                         aTargetValue ) );
+                                                         aTargetValue,
+                                                         aFirstTaxYear ) );
 	}
+    
+    if( aType == KyotoForcingTarget::getXMLNameStatic() ){
+        return auto_ptr<ITarget>( new KyotoForcingTarget( aClimateModel,
+                                                          aTargetValue,
+                                                          aFirstTaxYear ) );
+    }
 
     if( aType == EmissionsStabalizationTarget::getXMLNameStatic() ){
         return auto_ptr<ITarget>( new EmissionsStabalizationTarget( aClimateModel,
-                                                                    aTargetValue ) );
+                                                                    aTargetValue,
+                                                                    aFirstTaxYear ) );
     }
 
     // Make sure this create is in sync with isOfType.

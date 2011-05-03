@@ -42,14 +42,13 @@
 #include "util/base/include/definitions.h"
 #include <cassert>
 #include <string>
-#include <cmath>
+#include "containers/include/scenario.h"
+#include "util/base/include/model_time.h"
 #include "climate/include/iclimate_model.h"
 #include "target_finder/include/emissions_stabalization_target.h"
 #include "util/logger/include/ilogger.h"
-#include "containers/include/scenario.h"
-#include "util/base/include/model_time.h"
-#include "util/base/include/util.h"
 #include "util/base/include/configuration.h"
+#include "util/base/include/util.h"
 
 extern Scenario* scenario;
 
@@ -59,20 +58,30 @@ using namespace std;
  * \brief Constructor
  * \param aClimateModel The climate model.
  * \param aTargetValue The value of the target.
+ * \param aFirstTaxYear The first tax year.
  */
 EmissionsStabalizationTarget::EmissionsStabalizationTarget(
     const IClimateModel* aClimateModel,
-    const double aTargetValue ):
-mClimateModel( aClimateModel )
+    const double aTargetValue,
+    const int aFirstTaxYear ):
+mClimateModel( aClimateModel ),
+mFirstTaxYear( aFirstTaxYear )
 {
     // Store configuration variables.
     const Configuration* conf = Configuration::getInstance();
     mTargetGas = conf->getString( "concentration-target-gas", "CO2" );
 }
 
-ITarget::TrialStatus
-EmissionsStabalizationTarget::getStatus( const double aTolerance,
-                                         const double aYear ) const
+/*!
+ * \brief Return the static name of the object.
+ * \return The static name of the object.
+ */
+const string& EmissionsStabalizationTarget::getXMLNameStatic(){
+	static const string XML_NAME = "stabilization-target";
+	return XML_NAME;
+}
+
+double EmissionsStabalizationTarget::getStatus( const int aYear ) const
 {
     // Determine the total system emissions. NOTE: Net terrestrial uptake
     // includes land use emissions as a negative, so they are not added here as
@@ -80,22 +89,22 @@ EmissionsStabalizationTarget::getStatus( const double aTolerance,
     
     // NOTE: Assumes that net terrestrial uptake is not removed from industrial
     // emissions.
-    int prevYear = static_cast<int>( floor( aYear ) );
-    int nextYear = static_cast<int>( ceil( aYear ) );
 
-    double totalEmissions =
-        objects::linearInterpolateY( aYear, prevYear, nextYear,
-        mClimateModel->getEmissions( "CO2", prevYear ),
-        mClimateModel->getEmissions( "CO2", nextYear ) );
+    // Make sure we are using the correct year.
+    const int year = aYear == ITarget::getUseMaxTargetYearFlag() ? getYearOfMaxTargetValue()
+        : aYear;
+    /*!
+     * \pre year must be greater than mFirstTaxYear otherwise we will have no
+     *      ability to change the status in that year.
+     */
+    assert( year >= mFirstTaxYear );
+
+    double totalEmissions = mClimateModel->getEmissions( "CO2", year );
 
     // Year can be between two years
-    double netOceanUp = objects::linearInterpolateY( aYear, prevYear, nextYear,
-        mClimateModel->getNetOceanUptake( prevYear ),
-        mClimateModel->getNetOceanUptake( nextYear ) );
+    double netOceanUp = mClimateModel->getNetOceanUptake( year );
 
-    double netTerrUp = objects::linearInterpolateY( aYear, prevYear, nextYear,
-        mClimateModel->getNetTerrestrialUptake( prevYear ),
-        mClimateModel->getNetTerrestrialUptake( nextYear ) );
+    double netTerrUp = mClimateModel->getNetTerrestrialUptake( year );
 
     double totalNetUptake = netOceanUp + netTerrUp;
 
@@ -110,27 +119,28 @@ EmissionsStabalizationTarget::getStatus( const double aTolerance,
               << "Emissions: " << totalEmissions << " Total net uptake: "
               << totalNetUptake << endl;
 
-
-    TrialStatus status = UNKNOWN;
-    // Check if the target is solved.
-    if( fabs( percentOff ) < aTolerance ){
-        status = SOLVED;
-    }
-    else if( percentOff > 0 ){
-        status = HIGH;
-    }
-    else {
-        status = LOW;
-    }
-
-    return status;
+    return percentOff;
 }
 
-/*!
- * \brief Return the static name of the object.
- * \return The static name of the object.
- */
-const string& EmissionsStabalizationTarget::getXMLNameStatic(){
-	static const string XML_NAME = "stabilization-target";
-	return XML_NAME;
+int EmissionsStabalizationTarget::getYearOfMaxTargetValue() const {
+    // TODO: I think realistically this is always the last year.
+    
+    double minDiff = numeric_limits<double>::max();
+    const int finalYearToCheck = scenario->getModeltime()->getEndYear();
+    int minYear = mFirstTaxYear - 1;
+    
+    // Loop over possible year and find the min difference in emisssions and the
+    // year it occurs in.
+    for( int year = mFirstTaxYear; year <= finalYearToCheck; ++year ) {
+        double totalEmissions = mClimateModel->getEmissions( "CO2", year );
+        double netOceanUp = mClimateModel->getNetOceanUptake( year );
+        double netTerrUp = mClimateModel->getNetTerrestrialUptake( year );
+        double totalNetUptake = netOceanUp + netTerrUp;
+        double percentOff = objects::percentDiff( totalNetUptake, totalEmissions );
+        if( percentOff < minDiff ) {
+            minDiff = percentOff;
+            minYear = year;
+        }
+    }
+    return minYear;
 }

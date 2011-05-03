@@ -98,6 +98,12 @@ Resource::~Resource() {
     for ( vector<SubResource*>::iterator iter = mSubResource.begin(); iter != mSubResource.end(); iter++ ) {
         delete *iter;
     }
+    for( CGHGIterator iter = ghg.begin(); iter != ghg.end(); ++iter ) {
+        delete *iter;
+    }
+    for( vector<IOutput*>::const_iterator iter = mOutputs.begin(); iter != mOutputs.end(); ++iter ) {
+        delete *iter;
+    }
 }
 
 //! Set data members from XML input.

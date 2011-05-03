@@ -183,7 +183,8 @@ bool SimplePolicyTargetRunner::setupScenarios( Timer& aTimer, const string aName
     // Create a a policy target.
     mPolicyTarget = TargetFactory::create( mTargetType,
                                            getInternalScenario()->getClimateModel(),
-                                           mTargetValue );
+                                           mTargetValue,
+                                           mLowerBound->getMinX() );
 
     // Initialize the interpolated curve to have the same x points as the
     // lower-bound.

@@ -220,7 +220,7 @@ void Technology::init()
 
     const Modeltime* modeltime = scenario->getModeltime();
     mCosts.resize( modeltime->getmaxper(), -1.0 );
-    mProductionState.resize( modeltime->getmaxper() );
+    mProductionState.resize( modeltime->getmaxper(), 0 );
     mProductionFunction = 0;
     mPMultiplier = 1;
     mFixedOutput = -1;
@@ -715,13 +715,14 @@ void Technology::initCalc( const string& aRegionName,
  * \param aPeriod Model period.
  */
 void Technology::setProductionState( const int aPeriod ){
-    // Check that the state for this period has not already been initialized. An
-    // assertion here usually means initCalc was called twice for a single
-    // period.
-
-    // PolicyTargetRunner crashes on this in debug mode -- evidently objects are initialized more than once
-    // So comment out for debugging.
-    assert( !mProductionState[ aPeriod ] );
+    // Check that the state for this period has not already been initialized.
+    // Note that this is the case when the same scenario is run multiple times
+    // for instance when doing the policy cost calculation.  In which case
+    // we must delete the memory to avoid a memory leak.
+    if( mProductionState[ aPeriod ] ) {
+        delete mProductionState[ aPeriod ];
+    }
+    
     double initialOutput = 0;
     const Modeltime* modeltime = scenario->getModeltime();
     initialOutput = mOutputs[ 0 ]->getPhysicalOutput( modeltime->getyr_to_per( year ) );

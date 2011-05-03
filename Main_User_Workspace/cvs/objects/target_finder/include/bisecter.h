@@ -45,12 +45,14 @@
 * \author Josh Lurz
 */
 
+#include "target_finder/include/itarget_solver.h"
+
 class ITarget;
 
 /*! \brief Object which performs bisection on a given target until it
 *          reaches a tolerance.
 */
-class Bisecter {
+class Bisecter : public ITargetSolver {
 public:
     Bisecter( const ITarget* aTarget,
               const double aTolerance,
@@ -60,11 +62,10 @@ public:
               const double aMultiple,
               const int aYear );
 
+    // ITargetSolver methods
     std::pair<double, bool> getNextValue();
 
     unsigned int getIterations() const;
-
-    static double undefined();
 private:
     /*
     * \brief An enumeration of all states the bisection algorithm may be in at

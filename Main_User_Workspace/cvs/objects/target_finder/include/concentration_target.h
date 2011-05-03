@@ -57,12 +57,15 @@ class IClimateModel;
 class ConcentrationTarget: public ITarget {
 public:
     ConcentrationTarget( const IClimateModel* aClimateModel,
-                         const double aTargetValue );
-
-    virtual TrialStatus getStatus( const double aTolerance,
-                                   const double aYear ) const;
-
+                         const double aTargetValue,
+                         const int aFirstTaxYear );
+    
     static const std::string& getXMLNameStatic();
+
+    // ITarget methods
+    virtual double getStatus( const int aYear ) const;
+    
+    virtual int getYearOfMaxTargetValue() const;
 private:
 
     //! The name of the target gas.
@@ -72,6 +75,10 @@ private:
     const IClimateModel* mClimateModel;
 
     //! The target value.
-    double mTargetValue;
+    const double mTargetValue;
+    
+    //! The first policy year which would be the first valid year to check
+    //! getStatus in.
+    const int mFirstTaxYear;
 };
 #endif // _CONCENTRATION_TARGET_H_
