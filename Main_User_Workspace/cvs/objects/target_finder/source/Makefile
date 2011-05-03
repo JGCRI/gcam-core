@@ -14,6 +14,8 @@ OBJS       = bisecter.o \
              policy_target_runner.o \
              simple_policy_target_runner.o \
              target_factory.o \
+             secanter.o \
+             kyoto_forcing_target.o \
              temperature_target.o
 
 target_finder_dir: ${OBJS}
