@@ -132,8 +132,8 @@ process heat cement,biomass,biomass,1990,CH4,0.012072731,5.75837E-06,0.003027423
 process heat cement,gas,gas,1990,CH4,0.007327143,0.000602792,0.002353307,0.000985901,0.003041794,0.002707467,0.001616614,0.001299917,0.000318944,0.002682853,0.001123365,0.00403205,0.008330514,0.003419569
 process heat cement,coal,coal,1990,CH4,0.009976917,0.000820784,0.003341372,0.00134244,0.004141822,0.004092869,0.002443829,0.00196508,0.000482147,0.004055659,0.001698186,0.006095236,0.012593208,0.005169351
 process heat cement,refined liquids,refined liquids,1990,CH4,0.012683884,0.001043482,0.004247964,0.001706676,0.005265594,0.005203358,0.003106897,0.002498251,0.000612965,0.005156053,0.002158943,0.007749014,0.016010036,0.006571915
-urban processes,landfills,landfills,1990,CH4,5448.405779,869.0316093,5496.379262,305.5010012,385.8645031,2626.614348,824.1498036,315.0344128,431.2254527,3430.854365,416.0753305,1055.765338,182.2292764,401.516258
-urban processes,wastewater treatment,wastewater treatment,1990,CH4,1414.875343,228.550159,1677.724373,111.9155029,421.578211,1378.051725,8037.996301,773.8624925,3239.986967,4700.652091,4749.97461,690.3603234,441.6013741,5190.419726
+urban processes,landfills,landfills,1990,CH4,21.77785595,31.37524765,12.65085556,2.474133054,18.79332277,9.085770044,0.673715802,2.395790051,0.683728403,7.856750462,0.624579244,8.591630555,4.250840383,0.472641752
+urban processes,wastewater treatment,wastewater treatment,1990,CH4,5.655406856,8.251504045,3.861569171,0.906359861,20.53273967,4.766844092,6.570801936,5.885109643,5.13715297,10.76462203,7.130284672,5.618029536,10.30118207,6.109862364
 industrial processes,other industrial processes,other industrial processes,1990,CH4,121.3982502,1.591135732,50.40196308,17.17398123,5.392001959,69.8109147,32.5322778,1.78307725,0.810796831,26.11762307,2.447389803,32.59280557,14.5937767,9.927981915
 ,,,,,,,,,,,,,,,,,,
 Uncontrolled emissions coefficient for resources,,,,,,,,,,,,,,,,,,
@@ -385,8 +385,8 @@ process heat cement,biomass,biomass,1990,CH4,0.008450912,4.03086E-06,0.002119196
 process heat cement,gas,gas,1990,CH4,0.005129,0.000421954,0.001647315,0.000690131,0.002129255,0.001895227,0.00113163,0.000909942,0.000223261,0.001877997,0.000786355,0.002822435,0.00583136,0.002393699
 process heat cement,coal,coal,1990,CH4,0.006983842,0.000574549,0.002338961,0.000939708,0.002899275,0.002865008,0.00171068,0.001375556,0.000337503,0.002838962,0.00118873,0.004266665,0.008815246,0.003618546
 process heat cement,refined liquids,refined liquids,1990,CH4,0.008878719,0.000730437,0.002973575,0.001194673,0.003685916,0.003642351,0.002174828,0.001748776,0.000429075,0.003609237,0.00151126,0.00542431,0.011207025,0.00460034
-urban processes,landfills,landfills,1990,CH4,5448.405779,869.0316093,5496.379262,305.5010012,385.8645031,2626.614348,824.1498036,315.0344128,431.2254527,3430.854365,416.0753305,1055.765338,182.2292764,401.516258
-urban processes,wastewater treatment,wastewater treatment,1990,CH4,990.4127399,159.9851113,1174.407061,78.34085205,295.1047477,964.6362078,5626.59741,541.7037448,2267.990877,3290.456464,3324.982227,483.2522264,309.1209618,3633.293808
+urban processes,landfills,landfills,1990,CH4,21.77785595,31.37524765,12.65085556,2.474133054,18.79332277,9.085770044,0.673715802,2.395790051,0.683728403,7.856750462,0.624579244,8.591630555,4.250840383,0.472641752
+urban processes,wastewater treatment,wastewater treatment,1990,CH4,3.958784799,5.776052831,2.70309842,0.634451903,14.37291777,2.70309842,2.70309842,2.70309842,2.70309842,2.70309842,2.70309842,2.70309842,2.70309842,2.70309842
 industrial processes,other industrial processes,other industrial processes,1990,CH4,121.3982502,1.591135732,50.40196308,17.17398123,5.392001959,69.8109147,32.5322778,1.78307725,0.810796831,26.11762307,2.447389803,32.59280557,14.5937767,9.927981915
 ,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
@@ -479,7 +479,7 @@ Variable ID,,,,,,,,,,,,,,,,,,
 10071,,,,,,,,,,,,,,,,,,
 ,,,,,,,,,(reference tech),,,,,,,,,
 region,supplysector,subsector,technology,period,generic-ghg,phase-in,fuel-shift-range,cost-reduction-rate,final-reduction,base-cost-year,curve-shift-fuel-name,,,,,,,
-USA,regional natural gas,regional natural gas,regional natural gas,1990,CH4,2,43.58747402,0,0.65,2005,regional natural gas,,,,,,,
+USA,regional natural gas,regional natural gas,regional natural gas,1990,CH4,3,43.58747402,0,0.65,2005,regional natural gas,,,,,,,
 Canada,regional natural gas,regional natural gas,regional natural gas,1990,CH4,3,38.59649128,0,0.638744196,2005,regional natural gas,,,,,,,
 Western Europe,regional natural gas,regional natural gas,regional natural gas,1990,CH4,3,62.46244535,0,0.635985485,2005,regional natural gas,,,,,,,
 Japan,regional natural gas,regional natural gas,regional natural gas,1990,CH4,3,46.98188037,0,0.699892893,2005,regional natural gas,,,,,,,
@@ -493,7 +493,7 @@ Southeast Asia,regional natural gas,regional natural gas,regional natural gas,19
 Eastern Europe,regional natural gas,regional natural gas,regional natural gas,1990,CH4,3,48.12423481,0,0.645869514,2005,regional natural gas,,,,,,,
 Korea,regional natural gas,regional natural gas,regional natural gas,1990,CH4,3,46.54511113,0,0.70000186,2005,regional natural gas,,,,,,,
 India,regional natural gas,regional natural gas,regional natural gas,1990,CH4,3,34.90408039,0,0.698689028,2005,regional natural gas,,,,,,,
-USA,urban processes,landfills,landfills,1990,CH4,2,17.05,0,0.87,2005,regional natural gas,,,,,,,
+USA,urban processes,landfills,landfills,1990,CH4,3,17.05,0,0.87,2005,regional natural gas,,,,,,,
 Canada,urban processes,landfills,landfills,1990,CH4,3,18.33,0,0.71,2005,regional natural gas,,,,,,,
 Western Europe,urban processes,landfills,landfills,1990,CH4,3,36.67,0,0.72,2005,regional natural gas,,,,,,,
 Japan,urban processes,landfills,landfills,1990,CH4,3,0.00,0,0.90,2005,regional natural gas,,,,,,,
@@ -513,7 +513,7 @@ Variable ID,,,,,,,,,,,,,,,,,,
 11071,,,,,,,,,,,,,,,,,,
 ,,,,,,(reference tech),,,,,,,,,,,,
 region,depresource,generic-ghg,phase-in,fuel-shift-range,cost-reduction-rate,final-reduction,base-cost-year,curve-shift-fuel-name,,,,,,,,,,
-USA,coal,CH4,2,51.16,0,0.86,2005,regional natural gas,,,,,,,,,,
+USA,coal,CH4,3,51.16,0,0.86,2005,regional natural gas,,,,,,,,,,
 Canada,coal,CH4,3,0.00,0,0.00,2005,regional natural gas,,,,,,,,,,
 Western Europe,coal,CH4,3,36.23,0,0.39,2005,regional natural gas,,,,,,,,,,
 Japan,coal,CH4,3,0.00,0,0.98,2005,regional natural gas,,,,,,,,,,
@@ -527,7 +527,7 @@ Southeast Asia,coal,CH4,3,50.00,0,0.84,2005,regional natural gas,,,,,,,,,,
 Eastern Europe,coal,CH4,3,50.17,0,0.73,2005,regional natural gas,,,,,,,,,,
 Korea,coal,CH4,3,0.00,0,0.00,2005,regional natural gas,,,,,,,,,,
 India,coal,CH4,3,51.16,0,0.84,2005,regional natural gas,,,,,,,,,,
-USA,natural gas,CH4,2,43.59,0,0.65,2005,regional natural gas,,,,,,,,,,
+USA,natural gas,CH4,3,43.59,0,0.65,2005,regional natural gas,,,,,,,,,,
 Canada,natural gas,CH4,3,38.60,0,0.64,2005,regional natural gas,,,,,,,,,,
 Western Europe,natural gas,CH4,3,62.46,0,0.64,2005,regional natural gas,,,,,,,,,,
 Japan,natural gas,CH4,3,46.98,0,0.70,2005,regional natural gas,,,,,,,,,,
@@ -541,7 +541,7 @@ Southeast Asia,natural gas,CH4,3,51.16,0,0.70,2005,regional natural gas,,,,,,,,,
 Eastern Europe,natural gas,CH4,3,48.12,0,0.65,2005,regional natural gas,,,,,,,,,,
 Korea,natural gas,CH4,3,46.55,0,0.70,2005,regional natural gas,,,,,,,,,,
 India,natural gas,CH4,3,34.90,0,0.70,2005,regional natural gas,,,,,,,,,,
-USA,crude oil,CH4,2,28.97,0,0.31,2005,regional natural gas,,,,,,,,,,
+USA,crude oil,CH4,3,28.97,0,0.31,2005,regional natural gas,,,,,,,,,,
 Canada,crude oil,CH4,3,0.00,0,0.39,2005,regional natural gas,,,,,,,,,,
 Western Europe,crude oil,CH4,3,18.80,0,0.28,2005,regional natural gas,,,,,,,,,,
 Japan,crude oil,CH4,3,34.92,0,0.16,2005,regional natural gas,,,,,,,,,,

@@ -54,11 +54,19 @@
                         <output-driver/>
                         <uncontrolled-emiss-coef>1.28637E-08</uncontrolled-emiss-coef>
                         <MAC>
-                           <reduction tax="0">0.064111237</reduction>
-                           <reduction tax="15">0.09380838</reduction>
-                           <reduction tax="30">0.171779206</reduction>
-                           <reduction tax="45">0.214492586</reduction>
-                           <reduction tax="60">0.214492586</reduction>
+                           <reduction tax="0">0.016</reduction>
+                           <reduction tax="10">0.056909091</reduction>
+                           <reduction tax="20">0.097818182</reduction>
+                           <reduction tax="30">0.138727273</reduction>
+                           <reduction tax="40">0.179636364</reduction>
+                           <reduction tax="50">0.220545455</reduction>
+                           <reduction tax="75">0.241</reduction>
+                           <reduction tax="100">0.241</reduction>
+                           <reduction tax="125">0.241</reduction>
+                           <reduction tax="150">0.241</reduction>
+                           <reduction tax="175">0.241</reduction>
+                           <reduction tax="200">0.241</reduction>
+                           <final-reduction>0.369776606</final-reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="N2O_AGR">
@@ -66,10 +74,10 @@
                         <uncontrolled-emiss-coef>2.61672E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.217001498</reduction>
-                           <reduction tax="15">0.25893145</reduction>
-                           <reduction tax="30">0.285048208</reduction>
-                           <reduction tax="45">0.285048208</reduction>
-                           <reduction tax="60">0.285048208</reduction>
+                           <reduction tax="55">0.25893145</reduction>
+                           <reduction tax="110">0.285048208</reduction>
+                           <reduction tax="155">0.285048208</reduction>
+                           <reduction tax="220">0.285048208</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -509,10 +517,10 @@
                         <uncontrolled-emiss-coef>3.08814E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.217001498</reduction>
-                           <reduction tax="15">0.25893145</reduction>
-                           <reduction tax="30">0.285048208</reduction>
-                           <reduction tax="45">0.285048208</reduction>
-                           <reduction tax="60">0.285048208</reduction>
+                           <reduction tax="55">0.25893145</reduction>
+                           <reduction tax="110">0.285048208</reduction>
+                           <reduction tax="155">0.285048208</reduction>
+                           <reduction tax="220">0.285048208</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -1346,10 +1354,10 @@
                         <uncontrolled-emiss-coef>9.29183E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.217001498</reduction>
-                           <reduction tax="15">0.25893145</reduction>
-                           <reduction tax="30">0.285048208</reduction>
-                           <reduction tax="45">0.285048208</reduction>
-                           <reduction tax="60">0.285048208</reduction>
+                           <reduction tax="55">0.25893145</reduction>
+                           <reduction tax="110">0.285048208</reduction>
+                           <reduction tax="155">0.285048208</reduction>
+                           <reduction tax="220">0.285048208</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -1768,10 +1776,10 @@
                         <uncontrolled-emiss-coef>2.1571E-09</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.217001498</reduction>
-                           <reduction tax="15">0.25893145</reduction>
-                           <reduction tax="30">0.285048208</reduction>
-                           <reduction tax="45">0.285048208</reduction>
-                           <reduction tax="60">0.285048208</reduction>
+                           <reduction tax="55">0.25893145</reduction>
+                           <reduction tax="110">0.285048208</reduction>
+                           <reduction tax="155">0.285048208</reduction>
+                           <reduction tax="220">0.285048208</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -2190,10 +2198,10 @@
                         <uncontrolled-emiss-coef>3.32007E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.217001498</reduction>
-                           <reduction tax="15">0.25893145</reduction>
-                           <reduction tax="30">0.285048208</reduction>
-                           <reduction tax="45">0.285048208</reduction>
-                           <reduction tax="60">0.285048208</reduction>
+                           <reduction tax="55">0.25893145</reduction>
+                           <reduction tax="110">0.285048208</reduction>
+                           <reduction tax="155">0.285048208</reduction>
+                           <reduction tax="220">0.285048208</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -2612,10 +2620,10 @@
                         <uncontrolled-emiss-coef>3.18493E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.217001498</reduction>
-                           <reduction tax="15">0.25893145</reduction>
-                           <reduction tax="30">0.285048208</reduction>
-                           <reduction tax="45">0.285048208</reduction>
-                           <reduction tax="60">0.285048208</reduction>
+                           <reduction tax="55">0.25893145</reduction>
+                           <reduction tax="110">0.285048208</reduction>
+                           <reduction tax="155">0.285048208</reduction>
+                           <reduction tax="220">0.285048208</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -3034,10 +3042,10 @@
                         <uncontrolled-emiss-coef>7.82669E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.217001498</reduction>
-                           <reduction tax="15">0.25893145</reduction>
-                           <reduction tax="30">0.285048208</reduction>
-                           <reduction tax="45">0.285048208</reduction>
-                           <reduction tax="60">0.285048208</reduction>
+                           <reduction tax="55">0.25893145</reduction>
+                           <reduction tax="110">0.285048208</reduction>
+                           <reduction tax="155">0.285048208</reduction>
+                           <reduction tax="220">0.285048208</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -3456,10 +3464,10 @@
                         <uncontrolled-emiss-coef>3.29155E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.217001498</reduction>
-                           <reduction tax="15">0.25893145</reduction>
-                           <reduction tax="30">0.285048208</reduction>
-                           <reduction tax="45">0.285048208</reduction>
-                           <reduction tax="60">0.285048208</reduction>
+                           <reduction tax="55">0.25893145</reduction>
+                           <reduction tax="110">0.285048208</reduction>
+                           <reduction tax="155">0.285048208</reduction>
+                           <reduction tax="220">0.285048208</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -3842,10 +3850,10 @@
                         <uncontrolled-emiss-coef>0.024586346</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.217001498</reduction>
-                           <reduction tax="15">0.25893145</reduction>
-                           <reduction tax="30">0.285048208</reduction>
-                           <reduction tax="45">0.285048208</reduction>
-                           <reduction tax="60">0.285048208</reduction>
+                           <reduction tax="55">0.25893145</reduction>
+                           <reduction tax="110">0.285048208</reduction>
+                           <reduction tax="155">0.285048208</reduction>
+                           <reduction tax="220">0.285048208</reduction>
                         </MAC>
                      </generic-ghg>
                   </period>
@@ -7758,11 +7766,19 @@
                         <output-driver/>
                         <uncontrolled-emiss-coef>1.83812E-08</uncontrolled-emiss-coef>
                         <MAC>
-                           <reduction tax="0">0.06324945</reduction>
-                           <reduction tax="15">0.101273997</reduction>
-                           <reduction tax="30">0.130498517</reduction>
-                           <reduction tax="45">0.130498517</reduction>
-                           <reduction tax="60">0.168523064</reduction>
+                           <reduction tax="0">0.016</reduction>
+                           <reduction tax="10">0.056909091</reduction>
+                           <reduction tax="20">0.097818182</reduction>
+                           <reduction tax="30">0.138727273</reduction>
+                           <reduction tax="40">0.179636364</reduction>
+                           <reduction tax="50">0.220545455</reduction>
+                           <reduction tax="75">0.241</reduction>
+                           <reduction tax="100">0.241</reduction>
+                           <reduction tax="125">0.241</reduction>
+                           <reduction tax="150">0.241</reduction>
+                           <reduction tax="175">0.241</reduction>
+                           <reduction tax="200">0.241</reduction>
+                           <final-reduction>0.369776606</final-reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="N2O_AGR">
@@ -7770,10 +7786,10 @@
                         <uncontrolled-emiss-coef>1.5003E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.118988208</reduction>
-                           <reduction tax="15">0.126768432</reduction>
-                           <reduction tax="30">0.130458183</reduction>
-                           <reduction tax="45">0.137382796</reduction>
-                           <reduction tax="60">0.154921464</reduction>
+                           <reduction tax="55">0.126768432</reduction>
+                           <reduction tax="110">0.130458183</reduction>
+                           <reduction tax="155">0.137382796</reduction>
+                           <reduction tax="220">0.154921464</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -8213,10 +8229,10 @@
                         <uncontrolled-emiss-coef>2.58665E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.118988208</reduction>
-                           <reduction tax="15">0.126768432</reduction>
-                           <reduction tax="30">0.130458183</reduction>
-                           <reduction tax="45">0.137382796</reduction>
-                           <reduction tax="60">0.154921464</reduction>
+                           <reduction tax="55">0.126768432</reduction>
+                           <reduction tax="110">0.130458183</reduction>
+                           <reduction tax="155">0.137382796</reduction>
+                           <reduction tax="220">0.154921464</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -9050,10 +9066,10 @@
                         <uncontrolled-emiss-coef>4.58974E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.118988208</reduction>
-                           <reduction tax="15">0.126768432</reduction>
-                           <reduction tax="30">0.130458183</reduction>
-                           <reduction tax="45">0.137382796</reduction>
-                           <reduction tax="60">0.154921464</reduction>
+                           <reduction tax="55">0.126768432</reduction>
+                           <reduction tax="110">0.130458183</reduction>
+                           <reduction tax="155">0.137382796</reduction>
+                           <reduction tax="220">0.154921464</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -9472,10 +9488,10 @@
                         <uncontrolled-emiss-coef>1.70644E-09</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.118988208</reduction>
-                           <reduction tax="15">0.126768432</reduction>
-                           <reduction tax="30">0.130458183</reduction>
-                           <reduction tax="45">0.137382796</reduction>
-                           <reduction tax="60">0.154921464</reduction>
+                           <reduction tax="55">0.126768432</reduction>
+                           <reduction tax="110">0.130458183</reduction>
+                           <reduction tax="155">0.137382796</reduction>
+                           <reduction tax="220">0.154921464</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -9894,10 +9910,10 @@
                         <uncontrolled-emiss-coef>2.81609E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.118988208</reduction>
-                           <reduction tax="15">0.126768432</reduction>
-                           <reduction tax="30">0.130458183</reduction>
-                           <reduction tax="45">0.137382796</reduction>
-                           <reduction tax="60">0.154921464</reduction>
+                           <reduction tax="55">0.126768432</reduction>
+                           <reduction tax="110">0.130458183</reduction>
+                           <reduction tax="155">0.137382796</reduction>
+                           <reduction tax="220">0.154921464</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -10316,10 +10332,10 @@
                         <uncontrolled-emiss-coef>2.73165E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.118988208</reduction>
-                           <reduction tax="15">0.126768432</reduction>
-                           <reduction tax="30">0.130458183</reduction>
-                           <reduction tax="45">0.137382796</reduction>
-                           <reduction tax="60">0.154921464</reduction>
+                           <reduction tax="55">0.126768432</reduction>
+                           <reduction tax="110">0.130458183</reduction>
+                           <reduction tax="155">0.137382796</reduction>
+                           <reduction tax="220">0.154921464</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -10738,10 +10754,10 @@
                         <uncontrolled-emiss-coef>1.31336E-09</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.118988208</reduction>
-                           <reduction tax="15">0.126768432</reduction>
-                           <reduction tax="30">0.130458183</reduction>
-                           <reduction tax="45">0.137382796</reduction>
-                           <reduction tax="60">0.154921464</reduction>
+                           <reduction tax="55">0.126768432</reduction>
+                           <reduction tax="110">0.130458183</reduction>
+                           <reduction tax="155">0.137382796</reduction>
+                           <reduction tax="220">0.154921464</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -11160,10 +11176,10 @@
                         <uncontrolled-emiss-coef>2.75703E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.118988208</reduction>
-                           <reduction tax="15">0.126768432</reduction>
-                           <reduction tax="30">0.130458183</reduction>
-                           <reduction tax="45">0.137382796</reduction>
-                           <reduction tax="60">0.154921464</reduction>
+                           <reduction tax="55">0.126768432</reduction>
+                           <reduction tax="110">0.130458183</reduction>
+                           <reduction tax="155">0.137382796</reduction>
+                           <reduction tax="220">0.154921464</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -11546,10 +11562,10 @@
                         <uncontrolled-emiss-coef>0.021950147</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.118988208</reduction>
-                           <reduction tax="15">0.126768432</reduction>
-                           <reduction tax="30">0.130458183</reduction>
-                           <reduction tax="45">0.137382796</reduction>
-                           <reduction tax="60">0.154921464</reduction>
+                           <reduction tax="55">0.126768432</reduction>
+                           <reduction tax="110">0.130458183</reduction>
+                           <reduction tax="155">0.137382796</reduction>
+                           <reduction tax="220">0.154921464</reduction>
                         </MAC>
                      </generic-ghg>
                   </period>
@@ -11645,11 +11661,19 @@
                         <output-driver/>
                         <uncontrolled-emiss-coef>4.50004E-09</uncontrolled-emiss-coef>
                         <MAC>
-                           <reduction tax="0">0.026449791</reduction>
-                           <reduction tax="15">0.155246491</reduction>
-                           <reduction tax="30">0.156661056</reduction>
-                           <reduction tax="45">0.156661056</reduction>
-                           <reduction tax="60">0.156661056</reduction>
+                           <reduction tax="0">0.016</reduction>
+                           <reduction tax="10">0.056909091</reduction>
+                           <reduction tax="20">0.097818182</reduction>
+                           <reduction tax="30">0.138727273</reduction>
+                           <reduction tax="40">0.179636364</reduction>
+                           <reduction tax="50">0.220545455</reduction>
+                           <reduction tax="75">0.241</reduction>
+                           <reduction tax="100">0.241</reduction>
+                           <reduction tax="125">0.241</reduction>
+                           <reduction tax="150">0.241</reduction>
+                           <reduction tax="175">0.241</reduction>
+                           <reduction tax="200">0.241</reduction>
+                           <final-reduction>0.369776606</final-reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="N2O_AGR">
@@ -11657,10 +11681,10 @@
                         <uncontrolled-emiss-coef>2.586E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.118250744</reduction>
-                           <reduction tax="15">0.118250744</reduction>
-                           <reduction tax="30">0.118250744</reduction>
-                           <reduction tax="45">0.118250744</reduction>
-                           <reduction tax="60">0.124650736</reduction>
+                           <reduction tax="55">0.118250744</reduction>
+                           <reduction tax="110">0.118250744</reduction>
+                           <reduction tax="155">0.118250744</reduction>
+                           <reduction tax="220">0.124650736</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -12100,10 +12124,10 @@
                         <uncontrolled-emiss-coef>1.95073E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.118250744</reduction>
-                           <reduction tax="15">0.118250744</reduction>
-                           <reduction tax="30">0.118250744</reduction>
-                           <reduction tax="45">0.118250744</reduction>
-                           <reduction tax="60">0.124650736</reduction>
+                           <reduction tax="55">0.118250744</reduction>
+                           <reduction tax="110">0.118250744</reduction>
+                           <reduction tax="155">0.118250744</reduction>
+                           <reduction tax="220">0.124650736</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -12937,10 +12961,10 @@
                         <uncontrolled-emiss-coef>1.29016E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.118250744</reduction>
-                           <reduction tax="15">0.118250744</reduction>
-                           <reduction tax="30">0.118250744</reduction>
-                           <reduction tax="45">0.118250744</reduction>
-                           <reduction tax="60">0.124650736</reduction>
+                           <reduction tax="55">0.118250744</reduction>
+                           <reduction tax="110">0.118250744</reduction>
+                           <reduction tax="155">0.118250744</reduction>
+                           <reduction tax="220">0.124650736</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -13359,10 +13383,10 @@
                         <uncontrolled-emiss-coef>1.59169E-09</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.118250744</reduction>
-                           <reduction tax="15">0.118250744</reduction>
-                           <reduction tax="30">0.118250744</reduction>
-                           <reduction tax="45">0.118250744</reduction>
-                           <reduction tax="60">0.124650736</reduction>
+                           <reduction tax="55">0.118250744</reduction>
+                           <reduction tax="110">0.118250744</reduction>
+                           <reduction tax="155">0.118250744</reduction>
+                           <reduction tax="220">0.124650736</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -13781,10 +13805,10 @@
                         <uncontrolled-emiss-coef>1.97126E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.118250744</reduction>
-                           <reduction tax="15">0.118250744</reduction>
-                           <reduction tax="30">0.118250744</reduction>
-                           <reduction tax="45">0.118250744</reduction>
-                           <reduction tax="60">0.124650736</reduction>
+                           <reduction tax="55">0.118250744</reduction>
+                           <reduction tax="110">0.118250744</reduction>
+                           <reduction tax="155">0.118250744</reduction>
+                           <reduction tax="220">0.124650736</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -14203,10 +14227,10 @@
                         <uncontrolled-emiss-coef>2.08031E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.118250744</reduction>
-                           <reduction tax="15">0.118250744</reduction>
-                           <reduction tax="30">0.118250744</reduction>
-                           <reduction tax="45">0.118250744</reduction>
-                           <reduction tax="60">0.124650736</reduction>
+                           <reduction tax="55">0.118250744</reduction>
+                           <reduction tax="110">0.118250744</reduction>
+                           <reduction tax="155">0.118250744</reduction>
+                           <reduction tax="220">0.124650736</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -14625,10 +14649,10 @@
                         <uncontrolled-emiss-coef>6.50586E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.118250744</reduction>
-                           <reduction tax="15">0.118250744</reduction>
-                           <reduction tax="30">0.118250744</reduction>
-                           <reduction tax="45">0.118250744</reduction>
-                           <reduction tax="60">0.124650736</reduction>
+                           <reduction tax="55">0.118250744</reduction>
+                           <reduction tax="110">0.118250744</reduction>
+                           <reduction tax="155">0.118250744</reduction>
+                           <reduction tax="220">0.124650736</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -15047,10 +15071,10 @@
                         <uncontrolled-emiss-coef>2.07922E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.118250744</reduction>
-                           <reduction tax="15">0.118250744</reduction>
-                           <reduction tax="30">0.118250744</reduction>
-                           <reduction tax="45">0.118250744</reduction>
-                           <reduction tax="60">0.124650736</reduction>
+                           <reduction tax="55">0.118250744</reduction>
+                           <reduction tax="110">0.118250744</reduction>
+                           <reduction tax="155">0.118250744</reduction>
+                           <reduction tax="220">0.124650736</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -15433,10 +15457,10 @@
                         <uncontrolled-emiss-coef>0.016553808</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.118250744</reduction>
-                           <reduction tax="15">0.118250744</reduction>
-                           <reduction tax="30">0.118250744</reduction>
-                           <reduction tax="45">0.118250744</reduction>
-                           <reduction tax="60">0.124650736</reduction>
+                           <reduction tax="55">0.118250744</reduction>
+                           <reduction tax="110">0.118250744</reduction>
+                           <reduction tax="155">0.118250744</reduction>
+                           <reduction tax="220">0.124650736</reduction>
                         </MAC>
                      </generic-ghg>
                   </period>
@@ -15532,11 +15556,19 @@
                         <output-driver/>
                         <uncontrolled-emiss-coef>2.77427E-08</uncontrolled-emiss-coef>
                         <MAC>
-                           <reduction tax="0">0.041050326</reduction>
-                           <reduction tax="15">0.043062017</reduction>
-                           <reduction tax="30">0.067752811</reduction>
-                           <reduction tax="45">0.074818256</reduction>
-                           <reduction tax="60">0.084271925</reduction>
+                           <reduction tax="0">0.016</reduction>
+                           <reduction tax="10">0.056909091</reduction>
+                           <reduction tax="20">0.097818182</reduction>
+                           <reduction tax="30">0.138727273</reduction>
+                           <reduction tax="40">0.179636364</reduction>
+                           <reduction tax="50">0.220545455</reduction>
+                           <reduction tax="75">0.241</reduction>
+                           <reduction tax="100">0.241</reduction>
+                           <reduction tax="125">0.241</reduction>
+                           <reduction tax="150">0.241</reduction>
+                           <reduction tax="175">0.241</reduction>
+                           <reduction tax="200">0.241</reduction>
+                           <final-reduction>0.369776606</final-reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="N2O_AGR">
@@ -15544,10 +15576,10 @@
                         <uncontrolled-emiss-coef>6.44712E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.211773403</reduction>
-                           <reduction tax="15">0.211773403</reduction>
-                           <reduction tax="30">0.248835649</reduction>
-                           <reduction tax="45">0.347139044</reduction>
-                           <reduction tax="60">0.347139044</reduction>
+                           <reduction tax="55">0.211773403</reduction>
+                           <reduction tax="110">0.248835649</reduction>
+                           <reduction tax="155">0.347139044</reduction>
+                           <reduction tax="220">0.347139044</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -15987,10 +16019,10 @@
                         <uncontrolled-emiss-coef>5.99944E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.211773403</reduction>
-                           <reduction tax="15">0.211773403</reduction>
-                           <reduction tax="30">0.248835649</reduction>
-                           <reduction tax="45">0.347139044</reduction>
-                           <reduction tax="60">0.347139044</reduction>
+                           <reduction tax="55">0.211773403</reduction>
+                           <reduction tax="110">0.248835649</reduction>
+                           <reduction tax="155">0.347139044</reduction>
+                           <reduction tax="220">0.347139044</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -16824,10 +16856,10 @@
                         <uncontrolled-emiss-coef>3.42113E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.211773403</reduction>
-                           <reduction tax="15">0.211773403</reduction>
-                           <reduction tax="30">0.248835649</reduction>
-                           <reduction tax="45">0.347139044</reduction>
-                           <reduction tax="60">0.347139044</reduction>
+                           <reduction tax="55">0.211773403</reduction>
+                           <reduction tax="110">0.248835649</reduction>
+                           <reduction tax="155">0.347139044</reduction>
+                           <reduction tax="220">0.347139044</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -17246,10 +17278,10 @@
                         <uncontrolled-emiss-coef>2.10602E-09</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.211773403</reduction>
-                           <reduction tax="15">0.211773403</reduction>
-                           <reduction tax="30">0.248835649</reduction>
-                           <reduction tax="45">0.347139044</reduction>
-                           <reduction tax="60">0.347139044</reduction>
+                           <reduction tax="55">0.211773403</reduction>
+                           <reduction tax="110">0.248835649</reduction>
+                           <reduction tax="155">0.347139044</reduction>
+                           <reduction tax="220">0.347139044</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -17668,10 +17700,10 @@
                         <uncontrolled-emiss-coef>5.65459E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.211773403</reduction>
-                           <reduction tax="15">0.211773403</reduction>
-                           <reduction tax="30">0.248835649</reduction>
-                           <reduction tax="45">0.347139044</reduction>
-                           <reduction tax="60">0.347139044</reduction>
+                           <reduction tax="55">0.211773403</reduction>
+                           <reduction tax="110">0.248835649</reduction>
+                           <reduction tax="155">0.347139044</reduction>
+                           <reduction tax="220">0.347139044</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -18090,10 +18122,10 @@
                         <uncontrolled-emiss-coef>6.26979E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.211773403</reduction>
-                           <reduction tax="15">0.211773403</reduction>
-                           <reduction tax="30">0.248835649</reduction>
-                           <reduction tax="45">0.347139044</reduction>
-                           <reduction tax="60">0.347139044</reduction>
+                           <reduction tax="55">0.211773403</reduction>
+                           <reduction tax="110">0.248835649</reduction>
+                           <reduction tax="155">0.347139044</reduction>
+                           <reduction tax="220">0.347139044</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -18512,10 +18544,10 @@
                         <uncontrolled-emiss-coef>1.01705E-09</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.211773403</reduction>
-                           <reduction tax="15">0.211773403</reduction>
-                           <reduction tax="30">0.248835649</reduction>
-                           <reduction tax="45">0.347139044</reduction>
-                           <reduction tax="60">0.347139044</reduction>
+                           <reduction tax="55">0.211773403</reduction>
+                           <reduction tax="110">0.248835649</reduction>
+                           <reduction tax="155">0.347139044</reduction>
+                           <reduction tax="220">0.347139044</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -18934,10 +18966,10 @@
                         <uncontrolled-emiss-coef>6.39461E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.211773403</reduction>
-                           <reduction tax="15">0.211773403</reduction>
-                           <reduction tax="30">0.248835649</reduction>
-                           <reduction tax="45">0.347139044</reduction>
-                           <reduction tax="60">0.347139044</reduction>
+                           <reduction tax="55">0.211773403</reduction>
+                           <reduction tax="110">0.248835649</reduction>
+                           <reduction tax="155">0.347139044</reduction>
+                           <reduction tax="220">0.347139044</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -19320,10 +19352,10 @@
                         <uncontrolled-emiss-coef>0.050910863</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.211773403</reduction>
-                           <reduction tax="15">0.211773403</reduction>
-                           <reduction tax="30">0.248835649</reduction>
-                           <reduction tax="45">0.347139044</reduction>
-                           <reduction tax="60">0.347139044</reduction>
+                           <reduction tax="55">0.211773403</reduction>
+                           <reduction tax="110">0.248835649</reduction>
+                           <reduction tax="155">0.347139044</reduction>
+                           <reduction tax="220">0.347139044</reduction>
                         </MAC>
                      </generic-ghg>
                   </period>
@@ -19424,10 +19456,10 @@
                         <uncontrolled-emiss-coef>6.4617E-11</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.106580761</reduction>
-                           <reduction tax="15">0.118523971</reduction>
-                           <reduction tax="30">0.118523971</reduction>
-                           <reduction tax="45">0.118524756</reduction>
-                           <reduction tax="60">0.118524756</reduction>
+                           <reduction tax="55">0.118523971</reduction>
+                           <reduction tax="110">0.118523971</reduction>
+                           <reduction tax="155">0.118524756</reduction>
+                           <reduction tax="220">0.118524756</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -19867,10 +19899,10 @@
                         <uncontrolled-emiss-coef>1.23867E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.106580761</reduction>
-                           <reduction tax="15">0.118523971</reduction>
-                           <reduction tax="30">0.118523971</reduction>
-                           <reduction tax="45">0.118524756</reduction>
-                           <reduction tax="60">0.118524756</reduction>
+                           <reduction tax="55">0.118523971</reduction>
+                           <reduction tax="110">0.118523971</reduction>
+                           <reduction tax="155">0.118524756</reduction>
+                           <reduction tax="220">0.118524756</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -20704,10 +20736,10 @@
                         <uncontrolled-emiss-coef>2.99512E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.106580761</reduction>
-                           <reduction tax="15">0.118523971</reduction>
-                           <reduction tax="30">0.118523971</reduction>
-                           <reduction tax="45">0.118524756</reduction>
-                           <reduction tax="60">0.118524756</reduction>
+                           <reduction tax="55">0.118523971</reduction>
+                           <reduction tax="110">0.118523971</reduction>
+                           <reduction tax="155">0.118524756</reduction>
+                           <reduction tax="220">0.118524756</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -21126,10 +21158,10 @@
                         <uncontrolled-emiss-coef>6.79247E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.106580761</reduction>
-                           <reduction tax="15">0.118523971</reduction>
-                           <reduction tax="30">0.118523971</reduction>
-                           <reduction tax="45">0.118524756</reduction>
-                           <reduction tax="60">0.118524756</reduction>
+                           <reduction tax="55">0.118523971</reduction>
+                           <reduction tax="110">0.118523971</reduction>
+                           <reduction tax="155">0.118524756</reduction>
+                           <reduction tax="220">0.118524756</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -21548,10 +21580,10 @@
                         <uncontrolled-emiss-coef>1.41904E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.106580761</reduction>
-                           <reduction tax="15">0.118523971</reduction>
-                           <reduction tax="30">0.118523971</reduction>
-                           <reduction tax="45">0.118524756</reduction>
-                           <reduction tax="60">0.118524756</reduction>
+                           <reduction tax="55">0.118523971</reduction>
+                           <reduction tax="110">0.118523971</reduction>
+                           <reduction tax="155">0.118524756</reduction>
+                           <reduction tax="220">0.118524756</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -21970,10 +22002,10 @@
                         <uncontrolled-emiss-coef>1.30334E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.106580761</reduction>
-                           <reduction tax="15">0.118523971</reduction>
-                           <reduction tax="30">0.118523971</reduction>
-                           <reduction tax="45">0.118524756</reduction>
-                           <reduction tax="60">0.118524756</reduction>
+                           <reduction tax="55">0.118523971</reduction>
+                           <reduction tax="110">0.118523971</reduction>
+                           <reduction tax="155">0.118524756</reduction>
+                           <reduction tax="220">0.118524756</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -22392,10 +22424,10 @@
                         <uncontrolled-emiss-coef>6.29953E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.106580761</reduction>
-                           <reduction tax="15">0.118523971</reduction>
-                           <reduction tax="30">0.118523971</reduction>
-                           <reduction tax="45">0.118524756</reduction>
-                           <reduction tax="60">0.118524756</reduction>
+                           <reduction tax="55">0.118523971</reduction>
+                           <reduction tax="110">0.118523971</reduction>
+                           <reduction tax="155">0.118524756</reduction>
+                           <reduction tax="220">0.118524756</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -22814,10 +22846,10 @@
                         <uncontrolled-emiss-coef>1.32026E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.106580761</reduction>
-                           <reduction tax="15">0.118523971</reduction>
-                           <reduction tax="30">0.118523971</reduction>
-                           <reduction tax="45">0.118524756</reduction>
-                           <reduction tax="60">0.118524756</reduction>
+                           <reduction tax="55">0.118523971</reduction>
+                           <reduction tax="110">0.118523971</reduction>
+                           <reduction tax="155">0.118524756</reduction>
+                           <reduction tax="220">0.118524756</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -23200,10 +23232,10 @@
                         <uncontrolled-emiss-coef>0.010511292</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.106580761</reduction>
-                           <reduction tax="15">0.118523971</reduction>
-                           <reduction tax="30">0.118523971</reduction>
-                           <reduction tax="45">0.118524756</reduction>
-                           <reduction tax="60">0.118524756</reduction>
+                           <reduction tax="55">0.118523971</reduction>
+                           <reduction tax="110">0.118523971</reduction>
+                           <reduction tax="155">0.118524756</reduction>
+                           <reduction tax="220">0.118524756</reduction>
                         </MAC>
                      </generic-ghg>
                   </period>
@@ -23299,11 +23331,19 @@
                         <output-driver/>
                         <uncontrolled-emiss-coef>1.96136E-08</uncontrolled-emiss-coef>
                         <MAC>
-                           <reduction tax="0">0.079988584</reduction>
-                           <reduction tax="15">0.152620368</reduction>
-                           <reduction tax="30">0.151129868</reduction>
-                           <reduction tax="45">0.151129868</reduction>
-                           <reduction tax="60">0.153007539</reduction>
+                           <reduction tax="0">0.100744737</reduction>
+                           <reduction tax="10">0.120258421</reduction>
+                           <reduction tax="20">0.169858421</reduction>
+                           <reduction tax="30">0.200858421</reduction>
+                           <reduction tax="40">0.225536053</reduction>
+                           <reduction tax="50">0.236386053</reduction>
+                           <reduction tax="75">0.280601842</reduction>
+                           <reduction tax="100">0.287780789</reduction>
+                           <reduction tax="125">0.300328158</reduction>
+                           <reduction tax="150">0.313380789</reduction>
+                           <reduction tax="175">0.313380789</reduction>
+                           <reduction tax="200">0.334387368</reduction>
+                           <final-reduction>0.350295263</final-reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="N2O_AGR">
@@ -23311,10 +23351,10 @@
                         <uncontrolled-emiss-coef>5.19701E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.064086753</reduction>
-                           <reduction tax="15">0.064086753</reduction>
-                           <reduction tax="30">0.067439038</reduction>
-                           <reduction tax="45">0.101024083</reduction>
-                           <reduction tax="60">0.127078566</reduction>
+                           <reduction tax="55">0.064086753</reduction>
+                           <reduction tax="110">0.067439038</reduction>
+                           <reduction tax="155">0.101024083</reduction>
+                           <reduction tax="220">0.127078566</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -23754,10 +23794,10 @@
                         <uncontrolled-emiss-coef>2.17858E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.064086753</reduction>
-                           <reduction tax="15">0.064086753</reduction>
-                           <reduction tax="30">0.067439038</reduction>
-                           <reduction tax="45">0.101024083</reduction>
-                           <reduction tax="60">0.127078566</reduction>
+                           <reduction tax="55">0.064086753</reduction>
+                           <reduction tax="110">0.067439038</reduction>
+                           <reduction tax="155">0.101024083</reduction>
+                           <reduction tax="220">0.127078566</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -24591,10 +24631,10 @@
                         <uncontrolled-emiss-coef>8.2482E-15</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.064086753</reduction>
-                           <reduction tax="15">0.064086753</reduction>
-                           <reduction tax="30">0.067439038</reduction>
-                           <reduction tax="45">0.101024083</reduction>
-                           <reduction tax="60">0.127078566</reduction>
+                           <reduction tax="55">0.064086753</reduction>
+                           <reduction tax="110">0.067439038</reduction>
+                           <reduction tax="155">0.101024083</reduction>
+                           <reduction tax="220">0.127078566</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -25013,10 +25053,10 @@
                         <uncontrolled-emiss-coef>1.43886E-09</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.064086753</reduction>
-                           <reduction tax="15">0.064086753</reduction>
-                           <reduction tax="30">0.067439038</reduction>
-                           <reduction tax="45">0.101024083</reduction>
-                           <reduction tax="60">0.127078566</reduction>
+                           <reduction tax="55">0.064086753</reduction>
+                           <reduction tax="110">0.067439038</reduction>
+                           <reduction tax="155">0.101024083</reduction>
+                           <reduction tax="220">0.127078566</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -25435,10 +25475,10 @@
                         <uncontrolled-emiss-coef>2.11873E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.064086753</reduction>
-                           <reduction tax="15">0.064086753</reduction>
-                           <reduction tax="30">0.067439038</reduction>
-                           <reduction tax="45">0.101024083</reduction>
-                           <reduction tax="60">0.127078566</reduction>
+                           <reduction tax="55">0.064086753</reduction>
+                           <reduction tax="110">0.067439038</reduction>
+                           <reduction tax="155">0.101024083</reduction>
+                           <reduction tax="220">0.127078566</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -25857,10 +25897,10 @@
                         <uncontrolled-emiss-coef>2.27678E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.064086753</reduction>
-                           <reduction tax="15">0.064086753</reduction>
-                           <reduction tax="30">0.067439038</reduction>
-                           <reduction tax="45">0.101024083</reduction>
-                           <reduction tax="60">0.127078566</reduction>
+                           <reduction tax="55">0.064086753</reduction>
+                           <reduction tax="110">0.067439038</reduction>
+                           <reduction tax="155">0.101024083</reduction>
+                           <reduction tax="220">0.127078566</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -26279,10 +26319,10 @@
                         <uncontrolled-emiss-coef>3.95545E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.064086753</reduction>
-                           <reduction tax="15">0.064086753</reduction>
-                           <reduction tax="30">0.067439038</reduction>
-                           <reduction tax="45">0.101024083</reduction>
-                           <reduction tax="60">0.127078566</reduction>
+                           <reduction tax="55">0.064086753</reduction>
+                           <reduction tax="110">0.067439038</reduction>
+                           <reduction tax="155">0.101024083</reduction>
+                           <reduction tax="220">0.127078566</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -26701,10 +26741,10 @@
                         <uncontrolled-emiss-coef>2.32208E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.064086753</reduction>
-                           <reduction tax="15">0.064086753</reduction>
-                           <reduction tax="30">0.067439038</reduction>
-                           <reduction tax="45">0.101024083</reduction>
-                           <reduction tax="60">0.127078566</reduction>
+                           <reduction tax="55">0.064086753</reduction>
+                           <reduction tax="110">0.067439038</reduction>
+                           <reduction tax="155">0.101024083</reduction>
+                           <reduction tax="220">0.127078566</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -27087,10 +27127,10 @@
                         <uncontrolled-emiss-coef>0.017344864</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.064086753</reduction>
-                           <reduction tax="15">0.064086753</reduction>
-                           <reduction tax="30">0.067439038</reduction>
-                           <reduction tax="45">0.101024083</reduction>
-                           <reduction tax="60">0.127078566</reduction>
+                           <reduction tax="55">0.064086753</reduction>
+                           <reduction tax="110">0.067439038</reduction>
+                           <reduction tax="155">0.101024083</reduction>
+                           <reduction tax="220">0.127078566</reduction>
                         </MAC>
                      </generic-ghg>
                   </period>
@@ -27186,11 +27226,19 @@
                         <output-driver/>
                         <uncontrolled-emiss-coef>1.60516E-08</uncontrolled-emiss-coef>
                         <MAC>
-                           <reduction tax="0">0.004755997</reduction>
-                           <reduction tax="15">0.004755997</reduction>
-                           <reduction tax="30">0.012139392</reduction>
-                           <reduction tax="45">0.012748515</reduction>
-                           <reduction tax="60">0.012809518</reduction>
+                           <reduction tax="0">0.099006024</reduction>
+                           <reduction tax="10">0.099006024</reduction>
+                           <reduction tax="20">0.122098394</reduction>
+                           <reduction tax="30">0.141187249</reduction>
+                           <reduction tax="40">0.141187249</reduction>
+                           <reduction tax="50">0.166287651</reduction>
+                           <reduction tax="75">0.181347892</reduction>
+                           <reduction tax="100">0.204440261</reduction>
+                           <reduction tax="125">0.247267821</reduction>
+                           <reduction tax="150">0.309378765</reduction>
+                           <reduction tax="175">0.309378765</reduction>
+                           <reduction tax="200">0.32029744</reduction>
+                           <final-reduction>0.369776606</final-reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="N2O_AGR">
@@ -27198,10 +27246,10 @@
                         <uncontrolled-emiss-coef>9.77581E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.05100527</reduction>
-                           <reduction tax="15">0.052693844</reduction>
-                           <reduction tax="30">0.073379226</reduction>
-                           <reduction tax="45">0.078608341</reduction>
-                           <reduction tax="60">0.087147492</reduction>
+                           <reduction tax="55">0.052693844</reduction>
+                           <reduction tax="110">0.073379226</reduction>
+                           <reduction tax="155">0.078608341</reduction>
+                           <reduction tax="220">0.087147492</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -27641,10 +27689,10 @@
                         <uncontrolled-emiss-coef>4.21405E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.05100527</reduction>
-                           <reduction tax="15">0.052693844</reduction>
-                           <reduction tax="30">0.073379226</reduction>
-                           <reduction tax="45">0.078608341</reduction>
-                           <reduction tax="60">0.087147492</reduction>
+                           <reduction tax="55">0.052693844</reduction>
+                           <reduction tax="110">0.073379226</reduction>
+                           <reduction tax="155">0.078608341</reduction>
+                           <reduction tax="220">0.087147492</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -28478,10 +28526,10 @@
                         <uncontrolled-emiss-coef>2.73675E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.05100527</reduction>
-                           <reduction tax="15">0.052693844</reduction>
-                           <reduction tax="30">0.073379226</reduction>
-                           <reduction tax="45">0.078608341</reduction>
-                           <reduction tax="60">0.087147492</reduction>
+                           <reduction tax="55">0.052693844</reduction>
+                           <reduction tax="110">0.073379226</reduction>
+                           <reduction tax="155">0.078608341</reduction>
+                           <reduction tax="220">0.087147492</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -28900,10 +28948,10 @@
                         <uncontrolled-emiss-coef>2.85817E-09</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.05100527</reduction>
-                           <reduction tax="15">0.052693844</reduction>
-                           <reduction tax="30">0.073379226</reduction>
-                           <reduction tax="45">0.078608341</reduction>
-                           <reduction tax="60">0.087147492</reduction>
+                           <reduction tax="55">0.052693844</reduction>
+                           <reduction tax="110">0.073379226</reduction>
+                           <reduction tax="155">0.078608341</reduction>
+                           <reduction tax="220">0.087147492</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -29322,10 +29370,10 @@
                         <uncontrolled-emiss-coef>6.1499E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.05100527</reduction>
-                           <reduction tax="15">0.052693844</reduction>
-                           <reduction tax="30">0.073379226</reduction>
-                           <reduction tax="45">0.078608341</reduction>
-                           <reduction tax="60">0.087147492</reduction>
+                           <reduction tax="55">0.052693844</reduction>
+                           <reduction tax="110">0.073379226</reduction>
+                           <reduction tax="155">0.078608341</reduction>
+                           <reduction tax="220">0.087147492</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -29744,10 +29792,10 @@
                         <uncontrolled-emiss-coef>4.50275E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.05100527</reduction>
-                           <reduction tax="15">0.052693844</reduction>
-                           <reduction tax="30">0.073379226</reduction>
-                           <reduction tax="45">0.078608341</reduction>
-                           <reduction tax="60">0.087147492</reduction>
+                           <reduction tax="55">0.052693844</reduction>
+                           <reduction tax="110">0.073379226</reduction>
+                           <reduction tax="155">0.078608341</reduction>
+                           <reduction tax="220">0.087147492</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -30166,10 +30214,10 @@
                         <uncontrolled-emiss-coef>1.14004E-09</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.05100527</reduction>
-                           <reduction tax="15">0.052693844</reduction>
-                           <reduction tax="30">0.073379226</reduction>
-                           <reduction tax="45">0.078608341</reduction>
-                           <reduction tax="60">0.087147492</reduction>
+                           <reduction tax="55">0.052693844</reduction>
+                           <reduction tax="110">0.073379226</reduction>
+                           <reduction tax="155">0.078608341</reduction>
+                           <reduction tax="220">0.087147492</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -30588,10 +30636,10 @@
                         <uncontrolled-emiss-coef>4.49162E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.05100527</reduction>
-                           <reduction tax="15">0.052693844</reduction>
-                           <reduction tax="30">0.073379226</reduction>
-                           <reduction tax="45">0.078608341</reduction>
-                           <reduction tax="60">0.087147492</reduction>
+                           <reduction tax="55">0.052693844</reduction>
+                           <reduction tax="110">0.073379226</reduction>
+                           <reduction tax="155">0.078608341</reduction>
+                           <reduction tax="220">0.087147492</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -30974,10 +31022,10 @@
                         <uncontrolled-emiss-coef>0.035760158</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.05100527</reduction>
-                           <reduction tax="15">0.052693844</reduction>
-                           <reduction tax="30">0.073379226</reduction>
-                           <reduction tax="45">0.078608341</reduction>
-                           <reduction tax="60">0.087147492</reduction>
+                           <reduction tax="55">0.052693844</reduction>
+                           <reduction tax="110">0.073379226</reduction>
+                           <reduction tax="155">0.078608341</reduction>
+                           <reduction tax="220">0.087147492</reduction>
                         </MAC>
                      </generic-ghg>
                   </period>
@@ -31073,11 +31121,19 @@
                         <output-driver/>
                         <uncontrolled-emiss-coef>1.95644E-08</uncontrolled-emiss-coef>
                         <MAC>
-                           <reduction tax="0">0.006891685</reduction>
-                           <reduction tax="15">0.021302959</reduction>
-                           <reduction tax="30">0.026407214</reduction>
-                           <reduction tax="45">0.035353828</reduction>
-                           <reduction tax="60">0.035827966</reduction>
+                           <reduction tax="0">0.099006024</reduction>
+                           <reduction tax="10">0.099006024</reduction>
+                           <reduction tax="20">0.122098394</reduction>
+                           <reduction tax="30">0.141187249</reduction>
+                           <reduction tax="40">0.141187249</reduction>
+                           <reduction tax="50">0.166287651</reduction>
+                           <reduction tax="75">0.181347892</reduction>
+                           <reduction tax="100">0.204440261</reduction>
+                           <reduction tax="125">0.247267821</reduction>
+                           <reduction tax="150">0.309378765</reduction>
+                           <reduction tax="175">0.309378765</reduction>
+                           <reduction tax="200">0.32029744</reduction>
+                           <final-reduction>0.369776606</final-reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="N2O_AGR">
@@ -31085,10 +31141,10 @@
                         <uncontrolled-emiss-coef>1.07469E-09</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.110985196</reduction>
-                           <reduction tax="15">0.127933251</reduction>
-                           <reduction tax="30">0.139315489</reduction>
-                           <reduction tax="45">0.144734529</reduction>
-                           <reduction tax="60">0.145039822</reduction>
+                           <reduction tax="55">0.127933251</reduction>
+                           <reduction tax="110">0.139315489</reduction>
+                           <reduction tax="155">0.144734529</reduction>
+                           <reduction tax="220">0.145039822</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -31528,10 +31584,10 @@
                         <uncontrolled-emiss-coef>2.16512E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.110985196</reduction>
-                           <reduction tax="15">0.127933251</reduction>
-                           <reduction tax="30">0.139315489</reduction>
-                           <reduction tax="45">0.144734529</reduction>
-                           <reduction tax="60">0.145039822</reduction>
+                           <reduction tax="55">0.127933251</reduction>
+                           <reduction tax="110">0.139315489</reduction>
+                           <reduction tax="155">0.144734529</reduction>
+                           <reduction tax="220">0.145039822</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -32365,10 +32421,10 @@
                         <uncontrolled-emiss-coef>1.36376E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.110985196</reduction>
-                           <reduction tax="15">0.127933251</reduction>
-                           <reduction tax="30">0.139315489</reduction>
-                           <reduction tax="45">0.144734529</reduction>
-                           <reduction tax="60">0.145039822</reduction>
+                           <reduction tax="55">0.127933251</reduction>
+                           <reduction tax="110">0.139315489</reduction>
+                           <reduction tax="155">0.144734529</reduction>
+                           <reduction tax="220">0.145039822</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -32787,10 +32843,10 @@
                         <uncontrolled-emiss-coef>6.54941E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.110985196</reduction>
-                           <reduction tax="15">0.127933251</reduction>
-                           <reduction tax="30">0.139315489</reduction>
-                           <reduction tax="45">0.144734529</reduction>
-                           <reduction tax="60">0.145039822</reduction>
+                           <reduction tax="55">0.127933251</reduction>
+                           <reduction tax="110">0.139315489</reduction>
+                           <reduction tax="155">0.144734529</reduction>
+                           <reduction tax="220">0.145039822</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -33209,10 +33265,10 @@
                         <uncontrolled-emiss-coef>2.99099E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.110985196</reduction>
-                           <reduction tax="15">0.127933251</reduction>
-                           <reduction tax="30">0.139315489</reduction>
-                           <reduction tax="45">0.144734529</reduction>
-                           <reduction tax="60">0.145039822</reduction>
+                           <reduction tax="55">0.127933251</reduction>
+                           <reduction tax="110">0.139315489</reduction>
+                           <reduction tax="155">0.144734529</reduction>
+                           <reduction tax="220">0.145039822</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -33631,10 +33687,10 @@
                         <uncontrolled-emiss-coef>2.26033E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.110985196</reduction>
-                           <reduction tax="15">0.127933251</reduction>
-                           <reduction tax="30">0.139315489</reduction>
-                           <reduction tax="45">0.144734529</reduction>
-                           <reduction tax="60">0.145039822</reduction>
+                           <reduction tax="55">0.127933251</reduction>
+                           <reduction tax="110">0.139315489</reduction>
+                           <reduction tax="155">0.144734529</reduction>
+                           <reduction tax="220">0.145039822</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -34053,10 +34109,10 @@
                         <uncontrolled-emiss-coef>3.83597E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.110985196</reduction>
-                           <reduction tax="15">0.127933251</reduction>
-                           <reduction tax="30">0.139315489</reduction>
-                           <reduction tax="45">0.144734529</reduction>
-                           <reduction tax="60">0.145039822</reduction>
+                           <reduction tax="55">0.127933251</reduction>
+                           <reduction tax="110">0.139315489</reduction>
+                           <reduction tax="155">0.144734529</reduction>
+                           <reduction tax="220">0.145039822</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -34475,10 +34531,10 @@
                         <uncontrolled-emiss-coef>2.30773E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.110985196</reduction>
-                           <reduction tax="15">0.127933251</reduction>
-                           <reduction tax="30">0.139315489</reduction>
-                           <reduction tax="45">0.144734529</reduction>
-                           <reduction tax="60">0.145039822</reduction>
+                           <reduction tax="55">0.127933251</reduction>
+                           <reduction tax="110">0.139315489</reduction>
+                           <reduction tax="155">0.144734529</reduction>
+                           <reduction tax="220">0.145039822</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -34861,10 +34917,10 @@
                         <uncontrolled-emiss-coef>0.017237677</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.110985196</reduction>
-                           <reduction tax="15">0.127933251</reduction>
-                           <reduction tax="30">0.139315489</reduction>
-                           <reduction tax="45">0.144734529</reduction>
-                           <reduction tax="60">0.145039822</reduction>
+                           <reduction tax="55">0.127933251</reduction>
+                           <reduction tax="110">0.139315489</reduction>
+                           <reduction tax="155">0.144734529</reduction>
+                           <reduction tax="220">0.145039822</reduction>
                         </MAC>
                      </generic-ghg>
                   </period>
@@ -34960,11 +35016,19 @@
                         <output-driver/>
                         <uncontrolled-emiss-coef>1.38106E-08</uncontrolled-emiss-coef>
                         <MAC>
-                           <reduction tax="0">0.034833293</reduction>
-                           <reduction tax="15">0.043186308</reduction>
-                           <reduction tax="30">0.047273393</reduction>
-                           <reduction tax="45">0.047273393</reduction>
-                           <reduction tax="60">0.057867689</reduction>
+                           <reduction tax="0">0.099006024</reduction>
+                           <reduction tax="10">0.099006024</reduction>
+                           <reduction tax="20">0.122098394</reduction>
+                           <reduction tax="30">0.141187249</reduction>
+                           <reduction tax="40">0.141187249</reduction>
+                           <reduction tax="50">0.166287651</reduction>
+                           <reduction tax="75">0.181347892</reduction>
+                           <reduction tax="100">0.204440261</reduction>
+                           <reduction tax="125">0.247267821</reduction>
+                           <reduction tax="150">0.309378765</reduction>
+                           <reduction tax="175">0.309378765</reduction>
+                           <reduction tax="200">0.32029744</reduction>
+                           <final-reduction>0.369776606</final-reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="N2O_AGR">
@@ -34972,10 +35036,10 @@
                         <uncontrolled-emiss-coef>1.40376E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.151368694</reduction>
-                           <reduction tax="15">0.162648893</reduction>
-                           <reduction tax="30">0.181112993</reduction>
-                           <reduction tax="45">0.219812645</reduction>
-                           <reduction tax="60">0.249118764</reduction>
+                           <reduction tax="55">0.162648893</reduction>
+                           <reduction tax="110">0.181112993</reduction>
+                           <reduction tax="155">0.219812645</reduction>
+                           <reduction tax="220">0.249118764</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -35415,10 +35479,10 @@
                         <uncontrolled-emiss-coef>2.20728E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.151368694</reduction>
-                           <reduction tax="15">0.162648893</reduction>
-                           <reduction tax="30">0.181112993</reduction>
-                           <reduction tax="45">0.219812645</reduction>
-                           <reduction tax="60">0.249118764</reduction>
+                           <reduction tax="55">0.162648893</reduction>
+                           <reduction tax="110">0.181112993</reduction>
+                           <reduction tax="155">0.219812645</reduction>
+                           <reduction tax="220">0.249118764</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -36252,10 +36316,10 @@
                         <uncontrolled-emiss-coef>5.87483E-11</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.151368694</reduction>
-                           <reduction tax="15">0.162648893</reduction>
-                           <reduction tax="30">0.181112993</reduction>
-                           <reduction tax="45">0.219812645</reduction>
-                           <reduction tax="60">0.249118764</reduction>
+                           <reduction tax="55">0.162648893</reduction>
+                           <reduction tax="110">0.181112993</reduction>
+                           <reduction tax="155">0.219812645</reduction>
+                           <reduction tax="220">0.249118764</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -36674,10 +36738,10 @@
                         <uncontrolled-emiss-coef>9.68806E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.151368694</reduction>
-                           <reduction tax="15">0.162648893</reduction>
-                           <reduction tax="30">0.181112993</reduction>
-                           <reduction tax="45">0.219812645</reduction>
-                           <reduction tax="60">0.249118764</reduction>
+                           <reduction tax="55">0.162648893</reduction>
+                           <reduction tax="110">0.181112993</reduction>
+                           <reduction tax="155">0.219812645</reduction>
+                           <reduction tax="220">0.249118764</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -37096,10 +37160,10 @@
                         <uncontrolled-emiss-coef>2.5125E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.151368694</reduction>
-                           <reduction tax="15">0.162648893</reduction>
-                           <reduction tax="30">0.181112993</reduction>
-                           <reduction tax="45">0.219812645</reduction>
-                           <reduction tax="60">0.249118764</reduction>
+                           <reduction tax="55">0.162648893</reduction>
+                           <reduction tax="110">0.181112993</reduction>
+                           <reduction tax="155">0.219812645</reduction>
+                           <reduction tax="220">0.249118764</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -37518,10 +37582,10 @@
                         <uncontrolled-emiss-coef>2.27893E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.151368694</reduction>
-                           <reduction tax="15">0.162648893</reduction>
-                           <reduction tax="30">0.181112993</reduction>
-                           <reduction tax="45">0.219812645</reduction>
-                           <reduction tax="60">0.249118764</reduction>
+                           <reduction tax="55">0.162648893</reduction>
+                           <reduction tax="110">0.181112993</reduction>
+                           <reduction tax="155">0.219812645</reduction>
+                           <reduction tax="220">0.249118764</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -37940,10 +38004,10 @@
                         <uncontrolled-emiss-coef>3.75343E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.151368694</reduction>
-                           <reduction tax="15">0.162648893</reduction>
-                           <reduction tax="30">0.181112993</reduction>
-                           <reduction tax="45">0.219812645</reduction>
-                           <reduction tax="60">0.249118764</reduction>
+                           <reduction tax="55">0.162648893</reduction>
+                           <reduction tax="110">0.181112993</reduction>
+                           <reduction tax="155">0.219812645</reduction>
+                           <reduction tax="220">0.249118764</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -38362,10 +38426,10 @@
                         <uncontrolled-emiss-coef>2.35267E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.151368694</reduction>
-                           <reduction tax="15">0.162648893</reduction>
-                           <reduction tax="30">0.181112993</reduction>
-                           <reduction tax="45">0.219812645</reduction>
-                           <reduction tax="60">0.249118764</reduction>
+                           <reduction tax="55">0.162648893</reduction>
+                           <reduction tax="110">0.181112993</reduction>
+                           <reduction tax="155">0.219812645</reduction>
+                           <reduction tax="220">0.249118764</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -38748,10 +38812,10 @@
                         <uncontrolled-emiss-coef>0.017573299</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.151368694</reduction>
-                           <reduction tax="15">0.162648893</reduction>
-                           <reduction tax="30">0.181112993</reduction>
-                           <reduction tax="45">0.219812645</reduction>
-                           <reduction tax="60">0.249118764</reduction>
+                           <reduction tax="55">0.162648893</reduction>
+                           <reduction tax="110">0.181112993</reduction>
+                           <reduction tax="155">0.219812645</reduction>
+                           <reduction tax="220">0.249118764</reduction>
                         </MAC>
                      </generic-ghg>
                   </period>
@@ -38847,11 +38911,19 @@
                         <output-driver/>
                         <uncontrolled-emiss-coef>3.13724E-08</uncontrolled-emiss-coef>
                         <MAC>
-                           <reduction tax="0">0.085520609</reduction>
-                           <reduction tax="15">0.134284926</reduction>
-                           <reduction tax="30">0.137995881</reduction>
-                           <reduction tax="45">0.165412958</reduction>
-                           <reduction tax="60">0.17806978</reduction>
+                           <reduction tax="0">0.133683712</reduction>
+                           <reduction tax="10">0.133683712</reduction>
+                           <reduction tax="20">0.170100379</reduction>
+                           <reduction tax="30">0.170100379</reduction>
+                           <reduction tax="40">0.184494318</reduction>
+                           <reduction tax="50">0.184494318</reduction>
+                           <reduction tax="75">0.225427083</reduction>
+                           <reduction tax="100">0.255474432</reduction>
+                           <reduction tax="125">0.265910038</reduction>
+                           <reduction tax="150">0.334937816</reduction>
+                           <reduction tax="175">0.340215593</reduction>
+                           <reduction tax="200">0.340215593</reduction>
+                           <final-reduction>0.376950126</final-reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="N2O_AGR">
@@ -38859,10 +38931,10 @@
                         <uncontrolled-emiss-coef>6.32961E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.08140847</reduction>
-                           <reduction tax="15">0.083343151</reduction>
-                           <reduction tax="30">0.09596925</reduction>
-                           <reduction tax="45">0.134629976</reduction>
-                           <reduction tax="60">0.14428541</reduction>
+                           <reduction tax="55">0.083343151</reduction>
+                           <reduction tax="110">0.09596925</reduction>
+                           <reduction tax="155">0.134629976</reduction>
+                           <reduction tax="220">0.14428541</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -39302,10 +39374,10 @@
                         <uncontrolled-emiss-coef>1.76605E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.08140847</reduction>
-                           <reduction tax="15">0.083343151</reduction>
-                           <reduction tax="30">0.09596925</reduction>
-                           <reduction tax="45">0.134629976</reduction>
-                           <reduction tax="60">0.14428541</reduction>
+                           <reduction tax="55">0.083343151</reduction>
+                           <reduction tax="110">0.09596925</reduction>
+                           <reduction tax="155">0.134629976</reduction>
+                           <reduction tax="220">0.14428541</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -40139,10 +40211,10 @@
                         <uncontrolled-emiss-coef>0</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.08140847</reduction>
-                           <reduction tax="15">0.083343151</reduction>
-                           <reduction tax="30">0.09596925</reduction>
-                           <reduction tax="45">0.134629976</reduction>
-                           <reduction tax="60">0.14428541</reduction>
+                           <reduction tax="55">0.083343151</reduction>
+                           <reduction tax="110">0.09596925</reduction>
+                           <reduction tax="155">0.134629976</reduction>
+                           <reduction tax="220">0.14428541</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -40561,10 +40633,10 @@
                         <uncontrolled-emiss-coef>6.02529E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.08140847</reduction>
-                           <reduction tax="15">0.083343151</reduction>
-                           <reduction tax="30">0.09596925</reduction>
-                           <reduction tax="45">0.134629976</reduction>
-                           <reduction tax="60">0.14428541</reduction>
+                           <reduction tax="55">0.083343151</reduction>
+                           <reduction tax="110">0.09596925</reduction>
+                           <reduction tax="155">0.134629976</reduction>
+                           <reduction tax="220">0.14428541</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -40983,10 +41055,10 @@
                         <uncontrolled-emiss-coef>3.57018E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.08140847</reduction>
-                           <reduction tax="15">0.083343151</reduction>
-                           <reduction tax="30">0.09596925</reduction>
-                           <reduction tax="45">0.134629976</reduction>
-                           <reduction tax="60">0.14428541</reduction>
+                           <reduction tax="55">0.083343151</reduction>
+                           <reduction tax="110">0.09596925</reduction>
+                           <reduction tax="155">0.134629976</reduction>
+                           <reduction tax="220">0.14428541</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -41405,10 +41477,10 @@
                         <uncontrolled-emiss-coef>1.8565E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.08140847</reduction>
-                           <reduction tax="15">0.083343151</reduction>
-                           <reduction tax="30">0.09596925</reduction>
-                           <reduction tax="45">0.134629976</reduction>
-                           <reduction tax="60">0.14428541</reduction>
+                           <reduction tax="55">0.083343151</reduction>
+                           <reduction tax="110">0.09596925</reduction>
+                           <reduction tax="155">0.134629976</reduction>
+                           <reduction tax="220">0.14428541</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -41827,10 +41899,10 @@
                         <uncontrolled-emiss-coef>2.99631E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.08140847</reduction>
-                           <reduction tax="15">0.083343151</reduction>
-                           <reduction tax="30">0.09596925</reduction>
-                           <reduction tax="45">0.134629976</reduction>
-                           <reduction tax="60">0.14428541</reduction>
+                           <reduction tax="55">0.083343151</reduction>
+                           <reduction tax="110">0.09596925</reduction>
+                           <reduction tax="155">0.134629976</reduction>
+                           <reduction tax="220">0.14428541</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -42249,10 +42321,10 @@
                         <uncontrolled-emiss-coef>1.88238E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.08140847</reduction>
-                           <reduction tax="15">0.083343151</reduction>
-                           <reduction tax="30">0.09596925</reduction>
-                           <reduction tax="45">0.134629976</reduction>
-                           <reduction tax="60">0.14428541</reduction>
+                           <reduction tax="55">0.083343151</reduction>
+                           <reduction tax="110">0.09596925</reduction>
+                           <reduction tax="155">0.134629976</reduction>
+                           <reduction tax="220">0.14428541</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -42635,10 +42707,10 @@
                         <uncontrolled-emiss-coef>0.014060486</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.08140847</reduction>
-                           <reduction tax="15">0.083343151</reduction>
-                           <reduction tax="30">0.09596925</reduction>
-                           <reduction tax="45">0.134629976</reduction>
-                           <reduction tax="60">0.14428541</reduction>
+                           <reduction tax="55">0.083343151</reduction>
+                           <reduction tax="110">0.09596925</reduction>
+                           <reduction tax="155">0.134629976</reduction>
+                           <reduction tax="220">0.14428541</reduction>
                         </MAC>
                      </generic-ghg>
                   </period>
@@ -42734,11 +42806,19 @@
                         <output-driver/>
                         <uncontrolled-emiss-coef>1.71198E-08</uncontrolled-emiss-coef>
                         <MAC>
-                           <reduction tax="0">0.027363103</reduction>
-                           <reduction tax="15">0.027363103</reduction>
-                           <reduction tax="30">0.027363103</reduction>
-                           <reduction tax="45">0.027363103</reduction>
-                           <reduction tax="60">0.027363103</reduction>
+                           <reduction tax="0">0.099006024</reduction>
+                           <reduction tax="10">0.099006024</reduction>
+                           <reduction tax="20">0.122098394</reduction>
+                           <reduction tax="30">0.141187249</reduction>
+                           <reduction tax="40">0.141187249</reduction>
+                           <reduction tax="50">0.166287651</reduction>
+                           <reduction tax="75">0.181347892</reduction>
+                           <reduction tax="100">0.204440261</reduction>
+                           <reduction tax="125">0.247267821</reduction>
+                           <reduction tax="150">0.309378765</reduction>
+                           <reduction tax="175">0.309378765</reduction>
+                           <reduction tax="200">0.32029744</reduction>
+                           <final-reduction>0.369776606</final-reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="N2O_AGR">
@@ -42746,10 +42826,10 @@
                         <uncontrolled-emiss-coef>1.62507E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.145587713</reduction>
-                           <reduction tax="15">0.188417697</reduction>
-                           <reduction tax="30">0.209516385</reduction>
-                           <reduction tax="45">0.21501042</reduction>
-                           <reduction tax="60">0.240688336</reduction>
+                           <reduction tax="55">0.188417697</reduction>
+                           <reduction tax="110">0.209516385</reduction>
+                           <reduction tax="155">0.21501042</reduction>
+                           <reduction tax="220">0.240688336</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -43189,10 +43269,10 @@
                         <uncontrolled-emiss-coef>1.55931E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.145587713</reduction>
-                           <reduction tax="15">0.188417697</reduction>
-                           <reduction tax="30">0.209516385</reduction>
-                           <reduction tax="45">0.21501042</reduction>
-                           <reduction tax="60">0.240688336</reduction>
+                           <reduction tax="55">0.188417697</reduction>
+                           <reduction tax="110">0.209516385</reduction>
+                           <reduction tax="155">0.21501042</reduction>
+                           <reduction tax="220">0.240688336</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -44026,10 +44106,10 @@
                         <uncontrolled-emiss-coef>2.82767E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.145587713</reduction>
-                           <reduction tax="15">0.188417697</reduction>
-                           <reduction tax="30">0.209516385</reduction>
-                           <reduction tax="45">0.21501042</reduction>
-                           <reduction tax="60">0.240688336</reduction>
+                           <reduction tax="55">0.188417697</reduction>
+                           <reduction tax="110">0.209516385</reduction>
+                           <reduction tax="155">0.21501042</reduction>
+                           <reduction tax="220">0.240688336</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -44448,10 +44528,10 @@
                         <uncontrolled-emiss-coef>9.51262E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.145587713</reduction>
-                           <reduction tax="15">0.188417697</reduction>
-                           <reduction tax="30">0.209516385</reduction>
-                           <reduction tax="45">0.21501042</reduction>
-                           <reduction tax="60">0.240688336</reduction>
+                           <reduction tax="55">0.188417697</reduction>
+                           <reduction tax="110">0.209516385</reduction>
+                           <reduction tax="155">0.21501042</reduction>
+                           <reduction tax="220">0.240688336</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -44870,10 +44950,10 @@
                         <uncontrolled-emiss-coef>1.47416E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.145587713</reduction>
-                           <reduction tax="15">0.188417697</reduction>
-                           <reduction tax="30">0.209516385</reduction>
-                           <reduction tax="45">0.21501042</reduction>
-                           <reduction tax="60">0.240688336</reduction>
+                           <reduction tax="55">0.188417697</reduction>
+                           <reduction tax="110">0.209516385</reduction>
+                           <reduction tax="155">0.21501042</reduction>
+                           <reduction tax="220">0.240688336</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -45292,10 +45372,10 @@
                         <uncontrolled-emiss-coef>1.6408E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.145587713</reduction>
-                           <reduction tax="15">0.188417697</reduction>
-                           <reduction tax="30">0.209516385</reduction>
-                           <reduction tax="45">0.21501042</reduction>
-                           <reduction tax="60">0.240688336</reduction>
+                           <reduction tax="55">0.188417697</reduction>
+                           <reduction tax="110">0.209516385</reduction>
+                           <reduction tax="155">0.21501042</reduction>
+                           <reduction tax="220">0.240688336</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -45714,10 +45794,10 @@
                         <uncontrolled-emiss-coef>7.93021E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.145587713</reduction>
-                           <reduction tax="15">0.188417697</reduction>
-                           <reduction tax="30">0.209516385</reduction>
-                           <reduction tax="45">0.21501042</reduction>
-                           <reduction tax="60">0.240688336</reduction>
+                           <reduction tax="55">0.188417697</reduction>
+                           <reduction tax="110">0.209516385</reduction>
+                           <reduction tax="155">0.21501042</reduction>
+                           <reduction tax="220">0.240688336</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -46136,10 +46216,10 @@
                         <uncontrolled-emiss-coef>1.66202E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.145587713</reduction>
-                           <reduction tax="15">0.188417697</reduction>
-                           <reduction tax="30">0.209516385</reduction>
-                           <reduction tax="45">0.21501042</reduction>
-                           <reduction tax="60">0.240688336</reduction>
+                           <reduction tax="55">0.188417697</reduction>
+                           <reduction tax="110">0.209516385</reduction>
+                           <reduction tax="155">0.21501042</reduction>
+                           <reduction tax="220">0.240688336</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -46522,10 +46602,10 @@
                         <uncontrolled-emiss-coef>0.01323222</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.145587713</reduction>
-                           <reduction tax="15">0.188417697</reduction>
-                           <reduction tax="30">0.209516385</reduction>
-                           <reduction tax="45">0.21501042</reduction>
-                           <reduction tax="60">0.240688336</reduction>
+                           <reduction tax="55">0.188417697</reduction>
+                           <reduction tax="110">0.209516385</reduction>
+                           <reduction tax="155">0.21501042</reduction>
+                           <reduction tax="220">0.240688336</reduction>
                         </MAC>
                      </generic-ghg>
                   </period>
@@ -46621,11 +46701,19 @@
                         <output-driver/>
                         <uncontrolled-emiss-coef>1.29569E-08</uncontrolled-emiss-coef>
                         <MAC>
-                           <reduction tax="0">0.070841441</reduction>
-                           <reduction tax="15">0.088563386</reduction>
-                           <reduction tax="30">0.192785465</reduction>
-                           <reduction tax="45">0.202103536</reduction>
-                           <reduction tax="60">0.202103536</reduction>
+                           <reduction tax="0">0.099006024</reduction>
+                           <reduction tax="10">0.099006024</reduction>
+                           <reduction tax="20">0.122098394</reduction>
+                           <reduction tax="30">0.141187249</reduction>
+                           <reduction tax="40">0.141187249</reduction>
+                           <reduction tax="50">0.166287651</reduction>
+                           <reduction tax="75">0.181347892</reduction>
+                           <reduction tax="100">0.204440261</reduction>
+                           <reduction tax="125">0.247267821</reduction>
+                           <reduction tax="150">0.309378765</reduction>
+                           <reduction tax="175">0.309378765</reduction>
+                           <reduction tax="200">0.32029744</reduction>
+                           <final-reduction>0.369776606</final-reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="N2O_AGR">
@@ -46633,10 +46721,10 @@
                         <uncontrolled-emiss-coef>2.99171E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.138580549</reduction>
-                           <reduction tax="15">0.16138384</reduction>
-                           <reduction tax="30">0.16138384</reduction>
-                           <reduction tax="45">0.16138384</reduction>
-                           <reduction tax="60">0.165048099</reduction>
+                           <reduction tax="55">0.16138384</reduction>
+                           <reduction tax="110">0.16138384</reduction>
+                           <reduction tax="155">0.16138384</reduction>
+                           <reduction tax="220">0.165048099</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -47076,10 +47164,10 @@
                         <uncontrolled-emiss-coef>1.93827E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.138580549</reduction>
-                           <reduction tax="15">0.16138384</reduction>
-                           <reduction tax="30">0.16138384</reduction>
-                           <reduction tax="45">0.16138384</reduction>
-                           <reduction tax="60">0.165048099</reduction>
+                           <reduction tax="55">0.16138384</reduction>
+                           <reduction tax="110">0.16138384</reduction>
+                           <reduction tax="155">0.16138384</reduction>
+                           <reduction tax="220">0.165048099</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -47913,10 +48001,10 @@
                         <uncontrolled-emiss-coef>0</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.138580549</reduction>
-                           <reduction tax="15">0.16138384</reduction>
-                           <reduction tax="30">0.16138384</reduction>
-                           <reduction tax="45">0.16138384</reduction>
-                           <reduction tax="60">0.165048099</reduction>
+                           <reduction tax="55">0.16138384</reduction>
+                           <reduction tax="110">0.16138384</reduction>
+                           <reduction tax="155">0.16138384</reduction>
+                           <reduction tax="220">0.165048099</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -48335,10 +48423,10 @@
                         <uncontrolled-emiss-coef>1.71497E-09</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.138580549</reduction>
-                           <reduction tax="15">0.16138384</reduction>
-                           <reduction tax="30">0.16138384</reduction>
-                           <reduction tax="45">0.16138384</reduction>
-                           <reduction tax="60">0.165048099</reduction>
+                           <reduction tax="55">0.16138384</reduction>
+                           <reduction tax="110">0.16138384</reduction>
+                           <reduction tax="155">0.16138384</reduction>
+                           <reduction tax="220">0.165048099</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -48757,10 +48845,10 @@
                         <uncontrolled-emiss-coef>1.85718E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.138580549</reduction>
-                           <reduction tax="15">0.16138384</reduction>
-                           <reduction tax="30">0.16138384</reduction>
-                           <reduction tax="45">0.16138384</reduction>
-                           <reduction tax="60">0.165048099</reduction>
+                           <reduction tax="55">0.16138384</reduction>
+                           <reduction tax="110">0.16138384</reduction>
+                           <reduction tax="155">0.16138384</reduction>
+                           <reduction tax="220">0.165048099</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -49179,10 +49267,10 @@
                         <uncontrolled-emiss-coef>2.07619E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.138580549</reduction>
-                           <reduction tax="15">0.16138384</reduction>
-                           <reduction tax="30">0.16138384</reduction>
-                           <reduction tax="45">0.16138384</reduction>
-                           <reduction tax="60">0.165048099</reduction>
+                           <reduction tax="55">0.16138384</reduction>
+                           <reduction tax="110">0.16138384</reduction>
+                           <reduction tax="155">0.16138384</reduction>
+                           <reduction tax="220">0.165048099</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -49601,10 +49689,10 @@
                         <uncontrolled-emiss-coef>0</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.138580549</reduction>
-                           <reduction tax="15">0.16138384</reduction>
-                           <reduction tax="30">0.16138384</reduction>
-                           <reduction tax="45">0.16138384</reduction>
-                           <reduction tax="60">0.165048099</reduction>
+                           <reduction tax="55">0.16138384</reduction>
+                           <reduction tax="110">0.16138384</reduction>
+                           <reduction tax="155">0.16138384</reduction>
+                           <reduction tax="220">0.165048099</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -50023,10 +50111,10 @@
                         <uncontrolled-emiss-coef>2.06594E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.138580549</reduction>
-                           <reduction tax="15">0.16138384</reduction>
-                           <reduction tax="30">0.16138384</reduction>
-                           <reduction tax="45">0.16138384</reduction>
-                           <reduction tax="60">0.165048099</reduction>
+                           <reduction tax="55">0.16138384</reduction>
+                           <reduction tax="110">0.16138384</reduction>
+                           <reduction tax="155">0.16138384</reduction>
+                           <reduction tax="220">0.165048099</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -50409,10 +50497,10 @@
                         <uncontrolled-emiss-coef>0.015431626</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.138580549</reduction>
-                           <reduction tax="15">0.16138384</reduction>
-                           <reduction tax="30">0.16138384</reduction>
-                           <reduction tax="45">0.16138384</reduction>
-                           <reduction tax="60">0.165048099</reduction>
+                           <reduction tax="55">0.16138384</reduction>
+                           <reduction tax="110">0.16138384</reduction>
+                           <reduction tax="155">0.16138384</reduction>
+                           <reduction tax="220">0.165048099</reduction>
                         </MAC>
                      </generic-ghg>
                   </period>
@@ -50508,11 +50596,19 @@
                         <output-driver/>
                         <uncontrolled-emiss-coef>2.56065E-08</uncontrolled-emiss-coef>
                         <MAC>
-                           <reduction tax="0">0.007721017</reduction>
-                           <reduction tax="15">0.093947566</reduction>
-                           <reduction tax="30">0.091864019</reduction>
-                           <reduction tax="45">0.091864019</reduction>
-                           <reduction tax="60">0.091864019</reduction>
+                           <reduction tax="0">0.099006024</reduction>
+                           <reduction tax="10">0.099006024</reduction>
+                           <reduction tax="20">0.122098394</reduction>
+                           <reduction tax="30">0.141187249</reduction>
+                           <reduction tax="40">0.141187249</reduction>
+                           <reduction tax="50">0.166287651</reduction>
+                           <reduction tax="75">0.181347892</reduction>
+                           <reduction tax="100">0.204440261</reduction>
+                           <reduction tax="125">0.247267821</reduction>
+                           <reduction tax="150">0.309378765</reduction>
+                           <reduction tax="175">0.309378765</reduction>
+                           <reduction tax="200">0.32029744</reduction>
+                           <final-reduction>0.369776606</final-reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="N2O_AGR">
@@ -50520,10 +50616,10 @@
                         <uncontrolled-emiss-coef>2.41712E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.061763054</reduction>
-                           <reduction tax="15">0.113737363</reduction>
-                           <reduction tax="30">0.114127183</reduction>
-                           <reduction tax="45">0.12023535</reduction>
-                           <reduction tax="60">0.123752585</reduction>
+                           <reduction tax="55">0.113737363</reduction>
+                           <reduction tax="110">0.114127183</reduction>
+                           <reduction tax="155">0.12023535</reduction>
+                           <reduction tax="220">0.123752585</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -50963,10 +51059,10 @@
                         <uncontrolled-emiss-coef>1.68234E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.061763054</reduction>
-                           <reduction tax="15">0.113737363</reduction>
-                           <reduction tax="30">0.114127183</reduction>
-                           <reduction tax="45">0.12023535</reduction>
-                           <reduction tax="60">0.123752585</reduction>
+                           <reduction tax="55">0.113737363</reduction>
+                           <reduction tax="110">0.114127183</reduction>
+                           <reduction tax="155">0.12023535</reduction>
+                           <reduction tax="220">0.123752585</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -51800,10 +51896,10 @@
                         <uncontrolled-emiss-coef>0</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.061763054</reduction>
-                           <reduction tax="15">0.113737363</reduction>
-                           <reduction tax="30">0.114127183</reduction>
-                           <reduction tax="45">0.12023535</reduction>
-                           <reduction tax="60">0.123752585</reduction>
+                           <reduction tax="55">0.113737363</reduction>
+                           <reduction tax="110">0.114127183</reduction>
+                           <reduction tax="155">0.12023535</reduction>
+                           <reduction tax="220">0.123752585</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -52222,10 +52318,10 @@
                         <uncontrolled-emiss-coef>7.22151E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.061763054</reduction>
-                           <reduction tax="15">0.113737363</reduction>
-                           <reduction tax="30">0.114127183</reduction>
-                           <reduction tax="45">0.12023535</reduction>
-                           <reduction tax="60">0.123752585</reduction>
+                           <reduction tax="55">0.113737363</reduction>
+                           <reduction tax="110">0.114127183</reduction>
+                           <reduction tax="155">0.12023535</reduction>
+                           <reduction tax="220">0.123752585</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -52644,10 +52740,10 @@
                         <uncontrolled-emiss-coef>1.78989E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.061763054</reduction>
-                           <reduction tax="15">0.113737363</reduction>
-                           <reduction tax="30">0.114127183</reduction>
-                           <reduction tax="45">0.12023535</reduction>
-                           <reduction tax="60">0.123752585</reduction>
+                           <reduction tax="55">0.113737363</reduction>
+                           <reduction tax="110">0.114127183</reduction>
+                           <reduction tax="155">0.12023535</reduction>
+                           <reduction tax="220">0.123752585</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -53066,10 +53162,10 @@
                         <uncontrolled-emiss-coef>1.75753E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.061763054</reduction>
-                           <reduction tax="15">0.113737363</reduction>
-                           <reduction tax="30">0.114127183</reduction>
-                           <reduction tax="45">0.12023535</reduction>
-                           <reduction tax="60">0.123752585</reduction>
+                           <reduction tax="55">0.113737363</reduction>
+                           <reduction tax="110">0.114127183</reduction>
+                           <reduction tax="155">0.12023535</reduction>
+                           <reduction tax="220">0.123752585</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -53488,10 +53584,10 @@
                         <uncontrolled-emiss-coef>2.85197E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.061763054</reduction>
-                           <reduction tax="15">0.113737363</reduction>
-                           <reduction tax="30">0.114127183</reduction>
-                           <reduction tax="45">0.12023535</reduction>
-                           <reduction tax="60">0.123752585</reduction>
+                           <reduction tax="55">0.113737363</reduction>
+                           <reduction tax="110">0.114127183</reduction>
+                           <reduction tax="155">0.12023535</reduction>
+                           <reduction tax="220">0.123752585</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -53910,10 +54006,10 @@
                         <uncontrolled-emiss-coef>1.79315E-10</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.061763054</reduction>
-                           <reduction tax="15">0.113737363</reduction>
-                           <reduction tax="30">0.114127183</reduction>
-                           <reduction tax="45">0.12023535</reduction>
-                           <reduction tax="60">0.123752585</reduction>
+                           <reduction tax="55">0.113737363</reduction>
+                           <reduction tax="110">0.114127183</reduction>
+                           <reduction tax="155">0.12023535</reduction>
+                           <reduction tax="220">0.123752585</reduction>
                         </MAC>
                      </generic-ghg>
                      <generic-ghg name="NOx_AGR">
@@ -54296,10 +54392,10 @@
                         <uncontrolled-emiss-coef>0.014276249</uncontrolled-emiss-coef>
                         <MAC>
                            <reduction tax="0">0.061763054</reduction>
-                           <reduction tax="15">0.113737363</reduction>
-                           <reduction tax="30">0.114127183</reduction>
-                           <reduction tax="45">0.12023535</reduction>
-                           <reduction tax="60">0.123752585</reduction>
+                           <reduction tax="55">0.113737363</reduction>
+                           <reduction tax="110">0.114127183</reduction>
+                           <reduction tax="155">0.12023535</reduction>
+                           <reduction tax="220">0.123752585</reduction>
                         </MAC>
                      </generic-ghg>
                   </period>

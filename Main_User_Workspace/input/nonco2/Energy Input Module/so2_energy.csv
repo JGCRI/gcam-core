@@ -303,7 +303,7 @@ process heat cement,biomass,biomass,1990,SO2_1,0.000973188,0.00012489,0.00133776
 process heat cement,gas,gas,1990,SO2_1,0.003393876,0.007483055,0.000772157,0.001175657,
 process heat cement,coal,coal,1990,SO2_1,1.19282486,2.630023126,0.271385276,0.413200911,
 process heat cement,refined liquids,refined liquids,1990,SO2_1,0.780930372,1.721849541,0.177673196,0.270518458,
-urban processes,landfills,landfills,1990,SO2_1,20.35647696,0.1153059,8.819110198,12.43094005,
+urban processes,landfills,landfills,1990,SO2_1,0.081366998,0.004162968,0.020298688,0.101160779,
 industrial processes,other industrial processes,other industrial processes,1990,SO2_1,331.5355325,378.7734281,1445.363003,524.6795131,
 ,,,,,,,,,
 INPUT_TABLE,,,,,,,,,
@@ -359,7 +359,7 @@ process heat cement,biomass,biomass,1990,SO2_2,0.001162536,0.007056723,0.0116690
 process heat cement,gas,gas,1990,SO2_2,0.000284819,0.000640515,0.002968304,0.000532492,0.001261297
 process heat cement,coal,coal,1990,SO2_2,0.100103423,0.227813161,1.071581128,0.221179326,0.451213097
 process heat cement,refined liquids,refined liquids,1990,SO2_2,0.065536698,0.147382421,0.683006243,0.12252635,0.290224122
-urban processes,landfills,landfills,1990,SO2_2,1.181451106,0.22234648,2.056035761,0.447093668,2.176639341
+urban processes,landfills,landfills,1990,SO2_2,0.00956811,0.000181761,0.003086358,0.0104293,0.002562214
 industrial processes,other industrial processes,other industrial processes,1990,SO2_2,182.3968297,1139.698898,534.8706465,61.41605659,194.47517
 ,,,,,,,,,
 INPUT_TABLE,,,,,,,,,
@@ -415,7 +415,7 @@ process heat cement,biomass,biomass,1990,SO2_3,0.004436202,0.027685348,0.0110537
 process heat cement,gas,gas,1990,SO2_3,0.004352823,0.007559175,0.001859241,0.001419268,
 process heat cement,coal,coal,1990,SO2_3,1.529860026,2.805347577,0.666560951,0.533807149,
 process heat cement,refined liquids,refined liquids,1990,SO2_3,1.001583886,1.739364877,0.427810946,0.326573351,
-urban processes,landfills,landfills,1990,SO2_3,5.32308E-06,0.880898046,2.073792468,2.652114189,
+urban processes,landfills,landfills,1990,SO2_3,2.59258E-07,0.006699099,0.003288096,0.006073414,
 industrial processes,other industrial processes,other industrial processes,1990,SO2_3,1481.334786,309.9159077,465.5015551,2137.68883,
 ,,,,,,,,,
 INPUT_TABLE,,,,,,,,,
@@ -471,7 +471,7 @@ process heat cement,biomass,biomass,1990,SO2_4,0.000433317,,,,
 process heat cement,gas,gas,1990,SO2_4,0.000707575,,,,
 process heat cement,coal,coal,1990,SO2_4,0.256255172,,,,
 process heat cement,refined liquids,refined liquids,1990,SO2_4,0.162812856,,,,
-urban processes,landfills,landfills,1990,SO2_4,1.036832932,,,,
+urban processes,landfills,landfills,1990,SO2_4,0.003586528,,,,
 industrial processes,other industrial processes,other industrial processes,1990,SO2_4,1624.283689,,,,
 ,,,,,,,,,
 per-capita GDP at mid-point of control curve,,,,,,,,,
@@ -1205,7 +1205,7 @@ process heat cement,biomass,biomass,1990,SO2_1,0.000291956,3.74671E-05,0.0004013
 process heat cement,gas,gas,1990,SO2_1,0.001018163,0.002244916,0.000231647,0.000352697,
 process heat cement,coal,coal,1990,SO2_1,0.357847458,0.789006938,0.081415583,0.123960273,
 process heat cement,refined liquids,refined liquids,1990,SO2_1,0.234279111,0.516554862,0.053301959,0.081155537,
-urban processes,landfills,landfills,1990,SO2_1,10.17823848,0.05765295,4.409555099,6.215470027,
+urban processes,landfills,landfills,1990,SO2_1,0.040683499,0.002081484,0.010149344,0.05058039,
 industrial processes,other industrial processes,other industrial processes,1990,SO2_1,165.7677662,189.3867141,722.6815017,262.3397565,
 ,,,,,,,,,
 INPUT_TABLE,,,,,,,,,
@@ -1261,7 +1261,7 @@ process heat cement,biomass,biomass,1990,SO2_2,0.000348761,0.002117017,0.0035007
 process heat cement,gas,gas,1990,SO2_2,8.54456E-05,0.000192155,0.000890491,0.000159748,0.000378389
 process heat cement,coal,coal,1990,SO2_2,0.030031027,0.011390658,0.107158113,0.022117933,0.04512131
 process heat cement,refined liquids,refined liquids,1990,SO2_2,0.019661009,0.044214726,0.204901873,0.036757905,0.087067237
-urban processes,landfills,landfills,1990,SO2_2,0.590725553,0.11117324,1.028017881,0.223546834,1.088319671
+urban processes,landfills,landfills,1990,SO2_2,0.004784055,9.08805E-05,0.001543179,0.00521465,0.001281107
 industrial processes,other industrial processes,other industrial processes,1990,SO2_2,91.19841483,56.9849449,26.74353233,30.70802829,9.723758501
 ,,,,,,,,,
 INPUT_TABLE,,,,,,,,,
@@ -1317,7 +1317,7 @@ process heat cement,biomass,biomass,1990,SO2_3,0.001330861,0.008305604,0.0033161
 process heat cement,gas,gas,1990,SO2_3,0.001305847,0.002267753,0.000557772,0.00042578,
 process heat cement,coal,coal,1990,SO2_3,0.458958008,0.280534758,0.066656095,0.053380715,
 process heat cement,refined liquids,refined liquids,1990,SO2_3,0.300475166,0.521809463,0.128343284,0.097972005,
-urban processes,landfills,landfills,1990,SO2_3,2.66154E-06,0.440449023,1.036896234,1.326057095,
+urban processes,landfills,landfills,1990,SO2_3,1.29629E-07,0.00334955,0.001644048,0.003036707,
 industrial processes,other industrial processes,other industrial processes,1990,SO2_3,740.6673928,15.49579539,9.310031102,106.8844415,
 ,,,,,,,,,
 INPUT_TABLE,,,,,,,,,
@@ -1373,5 +1373,5 @@ process heat cement,biomass,biomass,1990,SO2_4,0.000129995,,,,
 process heat cement,gas,gas,1990,SO2_4,0.000212272,,,,
 process heat cement,coal,coal,1990,SO2_4,0.025625517,,,,
 process heat cement,refined liquids,refined liquids,1990,SO2_4,0.048843857,,,,
-urban processes,landfills,landfills,1990,SO2_4,0.518416466,,,,
+urban processes,landfills,landfills,1990,SO2_4,0.001793264,,,,
 industrial processes,other industrial processes,other industrial processes,1990,SO2_4,81.21418443,,,,

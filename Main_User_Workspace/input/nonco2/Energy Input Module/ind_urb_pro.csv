@@ -14,20 +14,20 @@ Variable ID,,,,,,,,,,,,,,,,,,
 9000,,,,,,,,,,,,,,,,,,
 ,,,1975 fillout,1975 fillout,base-service,,,,,,,,,,,,,
 region,energy-final-demand,perCapitaBased,income-elasticity,aeei,1990,2005,,,,,,,,,,,,
-USA,urban processes,1,0,0,0.004,0.00474,,,,,,,,,,,,
-Canada,urban processes,1,0,0,0.004,0.00466,,,,,,,,,,,,
-Western Europe,urban processes,1,0,0,0.004,0.00436,,,,,,,,,,,,
-Japan,urban processes,1,0,0,0.004,0.00414,,,,,,,,,,,,
-Australia_NZ,urban processes,1,0,0,0.004,0.00479,,,,,,,,,,,,
-Former Soviet Union,urban processes,1,0,0,0.004,0.00394,,,,,,,,,,,,
-China,urban processes,1,0,0,0.004,0.00466,,,,,,,,,,,,
-Middle East,urban processes,1,0,0,0.004,0.00570,,,,,,,,,,,,
-Africa,urban processes,1,0,0,0.004,0.00567,,,,,,,,,,,,
-Latin America,urban processes,1,0,0,0.004,0.00508,,,,,,,,,,,,
-Southeast Asia,urban processes,1,0,0,0.004,0.00522,,,,,,,,,,,,
-Eastern Europe,urban processes,1,0,0,0.004,0.00380,,,,,,,,,,,,
-Korea,urban processes,1,0,0,0.004,0.00451,,,,,,,,,,,,
-India,urban processes,1,0,0,0.004,0.00515,,,,,,,,,,,,
+USA,urban processes,1,0,0,1.000724,1.18564,,,,,,,,,,,,
+Canada,urban processes,1,0,0,0.110792,0.12908,,,,,,,,,,,,
+Western Europe,urban processes,1,0,0,1.737868,1.89584,,,,,,,,,,,,
+Japan,urban processes,1,0,0,0.493912,0.51104,,,,,,,,,,,,
+Australia_NZ,urban processes,1,0,0,0.082128,0.09830,,,,,,,,,,,,
+Former Soviet Union,urban processes,1,0,0,1.156364,1.13963,,,,,,,,,,,,
+China,urban processes,1,0,0,4.89316,5.70612,,,,,,,,,,,,
+Middle East,urban processes,1,0,0,0.52598,0.74948,,,,,,,,,,,,
+Africa,urban processes,1,0,0,2.522788,3.57534,,,,,,,,,,,,
+Latin America,urban processes,1,0,0,1.746704,2.21696,,,,,,,,,,,,
+Southeast Asia,urban processes,1,0,0,2.664676,3.47941,,,,,,,,,,,,
+Eastern Europe,urban processes,1,0,0,0.491532,0.46729,,,,,,,,,,,,
+Korea,urban processes,1,0,0,0.171476,0.19318,,,,,,,,,,,,
+India,urban processes,1,0,0,3.39806,4.37832,,,,,,,,,,,,
 ,,,,,,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,,,,,,
@@ -113,13 +113,13 @@ industrial processes,other industrial processes,other industrial processes,misc 
 ,,,,,,,,,,,,,,,,,,
 INPUT_TABLE,,,,,,,,,,,,,,,,,,
 Variable ID,,,,,,,,,,,,,,,,,,
-9503,,,,,1000,divisor for ind and urb pro. Guard against mistakenly including this stuff in a TFE query.,,,,,,,,,,,,
+9503,,,,,1000,divisor for industrial processes only. To keep the #s small in case they are mistakenly included in a TFE query,,,,,,,,,,,,
 ,,,,,calibrated-value,,,,,,,,,,,,,
 supplysector,subsector,technology,period,minicam-energy-input,USA,Canada,Western Europe,Japan,Australia_NZ,Former Soviet Union,China,Middle East,Africa,Latin America,Southeast Asia,Eastern Europe,Korea,India
-urban processes,landfills,landfills,1990,misc emissions sources,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
-urban processes,wastewater treatment,wastewater treatment,1990,misc emissions sources,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
-urban processes,aerosols,aerosols,1990,misc emissions sources,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
-urban processes,fire_exting,fire_exting,1990,misc emissions sources,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
+urban processes,landfills,landfills,1990,misc emissions sources,0.25018,0.02770,0.43447,0.12348,0.02053,0.28909,1.22329,0.13150,0.63070,0.43668,0.66617,0.12288,0.04287,0.84952
+urban processes,wastewater treatment,wastewater treatment,1990,misc emissions sources,0.25018,0.02770,0.43447,0.12348,0.02053,0.28909,1.22329,0.13150,0.63070,0.43668,0.66617,0.12288,0.04287,0.84952
+urban processes,aerosols,aerosols,1990,misc emissions sources,0.25018,0.02770,0.43447,0.12348,0.02053,0.28909,1.22329,0.13150,0.63070,0.43668,0.66617,0.12288,0.04287,0.84952
+urban processes,fire_exting,fire_exting,1990,misc emissions sources,0.25018,0.02770,0.43447,0.12348,0.02053,0.28909,1.22329,0.13150,0.63070,0.43668,0.66617,0.12288,0.04287,0.84952
 industrial processes,adipic acid,adipic acid,1990,misc emissions sources,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
 industrial processes,nitric acid,nitric acid,1990,misc emissions sources,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
 industrial processes,foams,foams,1990,misc emissions sources,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
@@ -128,10 +128,10 @@ industrial processes,HCFC_22_Prod,HCFC_22_Prod,1990,misc emissions sources,0.001
 industrial processes,semiconductors,semiconductors,1990,misc emissions sources,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
 industrial processes,Al_Mg,Al_Mg,1990,misc emissions sources,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
 industrial processes,other industrial processes,other industrial processes,1990,misc emissions sources,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001,0.001
-urban processes,landfills,landfills,2005,misc emissions sources,0.00118,0.00117,0.00109,0.00103,0.00120,0.00099,0.00117,0.00142,0.00142,0.00127,0.00131,0.00095,0.00113,0.00129
-urban processes,wastewater treatment,wastewater treatment,2005,misc emissions sources,0.00118,0.00117,0.00109,0.00103,0.00120,0.00099,0.00117,0.00142,0.00142,0.00127,0.00131,0.00095,0.00113,0.00129
-urban processes,aerosols,aerosols,2005,misc emissions sources,0.00118,0.00117,0.00109,0.00103,0.00120,0.00099,0.00117,0.00142,0.00142,0.00127,0.00131,0.00095,0.00113,0.00129
-urban processes,fire_exting,fire_exting,2005,misc emissions sources,0.00118,0.00117,0.00109,0.00103,0.00120,0.00099,0.00117,0.00142,0.00142,0.00127,0.00131,0.00095,0.00113,0.00129
+urban processes,landfills,landfills,2005,misc emissions sources,0.29641,0.03227,0.47396,0.12776,0.02458,0.28491,1.42653,0.18737,0.89384,0.55424,0.86985,0.11682,0.04829,1.09458
+urban processes,wastewater treatment,wastewater treatment,2005,misc emissions sources,0.29641,0.03227,0.47396,0.12776,0.02458,0.28491,1.42653,0.18737,0.89384,0.55424,0.86985,0.11682,0.04829,1.09458
+urban processes,aerosols,aerosols,2005,misc emissions sources,0.29641,0.03227,0.47396,0.12776,0.02458,0.28491,1.42653,0.18737,0.89384,0.55424,0.86985,0.11682,0.04829,1.09458
+urban processes,fire_exting,fire_exting,2005,misc emissions sources,0.29641,0.03227,0.47396,0.12776,0.02458,0.28491,1.42653,0.18737,0.89384,0.55424,0.86985,0.11682,0.04829,1.09458
 industrial processes,adipic acid,adipic acid,2005,misc emissions sources,0.00103,0.00123,0.00108,0.00101,0.00117,0.00089,0.00168,0.00167,0.00164,0.00124,0.00160,0.00076,0.00191,0.00183
 industrial processes,nitric acid,nitric acid,2005,misc emissions sources,0.00103,0.00123,0.00108,0.00101,0.00117,0.00089,0.00168,0.00167,0.00164,0.00124,0.00160,0.00076,0.00191,0.00183
 industrial processes,foams,foams,2005,misc emissions sources,0.00103,0.00123,0.00108,0.00101,0.00117,0.00089,0.00168,0.00167,0.00164,0.00124,0.00160,0.00076,0.00191,0.00183
