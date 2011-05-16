@@ -162,14 +162,15 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 			qg.axis1Name = "Region";
 			qg.var = "Undiscounted Cost";
 		} else {
-			qg.xPath = "PointSet/DataPoint/y/text()";
 			qg.nodeLevel = new DataPair<String, String>("Curve", null);
 			qg.yearLevel = new DataPair<String, String>("DataPoint", null);
 			qg.axis1Name = "Region";
 			qg.var = "Cost";
 			if(typeSel.equals("RegionalCostCurvesByPeriod")) {
+                qg.xPath = "PointSet/DataPoint/y/text()";
 				qg.axis2Name = "Year";
 			} else {
+                qg.xPath = "PointSet/DataPoint/x/text()";
 				qg.axis2Name = "Iteration";
 			}
 		}
@@ -252,7 +253,13 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 			if(qg.nodeLevel.getKey().equals("UndiscountedCost") || qg.nodeLevel.getKey().equals("DiscountedCost")) {
 				// check this is was adding to pos 0 but I think it should be nodeLevel
 				//ret.add(0, qg.nodeLevel.getKey());
-				axisValue.setValue(qg.nodeLevel.getKey());
+				if(isGlobal) {
+					// TODO: check if it should be key
+					axisValue.setValue("Global");
+				} else {
+					// TODO: check if it should be key
+					axisValue.setValue(attrMap.get("name"));
+				}
 				/*
 				   } else if(qg.yearLevel.equals("DataPoint")) {
 				// check the locks after this line, It might leave some
@@ -298,13 +305,7 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 		if(nodeName.equals(qg.yearLevel.getKey())) {
 			addedYearLevel = true;
 			if(qg.nodeLevel.getKey().equals("UndiscountedCost") || qg.nodeLevel.getKey().equals("DiscountedCost")) {
-				if(isGlobal) {
-					// TODO: check if it should be key
-					axisValue.setKey("Global");
-				} else {
-					// TODO: check if it should be key
-					axisValue.setKey(attrMap.get("name"));
-				}
+				axisValue.setKey(qg.nodeLevel.getKey());
 				/*
 				   } else if(qg.yearLevel.equals("DataPoint")) {
 			// check the locks after this line, It might leave some
@@ -324,7 +325,11 @@ public class CostCurveQueryBuilder extends QueryBuilder {
 			axisValue.setKey(nBefore.getNodeValue());
 			nBefore.delete();
 			*/
-			axisValue.setKey(currNode.getFirstChild().getFirstChild().getNodeValue());
+            if(qg.axis2Name.equals("Year")) {
+                axisValue.setKey(currNode.getFirstChild().getFirstChild().getNodeValue());
+            } else {
+                axisValue.setKey(currNode.getFirstChild().getNextSibling().getFirstChild().getNodeValue());
+            }
 		}
 
 		/*
