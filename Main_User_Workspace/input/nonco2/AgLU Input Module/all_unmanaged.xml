@@ -926,6 +926,11 @@
                      <itemName>UnmanagedForest</itemName>
                      <CO2 name="CO2"/>
                   </period>
+                  <period year="2010">
+                     <landType>AllForestLand</landType>
+                     <itemName>UnmanagedForest</itemName>
+                     <CO2 name="CO2"/>
+                  </period>
                </UnmanagedLandTechnology>
             </FoodSupplySubsector>
          </FoodSupplySector>
@@ -1851,6 +1856,11 @@
                      <generic-ghg name="SO2_1">
                         <output-driver/>
                      </generic-ghg>
+                     <landType>AllForestLand</landType>
+                     <itemName>UnmanagedForest</itemName>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2010">
                      <landType>AllForestLand</landType>
                      <itemName>UnmanagedForest</itemName>
                      <CO2 name="CO2"/>
@@ -2784,6 +2794,11 @@
                      <itemName>UnmanagedForest</itemName>
                      <CO2 name="CO2"/>
                   </period>
+                  <period year="2010">
+                     <landType>AllForestLand</landType>
+                     <itemName>UnmanagedForest</itemName>
+                     <CO2 name="CO2"/>
+                  </period>
                </UnmanagedLandTechnology>
             </FoodSupplySubsector>
          </FoodSupplySector>
@@ -3709,6 +3724,11 @@
                      <generic-ghg name="SO2_2">
                         <output-driver/>
                      </generic-ghg>
+                     <landType>AllForestLand</landType>
+                     <itemName>UnmanagedForest</itemName>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2010">
                      <landType>AllForestLand</landType>
                      <itemName>UnmanagedForest</itemName>
                      <CO2 name="CO2"/>
@@ -4642,6 +4662,11 @@
                      <itemName>UnmanagedForest</itemName>
                      <CO2 name="CO2"/>
                   </period>
+                  <period year="2010">
+                     <landType>AllForestLand</landType>
+                     <itemName>UnmanagedForest</itemName>
+                     <CO2 name="CO2"/>
+                  </period>
                </UnmanagedLandTechnology>
             </FoodSupplySubsector>
          </FoodSupplySector>
@@ -5567,6 +5592,11 @@
                      <generic-ghg name="SO2_4">
                         <output-driver/>
                      </generic-ghg>
+                     <landType>AllForestLand</landType>
+                     <itemName>UnmanagedForest</itemName>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2010">
                      <landType>AllForestLand</landType>
                      <itemName>UnmanagedForest</itemName>
                      <CO2 name="CO2"/>
@@ -6500,6 +6530,11 @@
                      <itemName>UnmanagedForest</itemName>
                      <CO2 name="CO2"/>
                   </period>
+                  <period year="2010">
+                     <landType>AllForestLand</landType>
+                     <itemName>UnmanagedForest</itemName>
+                     <CO2 name="CO2"/>
+                  </period>
                </UnmanagedLandTechnology>
             </FoodSupplySubsector>
          </FoodSupplySector>
@@ -7425,6 +7460,11 @@
                      <generic-ghg name="SO2_3">
                         <output-driver/>
                      </generic-ghg>
+                     <landType>AllForestLand</landType>
+                     <itemName>UnmanagedForest</itemName>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2010">
                      <landType>AllForestLand</landType>
                      <itemName>UnmanagedForest</itemName>
                      <CO2 name="CO2"/>
@@ -8358,6 +8398,11 @@
                      <itemName>UnmanagedForest</itemName>
                      <CO2 name="CO2"/>
                   </period>
+                  <period year="2010">
+                     <landType>AllForestLand</landType>
+                     <itemName>UnmanagedForest</itemName>
+                     <CO2 name="CO2"/>
+                  </period>
                </UnmanagedLandTechnology>
             </FoodSupplySubsector>
          </FoodSupplySector>
@@ -9283,6 +9328,11 @@
                      <generic-ghg name="SO2_3">
                         <output-driver/>
                      </generic-ghg>
+                     <landType>AllForestLand</landType>
+                     <itemName>UnmanagedForest</itemName>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2010">
                      <landType>AllForestLand</landType>
                      <itemName>UnmanagedForest</itemName>
                      <CO2 name="CO2"/>
@@ -10216,6 +10266,11 @@
                      <itemName>UnmanagedForest</itemName>
                      <CO2 name="CO2"/>
                   </period>
+                  <period year="2010">
+                     <landType>AllForestLand</landType>
+                     <itemName>UnmanagedForest</itemName>
+                     <CO2 name="CO2"/>
+                  </period>
                </UnmanagedLandTechnology>
             </FoodSupplySubsector>
          </FoodSupplySector>
@@ -11141,6 +11196,11 @@
                      <generic-ghg name="SO2_1">
                         <output-driver/>
                      </generic-ghg>
+                     <landType>AllForestLand</landType>
+                     <itemName>UnmanagedForest</itemName>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2010">
                      <landType>AllForestLand</landType>
                      <itemName>UnmanagedForest</itemName>
                      <CO2 name="CO2"/>
@@ -12074,6 +12134,11 @@
                      <itemName>UnmanagedForest</itemName>
                      <CO2 name="CO2"/>
                   </period>
+                  <period year="2010">
+                     <landType>AllForestLand</landType>
+                     <itemName>UnmanagedForest</itemName>
+                     <CO2 name="CO2"/>
+                  </period>
                </UnmanagedLandTechnology>
             </FoodSupplySubsector>
          </FoodSupplySector>
@@ -12999,6 +13064,11 @@
                      <generic-ghg name="SO2_2">
                         <output-driver/>
                      </generic-ghg>
+                     <landType>AllForestLand</landType>
+                     <itemName>UnmanagedForest</itemName>
+                     <CO2 name="CO2"/>
+                  </period>
+                  <period year="2010">
                      <landType>AllForestLand</landType>
                      <itemName>UnmanagedForest</itemName>
                      <CO2 name="CO2"/>
