@@ -25,9 +25,13 @@ class magicc_array {
     char name[ MA_NAMELEN ];
 private:
     int computepos( int, int );
+    void copy( const magicc_array& array );
 public:
     magicc_array();
+    magicc_array( const magicc_array& array );
     ~magicc_array();
+    magicc_array& operator=( const magicc_array& array );
+
     void init( const char*, int, int, int=0, int=0 );
     void setval( float, int, int=0 );
     float getval( int, int=0 );    

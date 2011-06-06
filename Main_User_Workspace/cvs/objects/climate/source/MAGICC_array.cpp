@@ -14,13 +14,41 @@
 
 using namespace std;
 
-magicc_array::magicc_array()
+magicc_array::magicc_array():data( 0 )
 {
     initialized = 0;    // Users must call init, below, to set up array(s)
 }
 
+magicc_array::magicc_array( const magicc_array& array )
+{
+    copy( array );
+}
+
 magicc_array::~magicc_array() {
     delete[] data;
+}
+
+magicc_array& magicc_array::operator=( const magicc_array& array ) {
+    if( this != &array ) {
+        delete[] data;
+        copy( array );
+    }
+    return *this;
+}
+
+void magicc_array::copy( const magicc_array& array ) {
+    initialized = array.initialized;
+    low1 = array.low1;
+    low2 = array.low2;
+    high1 = array.high1;
+    high2 = array.high2;
+    strncpy( name, array.name, MA_NAMELEN );
+
+    const int size = ( high1-low1+1 ) * ( high2-low2+1 );
+    data = new float[ size ];
+    for( int i = 0; i < size; ++i ) {
+        data[ i ] = array.data[ i ];
+    }
 }
 
 void magicc_array::init( const char* s, int l1, int h1, int l2, int h2 )
