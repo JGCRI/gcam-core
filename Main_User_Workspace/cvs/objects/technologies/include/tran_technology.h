@@ -115,6 +115,8 @@ public:
         const int aPeriod ) const;
 
     virtual void acceptDerived( IVisitor* aVisitor, const int aPeriod ) const;
+    
+    virtual void doInterpolations( const Technology* aPrevTech, const Technology* aNextTech );
 protected:
     //!< Vehicle load factor.
     double mLoadFactor; 

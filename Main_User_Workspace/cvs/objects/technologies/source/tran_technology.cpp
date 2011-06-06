@@ -410,3 +410,23 @@ void TranTechnology::acceptDerived( IVisitor* aVisitor, const int aPeriod ) cons
     aVisitor->startVisitTranTechnology( this, aPeriod );
     aVisitor->endVisitTranTechnology( this, aPeriod );
 }
+
+void TranTechnology::doInterpolations( const Technology* aPrevTech, const Technology* aNextTech ) {
+    Technology::doInterpolations( aPrevTech, aNextTech );
+    
+    const TranTechnology* prevTranTech = static_cast<const TranTechnology*> ( aPrevTech );
+    const TranTechnology* nextTranTech = static_cast<const TranTechnology*> ( aNextTech );
+    /*!
+     * \pre We are given a valid TranTechnology for the previous tech.
+     */
+    assert( prevTranTech );
+    
+    /*!
+     * \pre We are given a valid TranTechnology for the next tech.
+     */
+    assert( nextTranTech );
+    
+    // Interpolate load factors
+    mLoadFactor = util::linearInterpolateY( year, prevTranTech->year, nextTranTech->year,
+                                            prevTranTech->mLoadFactor, nextTranTech->mLoadFactor );
+}
