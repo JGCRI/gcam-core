@@ -47,12 +47,19 @@
 #include "technologies/include/stub_technology_container.h"
 #include "technologies/include/global_technology_database.h"
 #include "util/base/include/xml_helper.h"
+#include "containers/include/scenario.h"
+#include "util/base/include/model_time.h"
+#include "technologies/include/technology.h"
 
 using namespace std;
 using namespace xercesc;
 
+extern Scenario* scenario;
+
 //! Constructor
-StubTechnologyContainer::StubTechnologyContainer() {
+StubTechnologyContainer::StubTechnologyContainer()
+:mTechnology( 0 )
+{
 }
 
 //! Destructor
@@ -93,21 +100,26 @@ bool StubTechnologyContainer::XMLParse( const DOMNode* aNode ) {
 }
 
 void StubTechnologyContainer::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
     
     // The technology does not get written back out here, rather that will occur
     // in the global technology.  The XML adjustments do need to get written back
     // out however.
     for( CXMLIterator xmlIter = mXMLAdjustments.begin(); xmlIter != mXMLAdjustments.end(); ++xmlIter ) {
-        // Note that we really want to write all the child nodes here instead of
-        // the stub technology tag so that they all collapse into a single element.
-        DOMNodeList* childNodes = ( *xmlIter )->getChildNodes();
-        for( int childIndex = 0; childIndex < childNodes->getLength(); ++childIndex ) {
-            // tell it to serialize the entire subtree of this child node
-            XMLHelper<void>::serializeNode( childNodes->item( childIndex ), aOut, aTabs, true );
-        }
+        XMLHelper<void>::serializeNode( *xmlIter, aOut, aTabs, true );
     }
-    
+
+    // We must write out any calibrated values here otherwise they will be lost.
+    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
+    const Modeltime* modeltime = scenario->getModeltime();
+    ITechnologyContainer::CTechRangeIterator it =
+        mTechnology->getVintageBegin( modeltime->getFinalCalibrationPeriod() );
+    ITechnologyContainer::CTechRangeIterator endIter = mTechnology->getVintageEnd();
+
+    for( ; it != endIter; ++it ) {
+        XMLWriteOpeningTag( Technology::getXMLVintageNameStatic(), aOut, aTabs, "", ( *it ).first );
+        XMLWriteElement( ( *it ).second->getShareWeight(), "share-weight", aOut, aTabs );
+        XMLWriteClosingTag( Technology::getXMLVintageNameStatic(), aOut, aTabs );
+    }
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
@@ -139,11 +151,27 @@ void StubTechnologyContainer::completeInit( const string& aRegionName,
     }
     
     // Make the XML adjustments note that this may produce parsing errors.
+    vector<const DOMNode*> interpolateThenParse;
+    // First parse XML that does not require interpolation.
     for( CXMLIterator xmlIter = mXMLAdjustments.begin(); xmlIter != mXMLAdjustments.end(); ++xmlIter ) {
-        mTechnology->XMLParse( *xmlIter );
+        if( !XMLHelper<bool>::getAttr( *xmlIter, "allow-interpolate" ) ) {
+            // This XML does not need to intperolate
+            mTechnology->XMLParse( *xmlIter );
+        }
+        else {
+            // Store this XML until all XML which did not need to parse has
+            // finished.
+            interpolateThenParse.push_back( *xmlIter );
+        }
     }
     
-    // now call complete init on the completed technology
+    // Next interpolate and parse XML that was tagged to allow interpolation.
+    for( CXMLIterator xmlIter = interpolateThenParse.begin(); xmlIter != interpolateThenParse.end(); ++xmlIter ) {
+        mTechnology->interpolateAndParse( *xmlIter );
+    }
+    
+    // Now call complete init on the completed technology.  Note any other interpolations
+    // which need to occur will happen here.
     mTechnology->completeInit( aRegionName, aSectorName, aSubsectorName, aDependencyFinder,
                                aSubsecInfo, aLandAllocator );
 }
@@ -184,6 +212,10 @@ ITechnologyContainer::CTechRangeIterator StubTechnologyContainer::getVintageEnd(
 
 void StubTechnologyContainer::accept( IVisitor* aVisitor, const int aPeriod ) const {
     mTechnology->accept( aVisitor, aPeriod );
+}
+
+void StubTechnologyContainer::interpolateAndParse( const DOMNode* aNode ) {
+    // could make this work
 }
 
 /*!

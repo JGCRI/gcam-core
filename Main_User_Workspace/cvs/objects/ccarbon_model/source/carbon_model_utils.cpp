@@ -77,7 +77,6 @@ CarbonModelUtils::~CarbonModelUtils() {
  */
 double CarbonModelUtils::getLandUse( const unsigned int aYear,
                                      const LandUseHistory* aLandUseHistory,
-                                     const double aHistoricalShare,
                                      const objects::PeriodVector<double>& aLandUse ){
     // If the year is within the range of the history use the historical
     // allocation. The land use history may be null if none was read-in.
@@ -96,13 +95,13 @@ double CarbonModelUtils::getLandUse( const unsigned int aYear,
     double landUse;
 
     if( aYear <= maxHistoryYear ){
-        landUse = aHistoricalShare * aLandUseHistory->getAllocation( aYear );
+        landUse = aLandUseHistory->getAllocation( aYear );
     }
     // If the year is between the last historical year and the first
     // calculated year interpolate between the two.
     else if( aYear <= baseYear && maxHistoryYear != 0 ){
         landUse = util::linearInterpolateY( aYear, maxHistoryYear, baseYear,
-                                            aHistoricalShare * aLandUseHistory->getAllocation( maxHistoryYear ),
+                                            aLandUseHistory->getAllocation( maxHistoryYear ),
                                             aLandUse[ basePeriod ] );
     }
     // Otherwise use data interpolated from the current model projection.
@@ -116,27 +115,21 @@ double CarbonModelUtils::getLandUse( const unsigned int aYear,
  * \brief A static function to return the starting year to index the arrays.
  * \todo Use a read-in value for the start year.
  * \return The start year.
- * \todo The model is spending a lot of time (2% of total) in this function. Calculate once and cache.
  */
 int CarbonModelUtils::getStartYear(){
-    const IClimateModel* climateModel = scenario->getClimateModel();
-    if( climateModel != 0 ){
-        return scenario->getClimateModel()->getCarbonModelStartYear();
-    }
-    else {
-        //TODO: try and get the land use history start year
-        return scenario->getModeltime()->getStartYear();
-    }
+    const static int START_YEAR = scenario->getClimateModel()
+        ? scenario->getClimateModel()->getCarbonModelStartYear() : scenario->getModeltime()->getStartYear();
+    return START_YEAR;
 }
 
 /*!
  * \brief Return the last year of the climate calculation.
- * \todo Make this value dynamic.
  * \author Jim Naslund
  * \return The last year of the climate calculation.
  */
 int CarbonModelUtils::getEndYear(){
-    return scenario->getModeltime()->getEndYear();
+    const static int END_YEAR = scenario->getModeltime()->getEndYear();
+    return END_YEAR;
 }
 
 /*
@@ -146,23 +139,8 @@ int CarbonModelUtils::getEndYear(){
  * \todo This should be dynamic by land type.
  */
 double CarbonModelUtils::getSoilTimeScale(){
-    return 40;
-}
-
-/*!
- * \brief Returns an int that is a unique key to the conceptual root for this item.
- * \details Casts the address of the conceptual root for this land allocator item
- *          into an int, which is a unique key for the conceptual root.
- * \return The start year.
- */
-size_t CarbonModelUtils::getConceptualRootKey(const ALandAllocatorItem* const aItem ){
-
-    const ALandAllocatorItem* conceptualRoot = aItem;
-    while( conceptualRoot->getParent() && !conceptualRoot->isConceptualRoot() ){
-        conceptualRoot = conceptualRoot->getParent();
-    }
-
-    return (size_t)conceptualRoot;
+    const static double SOIL_TIME_SCALE = 40;
+    return SOIL_TIME_SCALE;
 }
 
 /*!
@@ -237,73 +215,4 @@ double CarbonModelUtils::interpYearHelper( const objects::YearVector<double>& aY
 
     // Return the value from inside the range of the vector.
     return aYearVector[ aYear ];
-}
-
-string CarbonModelUtils::flowTypeToString( FlowType aFlow ) {
-    switch( aFlow ) {
-        case 0:
-            return "BoxFlow";
-            break;
-        case 1:
-            return "LUCFlow";
-            break;
-        case 2:
-            return "LUCFlowOut";
-            break;
-        case 3:
-            return "LUCFlowIn";
-            break;
-        case 4:
-            return "AnyFlow";
-            break;
-    }
-}
-
-std::string CarbonModelUtils::boxTypeToString( BoxType aBoxType ) {
-    switch( aBoxType ) {
-        case 0:
-            return "Vegetation";
-            break;
-        case 1:
-            return "Soil";
-            break;
-        case 2:
-            return "Litter";
-            break;
-        case 3:
-            return "NPP";
-            break;
-        case 4:
-            return "Atmosphere";
-            break;
-        case 5:
-            return "AnyBox";
-            break;
-    }
-}
-
-BoxType CarbonModelUtils::stringBoxNameToType( const std::string aBoxName ) {
-    std::string tempBoxName = aBoxName;
-    std::transform( tempBoxName.begin(),
-                    tempBoxName.end(),
-                    tempBoxName.begin(),
-                    ::tolower );
-    if ( aBoxName == "vegetation" ) {
-        return eVegetation;
-    }
-    else if ( aBoxName == "soil") {
-        return eSoil;
-    }
-    else if ( aBoxName == "litter" ) {
-        return eLitter;
-    }
-    else if ( aBoxName == "npp" ) {
-        return eNPP;
-    }
-    else if ( aBoxName == "atmosphere" ) {
-        return eAtmosphere;
-    }
-    else if ( aBoxName == "anybox" ) {
-        return eAnyBox;
-    }
 }

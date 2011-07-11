@@ -177,18 +177,10 @@ void EnergyFinalDemand::toInputXML( ostream& aOut, Tabs* aTabs ) const {
                                      modeltime->getper_to_yr( i ) );
     }
 
-    // TODO: XMLWriteVector
-    for( unsigned int i = 0; i < mPriceElasticity.size(); ++i ){
-        XMLWriteElementCheckDefault<double>( mPriceElasticity[ i ], "price-elasticity",
-                                     aOut, aTabs, 0.0,
-                                     modeltime->getper_to_yr( i ) );
-    }
-
-    for( unsigned int i = 0; i < mIncomeElasticity.size(); ++i ){
-        XMLWriteElementCheckDefault<double>( mIncomeElasticity[ i ], "income-elasticity",
-                                     aOut, aTabs, 0.0,
-                                     modeltime->getper_to_yr( i ) );
-    }
+    // It is important that we do not check default here since this could cause
+    // unintended interpolation.
+    XMLWriteVector( mPriceElasticity, "price-elasticity", aOut, aTabs, modeltime );
+    XMLWriteVector( mIncomeElasticity, "income-elasticity", aOut, aTabs, modeltime );
 
     toInputXMLDerived( aOut, aTabs );
     XMLWriteClosingTag( getXMLName(), aOut, aTabs );
@@ -249,7 +241,7 @@ void EnergyFinalDemand::completeInit( const string& aRegionName,
         mDemandFunction.reset( new TotalGDPDemandFunction );
     }
 
-    if( mBaseService[ 0 ] <= util::getSmallNumber() ){
+    if( mBaseService[ 0 ] < 0.0 ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::DEBUG );
         mainLog << "Zero base service for demand sector " << mName

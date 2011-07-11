@@ -601,7 +601,7 @@ typename HashMap<Key, Value>::CItemPair
 HashMap<Key, Value>::getFirstItem() const {
     // Check for empty hashmap first to avoid a slow unsuccessful search.
     if( empty() ){
-        return CItemPair( 0, 0 );
+        return CItemPair( static_cast<Item*>( 0 ), 0 );
     }
 
     // Search starting at the beginning of the bucket vector to find the first
@@ -618,7 +618,7 @@ HashMap<Key, Value>::getFirstItem() const {
     assert( false );
     
     // Make the compiler happy.
-    return CItemPair( 0, 0 );
+    return CItemPair( static_cast<Item*>( 0 ), 0 );
 }
 
 /*! \brief Return the next item in the hashmap.
@@ -647,7 +647,7 @@ HashMap<Key, Value>::getNextItem( const CItemPair& aItemPair ) const {
     }
 
     // The end of the bucket vector was reached so there is not a next item.
-    return CItemPair( 0, 0 );
+    return CItemPair( static_cast<Item*>( 0 ), 0 );
 }
 
 /*! \brief Find the first item in the hashmap.
@@ -662,7 +662,7 @@ template<class Key, class Value>
 typename HashMap<Key, Value>::ItemPair HashMap<Key, Value>::getFirstItem() {
     // Check for empty hashmap first to avoid a slow unsuccessful search.
     if( empty() ){
-        return ItemPair( 0, 0 );
+        return ItemPair( static_cast<Item*>( 0 ), 0 );
     }
 
     // Search starting at the beginning of the bucket vector to find the first
@@ -679,7 +679,7 @@ typename HashMap<Key, Value>::ItemPair HashMap<Key, Value>::getFirstItem() {
     assert( false );
     
     // Make the compiler happy.
-    return ItemPair( 0, 0 );
+    return ItemPair( static_cast<Item*>( 0 ), 0 );
 }
 
 /*! \brief Return the next item in the hashmap.

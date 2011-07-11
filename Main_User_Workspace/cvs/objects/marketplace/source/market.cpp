@@ -266,8 +266,8 @@ const vector<const Atom*>& Market::getContainedRegions() const {
 }
 
 /*! \brief Set an initial price for the market.
-* \details This function checks if the price of the market is less than
-*          util::getSmallNumber and if it is sets the price to 1. This is done
+* \details This function checks if the price of the market is zero
+*          in which case it resets the price to 1. This is done
 *          because the model needs a non-zero starting price, but should not
 *          overwrite read-in prices.
 * \warning Prices for periods greater than zero will have their read-in prices

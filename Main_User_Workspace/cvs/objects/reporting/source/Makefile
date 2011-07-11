@@ -8,8 +8,6 @@ PATHOFFSET = ../..
 include ${PATHOFFSET}/build/linux/configure.gcam
 
 OBJS       = batch_csv_outputter.o \
-             complex_carbon_dot_printer.o \
-             complex_carbon_printer.o \
              demand_components_table.o \
              govt_results.o \
              graph_printer.o \

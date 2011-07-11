@@ -202,6 +202,14 @@ protected:
      * \return A pointer to a copy of this technology container.
      */
     virtual ITechnologyContainer* clone() const = 0;
+    
+    /*!
+     * \brief Interpolate a technology to parse the given XML.
+     * \details This method will interpolate (if necessary) a technology
+     *          in order to parse the given XML.
+     * \ param aNode The XML to parse.
+     */
+    virtual void interpolateAndParse( const xercesc::DOMNode* aNode ) = 0;
 };
 
 // Inline function definitions.

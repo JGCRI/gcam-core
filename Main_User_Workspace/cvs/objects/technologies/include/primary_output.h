@@ -150,9 +150,8 @@ public:
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 
     // Documentation is inherited.
-    virtual void setLandAllocator( const ILandAllocator* aLandAllocator,
-                                   const std::string& aName,
-                                   const std::string& aLandType ) {}
+    virtual void sendLandAllocator( const ILandAllocator* aLandAllocator,
+                                   const std::string& aName ) {}
     
     virtual void doInterpolations( const int aYear, const int aPreviousYear,
                                    const int aNextYear, const IOutput* aPreviousInput,

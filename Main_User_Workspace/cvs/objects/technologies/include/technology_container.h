@@ -140,6 +140,8 @@ public:
 protected:
     virtual ITechnologyContainer* clone() const;
     
+    virtual void interpolateAndParse( const xercesc::DOMNode* aNode );
+    
 private:
     //! The name of the technology which will be duplicated in each contained
     //! technology.
@@ -179,6 +181,8 @@ private:
     void interpolateShareWeights( const int aPeriod );
     
     void clearInterpolationRules();
+    
+    void interpolateVintage( const int aYear, CVintageIterator aPrevTech, CVintageIterator aNextTech );
 };
 
 #endif // _TECHNOLOGY_CONTAINER_H_

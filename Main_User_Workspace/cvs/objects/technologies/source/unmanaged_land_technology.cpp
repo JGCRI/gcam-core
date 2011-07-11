@@ -36,12 +36,13 @@
 * \file unmanaged_land_technology.cpp
 * \ingroup Objects
 * \brief UnmanagedLandTechnology class source file.
-* \author Steve Smith
+* \author Steve Smith, Kate Calvin
 */
 
 #include "util/base/include/definitions.h"
 #include "technologies/include/unmanaged_land_technology.h"
 #include "land_allocator/include/iland_allocator.h"
+#include "land_allocator/include/aland_allocator_item.h"
 #include "emissions/include/aghg.h"
 #include "containers/include/scenario.h"
 #include "containers/include/iinfo.h"
@@ -50,7 +51,9 @@
 #include "technologies/include/ical_data.h"
 #include "technologies/include/iproduction_state.h"
 #include "technologies/include/ioutput.h"
+#include "technologies/include/generic_output.h"
 #include "functions/include/renewable_input.h"
+#include "containers/include/dependency_finder.h"
 
 using namespace std;
 using namespace xercesc;
@@ -63,8 +66,8 @@ extern Scenario* scenario;
  * \param aYear Technology year.
  */
 UnmanagedLandTechnology::UnmanagedLandTechnology( const string& aName, const int aYear )
-:FoodProductionTechnology( aName, aYear ),
-mCarbonToEnergy( 1 ) {
+:AgProductionTechnology( aName, aYear )
+{
 }
 
 // ! Destructor
@@ -79,9 +82,8 @@ UnmanagedLandTechnology::~UnmanagedLandTechnology() {
  * \param aOther The UnmanagedLandTechnology to copy.
  */
 UnmanagedLandTechnology::UnmanagedLandTechnology( const UnmanagedLandTechnology& aOther ):
-FoodProductionTechnology( aOther ),
-mLandItemName( aOther.mLandItemName ),
-mCarbonToEnergy( aOther.mCarbonToEnergy)
+AgProductionTechnology( aOther ),
+mLandItemName( aOther.mLandItemName )
 {
 }
 
@@ -90,10 +92,7 @@ bool UnmanagedLandTechnology::XMLDerivedClassParse( const string& nodeName, cons
     if( nodeName == "itemName" ) {
         mLandItemName = XMLHelper<string>::getValue( curr );
     }
-    else if( nodeName == "carbon-to-energy-conversion" ) {
-        mCarbonToEnergy = XMLHelper<double>::getValue( curr );
-    }
-    else if( !FoodProductionTechnology::XMLDerivedClassParse(nodeName, curr)) {
+    else if( !AgProductionTechnology::XMLDerivedClassParse(nodeName, curr)) {
         return false;
     }
     return true;
@@ -101,17 +100,14 @@ bool UnmanagedLandTechnology::XMLDerivedClassParse( const string& nodeName, cons
 
 //! write object to xml output stream
 void UnmanagedLandTechnology::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
-    FoodProductionTechnology::toInputXMLDerived( out, tabs);
-
-   XMLWriteElement( mLandItemName, "itemName", out, tabs );
-   XMLWriteElement( mCarbonToEnergy, "carbon-to-energy-conversion", out, tabs );
+    AgProductionTechnology::toInputXMLDerived( out, tabs);
+    XMLWriteElement( mLandItemName, "itemName", out, tabs );
 }
 
 //! write object to xml output stream
 void UnmanagedLandTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
-    FoodProductionTechnology::toDebugXMLDerived( period, out, tabs);
-   XMLWriteElement( mLandItemName, "itemName", out, tabs );
-   XMLWriteElement( mCarbonToEnergy, "carbon-to-energy-conversion", out, tabs );
+    AgProductionTechnology::toDebugXMLDerived( period, out, tabs);
+    XMLWriteElement( mLandItemName, "itemName", out, tabs );
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -148,8 +144,8 @@ const string& UnmanagedLandTechnology::getXMLNameStatic() {
 * \return The constant XML_NAME as a static.
 */
 const string& UnmanagedLandTechnology::getLandInputName( ) const {
-   const static string LAND_INPUT_NAME = "land-input";
-   return LAND_INPUT_NAME;
+    const static string LAND_INPUT_NAME = "land-input";
+    return LAND_INPUT_NAME;
 }
 
 //! Clone Function. Returns a deep copy of the current technology.
@@ -173,9 +169,6 @@ void UnmanagedLandTechnology::initCalc( const string& aRegionName,
                                            PreviousPeriodInfo& aPrevPeriodInfo,
                                            const int aPeriod )
 {
-    // This is skiping parent class. This is bad form and can be corrected once ag classes need to be re-factored
-    // TODO re-factor Ag production classes
-
     // need to initialize the unused share-weight
     // see FoodProductionTechnology::initCalc
     mShareWeight.set( 1.0 );
@@ -201,17 +194,6 @@ void UnmanagedLandTechnology::completeInit( const string& aRegionName,
                                                const IInfo* aSubsectorInfo,
                                                ILandAllocator* aLandAllocator )
 {
-    // Setup the land allocators for the secondary outputs
-    if ( mOutputs.size() ) {
-        // Technology::completeInit() will add the primary output.
-        // At this point, all are secondary outputs
-        
-        // Note that instead of techname mLandItemName is passed
-        for ( vector<IOutput*>::iterator outputIter = mOutputs.begin(); outputIter != mOutputs.end(); ++outputIter ) {
-           ( *outputIter )->setLandAllocator( aLandAllocator, mLandItemName, landType );
-        }
-    }
-
     // Initialize a renewable-energy input to hold amount of land in unmanaged land leaf
     // This is a renewable energy input (so nothing goes to the marketplace) and is here purely to 
     // allow non-CO2 GHG emissions that are proportional to unmanaged land area
@@ -223,17 +205,22 @@ void UnmanagedLandTechnology::completeInit( const string& aRegionName,
         mInputs.push_back( new RenewableInput( getLandInputName() ) );
     }
 
-    
-    // TODO: Change to be able to call the parent function.
-    // Right now doesn't work since two classes aren't derived from common parent.
-    // To do this, likely need a     ILandAllocator::LandUsageType getLandType() function so as to
-    // create the proper land leaf type.
-    
     Technology::completeInit( aRegionName, aSectorName, aSubsectorName, aDepFinder, aSubsectorInfo,
                               aLandAllocator );
+	
+	// Create the generic output for this technology. Insert the generic
+	// output at position 0, so it can be used for emissions calculation.
+    mOutputs.insert( mOutputs.begin(), new GenericOutput( aSectorName ) );
 
     // Store away the land allocator.
     mLandAllocator = aLandAllocator;
+    mProductLeaf = mLandAllocator->findProductLeaf( mLandItemName );
+    
+    // Unmanaged land sector is dependant on the land allocator, note that at
+    // the moment there is no explicit ordering for ag sectors however there
+    // will be in the future.  So adding this dependency is only to avoid errors
+    // until explicit ordering happens.
+    aDepFinder->addDependency( aSectorName, "land-allocator" );
 
 }
 
@@ -254,8 +241,6 @@ double UnmanagedLandTechnology::calcShare( const string& aRegionName,
                                               const double aLogitExp,
                                               const int aPeriod ) const
 {
-    assert( mProductionState[ aPeriod ]->isNewInvestment() );
-
     return 1;
 }
 
@@ -263,11 +248,7 @@ void UnmanagedLandTechnology::calcCost( const string& aRegionName,
                                            const string& aSectorName,
                                            const int aPeriod )
 {
-    if( !mProductionState[ aPeriod ]->isOperating() ){
-        return;
-    }
-
-    // Override costs to a non-zero value as the cost for a food production
+    // Override costs to a non-zero value as the cost for a ag production
     // technology is not used for the shares.
     mCosts[ aPeriod ] = 1;
 }
@@ -283,7 +264,7 @@ void UnmanagedLandTechnology::calcCost( const string& aRegionName,
 * \param aFixedOutputScaleFactor Fixed output scale factor.
 * \param aGDP Regional GDP container.
 * \param aPeriod Model period.
-* \author Steve Smith
+* \author Steve Smith, Kate Calvin
 */
 void UnmanagedLandTechnology::production( const string& aRegionName,
                                              const string& aSectorName,
@@ -292,49 +273,46 @@ void UnmanagedLandTechnology::production( const string& aRegionName,
                                              const GDP* aGDP,
                                              const int aPeriod )
 {
+    // If the product does not exist then no calculations need to occur.
+    if( !mProductLeaf ) {
+        return;
+    }
+    
     // If this technology is not operating this period then return without calculating emissions
     if( !mProductionState[ aPeriod ]->isOperating() ){
         return;
     }
 
     // Set the input to be the land used. 
-    double landInput = mLandAllocator->getLandAllocation( landType, mLandItemName, aPeriod );
+    double landInput = mProductLeaf->getLandAllocation( mLandItemName, aPeriod );
 
-    //TODO replace with annual veg carbon change once that is available
-    // This is a better driver of deforestation emissions than land area change
     double previousLandAllocation = 0;
     if ( aPeriod > 0 ) {
-      previousLandAllocation = mLandAllocator->getLandAllocation( landType, mLandItemName, aPeriod - 1 );
+      previousLandAllocation = mProductLeaf->getLandAllocation( mLandItemName, aPeriod - 1 );
     }
 
     // Land use decrease will be temporarily set as the primary output and is only
-    // used when calculating deforestation emissions.
-    double landUseDecrease = previousLandAllocation - landInput;
-    const Modeltime* modeltime = scenario->getModeltime();
-    // Get the average per year decrease.  Note that the coefficients have the base
-    // year time-step already included so we must adjust for that.
-    landUseDecrease *= modeltime->gettimestep( modeltime->getFinalCalibrationPeriod() )
-        / modeltime->gettimestep( aPeriod );
-    if ( landUseDecrease < 0 ){
-      landUseDecrease = 0;
-   }
+    // used when calculating deforestation emissions.  Divide by time-step to get
+    // the average annual decrease.
+    int timestep = scenario->getModeltime()->gettimestep( aPeriod );
+    double annualLandUseDecrease = ( previousLandAllocation - landInput ) / timestep;
+    if ( annualLandUseDecrease < 0 ) {
+      annualLandUseDecrease = 0;
+    }
 
-    calcEmissionsAndOutputs( aRegionName, landUseDecrease, aGDP, aPeriod );
+    calcEmissionsAndOutputs( aRegionName, annualLandUseDecrease, aGDP, aPeriod );
 }
 
 
 /*!
- * \brief Calculate the emissions, primary and secondary outputs for the
- *        Technology.
- * \details Sets primary output to zero.
-            Determines the secondary output levels and emissions for the Technology once
- *          the primary output and input quantities are known. Secondary output is
- *          proportional to land-use change. Emissions driven by output are driven with
- *          a value that subtracts the amount produced by secondary production.
- *          Emissions and outputs are added to the marketplace by the Output and GHG objects.
+ * \brief Calculate the non-CO2 emissions for the unmanaged land types
+ * \details Uses the GHG object to calculate non-CO2 emissions. It sets the "primary output"
+ *          equal to the average annual change in land cover. This way any GHG object with 
+ *          an output driver will use land use change as a driver.  Input drivers will
+ *          use land area as a driver.  After emissions are calculated, the primary output
+ *          is set to zero since unmanaged land technologies do not produce anything.
  * \param aRegionName Region name.
- * \param aInput Input quantity.
- * \param aPrimaryOutput Primary output quantity.
+ * \param aPrimaryOutput Average annual land use change
  * \param aGDP Regional GDP container.
  * \param aPeriod Period.
 * \author Steve Smith
@@ -344,48 +322,19 @@ void UnmanagedLandTechnology::calcEmissionsAndOutputs( const string& aRegionName
                                           const GDP* aGDP,
                                           const int aPeriod )
 {
-
-    // Skip first slot for primary output
-    for( unsigned int i = 1; i < mOutputs.size(); ++i ){
-        mOutputs[ i ]->setPhysicalOutput( aPrimaryOutput, aRegionName,
-                                          mCaptureComponent.get(), aPeriod );
-    }
-
-    // TODO -- much of the code in the rest of this section could likely be 
-    // eliminated once units are in the model as we could then use the
-    // input - output form of complex GHG driver. Can't use that form now
-    // since input and output are in different units. For now, have to explicitly
-    // specify the conversion from secondary output to either carbon or land-use
-    // in the technology through the carbon-to-energy-conversion value.
+    // Sets the "output" equal to the average annual land use change
+    // This is used as an emissions driver
     
-    // Subtract secondary output amount from primary output
-    // The remainder drives deforestation emissions
-    double secondaryOutputCarbon = 0;
-    for( unsigned int i = 1; i < mOutputs.size(); ++i ){
-        secondaryOutputCarbon += mOutputs[ i ]->getPhysicalOutput( aPeriod ) / mCarbonToEnergy;
-    }
-   
-    double remainingOutput = aPrimaryOutput - secondaryOutputCarbon;
-    remainingOutput = remainingOutput > 0 ? remainingOutput : 0;
-   
-    // Set primary output to remaining output for purposes of emissions calculation
-    mOutputs[ 0 ]->setPhysicalOutput( remainingOutput, aRegionName, mCaptureComponent.get(), aPeriod );
+    mOutputs[0]->setPhysicalOutput( aPrimaryOutput, aRegionName, 0, aPeriod );
 
     // Set land amount to land input for purposes of emissions calculation in any input objects
-    double landArea = mLandAllocator->getLandAllocation( landType, mLandItemName, aPeriod );
+    double landArea = mProductLeaf->getLandAllocation( mLandItemName, aPeriod );
     ( *mResourceInput )->setPhysicalDemand( landArea, aRegionName, aPeriod );
 
     // calculate emissions for each gas
     for ( unsigned int i = 0; i < ghg.size(); ++i ) {
         ghg[ i ]->calcEmission( aRegionName, mInputs , mOutputs, aGDP, mCaptureComponent.get(), aPeriod );
     }
-
-    // Cancel previous set output to the market by subtracting from the marketplace
-    Marketplace* marketplace = scenario->getMarketplace();
-    marketplace->addToSupply( mOutputs[ 0 ]->getName(), aRegionName, -remainingOutput, aPeriod, false );
-
-    // Set primary output to zero -- there is no primary output from unmanaged land
-    mOutputs[ 0 ]->setPhysicalOutput( 0, aRegionName, mCaptureComponent.get(), aPeriod );
 }
 
 /*! 

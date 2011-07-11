@@ -15,8 +15,7 @@ OBJS       = base_technology.o \
              default_technology.o \
              expenditure.o \
              fixed_production_state.o \
-             food_production_technology.o \
-             forest_production_technology.o \
+             ag_production_technology.o \
              global_technology_database.o \
              intermittent_technology.o \
              internal_gains.o \
@@ -50,6 +49,7 @@ OBJS       = base_technology.o \
              stub_technology_container.o \
              s_curve_shutdown_decider.o \
              empty_technology.o \
+             generic_output.o \
              input_factory.o
 
 technologies_dir: ${OBJS}

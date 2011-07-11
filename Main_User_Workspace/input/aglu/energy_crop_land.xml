@@ -1,0 +1,1851 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="Western Europe">
+         <LandAllocatorRoot name="root">
+            <LandNode name="AgroForestLandAEZ4">
+               <LandNode name="AgroForest_NonPastureAEZ4">
+                  <LandNode name="CropLandAEZ4">
+                     <LandLeaf name="miscanthusAEZ4">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.490600074</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.0</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.490600074</above-ground-carbon-density>
+                           <below-ground-carbon-density>0</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">10</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                     <LandLeaf delete="1" name="biomassAEZ4"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ7">
+               <LandNode name="AgroForest_NonPastureAEZ7">
+                  <LandNode name="CropLandAEZ7">
+                     <LandLeaf name="miscanthusAEZ7">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.84483465</above-ground-carbon-density>
+                           <below-ground-carbon-density>8.5</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.84483465</above-ground-carbon-density>
+                           <below-ground-carbon-density>8.5</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">10</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                     <LandLeaf delete="1" name="biomassAEZ7"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ8">
+               <LandNode name="AgroForest_NonPastureAEZ8">
+                  <LandNode name="CropLandAEZ8">
+                     <LandLeaf name="miscanthusAEZ8">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.743847203</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.8</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.743847203</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.795102001</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">10</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                     <LandLeaf delete="1" name="biomassAEZ8"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ9">
+               <LandNode name="AgroForest_NonPastureAEZ9">
+                  <LandNode name="CropLandAEZ9">
+                     <LandLeaf name="miscanthusAEZ9">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.860065363</above-ground-carbon-density>
+                           <below-ground-carbon-density>10.1</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.860065363</above-ground-carbon-density>
+                           <below-ground-carbon-density>10.13529218</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">10</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                     <LandLeaf delete="1" name="biomassAEZ9"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ10">
+               <LandNode name="AgroForest_NonPastureAEZ10">
+                  <LandNode name="CropLandAEZ10">
+                     <LandLeaf name="miscanthusAEZ10">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>1.177450545</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.6</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>1.177450545</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.603760875</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">10</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                     <LandLeaf delete="1" name="biomassAEZ10"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ11">
+               <LandNode name="AgroForest_NonPastureAEZ11">
+                  <LandNode name="CropLandAEZ11">
+                     <LandLeaf name="miscanthusAEZ11">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>1.177450545</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.5</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>1.177450545</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.536961921</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">10</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                     <LandLeaf delete="1" name="biomassAEZ11"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ12">
+               <LandNode name="AgroForest_NonPastureAEZ12">
+                  <LandNode name="CropLandAEZ12">
+                     <LandLeaf name="miscanthusAEZ12">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>1.095907304</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.5</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>1.095907304</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.5</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">10</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                     <LandLeaf delete="1" name="biomassAEZ12"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ13">
+               <LandNode name="AgroForest_NonPastureAEZ13">
+                  <LandNode name="AllForestLandAEZ13">
+                     <LandLeaf name="willowAEZ13">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.236855101</above-ground-carbon-density>
+                           <below-ground-carbon-density>20.6</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.236855101</above-ground-carbon-density>
+                           <below-ground-carbon-density>20.6</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">50</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ13">
+                     <LandLeaf delete="1" name="biomassAEZ13"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ14">
+               <LandNode name="AgroForest_NonPastureAEZ14">
+                  <LandNode name="AllForestLandAEZ14">
+                     <LandLeaf name="willowAEZ14">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.302980792</above-ground-carbon-density>
+                           <below-ground-carbon-density>20.47987811</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.302980792</above-ground-carbon-density>
+                           <below-ground-carbon-density>20.47987811</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">50</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ14">
+                     <LandLeaf delete="1" name="biomassAEZ14"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ15">
+               <LandNode name="AgroForest_NonPastureAEZ15">
+                  <LandNode name="AllForestLandAEZ15">
+                     <LandLeaf name="willowAEZ15">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.404046715</above-ground-carbon-density>
+                           <below-ground-carbon-density>20.40796957</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.404046715</above-ground-carbon-density>
+                           <below-ground-carbon-density>20.40796957</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">50</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ15">
+                     <LandLeaf delete="1" name="biomassAEZ15"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ16">
+               <LandNode name="AgroForest_NonPastureAEZ16">
+                  <LandNode name="AllForestLandAEZ16">
+                     <LandLeaf name="willowAEZ16">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.610169618</above-ground-carbon-density>
+                           <below-ground-carbon-density>19.63443131</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.610169618</above-ground-carbon-density>
+                           <below-ground-carbon-density>19.63443131</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">50</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ16">
+                     <LandLeaf delete="1" name="biomassAEZ16"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+         </LandAllocatorRoot>
+      </region>
+      <region name="Africa">
+         <LandAllocatorRoot name="root">
+            <LandNode name="AgroForestLandAEZ1">
+               <LandNode name="AgroForest_NonPastureAEZ1">
+                  <LandNode name="CropLandAEZ1">
+                     <LandLeaf name="JatrophaAEZ1">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.040858544</above-ground-carbon-density>
+                           <below-ground-carbon-density>7.1</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.040858544</above-ground-carbon-density>
+                           <below-ground-carbon-density>7.073012798</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">10</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                     <LandLeaf delete="1" name="biomassAEZ1"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ2">
+               <LandNode name="AgroForest_NonPastureAEZ2">
+                  <LandNode name="CropLandAEZ2">
+                     <LandLeaf name="JatrophaAEZ2">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.026044474</above-ground-carbon-density>
+                           <below-ground-carbon-density>8.9</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.026044474</above-ground-carbon-density>
+                           <below-ground-carbon-density>8.941506817</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">10</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                     <LandLeaf delete="1" name="biomassAEZ2"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ3">
+               <LandNode name="AgroForest_NonPastureAEZ3">
+                  <LandNode name="AllForestLandAEZ3">
+                     <LandLeaf name="eucalyptusAEZ3">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.279432276</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.794775907</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.279432276</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.794775907</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">35.60263245</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ3">
+                     <LandLeaf delete="1" name="biomassAEZ3"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ4">
+               <LandNode name="AgroForest_NonPastureAEZ4">
+                  <LandNode name="AllForestLandAEZ4">
+                     <LandLeaf name="eucalyptusAEZ4">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.339412415</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.797943738</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.339412415</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.797943738</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">36.76227724</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ4">
+                     <LandLeaf delete="1" name="biomassAEZ4"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ5">
+               <LandNode name="AgroForest_NonPastureAEZ5">
+                  <LandNode name="AllForestLandAEZ5">
+                     <LandLeaf name="eucalyptusAEZ5">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.280101079</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.799838316</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.280101079</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.799838316</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">37.95913153</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ5">
+                     <LandLeaf delete="1" name="biomassAEZ5"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ6">
+               <LandNode name="AgroForest_NonPastureAEZ6">
+                  <LandNode name="AllForestLandAEZ6">
+                     <LandLeaf name="eucalyptusAEZ6">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.691064875</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.8</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.691064875</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.8</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">39.8533503</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ6">
+                     <LandLeaf delete="1" name="biomassAEZ6"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ7">
+               <LandNode name="AgroForest_NonPastureAEZ7">
+                  <LandNode name="AllForestLandAEZ7">
+                     <LandLeaf name="eucalyptusAEZ7">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>1.083315234</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.8</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>1.083315234</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.8</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">39.1901999</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ7">
+                     <LandLeaf delete="1" name="biomassAEZ7"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ8">
+               <LandNode name="AgroForest_NonPastureAEZ8">
+                  <LandNode name="AllForestLandAEZ8">
+                     <LandLeaf name="eucalyptusAEZ8">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.746837784</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.692629991</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.746837784</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.692629991</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">36.39867671</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ8">
+                     <LandLeaf delete="1" name="biomassAEZ8"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ9">
+               <LandNode name="AgroForest_NonPastureAEZ9">
+                  <LandNode name="AllForestLandAEZ9">
+                     <LandLeaf name="eucalyptusAEZ9">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.51110823</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.580094766</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.51110823</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.580094766</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">36.46228849</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ9">
+                     <LandLeaf delete="1" name="biomassAEZ9"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ10">
+               <LandNode name="AgroForest_NonPastureAEZ10">
+                  <LandNode name="AllForestLandAEZ10">
+                     <LandLeaf name="eucalyptusAEZ10">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.566126827</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.66937045</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.566126827</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.66937045</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">36.95872785</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ10">
+                     <LandLeaf delete="1" name="biomassAEZ10"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ11">
+               <LandNode name="AgroForest_NonPastureAEZ11">
+                  <LandNode name="AllForestLandAEZ11">
+                     <LandLeaf name="eucalyptusAEZ11">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.736496513</above-ground-carbon-density>
+                           <below-ground-carbon-density>8.999320252</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.736496513</above-ground-carbon-density>
+                           <below-ground-carbon-density>8.999320252</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">42.47943462</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ11">
+                     <LandLeaf delete="1" name="biomassAEZ11"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ12">
+               <LandNode name="AgroForest_NonPastureAEZ12">
+                  <LandNode name="AllForestLandAEZ12">
+                     <LandLeaf name="eucalyptusAEZ12">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.702269298</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.8</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.702269298</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.8</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">37.94815756</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ12">
+                     <LandLeaf delete="1" name="biomassAEZ12"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+         </LandAllocatorRoot>
+      </region>
+      <region name="India">
+         <LandAllocatorRoot name="root">
+            <LandNode name="AgroForestLandAEZ1">
+               <LandNode name="AgroForest_NonPastureAEZ1">
+                  <LandNode name="CropLandAEZ1">
+                     <LandLeaf name="JatrophaAEZ1">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.040858544</above-ground-carbon-density>
+                           <below-ground-carbon-density>0.0</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.040858544</above-ground-carbon-density>
+                           <below-ground-carbon-density>0</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">10</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                     <LandLeaf delete="1" name="biomassAEZ1"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ2">
+               <LandNode name="AgroForest_NonPastureAEZ2">
+                  <LandNode name="CropLandAEZ2">
+                     <LandLeaf name="JatrophaAEZ2">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.026044474</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.5</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.026044474</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.5</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">10</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                     <LandLeaf delete="1" name="biomassAEZ2"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ3">
+               <LandNode name="AgroForest_NonPastureAEZ3">
+                  <LandNode name="CropLandAEZ3">
+                     <LandLeaf name="JatrophaAEZ3">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.027224043</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.5</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.027224043</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.499450328</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">10</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                     <LandLeaf delete="1" name="biomassAEZ3"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ4">
+               <LandNode name="AgroForest_NonPastureAEZ4">
+                  <LandNode name="CropLandAEZ4">
+                     <LandLeaf name="JatrophaAEZ4">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.033385644</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.5</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.033385644</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.5</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">10</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                     <LandLeaf delete="1" name="biomassAEZ4"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ5">
+               <LandNode name="AgroForest_NonPastureAEZ5">
+                  <LandNode name="CropLandAEZ5">
+                     <LandLeaf name="JatrophaAEZ5">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.041349058</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.8</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.041349058</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.842696212</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">10</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                     <LandLeaf delete="1" name="biomassAEZ5"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ6">
+               <LandNode name="AgroForest_NonPastureAEZ6">
+                  <LandNode name="CropLandAEZ6">
+                     <LandLeaf name="JatrophaAEZ6">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.066287099</above-ground-carbon-density>
+                           <below-ground-carbon-density>13.5</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.066287099</above-ground-carbon-density>
+                           <below-ground-carbon-density>13.5</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">10</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                     <LandLeaf delete="1" name="biomassAEZ6"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+         </LandAllocatorRoot>
+      </region>
+      <region name="USA">
+         <LandAllocatorRoot name="root">
+            <LandNode name="AgroForestLandAEZ14">
+               <LandNode name="AgroForest_NonPastureAEZ14">
+                  <LandNode name="AllForestLandAEZ14">
+                     <LandLeaf name="willowAEZ14">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.302980792</above-ground-carbon-density>
+                           <below-ground-carbon-density>20.24961616</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.302980792</above-ground-carbon-density>
+                           <below-ground-carbon-density>20.24961616</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">50</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ14">
+                     <LandLeaf delete="1" name="biomassAEZ14"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ15">
+               <LandNode name="AgroForest_NonPastureAEZ15">
+                  <LandNode name="AllForestLandAEZ15">
+                     <LandLeaf name="willowAEZ15">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.404046715</above-ground-carbon-density>
+                           <below-ground-carbon-density>20.43575161</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.404046715</above-ground-carbon-density>
+                           <below-ground-carbon-density>20.43575161</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">50</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ15">
+                     <LandLeaf delete="1" name="biomassAEZ15"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ16">
+               <LandNode name="AgroForest_NonPastureAEZ16">
+                  <LandNode name="AllForestLandAEZ16">
+                     <LandLeaf name="willowAEZ16">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.610169618</above-ground-carbon-density>
+                           <below-ground-carbon-density>19.67994865</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.610169618</above-ground-carbon-density>
+                           <below-ground-carbon-density>19.67994865</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">50</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ16">
+                     <LandLeaf delete="1" name="biomassAEZ16"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+         </LandAllocatorRoot>
+      </region>
+      <region name="Eastern Europe">
+         <LandAllocatorRoot name="root">
+            <LandNode name="AgroForestLandAEZ8">
+               <LandNode name="AgroForest_NonPastureAEZ8">
+                  <LandNode name="AllForestLandAEZ8">
+                     <LandLeaf name="willowAEZ8">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.397221136</above-ground-carbon-density>
+                           <below-ground-carbon-density>13.4</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.397221136</above-ground-carbon-density>
+                           <below-ground-carbon-density>13.4</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">50</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ8">
+                     <LandLeaf delete="1" name="biomassAEZ8"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ9">
+               <LandNode name="AgroForest_NonPastureAEZ9">
+                  <LandNode name="AllForestLandAEZ9">
+                     <LandLeaf name="willowAEZ9">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.459282684</above-ground-carbon-density>
+                           <below-ground-carbon-density>12.70315514</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.459282684</above-ground-carbon-density>
+                           <below-ground-carbon-density>12.70315514</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">49.99186384</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ9">
+                     <LandLeaf delete="1" name="biomassAEZ9"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ10">
+               <LandNode name="AgroForest_NonPastureAEZ10">
+                  <LandNode name="AllForestLandAEZ10">
+                     <LandLeaf name="willowAEZ10">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.628769243</above-ground-carbon-density>
+                           <below-ground-carbon-density>13.22165286</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.628769243</above-ground-carbon-density>
+                           <below-ground-carbon-density>13.22165286</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">50</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ10">
+                     <LandLeaf delete="1" name="biomassAEZ10"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ11">
+               <LandNode name="AgroForest_NonPastureAEZ11">
+                  <LandNode name="AllForestLandAEZ11">
+                     <LandLeaf name="willowAEZ11">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.628769243</above-ground-carbon-density>
+                           <below-ground-carbon-density>13.05591361</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.628769243</above-ground-carbon-density>
+                           <below-ground-carbon-density>13.05591361</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">50</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ11">
+                     <LandLeaf delete="1" name="biomassAEZ11"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ12">
+               <LandNode name="AgroForest_NonPastureAEZ12">
+                  <LandNode name="AllForestLandAEZ12">
+                     <LandLeaf name="willowAEZ12">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.585224415</above-ground-carbon-density>
+                           <below-ground-carbon-density>11.93076644</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.585224415</above-ground-carbon-density>
+                           <below-ground-carbon-density>11.93076644</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">50</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ12">
+                     <LandLeaf delete="1" name="biomassAEZ12"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ15">
+               <LandNode name="AgroForest_NonPastureAEZ15">
+                  <LandNode name="AllForestLandAEZ15">
+                     <LandLeaf name="willowAEZ15">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.404046715</above-ground-carbon-density>
+                           <below-ground-carbon-density>17.41040275</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.404046715</above-ground-carbon-density>
+                           <below-ground-carbon-density>17.41040275</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">50</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ15">
+                     <LandLeaf delete="1" name="biomassAEZ15"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ16">
+               <LandNode name="AgroForest_NonPastureAEZ16">
+                  <LandNode name="AllForestLandAEZ16">
+                     <LandLeaf name="willowAEZ16">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.610169618</above-ground-carbon-density>
+                           <below-ground-carbon-density>17.26177259</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.610169618</above-ground-carbon-density>
+                           <below-ground-carbon-density>17.26177259</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">50</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ16">
+                     <LandLeaf delete="1" name="biomassAEZ16"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+         </LandAllocatorRoot>
+      </region>
+      <region name="Latin America">
+         <LandAllocatorRoot name="root">
+            <LandNode name="AgroForestLandAEZ1">
+               <LandNode name="AgroForest_NonPastureAEZ1">
+                  <LandNode name="AllForestLandAEZ1">
+                     <LandLeaf name="eucalyptusAEZ1">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.539429896</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.827442373</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.539429896</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.827442373</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">36.56849275</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ1">
+                     <LandLeaf delete="1" name="biomassAEZ1"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ2">
+               <LandNode name="AgroForest_NonPastureAEZ2">
+                  <LandNode name="AllForestLandAEZ2">
+                     <LandLeaf name="eucalyptusAEZ2">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.349696163</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.878611701</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.349696163</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.878611701</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">37.75077971</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ2">
+                     <LandLeaf delete="1" name="biomassAEZ2"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ3">
+               <LandNode name="AgroForest_NonPastureAEZ3">
+                  <LandNode name="AllForestLandAEZ3">
+                     <LandLeaf name="eucalyptusAEZ3">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.279432276</above-ground-carbon-density>
+                           <below-ground-carbon-density>10.00511056</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.279432276</above-ground-carbon-density>
+                           <below-ground-carbon-density>10.00511056</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">39.18085341</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ3">
+                     <LandLeaf delete="1" name="biomassAEZ3"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ4">
+               <LandNode name="AgroForest_NonPastureAEZ4">
+                  <LandNode name="AllForestLandAEZ4">
+                     <LandLeaf name="eucalyptusAEZ4">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.339412415</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.953669351</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.339412415</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.953669351</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">39.73036019</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ4">
+                     <LandLeaf delete="1" name="biomassAEZ4"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ5">
+               <LandNode name="AgroForest_NonPastureAEZ5">
+                  <LandNode name="AllForestLandAEZ5">
+                     <LandLeaf name="eucalyptusAEZ5">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.280101079</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.820100246</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.280101079</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.820100246</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">38.99308065</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ5">
+                     <LandLeaf delete="1" name="biomassAEZ5"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ6">
+               <LandNode name="AgroForest_NonPastureAEZ6">
+                  <LandNode name="AllForestLandAEZ6">
+                     <LandLeaf name="eucalyptusAEZ6">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.691064875</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.809923831</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.691064875</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.809923831</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">39.86961167</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ6">
+                     <LandLeaf delete="1" name="biomassAEZ6"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ7">
+               <LandNode name="AgroForest_NonPastureAEZ7">
+                  <LandNode name="AllForestLandAEZ7">
+                     <LandLeaf name="eucalyptusAEZ7">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>1.083315234</above-ground-carbon-density>
+                           <below-ground-carbon-density>10.81882255</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>1.083315234</above-ground-carbon-density>
+                           <below-ground-carbon-density>10.81882255</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">43.42394601</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ7">
+                     <LandLeaf delete="1" name="biomassAEZ7"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ8">
+               <LandNode name="AgroForest_NonPastureAEZ8">
+                  <LandNode name="AllForestLandAEZ8">
+                     <LandLeaf name="eucalyptusAEZ8">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.746837784</above-ground-carbon-density>
+                           <below-ground-carbon-density>10.71232616</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.746837784</above-ground-carbon-density>
+                           <below-ground-carbon-density>10.71232616</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">41.44767894</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ8">
+                     <LandLeaf delete="1" name="biomassAEZ8"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ9">
+               <LandNode name="AgroForest_NonPastureAEZ9">
+                  <LandNode name="AllForestLandAEZ9">
+                     <LandLeaf name="eucalyptusAEZ9">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.51110823</above-ground-carbon-density>
+                           <below-ground-carbon-density>10.72952066</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.51110823</above-ground-carbon-density>
+                           <below-ground-carbon-density>10.72952066</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">41.46871893</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ9">
+                     <LandLeaf delete="1" name="biomassAEZ9"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ10">
+               <LandNode name="AgroForest_NonPastureAEZ10">
+                  <LandNode name="AllForestLandAEZ10">
+                     <LandLeaf name="eucalyptusAEZ10">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.566126827</above-ground-carbon-density>
+                           <below-ground-carbon-density>10.590996</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.566126827</above-ground-carbon-density>
+                           <below-ground-carbon-density>10.590996</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">43.05863336</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ10">
+                     <LandLeaf delete="1" name="biomassAEZ10"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ11">
+               <LandNode name="AgroForest_NonPastureAEZ11">
+                  <LandNode name="AllForestLandAEZ11">
+                     <LandLeaf name="eucalyptusAEZ11">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.736496513</above-ground-carbon-density>
+                           <below-ground-carbon-density>10.22856515</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.736496513</above-ground-carbon-density>
+                           <below-ground-carbon-density>10.22856515</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">42.35601552</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ11">
+                     <LandLeaf delete="1" name="biomassAEZ11"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ12">
+               <LandNode name="AgroForest_NonPastureAEZ12">
+                  <LandNode name="AllForestLandAEZ12">
+                     <LandLeaf name="eucalyptusAEZ12">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.702269298</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.765538256</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.702269298</above-ground-carbon-density>
+                           <below-ground-carbon-density>9.765538256</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">40.46865781</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ12">
+                     <LandLeaf delete="1" name="biomassAEZ12"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+         </LandAllocatorRoot>
+      </region>
+      <region name="China">
+         <LandAllocatorRoot name="root">
+            <LandNode name="AgroForestLandAEZ13">
+               <LandNode name="AgroForest_NonPastureAEZ13">
+                  <LandNode name="AllForestLandAEZ13">
+                     <LandLeaf name="willowAEZ13">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.236855101</above-ground-carbon-density>
+                           <below-ground-carbon-density>20.6</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.236855101</above-ground-carbon-density>
+                           <below-ground-carbon-density>20.6</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">50</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ13">
+                     <LandLeaf delete="1" name="biomassAEZ13"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ14">
+               <LandNode name="AgroForest_NonPastureAEZ14">
+                  <LandNode name="AllForestLandAEZ14">
+                     <LandLeaf name="willowAEZ14">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.296733765</above-ground-carbon-density>
+                           <below-ground-carbon-density>20.25350733</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.296733765</above-ground-carbon-density>
+                           <below-ground-carbon-density>20.25350733</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">49.94052562</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ14">
+                     <LandLeaf delete="1" name="biomassAEZ14"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ15">
+               <LandNode name="AgroForest_NonPastureAEZ15">
+                  <LandNode name="AllForestLandAEZ15">
+                     <LandLeaf name="willowAEZ15">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.395715854</above-ground-carbon-density>
+                           <below-ground-carbon-density>20.39342295</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.395715854</above-ground-carbon-density>
+                           <below-ground-carbon-density>20.39342295</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">49.8544358</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ15">
+                     <LandLeaf delete="1" name="biomassAEZ15"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ16">
+               <LandNode name="AgroForest_NonPastureAEZ16">
+                  <LandNode name="AllForestLandAEZ16">
+                     <LandLeaf name="willowAEZ16">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.597588801</above-ground-carbon-density>
+                           <below-ground-carbon-density>14.24438183</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.597588801</above-ground-carbon-density>
+                           <below-ground-carbon-density>14.24438183</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">44.19887183</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ16">
+                     <LandLeaf delete="1" name="biomassAEZ16"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+            <LandNode name="AgroForestLandAEZ17">
+               <LandNode name="AgroForest_NonPastureAEZ17">
+                  <LandNode name="AllForestLandAEZ17">
+                     <LandLeaf name="willowAEZ17">
+                        <landAllocation year="1975">0</landAllocation>
+                        <landAllocation year="1990">0</landAllocation>
+                        <landAllocation year="2005">0</landAllocation>
+                        <land-use-history>
+                           <allocation year="1700">0</allocation>
+                           <allocation year="1750">0</allocation>
+                           <allocation year="1800">0</allocation>
+                           <allocation year="1850">0</allocation>
+                           <allocation year="1900">0</allocation>
+                           <allocation year="1950">0</allocation>
+                           <allocation year="1975">0</allocation>
+                           <above-ground-carbon-density>0.449020199</above-ground-carbon-density>
+                           <below-ground-carbon-density>10.82902677</below-ground-carbon-density>
+                        </land-use-history>
+                        <isNewTechnology fillout="1" year="2020">1</isNewTechnology>
+                        <minAboveGroundCDensity>0</minAboveGroundCDensity>
+                        <minBelowGroundCDensity>0</minBelowGroundCDensity>
+                        <land-carbon-densities>
+                           <above-ground-carbon-density>0.449020199</above-ground-carbon-density>
+                           <below-ground-carbon-density>10.82902677</below-ground-carbon-density>
+                           <mature-age fillout="1" year="1975">40.95280256</mature-age>
+                        </land-carbon-densities>
+                     </LandLeaf>
+                  </LandNode>
+                  <LandNode name="CropLandAEZ17">
+                     <LandLeaf delete="1" name="biomassAEZ17"/>
+                  </LandNode>
+               </LandNode>
+            </LandNode>
+         </LandAllocatorRoot>
+      </region>
+   </world>
+</scenario>

@@ -1,0 +1,81 @@
+<scenario name="CCSP450">
+	<world>
+		<region name="USA">
+			<ghgpolicy name="CO2">
+				<market>global</market>
+				<isFixedTax>1</isFixedTax>
+				<fixedTax year="2020">20</fixedTax>
+				<fixedTax year="2035">41.6</fixedTax>
+				<fixedTax year="2050">86.4</fixedTax>
+				<fixedTax year="2065">179.7</fixedTax>
+				<fixedTax year="2080">373.6</fixedTax>
+				<fixedTax year="2095">776.7</fixedTax>
+			</ghgpolicy>
+		</region>
+		<region name="Canada">
+			<ghgpolicy name="CO2">
+				<market>global</market>
+			</ghgpolicy>
+		</region>
+		<region name="Western Europe">
+			<ghgpolicy name="CO2">
+				<market>global</market>
+			</ghgpolicy>
+		</region>
+		<region name="Japan">
+			<ghgpolicy name="CO2">
+				<market>global</market>
+			</ghgpolicy>
+		</region>
+		<region name="Australia_NZ">
+			<ghgpolicy name="CO2">
+				<market>global</market>
+			</ghgpolicy>
+		</region>
+		<region name="Former Soviet Union">
+			<ghgpolicy name="CO2">
+				<market>global</market>
+			</ghgpolicy>
+		</region>
+		<region name="China">
+			<ghgpolicy name="CO2">
+				<market>global</market>
+			</ghgpolicy>
+		</region>
+		<region name="Middle East">
+			<ghgpolicy name="CO2">
+				<market>global</market>
+			</ghgpolicy>
+		</region>
+		<region name="Africa">
+			<ghgpolicy name="CO2">
+				<market>global</market>
+			</ghgpolicy>
+		</region>
+		<region name="Latin America">
+			<ghgpolicy name="CO2">
+				<market>global</market>
+			</ghgpolicy>
+		</region>
+		<region name="Southeast Asia">
+			<ghgpolicy name="CO2">
+				<market>global</market>
+			</ghgpolicy>
+		</region>
+		<region name="Eastern Europe">
+			<ghgpolicy name="CO2">
+				<market>global</market>
+			</ghgpolicy>
+		</region>
+		<region name="Korea">
+			<ghgpolicy name="CO2">
+				<market>global</market>
+			</ghgpolicy>
+		</region>
+		<region name="India">
+			<ghgpolicy name="CO2">
+				<market>global</market>
+			</ghgpolicy>
+		</region>
+	</world>
+</scenario>

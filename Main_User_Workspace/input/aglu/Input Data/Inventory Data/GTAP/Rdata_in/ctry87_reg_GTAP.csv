@@ -1,0 +1,88 @@
+ctry87,country_name,GCAM_region_ID,GCAM_region_name
+aus,Australia,5,Australia_NZ
+nzl,New Zealand,5,Australia_NZ
+xoc,Rest of Oceania,5,Australia_NZ
+chn,China,7,China
+hkg,Hong Kong,11,Southeast Asia
+jpn,Japan,4,Japan
+kor,Korea,13,Korea
+twn,Taiwan,11,Southeast Asia
+xea,Rest of East Asia,11,Southeast Asia
+idn,Indonesia,11,Southeast Asia
+mys,Malaysia,11,Southeast Asia
+phl,Philippines,11,Southeast Asia
+sgp,Singapore,11,Southeast Asia
+tha,Thailand,11,Southeast Asia
+vnm,Viet Nam,7,China
+xse,Rest of Southeast Asia,11,Southeast Asia
+bgd,Bangladesh,11,Southeast Asia
+ind,India,14,India
+lka,Sri Lanka,11,Southeast Asia
+xsa,Rest of South Asia,11,Southeast Asia
+can,Canada,2,Canada
+usa,USA,1,USA
+mex,Mexico,10,Latin America
+xna,Rest of North America,10,Latin America
+col,Colombia,10,Latin America
+per,Peru,10,Latin America
+ven,Venezuela,10,Latin America
+xap,Rest of Andean Pact,10,Latin America
+arg,Argentina,10,Latin America
+bra,Brazil,10,Latin America
+chl,Chile,10,Latin America
+ury,Uruguay,10,Latin America
+xsm,Rest of South America,10,Latin America
+xca,Central America,10,Latin America
+xfa,Rest of Free Trade Area of the Americas,10,Latin America
+xcb,Rest of the Caribbean,10,Latin America
+aut,Austria,3,Western Europe
+bel,Belgium,3,Western Europe
+dnk,Denmark,3,Western Europe
+fin,Finland,3,Western Europe
+fra,France,3,Western Europe
+deu,Germany,3,Western Europe
+gbr,United Kingdom,3,Western Europe
+grc,Greece,3,Western Europe
+irl,Ireland,3,Western Europe
+ita,Italy,3,Western Europe
+lux,Luxembourg,3,Western Europe
+nld,Netherlands,3,Western Europe
+prt,Portugal,3,Western Europe
+esp,Spain,3,Western Europe
+swe,Sweden,3,Western Europe
+che,Switzerland,3,Western Europe
+xef,Rest of EFTA,3,Western Europe
+xer,Rest of Europe,3,Western Europe
+alb,Albania,12,Eastern Europe
+bgr,Bulgaria,12,Eastern Europe
+hrv,Croatia,12,Eastern Europe
+cyp,Cyprus,12,Eastern Europe
+cze,Czech Republic,12,Eastern Europe
+hun,Hungary,12,Eastern Europe
+mlt,Malta,12,Eastern Europe
+pol,Poland,12,Eastern Europe
+rom,Romania,12,Eastern Europe
+svk,Slovakia,12,Eastern Europe
+svn,Slovenia,12,Eastern Europe
+est,Estonia,6,Former Soviet Union
+lva,Latvia,6,Former Soviet Union
+ltu,Lithuania,6,Former Soviet Union
+rus,Russian Federation,6,Former Soviet Union
+xsu,Rest of Former Soviet Union,6,Former Soviet Union
+tur,Turkey,3,Western Europe
+xme,Rest of Middle East,8,Middle East
+mar,Morocco,9,Africa
+tun,Tunisia,9,Africa
+xnf,Rest of North Africa,9,Africa
+bwa,Botswana,9,Africa
+zaf,South Africa,9,Africa
+xsc,Rest of South African Customs Union,9,Africa
+mwi,Malawi,9,Africa
+moz,Mozambique,9,Africa
+tza,Tanzania,9,Africa
+zmb,Zambia,9,Africa
+zwe,Zimbabwe,9,Africa
+xsd,Rest of Southern African Development Community,9,Africa
+mdg,Madagascar,9,Africa
+uga,Uganda,9,Africa
+xss,Rest of Sub-Saharan Africa,9,Africa

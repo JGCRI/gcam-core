@@ -465,7 +465,7 @@
          <axis2 name="Year">cost</axis2>
          <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector' and ((@name='electricity' or @name='off peak electricity' or @name='intermediate electricity' or @name='subpeak electricity' or @name='peak electricity' or @name='elect_td_bld' or @name='elect_td_ind' or @name='elect_td_trn'))]/cost/text()</xPath>
          <comments/>
-      </supplyDemandQuery>     
+      </supplyDemandQuery>
       <supplyDemandQuery title="Electricity costs by sector">
          <axis1 name="sector">sector</axis1>
          <axis2 name="Year">cost</axis2>
@@ -537,7 +537,7 @@
          <axis2 name="Year">demand-physical[@vintage]</axis2>
          <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and ((@name='refined liquids enduse' or @name='refined liquids industrial' or @name='refined liquids electricity' or @name='regional unconventional oil') )]//*[@type = 'technology']/*[@type='input' and not(@name='unconventional oil')]/demand-physical/node()</xPath>
          <comments>reg unconv oil inputs added to unconv oil refining</comments>
-         <labelRewriteList>
+         <labelRewriteList append-values="false">
             <level name="technology">
                <rewrite from="regional unconventional oil" to="unconventional oil refining"/>
             </level>
@@ -648,45 +648,45 @@
          <axis2 name="Year">demand-physical[@vintage]</axis2>
          <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and ((@name='building' or @name='industry' or @name='transportation') or (exists(child::keyword/@final-energy)))]//*[@type='input' (: collapse :) and not(@name='trn_pass_road' or @name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks')]/demand-physical/node()</xPath>
          <comments/>
-         <labelRewriteList>
+         <labelRewriteList append-values="false">
             <level name="sector">
-               <rewrite from="agriculture energy use" to="industry"/>
                <rewrite from="boilers general" to="industry"/>
+               <rewrite from="agriculture energy use" to="industry"/>
                <rewrite from="bld_res lighting" to="building"/>
                <rewrite from="trn_freight" to="transportation"/>
                <rewrite from="machine drive" to="industry"/>
                <rewrite from="bld_res hot water" to="building"/>
                <rewrite from="bld_comm office" to="building"/>
-               <rewrite from="bld_comm ventilation" to="building"/>
                <rewrite from="bld_res other" to="building"/>
-               <rewrite from="process heat primary metals" to="industry"/>
+               <rewrite from="bld_comm ventilation" to="building"/>
                <rewrite from="industrial energy use" to="industry"/>
-               <rewrite from="bld_res heating" to="building"/>
+               <rewrite from="process heat primary metals" to="industry"/>
                <rewrite from="feedstocks construction" to="industry"/>
+               <rewrite from="bld_res heating" to="building"/>
                <rewrite from="trn_shipping_intl" to="transportation"/>
                <rewrite from="bld_res appliances" to="building"/>
                <rewrite from="bld_comm cooling" to="building"/>
                <rewrite from="feedstocks chemicals" to="industry"/>
                <rewrite from="process heat cement" to="industry"/>
                <rewrite from="cement" to="industry"/>
-               <rewrite from="bld_comm other" to="building"/>
                <rewrite from="bld_comm refrigeration" to="building"/>
+               <rewrite from="bld_comm other" to="building"/>
                <rewrite from="electrochemical" to="industry"/>
-               <rewrite from="bld_res other appliances" to="building"/>
                <rewrite from="feedstocks primary metals" to="industry"/>
+               <rewrite from="bld_res other appliances" to="building"/>
                <rewrite from="other end uses" to="industry"/>
                <rewrite from="trn_passenger" to="transportation"/>
-               <rewrite from="bld_comm lighting" to="building"/>
                <rewrite from="bld_res cooling" to="building"/>
+               <rewrite from="bld_comm lighting" to="building"/>
                <rewrite from="construction energy use" to="industry"/>
-               <rewrite from="bld_comm cooking" to="building"/>
                <rewrite from="bld_comm hot water" to="building"/>
+               <rewrite from="bld_comm cooking" to="building"/>
                <rewrite from="industrial feedstocks" to="industry"/>
                <rewrite from="bld_comm heating" to="building"/>
                <rewrite from="boilers pulp paper and wood" to="industry"/>
                <rewrite from="process heat general" to="industry"/>
-               <rewrite from="mining energy use" to="industry"/>
                <rewrite from="limestone feedstocks" to=""/>
+               <rewrite from="mining energy use" to="industry"/>
                <rewrite from="trn_pass_road" to="transportation"/>
             </level>
          </labelRewriteList>
@@ -702,19 +702,19 @@
          <axis2 name="Year">demand-physical[@vintage]</axis2>
          <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector'  (: collapse :) and ((@name='building' or @name='industry' or @name='transportation') or (exists(child::keyword/@final-energy)))]//*[@type='input' and not(@name='trn_pass_road' or @name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks')]/demand-physical/node()</xPath>
          <comments/>
-         <labelRewriteList>
+         <labelRewriteList append-values="false">
             <level name="input">
-               <rewrite from="traditional biomass" to="7 trad biomass"/>
-               <rewrite from="H2 Enduse" to="6 hydrogen"/>
                <rewrite from="delivered biomass" to="4 biomass"/>
-               <rewrite from="refined liquids enduse" to="1 liquids"/>
+               <rewrite from="H2 Enduse" to="6 hydrogen"/>
+               <rewrite from="traditional biomass" to="7 trad biomass"/>
                <rewrite from="elect_td_bld" to="5 electricity"/>
-               <rewrite from="elect_td_trn" to="5 electricity"/>
+               <rewrite from="refined liquids enduse" to="1 liquids"/>
                <rewrite from="delivered coal" to="3 coal"/>
+               <rewrite from="elect_td_trn" to="5 electricity"/>
                <rewrite from="elect_td_ind" to="5 electricity"/>
-               <rewrite from="wholesale gas" to="2 gas"/>
-               <rewrite from="refined liquids industrial" to="1 liquids"/>
                <rewrite from="delivered gas" to="2 gas"/>
+               <rewrite from="refined liquids industrial" to="1 liquids"/>
+               <rewrite from="wholesale gas" to="2 gas"/>
             </level>
          </labelRewriteList>
       </supplyDemandQuery>
@@ -723,59 +723,59 @@
          <axis2 name="Year">demand-physical[@vintage]</axis2>
          <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and ((@name='building' or @name='industry' or @name='transportation') or (exists(child::keyword/@final-energy)))]//*[@type='input' and not(@name='trn_pass_road' or @name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='industrial feedstocks')]/demand-physical/node()</xPath>
          <comments/>
-         <labelRewriteList>
+         <labelRewriteList append-values="false">
             <level name="sector">
-               <rewrite from="agriculture energy use" to="industry"/>
                <rewrite from="boilers general" to="industry"/>
+               <rewrite from="agriculture energy use" to="industry"/>
                <rewrite from="bld_res lighting" to="building"/>
                <rewrite from="trn_freight" to="transportation"/>
                <rewrite from="machine drive" to="industry"/>
                <rewrite from="bld_res hot water" to="building"/>
                <rewrite from="bld_comm office" to="building"/>
-               <rewrite from="bld_comm ventilation" to="building"/>
                <rewrite from="bld_res other" to="building"/>
-               <rewrite from="industrial energy use" to="industry"/>
+               <rewrite from="bld_comm ventilation" to="building"/>
                <rewrite from="process heat primary metals" to="industry"/>
-               <rewrite from="bld_res heating" to="building"/>
+               <rewrite from="industrial energy use" to="industry"/>
                <rewrite from="feedstocks construction" to="industry"/>
+               <rewrite from="bld_res heating" to="building"/>
                <rewrite from="trn_shipping_intl" to="transportation"/>
                <rewrite from="bld_res appliances" to="building"/>
                <rewrite from="bld_comm cooling" to="building"/>
                <rewrite from="feedstocks chemicals" to="industry"/>
                <rewrite from="process heat cement" to="industry"/>
                <rewrite from="cement" to="industry"/>
-               <rewrite from="bld_comm other" to="building"/>
                <rewrite from="bld_comm refrigeration" to="building"/>
+               <rewrite from="bld_comm other" to="building"/>
                <rewrite from="electrochemical" to="industry"/>
-               <rewrite from="bld_res other appliances" to="building"/>
                <rewrite from="feedstocks primary metals" to="industry"/>
+               <rewrite from="bld_res other appliances" to="building"/>
                <rewrite from="other end uses" to="industry"/>
                <rewrite from="trn_passenger" to="transportation"/>
-               <rewrite from="bld_comm lighting" to="building"/>
                <rewrite from="bld_res cooling" to="building"/>
+               <rewrite from="bld_comm lighting" to="building"/>
                <rewrite from="construction energy use" to="industry"/>
-               <rewrite from="bld_comm cooking" to="building"/>
                <rewrite from="bld_comm hot water" to="building"/>
+               <rewrite from="bld_comm cooking" to="building"/>
                <rewrite from="industrial feedstocks" to="industry"/>
                <rewrite from="bld_comm heating" to="building"/>
                <rewrite from="boilers pulp paper and wood" to="industry"/>
                <rewrite from="process heat general" to="industry"/>
-               <rewrite from="mining energy use" to="industry"/>
                <rewrite from="limestone feedstocks" to=""/>
+               <rewrite from="mining energy use" to="industry"/>
                <rewrite from="trn_pass_road" to="transportation"/>
             </level>
             <level name="input">
-               <rewrite from="traditional biomass" to="7 trad biomass"/>
-               <rewrite from="H2 Enduse" to="6 hydrogen"/>
                <rewrite from="delivered biomass" to="4 biomass"/>
-               <rewrite from="refined liquids enduse" to="1 liquids"/>
+               <rewrite from="H2 Enduse" to="6 hydrogen"/>
+               <rewrite from="traditional biomass" to="7 trad biomass"/>
                <rewrite from="elect_td_bld" to="5 electricity"/>
-               <rewrite from="elect_td_trn" to="5 electricity"/>
+               <rewrite from="refined liquids enduse" to="1 liquids"/>
                <rewrite from="delivered coal" to="3 coal"/>
+               <rewrite from="elect_td_trn" to="5 electricity"/>
                <rewrite from="elect_td_ind" to="5 electricity"/>
-               <rewrite from="wholesale gas" to="2 gas"/>
-               <rewrite from="refined liquids industrial" to="1 liquids"/>
                <rewrite from="delivered gas" to="2 gas"/>
+               <rewrite from="refined liquids industrial" to="1 liquids"/>
+               <rewrite from="wholesale gas" to="2 gas"/>
             </level>
          </labelRewriteList>
       </supplyDemandQuery>
@@ -999,6 +999,18 @@
          <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='industry' or @name='chemicals' or @name='food processing' or @name='iron and steel' or @name='other nonmetallic minerals' or @name='aluminum and nonferrous metals' or @name='pulp paper and wood' or @name='other manufacturing' or @name='agriculture' or @name='mining' or @name='construction' or @name='cement')]/cost/text()</xPath>
          <comments/>
       </supplyDemandQuery>
+      <supplyDemandQuery title="Intermediate service output by technology, 2005 vintage">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]/*[@type = 'subsector']/*[@type = 'technology' and ((@year = '2005'))]/*[@type='output'(:collapse:)]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Intermediate service output by technology, 2020 vintage">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]/*[@type = 'subsector']/*[@type = 'technology' and ((@year = '2020'))]/*[@type='output'(:collapse:)]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
    </queryGroup>
    <queryGroup name="Transportation">
       <supplyDemandQuery title="Transportation total final energy by region">
@@ -1012,7 +1024,7 @@
          <axis2 name="Year">demand-physical[@vintage]</axis2>
          <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' and (@name='transportation' or (exists(child::keyword[@final-energy='transportation'])))]//*[@type='input' (:collapse:) and not(@name='trn_pass_road')]/demand-physical/node()</xPath>
          <comments>trn_pass_road assigned to trn_passenger</comments>
-         <labelRewriteList>
+         <labelRewriteList append-values="false">
             <level name="sector">
                <rewrite from="trn_pass_road" to="trn_passenger"/>
             </level>
@@ -1023,7 +1035,7 @@
          <axis2 name="Year">demand-physical[@vintage]</axis2>
          <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' and (@name='transportation' or (exists(child::keyword[@final-energy='transportation'])))]/*[@type='subsector']//*[@type='input' (:collapse:) and not(@name='trn_pass_road')]/demand-physical/node()</xPath>
          <comments>trn_pass_road assigned to trn_passenger</comments>
-         <labelRewriteList>
+         <labelRewriteList append-values="false">
             <level name="sector">
                <rewrite from="trn_pass_road" to="trn_passenger"/>
             </level>
@@ -1040,7 +1052,7 @@
          <axis2 name="Year">demand-physical[@vintage]</axis2>
          <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' and (@name='transportation' or (exists(child::keyword[@final-energy='transportation'])))]//*[@type='input' and not(@name='trn_pass_road')]/demand-physical/node()</xPath>
          <comments>trn_pass_road assigned to trn_passenger</comments>
-         <labelRewriteList>
+         <labelRewriteList append-values="false">
             <level name="sector">
                <rewrite from="trn_pass_road" to="trn_passenger"/>
             </level>
@@ -1106,162 +1118,626 @@
          <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector' and (@name='transportation' or (exists(child::keyword[@final-energy='transportation'])))]//*[@type = 'technology']/cost/text()</xPath>
          <comments/>
       </supplyDemandQuery>
-   </queryGroup>
-   <queryGroup name="AgLU: General">
+   </queryGroup> 
+   <queryGroup name="Land Use">
       <query title="Land Allocation">
          <axis1 name="land-allocation">LandLeaf</axis1>
          <axis2 name="Year">land-allocation[@year]</axis2>
-         <xPath buildList="true" dataName="land-allocation" group="false" sumAll="false">/LandAllocatorNode[@name='root' or @type='LandAllocatorNode' (: collapse :)]//land-allocation/text()</xPath>
+         <xPath buildList="true" dataName="land-allocation" group="false" sumAll="false">/LandNode[@name='root' or @type='LandNode' (: collapse :)]//land-allocation/text()</xPath>
          <comments/>
       </query>
-      <supplyDemandQuery title="Harvested Forest Area">
-         <axis1 name="technology">technology</axis1>
-         <axis2 name="Year">technology</axis2>
-         <xPath buildList="true" dataName="adj-harvested-area" group="false" sumAll="false">*[@type = 'sector']/*[@type = 'subsector']/*[@type = 'technology']/adj-harvested-area/text()</xPath>
+      <query title="Land Allocation in AEZ 9">
+         <axis1 name="land-allocation">LandLeaf</axis1>
+         <axis2 name="Year">land-allocation[@year]</axis2>
+         <xPath buildList="true" dataName="land-allocation" group="false" sumAll="false">/LandNode[@name='root' or @type='LandNode' (: collapse :)]//LandLeaf[ends-with(@name, 'AEZ9')]/land-allocation/text()</xPath>
          <comments/>
-      </supplyDemandQuery>
+      </query>
+      <query title="Aggregated Land Allocation">
+         <axis1 name="land-allocation">LandLeaf</axis1>
+         <axis2 name="Year">land-allocation[@year]</axis2>
+         <xPath buildList="true" dataName="land-allocation" group="true" sumAll="false">/LandNode[@name='root' or @type='LandNode' (: collapse :)]//land-allocation/text()</xPath>
+         <comments/>
+         <labelRewriteList append-values="false">
+            <level name="LandLeaf">
+               <rewrite from="UnmanagedForestAEZ18" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ17" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ16" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ15" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ14" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ13" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ12" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ11" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ10" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedPastureAEZ8" to="pasture (other)"/>
+               <rewrite from="UnmanagedPastureAEZ9" to="pasture (other)"/>
+               <rewrite from="UnmanagedPastureAEZ6" to="pasture (other)"/>
+               <rewrite from="UnmanagedPastureAEZ7" to="pasture (other)"/>
+               <rewrite from="RockIceDesert" to="rock and desert"/>
+               <rewrite from="OtherGrainAEZ17" to="crops"/>
+               <rewrite from="OtherGrainAEZ16" to="crops"/>
+               <rewrite from="OtherGrainAEZ18" to="crops"/>
+               <rewrite from="WheatAEZ5" to="crops"/>
+               <rewrite from="OtherGrainAEZ12" to="crops"/>
+               <rewrite from="WheatAEZ6" to="crops"/>
+               <rewrite from="OtherGrainAEZ13" to="crops"/>
+               <rewrite from="WheatAEZ3" to="crops"/>
+               <rewrite from="OtherGrainAEZ14" to="crops"/>
+               <rewrite from="WheatAEZ4" to="crops"/>
+               <rewrite from="OtherGrainAEZ15" to="crops"/>
+               <rewrite from="WheatAEZ1" to="crops"/>
+               <rewrite from="WheatAEZ2" to="crops"/>
+               <rewrite from="OtherGrainAEZ10" to="crops"/>
+               <rewrite from="OtherGrainAEZ11" to="crops"/>
+               <rewrite from="UnmanagedPastureAEZ1" to="pasture (other)"/>
+               <rewrite from="UnmanagedPastureAEZ5" to="pasture (other)"/>
+               <rewrite from="WheatAEZ9" to="crops"/>
+               <rewrite from="UnmanagedPastureAEZ4" to="pasture (other)"/>
+               <rewrite from="UnmanagedPastureAEZ3" to="pasture (other)"/>
+               <rewrite from="WheatAEZ7" to="crops"/>
+               <rewrite from="UnmanagedPastureAEZ2" to="pasture (other)"/>
+               <rewrite from="WheatAEZ8" to="crops"/>
+               <rewrite from="MiscCropAEZ2" to="crops"/>
+               <rewrite from="MiscCropAEZ3" to="crops"/>
+               <rewrite from="MiscCropAEZ4" to="crops"/>
+               <rewrite from="MiscCropAEZ5" to="crops"/>
+               <rewrite from="RockIceDesertAEZ1" to="desert"/>
+               <rewrite from="MiscCropAEZ6" to="crops"/>
+               <rewrite from="RockIceDesertAEZ2" to="desert"/>
+               <rewrite from="MiscCropAEZ7" to="crops"/>
+               <rewrite from="MiscCropAEZ8" to="crops"/>
+               <rewrite from="MiscCropAEZ9" to="crops"/>
+               <rewrite from="RockIceDesertAEZ5" to="desert"/>
+               <rewrite from="Root_TuberAEZ5" to="crops"/>
+               <rewrite from="RockIceDesertAEZ6" to="desert"/>
+               <rewrite from="Root_TuberAEZ6" to="crops"/>
+               <rewrite from="RockIceDesertAEZ3" to="desert"/>
+               <rewrite from="Root_TuberAEZ7" to="crops"/>
+               <rewrite from="RockIceDesertAEZ4" to="desert"/>
+               <rewrite from="Root_TuberAEZ8" to="crops"/>
+               <rewrite from="RockIceDesertAEZ9" to="desert"/>
+               <rewrite from="Root_TuberAEZ9" to="crops"/>
+               <rewrite from="RiceAEZ11" to="crops"/>
+               <rewrite from="RiceAEZ10" to="crops"/>
+               <rewrite from="RockIceDesertAEZ7" to="desert"/>
+               <rewrite from="RiceAEZ13" to="crops"/>
+               <rewrite from="RockIceDesertAEZ8" to="desert"/>
+               <rewrite from="MiscCropAEZ1" to="crops"/>
+               <rewrite from="RiceAEZ12" to="crops"/>
+               <rewrite from="eucalyptusAEZ9" to="biomass"/>
+               <rewrite from="Root_TuberAEZ2" to="crops"/>
+               <rewrite from="Root_TuberAEZ1" to="crops"/>
+               <rewrite from="Root_TuberAEZ4" to="crops"/>
+               <rewrite from="Root_TuberAEZ3" to="crops"/>
+               <rewrite from="UrbanLandAEZ11" to="urban"/>
+               <rewrite from="UrbanLandAEZ10" to="urban"/>
+               <rewrite from="UrbanLandAEZ13" to="urban"/>
+               <rewrite from="UrbanLandAEZ12" to="urban"/>
+               <rewrite from="UrbanLandAEZ15" to="urban"/>
+               <rewrite from="UrbanLandAEZ14" to="urban"/>
+               <rewrite from="UrbanLandAEZ17" to="urban"/>
+               <rewrite from="UrbanLandAEZ16" to="urban"/>
+               <rewrite from="FodderHerbAEZ18" to="crops"/>
+               <rewrite from="FodderHerbAEZ16" to="crops"/>
+               <rewrite from="FodderHerbAEZ17" to="crops"/>
+               <rewrite from="TundraAEZ9" to="tundra"/>
+               <rewrite from="TundraAEZ8" to="tundra"/>
+               <rewrite from="TundraAEZ7" to="tundra"/>
+               <rewrite from="RockIceDesertAEZ15" to="desert"/>
+               <rewrite from="FodderHerbAEZ10" to="crops"/>
+               <rewrite from="TundraAEZ6" to="tundra"/>
+               <rewrite from="RockIceDesertAEZ14" to="desert"/>
+               <rewrite from="FodderHerbAEZ11" to="crops"/>
+               <rewrite from="TundraAEZ5" to="tundra"/>
+               <rewrite from="RockIceDesertAEZ13" to="desert"/>
+               <rewrite from="TundraAEZ4" to="tundra"/>
+               <rewrite from="RockIceDesertAEZ12" to="desert"/>
+               <rewrite from="TundraAEZ3" to="tundra"/>
+               <rewrite from="RockIceDesertAEZ11" to="desert"/>
+               <rewrite from="FodderHerbAEZ14" to="crops"/>
+               <rewrite from="TundraAEZ2" to="tundra"/>
+               <rewrite from="RockIceDesertAEZ10" to="desert"/>
+               <rewrite from="FodderHerbAEZ15" to="crops"/>
+               <rewrite from="TundraAEZ1" to="tundra"/>
+               <rewrite from="FodderHerbAEZ12" to="crops"/>
+               <rewrite from="FodderHerbAEZ13" to="crops"/>
+               <rewrite from="ShrublandAEZ18" to="shrubs"/>
+               <rewrite from="ShrublandAEZ13" to="shrubs"/>
+               <rewrite from="ShrublandAEZ12" to="shrubs"/>
+               <rewrite from="ShrublandAEZ11" to="shrubs"/>
+               <rewrite from="ShrublandAEZ10" to="shrubs"/>
+               <rewrite from="ShrublandAEZ17" to="shrubs"/>
+               <rewrite from="ShrublandAEZ16" to="shrubs"/>
+               <rewrite from="ShrublandAEZ15" to="shrubs"/>
+               <rewrite from="ShrublandAEZ14" to="shrubs"/>
+               <rewrite from="FodderGrassAEZ8" to="crops"/>
+               <rewrite from="FodderGrassAEZ9" to="crops"/>
+               <rewrite from="FodderGrassAEZ6" to="crops"/>
+               <rewrite from="FodderGrassAEZ7" to="crops"/>
+               <rewrite from="RockIceDesertAEZ16" to="desert"/>
+               <rewrite from="RockIceDesertAEZ17" to="desert"/>
+               <rewrite from="RockIceDesertAEZ18" to="desert"/>
+               <rewrite from="biomassAEZ14" to="biomass"/>
+               <rewrite from="biomassAEZ13" to="biomass"/>
+               <rewrite from="biomassAEZ16" to="biomass"/>
+               <rewrite from="biomassAEZ15" to="biomass"/>
+               <rewrite from="biomassAEZ10" to="biomass"/>
+               <rewrite from="biomassAEZ12" to="biomass"/>
+               <rewrite from="biomassAEZ11" to="biomass"/>
+               <rewrite from="CornAEZ11" to="crops"/>
+               <rewrite from="CornAEZ4" to="crops"/>
+               <rewrite from="CornAEZ12" to="crops"/>
+               <rewrite from="CornAEZ5" to="crops"/>
+               <rewrite from="CornAEZ2" to="crops"/>
+               <rewrite from="CornAEZ10" to="crops"/>
+               <rewrite from="CornAEZ3" to="crops"/>
+               <rewrite from="CornAEZ1" to="crops"/>
+               <rewrite from="biomassAEZ17" to="biomass"/>
+               <rewrite from="biomassAEZ18" to="biomass"/>
+               <rewrite from="CornAEZ8" to="crops"/>
+               <rewrite from="CornAEZ9" to="crops"/>
+               <rewrite from="CornAEZ6" to="crops"/>
+               <rewrite from="CornAEZ7" to="crops"/>
+               <rewrite from="RiceAEZ4" to="crops"/>
+               <rewrite from="RiceAEZ3" to="crops"/>
+               <rewrite from="UrbanLandAEZ18" to="urban"/>
+               <rewrite from="RiceAEZ2" to="crops"/>
+               <rewrite from="RiceAEZ1" to="crops"/>
+               <rewrite from="RiceAEZ8" to="crops"/>
+               <rewrite from="RiceAEZ7" to="crops"/>
+               <rewrite from="CornAEZ18" to="crops"/>
+               <rewrite from="RiceAEZ6" to="crops"/>
+               <rewrite from="CornAEZ17" to="crops"/>
+               <rewrite from="RiceAEZ5" to="crops"/>
+               <rewrite from="CornAEZ16" to="crops"/>
+               <rewrite from="CornAEZ15" to="crops"/>
+               <rewrite from="CornAEZ14" to="crops"/>
+               <rewrite from="CornAEZ13" to="crops"/>
+               <rewrite from="RiceAEZ9" to="crops"/>
+               <rewrite from="PastureAEZ10" to="pasture (grazed)"/>
+               <rewrite from="SugarCropAEZ9" to="crops"/>
+               <rewrite from="SugarCropAEZ8" to="crops"/>
+               <rewrite from="SugarCropAEZ5" to="crops"/>
+               <rewrite from="SugarCropAEZ4" to="crops"/>
+               <rewrite from="SugarCropAEZ7" to="crops"/>
+               <rewrite from="SugarCropAEZ6" to="crops"/>
+               <rewrite from="SugarCropAEZ1" to="crops"/>
+               <rewrite from="SugarCropAEZ3" to="crops"/>
+               <rewrite from="SugarCropAEZ2" to="crops"/>
+               <rewrite from="PastureAEZ13" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ14" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ11" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ12" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ17" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ18" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ15" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ16" to="pasture (grazed)"/>
+               <rewrite from="willowAEZ7" to="biomass"/>
+               <rewrite from="willowAEZ9" to="biomass"/>
+               <rewrite from="willowAEZ8" to="biomass"/>
+               <rewrite from="PastureAEZ9" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ8" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ7" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ6" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ5" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ4" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ3" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ2" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ1" to="pasture (grazed)"/>
+               <rewrite from="eucalyptusAEZ1" to="biomass"/>
+               <rewrite from="Root_TuberAEZ12" to="crops"/>
+               <rewrite from="eucalyptusAEZ2" to="biomass"/>
+               <rewrite from="Root_TuberAEZ13" to="crops"/>
+               <rewrite from="eucalyptusAEZ3" to="biomass"/>
+               <rewrite from="Root_TuberAEZ10" to="crops"/>
+               <rewrite from="eucalyptusAEZ4" to="biomass"/>
+               <rewrite from="Root_TuberAEZ11" to="crops"/>
+               <rewrite from="eucalyptusAEZ5" to="biomass"/>
+               <rewrite from="eucalyptusAEZ6" to="biomass"/>
+               <rewrite from="eucalyptusAEZ7" to="biomass"/>
+               <rewrite from="eucalyptusAEZ8" to="biomass"/>
+               <rewrite from="Root_TuberAEZ18" to="crops"/>
+               <rewrite from="Root_TuberAEZ16" to="crops"/>
+               <rewrite from="Root_TuberAEZ17" to="crops"/>
+               <rewrite from="Root_TuberAEZ14" to="crops"/>
+               <rewrite from="Root_TuberAEZ15" to="crops"/>
+               <rewrite from="ForestAEZ7" to="forest (managed)"/>
+               <rewrite from="ForestAEZ8" to="forest (managed)"/>
+               <rewrite from="ForestAEZ5" to="forest (managed)"/>
+               <rewrite from="ForestAEZ6" to="forest (managed)"/>
+               <rewrite from="ForestAEZ3" to="forest (managed)"/>
+               <rewrite from="ForestAEZ4" to="forest (managed)"/>
+               <rewrite from="ForestAEZ1" to="forest (managed)"/>
+               <rewrite from="ForestAEZ2" to="forest (managed)"/>
+               <rewrite from="FiberCropAEZ1" to="crops"/>
+               <rewrite from="biomassAEZ5" to="biomass"/>
+               <rewrite from="miscanthusAEZ5" to="biomass"/>
+               <rewrite from="biomassAEZ4" to="biomass"/>
+               <rewrite from="miscanthusAEZ6" to="biomass"/>
+               <rewrite from="biomassAEZ3" to="biomass"/>
+               <rewrite from="miscanthusAEZ3" to="biomass"/>
+               <rewrite from="biomassAEZ2" to="biomass"/>
+               <rewrite from="miscanthusAEZ4" to="biomass"/>
+               <rewrite from="biomassAEZ9" to="biomass"/>
+               <rewrite from="miscanthusAEZ9" to="biomass"/>
+               <rewrite from="biomassAEZ8" to="biomass"/>
+               <rewrite from="biomassAEZ7" to="biomass"/>
+               <rewrite from="miscanthusAEZ7" to="biomass"/>
+               <rewrite from="biomassAEZ6" to="biomass"/>
+               <rewrite from="miscanthusAEZ8" to="biomass"/>
+               <rewrite from="FiberCropAEZ9" to="crops"/>
+               <rewrite from="FiberCropAEZ8" to="crops"/>
+               <rewrite from="FiberCropAEZ7" to="crops"/>
+               <rewrite from="FiberCropAEZ6" to="crops"/>
+               <rewrite from="GrasslandAEZ2" to="grass"/>
+               <rewrite from="FiberCropAEZ5" to="crops"/>
+               <rewrite from="biomassAEZ1" to="biomass"/>
+               <rewrite from="miscanthusAEZ1" to="biomass"/>
+               <rewrite from="GrasslandAEZ1" to="grass"/>
+               <rewrite from="FiberCropAEZ4" to="crops"/>
+               <rewrite from="miscanthusAEZ2" to="biomass"/>
+               <rewrite from="GrasslandAEZ4" to="grass"/>
+               <rewrite from="FiberCropAEZ3" to="crops"/>
+               <rewrite from="GrasslandAEZ3" to="grass"/>
+               <rewrite from="FiberCropAEZ2" to="crops"/>
+               <rewrite from="OtherArableLandAEZ14" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ1" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ13" to="otherarable"/>
+               <rewrite from="GrasslandAEZ9" to="grass"/>
+               <rewrite from="OtherArableLandAEZ12" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ3" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ11" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ2" to="otherarable"/>
+               <rewrite from="GrasslandAEZ7" to="grass"/>
+               <rewrite from="OtherArableLandAEZ18" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ5" to="otherarable"/>
+               <rewrite from="GrasslandAEZ8" to="grass"/>
+               <rewrite from="OtherArableLandAEZ17" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ4" to="otherarable"/>
+               <rewrite from="GrasslandAEZ5" to="grass"/>
+               <rewrite from="OtherArableLandAEZ16" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ7" to="otherarable"/>
+               <rewrite from="GrasslandAEZ6" to="grass"/>
+               <rewrite from="OtherArableLandAEZ15" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ6" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ9" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ8" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ10" to="otherarable"/>
+               <rewrite from="WheatAEZ17" to="crops"/>
+               <rewrite from="WheatAEZ16" to="crops"/>
+               <rewrite from="WheatAEZ18" to="crops"/>
+               <rewrite from="WheatAEZ13" to="crops"/>
+               <rewrite from="WheatAEZ12" to="crops"/>
+               <rewrite from="WheatAEZ15" to="crops"/>
+               <rewrite from="WheatAEZ14" to="crops"/>
+               <rewrite from="OilCropAEZ8" to="crops"/>
+               <rewrite from="WheatAEZ10" to="crops"/>
+               <rewrite from="OilCropAEZ9" to="crops"/>
+               <rewrite from="WheatAEZ11" to="crops"/>
+               <rewrite from="OilCropAEZ6" to="crops"/>
+               <rewrite from="OilCropAEZ7" to="crops"/>
+               <rewrite from="OilCropAEZ4" to="crops"/>
+               <rewrite from="OilCropAEZ5" to="crops"/>
+               <rewrite from="ForestAEZ9" to="forest (managed)"/>
+               <rewrite from="OilCropAEZ1" to="crops"/>
+               <rewrite from="OilCropAEZ3" to="crops"/>
+               <rewrite from="OilCropAEZ2" to="crops"/>
+               <rewrite from="UnmanagedPastureAEZ14" to="pasture (other)"/>
+               <rewrite from="GrasslandAEZ18" to="grass"/>
+               <rewrite from="UnmanagedPastureAEZ13" to="pasture (other)"/>
+               <rewrite from="UnmanagedPastureAEZ16" to="pasture (other)"/>
+               <rewrite from="UnmanagedPastureAEZ15" to="pasture (other)"/>
+               <rewrite from="GrasslandAEZ15" to="grass"/>
+               <rewrite from="UnmanagedPastureAEZ18" to="pasture (other)"/>
+               <rewrite from="GrasslandAEZ14" to="grass"/>
+               <rewrite from="UnmanagedPastureAEZ17" to="pasture (other)"/>
+               <rewrite from="GrasslandAEZ17" to="grass"/>
+               <rewrite from="GrasslandAEZ16" to="grass"/>
+               <rewrite from="GrasslandAEZ11" to="grass"/>
+               <rewrite from="GrasslandAEZ10" to="grass"/>
+               <rewrite from="GrasslandAEZ13" to="grass"/>
+               <rewrite from="GrasslandAEZ12" to="grass"/>
+               <rewrite from="UnmanagedPastureAEZ10" to="pasture (other)"/>
+               <rewrite from="UnmanagedPastureAEZ12" to="pasture (other)"/>
+               <rewrite from="UnmanagedPastureAEZ11" to="pasture (other)"/>
+               <rewrite from="TundraAEZ18" to="tundra"/>
+               <rewrite from="TundraAEZ17" to="tundra"/>
+               <rewrite from="TundraAEZ16" to="tundra"/>
+               <rewrite from="TundraAEZ15" to="tundra"/>
+               <rewrite from="TundraAEZ14" to="tundra"/>
+               <rewrite from="TundraAEZ13" to="tundra"/>
+               <rewrite from="TundraAEZ12" to="tundra"/>
+               <rewrite from="TundraAEZ11" to="tundra"/>
+               <rewrite from="OtherGrainAEZ9" to="crops"/>
+               <rewrite from="OtherGrainAEZ7" to="crops"/>
+               <rewrite from="OtherGrainAEZ8" to="crops"/>
+               <rewrite from="OtherGrainAEZ5" to="crops"/>
+               <rewrite from="OtherGrainAEZ6" to="crops"/>
+               <rewrite from="OtherGrainAEZ3" to="crops"/>
+               <rewrite from="OtherGrainAEZ4" to="crops"/>
+               <rewrite from="OtherGrainAEZ1" to="crops"/>
+               <rewrite from="TundraAEZ10" to="tundra"/>
+               <rewrite from="OtherGrainAEZ2" to="crops"/>
+               <rewrite from="PalmFruitAEZ8" to="crops"/>
+               <rewrite from="PalmFruitAEZ9" to="crops"/>
+               <rewrite from="PalmFruitAEZ6" to="crops"/>
+               <rewrite from="PalmFruitAEZ7" to="crops"/>
+               <rewrite from="PalmFruitAEZ4" to="crops"/>
+               <rewrite from="PalmFruitAEZ5" to="crops"/>
+               <rewrite from="ForestAEZ12" to="forest (managed)"/>
+               <rewrite from="ForestAEZ13" to="forest (managed)"/>
+               <rewrite from="ForestAEZ10" to="forest (managed)"/>
+               <rewrite from="ForestAEZ11" to="forest (managed)"/>
+               <rewrite from="ForestAEZ16" to="forest (managed)"/>
+               <rewrite from="ForestAEZ17" to="forest (managed)"/>
+               <rewrite from="Tundra" to="tundra"/>
+               <rewrite from="ForestAEZ14" to="forest (managed)"/>
+               <rewrite from="ForestAEZ15" to="forest (managed)"/>
+               <rewrite from="PalmFruitAEZ1" to="crops"/>
+               <rewrite from="PalmFruitAEZ3" to="crops"/>
+               <rewrite from="PalmFruitAEZ2" to="crops"/>
+               <rewrite from="ShrublandAEZ4" to="shrubs"/>
+               <rewrite from="FiberCropAEZ12" to="crops"/>
+               <rewrite from="ShrublandAEZ3" to="shrubs"/>
+               <rewrite from="FiberCropAEZ11" to="crops"/>
+               <rewrite from="FiberCropAEZ10" to="crops"/>
+               <rewrite from="ShrublandAEZ2" to="shrubs"/>
+               <rewrite from="ShrublandAEZ1" to="shrubs"/>
+               <rewrite from="ShrublandAEZ8" to="shrubs"/>
+               <rewrite from="FiberCropAEZ16" to="crops"/>
+               <rewrite from="OilCropAEZ16" to="crops"/>
+               <rewrite from="ShrublandAEZ7" to="shrubs"/>
+               <rewrite from="FiberCropAEZ15" to="crops"/>
+               <rewrite from="OilCropAEZ15" to="crops"/>
+               <rewrite from="ShrublandAEZ6" to="shrubs"/>
+               <rewrite from="FiberCropAEZ14" to="crops"/>
+               <rewrite from="OilCropAEZ18" to="crops"/>
+               <rewrite from="ShrublandAEZ5" to="shrubs"/>
+               <rewrite from="FiberCropAEZ13" to="crops"/>
+               <rewrite from="OilCropAEZ17" to="crops"/>
+               <rewrite from="OilCropAEZ12" to="crops"/>
+               <rewrite from="OilCropAEZ11" to="crops"/>
+               <rewrite from="OilCropAEZ14" to="crops"/>
+               <rewrite from="ShrublandAEZ9" to="shrubs"/>
+               <rewrite from="OilCropAEZ13" to="crops"/>
+               <rewrite from="OilCropAEZ10" to="crops"/>
+               <rewrite from="FodderHerbAEZ9" to="crops"/>
+               <rewrite from="FodderHerbAEZ8" to="crops"/>
+               <rewrite from="FodderHerbAEZ7" to="crops"/>
+               <rewrite from="FodderHerbAEZ6" to="crops"/>
+               <rewrite from="FodderHerbAEZ5" to="crops"/>
+               <rewrite from="FodderHerbAEZ4" to="crops"/>
+               <rewrite from="FodderHerbAEZ3" to="crops"/>
+               <rewrite from="FodderHerbAEZ1" to="crops"/>
+               <rewrite from="FodderHerbAEZ2" to="crops"/>
+               <rewrite from="ForestAEZ18" to="forest (managed)"/>
+               <rewrite from="UrbanLandAEZ5" to="urban"/>
+               <rewrite from="UrbanLandAEZ6" to="urban"/>
+               <rewrite from="UrbanLandAEZ7" to="urban"/>
+               <rewrite from="UrbanLandAEZ8" to="urban"/>
+               <rewrite from="UrbanLandAEZ1" to="urban"/>
+               <rewrite from="UrbanLandAEZ2" to="urban"/>
+               <rewrite from="UrbanLandAEZ3" to="urban"/>
+               <rewrite from="UrbanLandAEZ4" to="urban"/>
+               <rewrite from="FiberCropAEZ17" to="crops"/>
+               <rewrite from="FiberCropAEZ18" to="crops"/>
+               <rewrite from="PalmFruitAEZ10" to="crops"/>
+               <rewrite from="PalmFruitAEZ13" to="crops"/>
+               <rewrite from="PalmFruitAEZ14" to="crops"/>
+               <rewrite from="PalmFruitAEZ11" to="crops"/>
+               <rewrite from="PalmFruitAEZ12" to="crops"/>
+               <rewrite from="SugarCropAEZ13" to="crops"/>
+               <rewrite from="PalmFruitAEZ17" to="crops"/>
+               <rewrite from="SugarCropAEZ14" to="crops"/>
+               <rewrite from="PalmFruitAEZ18" to="crops"/>
+               <rewrite from="SugarCropAEZ11" to="crops"/>
+               <rewrite from="PalmFruitAEZ15" to="crops"/>
+               <rewrite from="SugarCropAEZ12" to="crops"/>
+               <rewrite from="PalmFruitAEZ16" to="crops"/>
+               <rewrite from="SugarCropAEZ17" to="crops"/>
+               <rewrite from="SugarCropAEZ18" to="crops"/>
+               <rewrite from="SugarCropAEZ15" to="crops"/>
+               <rewrite from="SugarCropAEZ16" to="crops"/>
+               <rewrite from="UrbanLandAEZ9" to="urban"/>
+               <rewrite from="SugarCropAEZ10" to="crops"/>
+               <rewrite from="FodderGrassAEZ10" to="crops"/>
+               <rewrite from="FodderGrassAEZ11" to="crops"/>
+               <rewrite from="FodderGrassAEZ12" to="crops"/>
+               <rewrite from="FodderGrassAEZ17" to="crops"/>
+               <rewrite from="FodderGrassAEZ18" to="crops"/>
+               <rewrite from="FodderGrassAEZ13" to="crops"/>
+               <rewrite from="FodderGrassAEZ14" to="crops"/>
+               <rewrite from="FodderGrassAEZ15" to="crops"/>
+               <rewrite from="FodderGrassAEZ16" to="crops"/>
+               <rewrite from="miscanthusAEZ17" to="biomass"/>
+               <rewrite from="miscanthusAEZ16" to="biomass"/>
+               <rewrite from="miscanthusAEZ18" to="biomass"/>
+               <rewrite from="FodderGrassAEZ1" to="crops"/>
+               <rewrite from="FodderGrassAEZ4" to="crops"/>
+               <rewrite from="FodderGrassAEZ5" to="crops"/>
+               <rewrite from="FodderGrassAEZ2" to="crops"/>
+               <rewrite from="FodderGrassAEZ3" to="crops"/>
+               <rewrite from="willowAEZ17" to="biomass"/>
+               <rewrite from="willowAEZ18" to="biomass"/>
+               <rewrite from="willowAEZ15" to="biomass"/>
+               <rewrite from="willowAEZ16" to="biomass"/>
+               <rewrite from="miscanthusAEZ10" to="biomass"/>
+               <rewrite from="miscanthusAEZ11" to="biomass"/>
+               <rewrite from="miscanthusAEZ12" to="biomass"/>
+               <rewrite from="miscanthusAEZ13" to="biomass"/>
+               <rewrite from="miscanthusAEZ14" to="biomass"/>
+               <rewrite from="miscanthusAEZ15" to="biomass"/>
+               <rewrite from="willowAEZ10" to="biomass"/>
+               <rewrite from="willowAEZ12" to="biomass"/>
+               <rewrite from="UrbanLand" to="urban"/>
+               <rewrite from="willowAEZ11" to="biomass"/>
+               <rewrite from="willowAEZ14" to="biomass"/>
+               <rewrite from="willowAEZ13" to="biomass"/>
+               <rewrite from="eucalyptusAEZ14" to="biomass"/>
+               <rewrite from="eucalyptusAEZ15" to="biomass"/>
+               <rewrite from="eucalyptusAEZ16" to="biomass"/>
+               <rewrite from="eucalyptusAEZ17" to="biomass"/>
+               <rewrite from="eucalyptusAEZ10" to="biomass"/>
+               <rewrite from="eucalyptusAEZ11" to="biomass"/>
+               <rewrite from="eucalyptusAEZ12" to="biomass"/>
+               <rewrite from="eucalyptusAEZ13" to="biomass"/>
+               <rewrite from="MiscCropAEZ12" to="crops"/>
+               <rewrite from="MiscCropAEZ11" to="crops"/>
+               <rewrite from="MiscCropAEZ10" to="crops"/>
+               <rewrite from="MiscCropAEZ16" to="crops"/>
+               <rewrite from="MiscCropAEZ15" to="crops"/>
+               <rewrite from="MiscCropAEZ14" to="crops"/>
+               <rewrite from="MiscCropAEZ13" to="crops"/>
+               <rewrite from="MiscCropAEZ17" to="crops"/>
+               <rewrite from="MiscCropAEZ18" to="crops"/>
+               <rewrite from="UnmanagedForestAEZ9" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ8" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ7" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ6" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ5" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ4" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ3" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ1" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ2" to="forest (unmanaged)"/>
+               <rewrite from="RiceAEZ15" to="crops"/>
+               <rewrite from="RiceAEZ14" to="crops"/>
+               <rewrite from="RiceAEZ17" to="crops"/>
+               <rewrite from="RiceAEZ16" to="crops"/>
+               <rewrite from="RiceAEZ18" to="crops"/>
+               <rewrite from="eucalyptusAEZ18" to="biomass"/>
+               <rewrite from="JatrophaAEZ2" to="biomass"/>
+               <rewrite from="JatrophaAEZ1" to="biomass"/>
+               <rewrite from="JatrophaAEZ4" to="biomass"/>
+               <rewrite from="JatrophaAEZ3" to="biomass"/>
+               <rewrite from="JatrophaAEZ6" to="biomass"/>
+               <rewrite from="JatrophaAEZ5" to="biomass"/>
+            </level>
+         </labelRewriteList>
+      </query>
       <query title="Land Use Change Emission">
-         <axis1 name="LandLeaf">LandLeaf</axis1>
+         <axis1 name="land-use-change-emission">LandLeaf</axis1>
          <axis2 name="Year">land-use-change-emission[@year]</axis2>
-         <xPath buildList="true" dataName="land-use-change-emission" group="false" sumAll="false">/LandAllocatorNode[@name='root' or @type='LandAllocatorNode' (: collapse :)]//land-use-change-emission/text()</xPath>
+         <xPath buildList="true" dataName="land-use-change-emission" group="false" sumAll="true">/LandNode[@name='root' or @type='LandNode' (: collapse :)]//land-use-change-emission/text()</xPath>
          <comments/>
       </query>
-      <query title="Above Ground Carbon">
-         <axis1 name="LandLeaf">LandLeaf</axis1>
-         <axis2 name="Year">above-ground-carbon[@year]</axis2>
-         <xPath buildList="true" dataName="above-ground-carbon" group="false" sumAll="false">/LandAllocatorNode[@name='root' or @type='LandAllocatorNode' (: collapse :)]//above-ground-carbon/text()</xPath>
+      <query title="Land Use Change Emission (future)">
+         <axis1 name="land-use-change-emission">LandLeaf</axis1>
+         <axis2 name="Year">land-use-change-emission[@year]</axis2>
+         <xPath buildList="true" dataName="land-use-change-emission" group="false" sumAll="true">/LandNode[@name='root' or @type='LandNode' (: collapse :)]//land-use-change-emission[@year&gt;1975]/text()</xPath>
          <comments/>
       </query>
-      <query title="Crop Yields">
-         <axis1 name="Crop">LandLeaf</axis1>
-         <axis2 name="Year">yield[@year]</axis2>
-         <xPath buildList="true" dataName="yield" group="false" sumAll="false">/LandAllocatorNode[@type='LandAllocatorNode' (: collapse :) or @name='CropLand']//yield/node()</xPath>
+      <query title="Profit Rate">
+         <axis1 name="profit-rate">LandLeaf</axis1>
+         <axis2 name="Year">profit-rate[@year]</axis2>
+         <xPath buildList="true" dataName="profit-rate" group="false" sumAll="false">/LandNode[@name='root' or @type='LandNode' (: collapse :)]//profit-rate/text()</xPath>
          <comments/>
       </query>
-      <supplyDemandQuery title="Ag Production">
+      <query title="Shares">
+         <axis1 name="share">LandLeaf</axis1>
+         <axis2 name="Year">share[@year]</axis2>
+         <xPath buildList="true" dataName="share" group="false" sumAll="false">/LandNode[@name='root' or @type='LandNode' (: collapse :)]//share/text()</xPath>
+         <comments/>
+      </query>
+   </queryGroup>
+   <queryGroup name="Agricultural Production">
+      <supplyDemandQuery title="Ag Production by Crop Type">
          <axis1 name="sector">sector[@name]</axis1>
          <axis2 name="Year">physical-output[@vintage]</axis2>
-         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (exists(child::keyword/@supplysector) or local-name() = 'ForestSupplySector' or local-name() = 'FoodSupplySector' or local-name() = 'export-sector' or @name="ForestDemand")]//*[@type='output']/physical-output/node()</xPath>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (exists(child::keyword/@supplysector) or local-name() = 'AgSupplySector' or @name='NonFoodDemand_Forest')]//*[@type='output']/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Ag Production by Crop Type and AEZ">
+         <axis1 name="technology">technology[@name]</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (exists(child::keyword/@supplysector) or local-name() = 'AgSupplySector' or @name='NonFoodDemand_Forest')]/*[@type = 'subsector']/*[@type = 'technology']/*[@type='output']/physical-output/node()</xPath>
          <comments/>
       </supplyDemandQuery>
       <supplyDemandQuery title="Variable Cost">
          <axis1 name="technology">technology</axis1>
          <axis2 name="Year">technology</axis2>
-         <xPath buildList="true" dataName="variableCost" group="false" sumAll="false">*[@type = 'sector']/*[@type = 'subsector']/*[@type = 'technology']/variableCost/text()</xPath>
+         <xPath buildList="true" dataName="nonLandVariableCost" group="false" sumAll="false">*[@type = 'sector']/*[@type = 'subsector']/*[@type = 'technology']/nonLandVariableCost/text()</xPath>
          <comments/>
       </supplyDemandQuery>
-   </queryGroup>
-   <queryGroup name="AgLU: Animals">
-      <supplyDemandQuery title="Total Inputs to Animal Production by Region">
-         <axis1 name="region">region</axis1>
-         <axis2 name="Year">demand-physical[@vintage]</axis2>
-         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' (:collapse:) and (@name='Beef' or @name='Dairy' or @name='Pork' or @name='Poultry' or @name='SheepGoat')]//*[@type='input' (:collapse:)]/demand-physical/node()</xPath>
+      <supplyDemandQuery title="Yield">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">technology</axis2>
+         <xPath buildList="true" dataName="yield" group="false" sumAll="false">*[@type = 'sector']/*[@type = 'subsector']/*[@type = 'technology']/yield/text()</xPath>
          <comments/>
       </supplyDemandQuery>
-      <supplyDemandQuery title="Total Inputs to Animal Production by Animal Type">
-         <axis1 name="sector">sector</axis1>
-         <axis2 name="Year">demand-physical[@vintage]</axis2>
-         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='Beef' or @name='Dairy' or @name='Pork' or @name='Poultry' or @name='SheepGoat')]//*[@type='input' (:collapse:)]/demand-physical/node()</xPath>
-         <comments/>
-      </supplyDemandQuery>
-      <supplyDemandQuery title="Inputs to Animal Production by Animal and System Type">
-         <axis1 name="sector">sector</axis1>
-         <axis2 name="Year">demand-physical[@vintage]</axis2>
-         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='Beef' or @name='Dairy' or @name='Pork' or @name='Poultry' or @name='SheepGoat')]/*[@type='subsector']//*[@type='input' (:collapse:)]/demand-physical/node()</xPath>
-         <comments/>
-      </supplyDemandQuery>
-      <supplyDemandQuery title="Inputs to Animal Production by Animal, System, and Feed Type">
-         <axis1 name="sector">sector</axis1>
-         <axis2 name="Year">demand-physical[@vintage]</axis2>
-         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='Beef' or @name='Dairy' or @name='Pork' or @name='Poultry' or @name='SheepGoat')]/*[@type='subsector']//*[@type='input']/demand-physical/node()</xPath>
-         <comments/>
-      </supplyDemandQuery>
-      <supplyDemandQuery title="Total Animal Production by Region">
-         <axis1 name="region">region</axis1>
-         <axis2 name="Year">physical-output[@vintage]</axis2>
-         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and (@name='Beef' or @name='Dairy' or @name='Pork' or @name='Poultry' or @name='SheepGoat')]//*[@type='output' (:collapse:)]/physical-output/node()</xPath>
-         <comments/>
-      </supplyDemandQuery>
-      <supplyDemandQuery title="Animal Production by Animal Type">
-         <axis1 name="sector">sector</axis1>
-         <axis2 name="Year">physical-output[@vintage]</axis2>
-         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='Beef' or @name='Dairy' or @name='Pork' or @name='Poultry' or @name='SheepGoat')]//*[@type='output']/physical-output/node()</xPath>
-         <comments/>
-      </supplyDemandQuery>
-      <supplyDemandQuery title="Animal Production by Animal and System Type">
-         <axis1 name="sector">sector</axis1>
-         <axis2 name="Year">physical-output[@vintage]</axis2>
-         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='Beef' or @name='Dairy' or @name='Pork' or @name='Poultry' or @name='SheepGoat')]/*[@type='subsector']//*[@type='output']/physical-output/node()</xPath>
-         <comments/>
-      </supplyDemandQuery>
-      <supplyDemandQuery title="Animal Production by Animal, System, and Feed Type">
-         <axis1 name="sector">sector</axis1>
-         <axis2 name="Year">physical-output[@vintage]</axis2>
-         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='Beef' or @name='Dairy' or @name='Pork' or @name='Poultry' or @name='SheepGoat')]/*[@type='subsector']/*[@type='technology']/*[@type='output']/physical-output/node()</xPath>
-         <comments/>
-      </supplyDemandQuery>
-   </queryGroup>
-   <queryGroup name="AgLU: Final Demands">
-      <supplyDemandQuery title="Final Demands of Agricultural Products">
-         <axis1 name="sector">sector</axis1>
-         <axis2 name="Year">physical-output[@vintage]</axis2>
-         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (@name='BeefDemand' or @name='CornDemand' or @name='DairyDemand' or @name='MiscCropDemand' or @name='OilCropDemand' or @name='OtherGrainDemand' or @name='PorkDemand' or @name='PoultryDemand' or @name='RiceDemand' or @name='SheepGoatDemand' or @name='SugarCropDemand' or @name='WheatDemand')]//*[@type='output']/physical-output/node()</xPath>
-         <comments>Includes non-food demands</comments>
-      </supplyDemandQuery>
-      <supplyDemandQuery title="Total Regional Food Demands">
-         <axis1 name="region">region</axis1>
-         <axis2 name="Year">physical-output[@vintage]</axis2>
-         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' (:collapse:) and (@name='BeefDemand' or @name='CornDemand' or @name='DairyDemand' or @name='MiscCropDemand' or @name='OilCropDemand' or @name='OtherGrainDemand' or @name='PorkDemand' or @name='PoultryDemand' or @name='RiceDemand' or @name='SheepGoatDemand' or @name='SugarCropDemand' or @name='WheatDemand')]/*[@type='subsector' (:collapse:) and (@name='BeefDemand' or @name='CornDemand' or @name='DairyDemand' or @name='MiscCropDemand' or @name='OilCropDemand' or @name='OtherGrainDemand' or @name='PorkDemand' or @name='PoultryDemand' or @name='RiceDemand' or @name='SheepGoatDemand' or @name='SugarCropDemand' or @name='WheatDemand')]//*[@type='output' (:collapse:)]/physical-output/node()</xPath>
-         <comments>Does not include non-food demands</comments>
-      </supplyDemandQuery>
-      <supplyDemandQuery title="Food Demands by Type">
-         <axis1 name="sector">sector</axis1>
-         <axis2 name="Year">physical-output[@vintage]</axis2>
-         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (@name='BeefDemand' or @name='CornDemand' or @name='DairyDemand' or @name='MiscCropDemand' or @name='OilCropDemand' or @name='OtherGrainDemand' or @name='PorkDemand' or @name='PoultryDemand' or @name='RiceDemand' or @name='SheepGoatDemand' or @name='SugarCropDemand' or @name='WheatDemand')]/*[@type='subsector' (:collapse:) and (@name='BeefDemand' or @name='CornDemand' or @name='DairyDemand' or @name='MiscCropDemand' or @name='OilCropDemand' or @name='OtherGrainDemand' or @name='PorkDemand' or @name='PoultryDemand' or @name='RiceDemand' or @name='SheepGoatDemand' or @name='SugarCropDemand' or @name='WheatDemand')]//*[@type='output' (:collapse:)]/physical-output/node()</xPath>
-         <comments/>
-      </supplyDemandQuery>
-      <supplyDemandQuery title="Non-Food Demands by Type">
-         <axis1 name="sector">sector</axis1>
-         <axis2 name="Year">physical-output[@vintage]</axis2>
-         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (@name='BeefDemand' or @name='CornDemand' or @name='DairyDemand' or @name='MiscCropDemand' or @name='OilCropDemand' or @name='OtherGrainDemand' or @name='PorkDemand' or @name='PoultryDemand' or @name='RiceDemand' or @name='SheepGoatDemand' or @name='SugarCropDemand' or @name='WheatDemand')]/*[@type='subsector' (:collapse:) and not (@name='BeefDemand' or @name='CornDemand' or @name='DairyDemand' or @name='MiscCropDemand' or @name='OilCropDemand' or @name='OtherGrainDemand' or @name='PorkDemand' or @name='PoultryDemand' or @name='RiceDemand' or @name='SheepGoatDemand' or @name='SugarCropDemand' or @name='WheatDemand')]//*[@type='output' (:collapse:)]/physical-output/node()</xPath>
-         <comments/>
-      </supplyDemandQuery>
-   </queryGroup>
-   <queryGroup name="AgLU: Biomass">
-      <query title="Land Allocation: biomass">
-         <axis1 name="LandLeaf">LandLeaf</axis1>
-         <axis2 name="Year">land-allocation[@year]</axis2>
-         <xPath buildList="false" dataName="land-allocation" group="false" sumAll="false">/LandAllocatorNode[@name='root' or @type='LandAllocatorNode' (: collapse :)]//land-allocation/text()[ancestor::*[(@type='LandLeaf' or local-name()='LandLeaf') and (@name='biomass')]]</xPath>
-         <comments/>
-      </query>
-      <supplyDemandQuery title="Biomass Production: Dedicated/Waste">
-         <axis1 name="sector">sector[@name]</axis1>
-         <axis2 name="Year">physical-output[@vintage]</axis2>
-         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (exists(child::keyword/@supplysector) or local-name() = 'ForestSupplySector' or local-name() = 'FoodSupplySector' or local-name() = 'export-sector' or @name='ForestDemand')]//*[@type='output' and @name='biomass']/physical-output/node()</xPath>
-         <comments/>
-      </supplyDemandQuery>
-      <supplyDemandQuery title="Purpose Grown Biomass Production">
-         <axis1 name="sector">sector[@name]</axis1>
-         <axis2 name="Year">physical-output[@vintage]</axis2>
-         <xPath buildList="false" dataName="output" group="false" sumAll="false">*[@type='sector' and (exists(child::keyword/@supplysector) or local-name() = 'ForestSupplySector' or local-name() = 'FoodSupplySector' or local-name() = 'export-sector')]//*[@type='output']/physical-output/node()[ancestor::*[(@type='sector') and (@name='biomass')]]</xPath>
-         <comments/>
-      </supplyDemandQuery>
-      <resourceQuery title="MSW Production">
-         <axis1 name="resource">resource</axis1>
-         <axis2 name="Year">output</axis2>
-         <xPath buildList="true" dataName="available" group="false" sumAll="false">*[@type = 'resource' and (@name='biomass')]//output/node()</xPath>
-         <comments/>
-      </resourceQuery>
-      <supplyDemandQuery title="Total Biomass Consumption">
-         <axis1 name="sector">sector</axis1>
-         <axis2 name="Year">demand-physical[@vintage]</axis2>
-         <xPath buildList="false" dataName="input" group="false" sumAll="false">*[@type='sector' and (exists(child::keyword/@supplysector) or local-name() = 'supplysector')]//*[@type='input']/demand-physical/node()[ancestor::*[(@type='sector') and (@name='regional biomass')]]</xPath>
-         <comments>Supply sectors only.</comments>
-      </supplyDemandQuery>
-      <supplyDemandQuery title="Purpose Grown Biomass Price">
+      <supplyDemandQuery title="Ag Commodity Prices">
          <axis1 name="sector">sector</axis1>
          <axis2 name="Year">cost</axis2>
-         <xPath buildList="true" dataName="Price" group="false" sumAll="false">*[@type = 'sector'  and (@name='biomass')]/cost/text()</xPath>
+         <xPath buildList="true" dataName="yield" group="false" sumAll="false">*[@type='sector' and (exists(child::keyword/@supplysector) or local-name() = 'AgSupplySector')]/cost/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+   </queryGroup>
+   <queryGroup name="Animals">
+      <supplyDemandQuery title="Meat Output By Technology">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and ((@name='Beef') or @name='SheepGoat' or @name='Pork' or @name='Dairy' or @name='Poultry' )]//*[@type = 'technology']/*[@type='output']/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Feed Demands by Meat Production">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' and ((@name='Beef') or @name='SheepGoat' or @name='Pork' or @name='Dairy' or @name='Poultry' )]//*[@type = 'technology']/*[@type='input']/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Feed Types by Crop">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' (: collapse :) and ((@name='FodderHerb_Residue') or @name='Pasture_FodderGrass' or @name='FeedCrops' or @name='Scavenging_Other')]//*[@type = 'technology']/*[@type='input']/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Meat Prices">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and ((@name='Beef') or @name='SheepGoat' or @name='Pork' or @name='Dairy' or @name='Poultry')]/cost/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+   </queryGroup>
+   <queryGroup name="Biomass">
+      <supplyDemandQuery title="Purpose-grown biomass production">
+         <axis1 name="sector">sector[@name]</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="false" dataName="output" group="false" sumAll="false">*[@type='sector' and @name='biomass']//*[@type='output']/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Residue biomass production">
+         <axis1 name="sector">sector[@name]</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="false" dataName="output" group="false" sumAll="false">*[@type='sector']//*[@type='output' and @name='biomass']/physical-output/node()</xPath>
+         <comments/>
+         <labelRewriteList append-values="false">
+            <level name="sector">
+               <rewrite from="biomass" to=""/>
+            </level>
+         </labelRewriteList>
+      </supplyDemandQuery>
+      <resourceQuery title="MSW production">
+         <axis1 name="resource">resource</axis1>
+         <axis2 name="Year">output</axis2>
+         <xPath buildList="false" dataName="production" group="false" sumAll="false">*[@type = 'resource' and (@name='biomass')]//output/node()</xPath>
+         <comments/>
+      </resourceQuery>
+      <supplyDemandQuery title="Total biomass consumption">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="false" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='regional biomass')]//*[@type='input']/demand-physical/node()</xPath>
+         <comments>Supply sectors only.</comments>
+      </supplyDemandQuery>
+   </queryGroup>
+   <queryGroup name="Ag Demands">
+      <supplyDemandQuery title="Food Consumption By Type">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='FoodDemand_Crops' or @name='FoodDemand_Meat')]//*[@type = 'technology']/*[@type='output']/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Demand Balances by Primary Good">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector']//*[@type='input' and (@name='Corn' or @name='FiberCrop' or @name='FodderGrass' or @name='FodderHerb' or @name='MiscCrop' or @name='OilCrop' or @name='OtherGrain' or @name='PalmFruit' or @name='Rice' or @name='Root_Tuber' or @name='SugarCrop' or @name='Wheat' or @name='Forest' or @name='Pasture')]/demand-physical/node()</xPath>
          <comments/>
       </supplyDemandQuery>
    </queryGroup>
@@ -1319,58 +1795,6 @@
 						local:rename-resource-emiss($currTree/*[@type='resource' and exists(child::*[@type='GHG'])])
 						| (: get the sector emissions :)
 						$currTree/*[@type = 'sector']//*[@type = 'GHG']/emissions/node()
-	 	 }; 
-            	 local:run-combine-sector-resource-emiss((:scenarios:), (:regions:), (:collection:))
-	 </xPath>
-         <comments/>
-      </emissionsQueryBuilder>
-      <emissionsQueryBuilder title="GHG emissions by subsector">
-         <axis1 name="sector">sector</axis1>
-         <axis2 name="Year">emissions</axis2>
-         <xPath buildList="true" dataName="emissions" group="false" sumAll="false"> 
-			 	 	 declare function local:rename-resource-emiss($resources as node()*) as node()* {
-					         for $resource in $resources
-			 	 		 let $scn := $resource/ancestor::scenario,
-			 			     $rgn := $resource/ancestor::region,
-			 			     $retDoc := document { element scenario {
-									$scn/@*,
-									element region {
-										$rgn/@*,
-										element sector {
-										        attribute type { 'sector' },
-											$resource/@name,
-											element subsector {
-												attribute type { 'subsector' },
-												$resource/@name,
-												element technology {
-													attribute type { 'technology' },
-													$resource/@name,
-													$resource/*[@type='GHG']
-			 			 						}
-			 			 	  				}
-										}
-									}
-								}
-							}
-			 			 return
-						     (: TODO: bug in the XMLDB prevents us from specifying text of emissions
-						        unless we want to loose all our ancestor info we just put together,
-						        so instead I am going to hack around it :)
-						     $retDoc//text()[parent::emissions]
-			 	 	 };  
-			 	 	 declare function local:run-combine-sector-resource-emiss($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
-			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
-			 	 	 		  then $regions
-			 	 	 		  else distinct-values(collection($collection)/scenario/world/*[@type='region']/@name)
-			 	 	 return
-			 	 	 for $scenario in $scenarios, 	    
-			 	 	 $region in $regionsG 	
-			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
-			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
-					 return (: rename resources as a sector/subsector/tech :)
-						local:rename-resource-emiss($currTree/*[@type='resource' and exists(child::*[@type='GHG'])])
-						| (: get the sector emissions :)
-						$currTree/*[@type = 'sector' ]/*[@type='subsector']//*[@type = 'GHG']/emissions/node()
 	 	 }; 
             	 local:run-combine-sector-resource-emiss((:scenarios:), (:regions:), (:collection:))
 	 </xPath>
@@ -1896,6 +2320,58 @@
 	 </xPath>
          <comments/>
       </emissionsQueryBuilder>
+      <emissionsQueryBuilder title="GHG emissions by subsector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">emissions</axis2>
+         <xPath buildList="true" dataName="emissions" group="false" sumAll="false"> 
+			 	 	 declare function local:rename-resource-emiss($resources as node()*) as node()* {
+					         for $resource in $resources
+			 	 		 let $scn := $resource/ancestor::scenario,
+			 			     $rgn := $resource/ancestor::region,
+			 			     $retDoc := document { element scenario {
+									$scn/@*,
+									element region {
+										$rgn/@*,
+										element sector {
+										        attribute type { 'sector' },
+											$resource/@name,
+											element subsector {
+												attribute type { 'subsector' },
+												$resource/@name,
+												element technology {
+													attribute type { 'technology' },
+													$resource/@name,
+													$resource/*[@type='GHG']
+			 			 						}
+			 			 	  				}
+										}
+									}
+								}
+							}
+			 			 return
+						     (: TODO: bug in the XMLDB prevents us from specifying text of emissions
+						        unless we want to loose all our ancestor info we just put together,
+						        so instead I am going to hack around it :)
+						     $retDoc//text()[parent::emissions]
+			 	 	 };  
+			 	 	 declare function local:run-combine-sector-resource-emiss($scenarios as xs:string*, $regions as xs:string*, $collection as xs:string) as node()* { 	
+			 	 	 let $regionsG := if(not($regions[1] = 'Global'))
+			 	 	 		  then $regions
+			 	 	 		  else distinct-values(collection($collection)/scenario/world/*[@type='region']/@name)
+			 	 	 return
+			 	 	 for $scenario in $scenarios, 	    
+			 	 	 $region in $regionsG 	
+			 	 	 let $scenario_split := tokenize($scenario, ' '), 	    
+			 	 	 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type = 'region' and @name=$region]
+					 return (: rename resources as a sector/subsector/tech :)
+						local:rename-resource-emiss($currTree/*[@type='resource' and exists(child::*[@type='GHG'])])
+						| (: get the sector emissions :)
+						$currTree/*[@type = 'sector' ]/*[@type='subsector']//*[@type = 'GHG']/emissions/node()
+	 	 }; 
+            	 local:run-combine-sector-resource-emiss((:scenarios:), (:regions:), (:collection:))
+	 </xPath>
+         <comments/>
+      </emissionsQueryBuilder>
    </queryGroup>
    <queryGroup name="CO2">
       <emissionsQueryBuilder title="CO2 emissions by region">
@@ -1909,51 +2385,51 @@
          <axis2 name="Year">emissions</axis2>
          <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector']//CO2/emissions/node()</xPath>
          <comments/>
-         <labelRewriteList>
+         <labelRewriteList append-values="false">
             <level name="sector">
                <rewrite from="gas pipeline" to="gas systems"/>
-               <rewrite from="backup_electricity" to="electricity"/>
-               <rewrite from="agriculture energy use" to="industry"/>
                <rewrite from="boilers general" to="industry"/>
+               <rewrite from="agriculture energy use" to="industry"/>
+               <rewrite from="backup_electricity" to="electricity"/>
                <rewrite from="bld_res lighting" to="building"/>
-               <rewrite from="H2 Central Production" to="hydrogen"/>
                <rewrite from="trn_freight" to="transportation"/>
+               <rewrite from="H2 Central Production" to="hydrogen"/>
                <rewrite from="machine drive" to="industry"/>
-               <rewrite from="gas processing" to="gas systems"/>
                <rewrite from="bld_res hot water" to="building"/>
+               <rewrite from="gas processing" to="gas systems"/>
                <rewrite from="bld_comm office" to="building"/>
-               <rewrite from="bld_comm ventilation" to="building"/>
                <rewrite from="bld_res other" to="building"/>
-               <rewrite from="process heat primary metals" to="industry"/>
+               <rewrite from="bld_comm ventilation" to="building"/>
                <rewrite from="industrial energy use" to="industry"/>
-               <rewrite from="csp_backup" to="electricity"/>
-               <rewrite from="bld_res heating" to="building"/>
+               <rewrite from="process heat primary metals" to="industry"/>
                <rewrite from="feedstocks construction" to="industry"/>
+               <rewrite from="bld_res heating" to="building"/>
+               <rewrite from="csp_backup" to="electricity"/>
                <rewrite from="trn_shipping_intl" to="transportation"/>
                <rewrite from="bld_res appliances" to="building"/>
                <rewrite from="bld_comm cooling" to="building"/>
                <rewrite from="feedstocks chemicals" to="industry"/>
-               <rewrite from="H2 Forecourt Production" to="hydrogen"/>
                <rewrite from="process heat cement" to="industry"/>
+               <rewrite from="H2 Forecourt Production" to="hydrogen"/>
                <rewrite from="cement" to="industry"/>
-               <rewrite from="bld_comm other" to="building"/>
                <rewrite from="bld_comm refrigeration" to="building"/>
+               <rewrite from="bld_comm other" to="building"/>
                <rewrite from="electrochemical" to="industry"/>
-               <rewrite from="bld_res other appliances" to="building"/>
                <rewrite from="feedstocks primary metals" to="industry"/>
+               <rewrite from="bld_res other appliances" to="building"/>
                <rewrite from="other end uses" to="industry"/>
                <rewrite from="trn_passenger" to="transportation"/>
-               <rewrite from="bld_comm lighting" to="building"/>
                <rewrite from="bld_res cooling" to="building"/>
+               <rewrite from="bld_comm lighting" to="building"/>
                <rewrite from="construction energy use" to="industry"/>
-               <rewrite from="bld_comm cooking" to="building"/>
                <rewrite from="bld_comm hot water" to="building"/>
+               <rewrite from="bld_comm cooking" to="building"/>
                <rewrite from="industrial feedstocks" to="industry"/>
                <rewrite from="bld_comm heating" to="building"/>
                <rewrite from="boilers pulp paper and wood" to="industry"/>
                <rewrite from="process heat general" to="industry"/>
-               <rewrite from="mining energy use" to="industry"/>
                <rewrite from="limestone feedstocks" to=""/>
+               <rewrite from="mining energy use" to="industry"/>
                <rewrite from="trn_pass_road" to="transportation"/>
             </level>
          </labelRewriteList>
@@ -1969,51 +2445,51 @@
          <axis2 name="Year">demand-physical[@vintage]</axis2>
          <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (exists(child::keyword/@supplysector) or local-name() = 'supplysector')]//*[@type='input' and (@name='regional biomass' or @name='delivered biomass' or @name='refined liquids enduse' or @name='refined liquids industrial' or @name='gas processing' or @name='wholesale gas' or @name='delivered gas' or @name='H2 Central Production' or @name='H2_td' or @name='H2 Enduse')]/demand-physical/node()</xPath>
          <comments>Supply sectors only</comments>
-         <labelRewriteList>
+         <labelRewriteList append-values="false">
             <level name="sector">
                <rewrite from="gas pipeline" to="gas systems"/>
-               <rewrite from="backup_electricity" to="electricity"/>
-               <rewrite from="agriculture energy use" to="industry"/>
                <rewrite from="boilers general" to="industry"/>
+               <rewrite from="agriculture energy use" to="industry"/>
+               <rewrite from="backup_electricity" to="electricity"/>
                <rewrite from="bld_res lighting" to="building"/>
-               <rewrite from="H2 Central Production" to="hydrogen"/>
                <rewrite from="trn_freight" to="transportation"/>
+               <rewrite from="H2 Central Production" to="hydrogen"/>
                <rewrite from="machine drive" to="industry"/>
-               <rewrite from="gas processing" to="gas systems"/>
                <rewrite from="bld_res hot water" to="building"/>
+               <rewrite from="gas processing" to="gas systems"/>
                <rewrite from="bld_comm office" to="building"/>
-               <rewrite from="bld_comm ventilation" to="building"/>
                <rewrite from="bld_res other" to="building"/>
-               <rewrite from="process heat primary metals" to="industry"/>
+               <rewrite from="bld_comm ventilation" to="building"/>
                <rewrite from="industrial energy use" to="industry"/>
-               <rewrite from="csp_backup" to="electricity"/>
-               <rewrite from="bld_res heating" to="building"/>
+               <rewrite from="process heat primary metals" to="industry"/>
                <rewrite from="feedstocks construction" to="industry"/>
+               <rewrite from="bld_res heating" to="building"/>
+               <rewrite from="csp_backup" to="electricity"/>
                <rewrite from="trn_shipping_intl" to="transportation"/>
                <rewrite from="bld_res appliances" to="building"/>
                <rewrite from="bld_comm cooling" to="building"/>
                <rewrite from="feedstocks chemicals" to="industry"/>
-               <rewrite from="H2 Forecourt Production" to="hydrogen"/>
                <rewrite from="process heat cement" to="industry"/>
+               <rewrite from="H2 Forecourt Production" to="hydrogen"/>
                <rewrite from="cement" to="industry"/>
-               <rewrite from="bld_comm other" to="building"/>
                <rewrite from="bld_comm refrigeration" to="building"/>
+               <rewrite from="bld_comm other" to="building"/>
                <rewrite from="electrochemical" to="industry"/>
-               <rewrite from="bld_res other appliances" to="building"/>
                <rewrite from="feedstocks primary metals" to="industry"/>
+               <rewrite from="bld_res other appliances" to="building"/>
                <rewrite from="other end uses" to="industry"/>
                <rewrite from="trn_passenger" to="transportation"/>
-               <rewrite from="bld_comm lighting" to="building"/>
                <rewrite from="bld_res cooling" to="building"/>
+               <rewrite from="bld_comm lighting" to="building"/>
                <rewrite from="construction energy use" to="industry"/>
-               <rewrite from="bld_comm cooking" to="building"/>
                <rewrite from="bld_comm hot water" to="building"/>
+               <rewrite from="bld_comm cooking" to="building"/>
                <rewrite from="industrial feedstocks" to="industry"/>
                <rewrite from="bld_comm heating" to="building"/>
                <rewrite from="boilers pulp paper and wood" to="industry"/>
                <rewrite from="process heat general" to="industry"/>
-               <rewrite from="mining energy use" to="industry"/>
                <rewrite from="limestone feedstocks" to=""/>
+               <rewrite from="mining energy use" to="industry"/>
                <rewrite from="trn_pass_road" to="transportation"/>
             </level>
          </labelRewriteList>
@@ -2041,7 +2517,7 @@
          <axis2 name="Year">emissions-sequestered</axis2>
          <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector' ]//CO2/emissions-sequestered/node()</xPath>
          <comments/>
-         <labelRewriteList>
+         <labelRewriteList append-values="false">
             <level name="sector">
                <rewrite from="backup_electricity" to="electricity"/>
                <rewrite from="csp_backup" to="electricity"/>
@@ -2200,6 +2676,12 @@
          <axis1 name="sector">sector[@name]</axis1>
          <axis2 name="Year">physical-output[@vintage]</axis2>
          <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector']/*[@type='subsector']/*[@type='technology']/*[@type='output']/physical-output[@unit='EJ']/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Cogeneration by sector">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector']//*[@type = 'technology' (:collapse:)]/output-secondary[@name='electricity']/physical-output/node()</xPath>
          <comments/>
       </supplyDemandQuery>
    </queryGroup>

@@ -1,0 +1,35 @@
+crop_ID,crop_name_abbrev,crop_name,GCAM_commodity
+1,WHEA, wheat,Wheat
+2,RICE, rice (paddy),Rice
+3,MAIZ, maize,Corn
+4,BARL, barley,OtherGrain
+5,MILL, millet,OtherGrain
+6,SORG, sorghum,OtherGrain
+7,OTHC, other cereals,OtherGrain
+8,POTA, potatoes,Root_Tuber
+9,SPOT, sweet potatoes,Root_Tuber
+10,CASS, cassava,Root_Tuber
+11,OTHR, other roots,Root_Tuber
+12,PLAN, plantains,MiscCrop
+13,BEET, sugar beet,SugarCrop
+14,CANE, sugar cane,SugarCrop
+15,PULS, pulses,MiscCrop
+16,VEGE, vegetables,MiscCrop
+17,BANA, bananas,MiscCrop
+18,CITR, citrus fruit,MiscCrop
+19,FRUI, other fruit,MiscCrop
+20,OILC, oilcrops  n.e.s.,OilCrop
+21,RAPE, rape seed,OilCrop
+22,PALM, palm oil,PalmFruit
+23,SOYB, soybeans,OilCrop
+24,GROU, groundnuts,OilCrop
+25,SUNF, sunflower seed,OilCrop
+26,SESA, sesame seed,OilCrop
+27,COCN, coconuts,PalmFruit
+28,COCO, cocoa beans,MiscCrop
+29,COFF, coffee beans,MiscCrop
+30,TEAS, teas and mate,MiscCrop
+31,TOBA, tobacco,na
+32,COTT, seed cotton,FiberCrop
+33,FIBR, jute and hard fibres,FiberCrop
+34,RUBB, rubber,na

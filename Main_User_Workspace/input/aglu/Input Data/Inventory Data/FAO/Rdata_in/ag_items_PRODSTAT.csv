@@ -1,0 +1,178 @@
+item,GCAM_commodity
+Agave Fibres Nes,FiberCrop
+Alfalfa for forage and silage,FodderHerb
+"Almonds, with shell",MiscCrop
+"Anise, badian, fennel, corian.",MiscCrop
+Apples,MiscCrop
+Apricots,MiscCrop
+Arecanuts,MiscCrop
+Artichokes,MiscCrop
+Asparagus,MiscCrop
+Avocados,MiscCrop
+Bambara beans,MiscCrop
+Bananas,MiscCrop
+Barley,OtherGrain
+"Beans, green",MiscCrop
+"Beans, dry",MiscCrop
+Beets for Fodder,FodderHerb
+Berries Nes,MiscCrop
+Blueberries,MiscCrop
+"Brazil nuts, with shell",MiscCrop
+"Broad beans, horse beans, dry",MiscCrop
+Buckwheat,OtherGrain
+Cabbage for Fodder,FodderHerb
+Cabbages and other brassicas,MiscCrop
+Canary seed,OtherGrain
+Carobs,MiscCrop
+Carrots and turnips,MiscCrop
+Carrots for Fodder,FodderHerb
+"Cashew nuts, with shell",MiscCrop
+Cashewapple,MiscCrop
+Cassava,Root_Tuber
+Castor oil seed,OilCrop
+Cauliflowers and broccoli,MiscCrop
+"Cereals, nes",OtherGrain
+Cherries,MiscCrop
+Chestnuts,MiscCrop
+Chick peas,MiscCrop
+Chicory roots,MiscCrop
+"Chillies and peppers, dry",MiscCrop
+"Chillies and peppers, green",MiscCrop
+Cinnamon (canella),MiscCrop
+"Citrus fruit, nes",MiscCrop
+Clover for forage and silage,FodderHerb
+Cloves,MiscCrop
+Cocoa beans,MiscCrop
+Coconuts,PalmFruit
+"Coffee, green",MiscCrop
+Cotton lint,Cotton_Fiber
+"Cow peas, dry",MiscCrop
+Cranberries,MiscCrop
+Cucumbers and gherkins,MiscCrop
+Currants,MiscCrop
+Dates,MiscCrop
+Eggplants (aubergines),MiscCrop
+Fibre Crops Nes,FiberCrop
+Figs,MiscCrop
+Flax fibre and tow,FiberCrop
+Fonio,OtherGrain
+forage Products,FodderGrass
+Fruit Fresh Nes,MiscCrop
+"Fruit, tropical fresh nes",MiscCrop
+Garlic,MiscCrop
+Ginger,MiscCrop
+Gooseberries,MiscCrop
+Grapefruit (inc. pomelos),MiscCrop
+Grapes,MiscCrop
+Grasses Nes for forage;Sil,FodderGrass
+Green Oilseeds for Silage,FodderHerb
+"Groundnuts, with shell",OilCrop
+Gums Natural,na
+"Hazelnuts, with shell",MiscCrop
+Hemp Tow Waste,FiberCrop
+Hempseed,OilCrop
+Hops,MiscCrop
+Jojoba Seeds,OilCrop
+Jute,FiberCrop
+Karite Nuts (Sheanuts),OilCrop
+Kiwi fruit,MiscCrop
+Kolanuts,MiscCrop
+"Leeks, other alliaceous veg",MiscCrop
+Leguminous for Silage,FodderHerb
+"Leguminous vegetables, nes",MiscCrop
+Lemons and limes,MiscCrop
+Lentils,MiscCrop
+Lettuce and chicory,MiscCrop
+Linseed,OilCrop
+Lupins,MiscCrop
+Maize,Corn
+Maize for forage and silage,FodderHerb
+"Maize, green",Corn
+"Mangoes, mangosteens, guavas",MiscCrop
+Manila Fibre (Abaca),FiberCrop
+Mate,MiscCrop
+Melonseed,OilCrop
+Millet,OtherGrain
+Mixed grain,OtherGrain
+Mushrooms and truffles,MiscCrop
+Mustard seed,OilCrop
+Natural rubber,na
+"Nutmeg, mace and cardamoms",MiscCrop
+"Nuts, nes",MiscCrop
+Oats,OtherGrain
+Oil palm fruit,PalmFruit
+"Oilseeds, Nes",OilCrop
+Okra,MiscCrop
+Olives,OilCrop
+"Onions (inc. shallots), green",MiscCrop
+"Onions, dry",MiscCrop
+Oranges,MiscCrop
+Other Bastfibres,FiberCrop
+Other melons (inc.cantaloupes),MiscCrop
+Papayas,MiscCrop
+Peaches and nectarines,MiscCrop
+Pears,MiscCrop
+"Peas, dry",MiscCrop
+"Peas, green",MiscCrop
+Pepper (Piper spp.),MiscCrop
+Peppermint,MiscCrop
+Persimmons,MiscCrop
+Pigeon peas,MiscCrop
+Pineapples,MiscCrop
+Pistachios,MiscCrop
+Plantains,MiscCrop
+Plums and sloes,MiscCrop
+"Pome fruit, nes",MiscCrop
+Popcorn,Corn
+Poppy seed,OilCrop
+Potatoes,Root_Tuber
+"Pulses, nes",MiscCrop
+Pumpkins for Fodder,na
+"Pumpkins, squash and gourds",MiscCrop
+"Pyrethrum,Dried",MiscCrop
+Quinces,MiscCrop
+Quinoa,OtherGrain
+Ramie,FiberCrop
+Rapeseed,OilCrop
+Raspberries,MiscCrop
+"Rice, paddy",Rice
+"Roots and Tubers, nes",Root_Tuber
+Rye,OtherGrain
+Rye grass for forage and silage,FodderGrass
+Safflower seed,OilCrop
+Seed cotton,Cotton_Total
+Sesame seed,OilCrop
+Sisal,FiberCrop
+Sorghum,OtherGrain
+Sorghum for forage and silage,FodderGrass
+Sour cherries,MiscCrop
+Soybeans,OilCrop
+"Spices, nes",MiscCrop
+Spinach,MiscCrop
+"Stone fruit, nes",MiscCrop
+Strawberries,MiscCrop
+String beans,MiscCrop
+Sugar beet,SugarCrop
+Sugar cane,SugarCrop
+"Sugar crops, nes",SugarCrop
+Sunflower seed,OilCrop
+Swedes for Fodder,FodderHerb
+Sweet potatoes,Root_Tuber
+"Tangerines, mandarins, clem.",MiscCrop
+Taro (cocoyam),Root_Tuber
+Tea,MiscCrop
+Tea Nes,MiscCrop
+"Tobacco, unmanufactured",MiscCrop
+Tomatoes,MiscCrop
+Triticale,OtherGrain
+Tung Nuts,OilCrop
+Turnips for Fodder,FodderHerb
+Vanilla,MiscCrop
+Vegetables fresh nes,MiscCrop
+Vegetables Roots Fodder,FodderHerb
+Vetches,FodderHerb
+"Walnuts, with shell",MiscCrop
+Watermelons,MiscCrop
+Wheat,Wheat
+Yams,Root_Tuber
+Yautia (cocoyam),Root_Tuber

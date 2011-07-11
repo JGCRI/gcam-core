@@ -36,22 +36,24 @@
  * \file unmanaged_land_leaf.cpp
  * \ingroup Objects
  * \brief UnmanagedLandLeaf class source file.
- * \author James Blackwood
+ * \author James Blackwood, Kate Calvin
  */
 
 #include "util/base/include/definitions.h"
 #include "land_allocator/include/unmanaged_land_leaf.h"
 #include "land_allocator/include/land_use_history.h"
 #include "util/base/include/xml_helper.h"
-#include "emissions/include/unmanaged_carbon_calc.h"
-#include "ccarbon_model/include/carbon_box_model.h"
+#include "ccarbon_model/include/land_carbon_densities.h"
 #include "emissions/include/aghg.h"
 #include "util/base/include/summary.h"
 #include "util/base/include/ivisitor.h"
 #include "emissions/include/ghg_factory.h"
+#include "marketplace/include/marketplace.h"
 
 using namespace std;
 using namespace xercesc;
+
+extern Scenario* scenario;
 
 /*!
  * \brief Default constructor.
@@ -68,100 +70,10 @@ LandLeaf( aParent, "" )
 UnmanagedLandLeaf::~UnmanagedLandLeaf() {
 }
 
-void UnmanagedLandLeaf::completeInit( const string& aRegionName,
-                             const IInfo* aRegionInfo )
-{
-    // Call parent
-    LandLeaf::completeInit( aRegionName, aRegionInfo );
-    
-    // If land value was not set for some period, set for all periods.
-    const Modeltime* modeltime = scenario->getModeltime();
-    for( int period = 0; period < modeltime->getmaxper(); period++ ) {
-        // Correct and warn if negative values
-        if( mLandAllocation[ period ].isInited() && mLandAllocation[ period ] < 0 ) {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Negative land allocation of " << mLandAllocation[ period ] << 
-                       " read in for leaf " << getName() << ". Resetting to zero." 
-                    << endl;
-            mLandAllocation[ period ] = 0;
-        }
-
-        if ( !mLandAllocation[ period ].isInited() ) {
-            if ( period > 0 && mLandAllocation[ period - 1 ].isInited() ) {
-                mLandAllocation[ period ] = mLandAllocation[ period - 1 ];
-            }
-            else {
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::NOTICE );
-                mainLog << "Land for unmanged Land-Leaf " << getName() 
-                        << " was not allocated in period " << period << endl;
-            }
-        }
-        
-       if ( !mBaseLandAllocation[ period ].isInited() ) {
-          mBaseLandAllocation[ period ] = mLandAllocation[ period ] ;
-      }
-    }
-    
-}
-
-
 bool UnmanagedLandLeaf::XMLDerivedClassParse( const std::string& aNodeName,
                                               const xercesc::DOMNode* aCurr )
 {
-    if( aNodeName == "landAllocation" ){
-        XMLHelper<Value>::insertValueIntoVector( aCurr, mLandAllocation,
-                                                 scenario->getModeltime() );
-        mReadinLandAllocation = mLandAllocation;
-    }
-    else if( aNodeName == "intrinsicRate" ){
-        XMLHelper<Value>::insertValueIntoVector( aCurr, mBaseIntrinsicRate,
-                                                 scenario->getModeltime() );
-    }
-    else if( aNodeName == LandUseHistory::getXMLNameStatic() ){
-        parseSingleNode( aCurr, mLandUseHistory, new LandUseHistory );
-    }
-    else if( aNodeName == UnmanagedCarbonCalc::getXMLNameStatic() ) {
-        parseSingleNode( aCurr, mCarbonContentCalc, new UnmanagedCarbonCalc );
-    }
-    else if( aNodeName == CarbonBoxModel::getXMLNameStatic() ){
-        parseSingleNode( aCurr, mCarbonContentCalc, new CarbonBoxModel );
-    }
-    else {
-        return false;
-    }
     return true;
-}
-
-void UnmanagedLandLeaf::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, mName );
-    const Modeltime* modeltime = scenario->getModeltime();
-    XMLWriteVector( mBaseIntrinsicRate, "intrinsicRate", aOut, aTabs, modeltime, Value( 0.0 ) );
-    XMLWriteVector( mReadinLandAllocation, "landAllocation", aOut, aTabs, modeltime );
-
-    if( mLandUseHistory.get() ){
-        mLandUseHistory->toInputXML( aOut, aTabs );
-    }
-
-    mCarbonContentCalc->toInputXML( aOut, aTabs );
-
-    // finished writing xml for the class members.
-    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
-}
-
-void UnmanagedLandLeaf::toDebugXMLDerived( const int aPeriod,
-                                           ostream& aOut,
-                                           Tabs* aTabs ) const
-{
-    LandLeaf::toDebugXMLDerived( aPeriod, aOut, aTabs );
-    XMLWriteElement( mBaseIntrinsicRate[ aPeriod ], "baseIntrinsicRate", aOut, aTabs );
-    XMLWriteElement( mBaseLandAllocation[ aPeriod ], "baseLandAllocation", aOut, aTabs );
-
-    // Don't write out land allocation because ALandAllocatorItem writes it.
-    if( mLandUseHistory.get() ){
-        mLandUseHistory->toDebugXML( aPeriod, aOut, aTabs );
-    }
 }
 
 const string& UnmanagedLandLeaf::getXMLName() const {
@@ -182,140 +94,64 @@ const string& UnmanagedLandLeaf::getXMLNameStatic() {
     return XML_NAME;
 }
 
-void UnmanagedLandLeaf::initCarbonCycle(){
-    if( !mCarbonContentCalc.get() ){
-        mCarbonContentCalc.reset( new UnmanagedCarbonCalc );
-    }
-}
-
-void UnmanagedLandLeaf::initLandUseHistory( const double aParentHistoryShare,
-                                            const LandUseHistory* aParentHistory,
-                                            const int aFirstCalibratedPeriod )
-{
-    assert( aParentHistoryShare >= 0 && aParentHistoryShare <= 1 );
-
-    // Check that the share has been normalized.
-    assert( mShare[ aFirstCalibratedPeriod ].isInited() &&
-            mShare[ aFirstCalibratedPeriod ] <= 1 );
-
-    // Use the unmanaged land leaf's history if one exists,
-    // otherwise use the parent.
-    double historyShare = 1;
-    const LandUseHistory* history = mLandUseHistory.get();
-    if( !history ){
-        history = aParentHistory;
-        historyShare = aParentHistoryShare * mShare[ aFirstCalibratedPeriod ];
-    }
-
-    mCarbonContentCalc->initLandUseHistory( history, historyShare );
-}
-
-void UnmanagedLandLeaf::setUnmanagedLandAllocation( const string& aRegionName,
-                                                    const double aNewUnmanaged,
-                                                    const int aPeriod )
-{
-   double newLandValue = aNewUnmanaged;
-   if( aNewUnmanaged < 0 ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Negative land allocation being set for leaf " << getName() << ". Resetting to zero." << endl;
-        newLandValue = 0;
-    }
-    mLandAllocation[ aPeriod ] = mBaseLandAllocation[ aPeriod ] = newLandValue;
-}
-
 /*!
-* \brief Sets a the intrinsic rate of a land leaf
-* \details This method adjusts the intrinsic rate of an unmanaged land leaf
+* \brief Sets a the profit rate of a land leaf
+* \details This method adjusts the profit rate of an unmanaged land leaf
 *          to account for the carbon value of land if the ag subsidy is
 *          is active and a carbon price exists. 
 * \param aRegionName Region.
 * \param aPeriod Period.
 */
-void UnmanagedLandLeaf::setUnmanagedLandValues( const string& aRegionName,
-                                                const int aPeriod )
+void UnmanagedLandLeaf::setUnmanagedLandProfitRate( const string& aRegionName,
+                                                    double aAverageProfitRate,
+                                                    const int aPeriod )
 {
-    // The base intrinsic rate that is read in should be equal to 
-    // the average profit rate of all land in the region. To convert from
-    // this rate for all land to the intrinsic rate for the unmanaged land
-    // leaf we must multiply by the intrinsic yield multiplier.
-    // TODO: check that the baseIntrinsicRate read-in is equal to the avgProfitRate of
-    // the tree land allocator OR pass that rate down to the leaf to initialize mBaseIntrinsicRate
-    assert( mBaseIntrinsicRate[ aPeriod ].isInited() );
-    mIntrinsicRate[ aPeriod ] = mBaseIntrinsicRate[ aPeriod ]*mIntrinsicYieldMult[ aPeriod ]
-                                + getCarbonValue( aRegionName, aPeriod );   
-}
+    // Adjust profit rate for land expnasion costs if applicable
+    double adjustedProfitRate = aAverageProfitRate;
+    const Marketplace* marketplace = scenario->getMarketplace();
 
-double UnmanagedLandLeaf::calcLandShares( const string& aRegionName,
-                                          const double aSigmaAbove,
-                                          const double aTotalBaseLand,
-                                          const int aPeriod )
-{
-    double unnormalizedShare = LandLeaf::calcLandShares( aRegionName,
-                                                         aSigmaAbove,
-                                                         0,
-                                                         aPeriod );
-
-    // result should be > 0.
-    assert( unnormalizedShare >= 0 );
-
-    return unnormalizedShare;
-}
-
-void UnmanagedLandLeaf::calcLandAllocation( const string& aRegionName,
-                                   const double aLandAllocationAbove,
-                                   const int aPeriod )
-{
-    LandLeaf::calcLandAllocation( aRegionName, aLandAllocationAbove, aPeriod);
-
-    //sjsTEMP - these are hacks, need to add initCalc() method
-    // Set base land allocation for next period
-    const Modeltime* modeltime = scenario->getModeltime();
-    if (aPeriod > 2 && modeltime->getper_to_yr( aPeriod ) > mLandUseHistory->getMaxYear() ) {
-        mBaseLandAllocation[ aPeriod ] = mLandAllocation[ aPeriod - 1 ];
+    if ( mIsLandExpansionCost ) {
+        //subtract off expansion cost from profit rate
+        double expansionCost = marketplace->getPrice( mLandExpansionCostName, aRegionName, aPeriod );
+        adjustedProfitRate = adjustedProfitRate - expansionCost;
     }
-    if ( mLandUseHistory.get() ) {
-        if ( modeltime->getper_to_yr( aPeriod ) <= mLandUseHistory->getMaxYear() ) {
-            mBaseLandAllocation[ aPeriod ] = mLandUseHistory->getAllocation( modeltime->getper_to_yr( aPeriod ) );
-        }
-    }
-}
 
-void UnmanagedLandLeaf::resetToCalLandAllocation( const int aPeriod ) {
-   // Set to land-use history value if this exists
-   if( mLandUseHistory.get() ){
-      const Modeltime* modeltime = scenario->getModeltime();
-      if ( modeltime->getper_to_yr( aPeriod ) <= mLandUseHistory->getMaxYear() ) {
-         mLandAllocation[ aPeriod ] = mBaseLandAllocation[ aPeriod ] = mLandUseHistory->getAllocation( modeltime->getper_to_yr( aPeriod ) );
-      }
-      else {
-          // Reset land allocations in model periods to what was parsed
-          mLandAllocation[ aPeriod ] = mReadinLandAllocation[ aPeriod ];
-      }
-   }
-}
+    mProfitRate[ aPeriod ] = max( adjustedProfitRate + getCarbonSubsidy( aRegionName, aPeriod ), 0.0 );
+}  
 
-bool UnmanagedLandLeaf::isUnmanagedNest() const {
-    // This is a hack to help find the top node of the unmanaged land nest.
-    return 1;
-}
 
-double UnmanagedLandLeaf::getBaseLandAllocation( const int aPeriod ) const {
-    assert( mBaseLandAllocation[ aPeriod ].isInited() );
-    return mBaseLandAllocation[ aPeriod ];
-}
-
-double UnmanagedLandLeaf::getTotalLandAllocation( const LandAllocationType aType,
-                                                  const int aPeriod ) const
+/*!
+* \brief Returns the land allocation of this leaf if it is the specified type
+* \param aType Land type.
+* \param aPeriod Model Period
+*/
+double UnmanagedLandLeaf::getCalLandAllocation( const LandAllocationType aType,
+                                                const int aPeriod ) const
 {
     // Check if unmanaged land should be returned.
     if( aType == eAnyLand || aType == eUnmanaged ){
-        assert( mLandAllocation[ aPeriod ].isInited() );
-        return mLandAllocation[ aPeriod ];
+        return mReadinLandAllocation[ aPeriod ];
     }
     return 0;
 }
-void UnmanagedLandLeaf::checkCalObservedYield( const int aPeriod ) const {
-    // Unmanaged land leaves do not have to have a calibrated observed yield, so
-    // no checking is done.
+
+/*!
+* \brief Sets a the profit rate of a land leaf
+* \param aRegionName Region.
+* \param aProductName Name of land leaf
+* \param aProfitRate Profit rate
+* \param aPeriod Period.
+*/
+void UnmanagedLandLeaf::setProfitRate( const string& aRegionName,
+                                 const string& aProductName,
+                                 const double aProfitRate,
+                                 const int aPeriod )
+{
+    // This shouldn't do anything for unmanaged land leafs
+}
+
+
+bool UnmanagedLandLeaf::isManagedLandLeaf( )  const 
+{
+    return false;
 }

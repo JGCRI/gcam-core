@@ -88,6 +88,10 @@ public:
     virtual bool setEmissions( const std::string& aGasName,
                                const int aPeriod,
                                const double aEmission );
+	
+	virtual bool setLUCEmissions( const std::string& aGasName,
+							  const int aYear,
+							  const double aEmission );
     
     virtual double getEmissions( const std::string& aGasName,
                                  const int aYear ) const;
@@ -145,6 +149,9 @@ private:
 
     //! Emissions levels by gas and period.
     std::vector<std::vector<double> > mEmissionsByGas;
+	
+	//! LUC CO2 Emissions by year.
+	std::vector<double> mLUCEmissionsByYear;
 
     //! Name of the scenario.
     std::string mScenarioName;

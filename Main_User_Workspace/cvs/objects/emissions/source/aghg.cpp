@@ -102,12 +102,10 @@ AGHG& AGHG::operator=( const AGHG& other ){
 //! Copy helper function.
 void AGHG::copy( const AGHG& other ){
 
+    // Note results are never copied.
     mEmissions.resize( scenario->getModeltime()->getmaxper() );
-    std::copy( other.mEmissions.begin(), other.mEmissions.end(), mEmissions.begin() );
     mEmissionsByFuel.resize( scenario->getModeltime()->getmaxper() );
-    std::copy( other.mEmissionsByFuel.begin(), other.mEmissionsByFuel.end(), mEmissionsByFuel.begin() );
     mEmissionsSequestered.resize( scenario->getModeltime()->getmaxper() );
-    std::copy( other.mEmissionsSequestered.begin(), other.mEmissionsSequestered.end(), mEmissionsSequestered.begin() );
 
     // Deep copy the auto_ptr
     if( other.mEmissionsDriver.get() ){

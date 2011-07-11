@@ -1,0 +1,102 @@
+item,GCAM_commodity
+"Almonds, with shell",MiscCrop
+"Anise, badian, fennel, corian.",MiscCrop
+Apples,MiscCrop
+Apricots,MiscCrop
+Artichokes,MiscCrop
+Asparagus,MiscCrop
+Avocados,MiscCrop
+Bananas,MiscCrop
+Barley,OtherGrain
+"Beans, dry",MiscCrop
+"Beans, green",MiscCrop
+"Broad beans, horse beans, dry",MiscCrop
+Cabbages and other brassicas,MiscCrop
+Carrots and turnips,MiscCrop
+"Cashew nuts, with shell",MiscCrop
+Cassava,Root_Tuber
+Cauliflowers and broccoli,MiscCrop
+"Cereals, nes",OtherGrain
+Cherries,MiscCrop
+Chestnuts,MiscCrop
+Chick peas,MiscCrop
+"Chillies and peppers, dry",MiscCrop
+"Chillies and peppers, green",MiscCrop
+Cinnamon (canella),MiscCrop
+"Citrus fruit, nes",MiscCrop
+Cloves,MiscCrop
+Cocoa beans,MiscCrop
+Coconuts,PalmFruit
+"Coffee, green",MiscCrop
+Cranberries,MiscCrop
+Cucumbers and gherkins,MiscCrop
+Currants,MiscCrop
+Dates,MiscCrop
+Eggplants (aubergines),MiscCrop
+Figs,MiscCrop
+Fruit Fresh Nes,MiscCrop
+Garlic,MiscCrop
+Ginger,MiscCrop
+Grapefruit (inc. pomelos),MiscCrop
+Grapes,MiscCrop
+"Groundnuts, with shell",OilCrop
+"Hazelnuts, with shell",MiscCrop
+Kiwi fruit,MiscCrop
+"Leeks, other alliaceous veg",MiscCrop
+"Leguminous vegetables, nes",MiscCrop
+Lemons and limes,MiscCrop
+Lentils,MiscCrop
+Lettuce and chicory,MiscCrop
+Linseed,OilCrop
+Maize,Corn
+"Mangoes, mangosteens, guavas",MiscCrop
+Millet,OtherGrain
+Mushrooms and truffles,MiscCrop
+"Nutmeg, mace and cardamoms",MiscCrop
+"Nuts, nes",MiscCrop
+Oats,OtherGrain
+Oil palm fruit,PalmFruit
+"Oilseeds, Nes",OilCrop
+Olives,OilCrop
+"Onions (inc. shallots), green",MiscCrop
+Oranges,MiscCrop
+Other melons (inc.cantaloupes),MiscCrop
+Papayas,MiscCrop
+Peaches and nectarines,MiscCrop
+Pears,MiscCrop
+"Peas, dry",MiscCrop
+"Peas, green",MiscCrop
+Pepper (Piper spp.),MiscCrop
+Pineapples,MiscCrop
+Pistachios,MiscCrop
+Plantains,MiscCrop
+Plums and sloes,MiscCrop
+Potatoes,Root_Tuber
+"Pulses, nes",MiscCrop
+"Pumpkins, squash and gourds",MiscCrop
+Rapeseed,OilCrop
+Raspberries,MiscCrop
+"Rice, paddy",Rice
+"Roots and Tubers, nes",Root_Tuber
+Rye,OtherGrain
+Seed cotton,OilCrop
+Sesame seed,OilCrop
+Sorghum,OtherGrain
+Soybeans,OilCrop
+"Spices, nes",MiscCrop
+Spinach,MiscCrop
+Strawberries,MiscCrop
+Sugar beet,SugarCrop
+Sugar cane,SugarCrop
+Sunflower seed,OilCrop
+Sweet potatoes,Root_Tuber
+"Tangerines, mandarins, clem.",MiscCrop
+Tea,MiscCrop
+"Tobacco, unmanufactured",MiscCrop
+Tomatoes,MiscCrop
+Vanilla,MiscCrop
+Vegetables fresh nes,MiscCrop
+"Walnuts, with shell",MiscCrop
+Watermelons,MiscCrop
+Wheat,Wheat
+Yams,Root_Tuber

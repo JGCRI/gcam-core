@@ -14,13 +14,13 @@
 			     csv files which you want to convert with the given 
 			     header file
 			  -->
-			<headerFile>..\..\Energy\IEA Calibration\MiniCAM regions\Input Module\header_cal_2005.txt</headerFile>
-			<outFile>..\..\Energy\IEA Calibration\MiniCAM regions\Input Module\cal_1990_2005.xml</outFile>
-			<csvFile>..\..\Energy\IEA Calibration\MiniCAM regions\Input Module\gas_cal.csv</csvFile>
-			<csvFile>..\..\Energy\IEA Calibration\MiniCAM regions\Input Module\ref_liquids_cal.csv</csvFile>
-			<csvFile>..\..\Energy\IEA Calibration\MiniCAM regions\Input Module\elec_supply_cal.csv</csvFile>
-			<csvFile>..\..\Energy\IEA Calibration\MiniCAM regions\Input Module\elec_td_ownuse.csv</csvFile>
-			<csvFile>..\..\Energy\IEA Calibration\MiniCAM regions\Input Module\final_enduse_cal.csv</csvFile>
+		 <headerFile>../Biomass/Main_User_Workspace_AGLU/input/energy/calibration_minicam/Input Module/header_cal_2005.txt</headerFile>
+			<outFile>../Biomass/Main_User_Workspace_AGLU/input/energy/calibration_minicam/Input Module/cal_1990_2005.xml</outFile>
+			<csvFile>../Biomass/Main_User_Workspace_AGLU/input/energy/calibration_minicam/Input Module/gas_cal.csv</csvFile>
+			<csvFile>../Biomass/Main_User_Workspace_AGLU/input/energy/calibration_minicam/Input Module/ref_liquids_cal.csv</csvFile>
+			<csvFile>../Biomass/Main_User_Workspace_AGLU/input/energy/calibration_minicam/Input Module/elec_supply_cal.csv</csvFile>
+			<csvFile>../Biomass/Main_User_Workspace_AGLU/input/energy/calibration_minicam/Input Module/elec_td_ownuse.csv</csvFile>
+			<csvFile>../Biomass/Main_User_Workspace_AGLU/input/energy/calibration_minicam/Input Module/final_enduse_cal.csv</csvFile>
 		</command>
 	</class>
 </ModelInterfaceBatch>

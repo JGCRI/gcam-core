@@ -95,12 +95,13 @@ public:
     void endVisitResource( const AResource* aResource, const int aPeriod );
     void startVisitSubResource( const SubResource* aSubResource, const int aPeriod );
     void endVisitSubResource( const SubResource* aSubResource, const int aPeriod );
+    void setRegionName( const std::string& aRegionName );
 private:
     //! Table to store our results
     std::auto_ptr<StorageTable> mTable;
 
     //! Name of the current region
-    const std::string mRegionName;
+    std::string mRegionName;
 
     //! Name of the current sector
     std::string mCurrentSector;

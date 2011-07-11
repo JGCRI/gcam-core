@@ -8,11 +8,11 @@ PATHOFFSET = ../..
 include ${PATHOFFSET}/build/linux/configure.gcam
 
 OBJS       = aland_allocator_item.o \
-             forest_land_leaf.o \
              land_leaf.o \
              land_node.o \
              land_use_history.o \
-             tree_land_allocator.o \
+             land_allocator.o \
+             carbon_land_leaf.o \
              unmanaged_land_leaf.o
 
 land_allocator_dir: ${OBJS}

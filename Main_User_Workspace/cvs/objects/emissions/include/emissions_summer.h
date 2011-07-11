@@ -49,8 +49,6 @@
 #include "util/base/include/default_visitor.h"
 #include "util/base/include/value.h"
 
-class AgSector;
-
 /*! 
 * \ingroup Objects
 * \brief A class which sums emissions for a particular gas.
@@ -64,13 +62,6 @@ public:
 
     virtual void startVisitGHG( const AGHG* aGHG,
                                 const int aPeriod );
-    
-    // TODO: Remove this when the Fortran land allocator is removed.
-    virtual void startVisitAgSector( const AgSector* aAgSector,
-                                     const int aPeriod );
-
-    virtual void startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc,
-                                       const int aPeriod );
 
     // Non-IVisitor interface methods.
     double getEmissions( const int aPeriod ) const;
@@ -107,12 +98,8 @@ public:
     virtual void startVisitGHG( const AGHG* aGHG,
                                 const int aPeriod );
     
-    // TODO: Remove this when the Fortran land allocator is removed.
-    virtual void startVisitAgSector( const AgSector* aAgSector,
-                                     const int aPeriod );
-    
-    virtual void startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc,
-                                       const int aPeriod );
+    /*virtual void startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc,
+                                       const int aPeriod );*/
     
 private:
     //! A map of emissions summer by GHG name.  The memory for the EmissionsSummer

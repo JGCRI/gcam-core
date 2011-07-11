@@ -64,7 +64,6 @@ class Demographic;
 class Sector;
 class SupplySector;
 class DemandSector;
-class AgSector;
 class ILandAllocator;
 class GHGPolicy;
 class Summary;
@@ -87,9 +86,7 @@ class AFinalDemand;
 *        it is not mandatory to instantiate all of these classes.  The region
 *        can contain just one of these objects or any combination of each of
 *        these objects.  The demand sector object, however, requires Populations
-*        information to drive the demand for goods and services.  An agriculture
-*        class is included in the Region class, but the agriculture class is an
-*        interface to the Fortran based AGLU module. The Region class also
+*        information to drive the demand for goods and services. The Region class also
 *        contains the GhgMarket class which is instantiated only when a market
 *        for ghg emissions is needed. Member functions of the Region class call
 *        functions of contained objects and trigger a series of events cascading
@@ -121,7 +118,6 @@ public:
 
     virtual void csvOutputFile() const;
     virtual void dbOutput( const std::list<std::string>& aPrimaryFuelList ) const;
-    virtual void initializeAgMarketPrices( const std::vector<double>& pricesIn );
     virtual void updateSummary( const std::list<std::string>& aPrimaryFuelList, const int period );
     virtual const Summary& getSummary( const int period ) const;
 
@@ -132,7 +128,6 @@ public:
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     std::auto_ptr<GDP> gdp; //!< GDP object.
-    std::auto_ptr<AgSector> agSector; //!< Agricultural sector
 
     //! Regional land allocator.
     std::auto_ptr<ILandAllocator> mLandAllocator;
@@ -145,9 +140,7 @@ protected:
 
     std::vector<double> calibrationGDPs; //!< GDPs to calibrate to
     std::vector<double> GDPcalPerCapita; //!< GDP per capita to calibrate to
-    
-    //! Soil carbon and land use change CO2 emissions.
-    std::vector<Value> mLandUseCO2Emissions;
+
 
 #if SORT_TESTING
     std::vector<std::string> sectorOrderList; //!< A vector listing the order in which to process the sectors.
@@ -191,7 +184,6 @@ protected:
     void adjustGDP( const int period );
     void calcEndUseDemand( const int period );
     void setFinalSupply( const int period );
-    void calcAgSector( const int period );
     void calibrateRegion( const int period );
 
     const std::vector<double> calcFutureGDP() const;

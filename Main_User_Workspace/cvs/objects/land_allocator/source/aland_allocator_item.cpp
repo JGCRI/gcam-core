@@ -36,7 +36,7 @@
  * \file aland_allocator_item.cpp
  * \ingroup Objects
  * \brief ALandAllocatorItem class source file.
- * \author James Blackwood
+ * \author James Blackwood, Kate Calvin
  */
 
 #include "util/base/include/definitions.h"
@@ -54,12 +54,18 @@ extern Scenario* scenario;
  * \brief Constructor.
  * \param aParent Pointer to this item's parent.
  * \param aType Enum representing this nodes type.
- * \author James Blackwood
+ * \author James Blackwood, Kate Calvin
  */
 ALandAllocatorItem::ALandAllocatorItem( const ALandAllocatorItem* aParent,
-                                        const TreeItemType aType )
+                                        const LandAllocatorItemType aType )
 : mParent( aParent ),
-  mType( aType )
+  mType( aType ),
+  mProfitScaler( -1.0 ), // this is so initialization can be checked.
+  mAdjustForNewTech( 1.0 ),
+  mIsNewTech( false ), 
+  mProfitRate( 0 ), 
+  mShare( -1.0 ), // this is so initialization can be checked.
+  mIsLandExpansionCost( false )
 {
 }
 
@@ -72,6 +78,13 @@ void ALandAllocatorItem::setShare( const double aShare,
 {
     assert( aShare >= 0 && aShare <= 1 );
     mShare[ aPeriod ] = aShare;
+}
+
+void ALandAllocatorItem::setProfitScaler( const double aProfitScaler,
+                                         const int aPeriod )
+{
+    assert( aProfitScaler >= 0 );
+    mProfitScaler[ aPeriod ] = aProfitScaler;
 }
 
 const string& ALandAllocatorItem::getName() const {
@@ -87,97 +100,79 @@ const ALandAllocatorItem* ALandAllocatorItem::getParent() const {
 }
 
 /*!
- * \brief Returns the intrinsic rate for the specified period.
+ * \brief Returns the profit rate for the specified period.
  * \param aPeriod The period to get the rate for.
- * \return double representing the intrinsic rate of this item for the specified
+ * \return double representing the profit rate of this item for the specified
  *         period.
  */
-double ALandAllocatorItem::getInstrinsicRate( const int aPeriod ) const {
-    assert( mIntrinsicRate[ aPeriod ].isInited() );
-    return mIntrinsicRate[ aPeriod ];
+double ALandAllocatorItem::getProfitRate( const int aPeriod ) const {
+    // Ensure that profit is positive
+    if ( mProfitRate[ aPeriod ] < 0.0 ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Profit is negative for leaf " << getName()
+                << " in period " << aPeriod << endl;
+        exit( -1 );
+    }
+    return mProfitRate[ aPeriod ];
 }
 
+/*!
+ * \brief Returns the scaled profit rate for the specified period.
+ * \param aPeriod The period to get the rate for.
+ * \return double representing the profit rate of this item for the specified
+ *         period.
+ */
+double ALandAllocatorItem::getScaledProfitRate( const int aPeriod ) const {
+    // call to getprofitrate ensures that profit is positive
+    double unScaledProfitRate = getProfitRate( aPeriod );
+    return mProfitScaler[ aPeriod ] * unScaledProfitRate;
+}
 /*!
  * \brief Returns the share for the specified period.
  * \param aPeriod The period to get the rate for.
  * \return double representing the share of this item for the specified period.
  */
 double ALandAllocatorItem::getShare( const int aPeriod ) const {
-    assert( mShare[ aPeriod ].isInited() &&
-            mShare[ aPeriod ] >= 0 &&
-            mShare[ aPeriod ] <= 1 );
     return mShare[ aPeriod ];
+}
+
+double ALandAllocatorItem::getProfitScaler( const int aPeriod ) const {
+    return mProfitScaler[ aPeriod ];
 }
 
 /*!
  * \brief Returns an enum representing the type of node (node/leaf).
  * \return Enum representing the type of this item.
  */
-TreeItemType ALandAllocatorItem::getType() const {
+LandAllocatorItemType ALandAllocatorItem::getType() const {
     return mType;
 }
 
+/*!
+ * \brief Returns an boolean indicating whether this is a new technology.
+ */
+bool ALandAllocatorItem::isNewTech( const double aPeriod ) const {
+    return mIsNewTech[ aPeriod ];
+}
+
+
+void ALandAllocatorItem::setNewTechAdjustment( const double aAdjustment, const double aPeriod ) {
+    mAdjustForNewTech[ aPeriod ] = aAdjustment;
+}
+
 void ALandAllocatorItem::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
-    
     XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, mName );
 
     // write out basic data members
-    XMLWriteElement( mIntrinsicRate[ aPeriod ], "IntrinsicRate", aOut, aTabs );
+    XMLWriteElement( mProfitRate[ aPeriod ], "ProfitRate", aOut, aTabs );
     XMLWriteElement( mShare[ aPeriod ], "share", aOut, aTabs );
+    XMLWriteElement( mProfitScaler[ aPeriod ], "profit-scaler", aOut, aTabs );
+    XMLWriteElement( mAdjustForNewTech[ aPeriod ], "adjustment", aOut, aTabs );
 
+    // Call derived class method
     toDebugXMLDerived( aPeriod, aOut, aTabs );
-    // Finished writing xml for the class members.
 
     XMLWriteClosingTag( getXMLName(), aOut, aTabs );
-}
-
-/*! \brief Write output to csv output file. 
-*
-* Put the variables here that will be output for each node and leaf
-*
-* \author Steve Smith
-*/
-void ALandAllocatorItem::csvOutput( const string& aRegionName ) const {
-    // function protocol
-    void fileoutput3(string var1name,string var2name,string var3name,
-        string var4name,string var5name,string uname,vector<double> dout);
-
-    // write land allocations for region
-    vector<double> temp( scenario->getModeltime()->getmaxper() );
-    for( unsigned int i = 0; i < temp.size(); ++i ){
-        temp[ i ] = getTotalLandAllocation( eAnyLand, i );
-    }
-    fileoutput3(aRegionName, mName," "," ","Land Use","000Ha", temp );
-
-}
-
-void ALandAllocatorItem::dbOutput( const string& aRegionName ) const {
-    // function protocol
-    void dboutput4(string var1name,string var2name,string var3name,string var4name,
-        string uname,vector<double> dout);
-
-    // write land allocations for region
-    vector<double> temp( scenario->getModeltime()->getmaxper() );
-    for( unsigned int i = 0; i < temp.size(); ++i ){
-        temp[ i ] = getTotalLandAllocation( eAnyLand, i );
-    }
-    dboutput4(aRegionName, "Land Allocation", mName,"Land Use","000Ha", temp );
-}
-
-/*! \brief Return default share for use in calculating intrinsic rates. 
-*
-* This routine provides the default numerical value for the share needed to
-* calculate the intrinsic rates. Returning an arbirary value is a hack,
-* need to find a better way to do this. Using the intrinsic rate from a
-* comparable crop that is grown in the calibration period might be a better
-* solution (or scaled to a comparable crop).
-*
-* This routine provides this value for both nodes and leaves that have no
-* land share in the calibration period.
-*
-* \author Steve Smith
-*/
-double ALandAllocatorItem::getDefaultShare( ) const {
-    return 0.25;
 }
 

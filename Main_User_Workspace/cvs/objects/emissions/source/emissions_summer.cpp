@@ -44,10 +44,6 @@
 #include <cassert>
 #include "emissions/include/emissions_summer.h"
 #include "emissions/include/aghg.h"
-#include "sectors/include/ag_sector.h"
-#include "emissions/include/icarbon_calc.h"
-#include "ccarbon_model/include/carbon_model_utils.h"
-#include "climate/include/magicc_model.h"
 
 using namespace std;
 
@@ -68,45 +64,13 @@ void EmissionsSummer::startVisitGHG( const AGHG* aGHG, const int aPeriod ){
     }
 }
 
-/*! \brief Add land use emissions from the land allocator leaves to the stored
-*          emissions.
-* \param aLandLeaf Land leaf from which to get emissions.
-* \param aPeriod Period in which to update.
-*/
-void EmissionsSummer::startVisitAgSector( const AgSector* aAgSector,
-                                          const int aPeriod )
-{
-    if( mGHGName == "CO2NetLandUse" ){
-        mEmissionsByPeriod[ aPeriod ] += aAgSector->getLandUseEmissions( aPeriod );
-    }
-}
-
-void EmissionsSummer::startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc,
-                                            const int aPeriod )
-{
-    // Add land use change emissions.
-    if( mGHGName == "CO2NetLandUse" ){
-        int year = scenario->getModeltime()->getper_to_yr( aPeriod );
-        year = max( static_cast<int>(CarbonModelUtils::getStartYear()), year );
-        mEmissionsByPeriod[ aPeriod ] += aCarbonCalc->getNetLandUseChangeEmission( year );
-    }
-    else if( mGHGName == MagiccModel::getnetDefor80sName() ){
-        double netDef80s = 0;
-        for( int aYear = 1980; aYear < 1990; ++aYear){
-            netDef80s += ( aCarbonCalc->getNetLandUseChangeEmission( aYear ) + 
-                           aCarbonCalc->getNetLandUseChangeEmission( aYear + 1 ) ) / 2;
-        }
-        mEmissionsByPeriod[ aPeriod ] += netDef80s / 10; // Return decadal average
-    }
-}
-
 /*! \brief Get the current emissions sum.
 * \param aPeriod Model period for which to get emissions.
 * \return The emissions sum.
 */
 double EmissionsSummer::getEmissions( const int aPeriod ) const {
-    // The value may not be initialized if there were no GHGs, or no AgLU for
-    // net land use change emissions. The default zero will be correct though.
+    // The value may not be initialized if there were no GHGs.  
+    // The default zero will be correct though.
 
     // The emissions sum may be negative if uptake is occurring.
     return mEmissionsByPeriod[ aPeriod ];
@@ -147,29 +111,4 @@ void GroupedEmissionsSummer::startVisitGHG( const AGHG* aGHG, const int aPeriod 
             (*it).second->startVisitGHG( aGHG, period );
         }
     }
-}
-
-void GroupedEmissionsSummer::startVisitAgSector( const AgSector* aAgSector, const int aPeriod ) {
-    // We are currently assuming all periods should be updated.
-    assert( aPeriod == -1 );
-    
-    CSummerIterator it = mEmissionsSummers.find( "CO2NetLandUse" );
-    if( it != mEmissionsSummers.end() ) {
-        for( int period = 1; period < scenario->getModeltime()->getmaxper(); ++period ) {
-            (*it).second->startVisitAgSector( aAgSector, period );
-        }
-    }
-}
-
-void GroupedEmissionsSummer::startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod ) {
-    // We are currently assuming all periods should be updated.
-    assert( aPeriod == -1 );
-    
-    CSummerIterator it = mEmissionsSummers.find( "CO2NetLandUse" );
-    if( it != mEmissionsSummers.end() ) {
-        for( int period = 1; period < scenario->getModeltime()->getmaxper(); ++period ) {
-            (*it).second->startVisitCarbonCalc( aCarbonCalc, period );
-        }
-    }
-    // TODO: 80s net deforestation has some hard coded behavior should I put that here?
 }

@@ -1,0 +1,3874 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="India">
+         <AgSupplySector name="biomassOil">
+            <output-unit>EJ</output-unit>
+            <input-unit>thous km2</input-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <price year="1975">1</price>
+            <calPrice>0.701</calPrice>
+            <market>India</market>
+            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <AgSupplySubsector name="JatrophaAEZ1">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="JatrophaAEZ1">
+                  <period year="1990">
+                     <yield>0.003364404</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.003364404</yield>
+                  </period>
+                  <period year="2010">
+                     <residue-biomass-production name="biomass">
+                        <mass-conversion>1</mass-conversion>
+                        <harvest-index>0.5</harvest-index>
+                        <eros-ctrl>0</eros-ctrl>
+                        <mass-to-energy>2.2</mass-to-energy>
+                        <water-content>0</water-content>
+                        <fract-harvested price="0">0</fract-harvested>
+                        <fract-harvested price="1.2">1</fract-harvested>
+                        <fract-harvested price="1.5">1</fract-harvested>
+                        <fract-harvested price="10">1</fract-harvested>
+                     </residue-biomass-production>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="JatrophaAEZ1">
+                  <period year="2010">
+                     <agProdChange>0.01049074</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.01049074</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.008450136</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.006392121</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="JatrophaAEZ2">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="JatrophaAEZ2">
+                  <period year="1990">
+                     <yield>0.002144573</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.002144573</yield>
+                  </period>
+                  <period year="2010">
+                     <residue-biomass-production name="biomass">
+                        <mass-conversion>1</mass-conversion>
+                        <harvest-index>0.5</harvest-index>
+                        <eros-ctrl>0</eros-ctrl>
+                        <mass-to-energy>2.2</mass-to-energy>
+                        <water-content>0</water-content>
+                        <fract-harvested price="0">0</fract-harvested>
+                        <fract-harvested price="1.2">1</fract-harvested>
+                        <fract-harvested price="1.5">1</fract-harvested>
+                        <fract-harvested price="10">1</fract-harvested>
+                     </residue-biomass-production>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="JatrophaAEZ2">
+                  <period year="2010">
+                     <agProdChange>0.01049074</agProdChange>
+                     <nonLandVariableCost>10.36911714</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.01049074</agProdChange>
+                     <nonLandVariableCost>10.36911714</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.008450136</agProdChange>
+                     <nonLandVariableCost>10.36911714</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.006392121</agProdChange>
+                     <nonLandVariableCost>10.36911714</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10.36911714</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10.36911714</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10.36911714</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>10.36911714</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>10.36911714</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="JatrophaAEZ3">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="JatrophaAEZ3">
+                  <period year="1990">
+                     <yield>0.002241702</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.002241702</yield>
+                  </period>
+                  <period year="2010">
+                     <residue-biomass-production name="biomass">
+                        <mass-conversion>1</mass-conversion>
+                        <harvest-index>0.5</harvest-index>
+                        <eros-ctrl>0</eros-ctrl>
+                        <mass-to-energy>2.2</mass-to-energy>
+                        <water-content>0</water-content>
+                        <fract-harvested price="0">0</fract-harvested>
+                        <fract-harvested price="1.2">1</fract-harvested>
+                        <fract-harvested price="1.5">1</fract-harvested>
+                        <fract-harvested price="10">1</fract-harvested>
+                     </residue-biomass-production>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="JatrophaAEZ3">
+                  <period year="2010">
+                     <agProdChange>0.01049074</agProdChange>
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.01049074</agProdChange>
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.008450136</agProdChange>
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.006392121</agProdChange>
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="JatrophaAEZ4">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="JatrophaAEZ4">
+                  <period year="1990">
+                     <yield>0.002749065</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.002749065</yield>
+                  </period>
+                  <period year="2010">
+                     <residue-biomass-production name="biomass">
+                        <mass-conversion>1</mass-conversion>
+                        <harvest-index>0.5</harvest-index>
+                        <eros-ctrl>0</eros-ctrl>
+                        <mass-to-energy>2.2</mass-to-energy>
+                        <water-content>0</water-content>
+                        <fract-harvested price="0">0</fract-harvested>
+                        <fract-harvested price="1.2">1</fract-harvested>
+                        <fract-harvested price="1.5">1</fract-harvested>
+                        <fract-harvested price="10">1</fract-harvested>
+                     </residue-biomass-production>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="JatrophaAEZ4">
+                  <period year="2010">
+                     <agProdChange>0.01049074</agProdChange>
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.01049074</agProdChange>
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.008450136</agProdChange>
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.006392121</agProdChange>
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="JatrophaAEZ5">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="JatrophaAEZ5">
+                  <period year="1990">
+                     <yield>0.003404794</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.003404794</yield>
+                  </period>
+                  <period year="2010">
+                     <residue-biomass-production name="biomass">
+                        <mass-conversion>1</mass-conversion>
+                        <harvest-index>0.5</harvest-index>
+                        <eros-ctrl>0</eros-ctrl>
+                        <mass-to-energy>2.2</mass-to-energy>
+                        <water-content>0</water-content>
+                        <fract-harvested price="0">0</fract-harvested>
+                        <fract-harvested price="1.2">1</fract-harvested>
+                        <fract-harvested price="1.5">1</fract-harvested>
+                        <fract-harvested price="10">1</fract-harvested>
+                     </residue-biomass-production>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="JatrophaAEZ5">
+                  <period year="2010">
+                     <agProdChange>0.01049074</agProdChange>
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.01049074</agProdChange>
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.008450136</agProdChange>
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.006392121</agProdChange>
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="JatrophaAEZ6">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="JatrophaAEZ6">
+                  <period year="1990">
+                     <yield>0.005458261</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.005458261</yield>
+                  </period>
+                  <period year="2010">
+                     <residue-biomass-production name="biomass">
+                        <mass-conversion>1</mass-conversion>
+                        <harvest-index>0.5</harvest-index>
+                        <eros-ctrl>0</eros-ctrl>
+                        <mass-to-energy>2.2</mass-to-energy>
+                        <water-content>0</water-content>
+                        <fract-harvested price="0">0</fract-harvested>
+                        <fract-harvested price="1.2">1</fract-harvested>
+                        <fract-harvested price="1.5">1</fract-harvested>
+                        <fract-harvested price="10">1</fract-harvested>
+                     </residue-biomass-production>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="JatrophaAEZ6">
+                  <period year="2010">
+                     <agProdChange>0.01049074</agProdChange>
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.01049074</agProdChange>
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.008450136</agProdChange>
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.006392121</agProdChange>
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>1.296139643</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+         </AgSupplySector>
+         <AgSupplySector name="biomass">
+            <AgSupplySubsector delete="1" name="biomassAEZ1"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ2"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ3"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ4"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ5"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ6"/>
+         </AgSupplySector>
+      </region>
+      <region name="Africa">
+         <AgSupplySector name="biomassOil">
+            <output-unit>EJ</output-unit>
+            <input-unit>thous km2</input-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <price year="1975">1</price>
+            <calPrice>0.701</calPrice>
+            <market>Africa</market>
+            <logit-exponent fillout="1" year="1975">-3</logit-exponent>
+            <AgSupplySubsector name="JatrophaAEZ1">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="JatrophaAEZ1">
+                  <period year="1990">
+                     <yield>0.003364404</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.003364404</yield>
+                  </period>
+                  <period year="2010">
+                     <residue-biomass-production name="biomass">
+                        <mass-conversion>1</mass-conversion>
+                        <harvest-index>0.5</harvest-index>
+                        <eros-ctrl>0</eros-ctrl>
+                        <mass-to-energy>2.2</mass-to-energy>
+                        <water-content>0</water-content>
+                        <fract-harvested price="0">0</fract-harvested>
+                        <fract-harvested price="1.2">1</fract-harvested>
+                        <fract-harvested price="1.5">1</fract-harvested>
+                        <fract-harvested price="10">1</fract-harvested>
+                     </residue-biomass-production>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="JatrophaAEZ1">
+                  <period year="2010">
+                     <agProdChange>0.01438774</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.01438774</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.011321051</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.008791555</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="JatrophaAEZ2">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="JatrophaAEZ2">
+                  <period year="1990">
+                     <yield>0.002144573</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.002144573</yield>
+                  </period>
+                  <period year="2010">
+                     <residue-biomass-production name="biomass">
+                        <mass-conversion>1</mass-conversion>
+                        <harvest-index>0.5</harvest-index>
+                        <eros-ctrl>0</eros-ctrl>
+                        <mass-to-energy>2.2</mass-to-energy>
+                        <water-content>0</water-content>
+                        <fract-harvested price="0">0</fract-harvested>
+                        <fract-harvested price="1.2">1</fract-harvested>
+                        <fract-harvested price="1.5">1</fract-harvested>
+                        <fract-harvested price="10">1</fract-harvested>
+                     </residue-biomass-production>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="JatrophaAEZ2">
+                  <period year="2010">
+                     <agProdChange>0.01438774</agProdChange>
+                     <nonLandVariableCost>10.36911714</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.01438774</agProdChange>
+                     <nonLandVariableCost>10.36911714</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.011321051</agProdChange>
+                     <nonLandVariableCost>10.36911714</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.008791555</agProdChange>
+                     <nonLandVariableCost>10.36911714</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10.36911714</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10.36911714</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10.36911714</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>10.36911714</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>10.36911714</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+         </AgSupplySector>
+         <AgSupplySector name="biomass">
+            <AgSupplySubsector name="eucalyptusAEZ3">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="eucalyptusAEZ3">
+                  <period year="1990">
+                     <yield>0.013894634</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.013894634</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="eucalyptusAEZ3">
+                  <period year="2010">
+                     <agProdChange>0.01438774</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.01438774</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.011321051</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.008791555</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="eucalyptusAEZ4">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="eucalyptusAEZ4">
+                  <period year="1990">
+                     <yield>0.016877118</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.016877118</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="eucalyptusAEZ4">
+                  <period year="2010">
+                     <agProdChange>0.01438774</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.01438774</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.011321051</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.008791555</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="eucalyptusAEZ5">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="eucalyptusAEZ5">
+                  <period year="1990">
+                     <yield>0.01392789</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.01392789</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="eucalyptusAEZ5">
+                  <period year="2010">
+                     <agProdChange>0.01438774</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.01438774</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.011321051</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.008791555</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="eucalyptusAEZ6">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="eucalyptusAEZ6">
+                  <period year="1990">
+                     <yield>0.034362866</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.034362866</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="eucalyptusAEZ6">
+                  <period year="2010">
+                     <agProdChange>0.01438774</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.01438774</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.011321051</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.008791555</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="eucalyptusAEZ7">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="eucalyptusAEZ7">
+                  <period year="1990">
+                     <yield>0.053867324</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.053867324</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="eucalyptusAEZ7">
+                  <period year="2010">
+                     <agProdChange>0.01438774</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.01438774</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.011321051</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.008791555</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="eucalyptusAEZ8">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="eucalyptusAEZ8">
+                  <period year="1990">
+                     <yield>0.037136146</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.037136146</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="eucalyptusAEZ8">
+                  <period year="2010">
+                     <agProdChange>0.01438774</agProdChange>
+                     <nonLandVariableCost>5.922124579</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.01438774</agProdChange>
+                     <nonLandVariableCost>5.922124579</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.011321051</agProdChange>
+                     <nonLandVariableCost>5.922124579</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.008791555</agProdChange>
+                     <nonLandVariableCost>5.922124579</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.922124579</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.922124579</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.922124579</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>5.922124579</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>5.922124579</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="eucalyptusAEZ9">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="eucalyptusAEZ9">
+                  <period year="1990">
+                     <yield>0.025414609</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.025414609</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="eucalyptusAEZ9">
+                  <period year="2010">
+                     <agProdChange>0.01438774</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.01438774</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.011321051</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.008791555</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="eucalyptusAEZ10">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="eucalyptusAEZ10">
+                  <period year="1990">
+                     <yield>0.028150382</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.028150382</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="eucalyptusAEZ10">
+                  <period year="2010">
+                     <agProdChange>0.01438774</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.01438774</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.011321051</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.008791555</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="eucalyptusAEZ11">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="eucalyptusAEZ11">
+                  <period year="1990">
+                     <yield>0.036621932</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.036621932</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="eucalyptusAEZ11">
+                  <period year="2010">
+                     <agProdChange>0.01438774</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.01438774</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.011321051</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.008791555</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="eucalyptusAEZ12">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="eucalyptusAEZ12">
+                  <period year="1990">
+                     <yield>0.03492</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.03492</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="eucalyptusAEZ12">
+                  <period year="2010">
+                     <agProdChange>0.01438774</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.01438774</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.011321051</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.008791555</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector delete="1" name="biomassAEZ1"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ2"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ3"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ4"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ5"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ6"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ7"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ8"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ9"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ10"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ11"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ12"/>
+         </AgSupplySector>
+      </region>
+      <region name="USA">
+         <AgSupplySector name="biomass">
+            <AgSupplySubsector name="willowAEZ14">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="willowAEZ14">
+                  <period year="1990">
+                     <yield>0.014754942</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.014754942</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="willowAEZ14">
+                  <period year="2010">
+                     <agProdChange>0.006178077</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.006178077</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.004843901</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.002977277</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="willowAEZ15">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="willowAEZ15">
+                  <period year="1990">
+                     <yield>0.019676779</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.019676779</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="willowAEZ15">
+                  <period year="2010">
+                     <agProdChange>0.006178077</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.006178077</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.004843901</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.002977277</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="willowAEZ16">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="willowAEZ16">
+                  <period year="1990">
+                     <yield>0.029714813</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.029714813</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="willowAEZ16">
+                  <period year="2010">
+                     <agProdChange>0.006178077</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.006178077</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.004843901</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.002977277</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector delete="1" name="biomassAEZ14"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ15"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ16"/>
+         </AgSupplySector>
+      </region>
+      <region name="Eastern Europe">
+         <AgSupplySector name="biomass">
+            <AgSupplySubsector name="willowAEZ8">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="willowAEZ8">
+                  <period year="1990">
+                     <yield>0.019344378</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.019344378</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="willowAEZ8">
+                  <period year="2010">
+                     <agProdChange>0.004079442</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.004079442</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.003609884</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.002977277</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="willowAEZ9">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="willowAEZ9">
+                  <period year="1990">
+                     <yield>0.02236673</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.02236673</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="willowAEZ9">
+                  <period year="2010">
+                     <agProdChange>0.004079442</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.004079442</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.003609884</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.002977277</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="willowAEZ10">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="willowAEZ10">
+                  <period year="1990">
+                     <yield>0.030620601</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.030620601</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="willowAEZ10">
+                  <period year="2010">
+                     <agProdChange>0.004079442</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.004079442</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.003609884</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.002977277</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="willowAEZ11">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="willowAEZ11">
+                  <period year="1990">
+                     <yield>0.030620601</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.030620601</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="willowAEZ11">
+                  <period year="2010">
+                     <agProdChange>0.004079442</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.004079442</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.003609884</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.002977277</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="willowAEZ12">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="willowAEZ12">
+                  <period year="1990">
+                     <yield>0.0285</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.0285</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="willowAEZ12">
+                  <period year="2010">
+                     <agProdChange>0.004079442</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.004079442</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.003609884</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.002977277</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>0.671403659</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="willowAEZ15">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="willowAEZ15">
+                  <period year="1990">
+                     <yield>0.019676779</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.019676779</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="willowAEZ15">
+                  <period year="2010">
+                     <agProdChange>0.004079442</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.004079442</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.003609884</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.002977277</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="willowAEZ16">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="willowAEZ16">
+                  <period year="1990">
+                     <yield>0.029714813</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.029714813</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="willowAEZ16">
+                  <period year="2010">
+                     <agProdChange>0.004079442</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.004079442</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.003609884</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.002977277</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector delete="1" name="biomassAEZ8"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ9"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ10"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ11"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ12"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ15"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ16"/>
+         </AgSupplySector>
+      </region>
+      <region name="Western Europe">
+         <AgSupplySector name="biomass">
+            <AgSupplySubsector name="miscanthusAEZ4">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="miscanthusAEZ4">
+                  <period year="1990">
+                     <yield>0.018481788</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.018481788</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="miscanthusAEZ4">
+                  <period year="2010">
+                     <agProdChange>0.006178077</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.006178077</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.004669928</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.002484246</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="miscanthusAEZ7">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="miscanthusAEZ7">
+                  <period year="1990">
+                     <yield>0.031826441</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.031826441</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="miscanthusAEZ7">
+                  <period year="2010">
+                     <agProdChange>0.006178077</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.006178077</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.004669928</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.002484246</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="miscanthusAEZ8">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="miscanthusAEZ8">
+                  <period year="1990">
+                     <yield>0.028022063</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.028022063</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="miscanthusAEZ8">
+                  <period year="2010">
+                     <agProdChange>0.006178077</agProdChange>
+                     <nonLandVariableCost>8.846730561</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.006178077</agProdChange>
+                     <nonLandVariableCost>8.846730561</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.004669928</agProdChange>
+                     <nonLandVariableCost>8.846730561</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.002484246</agProdChange>
+                     <nonLandVariableCost>8.846730561</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>8.846730561</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>8.846730561</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>8.846730561</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>8.846730561</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>8.846730561</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="miscanthusAEZ9">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="miscanthusAEZ9">
+                  <period year="1990">
+                     <yield>0.03240021</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.03240021</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="miscanthusAEZ9">
+                  <period year="2010">
+                     <agProdChange>0.006178077</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.006178077</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.004669928</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.002484246</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="miscanthusAEZ10">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="miscanthusAEZ10">
+                  <period year="1990">
+                     <yield>0.044356681</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.044356681</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="miscanthusAEZ10">
+                  <period year="2010">
+                     <agProdChange>0.006178077</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.006178077</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.004669928</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.002484246</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="miscanthusAEZ11">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="miscanthusAEZ11">
+                  <period year="1990">
+                     <yield>0.044356681</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.044356681</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="miscanthusAEZ11">
+                  <period year="2010">
+                     <agProdChange>0.006178077</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.006178077</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.004669928</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.002484246</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="miscanthusAEZ12">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="miscanthusAEZ12">
+                  <period year="1990">
+                     <yield>0.0412848</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.0412848</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="miscanthusAEZ12">
+                  <period year="2010">
+                     <agProdChange>0.006178077</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.006178077</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.004669928</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.002484246</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>1.10584132</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="willowAEZ13">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="willowAEZ13">
+                  <period year="1990">
+                     <yield>0.01153467</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.01153467</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="willowAEZ13">
+                  <period year="2010">
+                     <agProdChange>0.006178077</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.006178077</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.004669928</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.002484246</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="willowAEZ14">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="willowAEZ14">
+                  <period year="1990">
+                     <yield>0.014754942</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.014754942</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="willowAEZ14">
+                  <period year="2010">
+                     <agProdChange>0.006178077</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.006178077</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.004669928</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.002484246</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="willowAEZ15">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="willowAEZ15">
+                  <period year="1990">
+                     <yield>0.019676779</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.019676779</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="willowAEZ15">
+                  <period year="2010">
+                     <agProdChange>0.006178077</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.006178077</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.004669928</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.002484246</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="willowAEZ16">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="willowAEZ16">
+                  <period year="1990">
+                     <yield>0.029714813</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.029714813</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="willowAEZ16">
+                  <period year="2010">
+                     <agProdChange>0.006178077</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.006178077</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.004669928</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.002484246</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector delete="1" name="biomassAEZ4"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ7"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ8"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ9"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ10"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ11"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ12"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ13"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ14"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ15"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ16"/>
+         </AgSupplySector>
+      </region>
+      <region name="Latin America">
+         <AgSupplySector name="biomass">
+            <AgSupplySubsector name="eucalyptusAEZ1">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="eucalyptusAEZ1">
+                  <period year="1990">
+                     <yield>0.026269841</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.026269841</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="eucalyptusAEZ1">
+                  <period year="2010">
+                     <agProdChange>0.013262749</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.013262749</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.009660249</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.005908225</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="eucalyptusAEZ2">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="eucalyptusAEZ2">
+                  <period year="1990">
+                     <yield>0.017388472</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.017388472</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="eucalyptusAEZ2">
+                  <period year="2010">
+                     <agProdChange>0.013262749</agProdChange>
+                     <nonLandVariableCost>5.922124579</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.013262749</agProdChange>
+                     <nonLandVariableCost>5.922124579</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.009660249</agProdChange>
+                     <nonLandVariableCost>5.922124579</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.005908225</agProdChange>
+                     <nonLandVariableCost>5.922124579</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.922124579</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.922124579</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.922124579</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>5.922124579</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>5.922124579</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="eucalyptusAEZ3">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="eucalyptusAEZ3">
+                  <period year="1990">
+                     <yield>0.013894634</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.013894634</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="eucalyptusAEZ3">
+                  <period year="2010">
+                     <agProdChange>0.013262749</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.013262749</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.009660249</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.005908225</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="eucalyptusAEZ4">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="eucalyptusAEZ4">
+                  <period year="1990">
+                     <yield>0.016877118</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.016877118</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="eucalyptusAEZ4">
+                  <period year="2010">
+                     <agProdChange>0.013262749</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.013262749</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.009660249</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.005908225</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="eucalyptusAEZ5">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="eucalyptusAEZ5">
+                  <period year="1990">
+                     <yield>0.01392789</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.01392789</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="eucalyptusAEZ5">
+                  <period year="2010">
+                     <agProdChange>0.013262749</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.013262749</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.009660249</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.005908225</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="eucalyptusAEZ6">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="eucalyptusAEZ6">
+                  <period year="1990">
+                     <yield>0.034362866</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.034362866</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="eucalyptusAEZ6">
+                  <period year="2010">
+                     <agProdChange>0.013262749</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.013262749</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.009660249</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.005908225</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="eucalyptusAEZ7">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="eucalyptusAEZ7">
+                  <period year="1990">
+                     <yield>0.053867324</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.053867324</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="eucalyptusAEZ7">
+                  <period year="2010">
+                     <agProdChange>0.013262749</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.013262749</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.009660249</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.005908225</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="eucalyptusAEZ8">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="eucalyptusAEZ8">
+                  <period year="1990">
+                     <yield>0.037136146</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.037136146</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="eucalyptusAEZ8">
+                  <period year="2010">
+                     <agProdChange>0.013262749</agProdChange>
+                     <nonLandVariableCost>5.922124579</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.013262749</agProdChange>
+                     <nonLandVariableCost>5.922124579</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.009660249</agProdChange>
+                     <nonLandVariableCost>5.922124579</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.005908225</agProdChange>
+                     <nonLandVariableCost>5.922124579</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.922124579</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.922124579</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.922124579</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>5.922124579</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>5.922124579</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="eucalyptusAEZ9">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="eucalyptusAEZ9">
+                  <period year="1990">
+                     <yield>0.025414609</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.025414609</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="eucalyptusAEZ9">
+                  <period year="2010">
+                     <agProdChange>0.013262749</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.013262749</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.009660249</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.005908225</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="eucalyptusAEZ10">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="eucalyptusAEZ10">
+                  <period year="1990">
+                     <yield>0.028150382</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.028150382</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="eucalyptusAEZ10">
+                  <period year="2010">
+                     <agProdChange>0.013262749</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.013262749</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.009660249</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.005908225</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="eucalyptusAEZ11">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="eucalyptusAEZ11">
+                  <period year="1990">
+                     <yield>0.036621932</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.036621932</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="eucalyptusAEZ11">
+                  <period year="2010">
+                     <agProdChange>0.013262749</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.013262749</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.009660249</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.005908225</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="eucalyptusAEZ12">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="eucalyptusAEZ12">
+                  <period year="1990">
+                     <yield>0.03492</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.03492</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="eucalyptusAEZ12">
+                  <period year="2010">
+                     <agProdChange>0.013262749</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.013262749</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.009660249</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.005908225</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>0.740265572</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector delete="1" name="biomassAEZ1"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ2"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ3"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ4"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ5"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ6"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ7"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ8"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ9"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ10"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ11"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ12"/>
+         </AgSupplySector>
+      </region>
+      <region name="China">
+         <AgSupplySector name="biomass">
+            <AgSupplySubsector name="willowAEZ13">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="willowAEZ13">
+                  <period year="1990">
+                     <yield>0.01153467</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.01153467</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="willowAEZ13">
+                  <period year="2010">
+                     <agProdChange>0.008315349</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.008315349</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.006214045</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.003469021</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>10</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="willowAEZ14">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="willowAEZ14">
+                  <period year="1990">
+                     <yield>0.014754942</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.014754942</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="willowAEZ14">
+                  <period year="2010">
+                     <agProdChange>0.008315349</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.008315349</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.006214045</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.003469021</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="willowAEZ15">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="willowAEZ15">
+                  <period year="1990">
+                     <yield>0.019676779</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.019676779</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="willowAEZ15">
+                  <period year="2010">
+                     <agProdChange>0.008315349</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.008315349</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.006214045</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.003469021</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="willowAEZ16">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="willowAEZ16">
+                  <period year="1990">
+                     <yield>0.029714813</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.029714813</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="willowAEZ16">
+                  <period year="2010">
+                     <agProdChange>0.008315349</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.008315349</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.006214045</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.003469021</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector name="willowAEZ17">
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <share-weight fillout="1" year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <stub-technology name="willowAEZ17">
+                  <period year="1990">
+                     <yield>0.022327311</yield>
+                  </period>
+                  <period year="2005">
+                     <yield>0.022327311</yield>
+                  </period>
+               </stub-technology>
+               <stub-technology allow-interpolate="1" name="willowAEZ17">
+                  <period year="2010">
+                     <agProdChange>0.008315349</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2020">
+                     <agProdChange>0.008315349</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2035">
+                     <agProdChange>0.006214045</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2050">
+                     <agProdChange>0.003469021</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2065">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2080">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2095">
+                     <agProdChange>0.0025</agProdChange>
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="1990">
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+                  <period year="2005">
+                     <nonLandVariableCost>5.371229269</nonLandVariableCost>
+                  </period>
+               </stub-technology>
+            </AgSupplySubsector>
+            <AgSupplySubsector delete="1" name="biomassAEZ13"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ14"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ15"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ16"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ17"/>
+         </AgSupplySector>
+      </region>
+      <global-technology-database>
+         <location-info sector-name="biomass" subsector-name="willowAEZ14">
+            <AgProductionTechnology name="willowAEZ14">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomass" subsector-name="willowAEZ15">
+            <AgProductionTechnology name="willowAEZ15">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomass" subsector-name="willowAEZ16">
+            <AgProductionTechnology name="willowAEZ16">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomass" subsector-name="willowAEZ8">
+            <AgProductionTechnology name="willowAEZ8">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomass" subsector-name="willowAEZ9">
+            <AgProductionTechnology name="willowAEZ9">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomass" subsector-name="willowAEZ10">
+            <AgProductionTechnology name="willowAEZ10">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomass" subsector-name="willowAEZ11">
+            <AgProductionTechnology name="willowAEZ11">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomass" subsector-name="willowAEZ12">
+            <AgProductionTechnology name="willowAEZ12">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomass" subsector-name="miscanthusAEZ4">
+            <AgProductionTechnology name="miscanthusAEZ4">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomass" subsector-name="miscanthusAEZ7">
+            <AgProductionTechnology name="miscanthusAEZ7">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomass" subsector-name="miscanthusAEZ8">
+            <AgProductionTechnology name="miscanthusAEZ8">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomass" subsector-name="miscanthusAEZ9">
+            <AgProductionTechnology name="miscanthusAEZ9">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomass" subsector-name="miscanthusAEZ10">
+            <AgProductionTechnology name="miscanthusAEZ10">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomass" subsector-name="miscanthusAEZ11">
+            <AgProductionTechnology name="miscanthusAEZ11">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomass" subsector-name="miscanthusAEZ12">
+            <AgProductionTechnology name="miscanthusAEZ12">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomass" subsector-name="willowAEZ13">
+            <AgProductionTechnology name="willowAEZ13">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomass" subsector-name="eucalyptusAEZ1">
+            <AgProductionTechnology name="eucalyptusAEZ1">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomass" subsector-name="eucalyptusAEZ2">
+            <AgProductionTechnology name="eucalyptusAEZ2">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomass" subsector-name="eucalyptusAEZ3">
+            <AgProductionTechnology name="eucalyptusAEZ3">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomass" subsector-name="eucalyptusAEZ4">
+            <AgProductionTechnology name="eucalyptusAEZ4">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomass" subsector-name="eucalyptusAEZ5">
+            <AgProductionTechnology name="eucalyptusAEZ5">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomass" subsector-name="eucalyptusAEZ6">
+            <AgProductionTechnology name="eucalyptusAEZ6">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomass" subsector-name="eucalyptusAEZ7">
+            <AgProductionTechnology name="eucalyptusAEZ7">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomass" subsector-name="eucalyptusAEZ8">
+            <AgProductionTechnology name="eucalyptusAEZ8">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomass" subsector-name="eucalyptusAEZ9">
+            <AgProductionTechnology name="eucalyptusAEZ9">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomass" subsector-name="eucalyptusAEZ10">
+            <AgProductionTechnology name="eucalyptusAEZ10">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomass" subsector-name="eucalyptusAEZ11">
+            <AgProductionTechnology name="eucalyptusAEZ11">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomass" subsector-name="eucalyptusAEZ12">
+            <AgProductionTechnology name="eucalyptusAEZ12">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomassOil" subsector-name="JatrophaAEZ1">
+            <AgProductionTechnology name="JatrophaAEZ1">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomassOil" subsector-name="JatrophaAEZ2">
+            <AgProductionTechnology name="JatrophaAEZ2">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomass" subsector-name="willowAEZ17">
+            <AgProductionTechnology name="willowAEZ17">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomassOil" subsector-name="JatrophaAEZ3">
+            <AgProductionTechnology name="JatrophaAEZ3">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomassOil" subsector-name="JatrophaAEZ4">
+            <AgProductionTechnology name="JatrophaAEZ4">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomassOil" subsector-name="JatrophaAEZ5">
+            <AgProductionTechnology name="JatrophaAEZ5">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+         <location-info sector-name="biomassOil" subsector-name="JatrophaAEZ6">
+            <AgProductionTechnology name="JatrophaAEZ6">
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <period year="1975">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="1990">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2005">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+               <period year="2010">
+                  <CO2 name="CO2"/>
+                  <share-weight>1</share-weight>
+               </period>
+            </AgProductionTechnology>
+         </location-info>
+      </global-technology-database>
+   </world>
+</scenario>

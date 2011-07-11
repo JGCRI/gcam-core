@@ -46,6 +46,7 @@
  */
 #include <xercesc/dom/DOMNode.hpp>
 #include <string>
+#include <boost/shared_ptr.hpp>
 
 #include "util/base/include/iparsable.h"
 #include "util/base/include/iround_trippable.h"
@@ -163,7 +164,7 @@ private:
 
     //! The interpolation function that will be used to perform the
     //! interpolations
-    std::auto_ptr<IInterpolationFunction> mInterpolationFunction;
+    boost::shared_ptr<IInterpolationFunction> mInterpolationFunction;
 
     //! The policy this rule will use in the event that an existing
     //! value may get overwritten.

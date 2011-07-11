@@ -73,6 +73,7 @@ class MoreSectorInfo;
 class SocialAccountingMatrix;
 class ILandAllocator;
 class IndirectEmissionsCalculator;
+class AGHG;
 
 /*! 
 * \ingroup Objects

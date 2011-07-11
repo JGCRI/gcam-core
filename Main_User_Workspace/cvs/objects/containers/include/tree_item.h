@@ -46,9 +46,6 @@
 * \author Josh Lurz
 */
 
-#include <string>
-#include <deque>
-
 /*!
  * \brief An enum containing the types of searches (BFS/DFS)
  */
@@ -113,35 +110,30 @@ public:
  */
 template<class T, class Predicate>
 const T* findItem( SearchType aSearchType, const T* aNode, Predicate aIsGoal ){
-    // Create a deque for search.
-    std::deque<const T*> searchStack;
-
-    // Add the current item.
-    searchStack.push_front( aNode );
-
-    // Search the deque.
-    while( !searchStack.empty() ){
-        const T* curr = searchStack.front();
-        searchStack.pop_front();
-
-        // Check if this is our goal.
-        if( aIsGoal( curr ) ){
-            return curr;
-        }
-
-        // Add the children onto the deque.
-        for( unsigned int child = 0; child < curr->getNumChildren(); ++child ){
-            switch( aSearchType ){
-                case eDFS:
-                    searchStack.push_front( curr->getChildAt( child ) );
-                    break;
-                case eBFS:
-                    searchStack.push_back( curr->getChildAt( child ) );
-                    break;
+    if( aIsGoal( aNode ) ) {
+        return aNode;
+    }
+    
+    // breadth first search implies we should check all of our children now before recursing
+    if( aSearchType == eBFS ) {
+        for( unsigned int child = 0; child < aNode->getNumChildren(); ++child ){
+            if( aIsGoal( aNode->getChildAt( child ) ) ) {
+                return aNode->getChildAt( child );
             }
         }
     }
-    // We searched the entire tree and failed.
+    
+    // recursively check each subtree
+    for( unsigned int child = 0; child < aNode->getNumChildren(); ++child ){
+        const T* ret = findItem( aSearchType, aNode->getChildAt( child ), aIsGoal );
+        
+        // stop searching if something was found in the current subtree
+        if( ret ) {
+            return ret;
+        }
+    }
+    
+    // no matches in this subtree return null
     return 0;
 }
 
@@ -157,35 +149,30 @@ const T* findItem( SearchType aSearchType, const T* aNode, Predicate aIsGoal ){
  */
 template<class T, class Predicate>
 T* findItem( SearchType aSearchType, T* aNode, Predicate aIsGoal ){
-    // Create a deque for search.
-    std::deque<T*> searchStack;
-
-    // Add the current item.
-    searchStack.push_front( aNode );
-
-    // Search the deque.
-    while( !searchStack.empty() ){
-        T* curr = searchStack.front();
-        searchStack.pop_front();
-
-        // Check if this is our goal.
-        if( aIsGoal( curr ) ){
-            return curr;
-        }
-
-        // Add the children onto the deque.
-        for( unsigned int child = 0; child < curr->getNumChildren(); ++child ){
-            switch( aSearchType ){
-                case eDFS:
-                    searchStack.push_front( curr->getChildAt( child ) );
-                    break;
-                case eBFS:
-                    searchStack.push_back( curr->getChildAt( child ) );
-                    break;
+    if( aIsGoal( aNode ) ) {
+        return aNode;
+    }
+    
+    // breadth first search implies we should check all of our children now before recursing
+    if( aSearchType == eBFS ) {
+        for( unsigned int child = 0; child < aNode->getNumChildren(); ++child ){
+            if( aIsGoal( aNode->getChildAt( child ) ) ) {
+                return aNode->getChildAt( child );
             }
         }
     }
-    // We searched the entire tree and failed.
+    
+    // recursively check each subtree
+    for( unsigned int child = 0; child < aNode->getNumChildren(); ++child ){
+        T* ret = findItem( aSearchType, aNode->getChildAt( child ), aIsGoal );
+        
+        // stop searching if something was found in the current subtree
+        if( ret ) {
+            return ret;
+        }
+    }
+    
+    // no matches in this subtree return null
     return 0;
 }
 

@@ -1,0 +1,428 @@
+Note: all values are unlinked except for check for whether region/AEZ combination exists,,,,,,,
+INPUT_TABLE,,,,,,,
+VariableID,,,,,,,
+15,,,,,,,
+,,,,,,,
+Region,LandAllocatorRoot,LandNode,,,region,AEZ,exists
+USA,root,TundraAEZ1,,,1,AEZ1,0
+USA,root,TundraAEZ2,,,1,AEZ2,0
+USA,root,TundraAEZ3,,,1,AEZ3,0
+USA,root,TundraAEZ4,,,1,AEZ4,0
+USA,root,TundraAEZ5,,,1,AEZ5,0
+USA,root,TundraAEZ6,,,1,AEZ6,0
+USA,root,TundraAEZ17,,,1,AEZ17,0
+USA,root,TundraAEZ18,,,1,AEZ18,0
+Canada,root,TundraAEZ1,,,2,AEZ1,0
+Canada,root,TundraAEZ2,,,2,AEZ2,0
+Canada,root,TundraAEZ3,,,2,AEZ3,0
+Canada,root,TundraAEZ4,,,2,AEZ4,0
+Canada,root,TundraAEZ5,,,2,AEZ5,0
+Canada,root,TundraAEZ6,,,2,AEZ6,0
+Canada,root,TundraAEZ12,,,2,AEZ12,0
+Canada,root,TundraAEZ17,,,2,AEZ17,0
+Canada,root,TundraAEZ18,,,2,AEZ18,0
+Western Europe,root,TundraAEZ1,,,3,AEZ1,0
+Western Europe,root,TundraAEZ2,,,3,AEZ2,0
+Western Europe,root,TundraAEZ3,,,3,AEZ3,0
+Western Europe,root,TundraAEZ5,,,3,AEZ5,0
+Western Europe,root,TundraAEZ6,,,3,AEZ6,0
+Western Europe,root,TundraAEZ17,,,3,AEZ17,0
+Western Europe,root,TundraAEZ18,,,3,AEZ18,0
+Japan,root,TundraAEZ1,,,4,AEZ1,0
+Japan,root,TundraAEZ2,,,4,AEZ2,0
+Japan,root,TundraAEZ3,,,4,AEZ3,0
+Japan,root,TundraAEZ4,,,4,AEZ4,0
+Japan,root,TundraAEZ5,,,4,AEZ5,0
+Japan,root,TundraAEZ6,,,4,AEZ6,0
+Japan,root,TundraAEZ7,,,4,AEZ7,0
+Japan,root,TundraAEZ8,,,4,AEZ8,0
+Japan,root,TundraAEZ13,,,4,AEZ13,0
+Japan,root,TundraAEZ14,,,4,AEZ14,0
+Japan,root,TundraAEZ16,,,4,AEZ16,0
+Japan,root,TundraAEZ17,,,4,AEZ17,0
+Japan,root,TundraAEZ18,,,4,AEZ18,0
+Australia_NZ,root,TundraAEZ13,,,5,AEZ13,0
+Australia_NZ,root,TundraAEZ14,,,5,AEZ14,0
+Australia_NZ,root,TundraAEZ18,,,5,AEZ18,0
+Former Soviet Union,root,TundraAEZ1,,,6,AEZ1,0
+Former Soviet Union,root,TundraAEZ2,,,6,AEZ2,0
+Former Soviet Union,root,TundraAEZ3,,,6,AEZ3,0
+Former Soviet Union,root,TundraAEZ4,,,6,AEZ4,0
+Former Soviet Union,root,TundraAEZ5,,,6,AEZ5,0
+Former Soviet Union,root,TundraAEZ6,,,6,AEZ6,0
+Former Soviet Union,root,TundraAEZ17,,,6,AEZ17,0
+Former Soviet Union,root,TundraAEZ18,,,6,AEZ18,0
+China,root,TundraAEZ1,,,7,AEZ1,0
+China,root,TundraAEZ2,,,7,AEZ2,0
+China,root,TundraAEZ3,,,7,AEZ3,0
+China,root,TundraAEZ18,,,7,AEZ18,0
+Middle East,root,TundraAEZ4,,,8,AEZ4,0
+Middle East,root,TundraAEZ5,,,8,AEZ5,0
+Middle East,root,TundraAEZ6,,,8,AEZ6,0
+Middle East,root,TundraAEZ11,,,8,AEZ11,0
+Middle East,root,TundraAEZ12,,,8,AEZ12,0
+Middle East,root,TundraAEZ13,,,8,AEZ13,0
+Middle East,root,TundraAEZ14,,,8,AEZ14,0
+Middle East,root,TundraAEZ15,,,8,AEZ15,0
+Middle East,root,TundraAEZ16,,,8,AEZ16,0
+Middle East,root,TundraAEZ17,,,8,AEZ17,0
+Middle East,root,TundraAEZ18,,,8,AEZ18,0
+Africa,root,TundraAEZ13,,,9,AEZ13,0
+Africa,root,TundraAEZ14,,,9,AEZ14,0
+Africa,root,TundraAEZ15,,,9,AEZ15,0
+Africa,root,TundraAEZ16,,,9,AEZ16,0
+Africa,root,TundraAEZ17,,,9,AEZ17,0
+Africa,root,TundraAEZ18,,,9,AEZ18,0
+Southeast Asia,root,TundraAEZ2,,,11,AEZ2,0
+Southeast Asia,root,TundraAEZ17,,,11,AEZ17,0
+Southeast Asia,root,TundraAEZ18,,,11,AEZ18,0
+Eastern Europe,root,TundraAEZ1,,,12,AEZ1,0
+Eastern Europe,root,TundraAEZ2,,,12,AEZ2,0
+Eastern Europe,root,TundraAEZ3,,,12,AEZ3,0
+Eastern Europe,root,TundraAEZ4,,,12,AEZ4,0
+Eastern Europe,root,TundraAEZ5,,,12,AEZ5,0
+Eastern Europe,root,TundraAEZ6,,,12,AEZ6,0
+Eastern Europe,root,TundraAEZ7,,,12,AEZ7,0
+Eastern Europe,root,TundraAEZ13,,,12,AEZ13,0
+Eastern Europe,root,TundraAEZ14,,,12,AEZ14,0
+Eastern Europe,root,TundraAEZ17,,,12,AEZ17,0
+Eastern Europe,root,TundraAEZ18,,,12,AEZ18,0
+Korea,root,TundraAEZ1,,,13,AEZ1,0
+Korea,root,TundraAEZ2,,,13,AEZ2,0
+Korea,root,TundraAEZ3,,,13,AEZ3,0
+Korea,root,TundraAEZ4,,,13,AEZ4,0
+Korea,root,TundraAEZ5,,,13,AEZ5,0
+Korea,root,TundraAEZ6,,,13,AEZ6,0
+Korea,root,TundraAEZ7,,,13,AEZ7,0
+Korea,root,TundraAEZ8,,,13,AEZ8,0
+Korea,root,TundraAEZ9,,,13,AEZ9,0
+Korea,root,TundraAEZ12,,,13,AEZ12,0
+Korea,root,TundraAEZ13,,,13,AEZ13,0
+Korea,root,TundraAEZ14,,,13,AEZ14,0
+Korea,root,TundraAEZ15,,,13,AEZ15,0
+Korea,root,TundraAEZ16,,,13,AEZ16,0
+Korea,root,TundraAEZ17,,,13,AEZ17,0
+Korea,root,TundraAEZ18,,,13,AEZ18,0
+India,root,TundraAEZ17,,,14,AEZ17,0
+India,root,TundraAEZ18,,,14,AEZ18,0
+,,,,,,,
+INPUT_TABLE,,,,,,,
+VariableID,,,,,,,
+15,,,,,,,
+,,,,,,,
+Region,LandAllocatorRoot,LandNode,,,region,AEZ,exists
+USA,root,RockIceDesertAEZ1,,,1,AEZ1,0
+USA,root,RockIceDesertAEZ2,,,1,AEZ2,0
+USA,root,RockIceDesertAEZ3,,,1,AEZ3,0
+USA,root,RockIceDesertAEZ4,,,1,AEZ4,0
+USA,root,RockIceDesertAEZ5,,,1,AEZ5,0
+USA,root,RockIceDesertAEZ6,,,1,AEZ6,0
+USA,root,RockIceDesertAEZ17,,,1,AEZ17,0
+USA,root,RockIceDesertAEZ18,,,1,AEZ18,0
+Canada,root,RockIceDesertAEZ1,,,2,AEZ1,0
+Canada,root,RockIceDesertAEZ2,,,2,AEZ2,0
+Canada,root,RockIceDesertAEZ3,,,2,AEZ3,0
+Canada,root,RockIceDesertAEZ4,,,2,AEZ4,0
+Canada,root,RockIceDesertAEZ5,,,2,AEZ5,0
+Canada,root,RockIceDesertAEZ6,,,2,AEZ6,0
+Canada,root,RockIceDesertAEZ12,,,2,AEZ12,0
+Canada,root,RockIceDesertAEZ17,,,2,AEZ17,0
+Canada,root,RockIceDesertAEZ18,,,2,AEZ18,0
+Western Europe,root,RockIceDesertAEZ1,,,3,AEZ1,0
+Western Europe,root,RockIceDesertAEZ2,,,3,AEZ2,0
+Western Europe,root,RockIceDesertAEZ3,,,3,AEZ3,0
+Western Europe,root,RockIceDesertAEZ5,,,3,AEZ5,0
+Western Europe,root,RockIceDesertAEZ6,,,3,AEZ6,0
+Western Europe,root,RockIceDesertAEZ17,,,3,AEZ17,0
+Western Europe,root,RockIceDesertAEZ18,,,3,AEZ18,0
+Japan,root,RockIceDesertAEZ1,,,4,AEZ1,0
+Japan,root,RockIceDesertAEZ2,,,4,AEZ2,0
+Japan,root,RockIceDesertAEZ3,,,4,AEZ3,0
+Japan,root,RockIceDesertAEZ4,,,4,AEZ4,0
+Japan,root,RockIceDesertAEZ5,,,4,AEZ5,0
+Japan,root,RockIceDesertAEZ6,,,4,AEZ6,0
+Japan,root,RockIceDesertAEZ7,,,4,AEZ7,0
+Japan,root,RockIceDesertAEZ8,,,4,AEZ8,0
+Japan,root,RockIceDesertAEZ13,,,4,AEZ13,0
+Japan,root,RockIceDesertAEZ14,,,4,AEZ14,0
+Japan,root,RockIceDesertAEZ16,,,4,AEZ16,0
+Japan,root,RockIceDesertAEZ17,,,4,AEZ17,0
+Japan,root,RockIceDesertAEZ18,,,4,AEZ18,0
+Australia_NZ,root,RockIceDesertAEZ13,,,5,AEZ13,0
+Australia_NZ,root,RockIceDesertAEZ14,,,5,AEZ14,0
+Australia_NZ,root,RockIceDesertAEZ18,,,5,AEZ18,0
+Former Soviet Union,root,RockIceDesertAEZ1,,,6,AEZ1,0
+Former Soviet Union,root,RockIceDesertAEZ2,,,6,AEZ2,0
+Former Soviet Union,root,RockIceDesertAEZ3,,,6,AEZ3,0
+Former Soviet Union,root,RockIceDesertAEZ4,,,6,AEZ4,0
+Former Soviet Union,root,RockIceDesertAEZ5,,,6,AEZ5,0
+Former Soviet Union,root,RockIceDesertAEZ6,,,6,AEZ6,0
+Former Soviet Union,root,RockIceDesertAEZ17,,,6,AEZ17,0
+Former Soviet Union,root,RockIceDesertAEZ18,,,6,AEZ18,0
+China,root,RockIceDesertAEZ1,,,7,AEZ1,0
+China,root,RockIceDesertAEZ2,,,7,AEZ2,0
+China,root,RockIceDesertAEZ3,,,7,AEZ3,0
+China,root,RockIceDesertAEZ18,,,7,AEZ18,0
+Middle East,root,RockIceDesertAEZ4,,,8,AEZ4,0
+Middle East,root,RockIceDesertAEZ5,,,8,AEZ5,0
+Middle East,root,RockIceDesertAEZ6,,,8,AEZ6,0
+Middle East,root,RockIceDesertAEZ11,,,8,AEZ11,0
+Middle East,root,RockIceDesertAEZ12,,,8,AEZ12,0
+Middle East,root,RockIceDesertAEZ13,,,8,AEZ13,0
+Middle East,root,RockIceDesertAEZ14,,,8,AEZ14,0
+Middle East,root,RockIceDesertAEZ15,,,8,AEZ15,0
+Middle East,root,RockIceDesertAEZ16,,,8,AEZ16,0
+Middle East,root,RockIceDesertAEZ17,,,8,AEZ17,0
+Middle East,root,RockIceDesertAEZ18,,,8,AEZ18,0
+Africa,root,RockIceDesertAEZ13,,,9,AEZ13,0
+Africa,root,RockIceDesertAEZ14,,,9,AEZ14,0
+Africa,root,RockIceDesertAEZ15,,,9,AEZ15,0
+Africa,root,RockIceDesertAEZ16,,,9,AEZ16,0
+Africa,root,RockIceDesertAEZ17,,,9,AEZ17,0
+Africa,root,RockIceDesertAEZ18,,,9,AEZ18,0
+Southeast Asia,root,RockIceDesertAEZ2,,,11,AEZ2,0
+Southeast Asia,root,RockIceDesertAEZ17,,,11,AEZ17,0
+Southeast Asia,root,RockIceDesertAEZ18,,,11,AEZ18,0
+Eastern Europe,root,RockIceDesertAEZ1,,,12,AEZ1,0
+Eastern Europe,root,RockIceDesertAEZ2,,,12,AEZ2,0
+Eastern Europe,root,RockIceDesertAEZ3,,,12,AEZ3,0
+Eastern Europe,root,RockIceDesertAEZ4,,,12,AEZ4,0
+Eastern Europe,root,RockIceDesertAEZ5,,,12,AEZ5,0
+Eastern Europe,root,RockIceDesertAEZ6,,,12,AEZ6,0
+Eastern Europe,root,RockIceDesertAEZ7,,,12,AEZ7,0
+Eastern Europe,root,RockIceDesertAEZ13,,,12,AEZ13,0
+Eastern Europe,root,RockIceDesertAEZ14,,,12,AEZ14,0
+Eastern Europe,root,RockIceDesertAEZ17,,,12,AEZ17,0
+Eastern Europe,root,RockIceDesertAEZ18,,,12,AEZ18,0
+Korea,root,RockIceDesertAEZ1,,,13,AEZ1,0
+Korea,root,RockIceDesertAEZ2,,,13,AEZ2,0
+Korea,root,RockIceDesertAEZ3,,,13,AEZ3,0
+Korea,root,RockIceDesertAEZ4,,,13,AEZ4,0
+Korea,root,RockIceDesertAEZ5,,,13,AEZ5,0
+Korea,root,RockIceDesertAEZ6,,,13,AEZ6,0
+Korea,root,RockIceDesertAEZ7,,,13,AEZ7,0
+Korea,root,RockIceDesertAEZ8,,,13,AEZ8,0
+Korea,root,RockIceDesertAEZ9,,,13,AEZ9,0
+Korea,root,RockIceDesertAEZ12,,,13,AEZ12,0
+Korea,root,RockIceDesertAEZ13,,,13,AEZ13,0
+Korea,root,RockIceDesertAEZ14,,,13,AEZ14,0
+Korea,root,RockIceDesertAEZ15,,,13,AEZ15,0
+Korea,root,RockIceDesertAEZ16,,,13,AEZ16,0
+Korea,root,RockIceDesertAEZ17,,,13,AEZ17,0
+Korea,root,RockIceDesertAEZ18,,,13,AEZ18,0
+India,root,RockIceDesertAEZ17,,,14,AEZ17,0
+India,root,RockIceDesertAEZ18,,,14,AEZ18,0
+,,,,,,,
+INPUT_TABLE,,,,,,,
+VariableID,,,,,,,
+15,,,,,,,
+,,,,,,,
+Region,LandAllocatorRoot,LandNode,,,region,AEZ,exists
+USA,root,UrbanLandAEZ1,,,1,AEZ1,0
+USA,root,UrbanLandAEZ2,,,1,AEZ2,0
+USA,root,UrbanLandAEZ3,,,1,AEZ3,0
+USA,root,UrbanLandAEZ4,,,1,AEZ4,0
+USA,root,UrbanLandAEZ5,,,1,AEZ5,0
+USA,root,UrbanLandAEZ6,,,1,AEZ6,0
+USA,root,UrbanLandAEZ17,,,1,AEZ17,0
+USA,root,UrbanLandAEZ18,,,1,AEZ18,0
+Canada,root,UrbanLandAEZ1,,,2,AEZ1,0
+Canada,root,UrbanLandAEZ2,,,2,AEZ2,0
+Canada,root,UrbanLandAEZ3,,,2,AEZ3,0
+Canada,root,UrbanLandAEZ4,,,2,AEZ4,0
+Canada,root,UrbanLandAEZ5,,,2,AEZ5,0
+Canada,root,UrbanLandAEZ6,,,2,AEZ6,0
+Canada,root,UrbanLandAEZ12,,,2,AEZ12,0
+Canada,root,UrbanLandAEZ17,,,2,AEZ17,0
+Canada,root,UrbanLandAEZ18,,,2,AEZ18,0
+Western Europe,root,UrbanLandAEZ1,,,3,AEZ1,0
+Western Europe,root,UrbanLandAEZ2,,,3,AEZ2,0
+Western Europe,root,UrbanLandAEZ3,,,3,AEZ3,0
+Western Europe,root,UrbanLandAEZ5,,,3,AEZ5,0
+Western Europe,root,UrbanLandAEZ6,,,3,AEZ6,0
+Western Europe,root,UrbanLandAEZ17,,,3,AEZ17,0
+Western Europe,root,UrbanLandAEZ18,,,3,AEZ18,0
+Japan,root,UrbanLandAEZ1,,,4,AEZ1,0
+Japan,root,UrbanLandAEZ2,,,4,AEZ2,0
+Japan,root,UrbanLandAEZ3,,,4,AEZ3,0
+Japan,root,UrbanLandAEZ4,,,4,AEZ4,0
+Japan,root,UrbanLandAEZ5,,,4,AEZ5,0
+Japan,root,UrbanLandAEZ6,,,4,AEZ6,0
+Japan,root,UrbanLandAEZ7,,,4,AEZ7,0
+Japan,root,UrbanLandAEZ8,,,4,AEZ8,0
+Japan,root,UrbanLandAEZ13,,,4,AEZ13,0
+Japan,root,UrbanLandAEZ14,,,4,AEZ14,0
+Japan,root,UrbanLandAEZ16,,,4,AEZ16,0
+Japan,root,UrbanLandAEZ17,,,4,AEZ17,0
+Japan,root,UrbanLandAEZ18,,,4,AEZ18,0
+Australia_NZ,root,UrbanLandAEZ13,,,5,AEZ13,0
+Australia_NZ,root,UrbanLandAEZ14,,,5,AEZ14,0
+Australia_NZ,root,UrbanLandAEZ18,,,5,AEZ18,0
+Former Soviet Union,root,UrbanLandAEZ1,,,6,AEZ1,0
+Former Soviet Union,root,UrbanLandAEZ2,,,6,AEZ2,0
+Former Soviet Union,root,UrbanLandAEZ3,,,6,AEZ3,0
+Former Soviet Union,root,UrbanLandAEZ4,,,6,AEZ4,0
+Former Soviet Union,root,UrbanLandAEZ5,,,6,AEZ5,0
+Former Soviet Union,root,UrbanLandAEZ6,,,6,AEZ6,0
+Former Soviet Union,root,UrbanLandAEZ17,,,6,AEZ17,0
+Former Soviet Union,root,UrbanLandAEZ18,,,6,AEZ18,0
+China,root,UrbanLandAEZ1,,,7,AEZ1,0
+China,root,UrbanLandAEZ2,,,7,AEZ2,0
+China,root,UrbanLandAEZ3,,,7,AEZ3,0
+China,root,UrbanLandAEZ18,,,7,AEZ18,0
+Middle East,root,UrbanLandAEZ4,,,8,AEZ4,0
+Middle East,root,UrbanLandAEZ5,,,8,AEZ5,0
+Middle East,root,UrbanLandAEZ6,,,8,AEZ6,0
+Middle East,root,UrbanLandAEZ11,,,8,AEZ11,0
+Middle East,root,UrbanLandAEZ12,,,8,AEZ12,0
+Middle East,root,UrbanLandAEZ13,,,8,AEZ13,0
+Middle East,root,UrbanLandAEZ14,,,8,AEZ14,0
+Middle East,root,UrbanLandAEZ15,,,8,AEZ15,0
+Middle East,root,UrbanLandAEZ16,,,8,AEZ16,0
+Middle East,root,UrbanLandAEZ17,,,8,AEZ17,0
+Middle East,root,UrbanLandAEZ18,,,8,AEZ18,0
+Africa,root,UrbanLandAEZ13,,,9,AEZ13,0
+Africa,root,UrbanLandAEZ14,,,9,AEZ14,0
+Africa,root,UrbanLandAEZ15,,,9,AEZ15,0
+Africa,root,UrbanLandAEZ16,,,9,AEZ16,0
+Africa,root,UrbanLandAEZ17,,,9,AEZ17,0
+Africa,root,UrbanLandAEZ18,,,9,AEZ18,0
+Southeast Asia,root,UrbanLandAEZ2,,,11,AEZ2,0
+Southeast Asia,root,UrbanLandAEZ17,,,11,AEZ17,0
+Southeast Asia,root,UrbanLandAEZ18,,,11,AEZ18,0
+Eastern Europe,root,UrbanLandAEZ1,,,12,AEZ1,0
+Eastern Europe,root,UrbanLandAEZ2,,,12,AEZ2,0
+Eastern Europe,root,UrbanLandAEZ3,,,12,AEZ3,0
+Eastern Europe,root,UrbanLandAEZ4,,,12,AEZ4,0
+Eastern Europe,root,UrbanLandAEZ5,,,12,AEZ5,0
+Eastern Europe,root,UrbanLandAEZ6,,,12,AEZ6,0
+Eastern Europe,root,UrbanLandAEZ7,,,12,AEZ7,0
+Eastern Europe,root,UrbanLandAEZ13,,,12,AEZ13,0
+Eastern Europe,root,UrbanLandAEZ14,,,12,AEZ14,0
+Eastern Europe,root,UrbanLandAEZ17,,,12,AEZ17,0
+Eastern Europe,root,UrbanLandAEZ18,,,12,AEZ18,0
+Korea,root,UrbanLandAEZ1,,,13,AEZ1,0
+Korea,root,UrbanLandAEZ2,,,13,AEZ2,0
+Korea,root,UrbanLandAEZ3,,,13,AEZ3,0
+Korea,root,UrbanLandAEZ4,,,13,AEZ4,0
+Korea,root,UrbanLandAEZ5,,,13,AEZ5,0
+Korea,root,UrbanLandAEZ6,,,13,AEZ6,0
+Korea,root,UrbanLandAEZ7,,,13,AEZ7,0
+Korea,root,UrbanLandAEZ8,,,13,AEZ8,0
+Korea,root,UrbanLandAEZ9,,,13,AEZ9,0
+Korea,root,UrbanLandAEZ12,,,13,AEZ12,0
+Korea,root,UrbanLandAEZ13,,,13,AEZ13,0
+Korea,root,UrbanLandAEZ14,,,13,AEZ14,0
+Korea,root,UrbanLandAEZ15,,,13,AEZ15,0
+Korea,root,UrbanLandAEZ16,,,13,AEZ16,0
+Korea,root,UrbanLandAEZ17,,,13,AEZ17,0
+Korea,root,UrbanLandAEZ18,,,13,AEZ18,0
+India,root,UrbanLandAEZ17,,,14,AEZ17,0
+India,root,UrbanLandAEZ18,,,14,AEZ18,0
+,,,,,,,
+INPUT_TABLE,,,,,,,
+VariableID,,,,,,,
+15,,,,,,,
+,,,,,,,
+Region,LandAllocatorRoot,LandNode,,,region,AEZ,exists
+USA,root,AgroForestLandAEZ1,,,1,AEZ1,0
+USA,root,AgroForestLandAEZ2,,,1,AEZ2,0
+USA,root,AgroForestLandAEZ3,,,1,AEZ3,0
+USA,root,AgroForestLandAEZ4,,,1,AEZ4,0
+USA,root,AgroForestLandAEZ5,,,1,AEZ5,0
+USA,root,AgroForestLandAEZ6,,,1,AEZ6,0
+USA,root,AgroForestLandAEZ17,,,1,AEZ17,0
+USA,root,AgroForestLandAEZ18,,,1,AEZ18,0
+Canada,root,AgroForestLandAEZ1,,,2,AEZ1,0
+Canada,root,AgroForestLandAEZ2,,,2,AEZ2,0
+Canada,root,AgroForestLandAEZ3,,,2,AEZ3,0
+Canada,root,AgroForestLandAEZ4,,,2,AEZ4,0
+Canada,root,AgroForestLandAEZ5,,,2,AEZ5,0
+Canada,root,AgroForestLandAEZ6,,,2,AEZ6,0
+Canada,root,AgroForestLandAEZ12,,,2,AEZ12,0
+Canada,root,AgroForestLandAEZ17,,,2,AEZ17,0
+Canada,root,AgroForestLandAEZ18,,,2,AEZ18,0
+Western Europe,root,AgroForestLandAEZ1,,,3,AEZ1,0
+Western Europe,root,AgroForestLandAEZ2,,,3,AEZ2,0
+Western Europe,root,AgroForestLandAEZ3,,,3,AEZ3,0
+Western Europe,root,AgroForestLandAEZ5,,,3,AEZ5,0
+Western Europe,root,AgroForestLandAEZ6,,,3,AEZ6,0
+Western Europe,root,AgroForestLandAEZ17,,,3,AEZ17,0
+Western Europe,root,AgroForestLandAEZ18,,,3,AEZ18,0
+Japan,root,AgroForestLandAEZ1,,,4,AEZ1,0
+Japan,root,AgroForestLandAEZ2,,,4,AEZ2,0
+Japan,root,AgroForestLandAEZ3,,,4,AEZ3,0
+Japan,root,AgroForestLandAEZ4,,,4,AEZ4,0
+Japan,root,AgroForestLandAEZ5,,,4,AEZ5,0
+Japan,root,AgroForestLandAEZ6,,,4,AEZ6,0
+Japan,root,AgroForestLandAEZ7,,,4,AEZ7,0
+Japan,root,AgroForestLandAEZ8,,,4,AEZ8,0
+Japan,root,AgroForestLandAEZ13,,,4,AEZ13,0
+Japan,root,AgroForestLandAEZ14,,,4,AEZ14,0
+Japan,root,AgroForestLandAEZ16,,,4,AEZ16,0
+Japan,root,AgroForestLandAEZ17,,,4,AEZ17,0
+Japan,root,AgroForestLandAEZ18,,,4,AEZ18,0
+Australia_NZ,root,AgroForestLandAEZ13,,,5,AEZ13,0
+Australia_NZ,root,AgroForestLandAEZ14,,,5,AEZ14,0
+Australia_NZ,root,AgroForestLandAEZ18,,,5,AEZ18,0
+Former Soviet Union,root,AgroForestLandAEZ1,,,6,AEZ1,0
+Former Soviet Union,root,AgroForestLandAEZ2,,,6,AEZ2,0
+Former Soviet Union,root,AgroForestLandAEZ3,,,6,AEZ3,0
+Former Soviet Union,root,AgroForestLandAEZ4,,,6,AEZ4,0
+Former Soviet Union,root,AgroForestLandAEZ5,,,6,AEZ5,0
+Former Soviet Union,root,AgroForestLandAEZ6,,,6,AEZ6,0
+Former Soviet Union,root,AgroForestLandAEZ17,,,6,AEZ17,0
+Former Soviet Union,root,AgroForestLandAEZ18,,,6,AEZ18,0
+China,root,AgroForestLandAEZ1,,,7,AEZ1,0
+China,root,AgroForestLandAEZ2,,,7,AEZ2,0
+China,root,AgroForestLandAEZ3,,,7,AEZ3,0
+China,root,AgroForestLandAEZ18,,,7,AEZ18,0
+Middle East,root,AgroForestLandAEZ4,,,8,AEZ4,0
+Middle East,root,AgroForestLandAEZ5,,,8,AEZ5,0
+Middle East,root,AgroForestLandAEZ6,,,8,AEZ6,0
+Middle East,root,AgroForestLandAEZ11,,,8,AEZ11,0
+Middle East,root,AgroForestLandAEZ12,,,8,AEZ12,0
+Middle East,root,AgroForestLandAEZ13,,,8,AEZ13,0
+Middle East,root,AgroForestLandAEZ14,,,8,AEZ14,0
+Middle East,root,AgroForestLandAEZ15,,,8,AEZ15,0
+Middle East,root,AgroForestLandAEZ16,,,8,AEZ16,0
+Middle East,root,AgroForestLandAEZ17,,,8,AEZ17,0
+Middle East,root,AgroForestLandAEZ18,,,8,AEZ18,0
+Africa,root,AgroForestLandAEZ13,,,9,AEZ13,0
+Africa,root,AgroForestLandAEZ14,,,9,AEZ14,0
+Africa,root,AgroForestLandAEZ15,,,9,AEZ15,0
+Africa,root,AgroForestLandAEZ16,,,9,AEZ16,0
+Africa,root,AgroForestLandAEZ17,,,9,AEZ17,0
+Africa,root,AgroForestLandAEZ18,,,9,AEZ18,0
+Southeast Asia,root,AgroForestLandAEZ2,,,11,AEZ2,0
+Southeast Asia,root,AgroForestLandAEZ17,,,11,AEZ17,0
+Southeast Asia,root,AgroForestLandAEZ18,,,11,AEZ18,0
+Eastern Europe,root,AgroForestLandAEZ1,,,12,AEZ1,0
+Eastern Europe,root,AgroForestLandAEZ2,,,12,AEZ2,0
+Eastern Europe,root,AgroForestLandAEZ3,,,12,AEZ3,0
+Eastern Europe,root,AgroForestLandAEZ4,,,12,AEZ4,0
+Eastern Europe,root,AgroForestLandAEZ5,,,12,AEZ5,0
+Eastern Europe,root,AgroForestLandAEZ6,,,12,AEZ6,0
+Eastern Europe,root,AgroForestLandAEZ7,,,12,AEZ7,0
+Eastern Europe,root,AgroForestLandAEZ13,,,12,AEZ13,0
+Eastern Europe,root,AgroForestLandAEZ14,,,12,AEZ14,0
+Eastern Europe,root,AgroForestLandAEZ17,,,12,AEZ17,0
+Eastern Europe,root,AgroForestLandAEZ18,,,12,AEZ18,0
+Korea,root,AgroForestLandAEZ1,,,13,AEZ1,0
+Korea,root,AgroForestLandAEZ2,,,13,AEZ2,0
+Korea,root,AgroForestLandAEZ3,,,13,AEZ3,0
+Korea,root,AgroForestLandAEZ4,,,13,AEZ4,0
+Korea,root,AgroForestLandAEZ5,,,13,AEZ5,0
+Korea,root,AgroForestLandAEZ6,,,13,AEZ6,0
+Korea,root,AgroForestLandAEZ7,,,13,AEZ7,0
+Korea,root,AgroForestLandAEZ8,,,13,AEZ8,0
+Korea,root,AgroForestLandAEZ9,,,13,AEZ9,0
+Korea,root,AgroForestLandAEZ12,,,13,AEZ12,0
+Korea,root,AgroForestLandAEZ13,,,13,AEZ13,0
+Korea,root,AgroForestLandAEZ14,,,13,AEZ14,0
+Korea,root,AgroForestLandAEZ15,,,13,AEZ15,0
+Korea,root,AgroForestLandAEZ16,,,13,AEZ16,0
+Korea,root,AgroForestLandAEZ17,,,13,AEZ17,0
+Korea,root,AgroForestLandAEZ18,,,13,AEZ18,0
+India,root,AgroForestLandAEZ17,,,14,AEZ17,0
+India,root,AgroForestLandAEZ18,,,14,AEZ18,0

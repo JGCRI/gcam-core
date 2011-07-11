@@ -34,7 +34,7 @@
 
 /*! 
  * \file output_helper.cpp
- * \ingroup CIAM
+ * \ingroup Objects
  * \brief Contains the functions to write out single records to output file or
  *        table in the database. includes functions to open, create, and close
  *        database and tables.

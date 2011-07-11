@@ -70,6 +70,9 @@ public:
     virtual void startVisitSubResource( const SubResource* aSubResource,
                                      const int aPeriod );
 
+    virtual void startVisitSubRenewableResource( const SubRenewableResource* aSubResource,
+                                     const int aPeriod );
+
 private:
     //! Name of the Region the for which we are calibrating
     std::string mCurrentRegionName;

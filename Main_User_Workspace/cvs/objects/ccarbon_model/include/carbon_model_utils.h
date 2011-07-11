@@ -46,66 +46,8 @@
  */
 
 #include "util/base/include/time_vector.h"
-#include "land_allocator/include/aland_allocator_item.h"
 
 class LandUseHistory;
-
-/*!
-* \brief enum denoting types of carbon flows between boxes.
-*/
-enum FlowType {
-    /*!
-     * \brief Box flow - carbon flow due to plant growht, decay, etc..
-     */
-    eBoxFlow,
-    /*!
-     * \brief Flow due to land-use change
-    */
-    eLUCFlow,
-    /*!
-     * \brief Flow of carbon out due to a decrease in land area
-    */
-    eLUCFlowOut,
-    /*!
-     * \brief Flow of carbon in due to an increase in land area
-    */
-    eLUCFlowIn,
-    /*!
-     * \brief Any type of flow
-    */
-    eAnyFlow
-};
-
-/*!
-* \brief enum denoting types of carbon boxes.
-*/
-enum BoxType {
-    /*!
-     * \brief Vegetation type.
-     */
-    eVegetation,
-    /*!
-     * \brief Soil type.
-     */
-    eSoil,
-    /*!
-     * \brief Litter type.
-     */
-    eLitter,
-    /*!
-     * \brief NPP type.
-     */
-     eNPP,
-     /*!
-      * \brief Atmosphere type.
-      */
-      eAtmosphere,
-     /*!
-      * \brief A box should never be assigned type, it is used in the code
-      *        to perform operations on any of the above box types.
-      */
-     eAnyBox
-};
 
 /*
  * \brief Class with static helper functions for carbon models.
@@ -118,14 +60,11 @@ public:
 
     static double getLandUse( const unsigned int aYear,
                               const LandUseHistory* aLandUseHistory,
-                              const double aHistoricalShare,
                               const objects::PeriodVector<double>& aLandUse );
 
     static double getSoilTimeScale();
     static int getStartYear();
     static int getEndYear();
-
-    static size_t getConceptualRootKey(const ALandAllocatorItem* const aItem );
 
     static double interpYearHelper( const objects::PeriodVector<double>& aPeriodVector,
                                     const unsigned int aYear );
@@ -134,9 +73,6 @@ public:
                                     const unsigned int aStartYear,
                                     const unsigned int aEndYear,
                                     const unsigned int aYear );
-    static std::string flowTypeToString( FlowType aFlow );
-    static std::string boxTypeToString( BoxType aBoxType );
-    static BoxType stringBoxNameToType( const std::string aBoxName );
 };
 
 #endif // _CARBON_MODEL_UTILS_H_

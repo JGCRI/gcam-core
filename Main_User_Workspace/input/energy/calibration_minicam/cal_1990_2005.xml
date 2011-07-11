@@ -91,7 +91,7 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
-            <subsector name="biomass liquids-ethanol">
+            <subsector name="biomass liquids">
                <technology name="biomass liquids-ethanol">
                   <period year="1990">
                      <share-weight>0</share-weight>
@@ -103,9 +103,9 @@
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
-                     <share-weight>1</share-weight>
+                     <share-weight>0</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.325515326</calOutputValue>
+                        <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional biomass">
                         <coefficient>2.057471264</coefficient>
@@ -114,8 +114,6 @@
                </technology>
                <share-weight year="1990">0</share-weight>
                <share-weight year="2005">1</share-weight>
-            </subsector>
-            <subsector name="biomass liquids-FT">
                <technology name="biomass liquids-FT">
                   <period year="1990">
                      <share-weight>0</share-weight>
@@ -127,17 +125,73 @@
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
-                     <share-weight>1</share-weight>
+                     <share-weight>0</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.012401302</calOutputValue>
+                        <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional biomass">
                         <coefficient>1.960784314</coefficient>
                      </minicam-energy-input>
                   </period>
                </technology>
-               <share-weight year="1990">0</share-weight>
-               <share-weight year="2005">1</share-weight>
+               <technology name="biomass liquids-ethanol (conv)">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                     <minicam-energy-input name="regional corn for ethanol">
+                        <coefficient>1</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>1</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <coefficient>1</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.325515326</calOutputValue>
+                     </CalDataOutput>
+                     <minicam-energy-input name="regional corn for ethanol">
+                        <coefficient>1</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="elect_td_ind">
+                        <coefficient>0.025670868</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <coefficient>0.318361955</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+               <technology name="biomass liquids-biodiesel (conv)">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                     <minicam-energy-input name="regional biomassOil">
+                        <coefficient>1</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <coefficient>1</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.012401302</calOutputValue>
+                     </CalDataOutput>
+                     <minicam-energy-input name="regional biomassOil">
+                        <coefficient>1.030927835</coefficient>
+                     </minicam-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <coefficient>0.057672982</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
             </subsector>
             <subsector name="crude oil refining">
                <technology name="crude oil refining">
@@ -851,13 +905,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>6.344063891</calibrated-value>
+                        <calibrated-value>6.341281892</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>9.977344192</calibrated-value>
+                        <calibrated-value>9.979454213</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -987,13 +1041,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>3.285336809</calibrated-value>
+                        <calibrated-value>3.28812532</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>3.4710107</calibrated-value>
+                        <calibrated-value>3.468895</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -1011,7 +1065,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>5.397849562</calibrated-value>
+                        <calibrated-value>5.293502646</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -1255,7 +1309,7 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
-            <subsector name="biomass liquids-ethanol">
+            <subsector name="biomass liquids">
                <technology name="biomass liquids-ethanol">
                   <period year="1990">
                      <share-weight>0</share-weight>
@@ -1278,8 +1332,6 @@
                </technology>
                <share-weight year="1990">0</share-weight>
                <share-weight year="2005">1</share-weight>
-            </subsector>
-            <subsector name="biomass liquids-FT">
                <technology name="biomass liquids-FT">
                   <period year="1990">
                      <share-weight>0</share-weight>
@@ -1300,8 +1352,34 @@
                      </minicam-energy-input>
                   </period>
                </technology>
-               <share-weight year="1990">0</share-weight>
-               <share-weight year="2005">0</share-weight>
+               <technology name="biomass liquids-ethanol (conv)">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <technology name="biomass liquids-biodiesel (conv)">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
             </subsector>
             <subsector name="crude oil refining">
                <technology name="crude oil refining">
@@ -2015,13 +2093,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.860476407</calibrated-value>
+                        <calibrated-value>0.859898694</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>1.07509185</calibrated-value>
+                        <calibrated-value>1.074519679</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -2151,13 +2229,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.680143706</calibrated-value>
+                        <calibrated-value>0.680721419</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.926031386</calibrated-value>
+                        <calibrated-value>0.926603558</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -2419,7 +2497,7 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
-            <subsector name="biomass liquids-ethanol">
+            <subsector name="biomass liquids">
                <technology name="biomass liquids-ethanol">
                   <period year="1990">
                      <share-weight>0</share-weight>
@@ -2431,9 +2509,9 @@
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
-                     <share-weight>1</share-weight>
+                     <share-weight>0</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.023626112</calOutputValue>
+                        <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional biomass">
                         <coefficient>2.057471264</coefficient>
@@ -2442,8 +2520,6 @@
                </technology>
                <share-weight year="1990">0</share-weight>
                <share-weight year="2005">1</share-weight>
-            </subsector>
-            <subsector name="biomass liquids-FT">
                <technology name="biomass liquids-FT">
                   <period year="1990">
                      <share-weight>0</share-weight>
@@ -2464,8 +2540,40 @@
                      </minicam-energy-input>
                   </period>
                </technology>
-               <share-weight year="1990">0</share-weight>
-               <share-weight year="2005">1</share-weight>
+               <technology name="biomass liquids-ethanol (conv)">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                     <minicam-energy-input name="regional sugarbeet for ethanol">
+                        <coefficient>1</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.023626112</calOutputValue>
+                     </CalDataOutput>
+                     <minicam-energy-input name="regional sugarbeet for ethanol">
+                        <coefficient>1</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+               <technology name="biomass liquids-biodiesel (conv)">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
             </subsector>
             <subsector name="crude oil refining">
                <technology name="crude oil refining">
@@ -3179,13 +3287,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>3.68210657</calibrated-value>
+                        <calibrated-value>3.679380916</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>5.324498417</calibrated-value>
+                        <calibrated-value>5.321941707</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -3315,13 +3423,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>3.595610214</calibrated-value>
+                        <calibrated-value>3.598469501</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>4.400446077</calibrated-value>
+                        <calibrated-value>4.403118563</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -3583,7 +3691,7 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
-            <subsector name="biomass liquids-ethanol">
+            <subsector name="biomass liquids">
                <technology name="biomass liquids-ethanol">
                   <period year="1990">
                      <share-weight>0</share-weight>
@@ -3606,8 +3714,6 @@
                </technology>
                <share-weight year="1990">0</share-weight>
                <share-weight year="2005">0</share-weight>
-            </subsector>
-            <subsector name="biomass liquids-FT">
                <technology name="biomass liquids-FT">
                   <period year="1990">
                      <share-weight>0</share-weight>
@@ -3628,8 +3734,34 @@
                      </minicam-energy-input>
                   </period>
                </technology>
-               <share-weight year="1990">0</share-weight>
-               <share-weight year="2005">0</share-weight>
+               <technology name="biomass liquids-ethanol (conv)">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <technology name="biomass liquids-biodiesel (conv)">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
             </subsector>
             <subsector name="crude oil refining">
                <technology name="crude oil refining">
@@ -4343,13 +4475,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>1.421204138</calibrated-value>
+                        <calibrated-value>1.41851667</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>2.2269098</calibrated-value>
+                        <calibrated-value>2.224051012</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -4479,13 +4611,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.23598677</calibrated-value>
+                        <calibrated-value>1.238788954</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.266525814</calibrated-value>
+                        <calibrated-value>1.26947288</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -4747,7 +4879,7 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
-            <subsector name="biomass liquids-ethanol">
+            <subsector name="biomass liquids">
                <technology name="biomass liquids-ethanol">
                   <period year="1990">
                      <share-weight>0</share-weight>
@@ -4770,8 +4902,6 @@
                </technology>
                <share-weight year="1990">0</share-weight>
                <share-weight year="2005">1</share-weight>
-            </subsector>
-            <subsector name="biomass liquids-FT">
                <technology name="biomass liquids-FT">
                   <period year="1990">
                      <share-weight>0</share-weight>
@@ -4792,8 +4922,34 @@
                      </minicam-energy-input>
                   </period>
                </technology>
-               <share-weight year="1990">0</share-weight>
-               <share-weight year="2005">0</share-weight>
+               <technology name="biomass liquids-ethanol (conv)">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <technology name="biomass liquids-biodiesel (conv)">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
             </subsector>
             <subsector name="crude oil refining">
                <technology name="crude oil refining">
@@ -5507,13 +5663,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.29423876</calibrated-value>
+                        <calibrated-value>0.294188249</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.470620103</calibrated-value>
+                        <calibrated-value>0.470586045</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -5643,13 +5799,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.278697863</calibrated-value>
+                        <calibrated-value>0.278749529</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.426399834</calibrated-value>
+                        <calibrated-value>0.42643466</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -5911,7 +6067,7 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
-            <subsector name="biomass liquids-ethanol">
+            <subsector name="biomass liquids">
                <technology name="biomass liquids-ethanol">
                   <period year="1990">
                      <share-weight>0</share-weight>
@@ -5934,8 +6090,6 @@
                </technology>
                <share-weight year="1990">0</share-weight>
                <share-weight year="2005">1</share-weight>
-            </subsector>
-            <subsector name="biomass liquids-FT">
                <technology name="biomass liquids-FT">
                   <period year="1990">
                      <share-weight>0</share-weight>
@@ -5956,8 +6110,34 @@
                      </minicam-energy-input>
                   </period>
                </technology>
-               <share-weight year="1990">0</share-weight>
-               <share-weight year="2005">1</share-weight>
+               <technology name="biomass liquids-ethanol (conv)">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <technology name="biomass liquids-biodiesel (conv)">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
             </subsector>
             <subsector name="crude oil refining">
                <technology name="crude oil refining">
@@ -6671,13 +6851,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.915044979</calibrated-value>
+                        <calibrated-value>0.912587409</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>1.252065189</calibrated-value>
+                        <calibrated-value>1.250618282</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -6727,13 +6907,13 @@
                <technology name="biomass">
                   <period year="1990">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.056524325</calibrated-value>
+                        <calibrated-value>0.056603874</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.166903167</calibrated-value>
+                        <calibrated-value>0.166945035</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -6807,13 +6987,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>4.000887332</calibrated-value>
+                        <calibrated-value>4.004286383</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>2.468516423</calibrated-value>
+                        <calibrated-value>2.470263449</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -7075,7 +7255,7 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
-            <subsector name="biomass liquids-ethanol">
+            <subsector name="biomass liquids">
                <technology name="biomass liquids-ethanol">
                   <period year="1990">
                      <share-weight>0</share-weight>
@@ -7098,8 +7278,6 @@
                </technology>
                <share-weight year="1990">0</share-weight>
                <share-weight year="2005">0</share-weight>
-            </subsector>
-            <subsector name="biomass liquids-FT">
                <technology name="biomass liquids-FT">
                   <period year="1990">
                      <share-weight>0</share-weight>
@@ -7120,8 +7298,34 @@
                      </minicam-energy-input>
                   </period>
                </technology>
-               <share-weight year="1990">0</share-weight>
-               <share-weight year="2005">0</share-weight>
+               <technology name="biomass liquids-ethanol (conv)">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <technology name="biomass liquids-biodiesel (conv)">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
             </subsector>
             <subsector name="crude oil refining">
                <technology name="crude oil refining">
@@ -7835,13 +8039,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.374398136</calibrated-value>
+                        <calibrated-value>0.373727178</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>2.047647901</calibrated-value>
+                        <calibrated-value>2.046115993</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -7989,13 +8193,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.612284195</calibrated-value>
+                        <calibrated-value>1.612994872</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>5.678164132</calibrated-value>
+                        <calibrated-value>5.679752025</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -8257,7 +8461,7 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
-            <subsector name="biomass liquids-ethanol">
+            <subsector name="biomass liquids">
                <technology name="biomass liquids-ethanol">
                   <period year="1990">
                      <share-weight>0</share-weight>
@@ -8280,8 +8484,6 @@
                </technology>
                <share-weight year="1990">0</share-weight>
                <share-weight year="2005">0</share-weight>
-            </subsector>
-            <subsector name="biomass liquids-FT">
                <technology name="biomass liquids-FT">
                   <period year="1990">
                      <share-weight>0</share-weight>
@@ -8302,8 +8504,34 @@
                      </minicam-energy-input>
                   </period>
                </technology>
-               <share-weight year="1990">0</share-weight>
-               <share-weight year="2005">0</share-weight>
+               <technology name="biomass liquids-ethanol (conv)">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <technology name="biomass liquids-biodiesel (conv)">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
             </subsector>
             <subsector name="crude oil refining">
                <technology name="crude oil refining">
@@ -9017,13 +9245,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.555883766</calibrated-value>
+                        <calibrated-value>0.54841063</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>1.374260076</calibrated-value>
+                        <calibrated-value>1.35940952</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -9153,13 +9381,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.155043423</calibrated-value>
+                        <calibrated-value>0.162516559</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.449600915</calibrated-value>
+                        <calibrated-value>0.464451471</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -9421,7 +9649,7 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
-            <subsector name="biomass liquids-ethanol">
+            <subsector name="biomass liquids">
                <technology name="biomass liquids-ethanol">
                   <period year="1990">
                      <share-weight>0</share-weight>
@@ -9444,8 +9672,6 @@
                </technology>
                <share-weight year="1990">0</share-weight>
                <share-weight year="2005">0</share-weight>
-            </subsector>
-            <subsector name="biomass liquids-FT">
                <technology name="biomass liquids-FT">
                   <period year="1990">
                      <share-weight>0</share-weight>
@@ -9466,8 +9692,34 @@
                      </minicam-energy-input>
                   </period>
                </technology>
-               <share-weight year="1990">0</share-weight>
-               <share-weight year="2005">0</share-weight>
+               <technology name="biomass liquids-ethanol (conv)">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <technology name="biomass liquids-biodiesel (conv)">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
             </subsector>
             <subsector name="crude oil refining">
                <technology name="crude oil refining">
@@ -10181,13 +10433,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.360188042</calibrated-value>
+                        <calibrated-value>0.360142532</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.815177214</calibrated-value>
+                        <calibrated-value>0.813262576</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -10335,13 +10587,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.572206607</calibrated-value>
+                        <calibrated-value>0.572254246</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.833899633</calibrated-value>
+                        <calibrated-value>0.835869442</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -10603,21 +10855,21 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
-            <subsector name="biomass liquids-ethanol">
+            <subsector name="biomass liquids">
                <technology name="biomass liquids-ethanol">
                   <period year="1990">
-                     <share-weight>1</share-weight>
+                     <share-weight>0</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.027465408</calOutputValue>
+                        <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional biomass">
                         <coefficient>2.057471264</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
-                     <share-weight>1</share-weight>
+                     <share-weight>0</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.168062339</calOutputValue>
+                        <calOutputValue>0</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional biomass">
                         <coefficient>2.057471264</coefficient>
@@ -10626,8 +10878,6 @@
                </technology>
                <share-weight year="1990">1</share-weight>
                <share-weight year="2005">1</share-weight>
-            </subsector>
-            <subsector name="biomass liquids-FT">
                <technology name="biomass liquids-FT">
                   <period year="1990">
                      <share-weight>1</share-weight>
@@ -10648,8 +10898,40 @@
                      </minicam-energy-input>
                   </period>
                </technology>
-               <share-weight year="1990">1</share-weight>
-               <share-weight year="2005">1</share-weight>
+               <technology name="biomass liquids-ethanol (conv)">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.027465408</calOutputValue>
+                     </CalDataOutput>
+                     <minicam-energy-input name="regional sugar for ethanol">
+                        <coefficient>1</coefficient>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.168062339</calOutputValue>
+                     </CalDataOutput>
+                     <minicam-energy-input name="regional sugar for ethanol">
+                        <coefficient>1</coefficient>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+               <technology name="biomass liquids-biodiesel (conv)">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
             </subsector>
             <subsector name="crude oil refining">
                <technology name="crude oil refining">
@@ -11363,13 +11645,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.828796608</calibrated-value>
+                        <calibrated-value>0.828563883</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>1.530714912</calibrated-value>
+                        <calibrated-value>1.529461519</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -11517,13 +11799,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.982231437</calibrated-value>
+                        <calibrated-value>0.982467117</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.743751822</calibrated-value>
+                        <calibrated-value>1.74501597</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -11785,7 +12067,7 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
-            <subsector name="biomass liquids-ethanol">
+            <subsector name="biomass liquids">
                <technology name="biomass liquids-ethanol">
                   <period year="1990">
                      <share-weight>0</share-weight>
@@ -11808,8 +12090,6 @@
                </technology>
                <share-weight year="1990">0</share-weight>
                <share-weight year="2005">0</share-weight>
-            </subsector>
-            <subsector name="biomass liquids-FT">
                <technology name="biomass liquids-FT">
                   <period year="1990">
                      <share-weight>0</share-weight>
@@ -11830,8 +12110,34 @@
                      </minicam-energy-input>
                   </period>
                </technology>
-               <share-weight year="1990">0</share-weight>
-               <share-weight year="2005">0</share-weight>
+               <technology name="biomass liquids-ethanol (conv)">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <technology name="biomass liquids-biodiesel (conv)">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
             </subsector>
             <subsector name="crude oil refining">
                <technology name="crude oil refining">
@@ -12545,13 +12851,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.485760061</calibrated-value>
+                        <calibrated-value>0.484926813</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>1.485045089</calibrated-value>
+                        <calibrated-value>1.483985691</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -12699,13 +13005,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.485384868</calibrated-value>
+                        <calibrated-value>0.486221421</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.138236175</calibrated-value>
+                        <calibrated-value>1.139299239</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -12967,7 +13273,7 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
-            <subsector name="biomass liquids-ethanol">
+            <subsector name="biomass liquids">
                <technology name="biomass liquids-ethanol">
                   <period year="1990">
                      <share-weight>0</share-weight>
@@ -12990,8 +13296,6 @@
                </technology>
                <share-weight year="1990">0</share-weight>
                <share-weight year="2005">1</share-weight>
-            </subsector>
-            <subsector name="biomass liquids-FT">
                <technology name="biomass liquids-FT">
                   <period year="1990">
                      <share-weight>0</share-weight>
@@ -13012,8 +13316,34 @@
                      </minicam-energy-input>
                   </period>
                </technology>
-               <share-weight year="1990">0</share-weight>
-               <share-weight year="2005">1</share-weight>
+               <technology name="biomass liquids-ethanol (conv)">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <technology name="biomass liquids-biodiesel (conv)">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
             </subsector>
             <subsector name="crude oil refining">
                <technology name="crude oil refining">
@@ -13727,13 +14057,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.447699596</calibrated-value>
+                        <calibrated-value>0.44722618</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.731070007</calibrated-value>
+                        <calibrated-value>0.73084208</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -13789,7 +14119,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.122976469</calibrated-value>
+                        <calibrated-value>0.122980655</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -13863,13 +14193,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.779243515</calibrated-value>
+                        <calibrated-value>0.779773264</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.677239296</calibrated-value>
+                        <calibrated-value>0.677479904</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -14131,7 +14461,7 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
-            <subsector name="biomass liquids-ethanol">
+            <subsector name="biomass liquids">
                <technology name="biomass liquids-ethanol">
                   <period year="1990">
                      <share-weight>0</share-weight>
@@ -14153,9 +14483,7 @@
                   </period>
                </technology>
                <share-weight year="1990">0</share-weight>
-               <share-weight year="2005">0</share-weight>
-            </subsector>
-            <subsector name="biomass liquids-FT">
+               <share-weight year="2005">1</share-weight>
                <technology name="biomass liquids-FT">
                   <period year="1990">
                      <share-weight>0</share-weight>
@@ -14176,8 +14504,34 @@
                      </minicam-energy-input>
                   </period>
                </technology>
-               <share-weight year="1990">0</share-weight>
-               <share-weight year="2005">1</share-weight>
+               <technology name="biomass liquids-ethanol (conv)">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <technology name="biomass liquids-biodiesel (conv)">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
             </subsector>
             <subsector name="crude oil refining">
                <technology name="crude oil refining">
@@ -15277,7 +15631,7 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids enduse">
-            <subsector name="biomass liquids-ethanol">
+            <subsector name="biomass liquids">
                <technology name="biomass liquids-ethanol">
                   <period year="1990">
                      <share-weight>0</share-weight>
@@ -15300,8 +15654,6 @@
                </technology>
                <share-weight year="1990">0</share-weight>
                <share-weight year="2005">1</share-weight>
-            </subsector>
-            <subsector name="biomass liquids-FT">
                <technology name="biomass liquids-FT">
                   <period year="1990">
                      <share-weight>0</share-weight>
@@ -15322,8 +15674,34 @@
                      </minicam-energy-input>
                   </period>
                </technology>
-               <share-weight year="1990">0</share-weight>
-               <share-weight year="2005">0</share-weight>
+               <technology name="biomass liquids-ethanol (conv)">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <technology name="biomass liquids-biodiesel (conv)">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
             </subsector>
             <subsector name="crude oil refining">
                <technology name="crude oil refining">

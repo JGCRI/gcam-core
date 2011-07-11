@@ -78,13 +78,13 @@
 #include "util/base/include/configuration.h"
 #include "containers/include/gdp.h"
 #include "land_allocator/include/land_leaf.h"
-#include "emissions/include/icarbon_calc.h"
+#include "ccarbon_model/include/icarbon_calc.h"
+#include "ccarbon_model/include/land_carbon_densities.h"
 #include "util/base/include/atom.h"
 #include "land_allocator/include/land_node.h"
 #include "technologies/include/ioutput.h"
 #include "technologies/include/base_technology.h"
-#include "technologies/include/food_production_technology.h"
-#include "technologies/include/forest_production_technology.h"
+#include "technologies/include/ag_production_technology.h"
 #include "technologies/include/expenditure.h"
 #include "technologies/include/production_technology.h"
 #include "functions/include/sgm_input.h"
@@ -106,12 +106,7 @@
 #include "functions/include/iinput.h"
 #include "technologies/include/tran_technology.h"
 #include "land_allocator/include/land_use_history.h"
-#include "ccarbon_model/include/carbon_box.h"
-#include "ccarbon_model/include/carbon_box_model.h"
-#include "ccarbon_model/include/npp.h"
-#include "ccarbon_model/include/acarbon_flow.h"
 #include "ccarbon_model/include/carbon_model_utils.h"
-#include "ccarbon_model/include/environmental_info.h"
 #include "util/base/include/version.h"
 #include <typeinfo>
 
@@ -949,7 +944,10 @@ void XMLDBOutputter::startVisitInput( const IInput* aInput, const int aPeriod ) 
 
         // Write the IO coefficient for the input.
         currValue = aInput->getCoefficient( i );
-        if( !objects::isEqual<double>( currValue, 0.0 ) ) {
+        if( !objects::isEqual<double>( currValue, 0.0 ) &&
+            // hack to avoid writing out IO-coefficient for non-energy inputs
+            !objects::isEqual<double>( aInput->getPhysicalDemand( i ), 0.0 ) )
+        {
             attrs[ "unit" ] = "unitless";
             XMLWriteElementWithAttributes( currValue, "IO-coefficient", *childBuffer,
                 mTabs.get(), attrs );
@@ -1055,83 +1053,24 @@ void XMLDBOutputter::endVisitOutput( const IOutput* aOutput, const int aPeriod )
     delete parentBuffer;
 }
 
-void XMLDBOutputter::startVisitFoodProductionTechnology( const FoodProductionTechnology* aFoodProductionTechnology,
+void XMLDBOutputter::startVisitAgProductionTechnology( const AgProductionTechnology* aAgProductionTechnology,
                                                          const int aPeriod )
 {
     // Write out the non-energy cost assumed to be in same unit as sector price.
-    writeItemToBuffer( aFoodProductionTechnology->variableCost, "variableCost", 
+    writeItemToBuffer( aAgProductionTechnology->mNonLandVariableCost, "nonLandVariableCost", 
         *mBufferStack.top(), mTabs.get(), -1, "" );
-    writeItemToBuffer( aFoodProductionTechnology->agProdChange, "agProdChange", 
+    writeItemToBuffer( aAgProductionTechnology->mAgProdChange, "agProdChange", 
+        *mBufferStack.top(), mTabs.get(), -1, "" );
+    writeItemToBuffer( aAgProductionTechnology->mYield, "yield", 
+        *mBufferStack.top(), mTabs.get(), -1, "" );
+    writeItemToBuffer( aAgProductionTechnology->mHarvestsPerYear, "harvestsPerYear", 
         *mBufferStack.top(), mTabs.get(), -1, "" );
 }
 
-void XMLDBOutputter::endVisitFoodProductionTechnology( const FoodProductionTechnology* aTechnology,
+void XMLDBOutputter::endVisitAgProductionTechnology( const AgProductionTechnology* aTechnology,
                                                        const int aPeriod )
 {
 }
-
-void XMLDBOutputter::startVisitForestProductionTechnology( const ForestProductionTechnology* aForestProductionTechnology,
-                                                         const int aPeriod )
-{
-    startVisitFoodProductionTechnology( aForestProductionTechnology, aPeriod );
-    
-    // get period from year member variable
-    const Modeltime* modeltime = scenario->getModeltime();
-    int techPeriod = modeltime->getyr_to_per( aForestProductionTechnology->year );
-   
-    // Write out the harvested area for this period.
-    // This is *not* physical harvested area. It is an adjusted harvested area, accounting for the fixed model
-    // "rotation period" of 45 years.
-    double landAllocation = aForestProductionTechnology->mLandAllocator->getLandAllocation( 
-                            aForestProductionTechnology->landType, 
-                            aForestProductionTechnology->mName, techPeriod );
-    writeItemToBuffer( landAllocation, "adj-harvested-area", 
-        *mBufferStack.top(), mTabs.get(), -1, "" );
-
-    // Write out the harvested area for future period.
-    landAllocation = aForestProductionTechnology->mLandAllocator->getLandAllocation( 
-                            aForestProductionTechnology->landType, 
-                            aForestProductionTechnology->mName, 
-                            aForestProductionTechnology->getHarvestPeriod( techPeriod ) );
-    writeItemToBuffer( landAllocation, "adj-future-harvested-area", 
-        *mBufferStack.top(), mTabs.get(), -1, "" );
-
-}
-
-void XMLDBOutputter::endVisitForestProductionTechnology( const ForestProductionTechnology* aForestProductionTechnology,
-                                                       const int aPeriod )
-{
-}
-
-/*
-void XMLDBOutputter::startVisitForestProductionTechnology( const FoodProductionTechnology* aFoodProductionTechnology,
-                                                         const int aPeriod )
-{
-    startVisitFoodProductionTechnology( aFoodProductionTechnology, aPeriod );
-    
-    // Write out the harvested area for this period.
-    // This is *not* physical harvested area. It is an adjusted harvested area, accounting for the fixed model
-    // "rotation period" of 45 years.
-    double landAllocation = aFoodProductionTechnology->mLandAllocator->getLandAllocation( 
-                            aFoodProductionTechnology->landType, 
-                            aFoodProductionTechnology->mName, aPeriod );
-    writeItem( "adj-harvested-area", "",landAllocation, -1 );
-
-    // Write out the harvested area for future period.
-    landAllocation = aFoodProductionTechnology->mLandAllocator->getLandAllocation( 
-                            aFoodProductionTechnology->landType, 
-                            aFoodProductionTechnology->mName, 
-                            aFoodProductionTechnology->getHarvestPeriod( aPeriod ) );
-    writeItem( "adj-future-harvested-area", "",landAllocation, -1 );
-
-}
-
-
-void XMLDBOutputter::endVisitForestProductionTechnology( const FoodProductionTechnology* aTechnology,
-                                                       const int aPeriod )
-{
-}
-*/
 
 void XMLDBOutputter::startVisitGHG( const AGHG* aGHG, const int aPeriod ){
     // write the ghg tag and it's children in temp buffers so that we can
@@ -1180,14 +1119,6 @@ void XMLDBOutputter::startVisitGHG( const AGHG* aGHG, const int aPeriod ){
                 *childBuffer, mTabs.get(), attrs );
         }
 
-        // Write emissions by fuel if sector is primary energy.
-        currEmission = aGHG->getEmissFuel( i );
-        if( !objects::isEqual<double>( currEmission, 0.0 ) ) {
-            attrs[ "fuel-name" ] = mCurrentSector;
-            XMLWriteElementWithAttributes( currEmission, "emissions-by-fuel",
-                *childBuffer, mTabs.get(), attrs );
-        }
-
         // Write indirect emissions if this is CO2.
         if( aGHG->getName() == "CO2" && !util::isEqual( mCurrIndirectEmissions[ i ], 0.0 ) ){
             writeItemToBuffer( mCurrIndirectEmissions[ i ], "indirect-emissions", *childBuffer, 
@@ -1210,7 +1141,7 @@ void XMLDBOutputter::endVisitGHG( const AGHG* aGHG, const int aPeriod ){
     else {
         // if we don't write the closing tag we still need to decrease the indent
         mTabs->decreaseIndent();
-    }
+    } 
     
     // clean up any extra buffers
     delete childBuffer;
@@ -1536,34 +1467,6 @@ void XMLDBOutputter::endVisitGDP( const GDP* aGDP, const int aPeriod ){
     XMLWriteClosingTag( GDP::getXMLNameStatic(), mBuffer, mTabs.get() );
 }
 
-void XMLDBOutputter::startVisitCarbonBox( const CarbonBox* aCarbonBox,
-                                          const int aPeriod ){
-    XMLWriteOpeningTag( CarbonBox::getXMLNameStatic(), mBuffer, mTabs.get(), aCarbonBox->getName() );
-    int endingYear = scenario->getModeltime()->getEndYear();
-    const Configuration* conf = Configuration::getInstance();
-    const int outputInterval = conf->getInt( "carbon-stock-output-interval", 10 );
-    const int startingYear = max( conf->getInt( "carbon-output-start-year", 1990 ), CarbonModelUtils::getStartYear() );
- 
-    for( int aYear = startingYear; aYear < endingYear; aYear += outputInterval ){
-        XMLWriteElement( aCarbonBox->mStock->getStock( aYear ),
-                         "carbon-stock", mBuffer, mTabs.get(), aYear );
-    }
-    //! not sure if I want to be generic as compare aCarbonBox->mStock->getName() == NPP::getXMLNameStatic
-    //! this will cause big O(d) comparison with an if statement.
-    //! if I specific compare with "NPP", the comparison is big O(1) instead of big (d)
-
-    if( aCarbonBox->matches( eNPP ) ){
-        for ( int aYear = startingYear; aYear < endingYear; aYear +=outputInterval ){
-            XMLWriteElement( aCarbonBox->mStock->getNPPOverAreaRatio( aYear ),
-                         "NPPRatio", mBuffer, mTabs.get(), aYear );
-        } //! end of year loop
-    } //! end of NPP loop
-}
-
-void XMLDBOutputter::endVisitCarbonBox(const CarbonBox *aCarbonBox, const int aPeriod){
-    XMLWriteClosingTag( CarbonBox::getXMLNameStatic(), mBuffer, mTabs.get() );
-}
-
 void XMLDBOutputter::startVisitLandNode( const LandNode* aLandNode,
                                          const int aPeriod ){
     XMLWriteOpeningTag( LandNode::getXMLNameStatic(), mBuffer, mTabs.get(),
@@ -1588,27 +1491,18 @@ void XMLDBOutputter::startVisitLandLeaf( const LandLeaf* aLandLeaf,
     // This does not report the land harvested in a given year.
     const Modeltime* modeltime = scenario->getModeltime();
     for( int i = 0; i < modeltime->getmaxper(); ++i ){
-        writeItem( "land-allocation", "000Ha",
-           aLandLeaf->getTotalLandAllocation( ALandAllocatorItem::eAnyLand, i ),
+        writeItem( "land-allocation", "thous km2",
+           aLandLeaf->getLandAllocation( aLandLeaf->getName(), i ),
            i );
     }
-    
     for( int i = 0; i < modeltime->getmaxper(); ++i ){
-        writeItem( "intrinsic-rate", "$/kHa", aLandLeaf->mIntrinsicRate[ i ], i );
+        writeItem( "share", "", aLandLeaf->getShare( i ), i );
+    }  
+    for( int i = 0; i < modeltime->getmaxper(); ++i ){
+        writeItem( "profit-rate", "$/thous km2", aLandLeaf->mProfitRate[ i ], i );
     }
-
-    for( int i = 0; i < modeltime->getmaxper(); ++i ){
-        // TODO: consider having a writeItem that takes a Value and will only
-        // write if the Value isInited
-        if( aLandLeaf->mIntrinsicYieldMode[ i ].isInited() ) {
-            writeItem( "intrinsic-yield-mode", "GCal/kHa", aLandLeaf->mIntrinsicYieldMode[ i ], i );
-        }
-        if( aLandLeaf->mCalObservedYield[ i ].isInited() ) {
-            writeItem( "cal-observed-yield", "GCal/kHa", aLandLeaf->mCalObservedYield[ i ], i );
-        }
-        if( aLandLeaf->mYield[ i ].isInited() ) {
-            writeItem( "yield", "GCal/kHa", aLandLeaf->mYield[ i ], i );
-        }
+	for( int i = 0; i < modeltime->getmaxper(); ++i ){
+        writeItem( "profit-scaler", "", aLandLeaf->mProfitScaler[ i ], i );
     }
 }
 
@@ -1617,7 +1511,7 @@ void XMLDBOutputter::endVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPer
 }
 
 void XMLDBOutputter::startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod ){
-    XMLWriteOpeningTag( CarbonBoxModel::getXMLNameStatic(), mBuffer, mTabs.get() );
+    XMLWriteOpeningTag( LandCarbonDensities::getXMLNameStatic(), mBuffer, mTabs.get() );
 
     // Loop over the periods to output Carbon information.
 
@@ -1632,36 +1526,28 @@ void XMLDBOutputter::startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const
         // TODO -- need ability to write out units for non-period based items.
         XMLWriteElement( aCarbonCalc->getNetLandUseChangeEmission( aYear ),
                          "land-use-change-emission", mBuffer, mTabs.get(), aYear );
-        XMLWriteElement( aCarbonCalc->getActualAboveGroundCarbonDensity( aYear ),
-                         "above-ground-carbon", mBuffer, mTabs.get(), aYear );
-        XMLWriteElement( aCarbonCalc->getActualBelowGroundCarbonDensity( aYear ),
-                         "below-ground-carbon", mBuffer, mTabs.get(), aYear );
+        /* TODO: do we want to calculate these?
+        XMLWriteElement( aCarbonCalc->getBelowGroundCarbonStock( aYear ),
+                         "below-ground-carbon-stock", mBuffer, mTabs.get(), aYear );
+        XMLWriteElement( aCarbonCalc->getAboveGroundCarbonStock( aYear ),
+                         "above-ground-carbon-stock", mBuffer, mTabs.get(), aYear );*/
+
      }
+    
+    for( int aYear = modeltime->getStartYear(); 
+             aYear <= modeltime->getper_to_yr( modeltime->getmaxper() - 1 ) || aYear == modeltime->getper_to_yr( modeltime->getmaxper() - 1 ); 
+             aYear += outputInterval ){
+        XMLWriteElement( aCarbonCalc->getActualAboveGroundCarbonDensity( aYear ),
+                        "above-ground-carbon-density", mBuffer, mTabs.get(), aYear );
+        XMLWriteElement( aCarbonCalc->getActualBelowGroundCarbonDensity( aYear ),
+                        "below-ground-carbon-density", mBuffer, mTabs.get(), aYear );
+        
+    }
 }
 
 void XMLDBOutputter::endVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod ){
-    XMLWriteClosingTag( CarbonBoxModel::getXMLNameStatic(), mBuffer, mTabs.get() );
+    XMLWriteClosingTag( LandCarbonDensities::getXMLNameStatic(), mBuffer, mTabs.get() );
 } 
-
-void XMLDBOutputter::startVisitCarbonBoxModel( const CarbonBoxModel* aCarbonBoxModel, const int aPeriod ){
-    const Configuration* conf = Configuration::getInstance();
-    const int outputInterval = conf->getInt( "land-use-history-interval", 10 );
-    const int endingYear = scenario->getModeltime()->getEndYear();
-    const int startingYear = max( conf->getInt( "carbon-output-start-year", 1990 ), CarbonModelUtils::getStartYear() );
-
-    const EnvironmentalInfo* tempEnv = aCarbonBoxModel->getEnvironmentalInfo();
-
-    if( tempEnv ){
-        for( int aYear = startingYear; aYear <= endingYear; aYear += outputInterval ){
-            double landUse = tempEnv->getLandUse( aYear );
-            writeItemUsingYear( "land-use", "000Ha", landUse, aYear );
-        } // End of year loop
-    } // end of if( tempEnv )
-}
-
-void XMLDBOutputter::endVisitCarbonBoxModel( const CarbonBoxModel* aCarbonBoxModel, const int aPeriod ) {
-    // do nothing as this is for a derived class parse
-}
 
 void XMLDBOutputter::startVisitExpenditure( const Expenditure* aExpenditure, const int aPeriod ) {
     // write the expenditure tag and it's children in temp buffers so that we can

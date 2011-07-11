@@ -7,8 +7,7 @@
 PATHOFFSET = ../..
 include ${PATHOFFSET}/build/linux/configure.gcam
 
-OBJS       = ag_sector.o \
-             backup_calculator_factory.o \
+OBJS       = backup_calculator_factory.o \
              building_final_demand.o \
              cal_quantity_tabulator.o \
              capacity_limit_backup_calculator.o \
@@ -17,11 +16,8 @@ OBJS       = ag_sector.o \
              export_sector.o \
              factor_supply.o \
              final_demand_sector.o \
-             food_supply_sector.o \
-             food_supply_subsector.o \
-             forest_demand_sector.o \
-             forest_supply_sector.o \
-             forest_supply_subsector.o \
+             ag_supply_sector.o \
+             ag_supply_subsector.o \
              more_sector_info.o \
              production_sector.o \
              sector.o \

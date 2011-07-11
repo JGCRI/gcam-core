@@ -52,6 +52,7 @@
 #include "containers/include/gdp.h"
 #include "containers/include/iinfo.h"
 #include "marketplace/include/marketplace.h"
+#include "util/base/include/ivisitor.h"
 
 using namespace std;
 using namespace xercesc;
@@ -253,6 +254,10 @@ double SubRenewableResource::getAverageCapacityFactor() const {
 	return subResourceCapacityFactor;
 }
 
+double SubRenewableResource::getMaxSubResource() const {
+    return maxSubResource;
+}
+
 const std::string& SubRenewableResource::getXMLName() const
 {
    return getXMLNameStatic();
@@ -264,4 +269,18 @@ const std::string& SubRenewableResource::getXMLNameStatic()
    return XMLName;
 }
 
+/*! \brief Update an output container for a SubRenewableResource.
+* \param aVisitor Output container to update.
+* \param aPeriod Period to update.
+*/
+void SubRenewableResource::accept( IVisitor* aVisitor, const int aPeriod ) const {
+    aVisitor->startVisitSubRenewableResource( this, aPeriod );
+
+    // Update the output container for the subresources.
+    for( unsigned int i = 0; i < mGrade.size(); ++i ){
+        mGrade[ i ]->accept( aVisitor, aPeriod );
+    }
+
+    aVisitor->endVisitSubRenewableResource( this, aPeriod );
+}
 

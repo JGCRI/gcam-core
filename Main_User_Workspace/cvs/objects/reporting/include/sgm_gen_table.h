@@ -40,7 +40,7 @@
 
 /*! 
 * \file sgm_gen_table.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief SGMGenTable class header file.
 *
 *  Detailed description.

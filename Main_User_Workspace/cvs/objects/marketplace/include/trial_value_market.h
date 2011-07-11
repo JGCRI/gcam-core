@@ -41,7 +41,7 @@
 
 /*! 
 * \file trial_value_market.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The TrialValueMarket class header file.
 * \author Steve Smith
 */
@@ -49,7 +49,7 @@
 #include "marketplace/include/market.h"
 
 /*!
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A class which defines the trail value type market.
 * This market type sets up the solution mechanism to solve for a trial value of
 * some quantity. The quantity here need not be associated with any particular

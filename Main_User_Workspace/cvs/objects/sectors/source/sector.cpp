@@ -65,13 +65,11 @@
 #include "util/logger/include/ilogger.h"
 #include "containers/include/info_factory.h"
 #include "util/logger/include/logger.h"
-#include "containers/include/national_account.h"
 #include "containers/include/iinfo.h"
 #include "util/base/include/ivisitor.h"
 #include "reporting/include/sector_report.h"
 #include "sectors/include/tran_subsector.h"
 #include "sectors/include/sector_utils.h"
-#include "util/base/include/input_finder.h"
 
 using namespace std;
 using namespace xercesc;
@@ -771,5 +769,6 @@ void Sector::accept( IVisitor* aVisitor, const int aPeriod ) const {
     for( unsigned int i = 0; i < subsec.size(); i++ ) {
         subsec[ i ]->accept( aVisitor, aPeriod );
     }
+    
     aVisitor->endVisitSector( this, aPeriod );
 }

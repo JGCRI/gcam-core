@@ -44,13 +44,12 @@
 #include <xercesc/dom/DOMNodeList.hpp>
 #include "land_allocator/include/land_node.h"
 #include "land_allocator/include/unmanaged_land_leaf.h"
-#include "land_allocator/include/forest_land_leaf.h"
+#include "land_allocator/include/carbon_land_leaf.h"
 #include "land_allocator/include/land_use_history.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/ivisitor.h"
 #include <numeric>
 #include <typeinfo>
-#include "ccarbon_model/include/carbon_box_model.h"
 
 using namespace std;
 using namespace xercesc;
@@ -63,14 +62,19 @@ typedef std::map<unsigned int, double> LandMapType;
  * \author James Blackwood
  */
 LandNode::LandNode( const ALandAllocatorItem* aParent )
-: ALandAllocatorItem( aParent, eNode )
+: ALandAllocatorItem( aParent, eNode ),
+mLogitExponent( 1.0 ),
+mUnManagedLandValue( 0.0 ),
+mNewTechProfitScaler( 0.0 ),
+mGhostShareNumerator( 0.25 ),
+mAdjustScalersForNewTech( false )
  {
     mType = eNode;
  }
 
 //! Destructor
 LandNode::~LandNode() {
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+    for( unsigned int i = 0; i < mChildren.size(); i++ ) {
         delete mChildren[ i ];
     }
 }
@@ -115,14 +119,28 @@ bool LandNode::XMLParse( const xercesc::DOMNode* aNode ){
         else if ( nodeName == UnmanagedLandLeaf::getXMLNameStatic() ) {
             parseContainerNode( curr, mChildren, new UnmanagedLandLeaf( this ) );
         }
-        else if ( nodeName == CarbonBoxModel::getXMLNameStatic() ){
-            parseSingleNode( curr, mCarbonBoxModelTemplate, new CarbonBoxModel );
+        else if ( nodeName == CarbonLandLeaf::getXMLNameStatic() ) {
+            parseContainerNode( curr, mChildren, new CarbonLandLeaf( this ) );
         }
-        else if( nodeName == "sigma" ) {
-            mSigma = XMLHelper<double>::getValue( curr );
+        else if ( nodeName == LandLeaf::getXMLNameStatic() ) {
+            parseContainerNode( curr, mChildren, new LandLeaf( this, "" ) );
+        }
+        else if( nodeName == "logit-exponent" ){
+            XMLHelper<double>::insertValueIntoVector( curr, mLogitExponent,
+                                                 scenario->getModeltime() );
         }
         else if( nodeName == LandUseHistory::getXMLNameStatic() ){
             parseSingleNode( curr, mLandUseHistory, new LandUseHistory );
+        }
+        else if( nodeName == "default-share" ){
+            XMLHelper<double>::insertValueIntoVector( curr, mGhostShareNumerator,
+                                                  scenario->getModeltime() );
+        }
+        else if( nodeName == "unManagedLandValue" ){
+            mUnManagedLandValue = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "adjustForNewTech" ){
+            mAdjustScalersForNewTech = XMLHelper<bool>::getValue( curr );
         }
         else if ( !XMLDerivedClassParse( nodeName, curr ) ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -145,18 +163,22 @@ bool LandNode::XMLDerivedClassParse( const std::string& aNodeName,
 void LandNode::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag ( getXMLName(), out, tabs, mName );
 
-    // finished writing xml for the class members.
-
-    XMLWriteElement( mSigma, "sigma", out, tabs );
+    const Modeltime* modeltime = scenario->getModeltime();
+    XMLWriteVector( mLogitExponent, "logit-exponent", out, tabs, modeltime );
+    for( int period = 0; period < modeltime->getmaxper(); ++period ) {
+        XMLWriteElementCheckDefault( mGhostShareNumerator[ period ], "default-share",
+                                     out, tabs, 0.25, modeltime->getper_to_yr( period ) );
+    }
+    XMLWriteElement( mUnManagedLandValue, "unManagedLandValue", out, tabs );  
 
     if( mLandUseHistory.get() ){
         mLandUseHistory->toInputXML( out, tabs );
     }
     
-    // write out the Carbon Model template to input.xml, if and only if, one exists
-    if ( this->mCarbonBoxModelTemplate.get() ) {
-        this->mCarbonBoxModelTemplate->toInputXML( out, tabs );
+    if( mAdjustScalersForNewTech ) {
+        XMLWriteElement( mAdjustScalersForNewTech, "adjustForNewTech", out, tabs );
     }
+    
 
     // write out for mChildren
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
@@ -172,7 +194,10 @@ void LandNode::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
 }
 
 void LandNode::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {
-    XMLWriteElement( mSigma, "sigma", out, tabs );
+    const Modeltime* modeltime = scenario->getModeltime();
+    XMLWriteVector( mLogitExponent, "logit-exponent", out, tabs, modeltime );
+    XMLWriteElement( mUnManagedLandValue, "unManagedLandValue", out, tabs );
+    XMLWriteElement( getLandAllocation( mName, period ), "landAllocation", out, tabs );
 
     if( mLandUseHistory.get() ){
         mLandUseHistory->toDebugXML( period, out, tabs );
@@ -197,111 +222,39 @@ const string& LandNode::getXMLName() const {
 * \return The XML name of the object.
 */
 const string& LandNode::getXMLNameStatic() {
-    const static string XML_NAME = "LandAllocatorNode";    // origianl XML text
+    const static string XML_NAME = "LandNode";    // original XML text
     return XML_NAME;
 }
 
 void LandNode::completeInit( const string& aRegionName,
                              const IInfo* aRegionInfo )
 {
-    // Verify that sigma is initialized and valid.
-    if( !mSigma.isInited() || mSigma < 0 ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Sigma for land node " << mName
-                << " was not initialized or initialized to a negative value. Resetting to 1." << endl;
-        mSigma = 1;
-    }
-
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
         mChildren[ i ]->completeInit( aRegionName, aRegionInfo );
     }
 }
 
-/*!
-* \brief Adds land leafs to the land allocator
-* \details Food production technologies dynamically create land
-*          leafs via this method. The method determines which
-*          type of leaf to create and then inserts it into the
-*          tree
-* \param aLandType Type of land.
-* \param aProductName Product grown on this parcel of land
-* \param aLandUsageType Type of land leaf to create (e.g., forest )
-* \param aPeriod Model period
-*/
-void LandNode::addLandUsage( const string& aLandType,
-                             const string& aProductName,
-                             ILandAllocator::LandUsageType aLandUsageType,
-                             const int aPeriod )
+void LandNode::initCalc( const string& aRegionName, const int aPeriod )
 {
-    assert( aLandType == mName );
-
-    // Only add land usage in the base period. If this is not the base period check to make
-    // sure the leaf was already created.
-    if( aPeriod > 0 ){
-        ALandAllocatorItem* existingItem = findChild( aProductName, eLeaf );
-        if( !existingItem ){
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "A land leaf is required but cannot be created after the base period." << endl;
+    if ( aPeriod > 1 ) {
+        // Copy share weights forward if new ones haven't been read in or computed
+		// This works as calibration is called before this initCalc
+        if ( mProfitScaler[ aPeriod ] == -1 ) {
+            mProfitScaler[ aPeriod ] = mProfitScaler[ aPeriod - 1 ];
         }
     }
-    // Add a new leaf for the land usage.
-    else {
-        LandLeaf* newLeaf = 0;
-        switch( aLandUsageType ){
-        case ILandAllocator::eCrop:
-            newLeaf = new LandLeaf( this, aProductName );
-            if ( mCarbonBoxModelTemplate.get() ) {
-                newLeaf->copyCarbonBoxModel( this->mCarbonBoxModelTemplate.get() );
-            }
-            break;
-        case ILandAllocator::eForest:
-            newLeaf = new ForestLandLeaf( this, aProductName );
-            if ( mCarbonBoxModelTemplate.get() ) {
-                newLeaf->copyCarbonBoxModel( this->mCarbonBoxModelTemplate.get() );
-            }
-            break;
-            // No default here so that the compiler will detect 
-            // a missing case.
-        }
-        addChild( newLeaf );
+    else if ( mProfitScaler[ aPeriod ] == -1 ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Negative profit scaler in period " << aPeriod
+                << " for region " << aRegionName << " in land node "
+                << mName << endl;
+        exit( -1 );
     }
-}
 
-/*!
-* \brief Adjusts the amount of land allocated to unmanaged land leafs
-* \details Scales all unmanaged land leafs to ensure that the total 
-*          amount of land in a region is equal to the read in size of 
-*          a region. Model calculates the amount of land needed for the
-*          managed land leafs prior to calling this method. It then
-*          adjusts each of the unmanaged land leafs by the same percentage
-*          to ensure total land is consistent.
-* \param aRegionName Region.
-* \param aNewUnmanaged Amount of land needed in unmanaged leafs
-* \param aPeriod Model period
-*/
-void LandNode::setUnmanagedLandAllocation( const string& aRegionName,
-                                           const double aNewUnmanaged,
-                                           const int aPeriod )
-{
-    // Determine the current amount of unmanaged land below this node.
-    double unmanagedBelow = getTotalLandAllocation( eUnmanaged, aPeriod );
-
-    double landAllocationScaleFactor = unmanagedBelow > util::getSmallNumber() ? 
-                                       aNewUnmanaged / unmanagedBelow : 0;
-
+    // Call initCalc on any children
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        // Scale the child land allocation so the sum of this node's land
-        // allocation is equal to the intended allocation.
-        double newAllocation = mChildren[ i ]->getTotalLandAllocation( eUnmanaged, aPeriod )
-            * landAllocationScaleFactor;
-
-        mChildren[ i ]->setUnmanagedLandAllocation( aRegionName, newAllocation, aPeriod );
-        // Check that scaling of the child worked correctly.
-        assert( util::isEqual( newAllocation,
-                mChildren[ i ]->getTotalLandAllocation( eUnmanaged, aPeriod ),
-                util::getSmallNumber() ) ); 
+        mChildren[ i ]->initCalc( aRegionName, aPeriod );
     }
 }
 
@@ -309,224 +262,58 @@ void LandNode::setUnmanagedLandAllocation( const string& aRegionName,
 * \brief Initializes the share of land of a node
 * \details Calculates the share of land allocated to a node and calls
 *          a similar method for the node's children. This method is
-*          called during CompleteInit and InitCalc so the shares 
-*          set are prior to any calculations of yield, intrinsic rate, etc.
+*          called during the calibration process so the shares 
+*          set are prior to any calculations of share weights.
 * \param aRegionName Region.
-* \param aSigmaAbove Distribution parameter of the parent node
 * \param aLandAllocationAbove Land allocation of the parent node
-* \param aParentHistoryShare 
-* \param aParentHistory
 * \param aPeriod Model period
 */
 void LandNode::setInitShares( const string& aRegionName,
-                              const double aSigmaAbove,
                               const double aLandAllocationAbove,
-                              const double aParentHistoryShare,
-                              const LandUseHistory* aParentHistory,
                               const int aPeriod )
 {
     // Calculate the total land within this node.
-    double nodeLandAllocation = getTotalLandAllocation( eAnyLand, aPeriod );
+    double nodeLandAllocation = getCalLandAllocation( eAnyLand, aPeriod );
     
     // If there is no land allocation for the parent land type, set the share to
     // a small number.
-    if( aLandAllocationAbove < util::getSmallNumber() ){
-        mShare[ aPeriod ] = util::getSmallNumber();
+    if( aLandAllocationAbove <= 0.0 ){
+        mShare[ aPeriod ] = 0.0;
     }
+    // Otherwise, set the share of this node
     else {
         mShare[ aPeriod ] = nodeLandAllocation / aLandAllocationAbove;
-        
-        // If this is conceptual root then set total land for all periods
-        // Only do this once using 1990 values.
-        if ( isConceptualRoot() && aPeriod <= 1 ) {
-            const Modeltime* modeltime = scenario->getModeltime();
-            for( int period = aPeriod; period < modeltime->getmaxper(); period++ ) {
-               mLandAllocation[ period ] = nodeLandAllocation;
-            }
-        }
    }
 
-    //sjsTEMP
-    // Need two work out a more robust method of determining land-use history
-    // shares when historical years overlap. For now, hard code 1990 for all history shares.
-    int landShareBasePeriod = 1;
-    
-    // If the current node does not have a land use history object,
-    // use the parent's object and land use history share.
-    const LandUseHistory* nodeLandUseHistory = mLandUseHistory.get();
-    double landUseShare = 1;
-    if( !nodeLandUseHistory ){
-        nodeLandUseHistory = aParentHistory;
-        landUseShare = aParentHistoryShare * mShare[ landShareBasePeriod ];
-    }
-
+    // Call setInitShares on all children
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {        
         mChildren[ i ]->setInitShares( aRegionName,
-                                       mSigma,
                                        nodeLandAllocation,
-                                       landUseShare,
-                                       nodeLandUseHistory,
                                        aPeriod );
     }
-
-    // Calculate the intrinsic rate only in unmanaged land. This is to calculate
-    // the unmanaged land intrinsic rates, which is needed for calibrated. Other
-    // land types cannot calculate their intrinsic rates at this point.
-    if( isUnmanagedNest() ){
-        double totalBaseLandAllocation = getBaseLandAllocation( aPeriod );
-        calcLandShares( aRegionName, 0, totalBaseLandAllocation, aPeriod );
-    }
-}
-
-void LandNode::resetToCalLandAllocation( const int aPeriod )
-{
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        mChildren[ i ]->resetToCalLandAllocation( aPeriod );
-    }
 }
 
 /*!
-* \brief Helps calculate the intrinsic yield of the land leafs
-* \details Calculates the intrinsic rate of the node and passes it to
-*          the children so that land leaf can calculate its intrinsic
-*          yield. Nothing is stored for land node in this method. 
-*          Intrinsic rate in a node/leaf is equal to the intrinsic yield
-*          of the node above multiplied by the node/leaf share raised 
-*          to the sigma above
-* \param aIntrinsicYieldAbove Yield of parent node.
-* \param aSigmaAbove Distribution parameter of the parent node
-* \param aPeriod Model period
-*/
-void LandNode::setIntrinsicYieldMode( const double aIntrinsicYieldAbove,
-                                      const double aSigmaAbove,
-                                      const int aPeriod )
-{
-    assert( mShare[ aPeriod ].isInited() );
-
-    // Intrisic yields for a land type cannot be zero.
-    if ( aIntrinsicYieldAbove > util::getSmallNumber() ) {
-
-       double share = mShare[ aPeriod ] > util::getSmallNumber() ? mShare[ aPeriod ].get() : getDefaultShare();
-       double nodeIntrinsicRate = aIntrinsicYieldAbove * pow( share, aSigmaAbove );
-       
-       // If this is a child of the root with a sigma of zero the power of the
-       // share to the sigma will be one, and since the root has an intrinsic rate
-       // of one this will equal 1.
-       assert( aSigmaAbove > util::getSmallNumber() || util::isEqual( nodeIntrinsicRate, 1.0 ) );
-
-       for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-           mChildren[ i ]->setIntrinsicYieldMode( nodeIntrinsicRate, mSigma, aPeriod );
-       }
-    }
-}
-
-/*!
-* \brief Calculates a multiplier to convert potential ( read in ) carbon
-*        to actual carbon which varies with the amount of land
-* \details The multiplier for each node/leaf is equal to the multiplier from
-*        the node above times the node/leaf's share raised to the sigma above
-*        This multiplier adjusts carbon contents for a type of land based 
-*        on the amount of land that type is allocated. The assumption is that
-*        as land expands it moves into more marginal land which has a lower carbon
-*        content. Thus, carbon intensities decrease as land expands and increase
-*        when land contracts. The carbon intensity read in is the average intensity
-*        for the current parcel of land of that type.
-* \param aCarbonMultAbove Multiplier of the parent.
-* \param aSigmaAbove Sigma parameter governing the distribution this item
-*        is within.
-* \param aPeriod Period.
-* \author Kate Calvin
-*/
-void LandNode::setActualCarbonMult( const double aCarbonMultAbove,
-                                      const double aSigmaAbove,
-                                      const int aPeriod )
-{
-    assert( mShare[ aPeriod ].isInited() );
-
-    // Intrisic yields for a land type cannot be zero.
-    if ( aCarbonMultAbove > util::getSmallNumber() ) {
-
-       double share = mShare[ aPeriod ] > util::getSmallNumber() ? mShare[ aPeriod ].get() : getDefaultShare();
-       double nodeIntrinsicRate = aCarbonMultAbove * pow( share, aSigmaAbove );
-       
-       // If this is a child of the root with a sigma of zero the power of the
-       // share to the sigma will be one, and since the root has an intrinsic rate
-       // of one this will equal 1.
-       assert( aSigmaAbove > util::getSmallNumber() || util::isEqual( nodeIntrinsicRate, 1.0 ) );
-
-       for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-           mChildren[ i ]->setActualCarbonMult( nodeIntrinsicRate, mSigma, aPeriod );
-       }
-    }
-}
-
-/*!
-* \brief Sets land leaf's intrinsic rate
-* \details Locates a land leaf and calls the setIntrinsicRate
-*          method for that leaf. The intrinsic rate provided is
-*          passed in from the food production technology.
+* \brief Sets land leaf's profit rate
+* \details Locates a land leaf and calls the setProfitRate
+*          method for that leaf. The profit rate provided is
+*          passed in from the ag production technology.
 * \param aRegionName Region
-* \param aLandType Type of land
 * \param aProductName Name of the product grown on the land
-* \param aIntrinsicRate Profit rate passed in from the food production technology
+* \param aProfitRate Profit rate passed in from ag food production technology
 * \param aPeriod Period.
 */
-void LandNode::setIntrinsicRate( const string& aRegionName,
-                                 const string& aLandType,
+void LandNode::setProfitRate( const string& aRegionName,
                                  const string& aProductName,
-                                 const double aIntrinsicRate,
+                                 const double aProfitRate,
                                  const int aPeriod )
 {
-    assert( aLandType == mName );
-
     ALandAllocatorItem* curr = findChild( aProductName, eLeaf );
     // Set the rental rate.
     if( curr ){
-        curr->setIntrinsicRate( aRegionName, aLandType, aProductName,
-                                aIntrinsicRate, aPeriod );
-    }
-}
-
-void LandNode::setCalLandAllocation( const string& aLandType,
-                                     const string& aProductName,
-                                     const double aCalLandUsed,
-                                     const int aHarvestPeriod, 
-                                     const int aCurrentPeriod )
-{
-    assert( aLandType == mName );
-    ALandAllocatorItem* curr = findChild( aProductName, eLeaf );
-
-    // Set the land allocation.
-    if( curr ){
-        curr->setCalLandAllocation( aLandType, aProductName, aCalLandUsed,
-                                    aHarvestPeriod, aCurrentPeriod );
-    }
-}
-
-void LandNode::setCalObservedYield( const string& aLandType,
-                                    const string& aProductName,
-                                    const double aCalObservedYield,
-                                    const int aPeriod )
-{
-    assert( aLandType == mName );
-    ALandAllocatorItem* curr = findChild( aProductName, eLeaf );
-    
-    if( curr ){
-        curr->setCalObservedYield( aLandType, aProductName, aCalObservedYield, aPeriod );
-    }
-}
-
-void LandNode::setMaxYield( const string& aLandType,
-                                    const string& aProductName,
-                                    const double aMaxYield,
-                                    const int aPeriod )
-{
-    assert( aLandType == mName );
-    ALandAllocatorItem* curr = findChild( aProductName, eLeaf );
-    
-    if( curr ){
-        curr->setMaxYield( aLandType, aProductName, aMaxYield, aPeriod );
-    }
+        curr->setProfitRate( aRegionName, aProductName,
+                                aProfitRate, aPeriod );
+    } 
 }
 
 void LandNode::setCarbonPriceIncreaseRate( const double aCarbonPriceIncreaseRate,
@@ -552,213 +339,351 @@ void LandNode::setSoilTimeScale( const int aTimeScale ) {
 
 }
 
-void LandNode::applyAgProdChange( const string& aLandType,
-                                  const string& aProductName,
-                                  const double aAgProdChange,
-                                  const int aHarvestPeriod, 
-                                  const int aCurrentPeriod )
+/*!
+* \brief Calculates the share of land allocated to the node and its children
+* \details Uses the logit formulation to calculate the share
+*          of land allocated to a particular land type. A node's share
+*          is based on its profit rate and distribution parameter.
+*          A node's profit rate is NOT the weighted average of its
+*          childrens' profit rates but is based on the J. Clarke and Edmonds
+*          Logit paper and uses the scaled profits of the child nodes and leafs.
+* \param aRegionName Region
+* \param aLogitExpAbove Distribution parameter of the parent node
+* \param aPeriod Period.
+*/
+double LandNode::calcLandShares( const string& aRegionName,
+                                 const double aLogitExpAbove,
+                                 const int aPeriod )
 {
-    assert( aLandType == mName );
-    ALandAllocatorItem* curr = findChild( aProductName, eLeaf );
+
+    double unnormalizedSum;
+    vector<double> unnormalizedShares( mChildren.size() );
+    double unnormalizedShare = 0.0;
+
+    // Step 1.  Calculate the unnormalized shares.
+    // These calls need to be made to initiate recursion into lower nests even
+    // if the current node will have fixed shares.
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+        unnormalizedShares[ i ] = mChildren[ i ]->calcLandShares( aRegionName,
+                                                                  mLogitExponent[ aPeriod ],
+                                                                  aPeriod );          
+    }
+    unnormalizedSum = accumulate( unnormalizedShares.begin(),
+                                   unnormalizedShares.end(),
+                                    0.0 );
+
+    // Step 2 Option (a). If this is a zero-logit exponent, fixed share node
+    // then set shares equal to initshares if set by calibration in a 
+    // calibration period, or set to the previous period's value if not set.
+    // Test to check if shares have changed from initialized value of -1 
+    // set in the constructor of a_land_allocator class.
+    if ( mLogitExponent[ aPeriod ] == 0 && aPeriod > 0) {
+        for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+            // copy forward previous period share if this is not a calibration
+            // period in which case it will be set to something
+            if ( mChildren[ i ]->getShare( aPeriod ) == -1) {
+                 mChildren[ i ]->setShare( mChildren[ i ]->getShare( aPeriod - 1 ),
+                                      aPeriod );
+            }
+            else { //do nothing for now.  Assume it has been set by calibration
+            }
+        }
+    }
+    // Step 2 Option (b). Otherwise (as in most cases), node is not a fixed share node
+    // and shares are computed based on relative profits as usual  
+    else {
+        // But first check to make sure at least one child has a non-zero share
+        if ( unnormalizedSum == 0.0 ){ // which means all children have zero share
+           mProfitRate[ aPeriod ] = 0;
+           unnormalizedShare = 0.0;
+        }
+        else {
+           // Calculate and set the share of each child
+           for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+               mChildren[ i ]->setShare( unnormalizedShares[ i ] / unnormalizedSum,
+                                      aPeriod );
+           }
+        }
+     }
+      
+
+   // Step 3 Option (a) . compute node profit based on share denominator
+   // but only if logit exponent >0. If logit exponent is zero, math will crash.
+    if ( mLogitExponent[ aPeriod ] > 0 && unnormalizedSum > 0 ) {
+        mProfitRate[ aPeriod ] = pow( unnormalizedSum, 1.0 / mLogitExponent[ aPeriod ] );
+    }
+    else if ( mLogitExponent[ aPeriod ] == 0 ) {
+        // Step 3 Option (b). Profit for nodes with zero logit exponent will not change, 
+        // so we set the profit rate equal to the read in value of unmanaged land.
+        // Note: this profit rate shouldn't matter
+        // Note: if profit rates of children change over time this wouldn't capture that
+        mProfitRate[ aPeriod ] = mUnManagedLandValue;
+    } 
+    else if ( unnormalizedSum == 0 ) {
+        // Step 3 Option (c). If unnormalizedSum == 0 then all children must have had
+        // zero profit rates.  So, set the profit rate of the node to zero.
+        mProfitRate[ aPeriod ] = 0.0;
+    }
+
+    // Step 4. Calculate the unnormalized share for this node, but here using the logit exponent of the 
+    // containing or parant node.  This will be used to determine this nodes share within its 
+    // parent node.
+    if( aLogitExpAbove > 0 ){ // unnormalized share will be ignored if logitexpo = 0
+       unnormalizedShare = pow( mProfitScaler[ aPeriod ] * mProfitRate[ aPeriod ] * mAdjustForNewTech[ aPeriod ],
+                                                                                                aLogitExpAbove );
+     }
+     else {
+        // Can't calculate share, so return zero.
+        unnormalizedShare = 0.0;
+     }
+
+    return unnormalizedShare; // the unnormalized share of this node.
+}
+
+/*!
+ * \brief Calculates share profit scalers
+ * \param aRegionName Region name.
+ * \param aPeriod model period.
+ */
+void LandNode::calculateProfitScalers( const string& aRegionName, 
+                                          const int aPeriod ) {
+
+    // profit scaler of a node is calibrated as equal to 1 (the leaf
+    // calibration guarantees the node profits will equal what the 
+    // calibration shares would imply)
+   
+    mProfitScaler[ aPeriod ] = 1.0;
     
-    if( curr ){
-        curr->applyAgProdChange( aLandType, aProductName, aAgProdChange, aHarvestPeriod, aCurrentPeriod );
+    // Call share profit scalers calculation for each child
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+        mChildren[ i ]->calculateProfitScalers( aRegionName, aPeriod );
+    }
+
+    /* New Technologies or Land Leaves
+    Compute shareProfit scaler for new techs based on the share
+    a new leaf would get of the node if its profit equaled the average crop land profit.
+    */ 
+    double newTechCalibrationProfitRate = 0.0;
+    double landValue = 0.0;
+    int maxPeriod = scenario->getModeltime()->getmaxper();
+    double maxShare = 0.0;
+    double profitAtMaxShare = 0.0;
+
+    // First, calculate the weighted average profit of managed leafs in this node
+    // We are not including other arable land in this calculation
+    double totalManagedShare = 0.0;
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+        if ( mChildren[ i ]->isManagedLandLeaf() ) {
+            if( mChildren[ i ]->getShare( aPeriod ) > maxShare ) {
+                maxShare = mChildren[ i ]->getShare( aPeriod );
+                profitAtMaxShare = mChildren[ i ]->getProfitRate( aPeriod );
+            }
+            totalManagedShare += mChildren[ i ]->getShare( aPeriod );
+        }
+    }
+    landValue = profitAtMaxShare;
+
+    // Then, set the scaler by period.  This is so we can allow a new technology to 
+    // gradually enter the market by having its default share increase over time
+    for ( int per = aPeriod; per < maxPeriod; per++ ) {
+        // Next, compute calibration profit rate of a node in this node for this period
+        // Note: we are interpreting the defaultShare as relating to managed land leafs
+        // in this node. So, we have to multiply it by the % of managed land in the node
+        // to get the correct share of the whole node.
+        newTechCalibrationProfitRate = mCalibrationProfitRate[ aPeriod ]
+                                        * pow ( totalManagedShare * mGhostShareNumerator[ per ],
+                                            1.0 / mLogitExponent[ aPeriod ] ); 
+
+        // Finally, compute the scaler
+        if ( landValue > 0.0 ) {
+            mNewTechProfitScaler[ per ] = newTechCalibrationProfitRate / landValue;
+        }
+        else {
+            mNewTechProfitScaler[ per ] = 0.0;
+        }
+    }
+
+}
+
+/*!
+ * \brief Adjusts share profit scalers. This method is only called during non-calibration periods
+ * \param aRegionName Region name.
+ * \param aPeriod model period.
+ */
+// KVC_AGLU: probably need code for when logit exponent is zero
+void LandNode::adjustProfitScalers( const string& aRegionName, 
+                                          const int aPeriod ) 
+{
+    // We want to adjust scalers when a new technology is added, but only
+    // if it is producing an existing crop. If we don't do this, then adding
+    // more technologies increases a crop's share (even if the technologies are
+    // identical, simply because there are more chances.  This code should not
+    // apply to new crops like biomass.  
+    // Note: currently, the boolean that indicates whether this adjustment occurs
+    //       is read in and stored at the node level.  However, we may want it 
+    //       read in at the LandLeaf level.
+
+    if ( mAdjustScalersForNewTech ) {
+        // Call method in children first
+        for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+            mChildren[ i ]->adjustProfitScalers( aRegionName, aPeriod );
+        }
+
+        // MINSHARE is the share of the node a technology must have in order
+        // to be considered "existing"
+        const double MINSHARE = 0.0; 
+        int lastCalibPeriod = scenario->getModeltime()->getFinalCalibrationPeriod();
+        int numNewTech = 0;
+        int numExistingTech = 0;
+        for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+            if ( mChildren[ i ]->getShare( lastCalibPeriod ) > MINSHARE ) {
+                numExistingTech += 1;
+            }
+            else if ( mChildren[ i ]->isNewTech( aPeriod ) ) {  
+                numNewTech += 1;
+            }
+        }
+
+        // First, check if there are new technologies.  If not, nothing needs to happen 
+        // and we can exit this method.
+        if ( numNewTech == 0 ) {
+            return;
+        }
+
+        // Next, check if there are existing technologies in this node
+        if ( numExistingTech == 0 ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "Can not calibrate new tech for land leaf " << mName
+                    << " for region " << aRegionName
+                    << " since there are no existing techs." << endl;
+            exit( 1 );
+        }
+        else {
+            // Calculate adjustment factor
+            double ratio = (double) ( numExistingTech + numNewTech ) / (double) numExistingTech;
+            double sigma = 1.0 / mLogitExponent[ aPeriod ];
+            double adjustment = 1.0 / pow( ratio, sigma );
+
+            // Set adjustment factor
+            for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+                mChildren[ i ]->setNewTechAdjustment( adjustment, aPeriod );
+            }
+        }
+    }
+}
+
+
+/*!
+ * \brief Sets the base profit rate for all unmanaged land leafs
+ * \details Unmanaged land leafs have a base profit rate that
+ *          is equal to the average profit rate of that region
+ *          or subregion. 
+ * \param aRegionName Region name.
+ * \param aAverageProfitRate Average profit rate of region or subregion.
+ * \param aPeriod model period.
+ */
+void LandNode::setUnmanagedLandProfitRate( const string& aRegionName,
+                                           double aAverageProfitRate,
+                                           const int aPeriod )
+{
+    double avgProfitRate = aAverageProfitRate;
+    // If node is the root of a fixed land area nest ( typically a subregion )
+    // or the root of the entire land allocatory, then set the average profit
+    // rate to the previously calculated value. 
+    if ( ( getParent() ? getParent()->getLogitExponent( 1 ) == 0 : true )
+                    && mUnManagedLandValue > 0.0 ) {
+        avgProfitRate = mUnManagedLandValue;
+    }
+
+
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+        // assign the unmanaged land value to this node and to children. 
+        mUnManagedLandValue = avgProfitRate;
+        mChildren[ i ]->setUnmanagedLandProfitRate( aRegionName, avgProfitRate, aPeriod );
+    }
+}
+
+
+/*!
+ * \brief Compute the calibration profit rate for all land nodes and land leafs below
+ * \details If it is a root (meaning no sharing above), then its profit
+ *          is equal to the average profit rate of that region
+ *          or subregion. Otherwise, calcuate it based on calibration share.
+ * \param aRegionName Region name.
+ * \param aAverageProfitRate Average calibration profit rate of node above.
+ * \param aLogitExponentAbove - logit exponent of the containing node
+ * \author Marshall Wise
+ */
+void LandNode::calculateCalibrationProfitRate( const string& aRegionName,
+                                           double aAverageProfitRateAbove,
+                                           double aLogitExponentAbove,
+                                           const int aPeriod )
+{
+    double avgProfitRate = aAverageProfitRateAbove;
+    // If node is the root of a fixed land area nest ( typically a subregion )
+    // or the root of the entire land allocatory, then use the previously
+    // calculated value as the average profit rate.  Otherwise, profit is 
+    // calculate from the share and the logit exponent
+    if ( ( getParent() ? getParent()->getLogitExponent( 1 ) == 0 : true )
+                                            && mUnManagedLandValue > 0.0 ) {
+        avgProfitRate = mUnManagedLandValue;
+    }
+    else { 
+        avgProfitRate *= pow( mShare[ aPeriod ],  1.0 / aLogitExponentAbove ); 
+    } 
+
+    // store this value in this node 
+    mCalibrationProfitRate[ aPeriod ] = avgProfitRate;
+
+    // pass the node profit rate down to children and trigger their calculation
+    // and pass down the logit exponent of this node
+    double aLogitExponent = mLogitExponent[ aPeriod ];
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+        mChildren[ i ]->calculateCalibrationProfitRate( aRegionName, avgProfitRate, 
+                                                        aLogitExponent, aPeriod );
     }
 }
 
 /*!
-* \brief Calculates the share of land allocated to the node and its children
-* \details Uses the pure logit formulation to calculate the share
-*          of land allocated to a particular land type. A node's share
-*          is based on its intrinsic rate and distribution parameter.
-*          A node's intrinsic rate is based on the intrinsic rates of 
-*          its children
-* \param aRegionName Region
-* \param aSigmaAbove Distribution parameter of the parent node
-* \param aTotalBaseLand Amount of land allocated to the parent node
-* \param aPeriod Period.
-*/
-double LandNode::calcLandShares( const string& aRegionName,
-                                 const double aSigmaAbove,
-                                 const double aTotalBaseLand,
-                                 const int aPeriod )
-{
-    // Calculate the temporary unnormalized shares.
-    double totalBaseLandAllocation = getBaseLandAllocation( aPeriod );
-    vector<double> unnormalizedShares( mChildren.size() );
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        // If this is unmanaged land then use initial land allocation to weight
-        // land use. Returns the temporary unnormalized share.
-        unnormalizedShares[ i ] = mChildren[ i ]->calcLandShares( aRegionName,
-                                                                  mSigma,
-                                                                  totalBaseLandAllocation,
-                                                                  aPeriod );          
-    }
-
-    double unnormalizedSum = accumulate( unnormalizedShares.begin(),
-                                         unnormalizedShares.end(),
-                                         0.0 );
-
-    double unnormalizedShare;
-    if ( unnormalizedSum < util::getSmallNumber() ){ 
-        mIntrinsicRate[ aPeriod ] = 0;
-        unnormalizedShare = 0;
-    }
-    else {
-        // Set the normalized share for each child.
-        for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-            mChildren[ i ]->setShare( unnormalizedShares[ i ] / unnormalizedSum,
-                                      aPeriod );
-        }
-
-        // The unnormalizedSum is actually the 1/sigma weighted intrinsic rates
-        // of the mChildren Therefore, the equation below gives the intrinsic
-        // rate of this node
-        mIntrinsicRate[ aPeriod ] = pow( unnormalizedSum, mSigma.get() );
-
-        // This is a temporary unnormalized share. If this is an unmanaged land node
-        // within a nest that includes managed land nodes, the sigma above will be
-        // set to zero during the initial setting of shares.
-        if( aSigmaAbove > util::getSmallNumber() ){
-            unnormalizedShare = pow( mIntrinsicRate[ aPeriod ].get(), 1 / aSigmaAbove );
-            assert( util::isValidNumber( unnormalizedShare ) );
-        }
-        else {
-            // Can't calculate share, so return zero.
-            unnormalizedShare = 0;
-        }
-    }
-         
-    return unnormalizedShare;
-}
-
-void LandNode::setUnmanagedLandValues( const string& aRegionName,
-                                       const int aPeriod )
-{
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        mChildren[ i ]->setUnmanagedLandValues( aRegionName, aPeriod );
-    }
-}
-
+ * \brief Calculates land allocation
+ * \details Uses the land share and the allocation of land to 
+ *          the parent node to calculate the allocation of this
+ *          node. CalculateLandShares must be called first.
+ * \param aRegionName Region name.
+ * \param aLandAllocationAbove Land allocation of parent.
+ * \param aPeriod model period.
+ */
 void LandNode::calcLandAllocation( const string& aRegionName,
                                    const double aLandAllocationAbove,
                                    const int aPeriod )
 {
-    assert( mShare[ aPeriod ].isInited() );
+    assert( mShare[ aPeriod ] >= 0.0 && mShare[ aPeriod ] <= 1.0 );
 
-    // Default value
-    double nodeLandAllocation = aLandAllocationAbove * mShare[ aPeriod ];
-
-    // If this is a conceptual root then use fixed land allocation
-    if ( isConceptualRoot() ) {
-        nodeLandAllocation = mLandAllocation[ aPeriod ];
+    // Calculate node land allocation
+    double nodeLandAllocation = 0.0;
+    if ( aLandAllocationAbove > 0.0 && mShare[ aPeriod ] > 0.0 ) {
+        nodeLandAllocation = aLandAllocationAbove * mShare[ aPeriod ];
     }
     
+    // Call calcLandAllocation for each child
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
         mChildren[ i ]->calcLandAllocation( aRegionName, nodeLandAllocation, aPeriod );
     }
 }
 
-void LandNode::calcLUCCarbonFlowsOut( const string& aRegionName,
-                                          const int aYear )
-{
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        mChildren[ i ]->calcLUCCarbonFlowsOut( aRegionName, aYear );
-    }
-}
-
-void LandNode::calcLUCCarbonFlowsIn( const string& aRegionName,
-                                            const int aYear )
-{
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        mChildren[ i ]->calcLUCCarbonFlowsIn( aRegionName, aYear );
-    }
-}
-
-void LandNode::calcCarbonBoxModel( const string& aRegionName,
-                                           const int aYear )
-{
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        mChildren[ i ]->calcCarbonBoxModel( aRegionName, aYear );
-    }
-}
-
-void LandNode::setCarbonContent( const string& aLandType,
-                                 const string& aProductName,
-                                 const double aAboveGroundCarbon,
-                                 const double aBelowGroundCarbon,
-                                 const int aMatureAge,    
-                                 const int aPeriod )
-{
-    assert( aLandType == mName );
-    ALandAllocatorItem* curr = findChild( aProductName, eLeaf );
-    
-    if( curr ){
-        curr->setCarbonContent( aLandType, aProductName, aAboveGroundCarbon,
-                                aBelowGroundCarbon, aMatureAge, aPeriod );
-    }
-}
-
 /*!
-* \brief Calculates the yield of a managed land leaf
-* \details Locates a land leaf and calls the method to
-*          calculate its yield
-* \param aLandType Type of land.
-* \param aProductName Product produced on this parcel of land.
-* \param aRegionName Region.
-* \param aProfitRate Profit rate of the food production technology ($/GCal)
-* \param aAvgIntrinsicRate Profit rate of all land ($/kHa)
-* \param aHarvestPeriod Harvest period
-* \param aCurrentPeriod Current period
-*/
-void LandNode::calcYieldInternal( const string& aLandType,
-                                  const string& aProductName,
-                                  const string& aRegionName,
-                                  const double aProfitRate,
-                                  const double aAvgIntrinsicRate,
-                                  const int aHarvestPeriod,
-                                  const int aCurrentPeriod )
+ * \brief Calculates LUC emissions for the model period
+ * \param aRegionName Region name.
+ * \param aPeriod The current model period.
+ * \param aEndYear The year to calculate LUC emissions to.
+ */
+void LandNode::calcLUCEmissions( const string& aRegionName,
+                                 const int aPeriod, const int aEndYear )
 {
-    assert( aLandType == mName );
-    
-    // There should always be a positive average intrinsic rate.
-    assert( aAvgIntrinsicRate > util::getSmallNumber() );
-
-    ALandAllocatorItem* curr = findChild( aProductName, eLeaf );
-    
-    if( curr ){
-        curr->calcYieldInternal( aLandType, aProductName, aRegionName,
-                                 aProfitRate, aAvgIntrinsicRate, aHarvestPeriod,
-                                 aCurrentPeriod );
+    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+        mChildren[ i ]->calcLUCEmissions( aRegionName, aPeriod, aEndYear );
     }
-}
-
-double LandNode::getYield( const string& aLandType,
-                           const string& aProductName,
-                           const int aPeriod ) const
-{
-    assert( aLandType == mName );
-    const ALandAllocatorItem* curr = findChild( aProductName, eLeaf );
-
-    if( curr ){
-        return curr->getYield( aLandType, aProductName, aPeriod );
-    }
-    return 0;
-}
-
-void LandNode::addChild( ALandAllocatorItem* child ) {
-    assert( child );
-
-    // Check if the child already exists.
-    ALandAllocatorItem* existingItem = findChild( child->getName(), eLeaf );
-    if( existingItem ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Land type " << mName << " already has a child named " << child->getName() << "." << endl;
-        delete child;
-        return;
-    }
-    mChildren.push_back( child );
 }
 
 /*!
@@ -768,7 +693,7 @@ void LandNode::addChild( ALandAllocatorItem* child ) {
  * \return ALandAllocatorItem pointer to the child.
  */
 ALandAllocatorItem* LandNode::findChild( const string& aName,
-                                         const TreeItemType aType ) {
+                                         const LandAllocatorItemType aType ) {
     return findItem<ALandAllocatorItem>( eDFS, this, MatchesTypeAndName( aName, aType ) );
 }
 
@@ -779,86 +704,61 @@ ALandAllocatorItem* LandNode::findChild( const string& aName,
  * \return ALandAllocatorItem pointer to the child.
  */
 const ALandAllocatorItem* LandNode::findChild( const string& aName,
-                                               const TreeItemType aType ) const {
+                                               const LandAllocatorItemType aType ) const {
     return findItem<ALandAllocatorItem>( eDFS, this, MatchesTypeAndName( aName, aType ) );
 }
 
-double LandNode::getLandAllocation( const string& aLandType,
-                                    const string& aProductName,
+/*!
+ * \brief Gets land allocation for a particular product.
+ * \param aProductName The product name type.
+ * \param aPeriod Model period.
+ * \return Total land allocation of a given product.
+ */
+double LandNode::getLandAllocation( const string& aProductName,
                                     const int aPeriod ) const 
 {
-    assert( aLandType == mName );
-    
     // Allows land for entire node to be returned
     if ( aProductName == mName ) {
-        return getTotalLandAllocation( eAnyLand, aPeriod );
+        double sum = 0;
+        for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
+            sum += mChildren[ i ]->getLandAllocation( mChildren[ i ]->getName(), aPeriod );
+        }
+        return sum;
     }
     else {
         const ALandAllocatorItem* curr = findChild( aProductName, eLeaf );
         if( curr ){
-            return curr->getLandAllocation( aLandType, aProductName, aPeriod );
+            return curr->getLandAllocation( aProductName, aPeriod );
         }
     }
-    return 0;
+    return 0.0;
 }
 
-double LandNode::getTotalLandAllocation( const LandAllocationType aType,
-                                         const int aPeriod ) const
+/*!
+ * \brief Calculates and returns total land allocation of a given type.
+ * \param aType The desired type.
+ * \param aPeriod Model period.
+ * \return Total land allocation of a given type.
+ */
+double LandNode::getCalLandAllocation( const LandAllocationType aType,
+                                       const int aPeriod ) const
 {
     double sum = 0;
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        sum += mChildren[ i ]->getTotalLandAllocation( aType, aPeriod );
+        sum += mChildren[ i ]->getCalLandAllocation( aType, aPeriod );
     }
     return sum;
 }
 
-double LandNode::getBaseLandAllocation( const int aPeriod ) const {
-    double sum = 0;
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        sum += mChildren[ i ]->getBaseLandAllocation( aPeriod );
-    }
-    return sum;
+double LandNode::getLogitExponent( const int aPeriod ) const {
+    return mLogitExponent[ aPeriod ];
 }
 
-/*!
- * \brief Returns true if all children of a node are unmanaged leafs
- */
-bool LandNode::isUnmanagedNest() const {
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        if ( !mChildren[ i ]->isUnmanagedNest() ) {
-            return false;
-        }
-    }
-    return true;
+// To be called by contained leaf for new tech
+double LandNode::getNewTechProfitScaler( const int aPeriod ) const {
+    return mNewTechProfitScaler[ aPeriod ];
 }
 
-/*!
- * \brief Returns true if node is either has a sigma above of zero
- *        or no parent
- */
-bool LandNode::isConceptualRoot() const {
-    return getParent() ? getParent()->getSigma() < util::getSmallNumber() : true;
-}
-
-double LandNode::getSigma() const {
-    return mSigma;
-}
-
-void LandNode::csvOutput( const string& aRegionName ) const {
-    ALandAllocatorItem::csvOutput( aRegionName );
-    //write output for mChildren
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        mChildren[ i ]->csvOutput( aRegionName );
-    }
-}
-
-void LandNode::dbOutput( const string& aRegionName ) const {
-    ALandAllocatorItem::dbOutput( aRegionName );
-    //write output for mChildren
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        mChildren[ i ]->dbOutput( aRegionName );
-    }
-}
 
 void LandNode::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitLandNode( this, aPeriod );
@@ -871,3 +771,9 @@ void LandNode::accept( IVisitor* aVisitor, const int aPeriod ) const {
 LandUseHistory* LandNode::getLandUseHistory(){
     return( this->mLandUseHistory.get() );
 }
+
+bool LandNode::isManagedLandLeaf( )  const 
+{
+    return false;
+}
+

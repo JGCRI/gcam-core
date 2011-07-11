@@ -41,7 +41,7 @@
 
 /*! 
 * \file merge_runner.h
-* \ingroup CIAM
+* \ingroup Objects
 * \brief The ScenarioRunner class header file.
 * \author Josh Lurz
 */
@@ -55,7 +55,7 @@ class Scenario;
 class Timer;
 
 /*! 
-* \ingroup CIAM
+* \ingroup Objects
 * \brief A class which runs the scenario only to get the merged output.
 * \author Josh Lurz
 */

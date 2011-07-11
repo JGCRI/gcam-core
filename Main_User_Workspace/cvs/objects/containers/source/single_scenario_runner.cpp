@@ -47,7 +47,6 @@
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/configuration.h"
 #include "util/base/include/timer.h"
-#include "sectors/include/ag_sector.h"
 #include "util/base/include/configuration.h"
 #include "util/base/include/auto_file.h"
 #include "util/logger/include/ilogger.h"
@@ -197,12 +196,6 @@ void SingleScenarioRunner::printOutput( Timer& aTimer, const bool aCloseDB ) con
     Tabs tabs;
     mScenario->toInputXML( *xmlOut, &tabs );
 
-    // Write out the ag sector data.
-    const Configuration* conf = Configuration::getInstance();
-    if( conf->getBool( "agSectorActive" ) ){
-        AgSector::internalOutput();
-    }
-    
     // Write csv file output
     mScenario->writeOutputFiles();
 

@@ -1,0 +1,697 @@
+AEZ_ID,country,AEZ,GCAM_region_ID,GCAM_region_name
+107,Afghanistan,7,11,Southeast Asia
+108,Afghanistan,8,11,Southeast Asia
+109,Afghanistan,9,11,Southeast Asia
+110,Afghanistan,10,11,Southeast Asia
+113,Afghanistan,13,11,Southeast Asia
+114,Afghanistan,14,11,Southeast Asia
+209,Albania,9,12,Eastern Europe
+210,Albania,10,12,Eastern Europe
+211,Albania,11,12,Eastern Europe
+301,Algeria,1,9,Africa
+307,Algeria,7,9,Africa
+308,Algeria,8,9,Africa
+309,Algeria,9,9,Africa
+310,Algeria,10,9,Africa
+410,Andorra,10,3,Western Europe
+501,Angola,1,9,Africa
+502,Angola,2,9,Africa
+503,Angola,3,9,Africa
+504,Angola,4,9,Africa
+505,Angola,5,9,Africa
+508,Angola,8,9,Africa
+509,Angola,9,9,Africa
+510,Angola,10,9,Africa
+511,Angola,11,9,Africa
+607,Argentina,7,10,Latin America
+608,Argentina,8,10,Latin America
+609,Argentina,9,10,Latin America
+610,Argentina,10,10,Latin America
+611,Argentina,11,10,Latin America
+612,Argentina,12,10,Latin America
+613,Argentina,13,10,Latin America
+614,Argentina,14,10,Latin America
+615,Argentina,15,10,Latin America
+616,Argentina,16,10,Latin America
+708,Armenia,8,6,Former Soviet Union
+709,Armenia,9,6,Former Soviet Union
+714,Armenia,14,6,Former Soviet Union
+715,Armenia,15,6,Former Soviet Union
+801,Australia,1,5,Australia_NZ
+802,Australia,2,5,Australia_NZ
+803,Australia,3,5,Australia_NZ
+804,Australia,4,5,Australia_NZ
+805,Australia,5,5,Australia_NZ
+806,Australia,6,5,Australia_NZ
+807,Australia,7,5,Australia_NZ
+808,Australia,8,5,Australia_NZ
+809,Australia,9,5,Australia_NZ
+810,Australia,10,5,Australia_NZ
+811,Australia,11,5,Australia_NZ
+812,Australia,12,5,Australia_NZ
+817,Australia,17,5,Australia_NZ
+910,Austria,10,3,Western Europe
+911,Austria,11,3,Western Europe
+915,Austria,15,3,Western Europe
+916,Austria,16,3,Western Europe
+1008,Azerbaijan,8,6,Former Soviet Union
+1009,Azerbaijan,9,6,Former Soviet Union
+1014,Azerbaijan,14,6,Former Soviet Union
+1015,Azerbaijan,15,6,Former Soviet Union
+1104,Bangladesh,4,11,Southeast Asia
+1105,Bangladesh,5,11,Southeast Asia
+1210,Bellux,10,3,Western Europe
+1211,Bellux,11,3,Western Europe
+1310,Belarus,10,6,Former Soviet Union
+1406,Belize,6,10,Latin America
+1503,Benin,3,9,Africa
+1504,Benin,4,9,Africa
+1505,Benin,5,9,Africa
+1611,Bhutan,11,11,Southeast Asia
+1612,Bhutan,12,11,Southeast Asia
+1616,Bhutan,16,11,Southeast Asia
+1701,Bolivia,1,10,Latin America
+1702,Bolivia,2,10,Latin America
+1703,Bolivia,3,10,Latin America
+1704,Bolivia,4,10,Latin America
+1705,Bolivia,5,10,Latin America
+1706,Bolivia,6,10,Latin America
+1707,Bolivia,7,10,Latin America
+1708,Bolivia,8,10,Latin America
+1709,Bolivia,9,10,Latin America
+1710,Bolivia,10,10,Latin America
+1711,Bolivia,11,10,Latin America
+1712,Bolivia,12,10,Latin America
+1713,Bolivia,13,10,Latin America
+1714,Bolivia,14,10,Latin America
+1715,Bolivia,15,10,Latin America
+1716,Bolivia,16,10,Latin America
+1810,Bosnia Herzg,10,12,Eastern Europe
+1811,Bosnia Herzg,11,12,Eastern Europe
+1812,Bosnia Herzg,12,12,Eastern Europe
+1907,Botswana,7,9,Africa
+1908,Botswana,8,9,Africa
+1909,Botswana,9,9,Africa
+2001,Brazil,1,10,Latin America
+2002,Brazil,2,10,Latin America
+2003,Brazil,3,10,Latin America
+2004,Brazil,4,10,Latin America
+2005,Brazil,5,10,Latin America
+2006,Brazil,6,10,Latin America
+2010,Brazil,10,10,Latin America
+2011,Brazil,11,10,Latin America
+2012,Brazil,12,10,Latin America
+2106,Brunei Darsm,6,11,Southeast Asia
+2209,Bulgaria,9,12,Eastern Europe
+2210,Bulgaria,10,12,Eastern Europe
+2301,Burkina Faso,1,9,Africa
+2302,Burkina Faso,2,9,Africa
+2303,Burkina Faso,3,9,Africa
+2304,Burkina Faso,4,9,Africa
+2405,Burundi,5,9,Africa
+2504,Cambodia,4,7,China
+2505,Cambodia,5,7,China
+2506,Cambodia,6,7,China
+2602,Cameroon,2,9,Africa
+2603,Cameroon,3,9,Africa
+2604,Cameroon,4,9,Africa
+2605,Cameroon,5,9,Africa
+2606,Cameroon,6,9,Africa
+2707,Canada,7,2,Canada
+2708,Canada,8,2,Canada
+2709,Canada,9,2,Canada
+2710,Canada,10,2,Canada
+2711,Canada,11,2,Canada
+2713,Canada,13,2,Canada
+2714,Canada,14,2,Canada
+2715,Canada,15,2,Canada
+2716,Canada,16,2,Canada
+2803,Cent Afr Rep,3,9,Africa
+2804,Cent Afr Rep,4,9,Africa
+2805,Cent Afr Rep,5,9,Africa
+2806,Cent Afr Rep,6,9,Africa
+2901,Chad,1,9,Africa
+2902,Chad,2,9,Africa
+2903,Chad,3,9,Africa
+2904,Chad,4,9,Africa
+2907,Chad,7,9,Africa
+3001,Chile,1,10,Latin America
+3007,Chile,7,10,Latin America
+3008,Chile,8,10,Latin America
+3009,Chile,9,10,Latin America
+3010,Chile,10,10,Latin America
+3011,Chile,11,10,Latin America
+3012,Chile,12,10,Latin America
+3013,Chile,13,10,Latin America
+3014,Chile,14,10,Latin America
+3015,Chile,15,10,Latin America
+3016,Chile,16,10,Latin America
+3017,Chile,17,10,Latin America
+3018,Chile,18,10,Latin America
+3104,China,4,7,China
+3105,China,5,7,China
+3106,China,6,7,China
+3107,China,7,7,China
+3108,China,8,7,China
+3109,China,9,7,China
+3110,China,10,7,China
+3111,China,11,7,China
+3112,China,12,7,China
+3113,China,13,7,China
+3114,China,14,7,China
+3115,China,15,7,China
+3116,China,16,7,China
+3117,China,17,7,China
+3202,Colombia,2,10,Latin America
+3203,Colombia,3,10,Latin America
+3204,Colombia,4,10,Latin America
+3205,Colombia,5,10,Latin America
+3206,Colombia,6,10,Latin America
+3211,Colombia,11,10,Latin America
+3212,Colombia,12,10,Latin America
+3305,Congo,5,9,Africa
+3306,Congo,6,9,Africa
+3404,Costa Rica,4,10,Latin America
+3405,Costa Rica,5,10,Latin America
+3406,Costa Rica,6,10,Latin America
+3504,Cote Divoire,4,9,Africa
+3505,Cote Divoire,5,9,Africa
+3506,Cote Divoire,6,9,Africa
+3610,Croatia,10,12,Eastern Europe
+3611,Croatia,11,12,Eastern Europe
+3612,Croatia,12,12,Eastern Europe
+3704,Cuba,4,10,Latin America
+3705,Cuba,5,10,Latin America
+3706,Cuba,6,10,Latin America
+3810,Czech Rep,10,12,Eastern Europe
+3910,Denmark,10,3,Western Europe
+4001,Djibouti,1,9,Africa
+4105,Dominican Rp,5,10,Latin America
+4106,Dominican Rp,6,10,Latin America
+4201,Ecuador,1,10,Latin America
+4202,Ecuador,2,10,Latin America
+4203,Ecuador,3,10,Latin America
+4204,Ecuador,4,10,Latin America
+4205,Ecuador,5,10,Latin America
+4206,Ecuador,6,10,Latin America
+4208,Ecuador,8,10,Latin America
+4209,Ecuador,9,10,Latin America
+4210,Ecuador,10,10,Latin America
+4211,Ecuador,11,10,Latin America
+4212,Ecuador,12,10,Latin America
+4301,Egypt,1,9,Africa
+4302,Egypt,2,9,Africa
+4307,Egypt,7,9,Africa
+4404,El Salvador,4,10,Latin America
+4405,El Salvador,5,10,Latin America
+4506,Eq Guinea,6,9,Africa
+4601,Eritrea,1,9,Africa
+4602,Eritrea,2,9,Africa
+4710,Estonia,10,6,Former Soviet Union
+4716,Estonia,16,6,Former Soviet Union
+4801,Ethiopia,1,9,Africa
+4802,Ethiopia,2,9,Africa
+4803,Ethiopia,3,9,Africa
+4804,Ethiopia,4,9,Africa
+4805,Ethiopia,5,9,Africa
+4806,Ethiopia,6,9,Africa
+4808,Ethiopia,8,9,Africa
+4809,Ethiopia,9,9,Africa
+4810,Ethiopia,10,9,Africa
+4811,Ethiopia,11,9,Africa
+4812,Ethiopia,12,9,Africa
+4909,Finland,9,3,Western Europe
+4910,Finland,10,3,Western Europe
+4914,Finland,14,3,Western Europe
+4915,Finland,15,3,Western Europe
+5006,Fr Guiana,6,10,Latin America
+5110,France,10,3,Western Europe
+5111,France,11,3,Western Europe
+5112,France,12,3,Western Europe
+5115,France,15,3,Western Europe
+5116,France,16,3,Western Europe
+5205,Gabon,5,9,Africa
+5206,Gabon,6,9,Africa
+5303,Gambia,3,9,Africa
+5409,Georgia,9,6,Former Soviet Union
+5410,Georgia,10,6,Former Soviet Union
+5411,Georgia,11,6,Former Soviet Union
+5412,Georgia,12,6,Former Soviet Union
+5414,Georgia,14,6,Former Soviet Union
+5415,Georgia,15,6,Former Soviet Union
+5416,Georgia,16,6,Former Soviet Union
+5510,Germany,10,3,Western Europe
+5511,Germany,11,3,Western Europe
+5516,Germany,16,3,Western Europe
+5603,Ghana,3,9,Africa
+5604,Ghana,4,9,Africa
+5605,Ghana,5,9,Africa
+5606,Ghana,6,9,Africa
+5709,Greece,9,3,Western Europe
+5710,Greece,10,3,Western Europe
+5711,Greece,11,3,Western Europe
+5805,Guatemala,5,10,Latin America
+5806,Guatemala,6,10,Latin America
+5812,Guatemala,12,10,Latin America
+5903,Guinea,3,9,Africa
+5904,Guinea,4,9,Africa
+5905,Guinea,5,9,Africa
+5906,Guinea,6,9,Africa
+6003,Guineabissau,3,9,Africa
+6004,Guineabissau,4,9,Africa
+6104,Guyana,4,10,Latin America
+6105,Guyana,5,10,Latin America
+6106,Guyana,6,10,Latin America
+6204,Haiti,4,10,Latin America
+6205,Haiti,5,10,Latin America
+6206,Haiti,6,10,Latin America
+6304,Honduras,4,10,Latin America
+6305,Honduras,5,10,Latin America
+6306,Honduras,6,10,Latin America
+6412,Hong Kong,12,7,China
+6509,Hungary,9,12,Eastern Europe
+6510,Hungary,10,12,Eastern Europe
+6511,Hungary,11,12,Eastern Europe
+6613,Iceland,13,3,Western Europe
+6614,Iceland,14,3,Western Europe
+6615,Iceland,15,3,Western Europe
+6701,India,1,14,India
+6702,India,2,14,India
+6703,India,3,14,India
+6704,India,4,14,India
+6705,India,5,14,India
+6706,India,6,14,India
+6707,India,7,14,India
+6708,India,8,14,India
+6709,India,9,14,India
+6710,India,10,14,India
+6711,India,11,14,India
+6712,India,12,14,India
+6713,India,13,14,India
+6714,India,14,14,India
+6715,India,15,14,India
+6716,India,16,14,India
+6804,Indonesia,4,11,Southeast Asia
+6805,Indonesia,5,11,Southeast Asia
+6806,Indonesia,6,11,Southeast Asia
+6901,Iran,1,8,Middle East
+6907,Iran,7,8,Middle East
+6908,Iran,8,8,Middle East
+6909,Iran,9,8,Middle East
+7007,Iraq,7,8,Middle East
+7008,Iraq,8,8,Middle East
+7009,Iraq,9,8,Middle East
+7010,Iraq,10,8,Middle East
+7111,Ireland,11,3,Western Europe
+7112,Ireland,12,3,Western Europe
+7201,Israel,1,8,Middle East
+7202,Israel,2,8,Middle East
+7203,Israel,3,8,Middle East
+7207,Israel,7,8,Middle East
+7208,Israel,8,8,Middle East
+7209,Israel,9,8,Middle East
+7309,Italy,9,3,Western Europe
+7310,Italy,10,3,Western Europe
+7311,Italy,11,3,Western Europe
+7312,Italy,12,3,Western Europe
+7313,Italy,13,3,Western Europe
+7314,Italy,14,3,Western Europe
+7315,Italy,15,3,Western Europe
+7409,Japan,9,4,Japan
+7410,Japan,10,4,Japan
+7411,Japan,11,4,Japan
+7412,Japan,12,4,Japan
+7415,Japan,15,4,Japan
+7503,Jordan,3,8,Middle East
+7507,Jordan,7,8,Middle East
+7508,Jordan,8,8,Middle East
+7509,Jordan,9,8,Middle East
+7607,Kazakhstan,7,6,Former Soviet Union
+7608,Kazakhstan,8,6,Former Soviet Union
+7613,Kazakhstan,13,6,Former Soviet Union
+7614,Kazakhstan,14,6,Former Soviet Union
+7615,Kazakhstan,15,6,Former Soviet Union
+7701,Kenya,1,9,Africa
+7702,Kenya,2,9,Africa
+7703,Kenya,3,9,Africa
+7704,Kenya,4,9,Africa
+7705,Kenya,5,9,Africa
+7706,Kenya,6,9,Africa
+7807,Kuwait,7,8,Middle East
+7907,Kyrgyzstan,7,6,Former Soviet Union
+7908,Kyrgyzstan,8,6,Former Soviet Union
+7913,Kyrgyzstan,13,6,Former Soviet Union
+7914,Kyrgyzstan,14,6,Former Soviet Union
+8004,Laos,4,11,Southeast Asia
+8005,Laos,5,11,Southeast Asia
+8006,Laos,6,11,Southeast Asia
+8010,Laos,10,11,Southeast Asia
+8011,Laos,11,11,Southeast Asia
+8012,Laos,12,11,Southeast Asia
+8110,Latvia,10,6,Former Soviet Union
+8208,Lebanon,8,8,Middle East
+8210,Lebanon,10,8,Middle East
+8309,Lesotho,9,9,Africa
+8310,Lesotho,10,9,Africa
+8311,Lesotho,11,9,Africa
+8405,Liberia,5,9,Africa
+8406,Liberia,6,9,Africa
+8501,Libya,1,9,Africa
+8502,Libya,2,9,Africa
+8507,Libya,7,9,Africa
+8508,Libya,8,9,Africa
+8509,Libya,9,9,Africa
+8610,Lithuania,10,6,Former Soviet Union
+8709,Macedonia,9,12,Eastern Europe
+8710,Macedonia,10,12,Eastern Europe
+8802,Madagascar,2,9,Africa
+8803,Madagascar,3,9,Africa
+8804,Madagascar,4,9,Africa
+8805,Madagascar,5,9,Africa
+8806,Madagascar,6,9,Africa
+8810,Madagascar,10,9,Africa
+8811,Madagascar,11,9,Africa
+8903,Malawi,3,9,Africa
+8904,Malawi,4,9,Africa
+8905,Malawi,5,9,Africa
+8909,Malawi,9,9,Africa
+9006,Malaysia,6,11,Southeast Asia
+9101,Mali,1,9,Africa
+9102,Mali,2,9,Africa
+9103,Mali,3,9,Africa
+9104,Mali,4,9,Africa
+9107,Mali,7,9,Africa
+9201,Mauritania,1,9,Africa
+9202,Mauritania,2,9,Africa
+9207,Mauritania,7,9,Africa
+9301,Mexico,1,10,Latin America
+9302,Mexico,2,10,Latin America
+9303,Mexico,3,10,Latin America
+9304,Mexico,4,10,Latin America
+9305,Mexico,5,10,Latin America
+9306,Mexico,6,10,Latin America
+9307,Mexico,7,10,Latin America
+9308,Mexico,8,10,Latin America
+9309,Mexico,9,10,Latin America
+9310,Mexico,10,10,Latin America
+9311,Mexico,11,10,Latin America
+9312,Mexico,12,10,Latin America
+9408,Moldova Rep,8,6,Former Soviet Union
+9409,Moldova Rep,9,6,Former Soviet Union
+9410,Moldova Rep,10,6,Former Soviet Union
+9507,Mongolia,7,7,China
+9508,Mongolia,8,7,China
+9513,Mongolia,13,7,China
+9514,Mongolia,14,7,China
+9515,Mongolia,15,7,China
+9601,Morocco,1,9,Africa
+9602,Morocco,2,9,Africa
+9603,Morocco,3,9,Africa
+9604,Morocco,4,9,Africa
+9607,Morocco,7,9,Africa
+9608,Morocco,8,9,Africa
+9609,Morocco,9,9,Africa
+9610,Morocco,10,9,Africa
+9701,Mozambique,1,9,Africa
+9702,Mozambique,2,9,Africa
+9703,Mozambique,3,9,Africa
+9704,Mozambique,4,9,Africa
+9705,Mozambique,5,9,Africa
+9709,Mozambique,9,9,Africa
+9710,Mozambique,10,9,Africa
+9804,Myanmar,4,11,Southeast Asia
+9805,Myanmar,5,11,Southeast Asia
+9806,Myanmar,6,11,Southeast Asia
+9811,Myanmar,11,11,Southeast Asia
+9812,Myanmar,12,11,Southeast Asia
+9815,Myanmar,15,11,Southeast Asia
+9816,Myanmar,16,11,Southeast Asia
+9901,Namibia,1,9,Africa
+9907,Namibia,7,9,Africa
+9908,Namibia,8,9,Africa
+9909,Namibia,9,9,Africa
+10003,Nepal,3,11,Southeast Asia
+10004,Nepal,4,11,Southeast Asia
+10005,Nepal,5,11,Southeast Asia
+10010,Nepal,10,11,Southeast Asia
+10011,Nepal,11,11,Southeast Asia
+10012,Nepal,12,11,Southeast Asia
+10013,Nepal,13,11,Southeast Asia
+10014,Nepal,14,11,Southeast Asia
+10015,Nepal,15,11,Southeast Asia
+10016,Nepal,16,11,Southeast Asia
+10111,Netherlands,11,3,Western Europe
+10206,New Zealand,6,5,Australia_NZ
+10210,New Zealand,10,5,Australia_NZ
+10211,New Zealand,11,5,Australia_NZ
+10212,New Zealand,12,5,Australia_NZ
+10215,New Zealand,15,5,Australia_NZ
+10216,New Zealand,16,5,Australia_NZ
+10217,New Zealand,17,5,Australia_NZ
+10304,Nicaragua,4,10,Latin America
+10305,Nicaragua,5,10,Latin America
+10306,Nicaragua,6,10,Latin America
+10401,Niger,1,9,Africa
+10402,Niger,2,9,Africa
+10403,Niger,3,9,Africa
+10407,Niger,7,9,Africa
+10501,Nigeria,1,9,Africa
+10502,Nigeria,2,9,Africa
+10503,Nigeria,3,9,Africa
+10504,Nigeria,4,9,Africa
+10505,Nigeria,5,9,Africa
+10506,Nigeria,6,9,Africa
+10609,North Korea,9,7,China
+10610,North Korea,10,7,China
+10611,North Korea,11,7,China
+10615,North Korea,15,7,China
+10710,Norway,10,3,Western Europe
+10714,Norway,14,3,Western Europe
+10715,Norway,15,3,Western Europe
+10716,Norway,16,3,Western Europe
+10801,Oman,1,8,Middle East
+10901,Pakistan,1,11,Southeast Asia
+10907,Pakistan,7,11,Southeast Asia
+10908,Pakistan,8,11,Southeast Asia
+10909,Pakistan,9,11,Southeast Asia
+10910,Pakistan,10,11,Southeast Asia
+10911,Pakistan,11,11,Southeast Asia
+10912,Pakistan,12,11,Southeast Asia
+10913,Pakistan,13,11,Southeast Asia
+10914,Pakistan,14,11,Southeast Asia
+11005,Panama,5,10,Latin America
+11006,Panama,6,10,Latin America
+11105,Papua N Guin,5,11,Southeast Asia
+11106,Papua N Guin,6,11,Southeast Asia
+11201,Paraguay,1,10,Latin America
+11203,Paraguay,3,10,Latin America
+11204,Paraguay,4,10,Latin America
+11205,Paraguay,5,10,Latin America
+11206,Paraguay,6,10,Latin America
+11207,Paraguay,7,10,Latin America
+11208,Paraguay,8,10,Latin America
+11209,Paraguay,9,10,Latin America
+11210,Paraguay,10,10,Latin America
+11211,Paraguay,11,10,Latin America
+11212,Paraguay,12,10,Latin America
+11301,Peru,1,10,Latin America
+11302,Peru,2,10,Latin America
+11303,Peru,3,10,Latin America
+11304,Peru,4,10,Latin America
+11305,Peru,5,10,Latin America
+11306,Peru,6,10,Latin America
+11307,Peru,7,10,Latin America
+11308,Peru,8,10,Latin America
+11309,Peru,9,10,Latin America
+11310,Peru,10,10,Latin America
+11311,Peru,11,10,Latin America
+11312,Peru,12,10,Latin America
+11313,Peru,13,10,Latin America
+11314,Peru,14,10,Latin America
+11315,Peru,15,10,Latin America
+11316,Peru,16,10,Latin America
+11404,Philippines,4,11,Southeast Asia
+11405,Philippines,5,11,Southeast Asia
+11406,Philippines,6,11,Southeast Asia
+11510,Poland,10,12,Eastern Europe
+11610,Portugal,10,3,Western Europe
+11611,Portugal,11,3,Western Europe
+11612,Portugal,12,3,Western Europe
+11701,Qatar,1,8,Middle East
+11808,Romania,8,12,Eastern Europe
+11809,Romania,9,12,Eastern Europe
+11810,Romania,10,12,Eastern Europe
+11811,Romania,11,12,Eastern Europe
+11815,Romania,15,12,Eastern Europe
+11816,Romania,16,12,Eastern Europe
+11907,Russian Fed,7,6,Former Soviet Union
+11908,Russian Fed,8,6,Former Soviet Union
+11909,Russian Fed,9,6,Former Soviet Union
+11910,Russian Fed,10,6,Former Soviet Union
+11911,Russian Fed,11,6,Former Soviet Union
+11913,Russian Fed,13,6,Former Soviet Union
+11914,Russian Fed,14,6,Former Soviet Union
+11915,Russian Fed,15,6,Former Soviet Union
+11916,Russian Fed,16,6,Former Soviet Union
+12005,Rwanda,5,9,Africa
+12006,Rwanda,6,9,Africa
+12101,Saudi Arabia,1,8,Middle East
+12107,Saudi Arabia,7,8,Middle East
+12201,Senegal,1,9,Africa
+12202,Senegal,2,9,Africa
+12203,Senegal,3,9,Africa
+12304,Sierra Leone,4,9,Africa
+12305,Sierra Leone,5,9,Africa
+12406,Singapore,6,11,Southeast Asia
+12510,Slovakia,10,12,Eastern Europe
+12515,Slovakia,15,12,Eastern Europe
+12516,Slovakia,16,12,Eastern Europe
+12610,Slovenia,10,12,Eastern Europe
+12611,Slovenia,11,12,Eastern Europe
+12615,Slovenia,15,12,Eastern Europe
+12701,Somalia,1,9,Africa
+12702,Somalia,2,9,Africa
+12801,South Africa,1,9,Africa
+12802,South Africa,2,9,Africa
+12803,South Africa,3,9,Africa
+12804,South Africa,4,9,Africa
+12805,South Africa,5,9,Africa
+12806,South Africa,6,9,Africa
+12807,South Africa,7,9,Africa
+12808,South Africa,8,9,Africa
+12809,South Africa,9,9,Africa
+12810,South Africa,10,9,Africa
+12811,South Africa,11,9,Africa
+12910,South Korea,10,13,Korea
+12911,South Korea,11,13,Korea
+13004,Spain,4,3,Western Europe
+13008,Spain,8,3,Western Europe
+13009,Spain,9,3,Western Europe
+13010,Spain,10,3,Western Europe
+13011,Spain,11,3,Western Europe
+13012,Spain,12,3,Western Europe
+13103,Sri Lanka,3,11,Southeast Asia
+13104,Sri Lanka,4,11,Southeast Asia
+13105,Sri Lanka,5,11,Southeast Asia
+13106,Sri Lanka,6,11,Southeast Asia
+13201,Sudan,1,9,Africa
+13202,Sudan,2,9,Africa
+13203,Sudan,3,9,Africa
+13204,Sudan,4,9,Africa
+13205,Sudan,5,9,Africa
+13207,Sudan,7,9,Africa
+13208,Sudan,8,9,Africa
+13306,Suriname,6,10,Latin America
+13402,Swaziland,2,9,Africa
+13403,Swaziland,3,9,Africa
+13410,Swaziland,10,9,Africa
+13411,Swaziland,11,9,Africa
+13509,Sweden,9,3,Western Europe
+13510,Sweden,10,3,Western Europe
+13513,Sweden,13,3,Western Europe
+13514,Sweden,14,3,Western Europe
+13515,Sweden,15,3,Western Europe
+13516,Sweden,16,3,Western Europe
+13610,Switzerland,10,3,Western Europe
+13614,Switzerland,14,3,Western Europe
+13615,Switzerland,15,3,Western Europe
+13707,Syria,7,8,Middle East
+13708,Syria,8,8,Middle East
+13709,Syria,9,8,Middle East
+13710,Syria,10,8,Middle East
+13808,Tajikistan,8,6,Former Soviet Union
+13809,Tajikistan,9,6,Former Soviet Union
+13813,Tajikistan,13,6,Former Soviet Union
+13814,Tajikistan,14,6,Former Soviet Union
+13901,Tanzania,1,9,Africa
+13902,Tanzania,2,9,Africa
+13903,Tanzania,3,9,Africa
+13904,Tanzania,4,9,Africa
+13905,Tanzania,5,9,Africa
+13906,Tanzania,6,9,Africa
+14004,Thailand,4,11,Southeast Asia
+14005,Thailand,5,11,Southeast Asia
+14006,Thailand,6,11,Southeast Asia
+14010,Thailand,10,11,Southeast Asia
+14103,Togo,3,9,Africa
+14104,Togo,4,9,Africa
+14105,Togo,5,9,Africa
+14205,Trinidad Tob,5,10,Latin America
+14206,Trinidad Tob,6,10,Latin America
+14307,Tunisia,7,9,Africa
+14308,Tunisia,8,9,Africa
+14309,Tunisia,9,9,Africa
+14310,Tunisia,10,9,Africa
+14407,Turkey,7,3,Western Europe
+14408,Turkey,8,3,Western Europe
+14409,Turkey,9,3,Western Europe
+14410,Turkey,10,3,Western Europe
+14411,Turkey,11,3,Western Europe
+14414,Turkey,14,3,Western Europe
+14415,Turkey,15,3,Western Europe
+14416,Turkey,16,3,Western Europe
+14507,Turkmenistan,7,6,Former Soviet Union
+14508,Turkmenistan,8,6,Former Soviet Union
+14603,Uganda,3,9,Africa
+14604,Uganda,4,9,Africa
+14605,Uganda,5,9,Africa
+14606,Uganda,6,9,Africa
+14710,Uk,10,3,Western Europe
+14711,Uk,11,3,Western Europe
+14712,Uk,12,3,Western Europe
+14715,Uk,15,3,Western Europe
+14716,Uk,16,3,Western Europe
+14808,Ukraine,8,6,Former Soviet Union
+14809,Ukraine,9,6,Former Soviet Union
+14810,Ukraine,10,6,Former Soviet Union
+14816,Ukraine,16,6,Former Soviet Union
+14901,Untd Arab Em,1,8,Middle East
+15012,Uruguay,12,10,Latin America
+15107,Usa,7,1,USA
+15108,Usa,8,1,USA
+15109,Usa,9,1,USA
+15110,Usa,10,1,USA
+15111,Usa,11,1,USA
+15112,Usa,12,1,USA
+15113,Usa,13,1,USA
+15114,Usa,14,1,USA
+15115,Usa,15,1,USA
+15116,Usa,16,1,USA
+15207,Uzbekistan,7,6,Former Soviet Union
+15208,Uzbekistan,8,6,Former Soviet Union
+15214,Uzbekistan,14,6,Former Soviet Union
+15301,Venezuela,1,10,Latin America
+15302,Venezuela,2,10,Latin America
+15303,Venezuela,3,10,Latin America
+15304,Venezuela,4,10,Latin America
+15305,Venezuela,5,10,Latin America
+15306,Venezuela,6,10,Latin America
+15404,Viet Nam,4,7,China
+15405,Viet Nam,5,7,China
+15406,Viet Nam,6,7,China
+15411,Viet Nam,11,7,China
+15412,Viet Nam,12,7,China
+15501,Western Sahara,1,9,Africa
+15507,Western Sahara,7,9,Africa
+15601,Yemen,1,8,Middle East
+15710,Yugoslav Fr,10,12,Eastern Europe
+15711,Yugoslav Fr,11,12,Eastern Europe
+15716,Yugoslav Fr,16,12,Eastern Europe
+15804,Zaire,4,9,Africa
+15805,Zaire,5,9,Africa
+15806,Zaire,6,9,Africa
+15809,Zaire,9,9,Africa
+15810,Zaire,10,9,Africa
+15903,Zambia,3,9,Africa
+15904,Zambia,4,9,Africa
+15909,Zambia,9,9,Africa
+15910,Zambia,10,9,Africa
+16001,Zimbabwe,1,9,Africa
+16002,Zimbabwe,2,9,Africa
+16003,Zimbabwe,3,9,Africa
+16004,Zimbabwe,4,9,Africa
+16007,Zimbabwe,7,9,Africa
+16008,Zimbabwe,8,9,Africa
+16009,Zimbabwe,9,9,Africa
+16010,Zimbabwe,10,9,Africa
+16011,Zimbabwe,11,9,Africa

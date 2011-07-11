@@ -51,9 +51,8 @@
 #include "containers/include/scenario.h"
 #include "land_allocator/include/land_leaf.h"
 #include "util/base/include/ivisitor.h"
-#include "emissions/include/production_carbon_calc.h"
+#include "ccarbon_model/include/land_carbon_densities.h"
 #include "containers/include/iinfo.h"
-#include "ccarbon_model/include/acarbon_flow.h"
 #include "land_allocator/include/land_use_history.h"
 #include "ccarbon_model/include/carbon_model_utils.h"
 #include "util/base/include/configuration.h"
@@ -70,19 +69,13 @@ extern Scenario* scenario;
  * \param aParent Pointer to this leafs's parent.
  * \param aName Product name.
 */
-LandLeaf::LandLeaf( const ALandAllocatorItem* aParent,
-                    const string& aName ):
+LandLeaf::LandLeaf( const ALandAllocatorItem* aParent, const std::string &aName ):
 ALandAllocatorItem( aParent, eLeaf ),
-mIntrinsicYieldMode(),
-mYield( scenario->getModeltime()->getmaxper(), -1 ),
-mCalObservedYield(),
-mMaxYield( scenario->getModeltime()->getmaxper(), -1 ),
 mLandUseHistory( 0 ),
-mCalDataExists( false ),
-mIntrinsicYieldModeAgProdMultiplier ( 1 ),
-mIntrinsicYieldMult( 1 ),
-mActCarbonMult( 1 ),
-mCarbonPriceIncreaseRate( 0.0 )
+mCarbonPriceIncreaseRate( 0.0 ),
+mLandAllocation( 0.0 ),
+mMinAboveGroundCDensity( 0.0 ),
+mMinBelowGroundCDensity( 0.0 )
 {
     // Can't use initializer because mName is a member of ALandAllocatorItem,
     // not LandLeaf.
@@ -91,6 +84,24 @@ mCarbonPriceIncreaseRate( 0.0 )
 
 //! Destructor
 LandLeaf::~LandLeaf() {
+}
+
+const string& LandLeaf::getXMLName() const {
+    return getXMLNameStatic();
+}
+
+/*! \brief Get the XML node name in static form for comparison when parsing XML.
+*
+* This public function accesses the private constant string, XML_NAME.
+* This way the tag is always consistent for both read-in and output and can be easily changed.
+* The "==" operator that is used when parsing, required this second function to return static.
+* \note A function cannot be static and virtual.
+* \author Kate Calvin
+* \return The constant XML_NAME as a static.
+*/
+const string& LandLeaf::getXMLNameStatic() {
+    const static string XML_NAME = "LandLeaf";
+    return XML_NAME;
 }
 
 size_t LandLeaf::getNumChildren() const {
@@ -127,7 +138,33 @@ bool LandLeaf::XMLParse( const xercesc::DOMNode* aNode ){
         if( nodeName == "#text" ) {
             continue;
         }
-        if ( !XMLDerivedClassParse( nodeName, curr ) ){
+        else if( nodeName == "landAllocation" ){
+            XMLHelper<Value>::insertValueIntoVector( curr, mLandAllocation,
+                                                 scenario->getModeltime() );
+            mReadinLandAllocation = mLandAllocation;
+        }
+        else if( nodeName == "minAboveGroundCDensity" ){
+            mMinAboveGroundCDensity = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "minBelowGroundCDensity" ){
+            mMinBelowGroundCDensity = XMLHelper<double>::getValue( curr );
+        }
+        else if( nodeName == "isNewTechnology" ){
+            XMLHelper<bool>::insertValueIntoVector( curr, mIsNewTech,
+                                                 scenario->getModeltime() );
+        }        
+        else if( nodeName == LandUseHistory::getXMLNameStatic() ){
+            parseSingleNode( curr, mLandUseHistory, new LandUseHistory );
+        }
+        else if( nodeName == LandCarbonDensities::getXMLNameStatic() ) {
+            parseSingleNode( curr, mCarbonContentCalc, new LandCarbonDensities );
+        }
+        else if( nodeName == "landConstraintCurve" ) {
+            mLandExpansionCostName = XMLHelper<string>::getValue( curr );
+            mIsLandExpansionCost = true;
+        }
+
+        else if ( !XMLDerivedClassParse( nodeName, curr ) ){
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
             mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
@@ -143,19 +180,6 @@ bool LandLeaf::XMLDerivedClassParse( const std::string& aNodeName, const xercesc
     return false;
 }
 
-/*! \brief Get the XML node name for output to XML.
- *
- * This public function accesses the private constant string, XML_NAME.
- * This way the tag is always consistent for both read-in and output and can be easily changed.
- *  This function may be virtual to be overriden by derived class pointers.
- * \author Josh Lurz, James Blackwood
- * \return The constant XML_NAME.
- */
-const string& LandLeaf::getXMLName() const {
-    const static string XML_NAME = "LandAllocatorLeaf";
-    return XML_NAME;
-}
-
 void LandLeaf::completeInit( const string& aRegionName,
                              const IInfo* aRegionInfo )
 {
@@ -164,260 +188,187 @@ void LandLeaf::completeInit( const string& aRegionName,
 
     // Set the carbon cycle object if it has not already been initialized. Use a
     // virtual function so that derived leaves may use a different default type.
-    initCarbonCycle();
+    if( !mCarbonContentCalc.get() ){
+        mCarbonContentCalc.reset( new LandCarbonDensities );
+    }
 
-    // Initialize the carbon-cycle object, passing in the conceptual root key
-    mCarbonContentCalc->completeInit( CarbonModelUtils::getConceptualRootKey( this ) );
+    // Initialize the carbon-cycle object
+    mCarbonContentCalc->completeInit();
 
     // Ensure that a carbon cycle object has been setup.
     assert( mCarbonContentCalc.get() );
 
+    // Ensure that any land allocation read in was positive
+    // Note: zero land allocation is allowed
     const Modeltime* modeltime = scenario->getModeltime();
-    int maxper = modeltime->getmaxper();
-    mAgProdChange.resize( maxper );
+    for( int period = 0; period < modeltime->getmaxper(); period++ ) {
+        if( mLandAllocation[ period ] < 0 ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "Negative land allocation of " << mLandAllocation[ period ] 
+                    << " read in for leaf " << getName() << " in " 
+                    << aRegionName << "." << endl;
+            exit( -1 );
+        }
+    }
+    
+    // Initialize the land use history.
+    initLandUseHistory( aRegionName );
+}
+
+void LandLeaf::initCalc( const string& aRegionName, const int aPeriod )
+{
+    if ( aPeriod > 1 ) {
+        // If leaf is a "new tech" get the scaler from its parent
+        if ( mIsNewTech[ aPeriod ] ) {
+            mProfitScaler[ aPeriod ] = getParent()->getNewTechProfitScaler( aPeriod );
+        }
+        // Copy share weights forward if new ones haven't been read in 
+        else if ( mProfitScaler[ aPeriod ] == -1 ) {
+            mProfitScaler[ aPeriod ] = mProfitScaler[ aPeriod - 1 ];
+        }
+
+        // If share is uninitialized, set it to the previous period's.
+        // For most land leafs, this will be overwritten during the 
+        // calcLandShares method.  The exception is when a leaf is the only
+        // leaf within a node.
+        if ( mShare[ aPeriod ] == -1 ) {
+            mShare[ aPeriod ] = mShare[ aPeriod - 1 ];
+        }
+    }
+    //  This works since the land allocator calibration is called before these 
+    //  initcalcs are called in the landallocator initcalc, so Period 1 values 
+    //  should be set by the time it gets here
+    else if ( mProfitScaler[ aPeriod ] == -1 ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Negative share weight in period " << aPeriod
+                << " for region " << aRegionName << endl;
+        exit( -1 );
+    }
 }
 
 /*!
- * \brief Initialize the carbon cycle object.
- * \details Instantiate a carbon cycle for a production leaf.
- */
-void LandLeaf::initCarbonCycle(){
-    if( !mCarbonContentCalc.get() ){
-        mCarbonContentCalc.reset( new ProductionCarbonCalc );
-    }
-
-    // Initialize all historical land allocations.
-}
-
-void LandLeaf::addLandUsage( const string& aLandType,
-                             const string& aProductName,
-                             const ILandAllocator::LandUsageType aType,
-                             const int aPeriod )
-{
-    // The leaf is the land usage so this should never be called.
-    assert( false );
-}
-
-bool LandLeaf::isUnmanagedNest() const {
-    return false;
-}
-
+* \brief Initializes the share of land of a leaf
+* \details Calculates the share of land allocated to a leaf.
+*          This method is called during the calibration process 
+*          so the shares set are prior to any calculations
+*          of share weights.
+* \param aRegionName Region.
+* \param aLandAllocationAbove Land allocation of the parent node
+* \param aPeriod Model period
+*/
 void LandLeaf::setInitShares( const string& aRegionName,
-                              const double aSigmaAbove,
                               const double aLandAllocationAbove,
-                              const double aParentHistoryShare,
-                              const LandUseHistory* aParentHistory,
                               const int aPeriod )
 {
-    if ( aLandAllocationAbove > util::getSmallNumber() ) {
-        mShare[ aPeriod ] = mLandAllocation[ aPeriod ] / aLandAllocationAbove;
+    if ( aLandAllocationAbove > 0.0 ) {
+        mShare[ aPeriod ] = mReadinLandAllocation[ aPeriod ] / aLandAllocationAbove;
     }
     else {
         mShare[ aPeriod ] = 0;
     }
-
-    // Now that the leaf share is known set the land use history.
-    initLandUseHistory( aParentHistoryShare, aParentHistory, aPeriod );
-}
-
-void LandLeaf::resetToCalLandAllocation( const int aPeriod ) {
-   mLandAllocation[ aPeriod ] = mCalLandAllocation[ aPeriod ];
 }
 
 /*!
  * \brief Initialize the land use history for the leaf.
- * \param aParentHistoryShare The parent of this leaf's share of the land use
- *        history.
- * \param aParentHistory Land use history container.
- * \param aFirstCalibratedPeriod Model period to assume is the first calibrated period.
+ * \param aRegionName Region name used for printing error messages.
  */
-void LandLeaf::initLandUseHistory( const double aParentHistoryShare,
-                                   const LandUseHistory* aParentHistory,
-                                   const int aFirstCalibratedPeriod )
+void LandLeaf::initLandUseHistory( const string& aRegionName )
 {
-    // Kluge until we figure out what do do here. How do we figure out what the first calibrated period
-    // is for AgLU? Presumably it will be 1990, but that could change at some point. - sjs
-    // Set first calibrated period to 1990
-    int localFirstCalibratedPeriod = min( aFirstCalibratedPeriod, scenario->getModeltime()->getyr_to_per( 1990 ) );
-    
-    // Check that the share has been normalized.
-    assert( mShare[ localFirstCalibratedPeriod ].isInited() &&
-            mShare[ localFirstCalibratedPeriod ] >= 0 &&
-            mShare[ localFirstCalibratedPeriod ] <= 1 );
-
-    mCarbonContentCalc->initLandUseHistory( aParentHistory,
-                                            aParentHistoryShare * mShare[ localFirstCalibratedPeriod ] );
-}
-/*!
-* \brief Calculates a the intrinsic yield of a land leaf
-* \details The intrinsic yield is the yield of a particular type of land if
-*        all land in a region was that type. The assumption is that
-*        as land expands it moves into more marginal land which has a lower yield.
-*        Thus, yields decrease as land expands and increase when land contracts. 
-* \param aIntrinsicYieldAbove Intrinsic yield of the parent.
-* \param aSigmaAbove Sigma parameter governing the distribution this item
-*        is within.
-* \param aPeriod Period.
-*/
-void LandLeaf::setIntrinsicYieldMode( const double aIntrinsicYieldAbove,
-                                      const double aSigmaAbove,
-                                      const int aPeriod )
-{
-    assert( mShare[ aPeriod ].isInited() &&
-            mShare[ aPeriod ] >= 0 &&
-            mShare[ aPeriod ] <= 1 );
-
-    // TODO: Find better way of specifying share for the intrinsic yield calc
-    // for good with no initial share
-    // If share is zero and have read in a calibrated yield (e.g. biomass or
-    // other new crops) then use an arbitrary 0.25 share need to figure out what
-    // to read in for this, or how to specify (specify comparable?)
-    double share = mShare[ aPeriod ] > util::getSmallNumber() ? mShare[ aPeriod ].get() : getDefaultShare();
-    double intrinsicRate = aIntrinsicYieldAbove * pow( share, aSigmaAbove );
-    
-    // Share is only known in initCalc for calibration periods
-    if ( aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() ){
-        // Set the intrinsicYieldMult. This is used to scale average carbon
-        // to intrinsic carbon for the calculation of the carbon subsidy in policy cases
-        fill( mIntrinsicYieldMult.begin() + aPeriod, mIntrinsicYieldMult.end(), intrinsicRate );
-    }
-
-    // Only set the intrinsic yield mode if the calibrated observed yield is known.
-    if( mCalObservedYield[ aPeriod ].isInited() && mCalObservedYield[ aPeriod ] > util::getSmallNumber() ){
-        double intrinsicYield = intrinsicRate * mCalObservedYield[ aPeriod ];
-        if( intrinsicYield < util::getSmallNumber() ) {
-            // Don't set 
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Skipping -- intrinsic yield mode would have been zero in period " << aPeriod
-                    << " for land leaf " << mName << "." << endl;
-            return;
-        }
-
-        fill( mIntrinsicYieldMode.begin() + aPeriod,
-              mIntrinsicYieldMode.end(),
-              intrinsicYield );
-        checkCalObservedYield( aPeriod );
-    }
-}
-
-/*!
-* \brief Calculates a multiplier to convert potential ( read in ) carbon
-*        to actual carbon which varies with the amount of land
-* \details The multiplier for each node/leaf is equal to the multiplier from
-*        the node above times the node/leaf's share raised to the sigma above
-*        This multiplier adjusts carbon contents for a type of land based 
-*        on the amount of land that type is allocated. The assumption is that
-*        as land expands it moves into more marginal land which has a lower carbon
-*        content. Thus, carbon intensities decrease as land expands and increase
-*        when land contracts. The carbon intensity read in is the average intensity
-*        for the current parcel of land of that type.
-* \param aCarbonMultAbove Multiplier of the parent.
-* \param aSigmaAbove Sigma parameter governing the distribution this item
-*        is within.
-* \param aPeriod Period.
-* \author Kate Calvin
-*/
-void LandLeaf::setActualCarbonMult( const double aCarbonMultAbove,
-                                      const double aSigmaAbove,
-                                      const int aPeriod )
-{
-    assert( mShare[ aPeriod ].isInited() &&
-            mShare[ aPeriod ] >= 0 &&
-            mShare[ aPeriod ] <= 1 );
-
-    double share = mShare[ aPeriod ] > util::getSmallNumber() ? mShare[ aPeriod ].get() : getDefaultShare();
-    double intrinsicRate = aCarbonMultAbove * pow( share, aSigmaAbove );
- 
-    // Set the multiplier to get the actual carbon in unmanaged land
-    mActCarbonMult[ aPeriod ] = intrinsicRate;
-}
-
-
-/*! \brief Check whether the calibrated observed yield is valid for this leaf
-*          type.
-* \param aPeriod Model period.
-*/
-void LandLeaf::checkCalObservedYield( const int aPeriod ) const {
-    if ( util::isEqual( mCalObservedYield[ aPeriod ], Value( 0.0 ) ) ) {
+    if( !mLandUseHistory.get() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::NOTICE );
-        mainLog << "calObservedYield is zero in " << mName << " in " << " period " << aPeriod << endl; 
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "No land use history read in for leaf "
+                << getName() << " in region " << aRegionName << endl;
+        exit( -1 );
     }
+    mCarbonContentCalc->initLandUseHistory( mLandUseHistory.get() );
 }
 
 void LandLeaf::toInputXML( ostream& aOut, Tabs* aTabs ) const {
-    // Do nothing because land leaves are dynamically created.
+    XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, mName );
+    const Modeltime* modeltime = scenario->getModeltime();
+    XMLWriteVector( mReadinLandAllocation, "landAllocation", aOut, aTabs, modeltime );
+    XMLWriteVector( mIsNewTech, "isNewTechnology", aOut, aTabs, modeltime );
+    XMLWriteElement( mMinAboveGroundCDensity, "minAboveGroundCDensity", aOut, aTabs );
+    XMLWriteElement( mMinBelowGroundCDensity, "minBelowGroundCDensity", aOut, aTabs );
+    XMLWriteElementCheckDefault( mLandExpansionCostName, "landConstraintCurve", aOut, aTabs, string() );
+    
+
+    if( mLandUseHistory.get() ){
+        mLandUseHistory->toInputXML( aOut, aTabs );
+    }
+
+    mCarbonContentCalc->toInputXML( aOut, aTabs );
+
+    // finished writing xml for the class members.
+    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
 }
 
 void LandLeaf::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const {
-    XMLWriteElement( mLandAllocation[ period ], "landAllocation", out, tabs );
-    XMLWriteElement( mIntrinsicYieldMode[ period ], "intrinsicYieldMode", out, tabs );
-    XMLWriteElement( mCalObservedYield[ period ], "calObservedYield", out, tabs );
-    XMLWriteElement( mYield[ period ], "yield", out, tabs );
-    XMLWriteElement( mAgProdChange[ period ], "agProdChange", out, tabs );
-    XMLWriteElement( mIntrinsicYieldModeAgProdMultiplier[ period ], "agProdMultiplier", out, tabs );
+    XMLWriteElement( mLandAllocation[ period ], "landAllocation", out, tabs );    
+    XMLWriteElement( mMinAboveGroundCDensity, "minAboveGroundCDensity", out, tabs );
+    XMLWriteElement( mMinBelowGroundCDensity, "minBelowGroundCDensity", out, tabs );
     XMLWriteElement( mInterestRate, "interest-rate", out, tabs );
     XMLWriteVector( mCarbonPriceIncreaseRate, "carbon-price-increase-rate", out, tabs, scenario->getModeltime() );
+    XMLWriteElementCheckDefault( mLandExpansionCostName, "landConstraintCurve", out, tabs, string() );
+    if( mLandUseHistory.get() ){
+        mLandUseHistory->toDebugXML( period, out, tabs );
+    }
+    
     mCarbonContentCalc->toDebugXML( period, out, tabs );
 }
 
 /*!
-* \brief Calculates a the intrinsic rate of a land leaf
-* \details This method converts the intrinsic rate passed in from 
-*          the food production technology from $/GCal to $/kHa
+* \brief Sets a the profit rate of a land leaf
+* \details This method stores the profit rate passed in from 
+*          the ag production technology in $/kHa
 *          Additionally, we add the carbon value of the land to
-*          the intrinsic rate if the ag subsidy is active and a 
+*          the profit rate if the ag subsidy is active and a 
 *          carbon price exists
 * \param aRegionName Region.
-* \param aLandType Type of land
 * \param aProductName Name of land leaf
-* \param aIntrinsicRate Profit rate of the food production technology
-*          Equal to price minus variable cost
+* \param aProfitRate Profit rate of the ag production technology
 * \param aPeriod Period.
 */
-void LandLeaf::setIntrinsicRate( const string& aRegionName,
-                                 const string& aLandType,
+void LandLeaf::setProfitRate( const string& aRegionName,
                                  const string& aProductName,
-                                 const double aIntrinsicRate,
+                                 const double aProfitRate,
                                  const int aPeriod )
 {
-    assert( aProductName == mName );
-    assert( aPeriod == 0 || (mIntrinsicYieldMode[ aPeriod ].isInited() &&
-            mIntrinsicYieldMode[ aPeriod ] >= 0) );
+    // adjust profit rate for land expnasion costs if applicable
+    double adjustedProfitRate = aProfitRate;
+    const Marketplace* marketplace = scenario->getMarketplace();
 
-    // aIntrinsicRate [$/GCal] * intrinsicYieldMode [GCal/kHa] = [$/kHa]
-    // The intrinsicRate that is passed in is $/Gcal. 
-    // It is multiplied by intrinsicYieldMode (GCal/kHa) to convert it to $/kHa.   
-    // For biomass [$/GJ] * [GJ/kHa] = [$/kHa]
-    // Add carbon value to intrinsic rate.
-    mIntrinsicRate[ aPeriod ] = max( aIntrinsicRate * mIntrinsicYieldMode[ aPeriod ] * mIntrinsicYieldModeAgProdMultiplier[ aPeriod ] 
-                               + getCarbonValue( aRegionName, aPeriod ), 0.0 );
+    if ( mIsLandExpansionCost ) {
+        //subtract off expansion cost from profit rate
+        double expansionCost = marketplace->getPrice( mLandExpansionCostName, aRegionName, aPeriod );
+        adjustedProfitRate = aProfitRate - expansionCost;
+    }
+
+    mProfitRate[ aPeriod ] = max( adjustedProfitRate + getCarbonSubsidy( aRegionName, aPeriod ), 0.0 );
 }
 
 /*!
-* \brief Calculates the carbon value per hectare for this land type.
-* \details Uses the intrinsic carbon content of the land and the carbon
+* \brief Calculates the carbon subsidy per hectare for this land leaf.
+* \details Uses the carbon content of the land and the carbon
 *          price to compute a subsidy on land. Land parcels with higher
-*          carbon contents receive higher subsidies. We must use intrinsic
-*          carbon because the profit rates of leafs get amplified at the node
-*          level when using a pure logit. Thus, all components of the 
-*          node profit must be adjusted accordingly.
-* \author James Blackwood, Josh Lurz
+*          carbon contents receive higher subsidies.
+* \author Kate Calvin
 * \param aRegionName Region name.
 * \param aPeriod Model period.
 */
-double LandLeaf::getCarbonValue( const string& aRegionName, const int aPeriod ) const {
+double LandLeaf::getCarbonSubsidy( const string& aRegionName, const int aPeriod ) const {
     // Get boolean from configuration file that indicates agriculture lands should
     // be subsidized. Default is true
-    bool agSubsidy = Configuration::getInstance()->getBool( "agSubsidy", true );
+    const static bool agSubsidy = Configuration::getInstance()->getBool( "agSubsidy", true );
     if ( agSubsidy ){
-        // Check that the interest rate was initialized.
-        assert( mInterestRate.isInited() );
-
+        const double dollar_conversion_75_90 = 2.212;
         // Check if a carbon market exists and has a non-zero price.
         const Marketplace* marketplace = scenario->getMarketplace();
         double carbonPrice = marketplace->getPrice( "CO2", aRegionName, aPeriod, false );
+
         // Retrieve proportional tax rate.
         const IInfo* marketInfo = marketplace->getMarketInfo( "CO2", aRegionName, aPeriod, false );
         // Note: the key includes the region name.
@@ -425,123 +376,84 @@ double LandLeaf::getCarbonValue( const string& aRegionName, const int aPeriod ) 
             ( marketInfo && marketInfo->hasValue( "proportional-tax-rate" + aRegionName ) ) 
             ? marketInfo->getDouble( "proportional-tax-rate" + aRegionName, true )
             : 1.0;
-    
-        if( carbonPrice != Marketplace::NO_MARKET_PRICE && carbonPrice > util::getSmallNumber() ){
+
+        // If a carbon price exists, calculate the subsidy
+        if( carbonPrice != Marketplace::NO_MARKET_PRICE && carbonPrice > 0.0 ){
+            // Carbon price is in 1990$, but land value is in 1975$ so we need to convert
+            carbonPrice /= dollar_conversion_75_90;
+
             // Adjust carbon price with the proportional tax rate.
             carbonPrice *= proportionalTaxRate;
+            
+            // Carbon content is in kgC/m2. Land profit rate is in $/billion m2 (or $/ thous km2).
+            // We need to multiply by 1e9 to go from $/m2 to $/billion m2
+            // We need to divide by 1e3 to go from kgC to tC
+            const double conversionFactor = 1000000.0;
 
-            // With carbon content in Tg C/KHa, convert to $/KHa.
-            const double tC_in_TgC = 1000000;
+            // We are only subsidizing for carbon contents above the read in minimum
             const int year = scenario->getModeltime()->getper_to_yr( aPeriod );
+            double incrementalAboveCDensity = mCarbonContentCalc->getActualAboveGroundCarbonDensity( year )
+                                                - mMinAboveGroundCDensity;
+            double incrementalBelowCDensity = mCarbonContentCalc->getActualBelowGroundCarbonDensity( year )
+                                                - mMinBelowGroundCDensity;
 
             // Calculate the carbon value as the total carbon content of the land
             // multiplied by the carbon price and the interest rate.
-            double carbonSubsidy = ( mCarbonContentCalc->getPotentialAboveGroundCarbon( year ) *
-                mCarbonContentCalc->getAboveGroundCarbonSubsidyDiscountFactor()
-                + mCarbonContentCalc->getPotentialBelowGroundCarbon( year ) *
-                mCarbonContentCalc->getBelowGroundCarbonSubsidyDiscountFactor() )
-                * carbonPrice * ( mInterestRate - mCarbonPriceIncreaseRate[ aPeriod ] )* tC_in_TgC;
+            double carbonSubsidy = ( incrementalAboveCDensity * mCarbonContentCalc->getAboveGroundCarbonSubsidyDiscountFactor()
+                + incrementalBelowCDensity * mCarbonContentCalc->getBelowGroundCarbonSubsidyDiscountFactor() )
+                * carbonPrice * ( mInterestRate - mCarbonPriceIncreaseRate[ aPeriod ] )* conversionFactor;
 
-            // convert average carbon contents to intrinsic carbon contents
-            if ( mIntrinsicYieldMult[ aPeriod ].isInited() ) {
-                carbonSubsidy *= mIntrinsicYieldMult[ aPeriod ];
-            }
-
-            assert( carbonSubsidy >= 0 );
+            assert( carbonSubsidy >= 0.0 );
 
             return carbonSubsidy;
         }
 
         // If no market price
-        return 0;
+        return 0.0;
     }
 
     // If ag subsidy is not being used
-    return 0;
+    return 0.0;
 }
+
+void LandLeaf::setUnmanagedLandProfitRate( const string& aRegionName,  
+                                           double aAverageProfitRate, const int aPeriod ) {
+    // Does nothing for production (managed) leaves.
+	//Only takes action on unmanaged leaves , which is a type derived from LandLeaf
+}
+
 
 /*!
-* \brief Sets the carbon content in the carbon calculator.
-* \details Passes the carbon contents from the food production
-*          technologies into the carbon calculator. The
-*          setUnit***GroundCarbon method is only defined for 
-*          managed land leafs. Unmanaged land leafs must have
-*          carbon contents read in directly.
-* \param aLandType Type of land.
-* \param aProductName Name of the land leaf
-* \param aAboveGroundCarbon Carbon intensity of the land leaf ( TgC / kHa )
-* \param aBelowGroundCarbon Carbon intensity of the land leaf ( TgC / kHa )
-* \param aPeriod Model period.
+* \brief Calculate the leaf calibration profit rate.
+* \details Calculate the leaf calibration profit rate. This is the profit
+*          rate that is implied by the share this leaf gets within
+*          its node and the calibration profit rate of that.
+* \param aAverageProfitRateAbove - profit rate of the containing node
+* \param aLogitExponentAbove - logit exponent of the containing node
+* \author Marshall Wise
 */
-void LandLeaf::setCarbonContent( const string& aLandType,
-                                 const string& aProductName,
-                                 const double aAboveGroundCarbon,
-                                 const double aBelowGroundCarbon,
-                                 const int aMatureAge,
-                                 const int aPeriod )
-{
-    assert( aProductName == mName );
-    assert( mCarbonContentCalc.get() );
 
-    mCarbonContentCalc->setUnitAboveGroundCarbon( aAboveGroundCarbon, aPeriod );
-    mCarbonContentCalc->setUnitBelowGroundCarbon( aBelowGroundCarbon, aPeriod );
-    mCarbonContentCalc->setMatureAge( aMatureAge );
-    
+
+void LandLeaf::calculateCalibrationProfitRate( const string& aRegionName, 
+                                               double aAverageProfitRateAbove, 
+                                               double aLogitExponentAbove, 
+                                               const int aPeriod ) {
+    // Calculates calibration profit rate based on share within node and profit
+    // of the node that contains it
+
+    double avgProfitRate = aAverageProfitRateAbove;
+    // If logit exponent of node is zero, this calculation will not matter
+    // so don't do it.  Zero means fixed shares so average profit won't change.
+    // And avoid 1/0.
+    if ( aLogitExponentAbove > 0 ) {    
+        avgProfitRate *= pow( mShare[ aPeriod ], 1.0 / aLogitExponentAbove ); 
+    }
+
+    // store this value in this leaf 
+    mCalibrationProfitRate[ aPeriod ] = avgProfitRate;
+
 }
 
-/*!
-* \brief Sets the calibrated land allocation
-* \details This method is called during completeInit and set to the 
-*          read in value ( if it exists ). Land allocation can vary
-*          from the calibrated value in a calibration period however.
-* \param aLandType Type of land.
-* \param aProductName Name of the land leaf
-* \param aCalLandUsed Calibrated land used
-* \param aHarvestPeriod Harvest period
-* \param aCurrentPeriod Current period.
-*/
-void LandLeaf::setCalLandAllocation( const string& aLandType,
-                                     const string& aProductName,
-                                     const double aCalLandUsed,
-                                     const int aHarvestPeriod, 
-                                     const int aCurrentPeriod )
-{
-    assert( aProductName == mName );
-    
-    mCalDataExists[ aCurrentPeriod ] = true;
-
-    mLandAllocation[ aCurrentPeriod ] = aCalLandUsed;
-    mCalLandAllocation[ aCurrentPeriod ] = aCalLandUsed;
-}
-
-void LandLeaf::setUnmanagedLandAllocation( const string& aRegionName,
-                                           const double aNewUnmanaged,
-                                           const int aPeriod )
-{
-    // Does nothing for normal production leafs.
-}
-
-void LandLeaf::setUnmanagedLandValues( const string& aRegionName, const int aPeriod ) {
-    // Does nothing for production leaves.
-}
-
-void LandLeaf::setCalObservedYield( const string& aLandType,
-                                    const string& aProductName,
-                                    const double aCalObservedYield,
-                                    const int aPeriod )
-{
-    assert( aProductName == mName );
-    mCalObservedYield[ aPeriod ] = aCalObservedYield;
-}
-
-void LandLeaf::setMaxYield( const string& aLandType,
-                                    const string& aProductName,
-                                    const double aMaxYield,
-                                    const int aPeriod )
-{
-    assert( aProductName == mName );
-    mMaxYield[ aPeriod ] = aMaxYield;
-}
 
 void LandLeaf::setCarbonPriceIncreaseRate( const double aCarbonPriceIncreaseRate,
                                     const int aPeriod )
@@ -557,83 +469,74 @@ void LandLeaf::setCarbonPriceIncreaseRate( const double aCarbonPriceIncreaseRate
 * \author Kate Calvin
 */
 void LandLeaf::setSoilTimeScale( const int aTimeScale ) {
-
     mCarbonContentCalc->setSoilTimeScale( aTimeScale );
-
-}
-
-void LandLeaf::applyAgProdChange( const string& aLandType,
-                                  const string& aProductName,
-                                  const double aAgProdChange,
-                                  const int aHarvestPeriod, 
-                                  const int aCurrentPeriod )
-{
-    assert( aProductName == mName );
-    assert( aCurrentPeriod == 0 || mIntrinsicYieldMode[ aCurrentPeriod ].isInited() );
-
-    double previousAgProdChange = 1;
-    if ( aCurrentPeriod >= 1 ) {
-        previousAgProdChange = mAgProdChange[ aCurrentPeriod - 1 ];
-    }
-
-    const Modeltime* modeltime = scenario->getModeltime();
-
-    // Calculate Cumulative prod change from current to harvest period.
-    // This means that calculated yields for current period are assumed to be applied
-    // to the harvest period
-    // aAgProdChange must be constant if aHarvestPeriod != aCurrentPeriod
-    for ( int aPeriod = aCurrentPeriod; aPeriod <= aHarvestPeriod; ++aPeriod ) {
-        // Don't apply prod change in a calibration period
-        if ( !( mCalDataExists[ aCurrentPeriod ] && aPeriod == aCurrentPeriod ) ) {
-            int timestep = aPeriod < modeltime->getmaxper() ? modeltime->gettimestep( aPeriod )
-                : modeltime->gettimestep( modeltime->getmaxper() - 1 );
-            mAgProdChange[ aPeriod ] = previousAgProdChange * pow( 1 + aAgProdChange, timestep );
-        }
-        else {
-            mAgProdChange[ aPeriod ]  = 1.0;
-        }
-        previousAgProdChange = mAgProdChange[ aPeriod ];
-    }
-
-    // Save amount the intrinsic yield mode is to be adjusted by cumulative prod change
-    mIntrinsicYieldModeAgProdMultiplier[ aCurrentPeriod ] = mAgProdChange[ aHarvestPeriod ];
 }
 
 /*!
 * \brief Calculates the share of land allocated to a particular type
 * \details This method implements the logit function. A land type's
-*          share of land is based on its intrinsic rate and the
-*          distribution assumed for the parent node ( aSigmaAbove )
+*          share of land is based on its profit rate and the
+*          distribution assumed for the parent node ( aLogitExpAbove )
 * \param aRegionName Region.
-* \param aSigmaAbove Distribution parameter for the parent node
-* \param aTotalBaseLand Land allocated to the parent node
+* \param aLogitExpAbove Distribution parameter for the parent node
 * \param aPeriod Model period
 */
 double LandLeaf::calcLandShares( const string& aRegionName,
-                                 const double aSigmaAbove,
-                                 const double aTotalBaseLand,
+                                 const double aLogitExpAbove,
                                  const int aPeriod )
 {
-    // Land node should have validated all sigmas.
-    assert( aSigmaAbove > util::getSmallNumber() );
-
-    // Intrinsic rates may not be negative.
-    assert( mIntrinsicRate[ aPeriod ].isInited() && mIntrinsicRate[ aPeriod ] >= 0 );
-
-    // Production land leaves ignore aTotalLandAllocated.
-    double unnormalizedShare;
-    if( mIntrinsicRate[ aPeriod ] < util::getSmallNumber() ){
-        unnormalizedShare = util::getSmallNumber();
+    // Calculate the unnormalized share for this leaf
+    // The unnormalized share is used by the parent node to 
+    // calculate the leaf's share of the parent's land
+    double unnormalizedShare = 0.0;
+    double totalProfitRate = mProfitScaler[ aPeriod ] * mProfitRate[ aPeriod ] * mAdjustForNewTech[ aPeriod ];
+    // Total profit rate including the carbon subsidy should not be negative.
+    if( totalProfitRate < 0.0 || mProfitScaler[ aPeriod ] == 0.0 ){
+        unnormalizedShare = 0.0;
     }
     else {
-        unnormalizedShare = pow( mIntrinsicRate[ aPeriod ].get(), 1 / aSigmaAbove );
+        unnormalizedShare = pow( totalProfitRate , aLogitExpAbove );
     }
 
     // result should be > 0.
-    assert( unnormalizedShare >= 0 );
+    assert( unnormalizedShare >= 0.0 );
 
-    return unnormalizedShare;
+    return unnormalizedShare; 
 }
+
+/*!
+ * \brief Calculates share profit scalers
+ * \param aRegionName Region name.
+ * \param aPeriod model period.
+ */
+void LandLeaf::calculateProfitScalers( const string& aRegionName, 
+                                          const int aPeriod ) 
+{
+    // profit scaler is the ratio of the calibration profit over the 
+    // observed or computed profit. For managed land, the observed profit is the yield
+    // times the (price minus cost).  For unmanaged land, the observed profit is the
+    // the price of land read in for the subregion, plus any carbon value
+
+    // Only calculate if numerator and denomiator are both not equal to 0, else set to zero
+    if ( mCalibrationProfitRate[ aPeriod ] == 0 || mProfitRate[ aPeriod ] == 0 ) {
+        mProfitScaler[ aPeriod ] = 0;
+    }
+    else {
+        mProfitScaler[ aPeriod ] = mCalibrationProfitRate[ aPeriod ] / mProfitRate[ aPeriod ];
+    }
+
+    //put in a warning if this scaler is negative, that means cal price too low.
+    if ( mProfitScaler[ aPeriod ] < 0 ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "CalPrice too low resulting in negative share profit scaler. Setting scaler to zero"
+               << aRegionName << " " << mName << endl;
+               mProfitScaler[ aPeriod ] = 0;
+        }
+
+}
+
+
 
 /*!
 * \brief Calculates the land allocated to a particular type
@@ -644,7 +547,7 @@ double LandLeaf::calcLandShares( const string& aRegionName,
 *          is called in every time period including calibration
 *          periods. Thus, land in a calibration period is not 
 *          necessarily equal to read in values
-* \param aRegionName Region.
+* \param aRegionName Region name.
 * \param aLandAllocationAbove Land allocated to the parent node
 * \param aPeriod Model period
 */
@@ -652,291 +555,92 @@ void LandLeaf::calcLandAllocation( const string& aRegionName,
                                    const double aLandAllocationAbove,
                                    const int aPeriod )
 {
-    assert( mShare[ aPeriod ].isInited() &&
-            mShare[ aPeriod ] >= 0 &&
+    assert( mShare[ aPeriod ] >= 0 &&
             mShare[ aPeriod ] <= 1 );
 
-    mLandAllocation[ aPeriod ] = aLandAllocationAbove * mShare[ aPeriod ];
+    if ( aLandAllocationAbove > 0.0 ) {
+        mLandAllocation[ aPeriod ] = aLandAllocationAbove * mShare[ aPeriod ];
+    }
+    else {
+        mLandAllocation[ aPeriod ] = 0.0;
+    }
 
     // Set the land use in the carbon content calculator.
     mCarbonContentCalc->setTotalLandUse( mLandAllocation[ aPeriod ], aPeriod );
 
-    // Add emissions to the carbon market. (this has been removed.)
-    // Land-use emissions should not be in the market. 
-    // This can never be stable with a 15-year solution period as this is an implied c-cycle inversion.
-}
+    // compute any demands for land use constraint resources
+    if ( mIsLandExpansionCost ) {
+        Marketplace* marketplace = scenario->getMarketplace();
+        marketplace->addToDemand( mLandExpansionCostName, aRegionName, 
+            mLandAllocation[ aPeriod ], aPeriod, true );      
+    }
 
-
-void LandLeaf::calcLUCCarbonFlowsOut( const string& aRegionName,
-                                          const int aYear ){
-    mCarbonContentCalc->setLandUseValue( aYear );
-    mCarbonContentCalc->calcLandUseChange( aYear, eLUCFlowOut );
-}
-
-
-void LandLeaf::calcLUCCarbonFlowsIn( const string& aRegionName,
-                                            const int aYear ){
-    mCarbonContentCalc->calcLandUseChange( aYear, eLUCFlowIn );
 }
 
 /*!
-* \brief Calls the carbon box model to calculate land use emissions
-* \details First, we compute the actual carbon intensity for a land
-*          type. This carbon intensity varies with the yield in 
-*          managed land leafs and with the amount of land allocated 
-*          in unmanaged land leafs. Next, we set the actual carbon
-*          in the carbon calculator. Finally, we call the carbon
-*          calculator to compute the amount of emissions associated
-*          with land use change.
+* \brief Calls the simple carbon calculator to calculate land use emissions
 * \param aRegionName Region.
-* \param aYear Current year
+* \param aPeriod Current model period.
+* \param aEndYear The year to calculate LUC emissions to.
 */
-void LandLeaf::calcCarbonBoxModel( const string& aRegionName,
-                                           const int aYear ){
-   if ( aYear >= scenario->getModeltime()->getStartYear() ) {
-       // We need to change the carbon content in the carbon calculator to
-       // actual carbon. Actual carbon varies with yield/land size.
-       // We use intrinsic carbon to calculate the subsidy 
-       // and actual carbon to calculate emissions
-       const int period = scenario->getModeltime()->getyr_to_per( aYear );
-       double carbonContentAbove = mCarbonContentCalc->getPotentialAboveGroundCarbon( aYear );
-       double carbonContentBelow = mCarbonContentCalc->getPotentialBelowGroundCarbon( aYear );
-       double yieldMult = 1.0;
-       // Only managed land will have a mCalObservedYield > 0
-       // To convert potential carbon ( which is read in ) to actual carbon we multiply
-       // the read in carbon intensity by the current yield divided by the read in yield
-       // if it exists. Yield is only read in for calibration periods.
-       if ( period <= scenario->getModeltime()->getFinalCalibrationPeriod() ) {
-/*           if ( mCalObservedYield[ period ] > 0 ) {
-               if ( mYield[ period ] > 0 ){
-                   yieldMult = mYield[ period ] / mCalObservedYield[ period ];
-               }
-               // For years intermediate years ( e.g., 2006 to 2019 ) yield is not 
-               // calculated before carbon box model. These years are part of the next
-               // period but the yield for that period isn't computed until the final year
-               else if ( period > 0 ) {
-                   if ( mYield[ period - 1 ] > 0 ){
-                       yieldMult = mYield[ period - 1 ] / mCalObservedYield[ period ];
-                   }
-               }
-           }*/
-       }
-       else { 
-           if ( mCalObservedYield[ scenario->getModeltime()->getFinalCalibrationPeriod() ] > 0 ) {
-               if ( mYield[ period ] > 0 ){
-                   yieldMult = mYield[ period ] / mCalObservedYield[ scenario->getModeltime()->getFinalCalibrationPeriod() ];
-               }
-               // For years intermediate years ( e.g., 2006 to 2019 ) yield is not 
-               // calculated before carbon box model. These years are part of the next
-               // period but the yield for that period isn't computed until the final year
-               else if ( period > 0 ) {
-                   if ( mYield[ period - 1 ] > 0 ){
-                       yieldMult = mYield[ period - 1 ] / mCalObservedYield[ scenario->getModeltime()->getFinalCalibrationPeriod() ];
-                   }
-               }
-           }
-           // Unmanaged land leafs do not have yield. To convert potential carbon to actual carbon
-           // in these leafs, we use the carbon multiplier previously computed. This multiplier assumes
-           // that carbon intensity decreases as land expands and increases as land contracts.
-           else {
-               yieldMult = mActCarbonMult[ scenario->getModeltime()->getFinalCalibrationPeriod() ] / mActCarbonMult[ period ];
-           }
+void LandLeaf::calcLUCEmissions( const string& aRegionName,
+                                 const int aPeriod, const int aEndYear )
+{
+    // Calculate the amount of emissions attributed to land use change in the current period
+    mCarbonContentCalc->calc( aPeriod, aEndYear );
 
-           // We are computing the yield in forests exogenously and thus the yield is constant.
-           // We still want carbon intensity to change with the amount of land forests occupy
-           // If we calculate forest yield endogenously, we do not need this if statement.
-           if ( getXMLName() == "ForestLandAllocatorLeaf" ){
-               yieldMult = mActCarbonMult[ scenario->getModeltime()->getFinalCalibrationPeriod() ] / mActCarbonMult[ period ];
-           }
-       }
-
-       // Set the actual carbon contents in the carbon calculator prior to computing
-       // land use change emissions
-       mCarbonContentCalc->setActualAboveGroundCarbonDensity( carbonContentAbove*yieldMult, period );
-       mCarbonContentCalc->setActualBelowGroundCarbonDensity( carbonContentBelow*yieldMult, period );
-    }
-    // Calculate the amount of emissions attributed to land use change in the current year
-    mCarbonContentCalc->calc( aYear );
+    // Add emissions to the carbon market. 
+    const static bool addLUCtoMarket = Configuration::getInstance()->getBool( "addLUCtoMarket", false );
+    if ( aEndYear != CarbonModelUtils::getEndYear() && addLUCtoMarket ) {
+        double LUCEmissions = mCarbonContentCalc
+            ->getNetLandUseChangeEmission( scenario->getModeltime()->getper_to_yr( aPeriod ) );
+        Marketplace* marketplace = scenario->getMarketplace();
+        marketplace->addToDemand( "CO2", aRegionName, LUCEmissions, aPeriod, false );
+    }  
 }
 
 /*!
-* \brief Calculates the yield of a managed land leaf
-* \details This method uses the profit rate of all land in a region 
-*          ( measured in $/kHa ) and the profit rate of a food
-*          production technology ( measured in $/GCal ) to find 
-*          the yield of the land ( measured in GCal/kHa ). This
-*          method assumes that all land types in a region have
-*          the same profit rate 
-* \param aLandType Type of land.
-* \param aProductName Product produced on this parcel of land.
-* \param aRegionName Region.
-* \param aProfitRate Profit rate of the food production technology ($/GCal)
-* \param aAvgIntrinsicRate Profit rate of all land ($/kHa)
-* \param aHarvestPeriod Harvest period
-* \param aCurrentPeriod Current period
+* \brief Returns the land allocation of this leaf
+* \param aProductName Product name.
+* \param aPeriod Model Period
 */
-void LandLeaf::calcYieldInternal( const string& aLandType,
-                                  const string& aProductName,
-                                  const string& aRegionName,
-                                  const double aProfitRate,
-                                  const double aAvgIntrinsicRate,
-                                  const int aHarvestPeriod,
-                                  const int aCurrentPeriod )
-{
-    assert( aHarvestPeriod >= aCurrentPeriod );
-    assert( aCurrentPeriod == 0 || mIntrinsicYieldMode[ aCurrentPeriod ].isInited() );
-
-    // Add carbon value
-    // ProfitRate[$/GCal] = aProfitRate[$/GCal] + carbonValue[$/kHa] / intrinsicYieldMode[GCal/kHa]
-    // Note that the mIntrinsicYieldMode is used, not the actual yield (which is not known until this
-    // is finished). This may bias results.
-    double carbonValuePerOutput = 0;
-    if( mIntrinsicYieldMode[ aCurrentPeriod ] > util::getSmallNumber() ) {
-        carbonValuePerOutput = getCarbonValue( aRegionName, aCurrentPeriod ) 
-                               / ( mIntrinsicYieldMode[ aCurrentPeriod ] * mIntrinsicYieldModeAgProdMultiplier[ aCurrentPeriod ] );
-    }
-
-    // Compute the full profit rate including payments for carbon storage.
-    double totalProfitRate = aProfitRate + carbonValuePerOutput;
-
-    if ( totalProfitRate > util::getSmallNumber() ) {
-        // AveRate $/kHa / ($/GCal) = GCal/kHa)
-        // For biomass: AveRate $/kHa / $/GJ = GJ/kHa.
-        mYield[ aHarvestPeriod ] = aAvgIntrinsicRate / totalProfitRate;
-    }
-    else {
-        // Don't allow production at zero or negative profit rates.
-        // TODO: Isn't this a discontinuity?
-        mYield[ aHarvestPeriod ] = 0;
-    }
-
-    // We want to prevent the fat tails associated with a log-Gumbel
-    // distribution, so we are putting an upper bound on yield.
-    int yieldPer = aHarvestPeriod;
-    // The maximum yield for forests is not
-    // set until after the harvest period.  So, we are using the maximum
-    // yield from 2005 for all periods.  This is okay, since we have zero
-    // tech change on forests, but should be fixed in the future.
-    if ( mName == "Forest" ) {
-        yieldPer = scenario->getModeltime()->getFinalCalibrationPeriod();
-    }
-
-    if ( mMaxYield[ yieldPer ] != -1 ){
-        mYield[ aHarvestPeriod ] = min( mYield[ aHarvestPeriod ], mMaxYield[ yieldPer ] );
-    }
-
-}
-
-double LandLeaf::getYield( const string& aLandType,
-                           const string& aProductName,
-                           const int aPeriod ) const
-{
-    assert( aProductName == mName );
-    assert( mYield[ aPeriod ].isInited() );
-    return mYield[ aPeriod ];
-}
-
-void LandLeaf::addChild( ALandAllocatorItem* aChild ) {
-    assert( false );
-}
-
-double LandLeaf::getLandAllocation( const string& aLandType,
-                                    const string& aProductName,
+double LandLeaf::getLandAllocation( const string& aProductName,
                                     const int aPeriod ) const
 {
     assert( aProductName == mName );
-    assert( mLandAllocation[ aPeriod ].isInited() );
 
     return mLandAllocation[ aPeriod ];
 }
 
-double LandLeaf::getTotalLandAllocation( const LandAllocationType aType,
-                                         const int aPeriod ) const
+/*!
+* \brief Returns the land allocation of this leaf if it is the specified type
+* \param aType Land type.
+* \param aPeriod Model Period
+*/
+double LandLeaf::getCalLandAllocation( const LandAllocationType aType,
+                                       const int aPeriod ) const
 {
-    // Land allocation may not be set yet if this is an uncalibrated leaf.
-    // In this case returning zero is correct.
-
-    // Unless a land leaf is overridden it is a production leaf.
+    // If the requested type is managed or "any", return land allocation.
     if( aType == eAnyLand || aType == eManaged ){
-        return mLandAllocation[ aPeriod ];
-}
+        return mReadinLandAllocation[ aPeriod ];
+    }
+
     return 0;
 }
 
-double LandLeaf::getBaseLandAllocation( const int aPeriod ) const {
-    return 0;
+// does nothing for leaves. all new leafs within a node get the same scaler
+double LandLeaf::getNewTechProfitScaler( const int aPeriod ) const {
+     return 0;
 }
 
-bool LandLeaf::isConceptualRoot() const {
-    return false;
+double LandLeaf::getLogitExponent( const int aPeriod ) const {
+    // Land leaves do not have logit exponents
+    return 0.0;
 }
 
-double LandLeaf::getSigma() const {
-    return 0;
-}
-
-void LandLeaf::csvOutput( const string& aRegionName ) const {
-     ALandAllocatorItem::csvOutput( aRegionName );
-    
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    vector<double> temp(maxper);
-
-    // function protocol
-    void fileoutput3(string var1name,string var2name,string var3name,
-        string var4name,string var5name,string uname,vector<double> dout);
-
-    // write land allocations for region
-    fileoutput3(aRegionName, mName," "," ","Intr Rate","$/kHa", convertToVector( mIntrinsicRate ) );
-    fileoutput3(aRegionName, mName," "," ","Intr Yield Mode","GCal/kHa", convertToVector( mIntrinsicYieldMode ) );
-    fileoutput3(aRegionName, mName," "," ","calObsYield","GCal/kHa", convertToVector( mCalObservedYield ) );
-    
-    for( int i = 0; i < maxper; ++i ){
-        temp[ i ] = getCarbonValue( aRegionName, i );
-    }
-
-    fileoutput3(aRegionName, mName," "," ","carbonValue","000Ha", temp);
-    fileoutput3(aRegionName, mName," "," ","Ag Productivity Change","none",  mAgProdChange );
-}
-
-void LandLeaf::dbOutput( const string& aRegionName ) const {
-    // TODO: Won't this be wrong any time two leaves have the same name?
-    ALandAllocatorItem::dbOutput( aRegionName );
-
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    vector<double> temp(maxper);
-
-    // function protocol
-    void dboutput4(string var1name,string var2name,string var3name,string var4name,
-        string uname,vector<double> dout);
-
-    // write land allocations for region
-    dboutput4(aRegionName, "Land Allocation", mName,"Intr Rate","$/kHa", convertToVector( mIntrinsicRate ) );
-    dboutput4(aRegionName, "Land Allocation", mName,"Intr Yield Mode","GCal/kHa", convertToVector( mIntrinsicYieldMode ) );
-    dboutput4(aRegionName, "Land Allocation", mName,"calObsYield","GCal/kHa", convertToVector( mCalObservedYield ) );
-
-    for( int i = 0; i < maxper; ++i ){
-        temp[ i ] = getCarbonValue( aRegionName, i );
-    }
-    dboutput4(aRegionName, "Land Allocation", mName,"carbonValue","000Ha", temp );
-
-    for( int i = 0; i < maxper; ++i ){
-        temp[ i ] = mCarbonContentCalc->getNetLandUseChangeEmission( modeltime->getper_to_yr( i ) );
-    }
-    dboutput4(aRegionName, "Land Allocation", mName,"land-use-change-emission","000Ha", temp );
-    
-    if( mAgProdChange.size() <= maxper ) {
-        dboutput4(aRegionName, "Land Allocation", mName,"Ag Productivity Change","none", mAgProdChange );
-    }
-    else {
-        // the database can only write out maxper periods of data so any data after
-        // that will have to be ignored
-        for( int i = 0; i < maxper; ++i ){
-            temp[ i ] = mAgProdChange[ i ];
-        }
-        dboutput4(aRegionName, "Land Allocation", mName,"Ag Productivity Change","none", temp );
-    }
+void LandLeaf::adjustProfitScalers( const std::string& aRegionName, 
+                         const int aPeriod ) {
+    // This shouldn't do anything for land leafs.
 }
 
 void LandLeaf::accept( IVisitor* aVisitor, const int aPeriod ) const {
@@ -944,11 +648,10 @@ void LandLeaf::accept( IVisitor* aVisitor, const int aPeriod ) const {
 
     acceptDerived( aVisitor, aPeriod );
 
-    // All land leaves have carbon content calculators, but it may not have been
-    // instantiated yet.
     if( mCarbonContentCalc.get() ){
         mCarbonContentCalc->accept( aVisitor, aPeriod );
     }
+
     aVisitor->endVisitLandLeaf( this, aPeriod );
 }
 
@@ -956,12 +659,11 @@ void LandLeaf::acceptDerived( IVisitor* aVisitor, const int aPeriod ) const {
     // does nothing for the base class
 }
 
-void LandLeaf::copyCarbonBoxModel( const ICarbonCalc *aCarbonCalc ) {
-    if ( aCarbonCalc != NULL ){
-        this->mCarbonContentCalc.reset( aCarbonCalc->clone() );
-    }    
-}
-
 ICarbonCalc* LandLeaf::getCarbonContentCalc() const{
     return ( mCarbonContentCalc.get() );
+}
+
+bool LandLeaf::isManagedLandLeaf( )  const 
+{
+    return true;
 }

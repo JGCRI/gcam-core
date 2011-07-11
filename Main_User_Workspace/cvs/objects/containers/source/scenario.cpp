@@ -175,7 +175,7 @@ bool Scenario::XMLParse( const DOMNode* node ){
              */
             assert( world.get() );
             
-            shared_ptr<Solver> retSolver( SolverFactory::createAndParseSolver( nodeName, marketplace.get(),
+            boost::shared_ptr<Solver> retSolver( SolverFactory::createAndParseSolver( nodeName, marketplace.get(),
                                                                      world.get(), curr ) );
             
             // make sure we don't attempt to set an invalid solver
@@ -422,12 +422,6 @@ bool Scenario::calculatePeriod( const int aPeriod,
         marketplace->nullSuppliesAndDemands( aPeriod );
     }
 
-    world->calc( aPeriod ); // call to calculate initial supply and demand
-    
-    // TODO: This second call is a hack to allow LUC emissions to get properly
-    // calculated when using restart.  This should be unnecessary with the new
-    // AgLU code.
-    marketplace->nullSuppliesAndDemands( aPeriod ); // initialize market demand to null
     world->calc( aPeriod ); // call to calculate initial supply and demand
 
     bool success = solve( aPeriod ); // solution uses Bisect and NR routine to clear markets
@@ -837,8 +831,8 @@ void Scenario::initSolvers() {
     }
     
     // unfortunately we have to access this solver directly
-    shared_ptr<Solver> defaultSolver( new BisectionNRSolver( marketplace.get(), world.get() ) );
-    for(vector<shared_ptr<Solver> >::iterator solverIt = mSolvers.begin(); solverIt != mSolvers.end(); ++solverIt ) {
+    boost::shared_ptr<Solver> defaultSolver( new BisectionNRSolver( marketplace.get(), world.get() ) );
+    for(vector<boost::shared_ptr<Solver> >::iterator solverIt = mSolvers.begin(); solverIt != mSolvers.end(); ++solverIt ) {
         if( !(*solverIt).get() ) {
             (*solverIt) = defaultSolver;
         }

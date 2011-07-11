@@ -80,6 +80,7 @@ class OutputMetaData;
 class Marketplace;
 class Market;
 class SubResource;
+class SubRenewableResource;
 class Grade;
 class Population;
 class PopulationMiniCAM;
@@ -96,19 +97,11 @@ class LandLeaf;
 class UnmanagedLandLeaf;
 class LandNode;
 class ICarbonCalc;
-class CarbonBoxModel;
-class AgSector;
 class IClimateModel;
 class IInput;
 class TranTechnology;
-class CarbonBox;
-class CarbonBox;
-class NPP;
-class ACarbonFlow;
-class CarbonBoxModel;
 class LandUseHistory;
-class FoodProductionTechnology;
-class ForestProductionTechnology;
+class AgProductionTechnology;
 class BuildingGenericDmdTechnology;
 class NodeInput;
 
@@ -181,6 +174,9 @@ public:
     virtual void startVisitSubResource( const SubResource* aSubResource, const int aPeriod ) = 0;
     virtual void endVisitSubResource( const SubResource* aSubResource, const int aPeriod ) = 0;
 
+    virtual void startVisitSubRenewableResource( const SubRenewableResource* aSubResource, const int aPeriod ) = 0;
+    virtual void endVisitSubRenewableResource( const SubRenewableResource* aSubResource, const int aPeriod ) = 0;
+
     virtual void startVisitGrade( const Grade* aGrade, const int aPeriod ) = 0;
     virtual void endVisitGrade( const Grade* aGrade, const int aPeriod ) = 0;
 
@@ -207,11 +203,8 @@ public:
     virtual void startVisitTechnology( const Technology* aTechnology, const int aPeriod ) = 0;
     virtual void endVisitTechnology( const Technology* aTechnology, const int aPeriod ) = 0;
 
-    virtual void startVisitFoodProductionTechnology( const FoodProductionTechnology* aTechnology, const int aPeriod ) = 0;
-    virtual void endVisitFoodProductionTechnology( const FoodProductionTechnology* aTechnology, const int aPeriod ) = 0;
-
-    virtual void startVisitForestProductionTechnology( const ForestProductionTechnology* aTechnology, const int aPeriod ) = 0;
-    virtual void endVisitForestProductionTechnology( const ForestProductionTechnology* aTechnology, const int aPeriod ) = 0;
+    virtual void startVisitAgProductionTechnology( const AgProductionTechnology* aTechnology, const int aPeriod ) = 0;
+    virtual void endVisitAgProductionTechnology( const AgProductionTechnology* aTechnology, const int aPeriod ) = 0;
 
     virtual void startVisitBaseTechnology( const BaseTechnology* aBaseTechnology, const int aPeriod ) = 0;
     virtual void endVisitBaseTechnology( const BaseTechnology* aBaseTechnology, const int aPeriod ) = 0;
@@ -292,18 +285,6 @@ public:
     virtual void startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod ) = 0;
     virtual void endVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod ) = 0;
 
-    virtual void startVisitCarbonBox( const CarbonBox* aCarbonBox, const int aPeriod ) = 0;
-    virtual void endVisitCarbonBox( const CarbonBox* aCarbonBox, const int aPeriod ) = 0;
-
-    virtual void startVisitNPP( const NPP* aNPP, const int aPeriod ) = 0;
-    virtual void endVisitNPP( const NPP* aNPP, const int aPeriod ) = 0;
-
-    virtual void startVisitCarbonFlow( const ACarbonFlow* aCarbonFlow, const int aPeriod ) = 0;
-    virtual void endVisitCarbonFlow( const ACarbonFlow* aCarbonFlow, const int aPeriod ) = 0;
-
-    virtual void startVisitAgSector( const AgSector* aAgSector, const int aPeriod ) = 0;
-    virtual void endVisitAgSector( const AgSector* aAgSector, const int aPeriod ) = 0;
-
     virtual void startVisitClimateModel( const IClimateModel* aClimateModel, const int aPeriod ) = 0;
     virtual void endVisitClimateModel( const IClimateModel* aClimateModel, const int aPeriod ) = 0;
 
@@ -316,9 +297,6 @@ public:
     
     virtual void startVisitBuildingGenericDmdTechnology( const BuildingGenericDmdTechnology* aBuildingTechnology, const int aPeriod ) = 0;
     virtual void endVisitBuildingGenericDmdTechnology( const BuildingGenericDmdTechnology* aBuildingTechnology, const int aPeriod ) = 0;
-
-    virtual void startVisitCarbonBoxModel( const CarbonBoxModel* aCarbonBoxModel, const int aPeriod ) = 0;
-    virtual void endVisitCarbonBoxModel( const CarbonBoxModel* aCarbonBoxModel, const int aPeriod ) = 0;
 };
 
 IVisitor::~IVisitor(){

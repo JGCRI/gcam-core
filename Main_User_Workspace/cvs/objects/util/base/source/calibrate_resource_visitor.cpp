@@ -43,6 +43,7 @@
 #include <cassert>
 #include "util/base/include/calibrate_resource_visitor.h"
 #include "resources/include/subresource.h"
+#include "resources/include/renewable_subresource.h"
 #include "resources/include/resource.h"
 #include "resources/include/grade.h"
 
@@ -125,5 +126,59 @@ void CalibrateResourceVisitor::startVisitSubResource( const SubResource* aSubRes
         // Finally, calculate the price adder. This is the difference between the
         // effective price and the global price
         const_cast<SubResource*>( aSubResource )->mPriceAdder[ aPeriod ] = tempEffectivePrice - mktPrice;
+    }
+}
+
+void CalibrateResourceVisitor::startVisitSubRenewableResource( const SubRenewableResource* aSubResource, 
+                                                                                const int aPeriod ) {
+    // If calibration is active and a calibrated production quantity was read in, 
+    // then we need to calculate the price adder needed to produce that quantity
+    if( aSubResource->mCalProduction[ aPeriod ] != -1.0 && aPeriod > 0 ){
+        // First, calculate the annual production
+        double tempAnnualProd = aSubResource->mCalProduction[ aPeriod ];
+
+        // Next, determine which grade of resource is produced to get to the
+        // annual production needed.
+        double temp_annual = 0.0;
+        int gr_ind = 0;
+        double gr_avail = 0.0;
+        double prev_avail = 0.0;
+        while ( temp_annual < tempAnnualProd ) {
+            // For renewable resources, getAvail() returns the fraction of the maxSubResource
+            // that can be produced.  So, total production is getAvail() * maxSubResource
+            gr_avail = ( aSubResource->mGrade[ gr_ind ]->getAvail() - prev_avail ) 
+                                            * aSubResource->getMaxSubResource();
+            prev_avail = aSubResource->mGrade[ gr_ind ]->getAvail();
+            temp_annual += gr_avail;
+            gr_ind++;
+        }
+
+        // Then, calculate the fraction of the next grade that will be produced
+        double fractGrade = 0.0;
+        if ( gr_avail > 0.0 ) {
+            fractGrade = ( tempAnnualProd - ( temp_annual - gr_avail ) )
+                / gr_avail;
+        }
+
+        // Next, calculate the effective price.  This is the price needed
+        // to produce the calibrated production quantity in this period.
+        // mEffectivePrice = cost of the next highest grade - 
+        // ( 1 - fractGrade )*( cost of higher grade - cost of lower grade )
+        double low_cost = 0.0;
+        if ( gr_ind > 0 ) {
+            low_cost = aSubResource->mGrade[ gr_ind - 1 ]->getCost( aPeriod );
+        }
+        
+        double tempEffectivePrice = aSubResource->mGrade[ gr_ind ]->getCost( aPeriod ) - 
+            ( 1 - fractGrade ) * ( aSubResource->mGrade[ gr_ind ]->getCost( aPeriod ) - low_cost );
+
+
+        double mktPrice = scenario->getMarketplace()->getPrice( mCurrentResourceName, 
+                                                                mCurrentRegionName, 
+                                                                aPeriod );
+
+        // Finally, calculate the price adder. This is the difference between the
+        // effective price and the global price
+        const_cast<SubRenewableResource*>( aSubResource )->mPriceAdder[ aPeriod ] = tempEffectivePrice - mktPrice;
     }
 }

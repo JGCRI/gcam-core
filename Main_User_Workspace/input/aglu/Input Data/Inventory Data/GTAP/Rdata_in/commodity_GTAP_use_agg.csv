@@ -1,0 +1,12 @@
+GCAM_commodity,GTAP_use_agg
+Corn,gro
+FiberCrop,pfb
+MiscCrop,v_f_ocr
+OilCrop,osd
+OtherGrain,gro
+PalmFruit,osd
+Rice,pdr
+Root_Tuber,v_f_ocr
+SugarCrop,c_b
+Wheat,wht
+Forest,frs

@@ -34,7 +34,7 @@
 
 /*! 
 * \file subsector_add_techcosts.cpp
-* \ingroup CIAM
+* \ingroup Objects
 * \brief SubsectorAddTechCostsAddTechCosts class source file.
 * \author Sonny Kim
 */

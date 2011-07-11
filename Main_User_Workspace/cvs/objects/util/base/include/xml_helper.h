@@ -1361,7 +1361,6 @@ void XMLHelper<T>::serializeNode( const xercesc::DOMNode* aNode, std::ostream& a
 {
     switch( aNode->getNodeType() ) {
         case xercesc::DOMNode::TEXT_NODE: {
-            // TODO: additional logic here what about newlines?
             std::string textData = safeTranscode( aNode->getNodeValue() );
             boost::algorithm::trim( textData );
             aOut << textData;
@@ -1383,15 +1382,31 @@ void XMLHelper<T>::serializeNode( const xercesc::DOMNode* aNode, std::ostream& a
             if( aDeep ) {
                 // Process children as well so go ahead and close this tag then recursively
                 // process them.
-                aOut << '>' << std::endl;
-                aTabs->increaseIndent();
+                aOut << '>';
+                bool onlyTextChildren = true;
                 xercesc::DOMNodeList* childNodes = aNode->getChildNodes();
+                for( int childIndex = 0; childIndex < childNodes->getLength() && onlyTextChildren; ++childIndex ) {
+                    if( childNodes->item( childIndex )->getNodeType() != xercesc::DOMNode::TEXT_NODE ) {
+                        onlyTextChildren = false;
+                    }
+                }
+                if( !onlyTextChildren ) {
+                    aOut << std::endl;
+                    aTabs->increaseIndent();
+                }
+                
                 for( int childIndex = 0; childIndex < childNodes->getLength(); ++childIndex ) {
                     serializeNode( childNodes->item( childIndex ), aOut, aTabs, aDeep );
                 }
                 
-                // write the closing tag
-                XMLWriteClosingTag( nodeName, aOut, aTabs );
+                if( !onlyTextChildren ) {
+                    // write the closing tag
+                    XMLWriteClosingTag( nodeName, aOut, aTabs );
+                }
+                else {
+                    // close the tag on the same line
+                    aOut << "</" << nodeName << '>' << std::endl;
+                }
             }
             else {
                 // just put a close tag on this to make it valid XML

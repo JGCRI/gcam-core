@@ -1,0 +1,102 @@
+item,GCAM_commodity,HarvestIndex,ErosCtrl_tHa,ResEnergy_GJt,Root_Shoot,WaterContent
+"Almonds, with shell",MiscCrop,0.42,0.013,16.8,0.15,0.2
+"Anise, badian, fennel, corian.",MiscCrop,1.00,0.000,0.0,0.15,0
+Apples,MiscCrop,0.85,0.019,17.3,0.15,0.8
+Apricots,MiscCrop,0.68,0.034,17.3,0.15,0.8
+Artichokes,MiscCrop,0.77,0.800,6.9,0.15,0.7
+Asparagus,MiscCrop,0.49,1.116,6.9,0.15,0.7
+Avocados,MiscCrop,0.71,0.031,6.9,0.15,0.8
+Bananas,MiscCrop,0.40,0.225,6.9,0.415,0.7
+Barley,OtherGrain,0.50,1.787,16.2,0.5,0.1
+"Beans, green",MiscCrop,0.46,1.344,6.9,0.08,0.7
+"Beans, dry",MiscCrop,0.46,0.000,6.9,0.08,0.24
+"Broad beans, horse beans, dry",MiscCrop,0.46,1.344,6.9,0.08,0.24
+Cabbages and other brassicas,MiscCrop,0.80,1.349,6.9,0.15,0.7
+Carrots and turnips,MiscCrop,0.53,0.986,6.9,0.15,0.8
+"Cashew nuts, with shell",MiscCrop,0.40,0.009,18.4,0.15,0.2
+Cassava,Root_Tuber,0.38,0.886,6.9,0.15,0.1227
+Cauliflowers and broccoli,MiscCrop,0.80,1.025,6.9,0.15,0.7
+"Cereals, nes",OtherGrain,0.40,1.030,16.5,0.15,0.05
+Cherries,MiscCrop,0.85,0.225,17.3,0.15,0.8
+Chestnuts,MiscCrop,0.40,0.043,18.4,0.15,0.2
+Chick peas,MiscCrop,0.46,0.283,6.9,0.08,0.7
+"Chillies and peppers, dry",MiscCrop,0.60,0.222,6.9,0.15,0
+"Chillies and peppers, green",MiscCrop,0.60,2.057,6.9,0.15,0.7
+Cinnamon (canella),MiscCrop,1.00,0.000,6.9,0.15,0
+"Citrus fruit, nes",MiscCrop,0.93,0.004,17.3,0.15,0.8
+Cloves,MiscCrop,1.00,0.000,0.0,0.15,0
+Cocoa beans,MiscCrop,1.00,0.000,20.9,0.15,0
+Coconuts,PalmFruit,0.66,0.627,17.3,0.15,0.8
+"Coffee, green",MiscCrop,1.00,0.000,20.9,0.15,0
+Seed cotton,OilCrop,0.40,0.000,15.1,0.17,0.08
+Cranberries,MiscCrop,1.00,0.000,6.9,0.15,0.9
+Cucumbers and gherkins,MiscCrop,0.80,1.004,6.9,0.15,0.8
+Currants,MiscCrop,1.00,0.000,6.9,0.15,0.8
+Dates,MiscCrop,0.80,0.014,17.3,0.15,0.7
+Eggplants (aubergines),MiscCrop,0.59,2.692,6.9,0.15,0.8
+Figs,MiscCrop,0.62,0.016,17.3,0.15,0.7
+Fruit Fresh Nes,MiscCrop,1.00,0.000,6.9,0.15,0.7
+Garlic,MiscCrop,1.00,0.000,6.9,0.15,0.7
+Ginger,MiscCrop,1.00,0.000,6.9,0.15,0.7
+Grapefruit (inc. pomelos),MiscCrop,0.93,0.012,17.3,0.15,0.8
+Grapes,MiscCrop,0.79,0.022,15.3,0.15,0.9
+"Groundnuts, with shell",OilCrop,0.40,0.871,17.7,0.07,0.09
+"Mangoes, mangosteens, guavas",MiscCrop,0.45,0.078,17.3,0.15,0.8
+"Hazelnuts, with shell",MiscCrop,0.40,0.019,18.4,0.15,0.2
+Kiwi fruit,MiscCrop,0.72,0.057,17.3,0.15,0.8
+"Leeks, other alliaceous veg",MiscCrop,1.00,0.000,6.9,0.15,0.7
+"Leguminous vegetables, nes",MiscCrop,1.00,0.000,6.9,0.15,0.7
+Lemons and limes,MiscCrop,0.95,0.008,17.3,0.15,0.8
+Lentils,MiscCrop,0.61,0.143,6.9,0.15,0.2
+Lettuce and chicory,MiscCrop,0.94,0.344,6.9,0.15,0.7
+Linseed,OilCrop,0.26,1.671,16.2,0.15,0.15
+Maize,Corn,0.53,2.754,16.9,0.18,0.13
+Millet,OtherGrain,0.45,0.714,15.2,0.15,0.1
+Mushrooms and truffles,MiscCrop,1.00,0.000,6.9,0.15,0
+"Nutmeg, mace and cardamoms",MiscCrop,1.00,0.000,0.0,0.15,0
+"Nuts, nes",MiscCrop,0.40,0.018,18.4,0.15,0.2
+Oats,OtherGrain,0.52,1.298,16.2,0.4,0.08
+"Oilseeds, Nes",OilCrop,0.30,0.726,16.2,0.15,0
+Olives,OilCrop,0.69,0.007,17.3,0.15,0.7
+"Onions (inc. shallots), green",MiscCrop,0.56,3.283,6.9,0.15,0.7
+Oranges,MiscCrop,0.91,0.016,17.3,0.15,0.8
+Other melons (inc.cantaloupes),MiscCrop,0.91,0.451,6.9,0.15,0.8
+Oil palm fruit,PalmFruit,0.19,0.517,17.3,0.15,0.7
+Papayas,MiscCrop,0.99,0.002,17.3,0.15,0.8
+Peaches and nectarines,MiscCrop,0.86,0.015,17.3,0.15,0.8
+Pears,MiscCrop,0.88,0.014,17.3,0.15,0.8
+"Peas, dry",MiscCrop,0.30,1.066,6.9,0.08,0.1
+"Peas, green",MiscCrop,0.30,4.344,6.9,0.08,0.7
+Pepper (Piper spp.),MiscCrop,1.00,0.000,0.0,0.15,0
+Pineapples,MiscCrop,0.26,13.844,6.9,0.15,0.8
+Pistachios,MiscCrop,0.40,0.339,18.4,0.15,0.2
+Plantains,MiscCrop,0.40,0.090,6.9,0.415,0.7
+Plums and sloes,MiscCrop,0.80,0.010,17.3,0.15,0.8
+Potatoes,Root_Tuber,0.50,0.715,6.9,0.07,0.8
+"Pulses, nes",MiscCrop,0.35,0.314,6.9,0.15,0.7
+"Pumpkins, squash and gourds",MiscCrop,0.88,0.413,6.9,0.15,0.7
+Rapeseed,OilCrop,0.30,2.609,16.2,0.15,0
+Raspberries,MiscCrop,1.00,0.000,6.9,0.15,0.8
+"Rice, paddy",Rice,0.40,0.990,13.6,0.46,0.09
+Rye,OtherGrain,0.50,2.938,16.8,1.02,0.1
+Sesame seed,OilCrop,0.27,0.283,16.2,0.15,0.05
+Sorghum,OtherGrain,0.44,0.884,14.0,0.08,0.13
+Soybeans,OilCrop,0.42,2.037,6.9,0.15,0.08
+"Spices, nes",MiscCrop,1.00,0.000,6.9,0.15,0
+Spinach,MiscCrop,0.95,0.187,6.9,0.15,0.7
+"Roots and Tubers, nes",Root_Tuber,0.94,0.051,6.9,0.15,0.8
+Strawberries,MiscCrop,0.45,4.010,6.9,0.15,0.8
+Sugar beet,SugarCrop,0.40,1.028,6.9,0.43,0.85
+Sugar cane,SugarCrop,0.70,4.679,16.6,0.18,0.3
+Sunflower seed,OilCrop,0.27,1.389,6.9,0.06,0.07
+Sweet potatoes,Root_Tuber,0.53,0.616,6.9,0.15,0.8
+"Tangerines, mandarins, clem.",MiscCrop,0.91,0.011,17.3,0.15,0.8
+Tea,MiscCrop,1.00,0.000,0.0,0.15,0
+"Tobacco, unmanufactured",MiscCrop,1.00,0.000,6.9,0.8,0.2
+Tomatoes,MiscCrop,0.33,13.793,6.9,0.14,0.95
+Vanilla,MiscCrop,1.00,0.000,0.0,0.15,0
+Vegetables fresh nes,MiscCrop,1.00,0.000,6.9,0.15,0
+"Walnuts, with shell",MiscCrop,0.40,0.036,18.4,0.15,0.2
+Watermelons,MiscCrop,0.91,0.549,6.9,0.15,0.8
+Wheat,Wheat,0.39,2.960,16.2,0.2,0.11
+Yams,Root_Tuber,0.53,0.458,6.9,0.15,0.8

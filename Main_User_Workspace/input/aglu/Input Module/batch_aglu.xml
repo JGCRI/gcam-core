@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ModelInterfaceBatch>
+	<!--Batch converts all renewables csv's to xml's-->
+	<!-- You must first identify the class which will run the command.
+	     For csv conversions it will always be InputViewer.
+	     TODO: make it so the class name is not necessary.-->
+
+	<class name="ModelInterface.ModelGUI2.InputViewer">
+		<!-- The command you want to run.  It would be the same name as
+		     the name in the Open.. submenu.-->
+
+        <command name="CSV file">
+			<headerFile>../workspace-ag/input/aglu/Input Module/headers_aglu.txt</headerFile>
+			<outFile>../workspace-ag/input/aglu/ag_input.xml</outFile>
+			<csvFile>../workspace-ag/input/aglu/Input Module/ag_input.csv</csvFile>
+		</command>
+        <command name="CSV file">
+			<headerFile>../workspace-ag/input/aglu/Input Module/headers_aglu.txt</headerFile>
+			<outFile>../workspace-ag/input/aglu/ag_res_input.xml</outFile>
+			<csvFile>../workspace-ag/input/aglu/Input Module/ag_res_input.csv</csvFile>
+		</command>
+        <command name="CSV file">
+			<headerFile>../workspace-ag/input/aglu/Input Module/headers_aglu.txt</headerFile>
+			<outFile>../workspace-ag/input/aglu/an_input.xml</outFile>
+			<csvFile>../workspace-ag/input/aglu/Input Module/an_input.csv</csvFile>
+		</command>
+        <command name="CSV file">
+			<headerFile>../workspace-ag/input/aglu/Input Module/headers_aglu.txt</headerFile>
+			<outFile>../workspace-ag/input/aglu/delete_ag_For_bio_AEZs.xml</outFile>
+			<csvFile>../workspace-ag/input/aglu/Input Module/delete_ag_For_bio_AEZs.csv</csvFile>
+		</command>
+        <command name="CSV file">
+			<headerFile>../workspace-ag/input/aglu/Input Module/headers_aglu.txt</headerFile>
+			<outFile>../workspace-ag/input/aglu/delete_land_AEZs.xml</outFile>
+			<csvFile>../workspace-ag/input/aglu/Input Module/delete_land_AEZs.csv</csvFile>
+		</command>
+        <command name="CSV file">
+			<headerFile>../workspace-ag/input/aglu/Input Module/headers_aglu.txt</headerFile>
+			<outFile>../workspace-ag/input/aglu/demand_input.xml</outFile>
+			<csvFile>../workspace-ag/input/aglu/Input Module/demand_input.csv</csvFile>
+		</command>
+        <command name="CSV file">
+			<headerFile>../workspace-ag/input/aglu/Input Module/headers_aglu.txt</headerFile>
+			<outFile>../workspace-ag/input/aglu/For_Past_bio_input.xml</outFile>
+			<csvFile>../workspace-ag/input/aglu/Input Module/For_Past_bio_input.csv</csvFile>
+		</command>
+        <command name="CSV file">
+			<headerFile>../workspace-ag/input/aglu/Input Module/headers_aglu.txt</headerFile>
+			<outFile>../workspace-ag/input/aglu/For_res_input.xml</outFile>
+			<csvFile>../workspace-ag/input/aglu/Input Module/For_res_input.csv</csvFile>
+		</command>
+        <command name="CSV file">
+			<headerFile>../workspace-ag/input/aglu/Input Module/headers_aglu.txt</headerFile>
+			<outFile>../workspace-ag/input/aglu/land_input_A.xml</outFile>
+			<csvFile>../workspace-ag/input/aglu/Input Module/land_input_A.csv</csvFile>
+		</command>
+        <command name="CSV file">
+			<headerFile>../workspace-ag/input/aglu/Input Module/headers_aglu.txt</headerFile>
+			<outFile>../workspace-ag/input/aglu/land_input_B.xml</outFile>
+			<csvFile>../workspace-ag/input/aglu/Input Module/land_input_B.csv</csvFile>
+		</command>
+        <command name="CSV file">
+			<headerFile>../workspace-ag/input/aglu/Input Module/headers_aglu.txt</headerFile>
+			<outFile>../workspace-ag/input/aglu/land_input_C1.xml</outFile>
+			<csvFile>../workspace-ag/input/aglu/Input Module/land_input_C1.csv</csvFile>
+		</command>
+        <command name="CSV file">
+			<headerFile>../workspace-ag/input/aglu/Input Module/headers_aglu.txt</headerFile>
+			<outFile>../workspace-ag/input/aglu/land_input_C2.xml</outFile>
+			<csvFile>../workspace-ag/input/aglu/Input Module/land_input_C2.csv</csvFile>
+		</command>
+        <command name="CSV file">
+			<headerFile>../workspace-ag/input/aglu/Input Module/headers_aglu.txt</headerFile>
+			<outFile>../workspace-ag/input/aglu/land_input_C3.xml</outFile>
+			<csvFile>../workspace-ag/input/aglu/Input Module/land_input_C3.csv</csvFile>
+		</command>
+        <command name="CSV file">
+			<headerFile>../workspace-ag/input/aglu/Input Module/headers_aglu.txt</headerFile>
+			<outFile>../workspace-ag/input/aglu/prodchange_cost_adv.xml</outFile>
+			<csvFile>../workspace-ag/input/aglu/Input Module/prodchange_cost_adv.csv</csvFile>
+		</command>
+        <command name="CSV file">
+			<headerFile>../workspace-ag/input/aglu/Input Module/headers_aglu.txt</headerFile>
+			<outFile>../workspace-ag/input/aglu/prodchange_cost_const.xml</outFile>
+			<csvFile>../workspace-ag/input/aglu/Input Module/prodchange_cost_const.csv</csvFile>
+		</command>
+        <command name="CSV file">
+			<headerFile>../workspace-ag/input/aglu/Input Module/headers_aglu.txt</headerFile>
+			<outFile>../workspace-ag/input/aglu/prodchange_cost_core.xml</outFile>
+			<csvFile>../workspace-ag/input/aglu/Input Module/prodchange_cost_core.csv</csvFile>
+		</command>
+        <command name="CSV file">
+			<headerFile>../workspace-ag/input/aglu/Input Module/headers_aglu.txt</headerFile>
+			<outFile>../workspace-ag/input/aglu/prodchange_cost_ref.xml</outFile>
+			<csvFile>../workspace-ag/input/aglu/Input Module/prodchange_cost_ref.csv</csvFile>
+        </command>
+		<command name="CSV file">
+			<headerFile>../workspace-ag/input/aglu/Input Module/headers_aglu.txt</headerFile>
+			<outFile>../workspace-ag/input/aglu/energy_crop_input.xml</outFile>
+			<csvFile>../workspace-ag/input/aglu/Input Module/energy_crop_input.csv</csvFile>
+		</command>
+		<command name="CSV file">
+			<headerFile>../workspace-ag/input/aglu/Input Module/headers_aglu.txt</headerFile>
+			<outFile>../workspace-ag/input/aglu/energy_crop_land.xml</outFile>
+			<csvFile>../workspace-ag/input/aglu/Input Module/energy_crop_land.csv</csvFile>
+		</command>
+		<command name="CSV file">
+			<headerFile>../workspace-ag/input/aglu/Input Module/headers_aglu.txt</headerFile>
+			<outFile>../workspace-ag/input/aglu/demand_ethanol.xml</outFile>
+			<csvFile>../workspace-ag/input/aglu/Input Module/demand_ethanol.csv</csvFile>
+		</command>
+
+	</class>
+</ModelInterfaceBatch>

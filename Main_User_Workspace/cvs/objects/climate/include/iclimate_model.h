@@ -113,6 +113,23 @@ public:
     virtual bool setEmissions( const std::string& aGasName,
                                const int aPeriod,
 		                       const double aEmission ) = 0;
+	
+	/*! \brief Sets a level of emissions for a gas in a year.
+	 * \details This method will set the level of emissions for a gas which is
+	 *          used by the climate model. The level is set and will override any
+	 *          default or existing value. The year must be a valid model year. 
+	 *          The model will return false if the year is not valid. The gas must
+	 *          be LUC CO2 emission, and the model must return false if the gas is not.
+	 * \pre The model must have its initialization method called before emissions
+	 *      can be set.
+	 * \param aGasName The name of the gas name for which to set emissions.
+	 * \param aYear The year in which to set emissions.
+	 * \param aEmission The level of emissions to set.
+	 * \return Whether the value was set correctly.
+	 */
+    virtual bool setLUCEmissions( const std::string& aGasName,
+							  const int aYear,
+							  const double aEmission ) = 0;
 
     /*!
     * \brief Get the level of emissions for a particular gas in a given period.

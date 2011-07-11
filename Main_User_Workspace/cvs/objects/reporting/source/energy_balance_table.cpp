@@ -395,3 +395,7 @@ double EnergyBalanceTable::getTotalSectorOutput( const string& aSectorName ) con
     }
     return outputSum;
 }
+
+void EnergyBalanceTable::setRegionName( const string& aRegionName ) {
+    mRegionName = aRegionName;
+}

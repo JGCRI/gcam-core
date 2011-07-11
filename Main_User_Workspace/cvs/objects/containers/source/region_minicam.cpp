@@ -65,10 +65,7 @@
 #include "sectors/include/supply_sector.h"
 #include "sectors/include/production_sector.h"
 #include "sectors/include/demand_sector.h"
-#include "sectors/include/food_supply_sector.h"
-#include "sectors/include/forest_demand_sector.h"
-#include "sectors/include/forest_supply_sector.h"
-#include "sectors/include/ag_sector.h"
+#include "sectors/include/ag_supply_sector.h"
 #include "sectors/include/building_final_demand.h"
 #include "sectors/include/export_sector.h"
 
@@ -78,8 +75,9 @@
 
 #include "marketplace/include/marketplace.h"
 
-#include "land_allocator/include/tree_land_allocator.h"
+#include "land_allocator/include/land_allocator.h"
 #include "emissions/include/emissions_summer.h"
+#include "emissions/include/luc_emissions_summer.h"
 #include "policy/include/policy_ghg.h"
 #include "emissions/include/total_sector_emissions.h"
 
@@ -124,13 +122,12 @@ RegionMiniCAM::RegionMiniCAM() {
     summary.resize( maxper );
     calibrationGDPs.resize( maxper );
     GDPcalPerCapita.resize( maxper );
-    mLandUseCO2Emissions.resize( maxper );
 
     mRotationPeriod = 0;
     mInterestRate = 0;
 }
 
-//! Default destructor destroys sector, demsector, Resource, agSector, and
+//! Default destructor destroys sector, demsector, Resource, and
 //! population objects.
 RegionMiniCAM::~RegionMiniCAM() {
     clear();
@@ -177,17 +174,11 @@ bool RegionMiniCAM::XMLDerivedClassParse( const std::string& nodeName, const xer
     else if( nodeName == ExportSector::getXMLNameStatic() ){
         parseContainerNode( curr, supplySector, supplySectorNameMap, new ExportSector( name ) );
     }
-    else if( nodeName == FoodSupplySector::getXMLNameStatic() ) {
-        parseContainerNode( curr, supplySector, supplySectorNameMap, new FoodSupplySector( name ) );
-    }
-    else if( nodeName == ForestSupplySector::getXMLNameStatic() ) {
-        parseContainerNode( curr, supplySector, supplySectorNameMap, new ForestSupplySector( name ) );
+    else if( nodeName == AgSupplySector::getXMLNameStatic() ) {
+        parseContainerNode( curr, supplySector, supplySectorNameMap, new AgSupplySector( name ) );
     }
     else if( nodeName == EnergyFinalDemand::getXMLNameStatic() ){
         parseContainerNode( curr, mFinalDemands, new EnergyFinalDemand );
-    }
-    else if( nodeName == ForestDemandSector::getXMLNameStatic() ){
-        parseContainerNode( curr, mFinalDemands, new ForestDemandSector );
     }
     else if( nodeName == BuildingFinalDemand::getXMLNameStatic() ){
         parseContainerNode( curr, mFinalDemands, new BuildingFinalDemand );
@@ -195,16 +186,8 @@ bool RegionMiniCAM::XMLDerivedClassParse( const std::string& nodeName, const xer
     else if( nodeName == TotalSectorEmissions::getXMLNameStatic() ){
         parseContainerNode( curr, mAggEmissionsCalculators, new TotalSectorEmissions );
     }
-    else if ( nodeName == TreeLandAllocator::getXMLNameStatic() ) {
-        parseSingleNode( curr, mLandAllocator, new TreeLandAllocator );
-    }
-    else if( nodeName == AgSector::getXMLNameStatic() ) {
-        if( Configuration::getInstance()->getBool( "agSectorActive" ) ){
-            parseSingleNode( curr, agSector, new AgSector );
-        }
-    }
-    else if( nodeName == "land-use-co2-emissions" ){
-        XMLHelper<Value>::insertValueIntoVector( curr, mLandUseCO2Emissions, scenario->getModeltime() );
+    else if ( nodeName == LandAllocator::getXMLNameStatic() ) {
+        parseSingleNode( curr, mLandAllocator, new LandAllocator );
     }
     // regional economic data
     else if( nodeName == "calibrationdata" ){
@@ -314,20 +297,7 @@ void RegionMiniCAM::completeInit() {
         ( *sectorIter )->completeInit( mRegionInfo.get(), &depFinder, mLandAllocator.get() );
     }
 
-    // Finish initializing agLu
-    Configuration* conf = Configuration::getInstance();
-    if( conf->getBool( "agSectorActive" ) && agSector.get() ){
-        agSector->setGNP( calcFutureGDP() );
-        if( demographic.get() ){
-            agSector->setPop( demographic->getTotalPopVec() );
-        }
-        agSector->completeInit( name );
-    }
-
     if ( mLandAllocator.get() ) {
-        // This needs to be after completeInit for supply sectors is called because calibrated land use
-        // need to be set by all production technologies (within their completeInit methods) that use land
-        // before this function is called.
         mLandAllocator->completeInit( name, mRegionInfo.get() );
     }
 
@@ -503,7 +473,6 @@ void RegionMiniCAM::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( mCoolingDegreeDays, "coolingDegreeDays", out, tabs, Value( 0.0 ) );
     XMLWriteElementCheckDefault( mCoolingFractionOfYearActive, "cooling-fraction-of-year-active", out, tabs, Value( 0.0 ) );
     XMLWriteElementCheckDefault( mHeatingFractionOfYearActive, "heating-fraction-of-year-active", out, tabs, Value( 0.0 ) );
-    XMLWriteVector( mLandUseCO2Emissions, "land-use-co2-emissions", out, tabs, scenario->getModeltime() );
     XMLWriteElementCheckDefault( mRotationPeriod, "rotationPeriod", out, tabs, 0 );
     XMLWriteElementCheckDefault( mInterestRate, "interest-rate", out, tabs, 0.0 );
 
@@ -525,14 +494,6 @@ void RegionMiniCAM::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
 
     for( unsigned int i = 0; i < mAggEmissionsCalculators.size(); ++i ){
         mAggEmissionsCalculators[ i ]->toInputXML( out, tabs );
-    }
-
-    if( agSector.get() ){
-        agSector->toInputXML( out, tabs );
-    }
-    else {
-        tabs->writeTabs( out );
-        out << "<agsector/>" << endl;
     }
 
     // Note: The count function is an STL algorithm that counts the number of
@@ -565,8 +526,7 @@ void RegionMiniCAM::toDebugXMLDerived( const int period, std::ostream& out, Tabs
 
     XMLWriteElement( calibrationGDPs[ period ], "calibrationGDPs", out, tabs );
     XMLWriteElement( getEndUseServicePrice( period ), "priceSer", out, tabs );
-    XMLWriteElement( mLandUseCO2Emissions[ period ], "land-use-co2-emissions", out, tabs );
-
+    
     // Write out the Co2 Coefficients.
     for( map<string,double>::const_iterator coefAllIter = primaryFuelCO2Coef.begin(); coefAllIter != primaryFuelCO2Coef.end(); coefAllIter++ ) {
         XMLWriteElement( coefAllIter->second, "PrimaryFuelCO2Coef", out, tabs, 0, coefAllIter->first );
@@ -587,9 +547,6 @@ void RegionMiniCAM::toDebugXMLDerived( const int period, std::ostream& out, Tabs
     for( CFinalDemandIterator currSector = mFinalDemands.begin(); currSector != mFinalDemands.end(); ++currSector ){
         (*currSector)->toDebugXML( period, out, tabs );
     }
-
-    // Write out the single agSector object.
-    // agSector->toDebugXML( period, out );
 
     for( unsigned int i = 0; i < mAggEmissionsCalculators.size(); ++i ){
         mAggEmissionsCalculators[ i ]->toDebugXML( period, out, tabs );
@@ -629,7 +586,6 @@ const std::string& RegionMiniCAM::getXMLNameStatic() {
 void RegionMiniCAM::calc( const int period ) {
     // Store configuration variables locally as statics.
     static const Configuration* conf = Configuration::getInstance();
-    static const bool agSectorActive = conf->getBool( "agSectorActive" );
     static const bool calibrationActive = conf->getBool( "CalibrationActive" );
 
     // Write back calibrated values to the member variables.
@@ -643,12 +599,6 @@ void RegionMiniCAM::calc( const int period ) {
     // determine prices for all supply sectors (e.g., refined fuels, electricity, etc.)
     calcFinalSupplyPrice( period );
     
-    // Add land use CO2 emissions to the marketplace.
-    Marketplace* marketplace = scenario->getMarketplace();
-
-    const double GT_TO_MMT = 1000;
-    marketplace->addToDemand( "CO2", name, mLandUseCO2Emissions[ period ] * GT_TO_MMT, period, false );
-
     // adjust GDP for energy cost changes
     adjustGDP( period );
 
@@ -661,22 +611,10 @@ void RegionMiniCAM::calc( const int period ) {
     // determine supply of primary resources
     calcResourceSupply( period );
 
-    if( agSectorActive && agSector.get() ){
-        calcAgSector( period );
-    }
-
     // Perform calibrations
     if( calibrationActive ) {
         calibrateRegion( period );
     }
-}
-
-/*! Run the agLu Model and determine CO2 emitted.
-* \param period Model time period
-*/
-void RegionMiniCAM::calcAgSector( const int period ) {
-    agSector->runModel( period, name );
-    agSector->carbLand( period, name );
 }
 
 /*! \brief Set regional ghg constraint from input data to market supply.
@@ -884,10 +822,6 @@ void RegionMiniCAM::initCalc( const int period )
     // GHGs are initialized so they can be accessed.
     setCO2CoefsIntoMarketplace( period );
 
-    // Call initCalc for land allocator first so that shares and intrinsic rates are set properly
-    if ( mLandAllocator.get() ) {
-        mLandAllocator->initCalc( name, period );
-    }
 
     for( SectorIterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ){
         (*currSector)->initCalc( /*nationalAccount[ period ]*/0, demographic.get(), period );
@@ -898,6 +832,13 @@ void RegionMiniCAM::initCalc( const int period )
     for( ResourceIterator currResource = mResources.begin(); currResource != mResources.end(); ++currResource ){
         (*currResource)->initCalc( name, period );
     }
+
+    // Call initCalc for land allocator last. It needs profit from the ag sectors
+    // before it can calculate share weights
+    if ( mLandAllocator.get() ) {
+        mLandAllocator->initCalc( name, period );
+    }
+
 }
 
 /*
@@ -936,6 +877,8 @@ void RegionMiniCAM::setCO2CoefsIntoMarketplace( const int aPeriod ){
  */
 void RegionMiniCAM::postCalc( const int aPeriod ) {
     Region::postCalc( aPeriod );
+    
+    mLandAllocator->postCalc( name, aPeriod );
  }
 
 /*! \brief Tabulates all calibrated supplies and demands with in the region.
@@ -1065,22 +1008,19 @@ void RegionMiniCAM::calcEmissions( const int period ) {
         summary[period].updateemiss(supplySector[i]->getemission(period));
     }
 
-    // WARNING: These emissions are not currently added to emissions by fuel, so
-    // the totals will not be equal.
-    const double GT_TO_MMT = 1000;
-    map<string, double> landUseSummary;
-    if( mLandUseCO2Emissions[ period ].isInited() ){
-        landUseSummary[ "CO2" ] = mLandUseCO2Emissions[ period ] * GT_TO_MMT;
-        landUseSummary[ "CO2-net-terrestrial" ] = mLandUseCO2Emissions[ period ] * GT_TO_MMT;
-        summary[period].updateemiss( landUseSummary );
-    }
-
     // Determine land use change emissions and add to the summary.
-    EmissionsSummer co2LandUseSummer( "CO2NetLandUse" );
-    accept( &co2LandUseSummer, period );
-    map<string,double> agEmissions;
-    agEmissions[ "CO2NetLandUse" ] = co2LandUseSummer.getEmissions( period );
-    summary[ period ].updateemiss( agEmissions );
+	if( period > 0 ) {
+		LUCEmissionsSummer co2LandUseSummer( "CO2NetLandUse" );
+
+
+		const int year = scenario->getModeltime()->getper_to_yr( period );
+		accept( &co2LandUseSummer, period );
+		map<string,double> agEmissions;
+		if ( co2LandUseSummer.areEmissionsSet( year ) ) {
+			agEmissions[ "CO2NetLandUse" ] = co2LandUseSummer.getEmissions( year );
+			summary[ period ].updateemiss( agEmissions );
+		}
+	}
 }
 
 /*! \brief Calculate regional emissions by fuel for reporting.
@@ -1131,10 +1071,6 @@ void RegionMiniCAM::csvOutputFile() const {
         temp[m] = summary[m].get_emissmap_second( "CO2NetLandUse" );
     }
     fileoutput3(name," "," "," ","Net Land Use CO2 emiss","MTC",temp);
-
-    if ( mLandAllocator.get() ) {
-        mLandAllocator->csvOutput( name );
-    }
 
     // region primary energy consumption by fuel type
     typedef map<string,double>:: const_iterator CI;
@@ -1189,9 +1125,6 @@ void RegionMiniCAM::dbOutput( const list<string>& aPrimaryFuelList ) const {
     }
     if( gdp.get() ){
         gdp->dbOutput( name );
-    }
-    if ( mLandAllocator.get() ) {
-        mLandAllocator->dbOutput( name );
     }
 
     // CO2 emissions by fuel
@@ -1308,13 +1241,6 @@ void RegionMiniCAM::dbOutput( const list<string>& aPrimaryFuelList ) const {
     }
 }
 
-//! Initialize the market prices for the agricultural products.
-void RegionMiniCAM::initializeAgMarketPrices( const vector<double>& pricesIn ) {
-    if( agSector.get() ){
-        agSector->initMarketPrices( name, pricesIn );
-    }
-}
-
 //! update regional summaries for reporting
 void RegionMiniCAM::updateSummary( const list<string>& aPrimaryFuelList, const int period ) {
     calcEmissions( period );
@@ -1408,8 +1334,5 @@ void RegionMiniCAM::accept( IVisitor* aVisitor, const int aPeriod ) const {
         (*currDem)->accept( aVisitor, aPeriod );
     }
 
-    if( agSector.get() ){
-        agSector->accept( aVisitor, aPeriod );
-    }
     aVisitor->endVisitRegionMiniCAM( this, aPeriod );
 }

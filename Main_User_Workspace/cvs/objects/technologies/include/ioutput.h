@@ -254,11 +254,9 @@ public:
      * \brief Set the land allocator
      * \param aLandAllocator - the new land allocator
      * \param aName - the name of the technology
-     * \param aLandType - the land type
      */
-    virtual void setLandAllocator( const ILandAllocator* aLandAllocator,
-                                   const std::string& aName,
-                                   const std::string& aLandType ) = 0;
+    virtual void sendLandAllocator( const ILandAllocator* aLandAllocator,
+                                   const std::string& aName ) = 0;
     
     /*!
      * \brief Hook for an output to do interpolations to fill in any data that

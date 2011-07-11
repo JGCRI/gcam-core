@@ -188,7 +188,7 @@ void PrimaryOutput::setPhysicalOutput( const double aPrimaryOutput,
 
     // Add the primary output to the marketplace.
     // TODO: Once demand sectors are separated this should be changed.
-    if( aPrimaryOutput > util::getSmallNumber() ){
+    if( aPrimaryOutput > 0.0 ){
         mCachedMarket->addToSupply( mName, aRegionName, aPrimaryOutput, aPeriod, false );
     }
 }

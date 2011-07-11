@@ -75,7 +75,7 @@ SupplySector::SupplySector( const string& aRegionName ):
 Sector( aRegionName ),mHasTrialSupplyMarket( false ),
 mBiomassAdder( scenario->getModeltime()->getmaxper() ),
 // The default price for a trial supply market is 0.001
-mPriceTrialSupplyMarket( scenario->getModeltime()->getmaxper(), 0.001  )
+mPriceTrialSupplyMarket( scenario->getModeltime()->getmaxper(), 0.001 )
 {
 }
 
@@ -122,7 +122,7 @@ bool SupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNode* 
     }
     else if( nodeName == "price-trial-supply" ){
         XMLHelper<double>::insertValueIntoVector( curr, mPriceTrialSupplyMarket, scenario->getModeltime() );
-    }
+    }        
     else {
         return false;
     }

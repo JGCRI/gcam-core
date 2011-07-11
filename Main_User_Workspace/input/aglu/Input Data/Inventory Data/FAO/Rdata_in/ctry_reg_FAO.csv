@@ -1,0 +1,260 @@
+countries,GCAM_region_ID,GCAM_region_name
+Afghanistan,11,Southeast Asia
+Albania,12,Eastern Europe
+Algeria,9,Africa
+American Samoa,11,Southeast Asia
+Andorra,3,Western Europe
+Angola,9,Africa
+Anguilla,10,Latin America
+Antigua and Barbuda,10,Latin America
+Argentina,10,Latin America
+Armenia,6,Former Soviet Union
+Aruba,10,Latin America
+Australia,5,Australia_NZ
+Austria,3,Western Europe
+Azerbaijan,6,Former Soviet Union
+"Azerbaijan, Republic of",6,Former Soviet Union
+Bahamas,10,Latin America
+Bahrain,8,Middle East
+Bangladesh,11,Southeast Asia
+Barbados,10,Latin America
+Belarus,6,Former Soviet Union
+Belgium,3,Western Europe
+Belgium-Luxembourg,3,Western Europe
+Belize,10,Latin America
+Benin,9,Africa
+Bermuda,3,Western Europe
+Bhutan,11,Southeast Asia
+Bolivia (Plurinational State of),10,Latin America
+Bosnia and Herzegovina,12,Eastern Europe
+Botswana,9,Africa
+Brazil,10,Latin America
+British Virgin Islands,10,Latin America
+Brunei Darussalam,11,Southeast Asia
+Bulgaria,12,Eastern Europe
+Burkina Faso,9,Africa
+Burundi,9,Africa
+Cambodia,7,China
+Cameroon,9,Africa
+Canada,2,Canada
+Cape Verde,9,Africa
+Cayman Islands,10,Latin America
+Central African Republic,9,Africa
+Channel Islands,9,Africa
+Chad,9,Africa
+Chile,10,Latin America
+China,7,China
+"China, Hong Kong SAR",7,China
+"China, Macao SAR",7,China
+Christmas Island,5,Australia_NZ
+Cocos (Keeling) Islands,5,Australia_NZ
+Colombia,10,Latin America
+Comoros,9,Africa
+Congo,9,Africa
+"Congo, Dem Republic of",9,Africa
+"Congo, Democratic Republic of",9,Africa
+"Congo, Republic of",9,Africa
+Cook Islands,5,Australia_NZ
+Costa Rica,10,Latin America
+Cote dIvoire,9,Africa
+Croatia,12,Eastern Europe
+Cuba,10,Latin America
+Cyprus,3,Western Europe
+Czech Republic,12,Eastern Europe
+Czechoslovakia,12,Eastern Europe
+Democratic Peoples Republic of Korea,7,China
+Democratic Republic of the Congo,9,Africa
+Denmark,3,Western Europe
+Djibouti,9,Africa
+Dominica,10,Latin America
+Dominican Republic,10,Latin America
+Ecuador,10,Latin America
+Egypt,9,Africa
+El Salvador,10,Latin America
+Equatorial Guinea,9,Africa
+Eritrea,9,Africa
+Estonia,6,Former Soviet Union
+Ethiopia,9,Africa
+Ethiopia PDR,9,Africa
+Falkland Islands,10,Latin America
+Falkland Islands (Malvinas),10,Latin America
+Faroe Islands,3,Western Europe
+Fiji,11,Southeast Asia
+Fiji Islands,11,Southeast Asia
+Finland,3,Western Europe
+France,3,Western Europe
+French Guiana,10,Latin America
+French Polynesia,11,Southeast Asia
+Gabon,9,Africa
+Gambia,9,Africa
+Georgia,6,Former Soviet Union
+Germany,3,Western Europe
+Ghana,9,Africa
+Gibraltar,3,Western Europe
+Greece,3,Western Europe
+Greenland,3,Western Europe
+Grenada,10,Latin America
+Guadeloupe,10,Latin America
+Guam,11,Southeast Asia
+Guatemala,10,Latin America
+Guinea,9,Africa
+Guinea-Bissau,9,Africa
+Guyana,10,Latin America
+Haiti,10,Latin America
+Holy See,3,Western Europe
+Honduras,10,Latin America
+Hungary,12,Eastern Europe
+Iceland,3,Western Europe
+India,14,India
+Indonesia,11,Southeast Asia
+Iran (Islamic Republic of),8,Middle East
+Iraq,8,Middle East
+Ireland,3,Western Europe
+Isle of Man,3,Western Europe
+Israel,8,Middle East
+Italy,3,Western Europe
+Jamaica,10,Latin America
+Japan,4,Japan
+Jordan,8,Middle East
+Kazakhstan,6,Former Soviet Union
+Kenya,9,Africa
+Kiribati,11,Southeast Asia
+Kuwait,8,Middle East
+Kyrgyzstan,6,Former Soviet Union
+Lao Peoples Democratic Republic,11,Southeast Asia
+Laos,11,Southeast Asia
+Latvia,6,Former Soviet Union
+Lebanon,8,Middle East
+Lesotho,9,Africa
+Liberia,9,Africa
+Libyan Arab Jamahiriya,9,Africa
+Liechtenstein,3,Western Europe
+Lithuania,6,Former Soviet Union
+Luxembourg,3,Western Europe
+"Macedonia,The Fmr Yug Rp",12,Eastern Europe
+Madagascar,9,Africa
+Malawi,9,Africa
+Malaysia,11,Southeast Asia
+Maldives,11,Southeast Asia
+Mali,9,Africa
+Malta,3,Western Europe
+Marshall Islands,11,Southeast Asia
+Martinique,3,Western Europe
+Mauritania,9,Africa
+Mauritius,9,Africa
+Mayotte,9,Africa
+Mexico,10,Latin America
+"Micronesia,Fed States of",11,Southeast Asia
+"Micronesia, Federated States of",11,Southeast Asia
+Micronesia (Federated States of),11,Southeast Asia
+Moldova,6,Former Soviet Union
+"Moldova, Republic of",6,Former Soviet Union
+Monaco,3,Western Europe
+Mongolia,7,China
+Montenegro,12,Eastern Europe
+Montserrat,10,Latin America
+Morocco,9,Africa
+Mozambique,9,Africa
+Myanmar,11,Southeast Asia
+Namibia,9,Africa
+Nauru,11,Southeast Asia
+Nepal,11,Southeast Asia
+Netherlands,3,Western Europe
+Netherlands Antilles,10,Latin America
+New Caledonia,11,Southeast Asia
+New Zealand,5,Australia_NZ
+Nicaragua,10,Latin America
+Niger,9,Africa
+Nigeria,9,Africa
+Niue,5,Australia_NZ
+Norfolk Island,11,Southeast Asia
+Northern Mariana Islands,11,Southeast Asia
+Norway,3,Western Europe
+Occupied Palestinian Territory,8,Middle East
+Oman,8,Middle East
+Pacific Is,11,Southeast Asia
+Pacific Islands Trust Territory,11,Southeast Asia
+Pacific Islands Trust Tr,11,Southeast Asia
+Pakistan,11,Southeast Asia
+Palau,11,Southeast Asia
+"Palestine, Occupied Tr.",8,Middle East
+Panama,10,Latin America
+Papua New Guinea,11,Southeast Asia
+Paraguay,10,Latin America
+Peru,10,Latin America
+Philippines,11,Southeast Asia
+Pitcairn Islands,11,Southeast Asia
+Poland,12,Eastern Europe
+Portugal,3,Western Europe
+Puerto Rico,1,USA
+Qatar,8,Middle East
+Republic of Korea,13,Korea
+Republic of Moldova,6,Former Soviet Union
+Réunion,9,Africa
+Romania,12,Eastern Europe
+Russian Federation,6,Former Soviet Union
+Rwanda,9,Africa
+Saint Helena,9,Africa
+Saint Kitts and Nevis,10,Latin America
+Saint Lucia,10,Latin America
+Saint Pierre and Miquelon,2,Canada
+Saint Vincent and the Grenadines,10,Latin America
+Samoa,11,Southeast Asia
+San Marino,3,Western Europe
+Sao Tome and Principe,9,Africa
+Saudi Arabia,8,Middle East
+Senegal,9,Africa
+Serbia,12,Eastern Europe
+Serbia and Montenegro,12,Eastern Europe
+Seychelles,9,Africa
+Sierra Leone,9,Africa
+Singapore,11,Southeast Asia
+Slovakia,12,Eastern Europe
+Slovenia,12,Eastern Europe
+Solomon Islands,11,Southeast Asia
+Somalia,9,Africa
+South Africa,9,Africa
+Spain,3,Western Europe
+Sri Lanka,11,Southeast Asia
+Sudan,9,Africa
+Suriname,10,Latin America
+Svalbard and Jan Mayen Islands,3,Western Europe
+Swaziland,9,Africa
+Sweden,3,Western Europe
+Switzerland,3,Western Europe
+Syrian Arab Republic,8,Middle East
+Tajikistan,6,Former Soviet Union
+Thailand,11,Southeast Asia
+The former Yugoslav Republic of Macedonia,12,Eastern Europe
+Timor-Leste,11,Southeast Asia
+Togo,9,Africa
+Tokelau,5,Australia_NZ
+Tonga,11,Southeast Asia
+Trinidad and Tobago,10,Latin America
+Tunisia,9,Africa
+Turkey,3,Western Europe
+Turkmenistan,6,Former Soviet Union
+Turks and Caicos Islands,10,Latin America
+Tuvalu,11,Southeast Asia
+Uganda,9,Africa
+Ukraine,6,Former Soviet Union
+United Arab Emirates,8,Middle East
+United Kingdom,3,Western Europe
+United Republic of Tanzania,9,Africa
+United States of America,1,USA
+United States Virgin Islands,10,Latin America
+Uruguay,10,Latin America
+US Virgin Islands,10,Latin America
+USSR,6,Former Soviet Union
+Uzbekistan,6,Former Soviet Union
+Vanuatu,11,Southeast Asia
+Venezuela (Bolivarian Republic of),10,Latin America
+Viet Nam,7,China
+Wallis and Futuna Is,5,Australia_NZ
+Wallis and Futuna Islands,5,Australia_NZ
+Western Sahara,9,Africa
+Yemen,8,Middle East
+Yugoslav SFR,12,Eastern Europe
+Yugoslavia SFR,12,Eastern Europe
+Zambia,9,Africa
+Zimbabwe,9,Africa

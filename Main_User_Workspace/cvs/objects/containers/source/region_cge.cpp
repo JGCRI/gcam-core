@@ -129,7 +129,7 @@ void RegionCGE::createSGMGenTables() {
     mOutputContainers.push_back( new SGMGenTable( "PASSTRANCOST", "Passenger Transport Vehicle Service Cost ($/pass-mile)", modeltime ) );
 }
 
-//! Default destructor destroys sector, demsector, Resource, agSector, and population objects.
+//! Default destructor destroys sector, demsector, Resource, and population objects.
 RegionCGE::~RegionCGE() {
     clear();
 }

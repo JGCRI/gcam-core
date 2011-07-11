@@ -60,9 +60,8 @@ class LandNode;
  * \brief A LandLeaf is the leaf of a land allocation tree.
  * \details A leaf in the land allocator which represents the land used to
  *          produce a single crop. Land leaves can be separated into two
- *          categories, managed land leaves which are created by farming
- *          technologies, and unmanaged land leaves which are created through
- *          input to contain unmanaged arable land.
+ *          categories, managed land leaves which are used by farming
+ *          technologies, and unmanaged land leaves.
  *
  *          <b>XML specification for LandLeaf</b>
  *          - XML name: Not parsed
@@ -79,6 +78,8 @@ public:
 
     virtual ~LandLeaf();
 
+    static const std::string& getXMLNameStatic();
+
     // Tree Item methods.
     virtual size_t getNumChildren() const;
 
@@ -88,132 +89,58 @@ public:
 
     virtual void completeInit( const std::string& aRegionName, 
                                const IInfo* aRegionInfo );
-    
-    virtual void addLandUsage( const std::string& aLandType,
-                               const std::string& aProductName,
-                               const ILandAllocator::LandUsageType aLandUsageType,
-                               const int aPeriod );
+        
+    virtual void initCalc( const std::string& aRegionName,
+                           const int aPeriod );
 
     virtual void setInitShares( const std::string& aRegionName,
-                                const double aSigmaAbove,
                                 const double aLandAllocationAbove,
-                                const double aParentHistoryShare,
-                                const LandUseHistory* aParentHistory,
                                 const int aPeriod );
 
-    virtual void resetToCalLandAllocation( const int aPeriod );
+    virtual void calculateProfitScalers( const std::string& aRegionName, 
+                                const int aPeriod );
 
-    virtual void setIntrinsicYieldMode( const double aIntrinsicYieldAbove,
-                                        const double aSigmaAbove,
-                                        const int aPeriod );
-
-    virtual void setActualCarbonMult( const double aCarbonMultAbove,
-                                        const double aSigmaAbove,
-                                        const int aPeriod );
-    
-    virtual void setIntrinsicRate( const std::string& aRegionName,
-                                   const std::string& aLandType,
+	virtual void setProfitRate( const std::string& aRegionName,
                                    const std::string& aProductName,
-                                   const double aIntrinsicRate,
+                                   const double aProfitRate,
                                    const int aPeriod );
-    
-    virtual void setCalLandAllocation( const std::string& aLandType,
-                                       const std::string& aProductName,
-                                       const double aCalLandUsed,
-                                       const int aHarvestPeriod, 
-                                       const int aCurrentPeriod );
-
-    virtual void setCalObservedYield( const std::string& aLandType,
-                                      const std::string& aProductName,
-                                      const double aCalObservedYield, 
-                                      const int aPeriod );
-
-    virtual void setMaxYield( const std::string& aLandType,
-                                      const std::string& aProductName,
-                                      const double aMaxYield, 
-                                      const int aPeriod );
 
     virtual void setCarbonPriceIncreaseRate( const double aCarbonPriceIncreaseRate, 
                                       const int aPeriod );
 
-            /*!
-     * \brief Set the number of years needed to for soil carbons emissions/uptake
-     * \details This method sets the soil time scale into the carbon calculator
-     *          for each land leaf.
-     * \param aTimeScale soil time scale (in years)
-     * \author Kate Calvin
-     */
     virtual void setSoilTimeScale( const int aTimeScale );
 
-
-    virtual void applyAgProdChange( const std::string& aLandType,
-                                    const std::string& aProductName,
-                                    const double aAgProdChange,
-                                    const int aHarvestPeriod, 
-                                    const int aCurrentPeriod );
-
     virtual double calcLandShares( const std::string& aRegionName,
-                                   const double aSigmaAbove,
-                                   const double aTotalLandAllocated,
+                                   const double aLogitExpAbove,
                                    const int aPeriod );
 
     virtual void calcLandAllocation( const std::string& aRegionName,
                                      const double aLandAllocationAbove,
                                      const int aPeriod );
 
-    virtual void calcLUCCarbonFlowsOut( const std::string& aRegionName,
-                                            const int aYear );
+    virtual void calcLUCEmissions( const std::string& aRegionName,
+                                   const int aPeriod, const int aEndYear );
 
-    virtual void calcLUCCarbonFlowsIn( const std::string& aRegionName,
-                                              const int aYear );
-
-    virtual void calcCarbonBoxModel( const std::string& aRegionName,
-                                             const int aYear );
-    
-    virtual void calcYieldInternal( const std::string& aLandType,
-                                    const std::string& aProductName,
-                                    const std::string& aRegionName,
-                                    const double aProfitRate,
-                                    const double aAvgIntrinsicRate,
-                                    const int aHarvestPeriod,
-                                    const int aCurrentPeriod );
-    
-    virtual double getYield( const std::string& aLandType,
-                             const std::string& aProductName,
-                             const int aPeriod ) const;
-
-    virtual double getLandAllocation( const std::string& aLandType,
-                                      const std::string& aProductName,
+    virtual double getLandAllocation( const std::string& aProductName,
                                       const int aPeriod ) const;
 
-    virtual double getTotalLandAllocation( const LandAllocationType aType,
-                                           const int aPeriod ) const;
-    
-    virtual double getBaseLandAllocation( const int aPeriod ) const;
+    virtual double getCalLandAllocation( const LandAllocationType aType,
+                                         const int aPeriod ) const;
+    virtual double getNewTechProfitScaler( const int aPeriod ) const;
+        
+    virtual double getLogitExponent( const int aPeriod ) const;
 
-    virtual void setUnmanagedLandAllocation( const std::string& aRegionName,
-                                             const double aNewUnmanaged,
+    virtual void setUnmanagedLandProfitRate( const std::string& aRegionName, 
+                                             double aAverageProfitRate,
                                              const int aPeriod );
 
-    virtual void csvOutput( const std::string& aRegionName ) const;
+    virtual void calculateCalibrationProfitRate( const std::string& aRegionName, 
+                                             double aAverageProfitRate,
+                                             double aLogitExponentAbove,
+                                             const int aPeriod );
 
-    virtual void dbOutput( const std::string& aRegionName ) const;
-
-    virtual bool isUnmanagedNest() const;
-
-    virtual bool isConceptualRoot() const;
-
-    virtual double getSigma() const;
-
-    virtual void setUnmanagedLandValues( const std::string& aRegionName,
-                                         const int aPeriod );
- 
-    virtual void setCarbonContent( const std::string& aLandType,
-                                   const std::string& aProductName,
-                                   const double aAboveGroundCarbon,
-                                   const double aBelowGroundCarbon,
-                                   const int aMatureAge,    
-                                   const int aPeriod );
+    virtual void adjustProfitScalers( const std::string& aRegionName, 
+                                const int aPeriod );
 
     virtual bool XMLParse( const xercesc::DOMNode* aNode );
 
@@ -225,39 +152,14 @@ public:
 
     virtual void acceptDerived( IVisitor* aVisitor,
                          const int aPeriod ) const;
-    
-    virtual void copyCarbonBoxModel( const ICarbonCalc* aCarbonCalc );
+
     virtual ICarbonCalc* getCarbonContentCalc() const;
+        
+    virtual bool isManagedLandLeaf( )  const;
 
 protected:
-    //! The intrinsic yield mode of the leaf.
-    objects::PeriodVector<Value> mIntrinsicYieldMode;
-
-    //! Multiplier to intrinsic yield mode to account for ag productivity.
-    objects::PeriodVector<Value> mIntrinsicYieldModeAgProdMultiplier;
-
-    // TODO: Convert this to a PeriodVector. Currently can't because the forest
-    // leaf is adding extra periods.
-    //! Actual yield.
-    std::vector<Value> mYield;
-    
-    //! Flag to indicate that calibration data is present
-    objects::PeriodVector<bool> mCalDataExists;
-
-    //! The calibrated observed yield.
-    objects::PeriodVector<Value> mCalObservedYield;
-
-    //! The maximum possible yield.
-    std::vector<Value> mMaxYield;
-
-    //! Calculated cumulative technical change.
-    std::vector<double> mAgProdChange;  
-
-    //! Land allocated in 1000's of hectars
+    //! Land allocated in 1000's of hectares
     objects::PeriodVector<Value> mLandAllocation;
-
-    //! Calibrated land allocated in 1000's of hectars
-    objects::PeriodVector<Value> mCalLandAllocation;
 
     //! Carbon content and emissions calculator for the leaf.
     std::auto_ptr<ICarbonCalc> mCarbonContentCalc;
@@ -265,22 +167,22 @@ protected:
     //! Interest rate stored from the region info.
     Value mInterestRate;
 
+    //! Minimum above ground carbon density (used for carbon subsidy and not emissions calculations)
+    Value mMinAboveGroundCDensity;
+
+    //! Minimum below ground carbon density (used for carbon subsidy and not emissions calculations)
+    Value mMinBelowGroundCDensity;
+
     //! Expected rate of increase of the carbon price from the region info.
     objects::PeriodVector<Value> mCarbonPriceIncreaseRate;
 
-    //! Multiplier on observedYield to get IntrinsicYieldMode.
-    objects::PeriodVector<Value> mIntrinsicYieldMult;
-
-    //! Multiplier oto get Actual Carbon for unmanaged land.
-    objects::PeriodVector<Value> mActCarbonMult;
-
     //! Container of historical land use.
     std::auto_ptr<LandUseHistory> mLandUseHistory;
+    
+    objects::PeriodVector<Value> mReadinLandAllocation;
 
-    double getCarbonValue( const std::string& aRegionName,
+    double getCarbonSubsidy( const std::string& aRegionName,
                            const int aPeriod ) const;
-
-    virtual void initCarbonCycle();
 
     virtual bool XMLDerivedClassParse( const std::string& aNodeName,
                                        const xercesc::DOMNode* aCurr );
@@ -291,13 +193,8 @@ protected:
 
     virtual const std::string& getXMLName() const;
 
-    virtual void addChild( ALandAllocatorItem* aChild );
+    virtual void initLandUseHistory( const std::string& aRegionName );
 
-    virtual void checkCalObservedYield( const int aPeriod ) const;
-
-    virtual void initLandUseHistory( const double aParentHistoryShare,
-                                     const LandUseHistory* aParentHistory,
-                                     const int aFirstCalibratedPeriod );
 };
 
 #endif // _LAND_LEAF_H_

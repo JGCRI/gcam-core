@@ -1,0 +1,3029 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+         <energy-final-demand name="NonFoodDemand_Crops">
+            <perCapitaBased>1</perCapitaBased>
+            <base-service year="1975">1</base-service>
+            <base-service year="1990">131.8867298</base-service>
+            <base-service year="2005">134.6429897</base-service>
+            <price-elasticity fillout="1" year="2020">0</price-elasticity>
+            <income-elasticity year="2020">0</income-elasticity>
+            <income-elasticity year="2035">0</income-elasticity>
+            <income-elasticity year="2050">0</income-elasticity>
+            <income-elasticity year="2065">0</income-elasticity>
+            <income-elasticity year="2080">0</income-elasticity>
+            <income-elasticity year="2095">0</income-elasticity>
+            <final-energy-consumer/>
+         </energy-final-demand>
+         <supplysector name="NonFoodDemand_Crops">
+            <subsector name="Corn">
+               <technology name="Corn">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>34.04622555</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>59.35664064</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="FiberCrop">
+               <technology name="FiberCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.947756463</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.661927757</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="FodderHerb">
+               <technology name="FodderHerb">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>30.20564402</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">0</share-weight>
+            </subsector>
+            <subsector name="MiscCrop">
+               <technology name="MiscCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>3.496471974</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>4.214071858</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="OilCrop">
+               <technology name="OilCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>7.71656846</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>5.393197516</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="OtherGrain">
+               <technology name="OtherGrain">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>3.386183532</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>5.005901086</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="PalmFruit">
+               <technology name="PalmFruit">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.539526205</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.988979702</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Rice">
+               <technology name="Rice">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.964082655</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.115981914</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Root_Tuber">
+               <technology name="Root_Tuber">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>3.545021434</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.865942402</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="SugarCrop">
+               <technology name="SugarCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>45.03924949</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>51.8640995</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Wheat">
+               <technology name="Wheat">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.176247371</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Canada">
+         <energy-final-demand name="NonFoodDemand_Crops">
+            <perCapitaBased>1</perCapitaBased>
+            <base-service year="1975">1</base-service>
+            <base-service year="1990">9.320603679</base-service>
+            <base-service year="2005">8.95988665</base-service>
+            <price-elasticity fillout="1" year="2020">0</price-elasticity>
+            <income-elasticity year="2020">0</income-elasticity>
+            <income-elasticity year="2035">0</income-elasticity>
+            <income-elasticity year="2050">0</income-elasticity>
+            <income-elasticity year="2065">0</income-elasticity>
+            <income-elasticity year="2080">0</income-elasticity>
+            <income-elasticity year="2095">0</income-elasticity>
+            <final-energy-consumer/>
+         </energy-final-demand>
+         <supplysector name="NonFoodDemand_Crops">
+            <subsector name="Corn">
+               <technology name="Corn">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.173616009</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.30249254</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="FiberCrop">
+               <technology name="FiberCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.045341939</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.054851364</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="FodderHerb">
+               <technology name="FodderHerb">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
+            </subsector>
+            <subsector name="MiscCrop">
+               <technology name="MiscCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.101335629</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.717643691</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="OilCrop">
+               <technology name="OilCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.650565652</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.267681972</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="OtherGrain">
+               <technology name="OtherGrain">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.139079549</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.394695815</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="PalmFruit">
+               <technology name="PalmFruit">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.036856369</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.056268172</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Rice">
+               <technology name="Rice">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.021248272</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.064344294</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Root_Tuber">
+               <technology name="Root_Tuber">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.520977169</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.345039523</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="SugarCrop">
+               <technology name="SugarCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.65883869</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.602089266</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Wheat">
+               <technology name="Wheat">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.972744403</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.154780011</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Western Europe">
+         <energy-final-demand name="NonFoodDemand_Crops">
+            <perCapitaBased>1</perCapitaBased>
+            <base-service year="1975">1</base-service>
+            <base-service year="1990">307.9383509</base-service>
+            <base-service year="2005">232.858544</base-service>
+            <price-elasticity fillout="1" year="2020">0</price-elasticity>
+            <income-elasticity year="2020">0</income-elasticity>
+            <income-elasticity year="2035">0</income-elasticity>
+            <income-elasticity year="2050">0</income-elasticity>
+            <income-elasticity year="2065">0</income-elasticity>
+            <income-elasticity year="2080">0</income-elasticity>
+            <income-elasticity year="2095">0</income-elasticity>
+            <final-energy-consumer/>
+         </energy-final-demand>
+         <supplysector name="NonFoodDemand_Crops">
+            <subsector name="Corn">
+               <technology name="Corn">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>11.56647385</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>14.12394791</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="FiberCrop">
+               <technology name="FiberCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.233859294</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.295857185</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="FodderHerb">
+               <technology name="FodderHerb">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>49.36791087</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">0</share-weight>
+            </subsector>
+            <subsector name="MiscCrop">
+               <technology name="MiscCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>45.40707821</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>41.89625181</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="OilCrop">
+               <technology name="OilCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>17.75690855</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>26.64180375</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="OtherGrain">
+               <technology name="OtherGrain">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>27.56390164</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>18.97540826</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="PalmFruit">
+               <technology name="PalmFruit">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.63354325</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>5.553425333</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Rice">
+               <technology name="Rice">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.551347224</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.611086202</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Root_Tuber">
+               <technology name="Root_Tuber">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>18.84825018</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>11.46955499</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="SugarCrop">
+               <technology name="SugarCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>110.440632</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>86.18085376</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Wheat">
+               <technology name="Wheat">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>21.56844582</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>25.11035485</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Japan">
+         <energy-final-demand name="NonFoodDemand_Crops">
+            <perCapitaBased>1</perCapitaBased>
+            <base-service year="1975">1</base-service>
+            <base-service year="1990">20.31182395</base-service>
+            <base-service year="2005">18.01660665</base-service>
+            <price-elasticity fillout="1" year="2020">0</price-elasticity>
+            <income-elasticity year="2020">0</income-elasticity>
+            <income-elasticity year="2035">0</income-elasticity>
+            <income-elasticity year="2050">0</income-elasticity>
+            <income-elasticity year="2065">0</income-elasticity>
+            <income-elasticity year="2080">0</income-elasticity>
+            <income-elasticity year="2095">0</income-elasticity>
+            <final-energy-consumer/>
+         </energy-final-demand>
+         <supplysector name="NonFoodDemand_Crops">
+            <subsector name="Corn">
+               <technology name="Corn">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>4.334263001</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>5.578325394</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="FiberCrop">
+               <technology name="FiberCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.705815976</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.187473574</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="FodderHerb">
+               <technology name="FodderHerb">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
+            </subsector>
+            <subsector name="MiscCrop">
+               <technology name="MiscCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.246773143</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.72791604</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="OilCrop">
+               <technology name="OilCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.311941922</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.501446674</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="OtherGrain">
+               <technology name="OtherGrain">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.319635012</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.612019295</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="PalmFruit">
+               <technology name="PalmFruit">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.509027243</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.464792385</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Rice">
+               <technology name="Rice">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.722316297</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.658696085</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Root_Tuber">
+               <technology name="Root_Tuber">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.388046058</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.463436431</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="SugarCrop">
+               <technology name="SugarCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>5.303259177</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>4.698638896</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Wheat">
+               <technology name="Wheat">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.470746124</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.123861874</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Australia_NZ">
+         <energy-final-demand name="NonFoodDemand_Crops">
+            <perCapitaBased>1</perCapitaBased>
+            <base-service year="1975">1</base-service>
+            <base-service year="1990">25.8935075</base-service>
+            <base-service year="2005">42.92500927</base-service>
+            <price-elasticity fillout="1" year="2020">0</price-elasticity>
+            <income-elasticity year="2020">0</income-elasticity>
+            <income-elasticity year="2035">0</income-elasticity>
+            <income-elasticity year="2050">0</income-elasticity>
+            <income-elasticity year="2065">0</income-elasticity>
+            <income-elasticity year="2080">0</income-elasticity>
+            <income-elasticity year="2095">0</income-elasticity>
+            <final-energy-consumer/>
+         </energy-final-demand>
+         <supplysector name="NonFoodDemand_Crops">
+            <subsector name="Corn">
+               <technology name="Corn">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.19892647</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.384835799</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="FiberCrop">
+               <technology name="FiberCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.085022838</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.00606885</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="FodderHerb">
+               <technology name="FodderHerb">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
+            </subsector>
+            <subsector name="MiscCrop">
+               <technology name="MiscCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.219473016</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.46610621</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="OilCrop">
+               <technology name="OilCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.356063339</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.943528178</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="OtherGrain">
+               <technology name="OtherGrain">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.512550466</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>3.279087598</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="PalmFruit">
+               <technology name="PalmFruit">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.025835214</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.146585274</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Rice">
+               <technology name="Rice">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.189310316</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.169272808</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Root_Tuber">
+               <technology name="Root_Tuber">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.237749647</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.405058209</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="SugarCrop">
+               <technology name="SugarCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>20.30501012</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>32.2817055</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Wheat">
+               <technology name="Wheat">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.763566079</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.842760842</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Former Soviet Union">
+         <energy-final-demand name="NonFoodDemand_Crops">
+            <perCapitaBased>1</perCapitaBased>
+            <base-service year="1975">1</base-service>
+            <base-service year="1990">291.0926463</base-service>
+            <base-service year="2005">126.4209944</base-service>
+            <price-elasticity fillout="1" year="2020">0</price-elasticity>
+            <income-elasticity year="2020">0</income-elasticity>
+            <income-elasticity year="2035">0</income-elasticity>
+            <income-elasticity year="2050">0</income-elasticity>
+            <income-elasticity year="2065">0</income-elasticity>
+            <income-elasticity year="2080">0</income-elasticity>
+            <income-elasticity year="2095">0</income-elasticity>
+            <final-energy-consumer/>
+         </energy-final-demand>
+         <supplysector name="NonFoodDemand_Crops">
+            <subsector name="Corn">
+               <technology name="Corn">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>12.22774855</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>5.155087064</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="FiberCrop">
+               <technology name="FiberCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.227244347</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.037887971</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="FodderHerb">
+               <technology name="FodderHerb">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>107.8034116</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">0</share-weight>
+            </subsector>
+            <subsector name="MiscCrop">
+               <technology name="MiscCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>9.059024312</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>6.581599191</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="OilCrop">
+               <technology name="OilCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>6.205200742</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>6.698528511</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="OtherGrain">
+               <technology name="OtherGrain">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>29.32777651</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>19.53176886</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="PalmFruit">
+               <technology name="PalmFruit">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.247602665</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.933484073</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Rice">
+               <technology name="Rice">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.325781428</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.147324739</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Root_Tuber">
+               <technology name="Root_Tuber">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>26.3072225</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>28.63491152</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="SugarCrop">
+               <technology name="SugarCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>66.67167304</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>36.38604696</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Wheat">
+               <technology name="Wheat">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>30.68996058</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>21.31435548</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="China">
+         <energy-final-demand name="NonFoodDemand_Crops">
+            <perCapitaBased>1</perCapitaBased>
+            <base-service year="1975">1</base-service>
+            <base-service year="1990">268.2705568</base-service>
+            <base-service year="2005">394.6449517</base-service>
+            <price-elasticity fillout="1" year="2020">0</price-elasticity>
+            <income-elasticity year="2020">0</income-elasticity>
+            <income-elasticity year="2035">0</income-elasticity>
+            <income-elasticity year="2050">0</income-elasticity>
+            <income-elasticity year="2065">0</income-elasticity>
+            <income-elasticity year="2080">0</income-elasticity>
+            <income-elasticity year="2095">0</income-elasticity>
+            <final-energy-consumer/>
+         </energy-final-demand>
+         <supplysector name="NonFoodDemand_Crops">
+            <subsector name="Corn">
+               <technology name="Corn">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>50.81351715</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>70.20500109</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="FiberCrop">
+               <technology name="FiberCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>6.341717738</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>10.39572472</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="FodderHerb">
+               <technology name="FodderHerb">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
+            </subsector>
+            <subsector name="MiscCrop">
+               <technology name="MiscCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>19.0564991</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>62.67966729</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="OilCrop">
+               <technology name="OilCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>14.15404087</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>45.1958896</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="OtherGrain">
+               <technology name="OtherGrain">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>5.545456298</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>6.582093205</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="PalmFruit">
+               <technology name="PalmFruit">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.28544103</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>4.772308136</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Rice">
+               <technology name="Rice">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>40.98651973</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>28.06378109</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Root_Tuber">
+               <technology name="Root_Tuber">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>39.82480413</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>51.38427717</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="SugarCrop">
+               <technology name="SugarCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>72.56157012</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>108.4207713</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Wheat">
+               <technology name="Wheat">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>17.70099058</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>6.945438032</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Middle East">
+         <energy-final-demand name="NonFoodDemand_Crops">
+            <perCapitaBased>1</perCapitaBased>
+            <base-service year="1975">1</base-service>
+            <base-service year="1990">29.30761895</base-service>
+            <base-service year="2005">41.27165987</base-service>
+            <price-elasticity fillout="1" year="2020">0</price-elasticity>
+            <income-elasticity year="2020">0</income-elasticity>
+            <income-elasticity year="2035">0</income-elasticity>
+            <income-elasticity year="2050">0</income-elasticity>
+            <income-elasticity year="2065">0</income-elasticity>
+            <income-elasticity year="2080">0</income-elasticity>
+            <income-elasticity year="2095">0</income-elasticity>
+            <final-energy-consumer/>
+         </energy-final-demand>
+         <supplysector name="NonFoodDemand_Crops">
+            <subsector name="Corn">
+               <technology name="Corn">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.62628582</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.990889077</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="FiberCrop">
+               <technology name="FiberCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.268534373</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.32427754</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="FodderHerb">
+               <technology name="FodderHerb">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>4.546066145</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">0</share-weight>
+            </subsector>
+            <subsector name="MiscCrop">
+               <technology name="MiscCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>8.33663664</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>10.07438495</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="OilCrop">
+               <technology name="OilCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.070018341</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.607404798</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="OtherGrain">
+               <technology name="OtherGrain">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.92725518</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>4.002531115</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="PalmFruit">
+               <technology name="PalmFruit">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.225517662</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.840250174</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Rice">
+               <technology name="Rice">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.43994198</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.293446277</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Root_Tuber">
+               <technology name="Root_Tuber">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.844326401</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.679514769</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="SugarCrop">
+               <technology name="SugarCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>5.736653101</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>11.64768733</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Wheat">
+               <technology name="Wheat">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>4.286383305</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>6.811273847</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Africa">
+         <energy-final-demand name="NonFoodDemand_Crops">
+            <perCapitaBased>1</perCapitaBased>
+            <base-service year="1975">1</base-service>
+            <base-service year="1990">148.0539003</base-service>
+            <base-service year="2005">235.171374</base-service>
+            <price-elasticity fillout="1" year="2020">0</price-elasticity>
+            <income-elasticity year="2020">0</income-elasticity>
+            <income-elasticity year="2035">0</income-elasticity>
+            <income-elasticity year="2050">0</income-elasticity>
+            <income-elasticity year="2065">0</income-elasticity>
+            <income-elasticity year="2080">0</income-elasticity>
+            <income-elasticity year="2095">0</income-elasticity>
+            <final-energy-consumer/>
+         </energy-final-demand>
+         <supplysector name="NonFoodDemand_Crops">
+            <subsector name="Corn">
+               <technology name="Corn">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>9.337256589</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>14.67653372</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="FiberCrop">
+               <technology name="FiberCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.951731608</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.795320232</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="FodderHerb">
+               <technology name="FodderHerb">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>4.467573663</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">0</share-weight>
+            </subsector>
+            <subsector name="MiscCrop">
+               <technology name="MiscCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>16.41578844</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>22.20120897</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="OilCrop">
+               <technology name="OilCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>5.745000237</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>11.75331733</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="OtherGrain">
+               <technology name="OtherGrain">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>8.951645464</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>14.3622095</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="PalmFruit">
+               <technology name="PalmFruit">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>11.30284889</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>15.88949571</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Rice">
+               <technology name="Rice">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.338158091</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>4.531339051</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Root_Tuber">
+               <technology name="Root_Tuber">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>23.788103</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>63.69764616</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="SugarCrop">
+               <technology name="SugarCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>60.8856693</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>79.61960668</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Wheat">
+               <technology name="Wheat">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>3.870124994</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>7.644696668</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Latin America">
+         <energy-final-demand name="NonFoodDemand_Crops">
+            <perCapitaBased>1</perCapitaBased>
+            <base-service year="1975">1</base-service>
+            <base-service year="1990">514.3398437</base-service>
+            <base-service year="2005">631.807374</base-service>
+            <price-elasticity fillout="1" year="2020">0</price-elasticity>
+            <income-elasticity year="2020">0</income-elasticity>
+            <income-elasticity year="2035">0</income-elasticity>
+            <income-elasticity year="2050">0</income-elasticity>
+            <income-elasticity year="2065">0</income-elasticity>
+            <income-elasticity year="2080">0</income-elasticity>
+            <income-elasticity year="2095">0</income-elasticity>
+            <final-energy-consumer/>
+         </energy-final-demand>
+         <supplysector name="NonFoodDemand_Crops">
+            <subsector name="Corn">
+               <technology name="Corn">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>18.87404482</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>27.29516738</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="FiberCrop">
+               <technology name="FiberCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.809608403</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.286714152</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="FodderHerb">
+               <technology name="FodderHerb">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>3.295628036</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">0</share-weight>
+            </subsector>
+            <subsector name="MiscCrop">
+               <technology name="MiscCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>17.54242845</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>21.20314715</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="OilCrop">
+               <technology name="OilCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>7.709438203</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>15.66962282</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="OtherGrain">
+               <technology name="OtherGrain">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>8.433762071</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>11.11341779</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="PalmFruit">
+               <technology name="PalmFruit">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>4.751943045</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>9.847717803</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Rice">
+               <technology name="Rice">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.697331386</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>5.198897869</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Root_Tuber">
+               <technology name="Root_Tuber">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>14.11709843</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>13.58006687</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="SugarCrop">
+               <technology name="SugarCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>432.6277563</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>520.3614234</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Wheat">
+               <technology name="Wheat">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.480804601</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>5.251198773</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Southeast Asia">
+         <energy-final-demand name="NonFoodDemand_Crops">
+            <perCapitaBased>1</perCapitaBased>
+            <base-service year="1975">1</base-service>
+            <base-service year="1990">218.6839833</base-service>
+            <base-service year="2005">401.2818279</base-service>
+            <price-elasticity fillout="1" year="2020">0</price-elasticity>
+            <income-elasticity year="2020">0</income-elasticity>
+            <income-elasticity year="2035">0</income-elasticity>
+            <income-elasticity year="2050">0</income-elasticity>
+            <income-elasticity year="2065">0</income-elasticity>
+            <income-elasticity year="2080">0</income-elasticity>
+            <income-elasticity year="2095">0</income-elasticity>
+            <final-energy-consumer/>
+         </energy-final-demand>
+         <supplysector name="NonFoodDemand_Crops">
+            <subsector name="Corn">
+               <technology name="Corn">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>4.168281025</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>7.494648341</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="FiberCrop">
+               <technology name="FiberCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>3.039920346</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>4.477307293</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="FodderHerb">
+               <technology name="FodderHerb">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
+            </subsector>
+            <subsector name="MiscCrop">
+               <technology name="MiscCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>7.303921459</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>11.55870133</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="OilCrop">
+               <technology name="OilCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.138270522</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>3.341745137</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="OtherGrain">
+               <technology name="OtherGrain">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.684568003</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.99399748</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="PalmFruit">
+               <technology name="PalmFruit">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>51.22923901</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>147.2733653</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Rice">
+               <technology name="Rice">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>16.60167031</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>36.91965872</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Root_Tuber">
+               <technology name="Root_Tuber">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>3.329623952</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>17.16966052</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="SugarCrop">
+               <technology name="SugarCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>125.6312497</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>164.0599487</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Wheat">
+               <technology name="Wheat">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>4.557238937</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>7.992795136</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Eastern Europe">
+         <energy-final-demand name="NonFoodDemand_Crops">
+            <perCapitaBased>1</perCapitaBased>
+            <base-service year="1975">1</base-service>
+            <base-service year="1990">126.6942765</base-service>
+            <base-service year="2005">53.57870169</base-service>
+            <price-elasticity fillout="1" year="2020">0</price-elasticity>
+            <income-elasticity year="2020">0</income-elasticity>
+            <income-elasticity year="2035">0</income-elasticity>
+            <income-elasticity year="2050">0</income-elasticity>
+            <income-elasticity year="2065">0</income-elasticity>
+            <income-elasticity year="2080">0</income-elasticity>
+            <income-elasticity year="2095">0</income-elasticity>
+            <final-energy-consumer/>
+         </energy-final-demand>
+         <supplysector name="NonFoodDemand_Crops">
+            <subsector name="Corn">
+               <technology name="Corn">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>11.4811628</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>6.585127705</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="FiberCrop">
+               <technology name="FiberCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.467414746</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.181346291</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="FodderHerb">
+               <technology name="FodderHerb">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>30.92330163</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">0</share-weight>
+            </subsector>
+            <subsector name="MiscCrop">
+               <technology name="MiscCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>10.18631123</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>4.810663328</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="OilCrop">
+               <technology name="OilCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.224402713</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.819634497</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="OtherGrain">
+               <technology name="OtherGrain">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>10.39386233</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>7.185845423</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="PalmFruit">
+               <technology name="PalmFruit">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.033604397</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.135923675</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Rice">
+               <technology name="Rice">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.006873574</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.008216868</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Root_Tuber">
+               <technology name="Root_Tuber">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>18.57507507</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>5.523353958</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="SugarCrop">
+               <technology name="SugarCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>29.19966041</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>19.11184034</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Wheat">
+               <technology name="Wheat">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>13.20260762</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>7.21674961</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="Korea">
+         <energy-final-demand name="NonFoodDemand_Crops">
+            <perCapitaBased>1</perCapitaBased>
+            <base-service year="1975">1</base-service>
+            <base-service year="1990">7.829052774</base-service>
+            <base-service year="2005">9.707632478</base-service>
+            <price-elasticity fillout="1" year="2020">0</price-elasticity>
+            <income-elasticity year="2020">0</income-elasticity>
+            <income-elasticity year="2035">0</income-elasticity>
+            <income-elasticity year="2050">0</income-elasticity>
+            <income-elasticity year="2065">0</income-elasticity>
+            <income-elasticity year="2080">0</income-elasticity>
+            <income-elasticity year="2095">0</income-elasticity>
+            <final-energy-consumer/>
+         </energy-final-demand>
+         <supplysector name="NonFoodDemand_Crops">
+            <subsector name="Corn">
+               <technology name="Corn">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.764597645</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.571388262</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="FiberCrop">
+               <technology name="FiberCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.443651754</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.266074008</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="FodderHerb">
+               <technology name="FodderHerb">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
+            </subsector>
+            <subsector name="MiscCrop">
+               <technology name="MiscCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.640021879</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.938359397</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="OilCrop">
+               <technology name="OilCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.133394398</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.442086561</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="OtherGrain">
+               <technology name="OtherGrain">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.285183144</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.308948532</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="PalmFruit">
+               <technology name="PalmFruit">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.299850335</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.251643153</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Rice">
+               <technology name="Rice">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.063677666</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.157348584</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Root_Tuber">
+               <technology name="Root_Tuber">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.818110375</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.493957489</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="SugarCrop">
+               <technology name="SugarCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.159085145</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.000874646</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Wheat">
+               <technology name="Wheat">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.221480432</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0.276951844</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+         </supplysector>
+      </region>
+      <region name="India">
+         <energy-final-demand name="NonFoodDemand_Crops">
+            <perCapitaBased>1</perCapitaBased>
+            <base-service year="1975">1</base-service>
+            <base-service year="1990">245.2507647</base-service>
+            <base-service year="2005">308.5086627</base-service>
+            <price-elasticity fillout="1" year="2020">0</price-elasticity>
+            <income-elasticity year="2020">0</income-elasticity>
+            <income-elasticity year="2035">0</income-elasticity>
+            <income-elasticity year="2050">0</income-elasticity>
+            <income-elasticity year="2065">0</income-elasticity>
+            <income-elasticity year="2080">0</income-elasticity>
+            <income-elasticity year="2095">0</income-elasticity>
+            <final-energy-consumer/>
+         </energy-final-demand>
+         <supplysector name="NonFoodDemand_Crops">
+            <subsector name="Corn">
+               <technology name="Corn">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.861768971</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>5.796135303</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="FiberCrop">
+               <technology name="FiberCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>3.288457757</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>4.754189102</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="FodderHerb">
+               <technology name="FodderHerb">
+                  <period year="1990">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>0</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>0</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">0</share-weight>
+            </subsector>
+            <subsector name="MiscCrop">
+               <technology name="MiscCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>9.168115508</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>15.84092519</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="OilCrop">
+               <technology name="OilCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>7.525522046</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>10.35401318</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="OtherGrain">
+               <technology name="OtherGrain">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.392828894</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.989730423</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="PalmFruit">
+               <technology name="PalmFruit">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>2.208980697</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>5.163105608</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Rice">
+               <technology name="Rice">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>8.086766241</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>8.560076442</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Root_Tuber">
+               <technology name="Root_Tuber">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>4.608692995</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>7.671346126</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="SugarCrop">
+               <technology name="SugarCrop">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>200.9224782</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>247.3784688</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="Wheat">
+               <technology name="Wheat">
+                  <period year="1990">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>5.187153382</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+                  <period year="2005">
+                     <share-weight>1</share-weight>
+                     <CalDataOutput>
+                        <calOutputValue>1.000672558</calOutputValue>
+                     </CalDataOutput>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+         </supplysector>
+      </region>
+   </world>
+</scenario>

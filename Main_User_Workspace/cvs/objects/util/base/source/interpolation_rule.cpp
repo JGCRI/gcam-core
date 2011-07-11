@@ -290,7 +290,7 @@ void InterpolationRule::applyInterpolations( PeriodVector<Value>& aValuesToInter
         }
     }
     else {
-        if( !mToValue.isInited() ) {
+        if( !mToValue.isInited() && !mIsFixedFunction ) {
             // if the to-year is not a model year then the to-value should
             // have been set
             // abort no to-value has been set for non-model year
@@ -318,7 +318,7 @@ void InterpolationRule::applyInterpolations( PeriodVector<Value>& aValuesToInter
     // all error checking has occured so we can set the left and right brackets
     // and perform any interpolations
     XYDataPoint leftBracket( mFromYear, mFromValue.isInited() ? mFromValue : aValuesToInterpolate[ fromPer ] );
-    XYDataPoint rightBracket( mToYear, mToValue.isInited() ? mToValue : aValuesToInterpolate[ toPer ] );
+    XYDataPoint rightBracket( mToYear, mToValue.isInited() || mIsFixedFunction ? mToValue : aValuesToInterpolate[ toPer ] );
 
     // increment one to interpolate or set the terminal period for the fixed function.
     if( mIsFixedFunction ){ ++toPer; } 

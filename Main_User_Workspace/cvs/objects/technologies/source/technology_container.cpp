@@ -59,9 +59,8 @@
 #include "technologies/include/solar_technology.h"
 #include "technologies/include/nuke_fuel_technology.h"
 #include "technologies/include/tran_technology.h"
-#include "technologies/include/food_production_technology.h"
+#include "technologies/include/ag_production_technology.h"
 #include "technologies/include/unmanaged_land_technology.h"
-#include "technologies/include/forest_production_technology.h"
 #include "technologies/include/empty_technology.h"
 
 extern Scenario* scenario;
@@ -132,9 +131,8 @@ bool TechnologyContainer::hasTechnologyType( const string& aTechNodeName ) {
              aTechNodeName == SolarTechnology::getXMLNameStatic() ||
              aTechNodeName == NukeFuelTechnology::getXMLNameStatic() ||
              aTechNodeName == TranTechnology::getXMLNameStatic() ||
-             aTechNodeName == FoodProductionTechnology::getXMLNameStatic() ||
-             aTechNodeName == UnmanagedLandTechnology::getXMLNameStatic() ||
-             aTechNodeName == ForestProductionTechnology::getXMLNameStatic() );
+             aTechNodeName == AgProductionTechnology::getXMLNameStatic() ||
+             aTechNodeName == UnmanagedLandTechnology::getXMLNameStatic() );
 }
 
 /*!
@@ -188,14 +186,11 @@ bool TechnologyContainer::createAndParseVintage( const DOMNode* aNode, const str
         else if( aTechType == TranTechnology::getXMLNameStatic() ) {
             newVintage = new TranTechnology( mName, techYear );
         }
-        else if( aTechType == FoodProductionTechnology::getXMLNameStatic() ) {
-            newVintage = new FoodProductionTechnology( mName, techYear );
+        else if( aTechType == AgProductionTechnology::getXMLNameStatic() ) {
+            newVintage = new AgProductionTechnology( mName, techYear );
         }
         else if( aTechType == UnmanagedLandTechnology::getXMLNameStatic() ) {
             newVintage = new UnmanagedLandTechnology( mName, techYear );
-        }
-        else if( aTechType == ForestProductionTechnology::getXMLNameStatic() ) {
-            newVintage = new ForestProductionTechnology( mName, techYear );
         }
         else {
             // Getting an error message here implies that the known technologies in this method are
@@ -398,17 +393,9 @@ void TechnologyContainer::completeInit( const string& aRegionName,
             CVintageIterator tempPrevTech, prevTech;
             tempPrevTech = prevTech = mVintages./*find*/lower_bound( 
                                       modeltime->getper_to_yr( period - 1 ) );
-            ITechnology* newTech = ( *prevTech ).second->clone();
-            newTech->setYear( year );
             // Use temporary iterator to get next tech to avoid changing prev tech.
             CVintageIterator nextTech = ++tempPrevTech;
-            if( nextTech != mVintages.end() ) {
-                newTech->doInterpolations( static_cast<Technology*>( ( *prevTech ).second ),
-                                           static_cast<Technology*>( ( *nextTech ).second ) );
-            }
-            mVintages[ year ] = newTech;
-            mVintagesByPeriod[ period ] = newTech;
-            mInterpolatedTechYears.push_back( year );
+            interpolateVintage( year, prevTech, nextTech );
         }
     }
     
@@ -425,6 +412,19 @@ void TechnologyContainer::initCalc( const string& aRegionName, const string& aSe
                                     const IInfo* aSubsecInfo, const Demographic* aDemographic,
                                     const int aPeriod )
 {
+    
+    // Pass forward any emissions information
+    if( aPeriod > 1 && mVintagesByPeriod[ aPeriod - 1 ] != EmptyTechnology::getInstance() 
+        && mVintagesByPeriod[ aPeriod ] != EmptyTechnology::getInstance() )
+    {
+        vector<string> ghgNames = mVintagesByPeriod[ aPeriod -1]->getGHGNames();
+        int numberOfGHGs = mVintagesByPeriod[ aPeriod -1]->getNumbGHGs();
+        for ( int j=0 ; j<numberOfGHGs; j++ ) {
+            mVintagesByPeriod[ aPeriod ]->copyGHGParameters(
+                mVintagesByPeriod[ aPeriod - 1 ]->getGHGPointer( ghgNames[j] ) );
+        }
+    }
+    
     // Initialize the previous period info as having no input set and
     // cumulative Hicks neutral, energy of 1 and it is the first tech.
     PreviousPeriodInfo prevPeriodInfo = { 0, 1, true };
@@ -441,36 +441,6 @@ void TechnologyContainer::initCalc( const string& aRegionName, const string& aSe
     // interpolate technology share weights
     interpolateShareWeights( aPeriod );
     
-    // Pass forward any emissions information
-    if( aPeriod > 0 && mVintagesByPeriod[ aPeriod - 1 ] != EmptyTechnology::getInstance() 
-            && mVintagesByPeriod[ aPeriod ] != EmptyTechnology::getInstance() ) {
-        // TODO: check this logic and do we really want to check the prevous year's technology
-        // instead of the previous period's?
-        vector<string> ghgNames;
-        ghgNames = mVintagesByPeriod[ aPeriod ]->getGHGNames();
-        
-        int numberOfGHGs = mVintagesByPeriod[ aPeriod ]->getNumbGHGs();
-        
-        if ( numberOfGHGs != mVintagesByPeriod[ aPeriod - 1 ]->getNumbGHGs() && aPeriod > 1 ) {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Number of GHG objects changed in period " << aPeriod;
-            mainLog << " to " << numberOfGHGs <<", tech: " << mName;
-            mainLog << ", sect: " << aSectorName << ", region: " << aRegionName << endl;
-        }
-        // If number of GHG's decreased, then copy GHG objects
-        // This would allow user to input a GHG object only in one period
-        if ( numberOfGHGs < mVintagesByPeriod[ aPeriod - 1 ]->getNumbGHGs() ) {
-            // TODO
-        }
-        
-        if ( aPeriod > 1 ) { // Note the hard coded base period
-            for ( int j=0 ; j<numberOfGHGs; j++ ) {
-                mVintagesByPeriod[ aPeriod ]->copyGHGParameters(
-                    mVintagesByPeriod[ aPeriod - 1 ]->getGHGPointer( ghgNames[j] ) );
-            }
-        }
-    }
 }
 
 void TechnologyContainer::postCalc( const string& aRegionName, const int aPeriod ) {
@@ -614,6 +584,44 @@ void TechnologyContainer::interpolateShareWeights( const int aPeriod ) {
     }
 }
 
+/*!
+ * \brief Interpolate a technology vintage given the previous and next vintage.
+ * \details The vintage will be interpolated by cloning aPrevTech.  If aNextTech
+ *          exists then doInterpolations will be called on the new vintage.  All
+ *          datastructures will be updated with the new vintage.
+ * \param aYear The year which needs to be interpolated.
+ * \param aPrevTech The previous vintage to interpolate from.
+ * \param aNextTech The next vintage to interpolate to.
+ */
+void TechnologyContainer::interpolateVintage( const int aYear, CVintageIterator aPrevTech,
+                                              CVintageIterator aNextTech )
+{
+    /*!
+     * \pre The given year does not already exist.
+     */
+    assert( mVintages.find( aYear ) == mVintages.end() );
+    
+    /*!
+     * \pre The previous vintage must exist.
+     */
+    assert( aPrevTech != mVintages.end() );
+    
+    ITechnology* newTech = ( *aPrevTech ).second->clone();
+    newTech->setYear( aYear );
+    
+    if( aNextTech != mVintages.end() ) {
+        newTech->doInterpolations( static_cast<Technology*>( ( *aPrevTech ).second ),
+                                   static_cast<Technology*>( ( *aNextTech ).second ) );
+    }
+    mVintages[ aYear ] = newTech;
+    mInterpolatedTechYears.push_back( aYear );
+    
+    const Modeltime* modeltime = scenario->getModeltime();
+    if( modeltime->isModelYear( aYear ) ) {
+        mVintagesByPeriod[ modeltime->getyr_to_per( aYear ) ] = newTech;
+    }
+}
+
 void TechnologyContainer::accept( IVisitor* aVisitor, const int aPeriod ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     CVintageIterator end;
@@ -652,4 +660,37 @@ void TechnologyContainer::accept( IVisitor* aVisitor, const int aPeriod ) const 
     for( CVintageIterator vintageIt = mVintages.begin(); vintageIt != end; ++vintageIt ) {
         ( *vintageIt ).second->accept( aVisitor, periodToUse );
     }
+}
+
+void TechnologyContainer::interpolateAndParse( const DOMNode* aNode ) {
+    // Get all child nodes.
+    DOMNodeList* nodeList = aNode->getChildNodes();
+    
+    // Loop through the child nodes and interpolate any vintages which do not exist.
+    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
+        DOMNode* curr = nodeList->item( i );
+        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+        
+        if( nodeName == XMLHelper<void>::text() ) {
+            continue;
+        }
+        
+        const int year = XMLHelper<int>::getAttr( curr, "year" );
+        if( year != 0 && mVintages.find( year ) == mVintages.end() ) {
+            // Find the previous and next vintages so that we can interpolate.
+            CVintageIterator prevTech = --mVintages.lower_bound( year );
+            if( prevTech == mVintages.end() ) {
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::ERROR );
+                mainLog << "Could not find a vintage before " << year << " to interplate from." << endl;
+                exit( 1 );
+            }
+            CVintageIterator tempPrevTech = prevTech;
+            CVintageIterator nextTech = ++tempPrevTech;
+            interpolateVintage( year, prevTech, nextTech );
+        }
+    }
+    
+    // We can now parse values.
+    XMLParse( aNode );
 }

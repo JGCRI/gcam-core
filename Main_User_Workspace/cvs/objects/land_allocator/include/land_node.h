@@ -72,7 +72,6 @@ class ICarbonCalc;
  *          - Elements:
  *              - \c LandNode LandNode::children
  *              - \c UnmanagedLandLeaf LandNode::children
- *              - \c sigma LandNode::mSigma
  *              - \c land-use-history LandNode::mLandUseHistory
  */
 class LandNode : public ALandAllocatorItem {
@@ -92,51 +91,25 @@ public:
     
     virtual void completeInit( const std::string& aRegionName, 
                                const IInfo* aRegionInfo );
-
-    virtual void addLandUsage( const std::string& aLandType,
-                               const std::string& aProductName,
-                               const ILandAllocator::LandUsageType aLandUsageType,
-                               const int aPeriod );
+    
+    virtual void initCalc( const std::string& aRegionName,
+                           const int aPeriod );
 
     virtual void setInitShares( const std::string& aRegionName,
-                                const double aSigmaAbove,
                                 const double aLandAllocationAbove,
-                                const double aParentHistoryShare,
-                                const LandUseHistory* aParentHistory,
                                 const int aPeriod );
 
-    virtual void resetToCalLandAllocation( const int aPeriod );
+    virtual void calculateProfitScalers( const std::string& aRegionName, 
+                                const int aPeriod );
 
-    virtual void setIntrinsicYieldMode( const double aIntrinsicYieldAbove,
-                                        const double aSigmaAbove,
-                                        const int aPeriod );
+    virtual void adjustProfitScalers( const std::string& aRegionName, 
+                                const int aPeriod );
 
-    virtual void setActualCarbonMult( const double aCarbonMultAbove,
-                                        const double aSigmaAbove,
-                                        const int aPeriod );
-    
-    virtual void setIntrinsicRate( const std::string& aRegionName,
-                                   const std::string& aLandType,
+    virtual void setProfitRate( const std::string& aRegionName,
                                    const std::string& aProductName,
-                                   const double aIntrinsicRate,
+                                   const double aProfitRate,
                                    const int aPeriod );
-    
-    virtual void setCalLandAllocation( const std::string& aLandType,
-                                       const std::string& aProductName,
-                                       const double aCalLandUsed,
-                                       const int aHarvestPeriod, 
-                                       const int aCurrentPeriod );
-    
-    virtual void setCalObservedYield( const std::string& aLandType,
-                                      const std::string& aProductName,
-                                      const double aCalObservedYield, 
-                                      const int aPeriod );
-
-    virtual void setMaxYield( const std::string& aLandType,
-                                      const std::string& aProductName,
-                                      const double aMaxYield, 
-                                      const int aPeriod );
-
+ 
     virtual void setCarbonPriceIncreaseRate( const double aCarbonPriceIncreaseRate, 
                                       const int aPeriod );
 
@@ -149,76 +122,39 @@ public:
      */
     virtual void setSoilTimeScale( const int aTimeScale );
 
-
-    virtual void applyAgProdChange( const std::string& aLandType,
-                                    const std::string& aProductName,
-                                    const double aAgProdChange,
-                                    const int aHarvestPeriod, 
-                                    const int aCurrentPeriod );
-
     virtual double calcLandShares( const std::string& aRegionName,
-                                   const double aSigmaAbove,
-                                   const double aTotalLandAllocated,
+                                   const double aLogitExpAbove,
                                    const int aPeriod );
 
     virtual void calcLandAllocation( const std::string& aRegionName,
                                      const double aLandAllocationAbove,
                                      const int aPeriod );
     
-    virtual void calcLUCCarbonFlowsOut( const std::string& aRegionName,
-                                        const int aYear );
-
-    virtual void calcLUCCarbonFlowsIn( const std::string& aRegionName,
-                                       const int aYear );
-
-    virtual void calcCarbonBoxModel( const std::string& aRegionName,
-                                     const int aYear );
+    virtual void calcLUCEmissions( const std::string& aRegionName,
+                                   const int aYear, const int aEndYear );
     
-    virtual void calcYieldInternal( const std::string& aLandType,
-                                    const std::string& aProductName,
-                                    const std::string& aRegionName,
-                                    const double aProfitRate,
-                                    const double aAvgIntrinsicRate,
-                                    const int aHarvestPeriod,
-                                    const int aCurrentPeriod );
-
-    virtual double getYield( const std::string& aLandType,
-                             const std::string& aProductName,
-                             const int aPeriod ) const;
-    
-    virtual double getLandAllocation( const std::string& aLandType,
-                                      const std::string& aProductName,
+    virtual double getLandAllocation( const std::string& aProductName,
                                       const int aPeriod ) const;
 
-    virtual double getTotalLandAllocation( const LandAllocationType aType,
-                                           const int aPeriod ) const;
+    virtual double getCalLandAllocation( const LandAllocationType aType,
+                                         const int aPeriod ) const;
 
     virtual LandUseHistory* getLandUseHistory();
+        
+    virtual double getLogitExponent( const int aPeriod ) const;
 
-    virtual double getBaseLandAllocation( const int aPeriod ) const;
+    virtual double getNewTechProfitScaler( const int aPeriod ) const;
     
-    virtual void setUnmanagedLandAllocation( const std::string& aRegionName,
-                                             const double aNewUnmanaged,
+    virtual void setUnmanagedLandProfitRate( const std::string& aRegionName, 
+                                             double aAverageProfitRate,
                                              const int aPeriod );
+           
+    virtual bool isManagedLandLeaf( )  const;
 
-    virtual void csvOutput( const std::string& aRegionName ) const;
-    virtual void dbOutput( const std::string& aRegionName ) const;
-    
-    virtual bool isUnmanagedNest() const;
-    
-    virtual bool isConceptualRoot() const;
-    
-    virtual double getSigma() const;
-    
-    virtual void setUnmanagedLandValues( const std::string& aRegionName,
-                                         const int aPeriod );
-
-    virtual void setCarbonContent( const std::string& aLandType,
-                                   const std::string& aProductName,
-                                   const double aAboveGroundCarbon,
-                                   const double aBelowGroundCarbon,
-                                   const int aMatureAge,    
-                                   const int aPeriod );
+    virtual void calculateCalibrationProfitRate( const std::string& aRegionName,
+                                             double aAverageProfitRate,
+                                             double aLogitExponentAbove,
+                                             const int aPeriod );
 
     virtual void accept( IVisitor* aVisitor, 
                          const int aPeriod ) const;
@@ -240,30 +176,41 @@ protected:
                                     Tabs* aTabs ) const;
 
     virtual const std::string& getXMLName() const;
-
-    virtual void addChild( ALandAllocatorItem* child );
     
     ALandAllocatorItem* findChild( const std::string& aName,
-                                   const TreeItemType aType );
+                                   const LandAllocatorItemType aType );
     
     const ALandAllocatorItem* findChild( const std::string& aName,
-                                         const TreeItemType aType ) const;
+                                         const LandAllocatorItemType aType ) const;
 
     //! Land allocated -- used for conceptual roots
-    objects::PeriodVector<Value> mLandAllocation;
+    objects::PeriodVector<double> mLandAllocation;
+        
+    //! Logit exponent -- should be positive since we are sharing on profit
+    objects::PeriodVector<double> mLogitExponent;
+
+    //! Share Profit scaler for new technologies in this node
+    objects::PeriodVector<double> mNewTechProfitScaler;
+    
+    //! Numerator that determines share for new technologies IF the right profit conditions hold
+	//! Share will equal ( mGhostShareNumerator / ( 1 + mGhostShareNumerator ) ) if and only if
+	//! the profit of the new technology is equal to the profit of the dominant technology in 
+	//! the base year, and all other profits stay the same.
+    objects::PeriodVector<double> mGhostShareNumerator;
+    
+    //! Double storing the average price of land in a region or subregion
+    double mUnManagedLandValue;
+
+    //! Boolean indicating that scalers in this node should be adjusted for new technologies
+    // TODO: we may want this boolean at the LandLeaf level, but it will need to be used in LandNode
+    bool mAdjustScalersForNewTech;
 
     //! List of the children of this land node located below it in the land
     //! allocation tree.
     std::vector<ALandAllocatorItem*> mChildren;
 
-    //! Exponential constant used to distribute land shares.
-    Value mSigma;
-
     //! Container of historical land use.
     std::auto_ptr<LandUseHistory> mLandUseHistory;
-
-    std::auto_ptr<ICarbonCalc> mCarbonBoxModelTemplate;
-
 };
 
 #endif // _LAND_NODE_H_

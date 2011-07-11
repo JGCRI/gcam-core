@@ -248,7 +248,7 @@ void AComplexEmissions::calcEmission( const string& aRegionName,
 */
     const double totalInput = FunctionUtils::getPhysicalDemandSum( aInputs, aPeriod );
     const double emissDriver = emissionsDriver(totalInput, primaryOutput);
-    if ( ghgMac.get() ){
+    if ( ghgMac.get() && aPeriod > scenario->getModeltime()->getFinalCalibrationPeriod() ){
         macReduction = ghgMac->findReduction( aRegionName, aPeriod);
     }
 

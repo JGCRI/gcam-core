@@ -105,6 +105,9 @@ public:
     virtual void startVisitSubResource( const SubResource* aSubResource, const int aPeriod ){}
     virtual void endVisitSubResource( const SubResource* aSubResource, const int aPeriod ){}
 
+    virtual void startVisitSubRenewableResource( const SubRenewableResource* aSubResource, const int aPeriod ){}
+    virtual void endVisitSubRenewableResource( const SubRenewableResource* aSubResource, const int aPeriod ){}
+
     virtual void startVisitGrade( const Grade* aGrade, const int aPeriod ){}
     virtual void endVisitGrade( const Grade* aGrade, const int aPeriod ){}
 
@@ -131,11 +134,8 @@ public:
     virtual void startVisitTechnology( const Technology* aTechnology, const int aPeriod ){}
     virtual void endVisitTechnology( const Technology* aTechnology, const int aPeriod ){}
 
-    virtual void startVisitFoodProductionTechnology( const FoodProductionTechnology* aTechnology, const int aPeriod ){}
-    virtual void endVisitFoodProductionTechnology( const FoodProductionTechnology* aTechnology, const int aPeriod ){}
-
-    virtual void startVisitForestProductionTechnology( const ForestProductionTechnology* aTechnology, const int aPeriod ){}
-    virtual void endVisitForestProductionTechnology( const ForestProductionTechnology* aTechnology, const int aPeriod ){}
+    virtual void startVisitAgProductionTechnology( const AgProductionTechnology* aTechnology, const int aPeriod ){}
+    virtual void endVisitAgProductionTechnology( const AgProductionTechnology* aTechnology, const int aPeriod ){}
 
     virtual void startVisitBaseTechnology( const BaseTechnology* aBaseTechnology, const int aPeriod ){}
     virtual void endVisitBaseTechnology( const BaseTechnology* aBaseTechnology, const int aPeriod ){}
@@ -215,21 +215,6 @@ public:
 
     virtual void startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod ){}
     virtual void endVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod ){}
-
-    virtual void startVisitCarbonBoxModel( const CarbonBoxModel* aCarbonBoxModel, const int aPeriod ){}
-    virtual void endVisitCarbonBoxModel( const CarbonBoxModel* aCarbonBoxModel, const int aPeriod ){}
-    
-    virtual void startVisitCarbonBox( const CarbonBox* aCarbonBox, const int aPeriod ){};
-    virtual void endVisitCarbonBox( const CarbonBox* aCarbonBox, const int aPeriod ){};
-
-    virtual void startVisitNPP( const NPP* aNPP, const int aPeriod ){}
-    virtual void endVisitNPP( const NPP* aNPP, const int aPeriod ){}
-
-    virtual void startVisitCarbonFlow( const ACarbonFlow* aCarbonFlow, const int aPeriod ){}
-    virtual void endVisitCarbonFlow( const ACarbonFlow* aCarbonFlow, const int aPeriod ){}
-
-    virtual void startVisitAgSector( const AgSector* aAgSector, const int aPeriod ){}
-    virtual void endVisitAgSector( const AgSector* aAgSector, const int aPeriod ){}
 
     virtual void startVisitClimateModel( const IClimateModel* aClimateModel, const int aPeriod ){}
     virtual void endVisitClimateModel( const IClimateModel* aClimateModel, const int aPeriod ){}

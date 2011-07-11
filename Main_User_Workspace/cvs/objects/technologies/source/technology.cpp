@@ -148,6 +148,7 @@ void Technology::copy( const Technology& techIn ) {
     mName = techIn.mName;
     mLifetimeYears = techIn.mLifetimeYears;
     mShareWeight = techIn.mShareWeight;
+    mParsedShareWeight = techIn.mParsedShareWeight;
     mPMultiplier = techIn.mPMultiplier;
 
     year = techIn.year;
@@ -423,7 +424,7 @@ void Technology::completeInit( const string& aRegionName,
 
     // TODO: Calibrating to zero does not work correctly so reset the shareweights
     // to zero and remove the calibration input. This could be improved.
-    if( mCalValue.get() && mCalValue->getCalOutput() < util::getSmallNumber() ){
+    if( mCalValue.get() && mCalValue->getCalOutput() <= 0.0 ){
         mShareWeight = 0;
     }
 
@@ -693,7 +694,7 @@ void Technology::initCalc( const string& aRegionName,
 
             // If there is a calibration value re-set 0 shareweight to 1 so that calibration 
             // can occur.
-            if( getCalibrationOutput( false, "", aPeriod ) > util::getSmallNumber() 
+            if( getCalibrationOutput( false, "", aPeriod ) > 0.0 
                 && mShareWeight == 0 && mFixedOutput == getFixedOutputDefault() ) {
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
                 mainLog.setLevel( ILogger::NOTICE );
@@ -1479,12 +1480,16 @@ int Technology::getNumbGHGs()  const {
 * \warning Assumes there is only one GHG object with any given name
 */
 void Technology::copyGHGParameters( const AGHG* prevGHG ) {
-    for( GHGIterator i = ghg.begin(); i != ghg.end(); ++i ){
+    bool found = false;
+    for( GHGIterator i = ghg.begin(); i != ghg.end() && !found; ++i ){
         if( (*i)->getName() == prevGHG->getName() ){
             ( *i )->copyGHGParameters( prevGHG );
+            found = true;
         }
     }
-//    assert( false ); Don't know why this was set to crash here. sjs
+    if( !found ) {
+        ghg.push_back( prevGHG->clone() );
+    }
 }
 
 /*! \brief Returns the pointer to a specific GHG 
@@ -1794,6 +1799,11 @@ void Technology::doInterpolations( const Technology* aPrevTech, const Technology
     {
         mParsedShareWeight = util::linearInterpolateY( year, aPrevTech->year, aNextTech->year,
             aPrevTech->mParsedShareWeight, aNextTech->mParsedShareWeight );
+    }
+    else if( modeltime->getyr_to_per( aPrevTech->year ) == modeltime->getFinalCalibrationPeriod() )
+    {
+        // Make sure the share weight gets interpolated from the calibrated value.
+        mParsedShareWeight = Value();
     }
     
     // have inputs do any interpolations

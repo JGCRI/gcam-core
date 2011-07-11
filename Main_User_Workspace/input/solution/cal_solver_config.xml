@@ -132,12 +132,6 @@
 	<solution-info-param-parser>
 		<!-- applies to all regions since region attribute is not included -->
 		<max-price-change fillout="1" market-type="Trial-Value" period="1">10</max-price-change>
-		<!--
-	<bracket-interval good="Corn" region="global" period="1" fillout="1">0.05</bracket-interval>
-	<max-price-change good="Corn" region="global" period="1" fillout="1">1.05</max-price-change>
-	-->
-		<bracket-interval good="FutureForest" region="global" period="1">0.005</bracket-interval>
-		<max-price-change good="FutureForest" region="global" period="1">1.005</max-price-change>
 		<bracket-interval good="unconventional oil" region="global" period="3">0.005</bracket-interval>
 		<max-price-change good="unconventional oil" region="global" period="3">1.005</max-price-change>
 		<bracket-interval good="unconventional oil" region="global" period="4">0.005</bracket-interval>

@@ -136,7 +136,6 @@ private:
     //! calc() has been called.
     std::auto_ptr<CalcCounter> mCalcCounter;
 
-    void initAgLu(); 
     void clear();
 
     const std::vector<unsigned int> getRegionIndexesToCalculate( const AtomVector& aRegionsToCalc );

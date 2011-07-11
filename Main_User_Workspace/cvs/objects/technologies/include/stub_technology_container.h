@@ -61,7 +61,9 @@
  *          calling XMLParse on the copied container.  The global technology is
  *          not written back in toInputXML instead only the XML adjustments will
  *          be.  All other ITechnologyContainer calls are merely forwared to the
- *          local copy of the global technology.
+ *          local copy of the global technology.  The stub technology also allows
+ *          interpolating a technology before making adjustments by setting the
+ *          allow-interpolate attrubute to true.
  *
  *
  *          <b>XML specification for StubTechnologyContainer</b>
@@ -69,6 +71,9 @@
  *          - Contained by: Subsector
  *          - Parsing inherited from class: None
  *          - Attributes: name The name of the technologies contained.
+ *                        allow-interpolate Whether the XML adjustments with in
+ *                        this stub-technology tab may interpolate a technology
+ *                        in order to parse then data.
  *          - Elements:
  *              Any XML what so ever.  These elements will be kept around and will
  *              not be parsed until completeInit by the local copy of the global
@@ -122,6 +127,8 @@ public:
     
 protected:
     virtual ITechnologyContainer* clone() const;
+    
+    virtual void interpolateAndParse( const xercesc::DOMNode* aNode );
     
 private:
     //! The name of the stub which will be duplicated in each contained

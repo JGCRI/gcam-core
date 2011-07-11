@@ -94,7 +94,7 @@ typedef std::vector<AResource*>::const_iterator CResourceIterator;
 Region::Region() {
 }
 
-//! Default destructor destroys sector, demsector, Resource, agSector, and
+//! Default destructor destroys sector, demsector, Resource, and
 //! population objects.
 Region::~Region() {
     clear();

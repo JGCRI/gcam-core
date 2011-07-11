@@ -126,11 +126,8 @@ public:
     virtual void startVisitOutput( const IOutput* aOutput, const int aPeriod );
     virtual void endVisitOutput( const IOutput* aOutput, const int aPeriod );
 
-    virtual void startVisitFoodProductionTechnology( const FoodProductionTechnology* FoodProductionTechnology, const int aPeriod );
-    virtual void endVisitFoodProductionTechnology( const FoodProductionTechnology* FoodProductionTechnology, const int aPeriod );
-
-    virtual void startVisitForestProductionTechnology( const ForestProductionTechnology* aForestProductionTechnology, const int aPeriod );
-    virtual void endVisitForestProductionTechnology( const ForestProductionTechnology* aForestProductionTechnology, const int aPeriod );
+    virtual void startVisitAgProductionTechnology( const AgProductionTechnology* AgProductionTechnology, const int aPeriod );
+    virtual void endVisitAgProductionTechnology( const AgProductionTechnology* AgProductionTechnology, const int aPeriod );
 
     void startVisitGHG( const AGHG* aGHG, const int aPeriod );
     void endVisitGHG( const AGHG* aGHG, const int aPeriod );
@@ -170,12 +167,6 @@ public:
 
     void startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod );
     void endVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod );
-
-    virtual void startVisitCarbonBoxModel( const CarbonBoxModel* aCarbonBoxModel, const int aPeriod );
-    virtual void endVisitCarbonBoxModel( const CarbonBoxModel* aCarbonBoxModel, const int aPeriod );
-
-    void startVisitCarbonBox( const CarbonBox* aCarbonBox, const int aPeriod );
-    void endVisitCarbonBox( const CarbonBox* aCarbonBox, const int aPeriod );
 
     void startVisitLandNode( const LandNode* aLandNode, const int aPeriod );
     void endVisitLandNode( const LandNode* aLandNode, const int aPeriod );

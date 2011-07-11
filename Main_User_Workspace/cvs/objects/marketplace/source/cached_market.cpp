@@ -154,7 +154,7 @@ void CachedMarket::addToSupply( const string& aGoodName, const string& aRegionNa
     if ( !util::isValidNumber( aValue ) ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
-        mainLog << "Error adding to supply in markeplace for: " << aGoodName << ", value: " << aValue << endl;
+        mainLog << "Error adding to supply in markeplace for: " << aGoodName << ", region: " << aRegionName << ", value: " << aValue << endl;
         return;
     }
     
@@ -201,7 +201,7 @@ void CachedMarket::addToDemand( const string& aGoodName, const string& aRegionNa
     if ( !util::isValidNumber( aValue ) ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
-        mainLog << "Error adding to demand in markeplace for: " << aGoodName << ", value: " << aValue << endl;
+        mainLog << "Error adding to demand in markeplace for: " << aGoodName << ", region: " << aRegionName << ", value: " << aValue << endl;
         return;
     }
     

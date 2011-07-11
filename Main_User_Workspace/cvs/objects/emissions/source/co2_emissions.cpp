@@ -68,14 +68,7 @@ CO2Emissions::~CO2Emissions()
 
 //! Clone operator.
 CO2Emissions* CO2Emissions::clone() const {
-    /*!
-     * \todo We are just returning a default CO2Emissions object because
-     *       we did not want to copy the past emissions into a new object
-     *       since that would not make sense for reporting.  This strategy
-     *       is not completely correct because there may be things that should
-     *       get copied in the future.  This may be the case for MiniCAM already.
-     */
-    return new CO2Emissions();
+    return new CO2Emissions( *this );
 }
 
 void CO2Emissions::copyGHGParameters( const AGHG* aPrevGHG ){

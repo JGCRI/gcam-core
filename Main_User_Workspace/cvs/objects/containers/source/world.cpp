@@ -52,7 +52,6 @@
 #include "containers/include/world.h"
 #include "containers/include/region_minicam.h"
 #include "containers/include/region_cge.h"
-#include "sectors/include/ag_sector.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
@@ -73,18 +72,13 @@
 #include "util/base/include/hash_map.h"
 #include "util/base/include/atom_registry.h"
 #include "emissions/include/emissions_summer.h"
+#include "emissions/include/luc_emissions_summer.h"
 #include "technologies/include/global_technology_database.h"
 #include "reporting/include/energy_balance_table.h"
 
 using namespace std;
 using namespace xercesc;
 
-//wig: add capability to use lower-case fortran names
-#ifdef FORTRAN_LOWER
-extern "C" { void _stdcall ag2initc( double[14][12] ); };
-#else
-extern "C" { void _stdcall AG2INITC( double[14][12] ); };
-#endif
 extern Scenario* scenario;
 
 //! Default constructor.
@@ -159,12 +153,6 @@ void World::completeInit() {
         ( *regionIter )->completeInit();
     }
 
-    // Initialize AgLU
-    Configuration* conf = Configuration::getInstance();
-    if( conf->getBool( "agSectorActive" ) ) {
-        initAgLu();
-    }
-
     //If none has been read in, instantiate the default climate model
     if ( !mClimateModel.get() ) {
         mClimateModel.reset( new MagiccModel( scenario->getModeltime() ) );
@@ -199,29 +187,6 @@ void World::createFastLookupMap(){
 
         // Add an entry to the hashmap for the id.
         mRegionLookupMap->insert( make_pair( regionID, i ) );
-    }
-}
-
-//! Initialize the AgLu model.
-void World::initAgLu() {
-    ILogger& mainLog = ILogger::getLogger( "main_log" );
-    mainLog.setLevel( ILogger::NOTICE );
-    mainLog << "Initializing agLU..." << endl;
-
-    double prices[ 14 ][ 12 ]; 
-#if(__HAVE_FORTRAN__)
-#ifdef FORTRAN_LOWER
-    ag2initc( prices );
-#else
-    AG2INITC( prices );
-#endif    
-#endif
-    for ( unsigned int j = 0; j < regions.size(); j++ ) {
-        vector<double> tempVec( 12 );
-        for ( int k = 0; k < AgSector::getNumAgMarkets(); k++ ) {
-            tempVec[ k ] = prices[ j ][ k ];
-        }
-        regions[ j ]->initializeAgMarketPrices( tempVec );
     }
 }
 
@@ -410,8 +375,7 @@ void World::updateSummary( const list<string> aPrimaryFuelList, const int period
 void World::runClimateModel() {
     // Declare visitors which will aggregate emissions by period.
     EmissionsSummer co2Summer( "CO2" );
-    EmissionsSummer co2LandUseSummer( "CO2NetLandUse" );
-    EmissionsSummer netDef80sSummer( MagiccModel::getnetDefor80sName() );
+    LUCEmissionsSummer co2LandUseSummer( "CO2NetLandUse" );
     EmissionsSummer ch4Summer( "CH4" );
     EmissionsSummer ch4agrSummer( "CH4_AGR" );
     EmissionsSummer ch4awbSummer( "CH4_AWB" );
@@ -449,8 +413,6 @@ void World::runClimateModel() {
     // Group the EmissionsSummer together for improved performance.
     GroupedEmissionsSummer allSummer;
     allSummer.addEmissionsSummer( &co2Summer );
-    allSummer.addEmissionsSummer( &co2LandUseSummer );
-    //allSummer.addEmissionsSummer( &netDef80sSummer );
     allSummer.addEmissionsSummer( &ch4Summer );
     allSummer.addEmissionsSummer( &ch4agrSummer );
     allSummer.addEmissionsSummer( &ch4awbSummer );
@@ -490,22 +452,15 @@ void World::runClimateModel() {
    const double N_TO_NO2 = 3.2857;
    const double S_TO_SO2 = 2.0; 
    const double HFC_CA_TO_FA = ( 950 / 640 ); 
-        
-    // Sum 80s deforestation
-    const int dummyPeriod = 1;
-    accept( &netDef80sSummer, dummyPeriod );
-    if( netDef80sSummer.areEmissionsSet( dummyPeriod ) ){
-       mClimateModel->setEmissions( MagiccModel::getnetDefor80sName(), dummyPeriod,
-                                    netDef80sSummer.getEmissions( dummyPeriod )
-                                    / TG_TO_PG );
-    }
     
     // Update all emissions values.
     accept( &allSummer, -1 );
-
+	
     // The Climate model reads in data for the base period, so skip passing it in.
     for( int period = 1; period < scenario->getModeltime()->getmaxper(); ++period){
-
+        
+        accept( &co2LandUseSummer, period );
+        
         // Only set emissions if they are valid. If these are not set
         // MAGICC will use the default values.
         if( co2Summer.areEmissionsSet( period ) ){
@@ -513,13 +468,17 @@ void World::runClimateModel() {
                                           co2Summer.getEmissions( period )
                                           / TG_TO_PG );
         }
-
-        if( co2LandUseSummer.areEmissionsSet( period ) ){
-            mClimateModel->setEmissions( "CO2NetLandUse", period,
-                                          co2LandUseSummer.getEmissions( period )
-                                          / TG_TO_PG );
+        
+        const int currYear = scenario->getModeltime()->getper_to_yr( period );
+        const int startYear = currYear - scenario->getModeltime()->gettimestep( period ) + 1;
+        for ( int i = startYear; i <= currYear; i++ ) {
+            if( co2LandUseSummer.areEmissionsSet( i ) ){
+                mClimateModel->setLUCEmissions( "CO2NetLandUse", i,
+                                                co2LandUseSummer.getEmissions( i )
+                                                / TG_TO_PG );
+            }
         }
-
+        
         if( ch4Summer.areEmissionsSet( period ) ){
             mClimateModel->setEmissions( "CH4", period,
                                           ch4Summer.getEmissions( period ) +
@@ -539,8 +498,8 @@ void World::runClimateModel() {
             mClimateModel->setEmissions( "N2O", period,
                                           ( n2oSummer.getEmissions( period ) +
                                           n2oawbSummer.getEmissions( period ) +
-                                          n2oagrSummer.getEmissions( period ) )
-                                          / N_TO_N2O );
+                                          n2oagrSummer.getEmissions( period )  )
+                                        / N_TO_N2O );
         }
 
         // MAGICC wants NOx emissions in Tg N, but miniCAM calculates Tg NOx
@@ -640,6 +599,7 @@ void World::runClimateModel() {
         }
 
     }
+	
     // Run the model.
     mClimateModel->runModel();
 }

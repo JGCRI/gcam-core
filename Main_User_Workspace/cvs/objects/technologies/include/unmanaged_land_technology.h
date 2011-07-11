@@ -43,12 +43,12 @@
 * \file unmanaged_land_technology.h
 * \ingroup Objects
 * \brief The UnmanagedLandTechnology class header file.
-* \author Steve Smith
+* \author Steve Smith, Kate Calvin
 */  
 
 #include <xercesc/dom/DOMNode.hpp>
 
-#include "technologies/include/food_production_technology.h"
+#include "technologies/include/ag_production_technology.h"
 #include "util/base/include/value.h"
 
 // Forward declaration
@@ -57,22 +57,20 @@ class DependencyFinder;
 
 /*! 
 * \ingroup Objects
-* \brief Unmanaged land "production" technology.
+* \brief Unmanaged land technology.
 * \details 
-* This class allows secondary products to be produced from land leaves as well as
-* ghg emissions from unmanaged land leaves. "Input" GHG objects will be driven
+* This class allows non-CO2 ghg emissions from land leaves. "Input" GHG objects will be driven
 * by land area while "Output" GHG objects will be driven by land-area change
 * (e.g. deforestation).  Note that this class has NO primary output and is here merely
 * to allow calcultion of byproducts of land processes.  Values setin the primary
 * output object are just for the sake of emissions calculations and will be removed
 * immediately after those calculations are done.
-* \todo Need to change from land-area driver to net-CO2 emissions driver
-* \todo Need to fully implement land as a new type of physical input. 
-*       Once that is done remove UnmanagedLandTechnology as a friend class in RenewableInput 
-* \author Steve Smith
+* \todo Clean up this code and remove UnmanagedLandTechnology 
+*       as a friend class in RenewableInput 
+* \author Steve Smith, Kate Calvin
 */
 
-class UnmanagedLandTechnology : public FoodProductionTechnology {
+class UnmanagedLandTechnology : public AgProductionTechnology {
 public:
     UnmanagedLandTechnology( const std::string& aName,
                                 const int aYear );
@@ -131,9 +129,6 @@ protected:
 private:
     //! Name of leaf or node to use as driver for this technology
     std::string mLandItemName;
-
-    //! Conversion factor from unmanaged land area to energy
-    double mCarbonToEnergy;
 
     typedef std::vector<IInput*>::iterator InputIterator;
 

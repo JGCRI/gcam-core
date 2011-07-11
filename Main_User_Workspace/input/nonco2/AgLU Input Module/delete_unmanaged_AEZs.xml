@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+         <AgSupplySector name="UnmanagedLand">
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ1"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ2"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ3"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ4"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ5"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ6"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ17"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ18"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ1"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ2"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ3"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ4"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ5"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ6"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ17"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ18"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ1"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ2"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ3"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ4"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ5"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ6"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ17"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ18"/>
+         </AgSupplySector>
+      </region>
+      <region name="Canada">
+         <AgSupplySector name="UnmanagedLand">
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ1"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ2"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ3"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ4"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ5"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ6"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ12"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ17"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ18"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ1"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ2"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ3"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ4"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ5"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ6"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ12"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ17"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ18"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ1"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ2"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ3"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ4"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ5"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ6"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ12"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ17"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ18"/>
+         </AgSupplySector>
+      </region>
+      <region name="Western Europe">
+         <AgSupplySector name="UnmanagedLand">
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ1"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ2"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ3"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ5"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ6"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ17"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ18"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ1"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ2"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ3"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ5"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ6"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ17"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ18"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ1"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ2"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ3"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ5"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ6"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ17"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ18"/>
+         </AgSupplySector>
+      </region>
+      <region name="Japan">
+         <AgSupplySector name="UnmanagedLand">
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ1"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ2"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ3"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ4"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ5"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ6"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ7"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ8"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ13"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ14"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ16"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ17"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ18"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ1"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ2"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ3"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ4"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ5"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ6"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ7"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ8"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ13"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ14"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ16"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ17"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ18"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ1"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ2"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ3"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ4"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ5"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ6"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ7"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ8"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ13"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ14"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ16"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ17"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ18"/>
+         </AgSupplySector>
+      </region>
+      <region name="Australia_NZ">
+         <AgSupplySector name="UnmanagedLand">
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ13"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ14"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ18"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ13"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ14"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ18"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ13"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ14"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ18"/>
+         </AgSupplySector>
+      </region>
+      <region name="Former Soviet Union">
+         <AgSupplySector name="UnmanagedLand">
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ1"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ2"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ3"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ4"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ5"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ6"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ17"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ18"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ1"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ2"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ3"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ4"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ5"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ6"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ17"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ18"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ1"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ2"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ3"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ4"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ5"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ6"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ17"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ18"/>
+         </AgSupplySector>
+      </region>
+      <region name="China">
+         <AgSupplySector name="UnmanagedLand">
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ1"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ2"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ3"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ18"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ1"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ2"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ3"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ18"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ1"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ2"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ3"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ18"/>
+         </AgSupplySector>
+      </region>
+      <region name="Middle East">
+         <AgSupplySector name="UnmanagedLand">
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ4"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ5"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ6"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ11"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ12"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ13"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ14"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ15"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ16"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ17"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ18"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ4"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ5"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ6"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ11"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ12"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ13"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ14"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ15"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ16"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ17"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ18"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ4"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ5"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ6"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ11"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ12"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ13"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ14"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ15"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ16"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ17"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ18"/>
+         </AgSupplySector>
+      </region>
+      <region name="Africa">
+         <AgSupplySector name="UnmanagedLand">
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ13"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ14"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ15"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ16"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ17"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ18"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ13"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ14"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ15"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ16"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ17"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ18"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ13"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ14"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ15"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ16"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ17"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ18"/>
+         </AgSupplySector>
+      </region>
+      <region name="Southeast Asia">
+         <AgSupplySector name="UnmanagedLand">
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ2"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ17"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ18"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ2"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ17"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ18"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ2"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ17"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ18"/>
+         </AgSupplySector>
+      </region>
+      <region name="Eastern Europe">
+         <AgSupplySector name="UnmanagedLand">
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ1"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ2"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ3"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ4"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ5"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ6"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ7"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ13"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ14"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ17"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ18"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ1"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ2"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ3"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ4"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ5"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ6"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ7"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ13"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ14"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ17"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ18"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ1"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ2"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ3"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ4"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ5"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ6"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ7"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ13"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ14"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ17"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ18"/>
+         </AgSupplySector>
+      </region>
+      <region name="Korea">
+         <AgSupplySector name="UnmanagedLand">
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ1"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ2"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ3"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ4"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ5"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ6"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ7"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ8"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ9"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ12"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ13"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ14"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ15"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ16"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ17"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ18"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ1"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ2"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ3"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ4"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ5"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ6"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ7"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ8"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ9"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ12"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ13"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ14"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ15"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ16"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ17"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ18"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ1"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ2"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ3"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ4"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ5"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ6"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ7"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ8"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ9"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ12"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ13"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ14"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ15"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ16"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ17"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ18"/>
+         </AgSupplySector>
+      </region>
+      <region name="India">
+         <AgSupplySector name="UnmanagedLand">
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ17"/>
+            <AgSupplySubsector delete="1" name="Savannah BurningAEZ18"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ17"/>
+            <AgSupplySubsector delete="1" name="DeforestationAEZ18"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ17"/>
+            <AgSupplySubsector delete="1" name="Forest FiresAEZ18"/>
+         </AgSupplySector>
+      </region>
+   </world>
+</scenario>
