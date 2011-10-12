@@ -469,7 +469,8 @@ void LandNode::calculateProfitScalers( const string& aRegionName,
     double maxShare = 0.0;
     double profitAtMaxShare = 0.0;
 
-    // First, calculate the weighted average profit of managed leafs in this node
+    // First, cycle through all the managed leafs in this node
+    // and calculate the profit of the one with the largest share.
     // We are not including other arable land in this calculation
     double totalManagedShare = 0.0;
     for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
@@ -481,6 +482,11 @@ void LandNode::calculateProfitScalers( const string& aRegionName,
             totalManagedShare += mChildren[ i ]->getShare( aPeriod );
         }
     }
+    
+    if ( totalManagedShare == 0 ) {
+        profitAtMaxShare = mUnManagedLandValue;
+    }
+    
     landValue = profitAtMaxShare;
 
     // Then, set the scaler by period.  This is so we can allow a new technology to 
@@ -490,13 +496,22 @@ void LandNode::calculateProfitScalers( const string& aRegionName,
         // Note: we are interpreting the defaultShare as relating to managed land leafs
         // in this node. So, we have to multiply it by the % of managed land in the node
         // to get the correct share of the whole node.
+        if ( totalManagedShare > 0.0 ) {
+            newTechCalibrationProfitRate = mCalibrationProfitRate[ aPeriod ]
+            * pow ( totalManagedShare * mGhostShareNumerator[ per ],
+                   1.0 / mLogitExponent[ aPeriod ] ); 
+        }
+        
+        else {
         newTechCalibrationProfitRate = mCalibrationProfitRate[ aPeriod ]
-                                        * pow ( totalManagedShare * mGhostShareNumerator[ per ],
+                                        * pow ( mGhostShareNumerator[ per ],
                                             1.0 / mLogitExponent[ aPeriod ] ); 
+        }
 
         // Finally, compute the scaler
         if ( landValue > 0.0 ) {
             mNewTechProfitScaler[ per ] = newTechCalibrationProfitRate / landValue;
+            
         }
         else {
             mNewTechProfitScaler[ per ] = 0.0;
