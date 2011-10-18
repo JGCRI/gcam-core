@@ -1,12 +1,13 @@
 package ModelInterface.ModelGUI2.csvconv;
 
-import java.io.FileWriter;
 import java.util.*;
 import org.w3c.dom.*;
 
-import ModelInterface.InterfaceMain;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 import ModelInterface.common.DataPair;
-import ModelInterface.ConfigurationEditor.utils.FileUtils;
 
 /**
 *       Converts CSV formated tables to XML.
@@ -98,10 +99,24 @@ public class DOMTreeBuilder {
 		head = new Headers(headerIn);
 		// create the document if it has been created alredy and if we have a 
 		// root header we can use.
-		if(!buildMap && doc == null) {
-			doc = FileUtils.createDocument(InterfaceMain.getInstance(), null,
-					head.getRoot().getChildName());
-		}
+        if(!buildMap && doc == null) {
+            // Create a new document.
+            DOMImplementation domImpl = null;
+            try {
+                domImpl = DocumentBuilderFactory.newInstance().newDocumentBuilder()
+                    .getDOMImplementation();
+            } catch (ParserConfigurationException e) {
+                e.printStackTrace();
+                return;
+            }
+            doc = domImpl.createDocument(null, head.getRoot().getChildName(),
+                    null);
+            /* Note we were not able to use the util directly in order
+             * to avoid extra code dependencies
+             doc = FileUtils.createDocument(InterfaceMain.getInstance(), null,
+             head.getRoot().getChildName());
+             */
+        }
 	}
 
 	/** Adds the current data to the Tree.
