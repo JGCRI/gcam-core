@@ -45,9 +45,9 @@
  * \author Josh Lurz
  */
 #include <xercesc/dom/DOMNode.hpp>
-#include <vector>
 #include "resources/include/aresource.h"
 #include "util/base/include/value.h"
+#include "util/base/include/time_vector.h"
 
 /*! 
  * \ingroup Objects
@@ -122,7 +122,7 @@ public:
 
 protected:
     //! Read in prices.
-    std::vector<double> mFixedPrices;
+    objects::PeriodVector<Value> mFixedPrices;
 
     //! Capacity factor.
     Value mCapacityFactor;

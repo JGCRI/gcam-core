@@ -55,6 +55,7 @@
 #include "marketplace/include/imarket_type.h"
 #include "containers/include/iinfo.h"
 #include "util/base/include/ivisitor.h"
+#include "sectors/include/sector_utils.h"
 
 using namespace std;
 using namespace xercesc;
@@ -72,7 +73,7 @@ const string& UnlimitedResource::getXMLNameStatic(){
 
 //! Constructor.
 UnlimitedResource::UnlimitedResource()
-: mFixedPrices( scenario->getModeltime()->getmaxper() ){
+{
 }
 
 //! Destructor.
@@ -109,8 +110,8 @@ void UnlimitedResource::XMLParse( const DOMNode* node ){
             mMarket = XMLHelper<string>::getValue( curr );
         }
         else if( nodeName == "price" ){
-            XMLHelper<double>::insertValueIntoVector( curr, mFixedPrices,
-                                                      scenario->getModeltime() );
+            XMLHelper<Value>::insertValueIntoVector( curr, mFixedPrices,
+                                                     scenario->getModeltime() );
         }
         else if( nodeName == "capacity-factor" ){
             mCapacityFactor = XMLHelper<double>::getValue( curr );
@@ -140,14 +141,15 @@ void UnlimitedResource::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mPriceUnit, "price-unit", aOut, aTabs );
     XMLWriteElement( mMarket, "market", aOut, aTabs );
     
+    const Value VALUE_DEFAULT = 0.0;
     XMLWriteElementCheckDefault( mCapacityFactor, "capacity-factor", aOut,
-                                 aTabs, Value( 0 ) );
+                                 aTabs, VALUE_DEFAULT );
 
     XMLWriteElementCheckDefault( mVariance, "variance", aOut,
-                                 aTabs, Value( 0 ) );
+                                 aTabs, VALUE_DEFAULT );
     
     const Modeltime* modeltime = scenario->getModeltime();
-    XMLWriteVector( mFixedPrices, "price", aOut, aTabs, modeltime, 0.0 );
+    XMLWriteVector( mFixedPrices, "price", aOut, aTabs, modeltime, VALUE_DEFAULT );
 
     // finished writing xml for the class members.
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
@@ -193,16 +195,17 @@ void UnlimitedResource::completeInit( const string& aRegionName,
     }
     // Setup markets for this resource.
     setMarket( aRegionName );
+    
+    // Interpolate any missing periods for the fixed prices.
+    SectorUtils::fillMissingPeriodVectorInterpolated( mFixedPrices );
 }
 
 void UnlimitedResource::initCalc( const string& aRegionName,
                                   const int aPeriod )
 {
+    Marketplace* marketplace = scenario->getMarketplace();
     // Set the capacity factor and variance.
-    IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( mName,
-                                                                   aRegionName,
-                                                                   aPeriod,
-                                                                   true );
+    IInfo* marketInfo = marketplace->getMarketInfo( mName, aRegionName, aPeriod, true );
     assert( marketInfo );
 
     if( mCapacityFactor.isInited() ){
@@ -211,14 +214,16 @@ void UnlimitedResource::initCalc( const string& aRegionName,
     if( mVariance.isInited() ){
         marketInfo->setDouble( "resourceVariance", mVariance );
     }
+    
+    // Set the fixed price if a valid one was read in.
+    if( mFixedPrices[ aPeriod ] > 0 ) {
+        marketplace->setPrice( mName, aRegionName, mFixedPrices[ aPeriod ], aPeriod );
+    }
 }
 
 void UnlimitedResource::postCalc( const string& aRegionName,
                                   const int aPeriod )
 {
-    // Reset initial resource prices to solved prices
-    mFixedPrices[ aPeriod ] = scenario->getMarketplace()->getPrice( mName, aRegionName,
-                              aPeriod, true );
 }
 
 
@@ -310,13 +315,6 @@ void UnlimitedResource::setMarket( const string& aRegionName ) {
     // Need to set resource variance here because initCalc of technology is called
     // before that of resource. shk 2/27/07
     marketInfo->setDouble( "resourceVariance", mVariance );
-    // Set the read-in fixed prices for each period.
-    const Modeltime* modeltime = scenario->getModeltime();
-    for( int i = 0; i < modeltime->getmaxper(); ++i ){
-        if( mFixedPrices[ i ] != 0 ){
-            marketplace->setPrice( mName, aRegionName, mFixedPrices[ i ], i, true );
-        }
-    }
 }
 
 void UnlimitedResource::accept( IVisitor* aVisitor,
