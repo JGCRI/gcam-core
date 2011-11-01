@@ -998,6 +998,33 @@
     <ClCompile Include="..\..\target_finder\source\secanter.cpp">
       <Filter>Source Files\target_finder</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\containers\source\market_dependency_finder.cpp">
+      <Filter>Source Files\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\solution\solvers\source\lognrbt.cpp">
+      <Filter>Source Files\solution\solvers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\solution\util\source\edfun.cpp">
+      <Filter>Source Files\solution\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\solution\util\source\price_greater_than_solution_info_filter.cpp">
+      <Filter>Source Files\solution\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\solution\util\source\price_less_than_solution_info_filter.cpp">
+      <Filter>Source Files\solution\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\containers\source\final_demand_activity.cpp">
+      <Filter>Source Files\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\containers\source\land_allocator_activity.cpp">
+      <Filter>Source Files\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\containers\source\resource_activity.cpp">
+      <Filter>Source Files\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\containers\source\sector_activity.cpp">
+      <Filter>Source Files\containers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\containers\include\batch_runner.h">
@@ -2002,5 +2029,55 @@
     <ClInclude Include="..\..\target_finder\include\simple_policy_target_runner.h">
       <Filter>Header Files\target_finder</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\containers\include\market_dependency_finder.h">
+      <Filter>Header Files\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\solution\util\include\price_greater_than_solution_info_filter.h">
+      <Filter>Header Files\solution\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\solution\util\include\price_less_than_solution_info_filter.h">
+      <Filter>Header Files\solution\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\containers\include\final_demand_activity.h">
+      <Filter>Header Files\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\containers\include\iactivity.h">
+      <Filter>Header Files\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\containers\include\land_allocator_activity.h">
+      <Filter>Header Files\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\containers\include\resource_activity.h">
+      <Filter>Header Files\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\containers\include\sector_activity.h">
+      <Filter>Header Files\containers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\solution\solvers\include\lognrbt.hh">
+      <Filter>Header Files\solution\solvers</Filter>
+    </None>
+    <None Include="..\..\solution\util\include\edfun.hh">
+      <Filter>Header Files\solution\util</Filter>
+    </None>
+    <None Include="..\..\solution\util\include\fdjac.hh">
+      <Filter>Header Files\solution\util</Filter>
+    </None>
+    <None Include="..\..\solution\util\include\functor.hh">
+      <Filter>Header Files\solution\util</Filter>
+    </None>
+    <None Include="..\..\solution\util\include\functor-subs.hh">
+      <Filter>Header Files\solution\util</Filter>
+    </None>
+    <None Include="..\..\solution\util\include\linesearch.hh">
+      <Filter>Header Files\solution\util</Filter>
+    </None>
+    <None Include="..\..\solution\util\include\nrsolver.hh">
+      <Filter>Header Files\solution\util</Filter>
+    </None>
+    <None Include="..\..\solution\util\include\ublas-helpers.hh">
+      <Filter>Header Files\solution\util</Filter>
+    </None>
   </ItemGroup>
 </Project>

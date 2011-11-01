@@ -54,6 +54,7 @@
 #include "solution/solvers/include/bisect_all.h"
 #include "solution/solvers/include/bisect_one.h"
 #include "solution/solvers/include/bisect_policy.h"
+#include "solution/solvers/include/lognrbt.hh"
 
 using namespace std;
 using namespace xercesc;
@@ -72,7 +73,8 @@ bool SolverComponentFactory::hasSolverComponent( const string& aXMLName ) {
         || BisectAll::getXMLNameStatic() == aXMLName
         || LogNewtonRaphsonSaveDeriv::getXMLNameStatic() == aXMLName
         || BisectOne::getXMLNameStatic() == aXMLName
-        || BisectPolicy::getXMLNameStatic() == aXMLName;
+        || BisectPolicy::getXMLNameStatic() == aXMLName
+        || LogNRbt::getXMLNameStatic() == aXMLName;
 }
 
 /*!
@@ -86,11 +88,12 @@ bool SolverComponentFactory::hasSolverComponent( const string& aXMLName ) {
  * \note The list of known solvers components here must be kept in sync with
  *       the ones found in hasSolverComponent.
  */
-SolverComponent* SolverComponentFactory::createAndParseSolverComponent( const string& aXMLName,
-                                                                        Marketplace* aMarketplace,
-                                                                        World* aWorld,
-                                                                        CalcCounter* aCalcCounter,
-                                                                        const DOMNode* aNode )
+SolverComponent*
+SolverComponentFactory::createAndParseSolverComponent( const string& aXMLName,
+                                                       Marketplace* aMarketplace,
+                                                       World* aWorld,
+                                                       CalcCounter* aCalcCounter,
+                                                       const DOMNode* aNode )
 {
     // make sure we know about this solver component
     if( !hasSolverComponent( aXMLName ) ) {
@@ -116,6 +119,9 @@ SolverComponent* SolverComponentFactory::createAndParseSolverComponent( const st
     }
     else if( BisectPolicy::getXMLNameStatic() == aXMLName ) {
         retSolverComponent = new BisectPolicy( aMarketplace, aWorld, aCalcCounter );
+    }
+    else if(LogNRbt::getXMLNameStatic() == aXMLName) {
+        retSolverComponent = new LogNRbt(aMarketplace, aWorld, aCalcCounter);
     }
     else {
         // this must mean createAndParseSolverComponent and hasSolverComponent

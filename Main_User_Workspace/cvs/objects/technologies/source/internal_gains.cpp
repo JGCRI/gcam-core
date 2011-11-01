@@ -48,7 +48,7 @@
 #include "containers/include/iinfo.h"
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/ivisitor.h"
-#include "containers/include/dependency_finder.h"
+#include "containers/include/market_dependency_finder.h"
 
 using namespace std;
 using namespace xercesc;
@@ -158,14 +158,15 @@ void InternalGains::toDebugXML( const int aPeriod,
 }
 
 void InternalGains::completeInit( const string& aSectorName,
-                                  DependencyFinder* aDependencyFinder,
+                                  const string& aRegionName,
                                   const IInfo* aTechInfo,
                                   const bool aIsTechOperating )
 {
     // Internal gains are removed or added to demand, so add a dependency.
     if( aIsTechOperating ) {
-        aDependencyFinder->addDependency( aSectorName, mHeatingMarket );
-        aDependencyFinder->addDependency( aSectorName, mCoolingMarket );
+        MarketDependencyFinder* depFinder = scenario->getMarketplace()->getDependencyFinder();
+        depFinder->addDependency( aSectorName, aRegionName, mHeatingMarket, aRegionName );
+        depFinder->addDependency( aSectorName, aRegionName, mCoolingMarket, aRegionName );
     }
 
     // Store the fraction of year active for heating and cooling.
@@ -223,14 +224,14 @@ void InternalGains::setPhysicalOutput( const double aPrimaryOutput,
     // Subtract from the heating market demand. The internal gains is actually
     // supplying heating services, but adding to demand is required due to
     // ordering constraints.
-    marketplace->addToDemand( mHeatingMarket, aRegionName,
-                              -1 * totalGains * mHeatingFractionOfYearActive,
+    mLastCalcHeat = marketplace->addToDemand( mHeatingMarket, aRegionName,
+                              -1 * totalGains * mHeatingFractionOfYearActive, mLastCalcHeat,
                               aPeriod, true );
 
     // Add to the demand for cooling services. Internal gains cause additional
     // cooling services to be required.
-    marketplace->addToDemand( mCoolingMarket, aRegionName,
-                              totalGains * mCoolingFractionOfYearActive,
+    mLastCalcCool = marketplace->addToDemand( mCoolingMarket, aRegionName,
+                              totalGains * mCoolingFractionOfYearActive, mLastCalcCool,
                               aPeriod, true );
 }
 

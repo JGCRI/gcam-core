@@ -177,8 +177,12 @@ SolverComponent::ReturnCode BisectAll::solve( SolutionInfoSet& aSolutionSet, con
     worstMarketLog << "Policy All, X, XL, XR, ED, EDL, EDR, RED, bracketed, supply, demand" << endl;
     solverLog << "Bisection_all routine starting" << endl; 
 
-    aSolutionSet.updateFromMarkets();
     aSolutionSet.updateSolvable( mSolutionInfoFilter.get() );
+    
+    if( aSolutionSet.getNumSolvable() == 0 ) {
+        solverLog << "Exiting bisect all early due to empty solvable set." << endl;
+        return SUCCESS;
+    }
     
     // Select the worst market.
     ILogger& singleLog = ILogger::getLogger( "single_market_log" );
@@ -213,16 +217,10 @@ SolverComponent::ReturnCode BisectAll::solve( SolutionInfoSet& aSolutionSet, con
             } 
         }
 
-        aSolutionSet.updateToMarkets();
         marketplace->nullSuppliesAndDemands( aPeriod );
         world->calc( aPeriod );
-        aSolutionSet.updateFromMarkets();
         aSolutionSet.updateSolvable( mSolutionInfoFilter.get() );
-        // The  price and demand markets are very prone to moving beyond their brackets. 
-        // So check and adjust if needed. Lines below check if XL < Demand, or XR > Demand, 
-        // and move brackets if necessary. A more general bracket check is below, but this
-        // is needed more often and can be done simply.
-        aSolutionSet.adjustBrackets();
+
         // Print solution set information to solver log.
         solverLog << aSolutionSet << endl;
 

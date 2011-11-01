@@ -57,6 +57,7 @@
 class Market;
 class SolutionInfoSet;
 class SupplyDemandCurve;
+class IActivity;
 namespace objects {
     class Atom;
 }
@@ -72,10 +73,11 @@ class SolutionInfo {
         return os;
     }
 public:
-    SolutionInfo( Market* linkedMarket );
+    SolutionInfo( Market* linkedMarket, const std::vector<IActivity*>& aDependenicies );
     bool operator==( const SolutionInfo& rhs ) const;
     bool operator!=( const SolutionInfo& rhs ) const;
     const std::string& getName() const;
+    const std::string& getRegionName() const;
     const IMarketType::Type getType() const;
     std::string getTypeName() const;
     void init( const double aDefaultSolutionTolerance, const double aDefaultSolutionFloor,
@@ -91,17 +93,12 @@ public:
     void setPrice( const double aPrice );
     void setPriceToCenter();
     double getDemand() const;
-    void removeFromRawDemand( const double aDemand );
     double getSupply() const;
-    void removeFromRawSupply( const double aSupply );
     double getED() const;
     double getEDLeft() const;
     double getEDRight() const;
     void storeValues();
     void restoreValues();
-    void updateToMarket();
-    void updateFromMarket();
-    void adjustBracket();
     void expandBracket( const double aAdjFactor );
     double getRelativeED() const;
     bool isWithinTolerance() const;
@@ -123,6 +120,7 @@ public:
     void unsetBisectedFlag();
     bool hasBisected() const;
     const std::vector<const objects::Atom*>& getContainedRegions() const;
+    const std::vector<IActivity*>& getDependencies() const;
     SupplyDemandCurve createSDCurve();
     void printDerivatives( std::ostream& aOut ) const;
     /*!
@@ -144,18 +142,15 @@ private:
     bool bracketed; //!< Bracketed or unbracketed.
     bool mBisected;
     Market* linkedMarket; //!< Linked market. 
-    double X;       //!< unknown, price.
-    double storedX;      //!< previous unknown.
-    double demand;  //!< demand for X.
-    double storedDemand; //!< previous demand for X.
-    double supply; //!< supply for X
-    double storedSupply; //!< previous supply for X.
     double XL;      //!< left bracket
     double XR;      //!< right bracket
     double EDL;     //!< excess demand for left bracket
     double EDR;     //!< excess demand for right bracket
     std::vector<double> demandElasticities; //!< demand elasticities
     std::vector<double> supplyElasticities; //!< supply elasticities
+    //! This activities which need to recalculate if this solution info adjust
+    //! prices
+    std::vector<IActivity*> mDependencies;
     
     //! Market specific solution tolerance
     double mSolutionTolerance;

@@ -97,11 +97,10 @@ const string& DefaultTechnology::getXMLNameStatic() {
 void DefaultTechnology::completeInit( const std::string& aRegionName,
                                       const std::string& aSectorName,
                                       const std::string& aSubsectorName,
-                                      DependencyFinder* aDepFinder,
                                       const IInfo* aSubsectorInfo,
                                       ILandAllocator* aLandAllocator )
 {
-    Technology::completeInit( aRegionName, aSectorName, aSubsectorName, aDepFinder,
+    Technology::completeInit( aRegionName, aSectorName, aSubsectorName,
                               aSubsectorInfo, aLandAllocator );
 }
 

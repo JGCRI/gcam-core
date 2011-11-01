@@ -65,19 +65,14 @@ IMarketType::Type MarketSubsidy::getType() const {
 * \details This method checks first if the price has already been initialized.
 * If it has been initialized, the price is left unchanged. Otherwise the method checks the value of the constraint,
 * or supply, to determine how to initialize the price. If supply is 0, price is set to 0. If the supply 
-* is greater than 0, the price is initialized to a random number.
+* is greater than 0, the price is initialized to a small number.
 * \author Josh Lurz
-* \todo Some of these changes for the carbon market might be beneficial to the general market, or end up being the same.
 */
 void MarketSubsidy::initPrice() {
-    const double MIN_PRICE = 0.5;
     // If price is near zero it needs to be initialized.
     if( price < util::getSmallNumber() ){
-        // If this market should be solved price should be initialized to a 
-        // random number between MIN_PRICE and (1 + MIN_PRICE)
         if( solveMarket ){
-            srand( (unsigned)time( NULL ) );
-            price = ((double) rand() / (double) RAND_MAX) + MIN_PRICE;
+            price = util::getSmallNumber();
         }
         // The market will not be solved so it should be zero'd out. 
         else {
@@ -93,20 +88,16 @@ void MarketSubsidy::setPrice( const double priceIn ) {
 /* \brief Initialize the MarketSubsidy price from last period's price.
 * \details This method first checks if the lastPrice was 0. This would mean that last period's constraint was 
 * 0. If it is, then it checks if the constraint in the current period is greater than 0. In this case price is 
-* set to a random price as this is the initial constrained period. Otherwise price is set to the previous 
+* set to a small price as this is the initial constrained period. Otherwise price is set to the previous 
 * period's price as is done in the normal market.
 * \param lastPrice Previous period's price. This should have already been set in store to last!!
 * \author Josh Lurz
 */
 void MarketSubsidy::set_price_to_last_if_default( const double lastPrice ) {
-    const double MIN_PRICE = 0.5;
     // If the price is zero and the solve flag is set so a constraint exists. 
     if( price < util::getSmallNumber() && solveMarket ){
-        // If the last price is 0, we should set the price to a random number.
-        // New price is between MIN_PRICE and (1 + MIN_PRICE)
         if( lastPrice < util::getSmallNumber() ){
-            srand( (unsigned)time( NULL ) );
-            price = ((double) rand() / (double) RAND_MAX) + MIN_PRICE;
+            price = util::getSmallNumber();
         }
         // Otherwise set the price to the previous period's price.
         else {

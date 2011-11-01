@@ -50,10 +50,8 @@
 
 using namespace std;
 
-SectorCycleBreaker::SectorCycleBreaker( Marketplace* aMarketPlace,
-                                        const string& aRegionName):
+SectorCycleBreaker::SectorCycleBreaker( Marketplace* aMarketPlace ):
 ICycleBreaker(),
-mRegionName( aRegionName),
 mMarketplace( aMarketPlace )
 {
 }
@@ -75,14 +73,12 @@ void SectorCycleBreaker::breakCycle( DependencyFinder &aDependencyFinder,
     // Add simul markets to remove the dependency. Note that one of these
     // sectors may already have a simul market setup for it, the marketplace
     // will ignore the request to convert the market in that case.
-    mMarketplace->resetToPriceMarket( aDependencyFinder.getNameFromIndex( aFirstSector ),
-                                      mRegionName );
-    mMarketplace->resetToPriceMarket( aDependencyFinder.getNameFromIndex( aSecondSector ),
-                                      mRegionName );
+    //mMarketplace->resetToPriceMarket( aDependencyFinder.getNameFromIndex( aFirstSector ) );
+    //mMarketplace->resetToPriceMarket( aDependencyFinder.getNameFromIndex( aSecondSector ) );
     
     // Remove the cycle from the graph by removing both edges.
-    aDependencyFinder.removeDependency( aFirstSector, aSecondSector );
-    aDependencyFinder.removeDependency( aSecondSector, aFirstSector );
+    //aDependencyFinder.removeDependency( aFirstSector, aSecondSector );
+    //aDependencyFinder.removeDependency( aSecondSector, aFirstSector );
 }
 
 

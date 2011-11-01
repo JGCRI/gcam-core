@@ -240,7 +240,7 @@ void DepletingFixedResource::calcSupply( const string& aRegionName,
     Marketplace* marketplace = scenario->getMarketplace();
 
     // the supply is just the fixed amount that is left.
-    marketplace->addToSupply( mName, aRegionName, mFixedResource, aPeriod );
+    marketplace->addToSupply( mName, aRegionName, mFixedResource, mFixedResource, aPeriod );
 }
 
 double DepletingFixedResource::getAnnualProd( const string& aRegionName,

@@ -55,7 +55,6 @@ class Demographic;
 class NationalAccount;
 class GDP;
 class IInfo;
-class DependencyFinder;
 
 /*! 
  * \ingroup Objects
@@ -107,7 +106,6 @@ public:
     static const std::string& getXMLNameStatic();
     
     virtual void completeInit( const IInfo* aRegionInfo,
-                               DependencyFinder* aDepFinder,
                                ILandAllocator* aLandAllocator );
 
     double getOutput( const int aPeriod ) const;

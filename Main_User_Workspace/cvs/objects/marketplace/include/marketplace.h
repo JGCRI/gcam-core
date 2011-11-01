@@ -58,6 +58,7 @@ class MarketLocator;
 class IVisitor;
 class IInfo;
 class CachedMarket;
+class MarketDependencyFinder; 
 
 /*! 
  * \ingroup Objects
@@ -123,6 +124,10 @@ class CachedMarket;
 
 class Marketplace: public IVisitable
 {
+    friend class CachedMarket;
+    friend class SolverLibrary;
+    friend class MarketDependencyFinder;
+    friend class LogEDFun;
 public:
     Marketplace();
     ~Marketplace();
@@ -136,10 +141,10 @@ public:
                    const int period, bool aMustExist = true );
     void setPriceVector( const std::string& goodName, const std::string& regionName,
                          const std::vector<double>& prices );
-    void addToSupply( const std::string& goodName, const std::string& regionName, const double value,
-                      const int period, bool aMustExist = true );
-    void addToDemand( const std::string& goodName, const std::string& regionName, const double value,
-                      const int period, bool aMustExist = true );
+    double addToSupply( const std::string& goodName, const std::string& regionName, const double value,
+                      const double lastDerivValue, const int period, bool aMustExist = true );
+    double addToDemand( const std::string& goodName, const std::string& regionName, const double value,
+                      const double lastDerivValue, const int period, bool aMustExist = true );
     double getPrice( const std::string& goodName, const std::string& regionName, const int period,
                      bool aMustExist = true ) const;
     double getSupply( const std::string& goodName, const std::string& regionName,
@@ -153,7 +158,7 @@ public:
     void init_to_last( const int period );
     void dbOutput() const; 
     void csvOutputFile( std::string marketsToPrint = "" ) const; 
-    void resetToPriceMarket( const std::string& goodName, const std::string& regionName );
+    int resetToPriceMarket( const int aMarketNumber );
     void setMarketToSolve( const std::string& goodName, const std::string& regionName,
         const int period );
     void unsetMarketToSolve( const std::string& goodName, const std::string& regionName,
@@ -180,9 +185,18 @@ public:
     const static double NO_MARKET_PRICE;
     void store_prices_for_cost_calculation();
     void restore_prices_for_cost_calculation();
+    MarketDependencyFinder* getDependencyFinder() const;
+
+    // The methods from here down are diagnostics
+    std::vector<double> fullstate(int period) const; //!< Return all supplies and demands in all markets in a single vector
+    bool checkstate(int period, const std::vector<double>&, std::ostream *log=0, unsigned tol=0) const;
+    void prnmktbl(int period, std::ostream &out) const;
 private:
     std::vector< std::vector<Market*> > markets; //!< no of market objects by period
     std::auto_ptr<MarketLocator> mMarketLocator; //!< An object which determines the correct market number.
+    std::auto_ptr<MarketDependencyFinder> mDependencyFinder;
+    //! Flag indicating whether the next call to world->calc() will be part of a partial derivative calculation 
+    bool mIsDerivativeCalc;
 };
 
 #endif

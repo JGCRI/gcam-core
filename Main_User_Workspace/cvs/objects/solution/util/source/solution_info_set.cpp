@@ -51,6 +51,7 @@
 #include "solution/util/include/isolution_info_filter.h"
 #include "marketplace/include/market.h"
 #include "solution/util/include/solution_info_param_parser.h"
+#include "containers/include/market_dependency_finder.h"
 
 using namespace std;
 
@@ -95,7 +96,7 @@ void SolutionInfoSet::init( const unsigned int aPeriod, const double aDefaultSol
     // Create and initialize a SolutionInfo object for each market.
     typedef vector<Market*>::const_iterator ConstMarketIterator;
     for( ConstMarketIterator iter = marketsToSolve.begin(); iter != marketsToSolve.end(); ++iter ){
-        SolutionInfo currInfo( *iter );
+        SolutionInfo currInfo( *iter, (*iter)->isSolvable() ? marketplace->getDependencyFinder()->getOrdering( iter - marketsToSolve.begin() ) : vector<IActivity*>() );
         currInfo.init( aDefaultSolutionTolerance, aDefaultSolutionFloor,
                        aSolutionInfoParamParser->getSolutionInfoValuesForMarket( (*iter)->getGoodName(), (*iter)->getRegionName(),
                                                                                  currInfo.getTypeName(), period ) );
@@ -105,60 +106,6 @@ void SolutionInfoSet::init( const unsigned int aPeriod, const double aDefaultSol
         else {
             unsolvable.push_back( currInfo );
         }
-    }
-}
-
-//! Merge two solution sets
-void SolutionInfoSet::merge( const vector<SolutionInfo> aSolutionSet )
-{
-    ILogger& solverLog = ILogger::getLogger( "solver_log" );
-    solverLog.setLevel( ILogger::DEBUG );
-    // Iterate through passed-in solution set and merge with matching solvable set.
-    for( ConstSetIterator newIter = aSolutionSet.begin(); newIter != aSolutionSet.end(); ++newIter ){
-        // Find matching original solution, erase and add new solution.
-        for( SetIterator currIter = solvable.begin(); currIter != solvable.end(); ++currIter ){
-            if( currIter->getName() == newIter->getName() ){
-                solvable.erase( currIter );
-                solvable.insert( currIter, *newIter );
-                solverLog << newIter->getName() << " was merged to the solvable solution set." << endl;
-            }
-        }
-    }
-    // Iterate through passed-in solution set and merge with matching unsolvable set.
-    for( ConstSetIterator newIter = aSolutionSet.begin(); newIter != aSolutionSet.end(); ++newIter ){
-        // Find matching original solution, erase and add new solution.
-        for( SetIterator currIter = unsolvable.begin(); currIter != unsolvable.end(); ++currIter ){
-            if( currIter->getName() == newIter->getName() ){
-                unsolvable.erase( currIter );
-                unsolvable.insert( currIter, *newIter );
-                solverLog << newIter->getName() << " was merged to the unsolvable solution set." << endl;
-            }
-        }
-    }
-    solverLog << endl;
-}
-
-//! Update the prices to the marketplace.
-void SolutionInfoSet::updateToMarkets() {
-    // Send each SolutionInfo's price to its linked market for solvable markets. 
-    for( SetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
-        iter->updateToMarket();
-    }
-    // Update unsolvable as well.
-    for( SetIterator iter = unsolvable.begin(); iter != unsolvable.end(); ++iter ){
-        iter->updateToMarket();
-    }
-}
-
-//! Update information from the marketplace.
-void SolutionInfoSet::updateFromMarkets(){
-    // Retrieve information from the linked market.
-    for( SetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
-        iter->updateFromMarket();
-    }
-    // Update unsolvable as well.
-    for( SetIterator iter = unsolvable.begin(); iter != unsolvable.end(); ++iter ){
-        iter->updateFromMarket();
     }
 }
 
@@ -226,12 +173,6 @@ void SolutionInfoSet::updateElasticities() {
     for( SetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
         iter->calcDemandElas( *this );
         iter->calcSupplyElas( *this );
-    }
-}
-//! Adjust brackets
-void SolutionInfoSet::adjustBrackets() {
-    for( SetIterator iter = solvable.begin(); iter != solvable.end(); ++iter ){
-        iter->adjustBracket();
     }
 }
 

@@ -49,7 +49,7 @@
 #include "containers/include/iinfo.h"
 #include "containers/include/scenario.h"
 #include "util/logger/include/ilogger.h"
-#include "containers/include/dependency_finder.h"
+#include "containers/include/market_dependency_finder.h"
 #include "functions/include/iinput.h"
 #include "containers/include/scenario.h"
 
@@ -160,13 +160,15 @@ void PowerPlantCaptureComponent::toDebugXML( const int aPeriod,
 }
 
 void PowerPlantCaptureComponent::completeInit( const string& aRegionName,
-                                               const string& aSectorName,
-                                               DependencyFinder* aDependencyFinder )
+                                               const string& aSectorName )
 {
     // Add the storage market as a dependency of the sector. This is because
     // this sector will have to be ordered first so that the total demand and
     // price for storage are known.
-    aDependencyFinder->addDependency( aSectorName, mStorageMarket );
+    scenario->getMarketplace()->getDependencyFinder()->addDependency( aSectorName,
+                                                                      aRegionName,
+                                                                      mStorageMarket,
+                                                                      aRegionName );
     
     // Check that the remove fraction is valid.
     if( mRemoveFraction < 0 || mRemoveFraction > 1 ){
@@ -267,8 +269,8 @@ double PowerPlantCaptureComponent::calcSequesteredAmount( const string& aRegionN
         // set sequestered amount as demand side of carbon storage market
         Marketplace* marketplace = scenario->getMarketplace();
         if( aGHGName == mTargetGas ){
-            marketplace->addToDemand( mStorageMarket, aRegionName, mSequesteredAmount[ aPeriod ],
-                aPeriod, false );
+            mLastCalcValue = marketplace->addToDemand( mStorageMarket, aRegionName, mSequesteredAmount[ aPeriod ],
+                mLastCalcValue, aPeriod, false );
         }
     }
     return mSequesteredAmount[ aPeriod ];

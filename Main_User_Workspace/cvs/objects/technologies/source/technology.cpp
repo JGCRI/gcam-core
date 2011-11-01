@@ -328,7 +328,6 @@ bool Technology::XMLParse( const DOMNode* node )
 void Technology::completeInit( const string& aRegionName,
                                const string& aSectorName,
                                const string& aSubsectorName,
-                               DependencyFinder* aDepFinder,
                                const IInfo* aSubsectorInfo,
                                ILandAllocator* aLandAllocator )
 {
@@ -383,7 +382,7 @@ void Technology::completeInit( const string& aRegionName,
     // the most local info object available.
     const IInfo* localInfo = getTechInfo() != 0 ? getTechInfo() : aSubsectorInfo;
     for( unsigned int i = 0; i < mInputs.size(); ++i ) {
-        mInputs[ i ]->completeInit( aRegionName, aSectorName, aSubsectorName, mName, aDepFinder, localInfo );
+        mInputs[ i ]->completeInit( aRegionName, aSectorName, aSubsectorName, mName, localInfo );
     }
 
     // Price multiplier must be positive.
@@ -408,7 +407,11 @@ void Technology::completeInit( const string& aRegionName,
     }
     for( unsigned int i = 0; i < mOutputs.size(); ++i ) {
         // TODO: Change this when dependencies are determined by period.
-        mOutputs[ i ]->completeInit( aSectorName, aDepFinder, localInfo, !hasNoInputOrOutput( 0 ) );
+        mOutputs[ i ]->completeInit( aSectorName, aRegionName, localInfo, !hasNoInputOrOutput( 0 ) );
+    }
+    
+    for( CGHGIterator it = ghg.begin(); it != ghg.end(); ++it ) {
+        (*it)->completeInit( aRegionName, aSectorName, localInfo );
     }
 
     // Initialize the production function. Uses a virtual method so that
@@ -447,7 +450,7 @@ void Technology::completeInit( const string& aRegionName,
 
     // Initialize the capture component.
     if( mCaptureComponent.get() ) {
-        mCaptureComponent->completeInit( aRegionName, aSectorName, aDepFinder );
+        mCaptureComponent->completeInit( aRegionName, aSectorName );
     }
 
     // Initialize the technical change calculator.
@@ -1204,6 +1207,16 @@ bool Technology::isAvailable( const int aPeriod ) const
     return false;
 }
 
+/*!
+ * \brief Returns whether this technology will be operating in the given period.
+ * \details This method simply checks the production state.
+ * \param aPeriod Model period.
+ * \return True if this technology is operating in aPeriod false otherwise.
+ */
+bool Technology::isOperating( const int aPeriod ) const {
+    return mProductionState[ aPeriod ] && mProductionState[ aPeriod ]->isOperating();
+}
+
 /*! \brief Returns whether a technology uses a specific input.
 * \details Loops through the input set and checks if the input set exists.
 * \param aInputName The name of the input.
@@ -1583,7 +1596,7 @@ bool Technology::isAllCalibrated( const int aPeriod,
      *          a very tight tolerence we probably won't be able to calibrate exactly when scales
      *          are so different.
      */
-    if( relativeDiff > aCalAccuracy && ( fabs( output - calOutput ) / sectorOutput ) > aCalAccuracy ) {
+    if( relativeDiff > aCalAccuracy && ( fabs( output - calOutput ) ) > aCalAccuracy * sectorOutput ) {
         // Print warning then return false.
         if( aPrintWarnings ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );

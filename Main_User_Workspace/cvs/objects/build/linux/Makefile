@@ -11,7 +11,10 @@ all: gcam
 gcam-prof: export PROF = -pg
 gcam-prof: clean libgcam.a main_dir
 
-gcam: libgcam.a main_dir
+gcam: libgcam.a
+	rm -f ../../main/source/gcam.exe
+	$(MAKE) -C ../../main/source  BUILDPATH=$(BUILDPATH) main_dir 
+	cp ../../main/source/gcam.exe ../../../../exe/
 
 libgcam.a: dirs
 	$(AR) libgcam.a $(OBJDIR)/*.o

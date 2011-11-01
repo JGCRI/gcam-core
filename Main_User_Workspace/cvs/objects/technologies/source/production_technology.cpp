@@ -530,7 +530,7 @@ void ProductionTechnology::calcTaxes( NationalAccount& aNationalAccount, const M
     //assert( retainedEarnings >= 0 );
     assert( util::isValidNumber( retainedEarnings ) );
 
-    marketplace->addToSupply( "Capital", aRegionName, retainedEarnings, aPeriod );
+    //marketplace->addToSupply( "Capital", aRegionName, retainedEarnings, aPeriod );
     // Add all taxes and accounts to expenditure
     expenditures[ aPeriod ].setType(Expenditure::INDIRECT_TAXES, indBusTax);
     expenditures[ aPeriod ].setType(Expenditure::DIRECT_TAXES, corpIncomeTax);

@@ -176,6 +176,20 @@ void AGHG::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 }
 
 /*!
+ * \brief Complete the initialization of the ghg object.
+ * \note This routine is only called once per model run
+ * \param aRegionName Region name.
+ * \param aSectorName Sector name, also the name of the product.
+ * \param aTechInfo Technology information object.
+ * \author Pralit Patel
+ * \warning Markets are not necessarily set when completeInit is called
+ */
+void AGHG::completeInit( const string& aRegionName, const string& aSectorName,
+                         const IInfo* aTechInfo )
+{
+}
+
+/*!
  * \brief Calculate the aggregate output emissions coefficient for the gas.
  * \details The output coefficient is the sum of all output coefficients of all
  *          the outputs.

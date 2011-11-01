@@ -53,7 +53,7 @@
 #include "functions/include/icoefficient.h"
 #include "functions/include/efficiency.h"
 #include "functions/include/intensity.h"
-#include "containers/include/dependency_finder.h"
+#include "containers/include/market_dependency_finder.h"
 #include "containers/include/iinfo.h"
 #include "functions/include/function_utils.h"
 #include "util/logger/include/ilogger.h"
@@ -200,12 +200,14 @@ void InputSubsidy::completeInit( const string& aRegionName,
                                  const string& aSectorName,
                                  const string& aSubsectorName,
                                  const string& aTechName,
-                                 DependencyFinder* aDependencyFinder,
                                  const IInfo* aTechInfo )
 {
 
     // Add the input dependency to the dependency finder.
-    aDependencyFinder->addDependency( aSectorName, mName );
+    scenario->getMarketplace()->getDependencyFinder()->addDependency( aSectorName,
+                                                                      aRegionName,
+                                                                      getName(),
+                                                                      aRegionName );
     mSectorName = aSectorName;
     
 }
@@ -271,8 +273,8 @@ void InputSubsidy::setPhysicalDemand( double aPhysicalDemand,
     // This is so solver can use the excess demand to determine
     // whether to increase or decrease a subsidy. 
     // Each technology share is additive.
-    marketplace->addToSupply( mName, aRegionName, mPhysicalDemand[ aPeriod ],
-                              aPeriod, true );
+    mLastCalcValue = marketplace->addToSupply( mName, aRegionName, mPhysicalDemand[ aPeriod ],
+                              mLastCalcValue, aPeriod, true );
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
 }

@@ -194,6 +194,12 @@ protected:
     virtual const std::string& getXMLName() const;
 
     virtual void initLandUseHistory( const std::string& aRegionName );
+    
+    //! State value necessary to use Marketplace::addToDemand for CO2 emissions
+    double mLastCalcCO2Value;
+    
+    //! State value necessary to use Marketplace::addToDemand for expansion constraint
+    double mLastCalcExpansionValue;
 
 };
 

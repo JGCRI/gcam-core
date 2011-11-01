@@ -166,7 +166,6 @@ void InputCapital::completeInit( const string& aRegionName,
                                  const string& aSectorName,
                                  const string& aSubsectorName,
                                  const string& aTechName,
-                                 DependencyFinder* aDependencyFinder,
                                  const IInfo* aTechInfo )
 {   
     // completeInit() is called for each technology for each period

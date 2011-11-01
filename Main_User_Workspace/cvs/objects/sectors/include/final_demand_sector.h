@@ -53,7 +53,6 @@
 
 class Tabs;
 class IInfo;
-class DependencyFinder;
 
 /*!
  * \brief A sector which calculates the final demands for a region using a
@@ -76,7 +75,6 @@ public:
                            const int aPeriod );
 
     virtual void completeInit( const IInfo* aRegionInfo,
-                               DependencyFinder* aDependencyFinder,
                                ILandAllocator* aLandAllocator );
 
     virtual void dbOutput( const GDP* aGDP,

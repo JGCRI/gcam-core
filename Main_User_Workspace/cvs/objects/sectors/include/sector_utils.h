@@ -68,6 +68,7 @@ public:
     static void addToTrialDemand( const std::string& aRegionName,
                                   const std::string& aSectorName,
                                   const double aSupply,
+                                  double& aLastValue,
                                   const int aPeriod );
 
     static double getTrialSupply( const std::string& aRegionName,

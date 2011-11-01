@@ -102,7 +102,6 @@ public:
     virtual void completeInit( const std::string& aRegionName,
                                const std::string& aSectorName,
                                const std::string& aSubsectorName,
-                               DependencyFinder* aDepFinder,
                                const IInfo* aSubsectorInfo,
                                ILandAllocator* aLandAllocator );
 
@@ -221,6 +220,9 @@ protected:
     virtual const std::string& getBackupCapCostName( ) const;
 
     virtual const std::string& getTechCostName( ) const;
+    
+    //! State value necessary to use addToTrialDemand
+    double mLastCalcValue;
 };
 
 #endif // _ITERMITTENT_TECHNOLOGY_H_

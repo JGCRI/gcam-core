@@ -230,11 +230,6 @@ bool BisectionNRSolver::solve( const int aPeriod, const SolutionInfoParamParser*
             mBisectAll->solve( unsolved_solution_set, aPeriod );
             solverLog << "Solution after bisect all of unsolved set: " << endl << unsolved_solution_set << endl;
 
-            // to merge the unsolved_solution_set with solution_set we have them update to
-            // and from the marketplace repectively
-            unsolved_solution_set.updateToMarkets();  // Update new prices to marketplace.
-            solution_set.updateFromMarkets(); // Update solution set prices from marketplace.
-
             solverLog << "Solution after bisect all and update: " << endl << solution_set << endl;
         }
 

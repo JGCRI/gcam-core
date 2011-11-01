@@ -242,7 +242,7 @@ void UnlimitedResource::calcSupply( const string& aRegionName,
     double currDemand = marketplace->getDemand( mName, aRegionName, aPeriod );
     double currSupply = marketplace->getSupply( mName, aRegionName, aPeriod );
     assert( currDemand >= currSupply );
-    marketplace->addToSupply( mName, aRegionName, currDemand - currSupply,
+    marketplace->addToSupply( mName, aRegionName, currDemand - currSupply, currDemand - currSupply,
                               aPeriod );
 }
 

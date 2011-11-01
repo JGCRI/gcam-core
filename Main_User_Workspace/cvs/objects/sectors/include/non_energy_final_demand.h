@@ -132,6 +132,9 @@ protected:
     
     //! Calculated total technical change.
     std::vector<double> mTechnicalChange;
+    
+    //! State value necessary to use Marketplace::addToDemand
+    double mLastCalcValue;
 
     virtual void calcTechChange( const int aPeriod );
     

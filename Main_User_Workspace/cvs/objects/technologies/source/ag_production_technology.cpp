@@ -52,6 +52,7 @@
 #include "technologies/include/iproduction_state.h"
 #include "technologies/include/ioutput.h"
 #include "util/base/include/ivisitor.h"
+#include "containers/include/market_dependency_finder.h"
 
 using namespace std;
 using namespace xercesc;
@@ -271,7 +272,6 @@ void AgProductionTechnology::postCalc( const string& aRegionName,
 void AgProductionTechnology::completeInit( const std::string& aRegionName,
                                              const std::string& aSectorName,
                                              const std::string& aSubsectorName,
-                                             DependencyFinder* aDepFinder,
                                              const IInfo* aSubsectorInfo,
                                              ILandAllocator* aLandAllocator )
 {
@@ -292,7 +292,7 @@ void AgProductionTechnology::completeInit( const std::string& aRegionName,
     // Note: Technology::completeInit() loops through the outputs.
     //       Therefore, if any of the outputs need the land allocator,
     //       the call to Technology::completeInit() must come afterwards
-    Technology::completeInit( aRegionName, aSectorName, aSubsectorName, aDepFinder, aSubsectorInfo,
+    Technology::completeInit( aRegionName, aSectorName, aSubsectorName, aSubsectorInfo,
                               aLandAllocator );
 
     // Make some tests for bad inputs
@@ -318,6 +318,12 @@ void AgProductionTechnology::completeInit( const std::string& aRegionName,
     }
 
     setCalYields( aRegionName );
+    
+    // Indicate that this ag supply sector is dependent on the land allocator.
+    scenario->getMarketplace()->getDependencyFinder()->addDependency( "land-allocator",
+                                                                      aRegionName,
+                                                                      aSectorName,
+                                                                      aRegionName );
 }
 
 /*! \brief Sets the calibrated yields

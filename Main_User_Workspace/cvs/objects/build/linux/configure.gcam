@@ -3,8 +3,8 @@
 
 ### gcc compiler settings (testing with v4.1.2) ###
 CXX             = g++
-CXXOPTIM        = -O3
-CXXDEBUG        = -DNDEBUG
+CXXOPTIM        = -O
+CXXDEBUG        = -ggdb -DNDEBUG
 CXXBASEOPTS     = $(CXXDEBUG)
 
 FC              = gfortran

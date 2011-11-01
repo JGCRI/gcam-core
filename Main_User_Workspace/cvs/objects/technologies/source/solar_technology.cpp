@@ -251,7 +251,6 @@ void SolarTechnology::completeInit(
    const std::string&              aRegionName,
    const std::string&              aSectorName,
    const std::string&              aSubsectorName,
-   DependencyFinder*               aDepFinder,
    const IInfo*                    aSubsectorIInfo,
    ILandAllocator*                 aLandAllocator )
 {
@@ -260,7 +259,7 @@ void SolarTechnology::completeInit(
         mInputs.push_back( new NonEnergyInput( getTechCostName() ) );
     }
 
-   parent::completeInit( aRegionName, aSectorName, aSubsectorName, aDepFinder, aSubsectorIInfo, aLandAllocator );
+   parent::completeInit( aRegionName, aSectorName, aSubsectorName, aSubsectorIInfo, aLandAllocator );
 
    // Validate input parameters
    typedef ObjECTS::TValidatorInfo<> validator_type;

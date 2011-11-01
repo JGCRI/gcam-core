@@ -234,6 +234,6 @@ void TranSector::setFinalDemand( const string& aRegionName,
 
     // Add the demand to the marketplace.
     Marketplace* marketplace = scenario->getMarketplace();
-    marketplace->addToDemand( mName, aRegionName, mServiceDemands[ aPeriod ], aPeriod );
+    mLastCalcValue = marketplace->addToDemand( mName, aRegionName, mServiceDemands[ aPeriod ], mLastCalcValue, aPeriod );
 }
 

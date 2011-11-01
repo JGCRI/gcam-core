@@ -80,7 +80,6 @@ bool EmptyTechnology::XMLParse( const DOMNode* aNode )
 void EmptyTechnology::completeInit( const string& aRegionName,
                               const string& aSectorName,
                               const string& aSubsectorName,
-                              DependencyFinder* aDepFinder,
                               const IInfo* aSubsectorInfo,
                               ILandAllocator* aLandAllocator )
 {
@@ -193,6 +192,11 @@ bool EmptyTechnology::isFixedOutputTechnology( const int aPeriod ) const
 }
 
 bool EmptyTechnology::isAvailable( const int aPeriod ) const
+{
+    return false;
+}
+
+bool EmptyTechnology::isOperating( const int aPeriod ) const
 {
     return false;
 }

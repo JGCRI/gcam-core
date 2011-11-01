@@ -121,7 +121,7 @@ void Consumer::updateMarketplace( const string& aSectorName, const string& aRegi
             double tempDemand = mLeafInputs[ i ]->getPhysicalDemand( aPeriod );
             assert( util::isValidNumber( tempDemand ) );
 
-            marketplace->addToDemand( mLeafInputs[ i ]->getName(), aRegionName, tempDemand, aPeriod );
+            //marketplace->addToDemand( mLeafInputs[ i ]->getName(), aRegionName, tempDemand, aPeriod );
         }
     }
     mLeafInputs.clear();

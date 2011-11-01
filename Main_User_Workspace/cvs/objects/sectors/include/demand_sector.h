@@ -54,7 +54,6 @@
 class GDP;
 class NationalAccount;
 class Demographic;
-class DependencyFinder;
 class IInfo;
 
 /*! 
@@ -85,7 +84,6 @@ public:
     static const std::string& getXMLNameStatic();
     
     virtual void completeInit( const IInfo* aRegionInfo,
-                               DependencyFinder* aDepFinder,
                                ILandAllocator* aLandAllocator );
     
     virtual void initCalc( NationalAccount* aNationalAccount,

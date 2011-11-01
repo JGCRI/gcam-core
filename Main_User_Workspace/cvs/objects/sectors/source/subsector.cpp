@@ -400,13 +400,11 @@ const string& Subsector::getXMLNameStatic() {
 *
 * This routine is only called once per model run
 * \param aSectorInfo The parent sector info object.
-* \param aDependencyFinder The regional dependency finder.
 * \param aLandAllocator Regional land allocator.
 * \author Josh Lurz
 * \warning markets are not necessarily set when completeInit is called
 */
 void Subsector::completeInit( const IInfo* aSectorInfo,
-                              DependencyFinder* aDependencyFinder,
                               ILandAllocator* aLandAllocator )
 {
     mSubsectorInfo.reset( InfoFactory::constructInfo( aSectorInfo, regionName + "-" + sectorName + "-" + name ) );
@@ -428,8 +426,7 @@ void Subsector::completeInit( const IInfo* aSectorInfo,
     }
     
     for ( TechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
-        (*techIter)->completeInit( regionName, sectorName, name, aDependencyFinder, mSubsectorInfo.get(),
-                                   aLandAllocator );
+        (*techIter)->completeInit( regionName, sectorName, name, mSubsectorInfo.get(), aLandAllocator );
     }    
     
     const Modeltime* modeltime = scenario->getModeltime();
@@ -661,7 +658,7 @@ void Subsector::calcCost( const int aPeriod ){
     // calculate their costs. Future Technologies cannot have a cost as they do
     // not yet exist.
     for( TechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
-        for( ITechnologyContainer::TechRangeIterator vintageIter = (*techIter)->getVintageBegin( aPeriod ); vintageIter != (*techIter)->getVintageEnd(); ++vintageIter ) {
+        for( ITechnologyContainer::TechRangeIterator vintageIter = (*techIter)->getVintageBegin( aPeriod ); vintageIter != (*techIter)->getVintageEnd( aPeriod ); ++vintageIter ) {
             (*vintageIter).second->calcCost( regionName, sectorName, aPeriod );
         }
     }
@@ -713,7 +710,7 @@ double Subsector::calcShare(const int aPeriod, const GDP* aGdp, const double aLo
 double Subsector::getFixedOutput( const int aPeriod ) const {
     double fixedOutput = 0;
     for( CTechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
-        ITechnologyContainer::CTechRangeIterator endIter = (*techIter)->getVintageEnd();
+        ITechnologyContainer::CTechRangeIterator endIter = (*techIter)->getVintageEnd( aPeriod );
         for( ITechnologyContainer::CTechRangeIterator vintageIter = (*techIter)->getVintageBegin( aPeriod ); vintageIter != endIter ; ++vintageIter ) {
             double currFixedOutput = (*vintageIter).second->getFixedOutput( regionName, sectorName, false, "", aPeriod );
             /*! \invariant Fixed output for each Technology must be -1 or
@@ -798,14 +795,15 @@ void Subsector::setOutput( const double aSubsectorVariableDemand,
         
         // The first year is the current vintage, only pass variable output to current vintage.
         // Make sure that a new vintage technology exists for production.
-        if( vintageIter != (*techIter)->getVintageEnd() ) {
+        if( vintageIter != (*techIter)->getVintageEnd( aPeriod ) ) {
             (*vintageIter).second->production( regionName, sectorName,
                                             aSubsectorVariableDemand * shares[ techIter - mTechContainers.begin() ],
                                             aFixedOutputScaleFactor, aGDP, aPeriod );
+            ++vintageIter;
         }
         
         // Loop over old vintages which do not get variable demand.
-        for( ++vintageIter; vintageIter != (*techIter)->getVintageEnd(); ++vintageIter ) {
+        for( ; vintageIter != (*techIter)->getVintageEnd( aPeriod ); ++vintageIter ) {
             // calculate Technology output and fuel input for past vintages
             (*vintageIter).second->production( regionName, sectorName, 0,
                                             aFixedOutputScaleFactor, aGDP, aPeriod );
@@ -1255,7 +1253,7 @@ void Subsector::emission( const int period ){
     summary[period].clearemfuelmap(); // clear emissions map
     
     for( CTechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
-        ITechnologyContainer::CTechRangeIterator endIter = (*techIter)->getVintageEnd();
+        ITechnologyContainer::CTechRangeIterator endIter = (*techIter)->getVintageEnd( period );
         for( ITechnologyContainer::CTechRangeIterator vintageIter = (*techIter)->getVintageBegin( period ); vintageIter != endIter; ++vintageIter ) {
             summary[period].updateemiss( (*vintageIter).second->getEmissions( sectorName, period ) );
             summary[period].updateemfuelmap( (*vintageIter).second->getEmissionsByFuel( sectorName, period ) );
@@ -1277,7 +1275,7 @@ double Subsector::getOutput( const int period ) const {
     assert( period < scenario->getModeltime()->getmaxper() );
     double outputSum = 0;
     for( CTechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
-        ITechnologyContainer::CTechRangeIterator endIter = (*techIter)->getVintageEnd();
+        ITechnologyContainer::CTechRangeIterator endIter = (*techIter)->getVintageEnd( period );
         for( ITechnologyContainer::CTechRangeIterator vintageIter = (*techIter)->getVintageBegin( period ); vintageIter != endIter; ++vintageIter ) {
             outputSum += (*vintageIter).second->getOutput( period );
         }
@@ -1300,7 +1298,7 @@ double Subsector::getOutput( const int period ) const {
 double Subsector::getEnergyInput( const int aPeriod ) const {
     double totalEnergy = 0;
     for( CTechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
-        ITechnologyContainer::CTechRangeIterator endIter = (*techIter)->getVintageEnd();
+        ITechnologyContainer::CTechRangeIterator endIter = (*techIter)->getVintageEnd( aPeriod );
         for( ITechnologyContainer::CTechRangeIterator vintageIter = (*techIter)->getVintageBegin( aPeriod ); vintageIter != endIter; ++vintageIter ) {
             totalEnergy += (*vintageIter).second->getEnergyInput( aPeriod );
         }
@@ -1423,7 +1421,7 @@ void Subsector::updateSummary( const list<string>& aPrimaryFuelList,
     // clears Subsector fuel consumption map
     summary[period].clearfuelcons();
     for( CTechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
-        ITechnologyContainer::CTechRangeIterator endIter = (*techIter)->getVintageEnd();
+        ITechnologyContainer::CTechRangeIterator endIter = (*techIter)->getVintageEnd( period );
         for( ITechnologyContainer::CTechRangeIterator vintageIter = (*techIter)->getVintageBegin( period ); vintageIter != endIter; ++vintageIter ) {
             summary[period].updatefuelcons( aPrimaryFuelList, (*vintageIter).second->getFuelMap( period ) );
         }

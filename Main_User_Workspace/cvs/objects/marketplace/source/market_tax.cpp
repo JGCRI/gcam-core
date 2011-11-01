@@ -62,22 +62,24 @@ IMarketType::Type MarketTax::getType() const {
 }
 
 /* \brief Initialize the MarketTax price.
-* \details This method initializes the price of the tax market to a random number
-* or null if not a solved market.
-* \author Josh Lurz, Sonny Kim
+* \details This method initializes the price of the tax market to its minimum price,
+* or zero if not a solved market.
+* \author Josh Lurz, Sonny Kim 
+* \remark The "minimum" price isn't really a minimum, since the solver
+* could adjust it lower.  It's a minimum for the initial guess for the
+* price.  The important thing is to start the price in a regime where
+* its derivatives will behave reasonably in the solver.
 */
 void MarketTax::initPrice() {
     const double MIN_PRICE = 5;
     // If price is near zero it needs to be initialized.
     if( price < util::getSmallNumber() ){
-        // If this market should be solved price should be initialized to a 
-        // random number between MIN_PRICE and (1 + MIN_PRICE)
+        // If this market should be solved price should be initialized
+        // to the default from above.
         if( solveMarket ){
-            srand( (unsigned)time( NULL ) );
-            price = ((double) rand() / (double) RAND_MAX) + MIN_PRICE;
-            price = util::getSmallNumber();
+          price = MIN_PRICE;
         }
-        // The market will not be solved so it is set to null. 
+        // The market will not be solved so it is set to zero. 
         else {
             price = 0;
         }
@@ -90,25 +92,25 @@ void MarketTax::setPrice( const double priceIn ) {
 
 /* \brief Initialize the MarketTax price from last period's price.
 * \details This method checks if the lastPrice was 0. This would mean that last period's constraint was 
-* 0. If it is, price is set to a random as this is the initial constrained period.
+* 0. If it is, price is set to the minimum price, as this is the initial constrained period.
 * Otherwise price is set to the previous period's price as is done in the normal market.
 * \param lastPrice Previous period's price. This should have already been set in store to last!!
 * \author Josh Lurz, Sonny Kim
+* \remark The "minimum" price isn't really a minimum, since the solver
+* could adjust it lower.  It's a minimum for the initial guess for the
+* price.  The important thing is to start the price in a regime where
+* its derivatives will behave reasonably in the solver.
 */
 void MarketTax::set_price_to_last_if_default( const double lastPrice ) {
     const double MIN_PRICE = 5;
     // If the price is zero and the solve flag is set so a constraint exists. 
     if( price <= util::getSmallNumber() && solveMarket ){
-        // If the last price is 0, we should set the price to a random number.
-        // New price is between MIN_PRICE and (1 + MIN_PRICE)
-        if( lastPrice < util::getSmallNumber() ){
-            srand( (unsigned)time( NULL ) );
-            price = ((double) rand() / (double) RAND_MAX) + MIN_PRICE;
-        }
-        // Otherwise set the price to the previous period's price.
-        else {
-            price = lastPrice;
-        }
+      if( lastPrice < MIN_PRICE ){
+        price = MIN_PRICE;
+      }
+      else {
+        price = lastPrice;
+      }
     }
     // There is no else here because we do not want to override prices in the case of a fixed tax.
 }
@@ -118,21 +120,19 @@ void MarketTax::set_price_to_last_if_default( const double lastPrice ) {
 * 0. If it is, price is set to a random as this is the initial constrained period.
 * Otherwise price is set to the previous period's price as is done in the normal market.
 * \param lastPrice Previous period's price. This should have already been set in store to last!!
+* \remark This function appears to be identical to set_price_to_last_if_default()
 * \author Josh Lurz, Sonny Kim
 */
 void MarketTax::set_price_to_last( const double lastPrice ) {
     const double MIN_PRICE = 5;
     // If the price is zero and the solve flag is set so a constraint exists. 
     if( price <= util::getSmallNumber() && solveMarket ){
-        // If the last price is 0, we should set the price to a random number.
-        // New price is between MIN_PRICE and (1 + MIN_PRICE)
         if( lastPrice < util::getSmallNumber() ){
-            srand( (unsigned)time( NULL ) );
-            price = ((double) rand() / (double) RAND_MAX) + MIN_PRICE;
+          price = MIN_PRICE;
         }
         // Otherwise set the price to the previous period's price.
         else {
-            price = lastPrice;
+          price = lastPrice;
         }
     }
     // There is no else here because we do not want to override prices in the case of a fixed tax.

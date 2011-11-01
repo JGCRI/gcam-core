@@ -50,7 +50,6 @@
 #include <iosfwd> // remove when csv output is removed.
 
 class Tabs;
-class DependencyFinder;
 class ICaptureComponent;
 class IInfo;
 class MoreSectorInfo;
@@ -231,14 +230,12 @@ public:
      * \param aSectorName Name of the sector containing the input.
      * \param aSubsectorName Name of the subsector containing the input.
      * \param aTechName Name of the Technology containing the input.
-     * \param aDependencyFinder The input dependency finder, which may be null.
      * \param aTechInfo Technology's info object.
      */
     virtual void completeInit( const std::string& aRegionName,
                                const std::string& aSectorName,
                                const std::string& aSubsectorName,
                                const std::string& aTechName,
-                               DependencyFinder* aDependencyFinder,
                                const IInfo* aTechInfo ) = 0;
 
     /*!

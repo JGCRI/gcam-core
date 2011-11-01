@@ -53,7 +53,7 @@
 #include "functions/include/icoefficient.h"
 #include "functions/include/efficiency.h"
 #include "functions/include/intensity.h"
-#include "containers/include/dependency_finder.h"
+#include "containers/include/market_dependency_finder.h"
 #include "containers/include/iinfo.h"
 #include "functions/include/function_utils.h"
 #include "util/logger/include/ilogger.h"
@@ -200,12 +200,14 @@ void InputTax::completeInit( const string& aRegionName,
                                  const string& aSectorName,
                                  const string& aSubsectorName,
                                  const string& aTechName,
-                                 DependencyFinder* aDependencyFinder,
                                  const IInfo* aTechInfo )
 {
 
     // Add the input dependency to the dependency finder.
-    aDependencyFinder->addDependency( aSectorName, mName );
+    scenario->getMarketplace()->getDependencyFinder()->addDependency( aSectorName,
+                                                                      aRegionName,
+                                                                      getName(),
+                                                                      aRegionName );
     mSectorName = aSectorName;
     
 }
@@ -268,8 +270,8 @@ void InputTax::setPhysicalDemand( double aPhysicalDemand,
     // mPhysicalDemand can be a share if tax is share based.
     mPhysicalDemand[ aPeriod ].set( aPhysicalDemand );
     // Each technology share is additive.
-    marketplace->addToDemand( mName, aRegionName, mPhysicalDemand[ aPeriod ],
-                              aPeriod, true );
+    mLastCalcValue = marketplace->addToDemand( mName, aRegionName, mPhysicalDemand[ aPeriod ],
+                              aPeriod, mLastCalcValue, true );
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
 }

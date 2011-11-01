@@ -156,7 +156,6 @@ SolverComponent::ReturnCode BisectPolicy::solve( SolutionInfoSet& aSolutionSet, 
     singleLog.setLevel( ILogger::DEBUG );
 
     // Make sure we have all updated information.
-    aSolutionSet.updateFromMarkets();
     aSolutionSet.updateSolvable( mSolutionInfoFilter.get() );
 
     // Select the worst market.
@@ -188,11 +187,9 @@ SolverComponent::ReturnCode BisectPolicy::solve( SolutionInfoSet& aSolutionSet, 
                     worstSol->setPrice( 0 ); 
                 } 
 
-                aSolutionSet.updateToMarkets();
                 marketplace->nullSuppliesAndDemands( aPeriod );
 
                 world->calc( aPeriod );
-                aSolutionSet.updateFromMarkets();
                 aSolutionSet.updateSolvable( mSolutionInfoFilter.get() );
                 addIteration( worstSol->getName(), worstSol->getRelativeED() );
                 worstMarketLog << "BisectPolicy-MaxRelED: "  << *worstSol << endl;

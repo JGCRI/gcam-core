@@ -113,7 +113,8 @@ void StubTechnologyContainer::toInputXML( ostream& aOut, Tabs* aTabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     ITechnologyContainer::CTechRangeIterator it =
         mTechnology->getVintageBegin( modeltime->getFinalCalibrationPeriod() );
-    ITechnologyContainer::CTechRangeIterator endIter = mTechnology->getVintageEnd();
+    ITechnologyContainer::CTechRangeIterator endIter =
+        mTechnology->getVintageEnd( modeltime->getFinalCalibrationPeriod() );
 
     for( ; it != endIter; ++it ) {
         XMLWriteOpeningTag( Technology::getXMLVintageNameStatic(), aOut, aTabs, "", ( *it ).first );
@@ -134,7 +135,6 @@ const string& StubTechnologyContainer::getName() const {
 void StubTechnologyContainer::completeInit( const string& aRegionName,
                                             const string& aSectorName,
                                             const string& aSubsectorName,
-                                            DependencyFinder* aDependencyFinder,
                                             const IInfo* aSubsecInfo,
                                             ILandAllocator* aLandAllocator )
 {
@@ -172,7 +172,7 @@ void StubTechnologyContainer::completeInit( const string& aRegionName,
     
     // Now call complete init on the completed technology.  Note any other interpolations
     // which need to occur will happen here.
-    mTechnology->completeInit( aRegionName, aSectorName, aSubsectorName, aDependencyFinder,
+    mTechnology->completeInit( aRegionName, aSectorName, aSubsectorName,
                                aSubsecInfo, aLandAllocator );
 }
 
@@ -202,12 +202,12 @@ ITechnologyContainer::TechRangeIterator StubTechnologyContainer::getVintageBegin
 ITechnologyContainer::CTechRangeIterator StubTechnologyContainer::getVintageBegin( const int aPeriod ) const {
     return mTechnology->getVintageBegin( aPeriod );}
 
-ITechnologyContainer::TechRangeIterator StubTechnologyContainer::getVintageEnd() {
-    return mTechnology->getVintageEnd();
+ITechnologyContainer::TechRangeIterator StubTechnologyContainer::getVintageEnd( const int aPeriod ) {
+    return mTechnology->getVintageEnd( aPeriod );
 }
 
-ITechnologyContainer::CTechRangeIterator StubTechnologyContainer::getVintageEnd() const {
-    return mTechnology->getVintageEnd();
+ITechnologyContainer::CTechRangeIterator StubTechnologyContainer::getVintageEnd( const int aPeriod ) const {
+    return mTechnology->getVintageEnd( aPeriod );
 }
 
 void StubTechnologyContainer::accept( IVisitor* aVisitor, const int aPeriod ) const {

@@ -159,7 +159,6 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( SolutionInfoSet& aSolutionS
     
     // TODO: is the following necessary
     // Update the solution vector for the correct markets to solve.
-    aSolutionSet.updateFromMarkets();
     // Need to update solvable status before starting solution (Ignore return code)
     aSolutionSet.updateSolvable( mSolutionInfoFilter.get() );
 
@@ -176,6 +175,9 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( SolutionInfoSet& aSolutionS
         return SUCCESS; // Need a new code here.
     }
 
+    solverLog << "Initial market state:" << endl;
+    solverLog << aSolutionSet << endl;
+    
     // Setup the solution matrices.
     size_t currSize = aSolutionSet.getNumSolvable();
     Matrix JF( currSize, currSize );
@@ -187,20 +189,21 @@ SolverComponent::ReturnCode LogNewtonRaphson::solve( SolutionInfoSet& aSolutionS
         singleLog.setLevel( ILogger::DEBUG );
         aSolutionSet.printMarketInfo( "Begin logNR", calcCounter->getPeriodCount(), singleLog );
 
-        // Calculate derivatives
+        solverLog.setLevel(ILogger::DEBUG);
+        int itnum = number_of_NR_iteration - 1;
+        solverLog << "****************Iteration " << itnum << "\n";
+        
+        // Calculate derivatives 
         code = calculateDerivatives( aSolutionSet, JF, permMatrix, aPeriod );
         if ( code != SUCCESS ) {
             return code;
-        }
-
+        } 
         // Calculate new prices
         if( SolverLibrary::calculateNewPricesLogNR( aSolutionSet, JF, permMatrix, mDefaultMaxPriceChange ) ){
             // Call world.calc and update supplies and demands. 
-            aSolutionSet.updateToMarkets();
             marketplace->nullSuppliesAndDemands( aPeriod );
             solverLog << "Supplies and demands calculated with new prices." << endl;
             world->calc( aPeriod );
-            aSolutionSet.updateFromMarkets();
 
             // Add to the iteration list.
             SolutionInfo* currWorstSol = aSolutionSet.getWorstSolutionInfo();
@@ -284,6 +287,7 @@ SolverComponent::ReturnCode LogNewtonRaphson::calculateDerivatives( SolutionInfo
     
     // Update the JF, JFDM, and JFSM matrices
     SolverLibrary::updateMatrices( aSolutionSet, JFSM, JFDM, JF );
+    
     if( SolverLibrary::luFactorizeMatrix( JF, aPermMatrix ) ) {
         // print the derivative matrix to help the user understand why it was singular
         solverLog.setLevel( ILogger::ERROR );

@@ -61,6 +61,8 @@
 #include "solution/util/include/solution_info_set.h"
 #include "solution/util/include/calc_counter.h"
 #include "util/logger/include/ilogger.h"
+#include "solution/util/include/ublas-helpers.hh"
+#include "containers/include/iactivity.h"
 
 using namespace std;
 
@@ -116,75 +118,30 @@ bool SolverLibrary::isWithinTolerance( const double excessDemand, const double d
 /*! \brief Function to calculate partial derivatives for Newton-Raphson method, NR_Ron()
 *
 * This function calculates matrices of partial derivatives of supplies and demands for all markets which are currently being solved.
-* The function uses the fact that changing a regional price while holding all other prices constant can only change markets within that region.
-* It first creates matrices of supply and demand which contain the amount of supply and demand added to each market by each region
-* using the unchanged prices.
-* To do this, the function steps through World::calc(), calling it separately for each region.
-* Once these matrices are completed, when calculating a derivative, supplies and demands at the base price for the regions within the market
-* for which derivatives are being calculated are subtracted from the saved global totals. Then the price of the market is perturbed,
-* and World::calc() is only called on regions contained in the market, thus adding back in supplies and demands for regions within the market
-* using the perturbed market price. Cross-derivatives are then calculated for the market and original prices, supplies and demands reset.
-* Here is a summary of the steps.
-* <ol>
-*  <li>Create matrices of additional supplies and additional demands added to each market by each region at the base prices.</li>
-*  <li>Save the original supplies and demands.</li>
-*  <li>Iterate over each market performing the following steps:
-*  <ol>
-*        <li>Perturb the market price by multiplying by 1 + DELTA.</li>
-*        <li>Iterate over all regions contained by the market and remove supplies and demands added to each market by each region, using the additive matrices.</li>
-*        <li>Call World::calc() on only the regions contained by the market.</li>
-*        <li>Calculate cross-derivatives of demand and supply.</li>
-*        <li>Reset original prices, supplies and demands.</li>
-*        </ol></li>
-* <li> Return the partial demand matrices of supply and demand. </li>
-* </ol>
-*
+* The function uses the fact that changing a price while holding all other prices constant can only change markets that are affected.
+* It must however set the Marketplace mIsDerivativeCalc flag to ensure only changes are noted so the non-affected markets do not need
+* to null supplies and demands nor recalculate what they were.
 * \param marketplace The marketplace to perform derivative calculations on.
 * \param world The world object which is used for calls to World::calc
 * \param aSolutionSet The vector of SolutionInfo objects which store the current prices, supplies and demands.
 * \param Delta to use when changing prices.
 * \param per The current model period.
-* \todo Move this function into SolutionInfoSet.
 */
-
 void SolverLibrary::derivatives( Marketplace* marketplace, World* world, SolutionInfoSet& aSolutionSet,
                                  const double aDeltaPrice, const int per ) {
 
-    const bool doDebugChecks = Configuration::getInstance()->getBool( "debugChecking" );
     ILogger& solverLog = ILogger::getLogger( "solver_log" );
     solverLog.setLevel( ILogger::NOTICE );
     solverLog << "Starting derivative calculation" << endl;
 
-    // Initial call to world.calc to fix problems with calibration.
+    // Initial call to world.calc to ensure we have set our baseline to take
+    // partials from.
     marketplace->nullSuppliesAndDemands( per );
     world->calc( per );
-    aSolutionSet.updateFromMarkets();
-
-    // If updateSolvable changes the size of the solvable set, then the 
-    // Jacobian matrix will not be the right size. This will cause problems
-    // later in the solver code. KVC doesn't think this update is necessary.
-    // SolutionInfoSet::UpdateCode solvableChanged = solverSet.updateSolvable( true );
-
-    // If the size of the matrix changed then the inversion will eventually fail.
-    // assert( solvableChanged == SolutionInfoSet::UNCHANGED );
 
 #if( !NO_REGIONAL_DERIVATIVES )
-    // Save original global supplies and demands for error checking.
-    const vector<double>& originalSupplies = aSolutionSet.getSupplies();
-    const vector<double>& originalDemands = aSolutionSet.getDemands();
-
-    const RegionalSDDifferences& sdDifferences = calcRegionalSDDifferences( marketplace, world, aSolutionSet, per );
-
-    // This code will sum up the additive value for each market over all regions.
-    // These sums are then checked against the original global supplies and demands.
-    if( doDebugChecks ) {
-        solverLog.setLevel( ILogger::DEBUG );
-        solverLog << "Checking regional supplies for consistency" << endl;
-        doRegionalValuesSum( sdDifferences.supplies, originalSupplies, aSolutionSet );
-        solverLog << "Checking regional demands for consistency" << endl;
-        doRegionalValuesSum( sdDifferences.demands, originalDemands, aSolutionSet );
-        solverLog.setLevel( ILogger::NOTICE );
-    }
+    // Set the flag to only take supply/demand differences
+    marketplace->mIsDerivativeCalc = true;
 #endif
     // Retain the original values.
     aSolutionSet.storeValues();
@@ -193,46 +150,36 @@ void SolverLibrary::derivatives( Marketplace* marketplace, World* world, Solutio
     for ( unsigned int j = 0; j < aSolutionSet.getNumSolvable(); j++ ) {
         double currDeltaPrice = aSolutionSet.getSolvable( j ).getDeltaPrice( aDeltaPrice );
         aSolutionSet.getSolvable( j ).increaseX( currDeltaPrice, currDeltaPrice );
-        aSolutionSet.updateToMarkets();
 
 #if( NO_REGIONAL_DERIVATIVES )
         marketplace->nullSuppliesAndDemands( per );
         world->calc( per );
 #else
 
-        // Now remove additive supplies and demands.
-        const vector<const objects::Atom*> containedRegions = aSolutionSet.getSolvable( j ).getContainedRegions();
+        // Determine which calculations are affected.
+        const vector<IActivity*>& affectedItems = aSolutionSet.getSolvable( j ).getDependencies();
 
-        /*! \invariant There is at least one contained region. */
-        assert( !containedRegions.empty() );
+        /*! \invariant There is at least one item to calculate. */
+        assert( !affectedItems.empty() );
 
-        // Iterate over all regions within the market.
-        typedef std::vector<const objects::Atom*>::const_iterator RegionIterator;
-        for ( RegionIterator regionIter = containedRegions.begin(); regionIter != containedRegions.end(); ++regionIter ) {
-            // Find the vectors contains supply and demand reductions for this region.
-            /*! \invariant There is a vector of supply additions for this region. */
-            assert( util::hasValue( sdDifferences.supplies, *regionIter ) );
-            const vector<double> supplyReductions = util::searchForValue( sdDifferences.supplies, *regionIter );
-
-            /*! \invariant There is a vector of demand additions for this region. */
-            assert( util::hasValue( sdDifferences.demands, *regionIter ) );
-            const vector<double> demandReductions = util::searchForValue( sdDifferences.demands, *regionIter );
-
-            // Iterate through each market and remove its supply and demand.
-            for( unsigned int k = 0; k < aSolutionSet.getNumTotal(); ++k ){
-                aSolutionSet.getAny( k ).removeFromRawSupply( supplyReductions.at( k ) );
-                aSolutionSet.getAny( k ).removeFromRawDemand( demandReductions.at( k ) );
-            }
+        world->calc( per, affectedItems );
+        
+        // Set the stale flag to indicate that demand calculations may need to
+        // recalculate it's corresponding price calculation.  Setting this flag
+        // allows this to be lazy.
+        for( size_t partialIndex = 0 ; partialIndex < affectedItems.size(); ++partialIndex ) {
+            affectedItems[ partialIndex ]->setStale();
         }
-
-        world->calc( per, containedRegions );
 #endif
-        aSolutionSet.updateFromMarkets();
 
         aSolutionSet.getSolvable( j ).calcDemandElas( aSolutionSet );
         aSolutionSet.getSolvable( j ).calcSupplyElas( aSolutionSet );
         aSolutionSet.restoreValues();
     }
+#if( !NO_REGIONAL_DERIVATIVES )
+    // Reset the derivative flag.
+    marketplace->mIsDerivativeCalc = false;
+#endif
 }
 
 /* \brief Calculate the JFDM, JFSM, and JF matrices from the derivatives stored in the SolutionInfo. */
@@ -270,11 +217,19 @@ bool SolverLibrary::calculateNewPricesLogNR( SolutionInfoSet& aSolutionSet, Matr
     // Store the solution set prices so that they can be restored if NR fails to
     // generate valid prices.
     std::vector<double> storedPrices = storePrices( aSolutionSet );
+    boost::numeric::ublas::vector<double> price(aSolutionSet.getNumSolvable());
+    std::copy(storedPrices.begin(),storedPrices.begin()+price.size(),price.begin());
+
+    ILogger &solverLog = ILogger::getLogger("solver_log");
+    solverLog.setLevel(ILogger::DEBUG);
+    solverLog << "x: " << price << "\nfx: " << KDS << "\n";
+    
     
     // to solve JF(Xn) * ( Xn+1 - Xn ) = -F(Xn) we use lu substitution which
     // is favorable to calculating the inverse of JF.  lu_substitue will leave
     // us with ( Xn+1 - Xn ) stored in KDS
     lu_substitute( JFLUFactorized, aPermMatrix, KDS );
+    solverLog << "dx: " << KDS << "\n";
     
     // To calculate the new price Xn+1 we do Xn+1 = Xn + KDS
     // then take the e^Xn+1 to get the prices back in normal terms
@@ -348,119 +303,6 @@ bool SolverLibrary::luFactorizeMatrix( Matrix& aInputMatrix, PermutationMatrix& 
     return lu_factorize( aInputMatrix, aPermMatrix ) != 0;
 }
 
-
-//! Check if regional values sum to a world total.
-bool SolverLibrary::doRegionalValuesSum( const RegionalMarketValues& regionalValues, const vector<double>& worldTotals,
-                                         const SolutionInfoSet& aSolutionSet )
-{
-    const double ERROR_LIMIT = 1E-3;
-    // First check to make sure worldTotals isn't a vector of zeros.
-    // While possible, this is likely an error and we should warn.
-    SolverLibrary::ApproxEqual approxEq( 0, util::getSmallNumber() );
-    if( count_if( worldTotals.begin(), worldTotals.end(), approxEq ) == worldTotals.size() ){
-        ILogger& solverLog = ILogger::getLogger( "solver_log" );
-        solverLog.setLevel( ILogger::WARNING );
-        solverLog << "World totals vector is all zeros." << endl;
-    }
-
-    // Check and make sure the worldTotals vector isn't empty.
-    if( worldTotals.empty() ){
-        ILogger& solverLog = ILogger::getLogger( "solver_log" );
-        solverLog.setLevel( ILogger::WARNING );
-        solverLog << "World totals size is zero." << endl;
-    }
-
-    // Compute the sum of the regional values.
-    typedef RegionalMarketValues::const_iterator RegionValueIterator;
-    vector<double> regionalSums( worldTotals.size() );
-
-    // Loop through the list of regions and add
-    for ( RegionValueIterator checkIter = regionalValues.begin(); checkIter != regionalValues.end(); ++checkIter ) {
-        assert( checkIter->second.size() == worldTotals.size() );
-        for ( unsigned int currMarkIter = 0; currMarkIter < checkIter->second.size(); ++currMarkIter ) {
-            regionalSums[ currMarkIter ] += checkIter->second.at( currMarkIter );
-        }
-    }
-
-    // Check if the sums adds up to the total.
-    unsigned int errorCount = 0;
-    for( unsigned int marketCheckIter = 0; marketCheckIter < worldTotals.size(); ++marketCheckIter ) {
-        if( fabs( worldTotals.at( marketCheckIter ) - regionalSums.at( marketCheckIter ) ) > ERROR_LIMIT ){
-            errorCount++;
-            ILogger& solverLog = ILogger::getLogger( "solver_log" );
-            solverLog.setLevel( ILogger::WARNING );
-            solverLog << "Difference between world totals and regional sums for " << aSolutionSet.getAny( marketCheckIter ).getName()
-                      << ", " << worldTotals[ marketCheckIter ] - regionalSums[ marketCheckIter ] << ", "
-                      << ( worldTotals[ marketCheckIter ] - regionalSums[ marketCheckIter ] ) / worldTotals[ marketCheckIter ] * 100 << "%" << endl;
-        }
-    }
-    if ( errorCount > 0 ) {
-        ILogger& solverLog = ILogger::getLogger( "solver_log" );
-        solverLog.setLevel( ILogger::WARNING );
-        solverLog << errorCount << " sums not equal in derivative calculation." << endl;
-        return false;
-    }
-    return true;
-}
-
-//! Calculate regional supplies and demand adders. Should this be in the solverSet or market object itself? Turn region names into map? TODO
-// Further thought: Any world.calc call could update regional map, maybe flag for speed. Could check whether region was actually
-// allowed to add to the market as well.
-const SolverLibrary::RegionalSDDifferences SolverLibrary::calcRegionalSDDifferences( Marketplace* marketplace, World* world, SolutionInfoSet& aSolutionSet, const int per ) {
-
-    // Create additive matrices.
-    // Get the region IDs from the world.
-    const vector<const objects::Atom*>& regionNames = world->getRegionIDs();
-
-    /*! \invariant The region IDs vector is not-empty. */
-    assert( !regionNames.empty() );
-
-    // Additive matrices, indexed by region name and market number.
-    RegionalSDDifferences regionalDifferences;
-
-    // Supplies and demands saved from previous region during calculation of additive matrices.
-    vector<double> prevSupplies( aSolutionSet.getNumTotal() );
-    vector<double> prevDemands( aSolutionSet.getNumTotal() );
-
-    // clear demands and supplies.
-    marketplace->nullSuppliesAndDemands( per );
-
-    // Declare vectors outside loop to avoid repetive construction.
-    vector<double> diffInSupplies( aSolutionSet.getNumTotal() );
-    vector<double> diffInDemands( aSolutionSet.getNumTotal() );
-    vector<const objects::Atom*> singleRegion( 1 );
-
-    // iterate over regions and calculate additional supplies and demands for each region for the current prices.
-    typedef std::vector<const objects::Atom*>::const_iterator RegionIterator;
-    for ( RegionIterator regionIter = regionNames.begin(); regionIter != regionNames.end(); ++regionIter ) {
-
-        // Call world->calc() for this region only.
-        singleRegion[ 0 ] = *regionIter;
-        world->calc( per, singleRegion );
-
-        // determine current supplies and demands.
-        aSolutionSet.updateFromMarkets();
-        const vector<double> currSupplies = aSolutionSet.getSupplies();
-        const vector<double> currDemands = aSolutionSet.getDemands();
-
-        // calculate differences between previous supply and supply after calculating supply and demand for this region.
-        for( unsigned int k = 0; k < aSolutionSet.getNumTotal(); k++ ) {
-            diffInSupplies.at( k ) = currSupplies.at( k ) - prevSupplies.at( k );
-            diffInDemands.at( k ) = currDemands.at( k ) - prevDemands.at( k );
-        }
-
-        // save the current supplies and demands.
-        prevSupplies = currSupplies;
-        prevDemands = currDemands;
-
-        // Insert this regions additional supplies and demands into the additive matrices.
-        regionalDifferences.supplies[ *regionIter ] = diffInSupplies;
-        regionalDifferences.demands[ *regionIter ] = diffInDemands;
-    }
-
-    return regionalDifferences;
-}
-
 /*! \brief Bracket a set of markets.
 * \details Function finds bracket interval for each market and puts this
 *          information into solution set vector
@@ -484,10 +326,8 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
     static const double LOWER_BOUND = util::getVerySmallNumber();
 
     // Make sure the markets are up to date before starting.
-    aSolutionSet.updateToMarkets();
     aMarketplace->nullSuppliesAndDemands( aPeriod );
     aWorld->calc( aPeriod );
-    aSolutionSet.updateFromMarkets();
     aSolutionSet.updateSolvable( aSolutionInfoFilter );
     // Return with code true if all markets are bracketed.
     if( aSolutionSet.isAllBracketed() ){
@@ -500,6 +340,11 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
     solverLog << "Entering bracketing" << endl;
     solverLog.setLevel( ILogger::DEBUG );
     solverLog << aSolutionSet << endl;
+    
+    if( aSolutionSet.getNumSolvable() == 0 ) {
+        solverLog << "Exiting bracketing early due to empty solvable set." << endl;
+        return true;
+    }
 
     ILogger& singleLog = ILogger::getLogger( "single_market_log" );
 
@@ -595,11 +440,8 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
             } // END: if statement testing if currSol is bracketed with XL == XR
         } // end for loop
 
-        aSolutionSet.updateToMarkets();
         aMarketplace->nullSuppliesAndDemands( aPeriod );
         aWorld->calc( aPeriod );
-        aSolutionSet.updateFromMarkets();
-        //aSolverSet.updateSolvable( aSolutionInfoFilter );
         solverLog.setLevel( ILogger::NOTICE );
         solverLog << "Completed an iteration of bracket: " << iterationCount << endl;
         solverLog << aSolutionSet << endl;
@@ -637,8 +479,6 @@ bool SolverLibrary::bracketOne( Marketplace* aMarketplace, World* aWorld, const 
 {
     static const double LOWER_BOUND = util::getSmallNumber();
 
-    //  aWorld->calc( period );
-    aSolSet.updateFromMarkets();
     aSolSet.updateSolvable( aSolutionInfoFilter );
     double bracketInterval = aSol->getBracketInterval( aDefaultBracketInterval );
 
@@ -710,10 +550,8 @@ bool SolverLibrary::bracketOne( Marketplace* aMarketplace, World* aWorld, const 
             aSol->moveRightBracketToX();
         }
 
-        aSolSet.updateToMarkets();
         aMarketplace->nullSuppliesAndDemands( aPeriod );
         aWorld->calc( aPeriod );
-        aSolSet.updateFromMarkets();
         aSolSet.updateSolvable( aSolutionInfoFilter );
         solverLog.setLevel( ILogger::NOTICE );
         solverLog << "Completed an iteration of bracketOne." << endl;

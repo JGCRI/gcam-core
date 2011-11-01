@@ -223,7 +223,7 @@ void GovtConsumer::calcDeficit( const string& aRegionName, int aPeriod ) {
     
     // add deficit into the demand of capital
     Marketplace* marketplace = scenario->getMarketplace();
-    marketplace->addToDemand( "Capital", aRegionName, deficit, aPeriod );
+    //marketplace->addToDemand( "Capital", aRegionName, deficit, aPeriod );
 }
 
 /*! \brief Calculate total taxes.
@@ -247,7 +247,7 @@ void GovtConsumer::calcTotalTax( NationalAccount& aNationalAccount, const string
         + aNationalAccount.getAccountValue( NationalAccount::SOCIAL_SECURITY_TAX )
         + aNationalAccount.getAccountValue( NationalAccount::CARBON_TAX );
         // TODO: txpro, txadd ...
-    marketplace->addToDemand( "government-taxes", aRegionName, totalProductionTaxes, aPeriod );
+    //marketplace->addToDemand( "government-taxes", aRegionName, totalProductionTaxes, aPeriod );
     
     // get the trial total taxes
     double totalTaxes = marketplace->getPrice( "government-taxes", aRegionName, aPeriod );
@@ -349,7 +349,7 @@ void GovtConsumer::calcGovtCapitalDemand( const std::string& regionName, int per
     assert( util::isValidNumber( tempCapital ) );
     Marketplace* marketplace = scenario->getMarketplace();
     // Should this use the demand currency?
-    marketplace->addToDemand( "Capital", regionName, tempCapital, period );
+    //marketplace->addToDemand( "Capital", regionName, tempCapital, period );
     // add capital to ETE, not done
 }
 

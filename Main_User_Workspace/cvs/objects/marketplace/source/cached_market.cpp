@@ -46,8 +46,11 @@
 #include "util/logger/include/ilogger.h"
 #include "util/base/include/util.h"
 #include "marketplace/include/marketplace.h"
+#include "containers/include/scenario.h"
 
 using namespace std;
+
+extern Scenario* scenario;
 
 /*!
  * \brief Constructor which takes the parameters used to locate the given market.
@@ -159,7 +162,14 @@ void CachedMarket::addToSupply( const string& aGoodName, const string& aRegionNa
     }
     
     if ( mCachedMarket ) {
-        mCachedMarket->addToSupply( aValue );
+        double valueToAdd;
+        if( scenario->getMarketplace()->mIsDerivativeCalc ) {
+            valueToAdd = aValue - mLastSupply;
+        }
+        else {
+            mLastSupply = valueToAdd = aValue;
+        }
+        mCachedMarket->addToSupply( valueToAdd );
     }
     else if( aMustExist ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -206,7 +216,14 @@ void CachedMarket::addToDemand( const string& aGoodName, const string& aRegionNa
     }
     
     if ( mCachedMarket ) {
-        mCachedMarket->addToDemand( aValue );
+        double valueToAdd;
+        if( scenario->getMarketplace()->mIsDerivativeCalc ) {
+            valueToAdd = aValue - mLastDemand;
+        }
+        else {
+            mLastDemand = valueToAdd = aValue;
+        }
+        mCachedMarket->addToDemand( valueToAdd );
     }
     else if( aMustExist ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );

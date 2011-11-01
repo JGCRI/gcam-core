@@ -49,6 +49,7 @@
 #include "technologies/include/expenditure.h"
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
+#include "containers/include/market_dependency_finder.h"
 
 using namespace std;
 using namespace xercesc;
@@ -162,6 +163,19 @@ void TradeInput::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs
     toInputXMLDerived( aOut, aTabs );
 }
 
+void TradeInput::completeInit( const std::string& aRegionName,
+                               const std::string& aSectorName,
+                               const std::string& aSubsectorName,
+                               const std::string& aTechName,
+                               const IInfo* aTechInfo )
+{
+    SGMInput::completeInit( aRegionName, aSectorName, aSubsectorName, aTechName, aTechInfo );
+    
+    MarketDependencyFinder* depFinder = scenario->getMarketplace()->getDependencyFinder();
+    depFinder->addDependency( aSectorName, aRegionName, mName, mTradingPartner );
+}
+
+
 void TradeInput::initCalc( const string& aRegionName,
                          const string& aSectorName,
                          const bool aIsNewInvestmentPeriod,
@@ -222,8 +236,8 @@ double TradeInput::calcTaxes( const string& aRegionName, NationalAccount* aNatio
 
         Marketplace* marketplace = scenario->getMarketplace();
         // the government pays the tax/subsidy for the foreign sector 
-        marketplace->addToDemand( "government-taxes", mTradingPartner,
-            exportTax, aPeriod );
+        /*marketplace->addToDemand( "government-taxes", mTradingPartner,
+            exportTax, aPeriod );*/
     }
     return importTax;
 }

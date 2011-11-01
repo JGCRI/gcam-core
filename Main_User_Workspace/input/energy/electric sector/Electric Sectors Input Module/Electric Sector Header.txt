@@ -21,7 +21,7 @@
 
 354,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}intermittent-technology,intermittent-technology/+{year}period,CalDataOutput/+calOutputValue,scenario,scenario/world,world/{name=USA}region,period/CalDataOutput
 
-11,scenario,region/+{name}supplysector,supplysector/+has-trial-supply-market,world/{name=USA}region,scenario/world
+11,scenario,region/+{name}supplysector,world/{name=USA}region,scenario/world
 
 12,scenario,region/+{name}supplysector,supplysector/+{name}object-meta-info,object-meta-info/+value,world/{name=USA}region,scenario/world
 

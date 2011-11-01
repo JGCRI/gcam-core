@@ -146,7 +146,7 @@ void NodeInput::completeInit( const string& aRegionName,
                              const string& aSectorName,
                              const string& aSubsectorName,
                              const string& aTechName,
-                             DependencyFinder* aDependencyFinder , const IInfo* aTechInfo)
+                             const IInfo* aTechInfo)
 {
     // This is a hack to create the trial utility market when that is the function set
     // it would ideally be created somwhere else such as with in the function itself
@@ -182,7 +182,7 @@ void NodeInput::completeInit( const string& aRegionName,
     // have all contained inputs do completeInit as well
     for( NestedInputIterator it = mNestedInputs.begin(); it != mNestedInputs.end(); ++it ) {
         (*it)->completeInit( aRegionName, aSectorName, aSubsectorName, aTechName, 
-            aDependencyFinder, aTechInfo );
+            aTechInfo );
     }
 }
 

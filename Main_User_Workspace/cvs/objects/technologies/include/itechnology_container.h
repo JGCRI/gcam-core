@@ -54,7 +54,6 @@
 
 // Forward declarations
 class ITechnology;
-class DependencyFinder;
 class IInfo;
 class ILandAllocator;
 class Demographic;
@@ -96,13 +95,12 @@ public:
      *          technology database.
      * \param aRegionName The region name.
      * \param aSectorName Sector name, also the name of the product.
-     * \param aDepDefinder Regional dependency finder.
      * \param aSubsectorInfo Subsector information object.
      * \param aLandAllocator Regional land allocator.
      */
     virtual void completeInit( const std::string& aRegionName, const std::string& aSectorName,
-                               const std::string& aSubsectorName, DependencyFinder* aDependencyFinder,
-                               const IInfo* aSubsecInfo, ILandAllocator* aLandAllocator ) = 0;
+                               const std::string& aSubsectorName, const IInfo* aSubsecInfo,
+                               ILandAllocator* aLandAllocator ) = 0;
     
     /*!
      * \brief Perform any initializations which need to be performed before the
@@ -162,7 +160,7 @@ public:
      * \details The begin will be the most current vintage.  This may not be the
      *          the new vintage technology in the case where technologies are no
      *          longer allowed to be invested in at the given period.
-     * \param The model period.
+     * \param aPeriod The model period.
      * \return An iterator to the most recent vintage.  This iterator will be
      *         equal to the getVintageEnd() if no technologies are available in
      *         the given period.
@@ -175,7 +173,7 @@ public:
      * \details The begin will be the most current vintage.  This may not be the
      *          the new vintage technology in the case where technologies are no
      *          longer allowed to be invested in at the given period.
-     * \param The model period.
+     * \param aPeriod The model period.
      * \return A const iterator to the most recent vintage.  This iterator will be
      *         equal to the getVintageEnd() if no technologies are available in
      *         the given period.
@@ -185,16 +183,18 @@ public:
     /*!
      * \brief The end iterator which should be used to compare if the user has
      *        iterated to the end of the technology range.
+     * \param aPeriod The model period.
      * \return The vintage end iterator.
      */
-    virtual TechRangeIterator getVintageEnd() = 0;
+    virtual TechRangeIterator getVintageEnd( const int aPeriod ) = 0;
 
     /*!
      * \brief The end iterator which should be used to compare if the user has
      *        iterated to the end of the technology range.
+     * \param aPeriod The model period.
      * \return The vintage end const iterator.
      */
-    virtual CTechRangeIterator getVintageEnd() const = 0;
+    virtual CTechRangeIterator getVintageEnd( const int aPeriod ) const = 0;
     
 protected:
     /*!

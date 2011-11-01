@@ -150,7 +150,7 @@ const string& ByProduct::getXMLNameStatic()
 }
 
 void ByProduct::completeInit( const std::string& aSectorName,
-                              DependencyFinder* aDependencyFinder,
+                              const std::string& aRegionName,
                               const IInfo* aTechInfo,
                               const bool aIsTechOperating )
 {

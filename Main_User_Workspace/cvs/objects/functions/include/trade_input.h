@@ -88,6 +88,11 @@ public:
     virtual void copyParam( const IInput* aInput, const int aPeriod );
     virtual void copyParamsInto( TradeInput& aTradeInput, const int aPeriod ) const;
 
+    void completeInit( const std::string& aRegionName,
+                       const std::string& aSectorName,
+                       const std::string& aSubsectorName,
+                       const std::string& aTechName,
+                       const IInfo* aTechInfo );
     virtual void initCalc( const std::string& aRegionName,
                            const std::string& aSectorName,
                            const bool aIsNewInvestmentPeriod,

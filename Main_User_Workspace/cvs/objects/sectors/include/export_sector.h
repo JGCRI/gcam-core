@@ -47,7 +47,6 @@
 */
 #include <string>
 #include "sectors/include/supply_sector.h"
-class DependencyFinder;
 class IInfo;
 
 /*! 

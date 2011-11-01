@@ -57,7 +57,7 @@
 #include "containers/include/scenario.h"
 #include "containers/include/info_factory.h"
 #include "containers/include/iinfo.h"
-#include "containers/include/dependency_finder.h"
+#include "containers/include/market_dependency_finder.h"
 #include "sectors/include/cal_quantity_tabulator.h"
 
 // TODO: This needs a factory.
@@ -81,7 +81,6 @@
 #include "policy/include/policy_ghg.h"
 #include "emissions/include/total_sector_emissions.h"
 
-#include "util/base/include/input_finder.h"
 #include "util/base/include/summary.h"
 #include "util/base/include/ivisitor.h"
 #include "util/base/include/xml_helper.h"
@@ -92,9 +91,10 @@
 
 #include "reporting/include/indirect_emissions_calculator.h"
 
-#include "containers/include/sector_cycle_breaker.h"
-#include "util/base/include/calibrate_share_weight_visitor.h"
-#include "util/base/include/calibrate_resource_visitor.h"
+#include "containers/include/resource_activity.h"
+#include "containers/include/sector_activity.h"
+#include "containers/include/final_demand_activity.h"
+#include "containers/include/land_allocator_activity.h"
 
 using namespace std;
 using namespace xercesc;
@@ -217,31 +217,6 @@ bool RegionMiniCAM::XMLDerivedClassParse( const std::string& nodeName, const xer
             }
         }
     }
-#if SORT_TESTING
-    // A list representing the correct order in which to calculate the sectors.
-    else if( nodeName == "SectorOrderList" ){
-        // get all child nodes.
-        string nodeNameChild;
-        DOMNodeList* nodeListChild = curr->getChildNodes();
-        // loop through the child nodes.
-        for( unsigned int j = 0; j < nodeListChild->getLength(); j++ ){
-            DOMNode* currChild = nodeListChild->item( j );
-            nodeNameChild = XMLHelper<string>::safeTranscode( currChild->getNodeName() );
-
-            if( nodeNameChild == "#text" ) {
-                continue;
-            }
-            else if( nodeNameChild == "SectorName" ){
-                sectorOrderList.push_back( XMLHelper<string>::getValue( currChild ) );
-            }
-            else {
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::WARNING );
-                mainLog << "Unrecognized text string: " << nodeNameChild << " found while parsing region->SectorOrderList." << endl;
-            }
-        }
-    }
-#endif
     else {
         return false;
     }
@@ -287,14 +262,8 @@ void RegionMiniCAM::completeInit() {
         gdp->initData( demographic.get() );
     }
 
-    // Initialize the dependency finder.
-    // This may need to move to init calc when markets change by period.
-    // Note that the ICycleBreaker construction is on a seperate line because
-    // C++ is given liberty when evaluating expressions across statements.
-    SectorCycleBreaker sectorCycleBreaker( scenario->getMarketplace(), name );
-    DependencyFinder depFinder( &sectorCycleBreaker );
     for( SectorIterator sectorIter = supplySector.begin(); sectorIter != supplySector.end(); ++sectorIter ) {
-        ( *sectorIter )->completeInit( mRegionInfo.get(), &depFinder, mLandAllocator.get() );
+        ( *sectorIter )->completeInit( mRegionInfo.get(), mLandAllocator.get() );
     }
 
     if ( mLandAllocator.get() ) {
@@ -304,163 +273,33 @@ void RegionMiniCAM::completeInit() {
     for( FinalDemandIterator demandSectorIter = mFinalDemands.begin();
         demandSectorIter != mFinalDemands.end(); ++demandSectorIter )
     {
-        // Pass null in for the dependency finder so that the demand sector
-        // technologies will not add their dependencies. This is because demand
-        // sectors are not currently included in the ordering. Pass null for the land allocator
-        // since demand sectors cannot allocate land.
         ( *demandSectorIter )->completeInit( name, mRegionInfo.get() );
     }
-
-#if SORT_TESTING
-    // Reorder sectors before sorting to test it.
-    if( !sectorOrderList.empty() ){
-        reorderSectors( sectorOrderList );
-    }
-#endif
-    // Sort the sectors according to the order given by the dependency finder.
-
-    // This needs to be at the end of completeInit so that all objects have
-    // completed their calls to aDepFinder->addDependency. 
-    depFinder.createOrdering();
-    const vector<string> orderList = depFinder.getOrdering();
     
-    // Check for an empty order list in which case the reordering shoud be
-    // skipped. This occurs for SGM.
-    if( !orderList.empty() ){
-        util::reorderContainer<vector<Sector*>::iterator, Sector*>(
-                                supplySector.begin(), supplySector.end(),
-                                depFinder.getOrdering() );
+    // Wrap objects which are used to calculate the region so that they can
+    // be sorted into a global ordering and called directly from the world.
+    // Note that the region continues to own and manage these object.  The memory
+    // for the wrappers is managed by the market dependency finder.
+    MarketDependencyFinder* markDepFinder = scenario->getMarketplace()->getDependencyFinder();
+    for( int i = 0; i < mResources.size(); ++i ) {
+        markDepFinder->resolveActivityToDependency( name, mResources[ i ]->getName(),
+            new ResourceActivity( mResources[ i ], gdp.get(), name ) );
     }
-    else{
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::NOTICE );
-        mainLog << "Skipping sector reordering due to an empty order list."
-                << "  This is bad." << endl;
+    for( int i = 0; i < supplySector.size(); ++i ) {
+        SectorActivity* tempSectorActivity(
+            new SectorActivity( supplySector[ i ], gdp.get(), name ) );
+        markDepFinder->resolveActivityToDependency( name, supplySector[ i ]->getName(),
+            tempSectorActivity->getSectorDemandActivity(),
+            tempSectorActivity->getSectorPriceActivity() );
     }
-
-    setupCalibrationMarkets();
-}
-
-/*! \brief Initialize the GDP calibration markets.
-
-* \todo Move GDP calibration parameters into GDP object
-*/
-void RegionMiniCAM::setupCalibrationMarkets() {
-    if( !ensureGDP() ){
-        return;
+    for( int i = 0; i < mFinalDemands.size(); ++i ) {
+        markDepFinder->resolveActivityToDependency( name, mFinalDemands[ i ]->getName(),
+            new FinalDemandActivity( mFinalDemands[ i ], gdp.get(), demographic.get(), name ) );
     }
-
-    const Modeltime* modeltime = scenario->getModeltime();
-    // Change per capita calibration values into absolute values
-    for ( int period = 0; period < modeltime->getmaxper(); period++ ) {
-        if ( GDPcalPerCapita [ period ] != 0 && demographic.get() ) {
-            if ( calibrationGDPs[ period ] != 0 ) {
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::WARNING );
-                mainLog << "Both GDPcal and GDPcalPerCapita read in region " << name << ". GDPcalPerCapita used." << endl;
-            }
-            // Convert from GDP/cap ($) to millions of dollars GDP total. Pop is in 1000's, so need an additional 1e3 scale to convert to millions
-            // TODO: This will eventually write back out, so if this input file were used again the above warning
-            // would be triggered.
-            calibrationGDPs [ period ]  = GDPcalPerCapita [ period ] * demographic->getTotal( period )/1e3;
-        }
+    if( mLandAllocator.get() ) {
+        markDepFinder->resolveActivityToDependency( name, "land-allocator",
+            new LandAllocatorActivity( mLandAllocator.get(), name ) );
     }
-
-    if( Configuration::getInstance()->getBool( "CalibrationActive" ) ){
-        gdp->setupCalibrationMarkets( name, calibrationGDPs );
-    }
-}
-
-/*! \brief Reorder the sectors based on a list of sector names.
-* \details This function is used to reorder a list of sectors using a supplied
-*          ordering. In the partial-equilibrium model, the ordering of the
-*          supply sectors is critical to the correct solving of the model. This
-*          function handles errors as follows:
-* <ul><li> If a sector is not specified in the list, the function will issue a
-*          warning and remove the sector.</li>
-*     <li> If a sector name in the ordering list is not an existing sector in
-*          the model, a debugging warning will be issued and the sector will be
-*          skipped. This can occur for resources and other non-sector
-*          fuels.</li></ul>
-* \param aOrderList A list of sector names in the order in which the sectors
-*        should be put.
-* \return Whether all sectors had orderings in the passed in order list.
-*/
-bool RegionMiniCAM::reorderSectors( const vector<string>& aOrderList ){
-    // Check for an empty order list in which case the reordering should be
-    // skipped. This occurs for SGM.
-    if( aOrderList.empty() ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::NOTICE );
-        mainLog << "Skipping sector reordering due to an empty order list. This is normal for SGM." << endl;
-        return false;
-    }
-
-    // Create temporary copy of the sectors and the sector name map.
-    vector<Sector*> originalOrder = supplySector;
-    map<string,int> originalNameMap = supplySectorNameMap;
-
-    // Clear the list of sectors and sectorNames.
-    supplySector.clear();
-    supplySectorNameMap.clear();
-
-    // Get the dependency finder logger.
-    ILogger& depFinderLog = ILogger::getLogger( "dependency_finder_log" );
-
-    // Loop through the sector order vector.
-    typedef vector<string>::const_iterator NameIterator;
-    typedef map<string,int>::iterator NameMapIterator;
-
-    for( NameIterator currSectorName = aOrderList.begin(); currSectorName != aOrderList.end(); ++currSectorName ){
-        NameMapIterator origSectorPosition = originalNameMap.find( *currSectorName );
-
-        // Check if the sector name in the sector ordering list exists
-        // currently.
-        if( origSectorPosition != originalNameMap.end() ){
-            // Assign the sector.
-            supplySector.push_back( originalOrder[ origSectorPosition->second ] );
-            supplySectorNameMap[ *currSectorName ] = static_cast<int>( supplySector.size() - 1 );
-
-            // Remove the original sector mapping. This will allow us to clean
-            // up sectors that were not assigned a new ordering. This also is
-            // more efficient as there are less entries to search.
-            originalNameMap.erase( origSectorPosition );
-        }
-        else {
-            depFinderLog.setLevel( ILogger::DEBUG );
-            depFinderLog << *currSectorName << " is not the name of an existing sector. "
-                << "It will not be included in the sector ordering." << endl;
-        } // end else
-    } // end for.
-
-    // Check if there are any unassigned sectors and remove them.
-    for( NameMapIterator currSecName = originalNameMap.begin(); currSecName != originalNameMap.end(); ++currSecName ){
-        ILogger& mainLog = ILogger::getLogger( "main_log");
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << currSecName->first << " was not assigned a position in the explicit sector ordering list." << endl
-            << "This sector will be removed from the model." << endl;
-
-        depFinderLog.setLevel( ILogger::ERROR );
-        depFinderLog << currSecName->first << " was not assigned a position in the explicit sector ordering list." << endl
-            << "This sector will be removed from the model." << endl;
-
-
-        // This sector is not in the new list, so free its memory.
-        delete originalOrder[ currSecName->second ];
-    }
-    // This was successful if the sector name map is empty, so that all sectors
-    // were ordered.
-
-    // Print out sector ordering for debugging purposes
-    depFinderLog.setLevel( ILogger::DEBUG );
-    depFinderLog << "SECTOR ORDERING FOR REGION " << name << endl;
-    depFinderLog << "  ";
-    for( NameIterator currSectorName = aOrderList.begin(); currSectorName != aOrderList.end(); ++currSectorName ){
-        depFinderLog << *currSectorName << ", ";
-    }
-    depFinderLog << endl;
-
-    return originalNameMap.empty();
 }
 
 void RegionMiniCAM::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
@@ -582,110 +421,6 @@ const std::string& RegionMiniCAM::getXMLNameStatic() {
     return XML_NAME;
 }
 
-//! Calculate the region.
-void RegionMiniCAM::calc( const int period ) {
-    // Store configuration variables locally as statics.
-    static const Configuration* conf = Configuration::getInstance();
-    static const bool calibrationActive = conf->getBool( "CalibrationActive" );
-
-    // Write back calibrated values to the member variables.
-    // These are still trial values.
-    if( calibrationActive && gdp.get() ) {
-        gdp->writeBackCalibratedValues( name, period );
-    }
-    // calculate regional GDP
-    calcGDP( period );
-
-    // determine prices for all supply sectors (e.g., refined fuels, electricity, etc.)
-    calcFinalSupplyPrice( period );
-    
-    // adjust GDP for energy cost changes
-    adjustGDP( period );
-
-    // determine end-use demand for energy and other goods
-    calcEndUseDemand( period );
-
-    // determine supply of final energy and other goods based on demand
-    setFinalSupply( period );
-
-    // determine supply of primary resources
-    calcResourceSupply( period );
-
-    // Perform calibrations
-    if( calibrationActive ) {
-        calibrateRegion( period );
-    }
-}
-
-/*! \brief Set regional ghg constraint from input data to market supply.
-* \param period Model time period
-*/
-void RegionMiniCAM::calcResourceSupply( const int period ){
-    if( !ensureGDP() ){
-        return;
-    }
-    
-    for( ResourceIterator currResource = mResources.begin(); currResource != mResources.end(); ++currResource ){
-        (*currResource)->calcSupply( name, gdp.get(), period );
-    }
-}
-
-/*!
- * \brief Calculate prices of all sectors.
- * \details If calibration is active we must have the CalibrateShareWeightVisitor
- *          calculate share weights at the current prices before calculating the
- *          price for that sector.  Doing this ensures consistent prices and share
- *          weights.
- * \todo Move this functionality into sector.
- * \param period Model time period
- */
-void RegionMiniCAM::calcFinalSupplyPrice( const int period ) {
-    if( !ensureGDP() ){
-        return;
-    }
-
-    // determine if we should calibrate our share weights
-    const bool calibrationPeriod = period > 0 && period <= scenario->getModeltime()->getFinalCalibrationPeriod();
-    static const bool calibrationActive = Configuration::getInstance()->getBool( "CalibrationActive" );
-
-    CalibrateShareWeightVisitor calibrator( name, gdp.get() );
-    for( SectorIterator currSupply = supplySector.begin(); currSupply != supplySector.end(); ++currSupply ){
-        // if calibration is active and we are in a calibration period we must calibrate our share weights
-        // before calculating prices
-        if( calibrationActive && calibrationPeriod ) {
-                (*currSupply)->accept( &calibrator, period );
-        }
-        (*currSupply)->calcFinalSupplyPrice( gdp.get(), period );
-    }
-
-    if( calibrationActive && calibrationPeriod ) {
-        CalibrateResourceVisitor resourceCalibrator( name );
-        for( ResourceIterator currResource = mResources.begin(); currResource != mResources.end(); ++currResource ){
-            (*currResource)->accept( &resourceCalibrator, period );
-        }
-    }
-
-    if ( mLandAllocator.get() ) {
-        mLandAllocator->calcFinalLandAllocation( name, period );
-    }
-}
-
-/*! Calculates supply of final energy and other goods.
-* \todo Move functionality into sector
-* \param period Model time period
-*/
-void RegionMiniCAM::setFinalSupply( const int period ) {
-    if( !ensureGDP() ){
-        return;
-    }
-
-    // loop through all sectors in reverse once to get total output.
-    typedef vector<Sector*>::reverse_iterator ReverseSectorIterator;
-    for ( ReverseSectorIterator currSupply = supplySector.rbegin(); currSupply != supplySector.rend(); ++currSupply ) {
-        (*currSupply)->supply( gdp.get(), period );
-    }
-}
-
 /*! Calculate initial gdp value (without feedbacks)
 *
 * \param period Model time period
@@ -747,23 +482,6 @@ void RegionMiniCAM::adjustGDP( const int period ){
         tempratio = getEndUseServicePrice( period ) / getEndUseServicePrice( period - 1 );
     }
     gdp->adjustGDP( period, tempratio );
-}
-
-/*! \brief Perform regional calibration of GDP.
-* \details This method handles calibration of the GDP.  For Calibrations
-*          of subsectors and technologies see RegionMiniCAM::calcFinalSupplyPrice
-* \param period Model time period
-*/
-void RegionMiniCAM::calibrateRegion( const int period ) {
-    if( !ensureGDP() ){
-        return;
-    }
-    // TODO: Move this into GDP object.
-    if( calibrationGDPs[ period ] > 0 ){
-        const string goodName = "GDP";
-        Marketplace* marketplace = scenario->getMarketplace();
-        marketplace->addToSupply( goodName, name, gdp->getGDP( period ), period );
-    }
 }
 
 /*! \brief Test to see if calibration worked for all sectors in this region
@@ -832,6 +550,8 @@ void RegionMiniCAM::initCalc( const int period )
     for( ResourceIterator currResource = mResources.begin(); currResource != mResources.end(); ++currResource ){
         (*currResource)->initCalc( name, period );
     }
+    calcGDP( period );
+    gdp->adjustGDP( period, 1.0 );
 
     // Call initCalc for land allocator last. It needs profit from the ag sectors
     // before it can calculate share weights
@@ -982,20 +702,6 @@ void RegionMiniCAM::initializeCalValues( const int period ) {
         resourceMarketInfo->setDouble( "calSupply", DEFAULT_CAL_VALUE );
         resourceMarketInfo->setDouble( "calDemand", DEFAULT_CAL_VALUE );
     }
-}
-
-//! Calculate regional demand for energy and other goods for all sectors.
-void RegionMiniCAM::calcEndUseDemand( const int period ) {
-    if( !ensureGDP() ){
-        return;
-    }
-
-    for ( FinalDemandIterator currDemSector = mFinalDemands.begin(); currDemSector != mFinalDemands.end(); ++currDemSector ){
-        // calculate aggregate demand for end-use sector services
-        // set fuel demand from aggregate demand for services
-        (*currDemSector)->setFinalDemand( name, demographic.get(), gdp.get(), period );
-    }
-
 }
 
 //! Calculate regional emissions from resources.

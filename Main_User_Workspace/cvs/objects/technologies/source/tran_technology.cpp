@@ -120,11 +120,10 @@ void TranTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* ta
 void TranTechnology::completeInit( const string& aRegionName,
                                    const string& aSectorName,
                                    const string& aSubsectorName,
-                                   DependencyFinder* aDepFinder,
                                    const IInfo* aSubsectorInfo,
                                    ILandAllocator* aLandAllocator )
 {
-    Technology::completeInit( aRegionName, aSectorName, aSubsectorName, aDepFinder,
+    Technology::completeInit( aRegionName, aSectorName, aSubsectorName,
                               aSubsectorInfo, aLandAllocator );
 }
 
@@ -135,21 +134,22 @@ void TranTechnology::initCalc( const string& aRegionName,
                                PreviousPeriodInfo& aPrevPeriodInfo,
 							   const int aPeriod )   
 {
-	// initialize mOutput to read-in service output
-    // TODO: This is not correct because this will add to the market. This will
-    //       only happen in the first iteration however, so should be okay most
-    //       of the time.
-	if( aPeriod <= 1 ) {
-        // Primary output is at location 0.
-        mOutputs[ 0 ]->setPhysicalOutput( mServiceOutput,
-                                          aRegionName,
-                                          mCaptureComponent.get(),
-                                          aPeriod );
-    }
+
 
     Technology::initCalc( aRegionName, aSectorName, aSubsectorInfo,
                           aDemographics, aPrevPeriodInfo, aPeriod );
 
+    // initialize mOutput to read-in service output
+    // TODO: This is not correct because this will add to the market. This will
+    //       only happen in the first iteration however, so should be okay most
+    //       of the time.
+    if( aPeriod <= 1 ) {
+      // Primary output is at location 0.
+      mOutputs[ 0 ]->setPhysicalOutput( mServiceOutput,
+                                        aRegionName,
+                                        mCaptureComponent.get(),
+                                        aPeriod );
+    }
     // Check if illegal values have been read in
     if ( mLoadFactor == 0 ) {
         mLoadFactor = 1;

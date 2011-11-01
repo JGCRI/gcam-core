@@ -109,6 +109,12 @@ private:
 #endif
     //! The actual market which is cached.
     Market* mCachedMarket;
+    
+    //! The demand last added during a non-derivative calc.
+    double mLastDemand;
+    
+    //! The supply last added during a non-derivative calc.
+    double mLastSupply;
 };
 
 #endif // _CACHED_MARKET_H_

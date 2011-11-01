@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectName>objects-main-timestep</ProjectName>
+    <ProjectName>objects-main</ProjectName>
     <ProjectGuid>{C6E84727-E04B-48EC-B119-EE4A2C0DB34B}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
   </PropertyGroup>
@@ -192,18 +192,23 @@
     <ClCompile Include="..\..\climate\source\ObjECTS_MAGICC_others.cpp" />
     <ClCompile Include="..\..\containers\source\batch_runner.cpp" />
     <ClCompile Include="..\..\containers\source\dependency_finder.cpp" />
+    <ClCompile Include="..\..\containers\source\final_demand_activity.cpp" />
     <ClCompile Include="..\..\containers\source\gdp.cpp" />
     <ClCompile Include="..\..\containers\source\info.cpp" />
     <ClCompile Include="..\..\containers\source\info_factory.cpp" />
+    <ClCompile Include="..\..\containers\source\land_allocator_activity.cpp" />
     <ClCompile Include="..\..\containers\source\mac_generator_scenario_runner.cpp" />
+    <ClCompile Include="..\..\containers\source\market_dependency_finder.cpp" />
     <ClCompile Include="..\..\containers\source\merge_runner.cpp" />
     <ClCompile Include="..\..\containers\source\national_account.cpp" />
     <ClCompile Include="..\..\containers\source\output_meta_data.cpp" />
     <ClCompile Include="..\..\containers\source\region.cpp" />
     <ClCompile Include="..\..\containers\source\region_cge.cpp" />
     <ClCompile Include="..\..\containers\source\region_minicam.cpp" />
+    <ClCompile Include="..\..\containers\source\resource_activity.cpp" />
     <ClCompile Include="..\..\containers\source\scenario.cpp" />
     <ClCompile Include="..\..\containers\source\scenario_runner_factory.cpp" />
+    <ClCompile Include="..\..\containers\source\sector_activity.cpp" />
     <ClCompile Include="..\..\containers\source\sector_cycle_breaker.cpp" />
     <ClCompile Include="..\..\containers\source\single_scenario_runner.cpp" />
     <ClCompile Include="..\..\containers\source\total_policy_cost_calculator.cpp" />
@@ -288,6 +293,7 @@
     <ClCompile Include="..\..\solution\solvers\source\bisect_policy.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\bisect_policy_nr_solver.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\bisection_nr_solver.cpp" />
+    <ClCompile Include="..\..\solution\solvers\source\lognrbt.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\log_newton_raphson.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\log_newton_raphson_sd.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\solver_component.cpp" />
@@ -297,10 +303,13 @@
     <ClCompile Include="..\..\solution\util\source\all_solution_info_filter.cpp" />
     <ClCompile Include="..\..\solution\util\source\and_solution_info_filter.cpp" />
     <ClCompile Include="..\..\solution\util\source\calc_counter.cpp" />
+    <ClCompile Include="..\..\solution\util\source\edfun.cpp" />
     <ClCompile Include="..\..\solution\util\source\market_name_solution_info_filter.cpp" />
     <ClCompile Include="..\..\solution\util\source\market_type_solution_info_filter.cpp" />
     <ClCompile Include="..\..\solution\util\source\not_solution_info_filter.cpp" />
     <ClCompile Include="..\..\solution\util\source\or_solution_info_filter.cpp" />
+    <ClCompile Include="..\..\solution\util\source\price_greater_than_solution_info_filter.cpp" />
+    <ClCompile Include="..\..\solution\util\source\price_less_than_solution_info_filter.cpp" />
     <ClCompile Include="..\..\solution\util\source\solution_info.cpp" />
     <ClCompile Include="..\..\solution\util\source\solution_info_filter_factory.cpp" />
     <ClCompile Include="..\..\solution\util\source\solution_info_param_parser.cpp" />
@@ -474,22 +483,28 @@
     <ClInclude Include="..\..\climate\include\ObjECTS_MAGICC.h" />
     <ClInclude Include="..\..\containers\include\batch_runner.h" />
     <ClInclude Include="..\..\containers\include\dependency_finder.h" />
+    <ClInclude Include="..\..\containers\include\final_demand_activity.h" />
     <ClInclude Include="..\..\containers\include\gdp.h" />
+    <ClInclude Include="..\..\containers\include\iactivity.h" />
     <ClInclude Include="..\..\containers\include\icycle_breaker.h" />
     <ClInclude Include="..\..\containers\include\iinfo.h" />
     <ClInclude Include="..\..\containers\include\info.h" />
     <ClInclude Include="..\..\containers\include\info_factory.h" />
     <ClInclude Include="..\..\containers\include\iscenario_runner.h" />
+    <ClInclude Include="..\..\containers\include\land_allocator_activity.h" />
     <ClInclude Include="..\..\containers\include\mac_generator_scenario_runner.h" />
+    <ClInclude Include="..\..\containers\include\market_dependency_finder.h" />
     <ClInclude Include="..\..\containers\include\merge_runner.h" />
     <ClInclude Include="..\..\containers\include\national_account.h" />
     <ClInclude Include="..\..\containers\include\output_meta_data.h" />
     <ClInclude Include="..\..\containers\include\region.h" />
     <ClInclude Include="..\..\containers\include\region_cge.h" />
     <ClInclude Include="..\..\containers\include\region_minicam.h" />
+    <ClInclude Include="..\..\containers\include\resource_activity.h" />
     <ClInclude Include="..\..\containers\include\scenario.h" />
     <ClInclude Include="..\..\containers\include\scenario_runner.h" />
     <ClInclude Include="..\..\containers\include\scenario_runner_factory.h" />
+    <ClInclude Include="..\..\containers\include\sector_activity.h" />
     <ClInclude Include="..\..\containers\include\sector_cycle_breaker.h" />
     <ClInclude Include="..\..\containers\include\single_scenario_runner.h" />
     <ClInclude Include="..\..\containers\include\total_policy_cost_calculator.h" />
@@ -597,6 +612,8 @@
     <ClInclude Include="..\..\solution\util\include\market_type_solution_info_filter.h" />
     <ClInclude Include="..\..\solution\util\include\not_solution_info_filter.h" />
     <ClInclude Include="..\..\solution\util\include\or_solution_info_filter.h" />
+    <ClInclude Include="..\..\solution\util\include\price_greater_than_solution_info_filter.h" />
+    <ClInclude Include="..\..\solution\util\include\price_less_than_solution_info_filter.h" />
     <ClInclude Include="..\..\solution\util\include\solution_info.h" />
     <ClInclude Include="..\..\solution\util\include\solution_info_filter_factory.h" />
     <ClInclude Include="..\..\solution\util\include\solution_info_param_parser.h" />
@@ -800,6 +817,16 @@
     <ClInclude Include="..\..\investment\include\simple_expected_profit_calculator.h" />
     <ClInclude Include="..\..\policy\include\policy_ghg.h" />
     <ClInclude Include="..\..\policy\include\policy_portfolio_standard.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\solution\solvers\include\lognrbt.hh" />
+    <None Include="..\..\solution\util\include\edfun.hh" />
+    <None Include="..\..\solution\util\include\fdjac.hh" />
+    <None Include="..\..\solution\util\include\functor-subs.hh" />
+    <None Include="..\..\solution\util\include\functor.hh" />
+    <None Include="..\..\solution\util\include\linesearch.hh" />
+    <None Include="..\..\solution\util\include\nrsolver.hh" />
+    <None Include="..\..\solution\util\include\ublas-helpers.hh" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

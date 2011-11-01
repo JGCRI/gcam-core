@@ -33,7 +33,6 @@
  */
 
 #include "util/base/include/definitions.h"
-#include "containers/include/dependency_finder.h"
 #include "containers/include/iinfo.h"
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
@@ -46,6 +45,7 @@
 #include "util/curves/include/explicit_point_set.h"
 #include "util/curves/include/xy_data_point.h"
 #include "land_allocator/include/aland_allocator_item.h"
+#include "containers/include/market_dependency_finder.h"
 
 #include <xercesc/dom/DOMNodeList.hpp>
 
@@ -229,7 +229,7 @@ IOutput::OutputList ResidueBiomassOutput::calcPhysicalOutput( const double aPrim
     return outputList;
 }
 
-void ResidueBiomassOutput::completeInit( const std::string& aSectorName, DependencyFinder* aDependencyFinder,
+void ResidueBiomassOutput::completeInit( const std::string& aSectorName, const std::string& aRegionName,
                                          const IInfo* aTechInfo, const bool aIsTechOperating )
 {
     #if !defined( _MSC_VER )
@@ -268,6 +268,11 @@ void ResidueBiomassOutput::completeInit( const std::string& aSectorName, Depende
                 << " in sector " << aSectorName << ": " << msg << std::endl;
         exit( -1 );
     }
+    
+    scenario->getMarketplace()->getDependencyFinder()->addDependency( aSectorName,
+                                                                      aRegionName,
+                                                                      getName(),
+                                                                      aRegionName );
 }
 
 double ResidueBiomassOutput::getEmissionsPerOutput( const std::string& aGHGName, const int aPeriod ) const
@@ -332,12 +337,6 @@ void ResidueBiomassOutput::sendLandAllocator( const ILandAllocator* aLandAllocat
 void ResidueBiomassOutput::setPhysicalOutput( const double aPrimaryOutput, const std::string& aRegionName,
                                               ICaptureComponent* aCaptureComponent, const int aPeriod )
 {
-    /*
-    if ( !mPhysicalOutputs.size() ) {
-        const Modeltime* modeltime = scenario->getModeltime();
-        mPhysicalOutputs.resize( modeltime->getmaxper() );
-    }*/
-
     // Set the physical output for the specified period
     // calcPhysicalOutput only returns a single value.
     OutputList outputList = calcPhysicalOutput( aPrimaryOutput, aRegionName, aCaptureComponent, aPeriod );
@@ -345,7 +344,8 @@ void ResidueBiomassOutput::setPhysicalOutput( const double aPrimaryOutput, const
 
     // Add output to the supply
     Marketplace* marketplace = scenario->getMarketplace();
-    marketplace->addToSupply( getName(), aRegionName, mPhysicalOutputs[ aPeriod ], aPeriod, true );
+    mLastCalcValue = marketplace->addToSupply( getName(), aRegionName, mPhysicalOutputs[ aPeriod ],
+            mLastCalcValue, aPeriod, true );
 }
 
 void ResidueBiomassOutput::toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const

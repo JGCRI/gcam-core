@@ -64,7 +64,8 @@
 #include "util/base/include/auto_file.h"
 #include "solution/solvers/include/solver_factory.h"
 #include "solution/solvers/include/bisection_nr_solver.h"
-#include "solution/util/include/solution_info_param_parser.h"
+#include "solution/util/include/solution_info_param_parser.h" 
+
 
 using namespace std;
 using namespace xercesc;
@@ -422,8 +423,8 @@ bool Scenario::calculatePeriod( const int aPeriod,
         marketplace->nullSuppliesAndDemands( aPeriod );
     }
 
-    world->calc( aPeriod ); // call to calculate initial supply and demand
-
+    world->calc( aPeriod ); // call to calculate initial supply and demand 
+    
     bool success = solve( aPeriod ); // solution uses Bisect and NR routine to clear markets
 
     world->postCalc( aPeriod );
@@ -443,6 +444,7 @@ bool Scenario::calculatePeriod( const int aPeriod,
     if( aPrintDebugging ){
         writeDebuggingFiles( aXMLDebugFile, aSGMDebugFile, aTabs, aPeriod );
     }
+
     return success;
 }
 

@@ -46,7 +46,7 @@
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/xml_helper.h"
-#include "containers/include/dependency_finder.h"
+#include "containers/include/market_dependency_finder.h"
 #include "containers/include/iinfo.h"
 #include "functions/include/function_utils.h"
 
@@ -192,7 +192,6 @@ void BuildingDemandInput::completeInit( const string& aRegionName,
                                         const string& aSectorName,
                                         const string& aSubsectorName,
                                         const string& aTechName,
-                                        DependencyFinder* aDependencyFinder,
                                         const IInfo* aTechInfo )
 {
     // Check for an invalid type.
@@ -206,7 +205,10 @@ void BuildingDemandInput::completeInit( const string& aRegionName,
     }
     initializeParameters( aSectorName, aSubsectorName, aTechName, aTechInfo );
 
-    aDependencyFinder->addDependency( aSectorName, mName );
+    scenario->getMarketplace()->getDependencyFinder()->addDependency( aSectorName,
+                                                                      aRegionName,
+                                                                      getName(),
+                                                                      aRegionName );
     
     // Adjust the coefficient for various other input specific parameters. This 
     // coefficient will later be scaled for calibration values.
@@ -254,8 +256,8 @@ void BuildingDemandInput::setPhysicalDemand( double aPhysicalDemand,
                                              const int aPeriod )
 {
     mPhysicalDemand[ aPeriod ] = aPhysicalDemand;
-    scenario->getMarketplace()->addToDemand( mName, aRegionName,
-                                             mPhysicalDemand[ aPeriod ],
+    mLastCalcValue = scenario->getMarketplace()->addToDemand( mName, aRegionName,
+                                             mPhysicalDemand[ aPeriod ], mLastCalcValue,
                                              aPeriod, true );
 }
 

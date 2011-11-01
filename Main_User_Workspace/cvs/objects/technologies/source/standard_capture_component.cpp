@@ -49,7 +49,7 @@
 #include "containers/include/iinfo.h"
 #include "containers/include/scenario.h"
 #include "util/logger/include/ilogger.h"
-#include "containers/include/dependency_finder.h"
+#include "containers/include/market_dependency_finder.h"
 #include "functions/include/iinput.h"
 
 using namespace std;
@@ -159,13 +159,15 @@ void StandardCaptureComponent::toDebugXML( const int aPeriod, ostream& aOut, Tab
 }
 
 void StandardCaptureComponent::completeInit( const string& aRegionName,
-                                             const string& aSectorName,
-                                             DependencyFinder* aDependencyFinder )
+                                             const string& aSectorName )
 {
     // Add the storage market as a dependency of the sector. This is because
     // this sector will have to be ordered first so that the total demand and
     // price for storage are known.
-    aDependencyFinder->addDependency( aSectorName, mStorageMarket );
+    scenario->getMarketplace()->getDependencyFinder()->addDependency( aSectorName,
+                                                                      aRegionName,
+                                                                      mStorageMarket,
+                                                                      aRegionName );
 
     // Default the target gas to CO2.
     if( mTargetGas.empty() ){
@@ -269,7 +271,7 @@ double StandardCaptureComponent::calcSequesteredAmount( const string& aRegionNam
         // do only if mTargetGas (currently "CO2)
         Marketplace* marketplace = scenario->getMarketplace();
         if( aGHGName == mTargetGas ){
-            marketplace->addToDemand( mStorageMarket, aRegionName, mSequesteredAmount[ aPeriod ], aPeriod,
+            mLastCalcValue = marketplace->addToDemand( mStorageMarket, aRegionName, mSequesteredAmount[ aPeriod ], mLastCalcValue, aPeriod,
             false );
         }
     }

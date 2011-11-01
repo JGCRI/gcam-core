@@ -359,12 +359,10 @@ void Sector::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
 *
 * \author Josh Lurz
 * \param aRegionInfo Regional information object.
-* \param aDepFinder Regional dependency finder.
 * \param aLandAllocator Regional land allocator.
 * \warning markets are not necessarily set when completeInit is called
 */
-void Sector::completeInit( const IInfo* aRegionInfo, DependencyFinder* aDepFinder,
-                           ILandAllocator* aLandAllocator )
+void Sector::completeInit( const IInfo* aRegionInfo, ILandAllocator* aLandAllocator )
 {
     // Allocate the sector info.
     // Do not reset if mSectorInfo contains information from derived sector classes.
@@ -389,7 +387,7 @@ void Sector::completeInit( const IInfo* aRegionInfo, DependencyFinder* aDepFinde
 
     // Complete the subsector initializations.
     for( vector<Subsector*>::iterator subSecIter = subsec.begin(); subSecIter != subsec.end(); subSecIter++ ) {
-        ( *subSecIter )->completeInit( mSectorInfo.get(), aDepFinder, aLandAllocator );
+        ( *subSecIter )->completeInit( mSectorInfo.get(), aLandAllocator );
     }
 }
 

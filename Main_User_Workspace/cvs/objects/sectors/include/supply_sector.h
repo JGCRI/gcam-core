@@ -49,7 +49,6 @@
 #include "sectors/include/sector.h"
 class NationalAccount;
 class IInfo;
-class DependencyFinder;
 /*! 
 * \ingroup Objects
 * \brief This class represents a single supply sector.
@@ -63,7 +62,6 @@ public:
     static const std::string& getXMLNameStatic();
     
     virtual void completeInit( const IInfo* aRegionInfo,
-                               DependencyFinder* aDepFinder,
                                ILandAllocator* aLandAllocator );
 
     
@@ -99,6 +97,9 @@ protected:
     private:
         //! The cached name of the TFE market.
         std::string mTFEMarketName;
+        
+        // State value necessary to use marketplace::addToDemand
+        double mLastTFEValue;
     };
 
     virtual double getEnergyInput( const int aPeriod ) const;
@@ -119,8 +120,6 @@ protected:
     //! calibration market.
     std::auto_ptr<FinalEnergySupplier> mFinalEnergySupplier;
 
-    //! Whether the sector has a trial supply market.
-    bool mHasTrialSupplyMarket;
     //! Trial supply market prices
     std::vector<double> mPriceTrialSupplyMarket;
 

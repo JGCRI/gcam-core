@@ -94,7 +94,7 @@ double TradeDemandFunction::calcDemand( InputSet& input, double consumption, con
             // not be added to the marketplace directly although I could get
             // this to work by allowing a setCurrencyDemand to add to the marketplace
 			input[ i ]->setPhysicalDemand( netExport, regionName, period );
-            marketplace->addToSupply( input[ i ]->getName(), regionName, netExport, period );
+            //marketplace->addToSupply( input[ i ]->getName(), regionName, netExport, period );
 		}
 	}
     assert( util::isValidNumber( totalNetExport ) );

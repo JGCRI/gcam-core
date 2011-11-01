@@ -59,16 +59,13 @@ class SectorCycleBreaker: public ICycleBreaker,
                           protected boost::noncopyable
 {
 public:
-    SectorCycleBreaker( Marketplace* aMarketPlace, const std::string& aRegionName );
+    SectorCycleBreaker( Marketplace* aMarketPlace );
     virtual ~SectorCycleBreaker();
     void breakCycle( DependencyFinder &aDependencyFinder,
                      const size_t aFirstSector, const size_t aSecondSector );
 private:
     //! The marketplace for this region.
     Marketplace* mMarketplace;
-
-    //! Name of the region containing the dependency finder.
-    const std::string mRegionName;
 };
 
 #endif // _SECTOR_CYCLE_BREAKER_H_

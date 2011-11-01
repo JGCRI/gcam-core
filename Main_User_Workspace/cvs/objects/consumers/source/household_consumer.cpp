@@ -391,8 +391,8 @@ void HouseholdConsumer::initCalc( const MoreSectorInfo* aMoreSectorInfo, const s
                 } 
                 for( int period = 0; period < modelTime->getmaxper(); ++period ){
                     marketplace->setMarketToSolve( getPriceIndexMarketName(), aRegionName, period );
-                    marketplace->addToDemand( getPriceIndexMarketName(), aRegionName, priceIndexDenom *
-                        numeraireTestScaler, period );
+                    /*marketplace->addToDemand( getPriceIndexMarketName(), aRegionName, priceIndexDenom *
+                        numeraireTestScaler, period );*/
                 }
             }
             
@@ -485,7 +485,7 @@ void HouseholdConsumer::calcSavings( double disposableIncome, const string& regi
     //double savings = baseScalerSavings * disposableIncome;
     expenditures[ period ].setType( Expenditure::SAVINGS, savings );
     assert( savings > 0 );
-    marketplace->addToSupply("Capital", regionName, savings, period );
+    //marketplace->addToSupply("Capital", regionName, savings, period );
 }
 
 // calculate land supply
@@ -495,7 +495,7 @@ void HouseholdConsumer::calcLandSupply( const string& regionName, int period ) {
     const int R1 = 1;
     landSupply = maxLandSupplyFrac * totalLandArea * ( 1 - R1*exp(
         baseScalerLand * marketplace->getPrice( "Land", regionName, period ) ) ); // not sure i think i found this, and this is the correct price
-    marketplace->addToSupply("Land", regionName, landSupply, period );
+    //marketplace->addToSupply("Land", regionName, landSupply, period );
 }
 
 // calculate labor supply
@@ -508,10 +508,10 @@ void HouseholdConsumer::calcLaborSupply( const string& regionName, int period ) 
     assert( workingAgePopMale != -1 );
     assert( workingAgePopFemale != -1 );
     laborSupplyUnSkLab = workingAgePop * fixedLaborSupplyFracUnSkLab;
-    marketplace->addToSupply("UnSkLab", regionName, laborSupplyUnSkLab, period );
+    //marketplace->addToSupply("UnSkLab", regionName, laborSupplyUnSkLab, period );
 
     laborSupplySkLab = workingAgePop * fixedLaborSupplyFracSkLab;
-    marketplace->addToSupply("SkLab", regionName, laborSupplySkLab, period );
+    //marketplace->addToSupply("SkLab", regionName, laborSupplySkLab, period );
     /*
     if(fixedLaborSupplyFrac != 0) {
         laborSupplyMale = workingAgePopMale * fixedLaborSupplyFrac;
@@ -602,7 +602,7 @@ void HouseholdConsumer::calcIncome( NationalAccount& nationalAccount, const stri
     // marketplace. This is to resolve ordering problems between the household
     // consumer and government consumer. The government consumer will have setup
     // this market.
-    marketplace->addToDemand( "government-taxes", regionName, directTaxes + socialSecurityTax, period );
+    //marketplace->addToDemand( "government-taxes", regionName, directTaxes + socialSecurityTax, period );
 
     // add to National Accounts
     nationalAccount.addToAccount( NationalAccount::SOCIAL_SECURITY_TAX, socialSecurityTax );
@@ -661,14 +661,14 @@ void HouseholdConsumer::operate( NationalAccount& aNationalAccount, const Demogr
                 (*inputIt)->getPricePaid( aRegionName, aPeriod );
         }
         if( aRegionName == Configuration::getInstance()->getString( "numeraire-region", "USA" ) ) {
-            marketplace->addToSupply( getPriceIndexMarketName(), aRegionName, priceIndexNum, aPeriod );
+            //marketplace->addToSupply( getPriceIndexMarketName(), aRegionName, priceIndexNum, aPeriod );
         }
 
         // Add output, or demand as the supply of the budget equation. This is
         // because as personal income increases the demand will increase, which
         // is the assumed movement of the supply side of the market.
-        marketplace->addToSupply( getBudgetMarketName(), aRegionName,
-                                  mOutputs[ 0 ]->getCurrencyOutput( aPeriod ), aPeriod );
+        /*marketplace->addToSupply( getBudgetMarketName(), aRegionName,
+                                  mOutputs[ 0 ]->getCurrencyOutput( aPeriod ), aPeriod );*/
 
         calcNoHouseholds( aDemographics, aPeriod );
         // household's factor demands are calculated after total supplies are
@@ -706,7 +706,7 @@ void HouseholdConsumer::operate( NationalAccount& aNationalAccount, const Demogr
 
         // add taxes into the trial government taxes
         double otherHouseholdTaxes = ghgTax + expenditures[ aPeriod ].getValue( Expenditure::INDIRECT_TAXES );
-        marketplace->addToDemand( "government-taxes", aRegionName, otherHouseholdTaxes, aPeriod );
+        //marketplace->addToDemand( "government-taxes", aRegionName, otherHouseholdTaxes, aPeriod );
 
         // calculate the real amount consumed
         // TODO: this could currently just go in post calc
@@ -739,7 +739,7 @@ void HouseholdConsumer::calcBudget( const string& aRegionName, const int aPeriod
     expenditures[ aPeriod ].setType( Expenditure::BUDGET, budget );
     // Set the budget as the demand in the budget constraint equation.
     Marketplace* marketplace = scenario->getMarketplace();
-    marketplace->addToDemand( getBudgetMarketName(), aRegionName, budget, aPeriod );
+    //marketplace->addToDemand( getBudgetMarketName(), aRegionName, budget, aPeriod );
 }
 
 /*! \brief Get the XML node name for output to XML.

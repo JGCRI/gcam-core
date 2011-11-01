@@ -46,6 +46,7 @@
 * \author Josh Lurz, Sonny Kim
 */
 #include "solution/util/include/solution_info.h" // Maybe use pointer instead.
+
 class Marketplace;
 class ILogger;
 class World;
@@ -71,12 +72,8 @@ public:
     SolutionInfoSet( const std::vector<SolutionInfo> aSolutionSet );
     void init( const unsigned int aPeriod, const double aDefaultSolutionTolerance, const double aDefaultSolutionFloor,
                const SolutionInfoParamParser* aSolutionInfoParamParser );
-    void merge( const std::vector<SolutionInfo> aSolutionSet );
-    void updateFromMarkets();
-    void updateToMarkets();
     UpdateCode updateSolvable( const ISolutionInfoFilter* aSolutionInfoFilter );
     void updateElasticities();
-    void adjustBrackets();
     void storeValues();
     void restoreValues();
     void resetBrackets();
@@ -107,6 +104,7 @@ public:
     void findAndPrintSD( World* aWorld, Marketplace* aMarketplace, const int aPeriod, ILogger& aLogger );
     void printMarketInfo( const std::string& comment, const double worldCalcCount, std::ostream& out ) const;
     void printDerivatives( std::ostream& aOut ) const;
+    
 private:
     unsigned int period;
     Marketplace* marketplace;

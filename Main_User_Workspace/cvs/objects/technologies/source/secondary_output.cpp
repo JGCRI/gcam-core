@@ -48,7 +48,7 @@
 #include "containers/include/iinfo.h"
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/ivisitor.h"
-#include "containers/include/dependency_finder.h"
+#include "containers/include/market_dependency_finder.h"
 #include "functions/include/function_utils.h"
 
 using namespace std;
@@ -166,13 +166,16 @@ void SecondaryOutput::toDebugXML( const int aPeriod,
 }
 
 void SecondaryOutput::completeInit( const string& aSectorName,
-                                    DependencyFinder* aDependencyFinder,
+                                    const string& aRegionName,
                                     const IInfo* aTechInfo,
                                     const bool aIsTechOperating )
 {
     // Secondary output is removed from demand, so add a dependency.
     if( aIsTechOperating ) {
-        aDependencyFinder->addDependency( aSectorName, mName );
+        scenario->getMarketplace()->getDependencyFinder()->addDependency( aSectorName,
+                                                                          aRegionName,
+                                                                          getName(),
+                                                                          aRegionName );
     }
 }
 
@@ -220,7 +223,7 @@ void SecondaryOutput::setPhysicalOutput( const double aPrimaryOutput,
     // fill all of demand. If this technology also added to supply, supply would
     // not equal demand.
     Marketplace* marketplace = scenario->getMarketplace();
-    marketplace->addToDemand( mName, aRegionName, -1 * mPhysicalOutputs[ aPeriod ], aPeriod, true );
+    mLastCalcValue = marketplace->addToDemand( mName, aRegionName, -1 * mPhysicalOutputs[ aPeriod ], mLastCalcValue, aPeriod, true );
 }
 
 double SecondaryOutput::getPhysicalOutput( const int aPeriod ) const

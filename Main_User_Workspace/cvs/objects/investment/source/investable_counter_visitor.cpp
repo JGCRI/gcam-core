@@ -85,7 +85,7 @@ void InvestableCounterVisitor::startVisitSubsector( const Subsector* aSubsector,
     mMultipleTechnologies = countTechs > 1;
 
     // only create calibration markets if there are multiple subsectors
-    if ( mMultipleSubsectors ){
+    /*if ( mMultipleSubsectors ){
         Marketplace* marketplace = scenario->getMarketplace();
         double subsectorInvestment = aSubsector->getAnnualInvestment( aPeriod );
         double shareWeight = aSubsector->getShareWeight( aPeriod );
@@ -115,7 +115,7 @@ void InvestableCounterVisitor::startVisitSubsector( const Subsector* aSubsector,
         // increase the subsector count so that we know we have already have created a subsector
         // that will be help at a constant share weight
         ++mSubSectorCount;
-    }
+    }*/
 }
 
 void InvestableCounterVisitor::endVisitSubsector( const Subsector* aSubsector,
@@ -133,7 +133,7 @@ void InvestableCounterVisitor::startVisitBaseTechnology( const BaseTechnology* a
 {
     // only create the market if there are multiple technologies and only when we are visiting
     // the new investment for that technology
-    if ( mMultipleTechnologies && aTechnology->isNewInvestment( aPeriod ) ){
+    /*if ( mMultipleTechnologies && aTechnology->isNewInvestment( aPeriod ) ){
         //aTechnology is const, but we need to set this flag to simplify the other calibration visitor routines
         const_cast<BaseTechnology*>(aTechnology)->doCalibration = true;
 
@@ -157,7 +157,7 @@ void InvestableCounterVisitor::startVisitBaseTechnology( const BaseTechnology* a
         }
         marketplace->setPrice( calibrationMrkName, mCurrentRegionName, shareWeight, aPeriod, true );
         ++mTechCount;
-    }
+    }*/
 }
 
 void InvestableCounterVisitor::endVisitBaseTechnology( const BaseTechnology* aTechnology,

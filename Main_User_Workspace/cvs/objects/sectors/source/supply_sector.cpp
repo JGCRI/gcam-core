@@ -72,7 +72,7 @@ const string SupplySector::XML_NAME = "supplysector";
 * \param aRegionName The name of the region.
 */
 SupplySector::SupplySector( const string& aRegionName ):
-Sector( aRegionName ),mHasTrialSupplyMarket( false ),
+Sector( aRegionName ),
 mBiomassAdder( scenario->getModeltime()->getmaxper() ),
 // The default price for a trial supply market is 0.001
 mPriceTrialSupplyMarket( scenario->getModeltime()->getmaxper(), 0.001 )
@@ -117,9 +117,6 @@ bool SupplySector::XMLDerivedClassParse( const string& nodeName, const DOMNode* 
     if( nodeName == "biomass-price-adder" ){
         XMLHelper<double>::insertValueIntoVector( curr, mBiomassAdder, scenario->getModeltime() );
     }
-    else if( nodeName == "has-trial-supply-market" ){
-        mHasTrialSupplyMarket = XMLHelper<bool>::getValue( curr );
-    }
     else if( nodeName == "price-trial-supply" ){
         XMLHelper<double>::insertValueIntoVector( curr, mPriceTrialSupplyMarket, scenario->getModeltime() );
     }        
@@ -143,9 +140,6 @@ void SupplySector::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     // Temporary CCTP hack.
     XMLWriteVector( mBiomassAdder, "biomass-price-adder", aOut, aTabs, modeltime, 0.0 );
-    if( mHasTrialSupplyMarket ){
-        XMLWriteElement( mHasTrialSupplyMarket, "has-trial-supply-market", aOut, aTabs );
-    }
     for( int period = 0; period < modeltime->getmaxper(); ++period ) {
         XMLWriteElementCheckDefault( mPriceTrialSupplyMarket[ period ], "price-trial-supply",
                                      aOut, aTabs, 0.001, modeltime->getper_to_yr( period ) );
@@ -164,18 +158,13 @@ void SupplySector::toInputXMLDerived( ostream& aOut, Tabs* aTabs ) const {
 void SupplySector::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
 
     XMLWriteElement( mBiomassAdder[ aPeriod ], "biomass-price-adder", aOut, aTabs );
-    if( mHasTrialSupplyMarket ){
-        XMLWriteElement( mHasTrialSupplyMarket, "has-trial-supply-market", aOut, aTabs );
-        XMLWriteElement( mPriceTrialSupplyMarket[ aPeriod ], "price-trial-supply", aOut, aTabs );
-    }
 }
 
 /*! \brief Complete the initialization of the supply sector.
 * \param aRegionInfo Regional information object.
-* \param aDependencyFinder Regional dependency finder.
+* \param ILandAllocator Regional land allocator.
 */
 void SupplySector::completeInit( const IInfo* aRegionInfo,
-                                 DependencyFinder* aDependencyFinder,
                                  ILandAllocator* aLandAllocator )
 {
 	// default unit to EJ
@@ -190,7 +179,7 @@ void SupplySector::completeInit( const IInfo* aRegionInfo,
 	if ( mPriceUnit.empty() ) {
 		mPriceUnit = "75$/GJ"; 
 	}
-	Sector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator );	
+	Sector::completeInit( aRegionInfo, aLandAllocator );	
     setMarket();
 }
 
@@ -214,27 +203,16 @@ void SupplySector::setMarket() {
         marketInfo->setString( "price-unit", mPriceUnit );
         marketInfo->setString( "output-unit", mOutputUnit );
     }
-    // Create trial supply market.
-    if( mHasTrialSupplyMarket ){
-        if( SectorUtils::createTrialSupplyMarket(regionName,name,
-            marketplace->getMarketInfo(name,regionName,0,true)) ){
-            // Initialize "prices" (quantities) for trial supply market
-            marketplace->setPriceVector( SectorUtils::getTrialMarketName(name),
-                regionName, mPriceTrialSupplyMarket );
-        }
-    }
-    else {
-        // If this sector does not explicitly create a trial supply it may still
-        // have had trial demands because the dependency finder choose to make one
-        // for this sector.  In that case we will store the initial trial demand
-        // in the market info and if the dependency finder decides to make a trial
-        // market again for this sector it can utilize this value.
-        const Modeltime* modeltime = scenario->getModeltime();
-        for( int period = 1; period < modeltime->getmaxper(); ++period ) {
-            if( mPriceTrialSupplyMarket[ period ] != 0.001 ) {
-                marketplace->getMarketInfo( name, regionName, period, true )
-                    ->setDouble( "initial-trial-demand", mPriceTrialSupplyMarket[ period ] );
-            }
+
+    // This sector may have had trial demands because the dependency finder choose
+    // to make one for this sector.  In that case we will store the initial trial
+    // demand in the market info and if the dependency finder decides to make a trial
+    // market again for this sector it can utilize this value.
+    const Modeltime* modeltime = scenario->getModeltime();
+    for( int period = 1; period < modeltime->getmaxper(); ++period ) {
+        if( mPriceTrialSupplyMarket[ period ] != 0.001 ) {
+            marketplace->getMarketInfo( name, regionName, period, true )
+                ->setDouble( "initial-trial-demand", mPriceTrialSupplyMarket[ period ] );
         }
     }
 }
@@ -383,11 +361,6 @@ void SupplySector::supply( const GDP* aGDP, const int aPeriod ) {
                                               aPeriod );
     }
 
-    // Add demand to trial supply market.
-    if( mHasTrialSupplyMarket ){
-        SectorUtils::addToTrialDemand( regionName, name, marketDemand, aPeriod );
-    }
-
 	const static bool debugChecking = Configuration::getInstance()->getBool( "debugChecking" );
 	if ( debugChecking ) {
 		// If the model is working correctly this should never give an error
@@ -441,8 +414,8 @@ void SupplySector::FinalEnergySupplier::setFinalEnergy( const string& aRegionNam
 {
 	if( aPeriod > 1 ){
         Marketplace* marketplace = scenario->getMarketplace();
-		marketplace->addToDemand( mTFEMarketName, aRegionName,
-                                  aFinalEnergy, aPeriod, false );
+		mLastTFEValue = marketplace->addToDemand( mTFEMarketName, aRegionName,
+                                  aFinalEnergy, mLastTFEValue, aPeriod, false );
 	}
 }
 
@@ -455,19 +428,13 @@ void SupplySector::FinalEnergySupplier::setFinalEnergy( const string& aRegionNam
 */
 void SupplySector::postCalc( const int aPeriod ){
     Sector::postCalc( aPeriod );
+    // We may have trial "prices" if the dependency finder generated a trial market
+    // for this sector.  This value is stored so that it can be written into the
+    // toOutputXML and potentially used for restart purposes.
     const Marketplace* marketplace = scenario->getMarketplace();
-    // If trial supply market exists, get solved trial "prices" and set to member
-    // price vector.
-    if( aPeriod > 0 && mHasTrialSupplyMarket ){
-        mPriceTrialSupplyMarket[ aPeriod ] = marketplace->getPrice(
-            SectorUtils::getTrialMarketName(name),
-            regionName, aPeriod, true );
-    }
-    else if( aPeriod > 0 && marketplace->getMarketInfo( name, regionName, aPeriod, true )
+    if( aPeriod > 0 && marketplace->getMarketInfo( name, regionName, aPeriod, true )
              ->getBoolean( "has-split-market", false ) )
     {
-        // We may still have trial "prices" if the dependency finder generated a
-        // trial market for this sector.
         mPriceTrialSupplyMarket[ aPeriod ] = marketplace->getDemand( name, regionName, aPeriod );
     }
 }

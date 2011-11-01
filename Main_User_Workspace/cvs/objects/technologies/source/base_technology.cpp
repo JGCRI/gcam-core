@@ -288,7 +288,7 @@ void BaseTechnology::completeInit( const string& aRegionName,
 
     // technologies before the base year will not have inputs yet
     if( mNestedInputRoot ) {
-        mNestedInputRoot->completeInit( aRegionName, aSectorName, aSubsectorName, name, 0, 0 );
+        mNestedInputRoot->completeInit( aRegionName, aSectorName, aSubsectorName, name, 0 );
     }
 
     // Check if CO2 is missing. 
@@ -432,10 +432,10 @@ void BaseTechnology::updateMarketplace( const string& sectorName, const string& 
     for( InputIterator curr = mLeafInputs.begin(); curr != mLeafInputs.end(); ++curr ) {
         // really currency
         double tempDemand = (*curr)->getPhysicalDemand( period );
-        marketplace->addToDemand( (*curr)->getName(), regionName, tempDemand, period );
+        //marketplace->addToDemand( (*curr)->getName(), regionName, tempDemand, period );
         totalDemand += tempDemand;
     }
-    marketplace->addToSupply( sectorName, regionName, totalDemand, period );
+    //marketplace->addToSupply( sectorName, regionName, totalDemand, period );
     mLeafInputs.clear();
 }
 

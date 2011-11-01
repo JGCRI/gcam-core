@@ -82,7 +82,6 @@ public:
     virtual void completeInit( const std::string& aRegionName,
                               const std::string& aSectorName,
                               const std::string& aSubsectorName,
-                              DependencyFinder* aDepFinder,
                               const IInfo* aSubsectorIInfo,
                               ILandAllocator* aLandAllocator );
     
@@ -179,6 +178,8 @@ public:
     virtual const std::map<std::string, double> getFuelMap( const int aPeriod ) const;
     
     virtual bool isAvailable( const int aPeriod ) const;
+    
+    virtual bool isOperating( const int aPeriod ) const;
     
     virtual double calcFuelPrefElasticity( const int aPeriod ) const;
     

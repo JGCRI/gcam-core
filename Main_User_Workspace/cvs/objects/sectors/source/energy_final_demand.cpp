@@ -358,7 +358,7 @@ void EnergyFinalDemand::setFinalDemand( const string& aRegionName,
     const double annualServiceDemand = calcFinalDemand( aRegionName, aDemographics, aGDP, aPeriod );
     // Set the service demand into the marketplace.
     Marketplace* marketplace = scenario->getMarketplace();
-    marketplace->addToDemand( mName, aRegionName, annualServiceDemand, aPeriod );
+    mLastCalcValue = marketplace->addToDemand( mName, aRegionName, annualServiceDemand, mLastCalcValue, aPeriod );
 }
 
 /*! \brief Set the final demand for service using the aggrgate sector energy service 

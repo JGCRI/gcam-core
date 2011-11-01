@@ -135,7 +135,7 @@ void PrimaryOutput::toDebugXML( const int aPeriod,
 }
 
 void PrimaryOutput::completeInit( const string& aSectorName,
-                                  DependencyFinder* aDependencyFinder,
+                                  const string& aRegionName,
                                   const IInfo* aTechInfo,
                                   const bool aIsTechOperating )
 {
@@ -187,10 +187,7 @@ void PrimaryOutput::setPhysicalOutput( const double aPrimaryOutput,
     mPhysicalOutputs[ aPeriod ] = aPrimaryOutput;
 
     // Add the primary output to the marketplace.
-    // TODO: Once demand sectors are separated this should be changed.
-    if( aPrimaryOutput > 0.0 ){
-        mCachedMarket->addToSupply( mName, aRegionName, aPrimaryOutput, aPeriod, false );
-    }
+    mCachedMarket->addToSupply( mName, aRegionName, aPrimaryOutput, aPeriod, false );
 }
 
 double PrimaryOutput::getPhysicalOutput( const int aPeriod ) const {

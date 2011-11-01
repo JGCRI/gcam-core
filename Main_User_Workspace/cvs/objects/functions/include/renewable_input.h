@@ -104,7 +104,6 @@ public:
                                const std::string& aSectorName,
                                const std::string& aSubsectorName,
                                const std::string& aTechName,
-                               DependencyFinder* aDependencyFinder,
                                const IInfo* aTechInfo);
 
     virtual void initCalc( const std::string& aRegionName,

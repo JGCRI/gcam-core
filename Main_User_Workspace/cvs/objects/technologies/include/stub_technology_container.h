@@ -91,8 +91,8 @@ public:
     
     // ITechnologyContainer methods
     virtual void completeInit( const std::string& aRegionName, const std::string& aSectorName,
-                               const std::string& aSubsectorName, DependencyFinder* aDependencyFinder,
-                               const IInfo* aSubsecInfo, ILandAllocator* aLandAllocator );
+                               const std::string& aSubsectorName, const IInfo* aSubsecInfo,
+                               ILandAllocator* aLandAllocator );
     
     virtual void initCalc( const std::string& aRegionName, const std::string& aSectorName,
                            const IInfo* aSubsecInfo, const Demographic* aDemographics, const int aPeriod );
@@ -109,9 +109,9 @@ public:
     
     virtual CTechRangeIterator getVintageBegin( const int aPeirod ) const;
     
-    virtual TechRangeIterator getVintageEnd();
+    virtual TechRangeIterator getVintageEnd( const int aPeriod );
     
-    virtual CTechRangeIterator getVintageEnd() const;
+    virtual CTechRangeIterator getVintageEnd( const int aPeriod ) const;
     
     // INamed methods
     virtual const std::string& getName() const;

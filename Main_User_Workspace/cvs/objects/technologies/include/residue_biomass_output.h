@@ -92,7 +92,7 @@ public :
 
     virtual ResidueBiomassOutput* clone( void ) const { return new ResidueBiomassOutput( *this ); }
 
-    virtual void completeInit( const std::string& aSectorName, DependencyFinder* aDependencyFinder,
+    virtual void completeInit( const std::string& aSectorName, const std::string& aRegionName,
                                const IInfo* aTechInfo, const bool aIsTechOperating );
 
     virtual double getEmissionsPerOutput( const std::string& aGHGName, const int aPeriod ) const;
@@ -188,6 +188,8 @@ private :
     //! Fraction of max available residue harvested for energy
     mutable double mFractProduced;
 
+    //! State value necessary to use Marketplace::addToDemand
+    double mLastCalcValue;
 };
 
 #endif   // __RESIDUEBIOMASSOUTPUT_H

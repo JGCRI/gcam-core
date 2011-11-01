@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0E36093313F03D350002F67C /* price_greater_than_solution_info_filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E36093213F03D350002F67C /* price_greater_than_solution_info_filter.cpp */; };
+		0E36094413F0457A0002F67C /* price_less_than_solution_info_filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E36094313F0457A0002F67C /* price_less_than_solution_info_filter.cpp */; };
+		0E4247B7143D00AC00A8BBD3 /* resource_activity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E4247B6143D00AC00A8BBD3 /* resource_activity.cpp */; };
+		0E4247C1143D022E00A8BBD3 /* land_allocator_activity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E4247C0143D022E00A8BBD3 /* land_allocator_activity.cpp */; };
+		0E4247C9143D033700A8BBD3 /* final_demand_activity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E4247C8143D033700A8BBD3 /* final_demand_activity.cpp */; };
+		0E4247D2143D0DCC00A8BBD3 /* sector_activity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0E4247D1143D0DCC00A8BBD3 /* sector_activity.cpp */; };
+		0EF7AF5813E1EFDA0034AA71 /* market_dependency_finder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EF7AF5113E1EFDA0034AA71 /* market_dependency_finder.cpp */; };
+		0EF7AF5D13E1EFF80034AA71 /* lognrbt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EF7AF5C13E1EFF80034AA71 /* lognrbt.cpp */; };
 		CD48872A122873C200F5A88A /* asimple_carbon_calc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488431122873C000F5A88A /* asimple_carbon_calc.cpp */; };
 		CD48872B122873C200F5A88A /* carbon_model_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488432122873C000F5A88A /* carbon_model_utils.cpp */; };
 		CD48872C122873C200F5A88A /* land_carbon_densities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488433122873C000F5A88A /* land_carbon_densities.cpp */; };
@@ -279,6 +287,7 @@
 		CDAF62F1130DAB6900D93AFB /* MAGICC_IO_helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDAF62ED130DAB6900D93AFB /* MAGICC_IO_helpers.cpp */; };
 		CDAF62F2130DAB6900D93AFB /* ObjECTS_MAGICC_others.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDAF62EE130DAB6900D93AFB /* ObjECTS_MAGICC_others.cpp */; };
 		CDAF62F3130DAB6900D93AFB /* ObjECTS_MAGICC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDAF62EF130DAB6900D93AFB /* ObjECTS_MAGICC.cpp */; };
+		CDBEAA2A13E9F2A700FA99F7 /* edfun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EF7AF6713E1F0130034AA71 /* edfun.cpp */; };
 		CDD5A20D130338B60088463C /* empty_technology.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD5A20A130338B60088463C /* empty_technology.cpp */; };
 		CDD5A20E130338B60088463C /* stub_technology_container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD5A20B130338B60088463C /* stub_technology_container.cpp */; };
 		CDD5A20F130338B60088463C /* technology_container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD5A20C130338B60088463C /* technology_container.cpp */; };
@@ -303,6 +312,31 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0E36093013F03C490002F67C /* price_greater_than_solution_info_filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = price_greater_than_solution_info_filter.h; sourceTree = "<group>"; };
+		0E36093213F03D350002F67C /* price_greater_than_solution_info_filter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = price_greater_than_solution_info_filter.cpp; sourceTree = "<group>"; };
+		0E36094113F045080002F67C /* price_less_than_solution_info_filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = price_less_than_solution_info_filter.h; sourceTree = "<group>"; };
+		0E36094313F0457A0002F67C /* price_less_than_solution_info_filter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = price_less_than_solution_info_filter.cpp; sourceTree = "<group>"; };
+		0E4247AD143CFDEE00A8BBD3 /* iactivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iactivity.h; sourceTree = "<group>"; };
+		0E4247B5143D009700A8BBD3 /* resource_activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = resource_activity.h; sourceTree = "<group>"; };
+		0E4247B6143D00AC00A8BBD3 /* resource_activity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = resource_activity.cpp; sourceTree = "<group>"; };
+		0E4247BB143D018400A8BBD3 /* land_allocator_activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = land_allocator_activity.h; sourceTree = "<group>"; };
+		0E4247C0143D022E00A8BBD3 /* land_allocator_activity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = land_allocator_activity.cpp; sourceTree = "<group>"; };
+		0E4247C5143D029E00A8BBD3 /* final_demand_activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = final_demand_activity.h; sourceTree = "<group>"; };
+		0E4247C8143D033700A8BBD3 /* final_demand_activity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = final_demand_activity.cpp; sourceTree = "<group>"; };
+		0E4247CD143D03B600A8BBD3 /* sector_activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sector_activity.h; sourceTree = "<group>"; };
+		0E4247D1143D0DCC00A8BBD3 /* sector_activity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sector_activity.cpp; sourceTree = "<group>"; };
+		0EF7AF4A13E1EFCF0034AA71 /* market_dependency_finder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = market_dependency_finder.h; sourceTree = "<group>"; };
+		0EF7AF5113E1EFDA0034AA71 /* market_dependency_finder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = market_dependency_finder.cpp; sourceTree = "<group>"; };
+		0EF7AF5B13E1EFF20034AA71 /* lognrbt.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = lognrbt.hh; sourceTree = "<group>"; };
+		0EF7AF5C13E1EFF80034AA71 /* lognrbt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lognrbt.cpp; sourceTree = "<group>"; };
+		0EF7AF5E13E1F0050034AA71 /* edfun.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = edfun.hh; sourceTree = "<group>"; };
+		0EF7AF6013E1F0050034AA71 /* fdjac.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = fdjac.hh; sourceTree = "<group>"; };
+		0EF7AF6113E1F0050034AA71 /* functor-subs.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "functor-subs.hh"; sourceTree = "<group>"; };
+		0EF7AF6213E1F0050034AA71 /* functor.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = functor.hh; sourceTree = "<group>"; };
+		0EF7AF6413E1F0050034AA71 /* linesearch.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = linesearch.hh; sourceTree = "<group>"; };
+		0EF7AF6513E1F0050034AA71 /* nrsolver.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = nrsolver.hh; sourceTree = "<group>"; };
+		0EF7AF6613E1F0050034AA71 /* ublas-helpers.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "ublas-helpers.hh"; sourceTree = "<group>"; };
+		0EF7AF6713E1F0130034AA71 /* edfun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = edfun.cpp; sourceTree = "<group>"; };
 		CD299E9611B9C11800E6D196 /* objects */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = objects; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD48840C122873C000F5A88A /* Ag2Calibrate.f90 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.fortran.f90; path = Ag2Calibrate.f90; sourceTree = "<group>"; };
 		CD48840D122873C000F5A88A /* Ag2CH4N2O.f90 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.fortran.f90; path = Ag2CH4N2O.f90; sourceTree = "<group>"; };
@@ -1232,6 +1266,8 @@
 		CD488450122873C000F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				0E4247B5143D009700A8BBD3 /* resource_activity.h */,
+				0EF7AF4A13E1EFCF0034AA71 /* market_dependency_finder.h */,
 				CD488451122873C000F5A88A /* batch_runner.h */,
 				CD488452122873C000F5A88A /* dependency_finder.h */,
 				CD488453122873C000F5A88A /* gdp.h */,
@@ -1254,6 +1290,10 @@
 				CD488464122873C000F5A88A /* total_policy_cost_calculator.h */,
 				CD488465122873C000F5A88A /* tree_item.h */,
 				CD488466122873C000F5A88A /* world.h */,
+				0E4247AD143CFDEE00A8BBD3 /* iactivity.h */,
+				0E4247BB143D018400A8BBD3 /* land_allocator_activity.h */,
+				0E4247C5143D029E00A8BBD3 /* final_demand_activity.h */,
+				0E4247CD143D03B600A8BBD3 /* sector_activity.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -1261,6 +1301,7 @@
 		CD488467122873C000F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				0EF7AF5113E1EFDA0034AA71 /* market_dependency_finder.cpp */,
 				CD488468122873C000F5A88A /* batch_runner.cpp */,
 				CD488469122873C000F5A88A /* dependency_finder.cpp */,
 				CD48846A122873C000F5A88A /* gdp.cpp */,
@@ -1279,6 +1320,10 @@
 				CD488477122873C000F5A88A /* single_scenario_runner.cpp */,
 				CD488478122873C000F5A88A /* total_policy_cost_calculator.cpp */,
 				CD488479122873C000F5A88A /* world.cpp */,
+				0E4247B6143D00AC00A8BBD3 /* resource_activity.cpp */,
+				0E4247C0143D022E00A8BBD3 /* land_allocator_activity.cpp */,
+				0E4247C8143D033700A8BBD3 /* final_demand_activity.cpp */,
+				0E4247D1143D0DCC00A8BBD3 /* sector_activity.cpp */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -2048,6 +2093,7 @@
 		CD48861B122873C200F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				0EF7AF5B13E1EFF20034AA71 /* lognrbt.hh */,
 				CD48861C122873C200F5A88A /* bisect_all.h */,
 				CD48861D122873C200F5A88A /* bisect_one.h */,
 				CD48861E122873C200F5A88A /* bisect_policy.h */,
@@ -2067,6 +2113,7 @@
 		CD488628122873C200F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				0EF7AF5C13E1EFF80034AA71 /* lognrbt.cpp */,
 				CD488629122873C200F5A88A /* bisect_all.cpp */,
 				CD48862A122873C200F5A88A /* bisect_one.cpp */,
 				CD48862B122873C200F5A88A /* bisect_policy.cpp */,
@@ -2094,6 +2141,13 @@
 		CD488635122873C200F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				0EF7AF5E13E1F0050034AA71 /* edfun.hh */,
+				0EF7AF6013E1F0050034AA71 /* fdjac.hh */,
+				0EF7AF6113E1F0050034AA71 /* functor-subs.hh */,
+				0EF7AF6213E1F0050034AA71 /* functor.hh */,
+				0EF7AF6413E1F0050034AA71 /* linesearch.hh */,
+				0EF7AF6513E1F0050034AA71 /* nrsolver.hh */,
+				0EF7AF6613E1F0050034AA71 /* ublas-helpers.hh */,
 				CD488636122873C200F5A88A /* all_solution_info_filter.h */,
 				CD488637122873C200F5A88A /* and_solution_info_filter.h */,
 				CD488638122873C200F5A88A /* calc_counter.h */,
@@ -2110,6 +2164,8 @@
 				CD488643122873C200F5A88A /* solvable_solution_info_filter.h */,
 				CD488644122873C200F5A88A /* solver_library.h */,
 				CD488645122873C200F5A88A /* unsolved_solution_info_filter.h */,
+				0E36093013F03C490002F67C /* price_greater_than_solution_info_filter.h */,
+				0E36094113F045080002F67C /* price_less_than_solution_info_filter.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -2117,6 +2173,7 @@
 		CD488646122873C200F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				0EF7AF6713E1F0130034AA71 /* edfun.cpp */,
 				CD488647122873C200F5A88A /* all_solution_info_filter.cpp */,
 				CD488648122873C200F5A88A /* and_solution_info_filter.cpp */,
 				CD488649122873C200F5A88A /* calc_counter.cpp */,
@@ -2132,6 +2189,8 @@
 				CD488653122873C200F5A88A /* solvable_solution_info_filter.cpp */,
 				CD488654122873C200F5A88A /* solver_library.cpp */,
 				CD488655122873C200F5A88A /* unsolved_solution_info_filter.cpp */,
+				0E36093213F03D350002F67C /* price_greater_than_solution_info_filter.cpp */,
+				0E36094313F0457A0002F67C /* price_less_than_solution_info_filter.cpp */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -2802,6 +2861,15 @@
 				CDF83C1413A30CA600DF178D /* s_curve_shutdown_decider.cpp in Sources */,
 				CDF83C1A13A30CC500DF178D /* kyoto_forcing_target.cpp in Sources */,
 				CDF83C1B13A30CC500DF178D /* secanter.cpp in Sources */,
+				0EF7AF5813E1EFDA0034AA71 /* market_dependency_finder.cpp in Sources */,
+				0EF7AF5D13E1EFF80034AA71 /* lognrbt.cpp in Sources */,
+				CDBEAA2A13E9F2A700FA99F7 /* edfun.cpp in Sources */,
+				0E36093313F03D350002F67C /* price_greater_than_solution_info_filter.cpp in Sources */,
+				0E36094413F0457A0002F67C /* price_less_than_solution_info_filter.cpp in Sources */,
+				0E4247B7143D00AC00A8BBD3 /* resource_activity.cpp in Sources */,
+				0E4247C1143D022E00A8BBD3 /* land_allocator_activity.cpp in Sources */,
+				0E4247C9143D033700A8BBD3 /* final_demand_activity.cpp in Sources */,
+				0E4247D2143D0DCC00A8BBD3 /* sector_activity.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

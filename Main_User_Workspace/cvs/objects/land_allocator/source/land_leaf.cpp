@@ -56,7 +56,7 @@
 #include "land_allocator/include/land_use_history.h"
 #include "ccarbon_model/include/carbon_model_utils.h"
 #include "util/base/include/configuration.h"
-#include <typeinfo>
+#include "containers/include/market_dependency_finder.h"
 
 using namespace std;
 using namespace xercesc;
@@ -214,6 +214,14 @@ void LandLeaf::completeInit( const string& aRegionName,
     
     // Initialize the land use history.
     initLandUseHistory( aRegionName );
+    
+    // Add dependency for to expansion constraint market if it is being used.
+    if( mIsLandExpansionCost ) {
+        scenario->getMarketplace()->getDependencyFinder()->addDependency( "land-allocator",
+                                                                          aRegionName,
+                                                                          mLandExpansionCostName,
+                                                                          aRegionName );
+    }
 }
 
 void LandLeaf::initCalc( const string& aRegionName, const int aPeriod )
@@ -571,8 +579,8 @@ void LandLeaf::calcLandAllocation( const string& aRegionName,
     // compute any demands for land use constraint resources
     if ( mIsLandExpansionCost ) {
         Marketplace* marketplace = scenario->getMarketplace();
-        marketplace->addToDemand( mLandExpansionCostName, aRegionName, 
-            mLandAllocation[ aPeriod ], aPeriod, true );      
+        mLastCalcExpansionValue = marketplace->addToDemand( mLandExpansionCostName, aRegionName, 
+            mLandAllocation[ aPeriod ], mLastCalcExpansionValue, aPeriod, true );      
     }
 
 }
@@ -595,7 +603,8 @@ void LandLeaf::calcLUCEmissions( const string& aRegionName,
         double LUCEmissions = mCarbonContentCalc
             ->getNetLandUseChangeEmission( scenario->getModeltime()->getper_to_yr( aPeriod ) );
         Marketplace* marketplace = scenario->getMarketplace();
-        marketplace->addToDemand( "CO2", aRegionName, LUCEmissions, aPeriod, false );
+        mLastCalcCO2Value = marketplace->addToDemand( "CO2", aRegionName, LUCEmissions,
+                                                      mLastCalcCO2Value, aPeriod, false );
     }  
 }
 

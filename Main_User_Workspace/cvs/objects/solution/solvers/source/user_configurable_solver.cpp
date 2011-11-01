@@ -214,6 +214,8 @@ bool UserConfigurableSolver::solve( const int aPeriod, const SolutionInfoParamPa
         for( SolverComponentIterator it = mSolverComponents.begin(); it != mSolverComponents.end(); ++it ) {
             // Note we are not checking the return code here since even if a solver component was able to
             // solve successfully it is not necessarily working on the entire solution set.
+            solverLog << "\n%%%%%%%%%%%%%%%%Solution Set State:\n" << solution_set
+                      << "\n%%%%%%%%%%%%%%%%\n";
             (*it)->solve( solution_set, aPeriod );
         }
         

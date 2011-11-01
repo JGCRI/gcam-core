@@ -88,7 +88,7 @@ void GetDistributedInvestmentVisitor::startVisitSubsector( const Subsector* aSub
         double subsectorInvestment = aSubsector->getAnnualInvestment( aPeriod );
         Marketplace* marketplace = scenario->getMarketplace();
         string calibrationMrkName = "SubSec-"+mCurrentSubSectorName;
-        marketplace->addToSupply( calibrationMrkName, mCurrentRegionName, subsectorInvestment, aPeriod, true );
+        //marketplace->addToSupply( calibrationMrkName, mCurrentRegionName, subsectorInvestment, aPeriod, true );
     }
 }
 
@@ -112,7 +112,7 @@ void GetDistributedInvestmentVisitor::startVisitBaseTechnology( const BaseTechno
         double technologyInvestment = aTechnology->getAnnualInvestment( aPeriod );
         Marketplace* marketplace = scenario->getMarketplace();
         string calibrationMrkName = "Tech-"+aTechnology->getName();
-        marketplace->addToSupply( calibrationMrkName, mCurrentRegionName, technologyInvestment, aPeriod, true );
+        //marketplace->addToSupply( calibrationMrkName, mCurrentRegionName, technologyInvestment, aPeriod, true );
     }
 }
 

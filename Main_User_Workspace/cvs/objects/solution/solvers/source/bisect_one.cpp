@@ -152,7 +152,6 @@ SolverComponent::ReturnCode BisectOne::solve( SolutionInfoSet& aSolutionSet, con
     singleLog.setLevel( ILogger::DEBUG );
 
     // Make sure we have all updated information.
-    aSolutionSet.updateFromMarkets();
     aSolutionSet.updateSolvable( mSolutionInfoFilter.get() );
 
     // Select the worst market.
@@ -177,11 +176,9 @@ SolverComponent::ReturnCode BisectOne::solve( SolutionInfoSet& aSolutionSet, con
         // Set new trial value to center
         worstSol->setPriceToCenter();
 
-        aSolutionSet.updateToMarkets();
         marketplace->nullSuppliesAndDemands( aPeriod );
 
         world->calc( aPeriod );
-        aSolutionSet.updateFromMarkets();
         // TODO: what is the point in updating
         aSolutionSet.updateSolvable( mSolutionInfoFilter.get() );
         addIteration( worstSol->getName(), worstSol->getRelativeED() );

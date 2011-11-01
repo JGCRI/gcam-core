@@ -170,17 +170,14 @@ void TranSubsector::toDebugXMLDerived( const int period, ostream& out, Tabs* tab
 
 /*! \brief Perform any initializations needed for each period.
 * \author Sonny Kim, Steve Smith, Josh Lurz
-* \param aNationalAccount National accounts information
-* \param aDemographics Regional demographics information
-* \param aMoreSectorInfo Additional sector information required for subsector
-* \param aPeriod Model period
+* \param aSectorInfo The sector info object for additional sector data.
+* \param aLandAllocator The regional land allocator.
 */
 void TranSubsector::completeInit( const IInfo* aSectorInfo,
-                                  DependencyFinder* aDependencyFinder,
                                   ILandAllocator* aLandAllocator )
 {
     // Only call base class completeInit.
-    Subsector::completeInit( aSectorInfo, aDependencyFinder, aLandAllocator );
+    Subsector::completeInit( aSectorInfo, aLandAllocator );
 }
 
 /*!

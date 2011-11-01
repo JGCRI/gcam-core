@@ -238,13 +238,13 @@ void RegionCGE::completeInit() {
         demographic->completeInit();
     }
     for( SectorIterator sectorIter = supplySector.begin(); sectorIter != supplySector.end(); ++sectorIter ) {
-        ( *sectorIter )->completeInit( 0, 0, 0 );
+        ( *sectorIter )->completeInit( 0, 0 );
     }
     for( unsigned int i = 0; i < finalDemandSector.size(); i++) {
         // Pass null for the dependency finder argument as CGE regions don't
         // have dependencies. Pass null for the regional land allocator 
         // because CGE regions do not currently use one.
-        finalDemandSector[i]->completeInit( 0, 0, 0 );
+        finalDemandSector[i]->completeInit( 0, 0 );
     }
     for( unsigned int i = 0; i < factorSupply.size(); i++) {
         factorSupply[i]->completeInit( name );
@@ -352,8 +352,8 @@ void RegionCGE::calc( const int period ) {
         }
         // the import taxes need to get added to the government taxes market but we don't really
         // need to run the consumers for that
-        scenario->getMarketplace()->addToDemand( "government-taxes", name,
-            mNationalAccounts[ period ]->getAccountValue( NationalAccount::INDIRECT_BUSINESS_TAX ), period );
+        /*scenario->getMarketplace()->addToDemand( "government-taxes", name,
+            mNationalAccounts[ period ]->getAccountValue( NationalAccount::INDIRECT_BUSINESS_TAX ), period );*/
         return;
     }
     // calls operate for both production and final demand sectors

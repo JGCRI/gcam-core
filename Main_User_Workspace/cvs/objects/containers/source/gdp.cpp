@@ -285,7 +285,7 @@ void GDP::setupCalibrationMarkets( const string& regionName, const vector<double
     // Set the constraint.
     for( int per = 1; per < modeltime->getmaxper(); per++ ){
         if( aCalibrationGDPs[ per ] > 0 ){
-            marketplace->addToDemand( goodName, regionName, aCalibrationGDPs[ per  ], per );
+            //marketplace->addToDemand( goodName, regionName, aCalibrationGDPs[ per  ], per );
             marketplace->setMarketToSolve( goodName, regionName, per );
         }
     }

@@ -404,7 +404,7 @@ void MarketBasedInvestor::setEfficiencyConditions( vector<IInvestable*>& aInvest
     */
     assert( marketplace->getDemand( mMarketName, mRegionName, aPeriod ) 
         < util::getVerySmallNumber() );
-    marketplace->addToDemand( mMarketName, mRegionName, currInvestment * priceReceived, aPeriod, true );
+    //marketplace->addToDemand( mMarketName, mRegionName, currInvestment * priceReceived, aPeriod, true );
 
     // Create a levelized cost rate calculator to calculate the sector average
     // levelized cost.
@@ -433,11 +433,11 @@ void MarketBasedInvestor::setEfficiencyConditions( vector<IInvestable*>& aInvest
         mainLog.setLevel( ILogger::WARNING );
         mainLog << "Reseting LC for " << mMarketName << " in " << mRegionName << " from " << sectorLevelizedCost
             << " to " << priceReceived << endl;
-        marketplace->addToSupply( mMarketName, mRegionName, currInvestment * priceReceived, aPeriod, true );
+        //marketplace->addToSupply( mMarketName, mRegionName, currInvestment * priceReceived, aPeriod, true );
         return;
     }
     // to here
-    marketplace->addToSupply( mMarketName, mRegionName, currInvestment * sectorLevelizedCost, aPeriod, true );
+    //marketplace->addToSupply( mMarketName, mRegionName, currInvestment * sectorLevelizedCost, aPeriod, true );
 }
 /*! \brief Set the efficienty conditions for the investment market for the sector.
 * \details In period 0, investment is summed not calculated. This function

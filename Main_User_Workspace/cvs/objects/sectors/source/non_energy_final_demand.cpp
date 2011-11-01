@@ -265,7 +265,7 @@ void NonEnergyFinalDemand::setFinalDemand( const string& aRegionName,
     
     // Set the service demand into the marketplace.
     Marketplace* marketplace = scenario->getMarketplace();
-    marketplace->addToDemand( mName, aRegionName, mServiceDemands[ aPeriod ], aPeriod );
+    mLastCalcValue = marketplace->addToDemand( mName, aRegionName, mServiceDemands[ aPeriod ], mLastCalcValue, aPeriod );
 }
 
 /*! \brief Aggrgate sector energy service demand function

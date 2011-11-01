@@ -136,7 +136,7 @@ void InvestConsumer::calcIncome( NationalAccount& aNationalAccount, const Demogr
 	//allocateDistributionCost( nationalAccount, regionName, period );
     double investment = aNationalAccount.getAccountValue( NationalAccount::ANNUAL_INVESTMENT );
     expenditures[ aPeriod ].setType( Expenditure::INVESTMENT, investment );
-    scenario->getMarketplace()->addToDemand( "Capital", aRegionName, investment, aPeriod );
+    //scenario->getMarketplace()->addToDemand( "Capital", aRegionName, investment, aPeriod );
 	// set National Accounts Consumption for GNP calculation
 	aNationalAccount.addToAccount( NationalAccount::GNP_NOMINAL, investment );
 	aNationalAccount.addToAccount( NationalAccount::INVESTMENT_NOMINAL, investment );
@@ -175,7 +175,7 @@ void InvestConsumer::operate( NationalAccount& aNationalAccount, const Demograph
 
         // TODO: what about emissions taxes?
         double investmentTaxes = expenditures[ aPeriod ].getValue( Expenditure::INDIRECT_TAXES );
-        scenario->getMarketplace()->addToDemand( "government-taxes", aRegionName, investmentTaxes, aPeriod );
+        //scenario->getMarketplace()->addToDemand( "government-taxes", aRegionName, investmentTaxes, aPeriod );
 
         // calculate the real amount consumed
         // TODO: this could currently just go in post calc

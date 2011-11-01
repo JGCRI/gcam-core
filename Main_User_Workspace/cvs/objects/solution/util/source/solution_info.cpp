@@ -54,14 +54,8 @@
 using namespace std;
 
 //! Constructor
-SolutionInfo::SolutionInfo( Market* aLinkedMarket )
+SolutionInfo::SolutionInfo( Market* aLinkedMarket, const vector<IActivity*>& aDependencies )
 :linkedMarket( aLinkedMarket ),
-X( 0 ),
-storedX( 0 ),
-demand( 0 ),
-storedDemand( 0 ),
-supply( 0 ),
-storedSupply( 0 ),
 XL( 0 ),
 XR( 0 ),
 EDL( 0 ),
@@ -71,7 +65,8 @@ mBisected( false ),
 mSolutionTolerance( 0 ),
 mSolutionFloor( 0 ),
 mBracketInterval( 0 ),
-mMaxNRPriceJump( 0 )
+mMaxNRPriceJump( 0 ),
+mDependencies( const_cast<vector<IActivity*>&>( aDependencies ) )
 {
     assert( aLinkedMarket );
 }
@@ -104,10 +99,6 @@ bool SolutionInfo::operator!=( const SolutionInfo& rhs ) const {
  */
 void SolutionInfo::init( const double aDefaultSolutionTolerance, const double aDefaultSolutionFloor,
                          const SolutionInfoParamParser::SolutionInfoValues& aSolutionInfoValues ) {
-    // Update price, supply and demand from the market.
-    X = linkedMarket->getRawPrice();
-    supply = linkedMarket->getRawSupply();
-    demand = linkedMarket->getRawDemand();
     resetBrackets();
     
     // Initialize parameters from the solution info values if they are set
@@ -188,43 +179,34 @@ double SolutionInfo::getDeltaPrice( const double aDefaultDeltaPrice ) const {
 
 /*! \brief Get the price */
 double SolutionInfo::getPrice() const {
-    return X;
+    return linkedMarket->getRawPrice();
 }
 
 //! Set the price
 void SolutionInfo::setPrice( const double aPrice ){
-   X = aPrice;
+    linkedMarket->setRawPrice( aPrice );
 }
 
 //! Set the price to the median value between the left and right bracket.
 void SolutionInfo::setPriceToCenter(){
-    X = ( XL + XR ) / 2;
+    double X = ( XL + XR ) / 2;
+    setPrice( X );
 }
 
 /*! \brief Get Demand */
 double SolutionInfo::getDemand() const {
-    return demand;
-}
-
-//! Remove a given amount from the raw demand for the linked market.
-void SolutionInfo::removeFromRawDemand( const double aDemand ){
-    linkedMarket->removeFromRawDemand( aDemand );
+    return linkedMarket->getRawDemand();
 }
 
 
 /*! \brief Get the Supply */
 double SolutionInfo::getSupply() const {
-    return supply;
-}
-
-//! Remove a given amount from the raw supply for the linked market.
-void SolutionInfo::removeFromRawSupply( const double aSupply ){
-    linkedMarket->removeFromRawSupply( aSupply );
+    return linkedMarket->getRawSupply();
 }
 
 //! Get the Excess Demand, calculated dynamically.
 double SolutionInfo::getED() const {
-    return demand - supply;
+    return getDemand() - getSupply();
 }
 
 //! Get the ED at the left bracket.
@@ -239,19 +221,12 @@ double SolutionInfo::getEDRight() const {
 
 //! Store X, demand and supply so that they can later be used to calculate derivatives.
 void SolutionInfo::storeValues() {
-    storedX = X;
-    storedDemand = demand;
-    storedSupply = supply;
+    linkedMarket->storeInfo();
 }
 
 //! Restore X, demand and supply.
 void SolutionInfo::restoreValues() {
-    X = storedX;
-    demand = storedDemand;
-    supply = storedSupply;
-    linkedMarket->setRawDemand( demand );
-    linkedMarket->setRawSupply( supply );
-    linkedMarket->setRawPrice( X );
+    linkedMarket->restoreInfo();
 }
 
 /*! \brief Return the name of the SolutionInfo object.
@@ -260,6 +235,10 @@ void SolutionInfo::restoreValues() {
 */
 const string& SolutionInfo::getName() const {
     return linkedMarket->getName();
+}
+
+const string & SolutionInfo::getRegionName() const {
+  return linkedMarket->getRegionName();
 }
 
 /*! \brief Return the market type of the linked market object.
@@ -278,50 +257,6 @@ string SolutionInfo::getTypeName() const {
     return linkedMarket->convert_type_to_string( linkedMarket->getType() );
 }
 
-/*! \brief Sets the price contained in the Solver into its corresponding market.
-* \author Josh Lurz
-* \details This function sets the market prices from the prices in the SolutionInfo
-*/
-void SolutionInfo::updateToMarket() {
-    linkedMarket->setRawPrice( X );
-}
-
-/*! \brief Get the demands, supplies, prices and excess demands from the market and set them into their corresponding places in the SolutionInfo.
-* \author Josh Lurz
-* \details This function gets the price, supply and demand out the market and sets those values into the SolutionInfo
-* object. This function also updates the ED value to one based on the retrieved supply and demand.
-*/
-void SolutionInfo::updateFromMarket() {
-    X = linkedMarket->getRawPrice();
-    supply = linkedMarket->getRawSupply();
-    demand = linkedMarket->getRawDemand();
-}
-
-/*! \brief Determines if a price or demand market has been unbracketed and attempts to restore it back to a bracketed state. 
-* \details This function checks if the linked market is a PriceMarket or DemandMarket and is unbracketed. It then adjust the brackets
-* to attempt to bring the market into a bracketed state.
-* \note This was originally a kludge and has never been replaced.
-* \author Josh Lurz
-*/
-void SolutionInfo::adjustBracket() {
-    // How much to adjust brackets by.
-    const static double ADJUSTMENT_FACTOR = 1.5;
-
-    // Adjust the brackets if it is a price or demand market. 
-    if( linkedMarket->getType() == IMarketType::PRICE
-        || linkedMarket->getType() == IMarketType::DEMAND )
-    {
-        double rawDemand = linkedMarket->getRawDemand();
-
-        if( XL < rawDemand ) {
-            XL = rawDemand * ADJUSTMENT_FACTOR;
-        }
-        if( XR > rawDemand ) {
-            XR = rawDemand / ADJUSTMENT_FACTOR;
-        }
-    }
-}
-
 // Expand the bracket slightly.
 void SolutionInfo::expandBracket( const double aAdjFactor ) {
     XL *= aAdjFactor;
@@ -332,7 +267,7 @@ void SolutionInfo::expandBracket( const double aAdjFactor ) {
 * \return The relative excess demand. 
 */
 double SolutionInfo::getRelativeED() const {
-    return SolverLibrary::getRelativeED( getED(), demand, mSolutionFloor );
+    return SolverLibrary::getRelativeED( getED(), getDemand(), mSolutionFloor );
 }
 
 /*! \brief Determine whether a market is within the solution tolerance. 
@@ -358,6 +293,8 @@ bool SolutionInfo::shouldSolve( const bool isNR ) const {
 */
 double SolutionInfo::getLogChangeInRawPrice() const {
    double change = 0;
+    double storedX = linkedMarket->getStoredRawPrice();
+    double X = getPrice();
    // Case 1: price or Previous price is zero.
    if( storedX == 0 || X == 0 ) {
       change = util::getVerySmallNumber();
@@ -385,6 +322,8 @@ double SolutionInfo::getLogChangeInRawPrice() const {
 */
 double SolutionInfo::getLogChangeInRawDemand() const {
    double change = 0;
+    double storedDemand = linkedMarket->getStoredRawDemand();
+    double demand = getDemand();
 
    // Case 1: Demand or Previous Demand is zero.
    if( storedDemand == 0 || demand == 0 ) {
@@ -409,6 +348,8 @@ double SolutionInfo::getLogChangeInRawDemand() const {
 */
 double SolutionInfo::getLogChangeInRawSupply() const {
    double change = 0;
+    double storedSupply = linkedMarket->getStoredRawSupply();
+    double supply = getSupply();
 
    // Case 1: supply or Previous supply is zero.
    if( storedSupply == 0 || supply == 0 ) {
@@ -475,6 +416,7 @@ bool SolutionInfo::checkAndResetBrackets(){
 
 //! Increase price by 1+multiplier, or set it to lowerBound if it is below the lower bound.
 void SolutionInfo::increaseX( const double multiplier, const double lowerBound ){
+    double X = getPrice();
     if( X >= lowerBound ) {
         X *= ( 1 + multiplier );
     }
@@ -484,10 +426,12 @@ void SolutionInfo::increaseX( const double multiplier, const double lowerBound )
     else { // X is negative.
         assert( false );
     }
+    setPrice( X );
 }
 
 //! Decrease price by 1/(1+multiplier), or set it to 0 if it is below the lower bound.
 void SolutionInfo::decreaseX( const double multiplier, const double lowerBound ){
+    double X = getPrice();
     if( X >= lowerBound ) {
         X /= ( 1 + multiplier );
     }
@@ -497,16 +441,17 @@ void SolutionInfo::decreaseX( const double multiplier, const double lowerBound )
     else {
         assert( false );
     }
+    setPrice( X );
 }
 //! Set the right bracket to X and right bracket ED to the current value of ED.
 void SolutionInfo::moveRightBracketToX(){
-    XR = X;
+    XR = getPrice();
     EDR = getED();
 }
 
 //! Set the left bracket to X and left bracket ED to the current value of ED.
 void SolutionInfo::moveLeftBracketToX(){
-    XL = X; 
+    XL = getPrice(); 
     EDL = getED();
 }
 
@@ -588,7 +533,7 @@ void SolutionInfo::print( ostream& aOut ) const {
     aOut.setf(ios_base::left,ios_base::adjustfield); // left alignment
     aOut.precision(6); // for floating-point
     aOut.width(36); aOut << getName() << ", ";
-    aOut.width(10); aOut << X << ", ";
+    aOut.width(10); aOut << getPrice() << ", ";
     aOut.width(10); aOut << XL << ", ";
     aOut.width(10); aOut << XR << ", ";
     aOut.width(10); aOut << getED() << ", ";
@@ -596,8 +541,8 @@ void SolutionInfo::print( ostream& aOut ) const {
     aOut.width(10); aOut << EDR << ", ";
     aOut.width(10); aOut << getRelativeED() << ", ";
     aOut.width(3); aOut << isBracketed() << ", ";
-    aOut.width(10); aOut << supply << ", ";
-    aOut.width(10); aOut << demand << ", ";
+    aOut.width(10); aOut << getSupply() << ", ";
+    aOut.width(10); aOut << getDemand() << ", ";
     aOut.width(10); aOut << getTypeName() << ", ";
     aOut.setf(ios_base::fmtflags(0),ios_base::floatfield); //reset to default
 }
@@ -617,4 +562,13 @@ void SolutionInfo::printDerivatives( ostream& aOut ) const {
         aOut << "," << demandElasticities[ i ];
     }
     aOut << endl;
+}
+
+/*
+ * \brief Get the items which are affected by changing the price of this solution
+ *        info.
+ * \return A list of items to recalculate when this solution info's price changes.
+ */
+const vector<IActivity*>& SolutionInfo::getDependencies() const {
+    return mDependencies;
 }

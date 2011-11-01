@@ -113,9 +113,7 @@ public:
     double getStoredRawPrice() const;
 
     virtual void nullDemand();
-    void setRawDemand( const double value );
     virtual void addToDemand( const double demandIn ) = 0;
-    virtual void removeFromRawDemand( const double demandIn );
     double getRawDemand() const;
     double getStoredRawDemand() const;
     virtual double getDemand() const = 0;
@@ -123,10 +121,9 @@ public:
     virtual void nullSupply() = 0;
     double getRawSupply() const;
     double getStoredRawSupply() const;
-    void setRawSupply( const double supplyIn );
-    void removeFromRawSupply( const double supplyIn );
     virtual double getSupply() const = 0;
     virtual void addToSupply( const double supplyIn );
+    
     const std::string& getName() const;
     const std::string& getRegionName() const;
     const std::string& getGoodName() const;

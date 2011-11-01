@@ -149,7 +149,6 @@ void InputOMVar::completeInit( const string& aRegionName,
                                const string& aSectorName,
                                const string& aSubsectorName,
                                const string& aTechName,
-                               DependencyFinder* aDependencyFinder,
                                const IInfo* aTechInfo )
 {   
     // Initialize the adjusted costs in all periods to the base calculate

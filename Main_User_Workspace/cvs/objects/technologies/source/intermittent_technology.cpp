@@ -58,6 +58,7 @@
 #include "functions/include/iinput.h"
 #include "functions/include/non_energy_input.h"
 #include "technologies/include/iproduction_state.h"
+#include "containers/include/market_dependency_finder.h"
 
 using namespace std;
 using namespace xercesc;
@@ -222,7 +223,6 @@ void IntermittentTechnology::toDebugXMLDerived( const int period, ostream& aOut,
 * \param aSectorName Sector name.
 * \param aSubsectorName Subsector name.
 * \param aSectorInfo Sector information object.
-* \param aDependencyFinder Regional dependency finder.
 * \param aLandAllocator Regional land allocator.
 * \author Marshall Wise, Sonny Kim
 * \detail A trial market for the intermittent technology is created here,  
@@ -238,12 +238,11 @@ void IntermittentTechnology::toDebugXMLDerived( const int period, ostream& aOut,
 void IntermittentTechnology::completeInit( const string& aRegionName,
                                            const string& aSectorName,
                                            const string& aSubsectorName,
-                                           DependencyFinder* aDepFinder,
                                            const IInfo* aSubsectorInfo,
                                            ILandAllocator* aLandAllocator )
 {
 	// The parent method must be called first due to sequence issues
-    Technology::completeInit( aRegionName, aSectorName, aSubsectorName, aDepFinder, aSubsectorInfo,
+    Technology::completeInit( aRegionName, aSectorName, aSubsectorName, aSubsectorInfo,
 							 aLandAllocator );	
 	
 	// Initialize electric reserve margin and average grid capacity factor from the Sector.
@@ -274,6 +273,13 @@ void IntermittentTechnology::completeInit( const string& aRegionName,
     // calculated.
     if( mBackupCalculator.get() ){
         SectorUtils::createTrialSupplyMarket( aRegionName, mTrialMarketName, mIntermittTechInfo.get() );
+        MarketDependencyFinder* depFinder = scenario->getMarketplace()->getDependencyFinder();
+        depFinder->addDependency( aSectorName, aRegionName,
+                                  SectorUtils::getTrialMarketName( mTrialMarketName ),
+                                  aRegionName );
+        if( aSectorName != mElectricSectorName ) {
+            depFinder->addDependency( mElectricSectorName, aRegionName, aSectorName, aRegionName );
+        }
     }
 
     // Warn if a backup calculator was not read-in.
@@ -349,10 +355,8 @@ void IntermittentTechnology::production( const string& aRegionName,
                             aFixedOutputScaleFactor, aGDP, aPeriod );
     
     // For the trial intermittent technology market, set the trial supply amount to
-    // the ratio of intermittent-technology output to the trial electricity output.
-    // Trial electricity market must exist.
-    double dependentSectorOutput = scenario->getMarketplace()->getPrice( 
-        SectorUtils::getTrialMarketName(mElectricSectorName), aRegionName, aPeriod, true );
+    // the ratio of intermittent-technology output to the electricity output.
+    double dependentSectorOutput = scenario->getMarketplace()->getDemand( mElectricSectorName, aRegionName, aPeriod );
 
     double currentTechRatio = 0;
     if ( dependentSectorOutput > 0 ){
@@ -361,7 +365,7 @@ void IntermittentTechnology::production( const string& aRegionName,
 
     // Multiple vintaged intermittent technology ratios are additive. This gives one 
     // share for backup calculation and proper behavior for vintaging intermittent technologies.
-    SectorUtils::addToTrialDemand( aRegionName, mTrialMarketName, currentTechRatio, aPeriod );
+    SectorUtils::addToTrialDemand( aRegionName, mTrialMarketName, currentTechRatio, mLastCalcValue, aPeriod );
 }
 
 double IntermittentTechnology::calcShare( const string& aRegionName,

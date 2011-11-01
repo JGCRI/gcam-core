@@ -113,7 +113,5 @@ bool NormalMarket::shouldSolve() const {
 }
 
 bool NormalMarket::shouldSolveNR() const {
-   // Solves all solvable markets with the following conditions
-   // including those with null demand.
-   return ( solveMarket && price > 0 && supply > 0 );
+    return Market::shouldSolveNR();
 }

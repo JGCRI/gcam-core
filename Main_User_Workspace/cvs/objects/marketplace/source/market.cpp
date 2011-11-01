@@ -47,6 +47,7 @@
 
 #include "util/base/include/model_time.h" 
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/util.h"
 #include "marketplace/include/market.h"
 #include "marketplace/include/imarket_type.h"
 #include "containers/include/scenario.h"
@@ -237,10 +238,12 @@ void Market::addRegion( const string& aRegion ) {
     // Convert the string to an atom.
     const Atom* regionID = AtomRegistry::getInstance()->findAtom( aRegion );
 
-    /*! \invariant If the region ID is null that means that the world forgot to
-    *              create a hashmap of all the regions. 
-    */
-    assert( regionID );
+    // Could be the first request for this name.  Note the atom registry will
+    // manage this memory.
+    if( !regionID ) {
+        regionID = new Atom( aRegion );
+    }
+
     /*! \invariant The ID of the found atom is the same as the name of the
     *              region, this ensures the lookup was correct.
     */
@@ -400,17 +403,6 @@ void Market::nullDemand() {
     demand = 0;
 }
 
-/*! \brief Set the Raw demand.
-* \details This method is used to set the true value of the demand variable in
-*          the Market. It is often used in the solution mechanism. Note that all
-*          the functions with "Raw" in the name have this behavior.
-* \param value The new value to set the demand variable to. 
-* \sa setDemand
-*/
-void Market::setRawDemand( const double value ) {
-    demand = value;
-}
-
 /*! \brief Add to the the Market an amount of demand in a method based on the
 *          Market's type.
 * \details This method is used throughout the model to add demand to a market. 
@@ -419,16 +411,6 @@ void Market::setRawDemand( const double value ) {
 */
 void Market::addToDemand( const double demandIn ) {
     demand += demandIn;
-}
-
-/*! \brief Remove an amount of demand from the raw demand.
-* \details This function is used by the solution mechanism to subtract out an
-*          amount of demand. This method was needed because addToDemand is
-*          virtual, and this function needs to always change the raw demand. 
-* \param demandIn Amount of demand to remove.
-*/
-void Market::removeFromRawDemand( const double demandIn ) {
-    demand -= demandIn;
 }
 
 /*! \brief Get the raw demand.
@@ -495,17 +477,6 @@ double Market::getStoredRawSupply() const {
     return storedSupply;
 }
 
-/*! \brief Set the Raw supply.
-* \details This method is used to set the true value of the supply variable in
-*          the Market. It is often used in the solution mechanism. Note that all
-*          the functions with "Raw" in the name have this behavior.
-* \param supplyIn The new value to set the supply variable to. 
-* \sa setSupply
-*/
-void Market::setRawSupply( const double supplyIn ) {
-    supply = supplyIn;
-}
-
 /*! \brief Get the supply.
 * \details Get the supply out of the market.
 * \return Market supply
@@ -522,17 +493,6 @@ double Market::getSupply() const {
 */
 void Market::addToSupply( const double supplyIn ) {
     supply += supplyIn;
-}
-
-/*! \brief Remove an amount of supply from the raw supply.
-* \details This function is used by the solution mechanism to subtract out an
-*          amount of supply. This method was needed because addToSupply is
-*          virtual, and this function needs to always change the raw supply. 
-* \param supplyIn Amount of supply to remove.
-* \return void
-*/
-void Market::removeFromRawSupply( const double supplyIn ) {
-    supply -= supplyIn;
 }
 
 /*! \brief Return the market name.
@@ -662,7 +622,7 @@ bool Market::shouldSolve() const {
 bool Market::shouldSolveNR() const {
    // Solves all solvable markets with the following conditions
    // including those with null demand.
-   return ( solveMarket && price > 0 && supply > 0 );
+   return ( solveMarket && price > util::getTinyNumber() && supply > util::getTinyNumber() );
 }
 
 /*! \brief Return whether a market is solved according to market type specific

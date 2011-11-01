@@ -50,7 +50,6 @@
 #include <list>
 
 class Tabs;
-class DependencyFinder;
 class ICaptureComponent;
 class IInfo;
 
@@ -129,12 +128,12 @@ public:
     /*!
      * \brief Complete the initialization of the output.
      * \param aSectorName Sector name.
-     * \param aDependencyFinder The input dependency finder, which may be null.
+     * \param aRegionName Region name.
      * \param aTechInfo The technology's information container.
      * \param aIsTechOperating Whether the Technology can operate.
      */
     virtual void completeInit( const std::string& aSectorName,
-                               DependencyFinder* aDependencyFinder,
+                               const std::string& aRegionName,
                                const IInfo* aTechInfo,
                                const bool aIsTechOperating ) = 0;
 

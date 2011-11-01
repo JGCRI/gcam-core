@@ -46,7 +46,7 @@
  */
 #include <vector>
 #include "util/base/include/istandard_component.h"
-class DependencyFinder;
+
 class IInput;
 
 /*! 
@@ -97,11 +97,9 @@ public:
     /*! \brief Complete the initialization of the capture component.
     * \param aRegionName Region name.
     * \param aSectorName Sector name.
-    * \param aDependencyFinder Regional dependency finder.
     */
     virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName,
-                               DependencyFinder* aDependencyFinder ) = 0;
+                               const std::string& aSectorName ) = 0;
     
     /*!
      * \brief Initialize the capture component for a given period.

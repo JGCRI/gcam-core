@@ -61,7 +61,6 @@ class Summary;
 class ITechnologyContainer;
 class GDP;
 class IInfo;
-class DependencyFinder;
 class BaseTechnology;
 class NationalAccount;
 class Demographic;
@@ -159,7 +158,6 @@ public:
     void XMLParse( const xercesc::DOMNode* aNode );
 
     virtual void completeInit( const IInfo* aSectorInfo,
-                               DependencyFinder* aDependencyFinder,
                                ILandAllocator* aLandAllocator );
     
     virtual void initCalc( NationalAccount* aNationalAccount,

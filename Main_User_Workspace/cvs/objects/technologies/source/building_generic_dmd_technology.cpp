@@ -128,7 +128,6 @@ const std::string& BuildingGenericDmdTechnology::getXMLName() const {
 void BuildingGenericDmdTechnology::completeInit( const string& aRegionName,
                                                  const string& aSectorName,
                                                  const string& aSubsectorName,
-                                                 DependencyFinder* aDepFinder,
                                                  const IInfo* aSubsectorInfo,
                                                  ILandAllocator* aLandAllocator )
 {
@@ -156,7 +155,7 @@ void BuildingGenericDmdTechnology::completeInit( const string& aRegionName,
     mInfo->setDouble( "floor-to-surface-area", mFloorToSurfaceArea );
 
     Technology::completeInit( aRegionName, aSectorName, aSubsectorName, 
-                              aDepFinder, aSubsectorInfo, aLandAllocator );
+                              aSubsectorInfo, aLandAllocator );
 }
 
 void BuildingGenericDmdTechnology::initCalc( const string& aRegionName,

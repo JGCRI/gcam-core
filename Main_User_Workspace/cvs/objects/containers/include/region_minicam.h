@@ -70,11 +70,8 @@ class Summary;
 class ILogger;
 class GDP;
 class Curve;
-class DependencyFinder;
 class TotalSectorEmissions;
 class AFinalDemand;
-
-#define SORT_TESTING 0
 
 /*! 
 * \ingroup Objects
@@ -88,11 +85,9 @@ class AFinalDemand;
 *        these objects.  The demand sector object, however, requires Populations
 *        information to drive the demand for goods and services. The Region class also
 *        contains the GhgMarket class which is instantiated only when a market
-*        for ghg emissions is needed. Member functions of the Region class call
-*        functions of contained objects and trigger a series of events cascading
-*        down to the lowest set of classes.  The sequences of calls to other
-*        functions of the contained objects are likely to important in each of
-*        these member functions. 
+*        for ghg emissions is needed. Due to inter-dependencies between regions
+*        the calculations of the sectors, resources, etc are performed at the
+*        world level to ensure the correct calculation order.
 *
 * \author Sonny Kim
 */
@@ -110,7 +105,6 @@ public:
     virtual ~RegionMiniCAM();
     static const std::string& getXMLNameStatic();
     virtual void completeInit();
-    virtual void calc( const int period );
     
     virtual void initCalc( const int period );
 
@@ -141,10 +135,6 @@ protected:
     std::vector<double> calibrationGDPs; //!< GDPs to calibrate to
     std::vector<double> GDPcalPerCapita; //!< GDP per capita to calibrate to
 
-
-#if SORT_TESTING
-    std::vector<std::string> sectorOrderList; //!< A vector listing the order in which to process the sectors.
-#endif
     std::vector<Summary> summary; //!< summary values and totals for reporting
     std::map<std::string,int> supplySectorNameMap; //!< Map of supplysector name to integer position in vector.
     std::map<std::string, double> primaryFuelCO2Coef; //!< map of CO2 emissions coefficient for primary fuels only
@@ -174,17 +164,10 @@ protected:
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 
     void initElementalMembers();
-    void setupCalibrationMarkets();
 
-    bool reorderSectors( const std::vector<std::string>& orderList );
     void calcGDP( const int period );
-    void calcResourceSupply( const int period );
-    void calcFinalSupplyPrice( const int period );
     double getEndUseServicePrice( const int period ) const;
     void adjustGDP( const int period );
-    void calcEndUseDemand( const int period );
-    void setFinalSupply( const int period );
-    void calibrateRegion( const int period );
 
     const std::vector<double> calcFutureGDP() const;
     void calcEmissions( const int period );

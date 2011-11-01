@@ -76,7 +76,6 @@ public:
     virtual void completeInit( const std::string& aRegionName,
                                const std::string& aSectorName,
                                const std::string& aSubsectorName,
-                               DependencyFinder* aDepFinder,
                                const IInfo* aSubsectorIInfo,
                                ILandAllocator* aLandAllocator );
 

@@ -157,7 +157,7 @@ void SGMOutput::toDebugXML( const int aPeriod,
 }
 
 void SGMOutput::completeInit( const string& aSectorName,
-                              DependencyFinder* aDependencyFinder,
+                              const string& aRegionName,
                               const IInfo* aTechInfo,
                               const bool aIsTechOperating )
 {

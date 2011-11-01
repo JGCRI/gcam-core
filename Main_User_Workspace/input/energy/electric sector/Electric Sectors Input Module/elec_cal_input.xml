@@ -7,7 +7,6 @@
             <output-unit>EJ</output-unit>
             <input-unit>EJ</input-unit>
             <price-unit>1975$/GJ</price-unit>
-            <has-trial-supply-market>1</has-trial-supply-market>
             <object-meta-info name="electricity-reserve-margin">
                <value>0.15</value>
             </object-meta-info>
@@ -162,6 +161,9 @@
                   </period>
                </technology>
                <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -238,6 +240,9 @@
                   </period>
                </technology>
                <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -341,6 +346,9 @@
                   </period>
                </technology>
                <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -471,6 +479,9 @@
                   </period>
                </technology>
                <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
@@ -628,6 +639,9 @@
                   </period>
                </technology>
                <share-weight fillout="1" year="1975">1</share-weight>
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>

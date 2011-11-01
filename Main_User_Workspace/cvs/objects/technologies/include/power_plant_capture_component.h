@@ -115,8 +115,7 @@ public:
                              Tabs* aTabs ) const;
 
     virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName,
-                               DependencyFinder* aDependencyFinder );
+                               const std::string& aSectorName );
 
     virtual void initCalc( const std::string& aRegionName,
                    const std::string& aSectorName,
@@ -186,6 +185,9 @@ protected:
 
     //! Stored emissions coefficient for the fuel.
     Value mCachedFuelCoef;
+    
+    //! State value necessary to use Marketplace::addToDemand
+    double mLastCalcValue;
 };
 
 #endif // _POWER_PLANT_CAPTURE_COMPONENT_H_

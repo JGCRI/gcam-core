@@ -70,7 +70,6 @@ public:
     static const std::string& getXMLNameStatic();    
 
     virtual void completeInit( const IInfo* aSectorInfo,
-                               DependencyFinder* aDependencyFinder,
                                ILandAllocator* aLandAllocator );
     
     virtual void initCalc( NationalAccount* aNationalAccount,

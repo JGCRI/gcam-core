@@ -318,18 +318,18 @@ void PolicyPortfolioStandard::completeInit( const string& aRegionName ) {
                 if ( mPolicyType == "tax" ){
                     marketplace->setMarketToSolve( mName, aRegionName, per );
 					marketplace->addToSupply( mName, aRegionName, tempConstraint[ per ] - 
-                        marketplace->getSupply( mName, aRegionName, per ), per, false );
+                        marketplace->getSupply( mName, aRegionName, per ), 0, per, false );
                 }
 				else if ( mPolicyType == "RES" ){  // maw doesn't understand this
                     marketplace->setMarketToSolve( mName, aRegionName, per );
 				//	maw doesn't understand this.  But it doesn;t work otherwise
 					marketplace->addToSupply( mName, aRegionName, tempConstraint[ per ] - 
-                        marketplace->getSupply( mName, aRegionName, per ), per, false );
+                        marketplace->getSupply( mName, aRegionName, per ), 0, per, false );
                 }
                 else {
                     marketplace->setMarketToSolve( mName, aRegionName, per );
                     marketplace->addToDemand( mName, aRegionName, tempConstraint[ per ] - 
-                        marketplace->getDemand( mName, aRegionName, per ), per, false );
+                        marketplace->getDemand( mName, aRegionName, per ), 0, per, false );
                 }
             }
         }

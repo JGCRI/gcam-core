@@ -53,7 +53,6 @@
 #include "util/logger/include/ilogger.h"
 #include "marketplace/include/imarket_type.h"
 #include "util/base/include/configuration.h"
-#include "containers/include/dependency_finder.h"
 #include "containers/include/scenario.h" // for marketplace
 #include "containers/include/iinfo.h"
 #include "sectors/include/sector_utils.h"

@@ -94,7 +94,7 @@ public:
                              Tabs* aTabs ) const;
 
     virtual void completeInit( const std::string& aSectorName,
-                               DependencyFinder* aDependencyFinder,
+                               const std::string& aRegionName,
                                const IInfo* aTechInfo,
                                const bool aIsTechOperating );
 

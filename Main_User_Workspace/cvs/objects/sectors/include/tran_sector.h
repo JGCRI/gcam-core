@@ -98,6 +98,9 @@ protected:
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr ); 
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
+    
+    //! State value necessary to use Marketplace::addToDemand
+    double mLastCalcValue;
 };
 
 #endif // _TRANSSECTOR_H_

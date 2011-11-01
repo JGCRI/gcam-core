@@ -99,14 +99,6 @@ public:
                         const ISolutionInfoFilter* aSolutionInfoFilter, const int aPeriod );
 
 private:
-    typedef std::map<const objects::Atom*, std::vector<double> > RegionalMarketValues;
-
-    //! A simple struct to link Supplies and Demands.
-    struct RegionalSDDifferences {
-        RegionalMarketValues supplies;
-        RegionalMarketValues demands;
-    };
-
     //! A function object to compare to values and see if they are approximately equal. 
     struct ApproxEqual : public std::unary_function<double, bool> {
         const double compareValue; //!< A value to compare the argument value against.
@@ -117,12 +109,6 @@ private:
             return fabs( value - compareValue ) < tolerance;
         }
     };
-
-    static bool doRegionalValuesSum( const RegionalMarketValues& regionalValues,
-        const std::vector<double>& worldTotals, const SolutionInfoSet& aSolutionSet );
-
-    static const RegionalSDDifferences calcRegionalSDDifferences( Marketplace* marketplace, World* world,
-        SolutionInfoSet& sol, const int per );
 
     static std::vector<double> storePrices( const SolutionInfoSet& aSolutionSet );
     static void restorePrices( SolutionInfoSet& aSolutionSet, const std::vector<double>& aPrices );

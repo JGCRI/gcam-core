@@ -143,8 +143,7 @@ void NonEnergyUseCaptureComponent::toDebugXML( const int aPeriod,
 }
 
 void NonEnergyUseCaptureComponent::completeInit( const string& aRegionName,
-                                                 const string& aSectorName,
-                                                 DependencyFinder* aDependencyFinder )
+                                                 const string& aSectorName )
 {
     // Does not need to add any dependencies. Check that the remove fraction is
     // valid.

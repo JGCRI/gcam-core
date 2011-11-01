@@ -115,8 +115,7 @@ void AgSupplySector::toDebugXMLDerived( const int period, std::ostream& out, Tab
 * \author James Blackwood
 */
 void AgSupplySector::completeInit( const IInfo* aRegionInfo,
-                                    DependencyFinder* aDependencyFinder,
-                                    ILandAllocator* aLandAllocator )
+                                   ILandAllocator* aLandAllocator )
 {
     if ( !aLandAllocator ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -130,7 +129,7 @@ void AgSupplySector::completeInit( const IInfo* aRegionInfo,
         mainLog << "Market name for sector " << name << " was not set. Defaulting to regional market." << endl;
         mMarketName = regionName;
     }
-    SupplySector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator );
+    SupplySector::completeInit( aRegionInfo, aLandAllocator );
 }
 
 /*! \brief Calculate the sector price.

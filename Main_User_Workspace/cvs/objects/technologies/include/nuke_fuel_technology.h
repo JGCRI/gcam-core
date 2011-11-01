@@ -70,7 +70,6 @@ public:
     virtual void completeInit( const std::string& aRegionName,
                                const std::string& aSectorName,
                                const std::string& aSubsectorName,
-                               DependencyFinder* aDepFinder,
                                const IInfo* aSubsectorIInfo,
                                ILandAllocator* aLandAllocator );
 
@@ -128,6 +127,12 @@ private:
     double interimStorageCost; //!< interim storage cost of spent fuel ($/kgHM)
 	double geologicWasteDisposalCost; //!< cost of permenant waste disposal ($/kgHM)
     double reprocessingCost; //!< reprocessing cost of spent fuel ($/kgHM)
+    
+    //! State value for fertile fuel market necessary to use Marketplace::addToDemand
+    double mLastFertileValue;
+    
+    //! State value for blanket fuel market necessary to use Marketplace::addToDemand
+    double mLastBlanketValue;
 
 	static double getSWValue( const double aWeightFraction );
 

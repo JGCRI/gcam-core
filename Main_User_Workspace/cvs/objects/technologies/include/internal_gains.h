@@ -49,7 +49,6 @@
 #include <xercesc/dom/DOMNode.hpp>
 
 class Tabs;
-class DependencyFinder;
 
 #include "technologies/include/ioutput.h"
 #include "util/base/include/value.h"
@@ -108,7 +107,7 @@ public:
                              Tabs* aTabs ) const;
 
     virtual void completeInit( const std::string& aSectorName,
-                               DependencyFinder* aDependencyFinder,
+                               const std::string& aRegionName,
                                const IInfo* aTechInfo,
                                const bool aIsTechOperating );
 
@@ -191,6 +190,12 @@ protected:
     //! Ratio of the internal gains to primary output production such that
     //! primary output multiplied by the ratio is equal to internal gains.
     Value mOutputRatio;
+    
+    //! State value for heating market necessary to use Marketplace::addToDemand
+    double mLastCalcHeat;
+    
+    //! State value for cooling market necessary to use Marketplace::addToDemand
+    double mLastCalcCool;
 
 private :
     const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 

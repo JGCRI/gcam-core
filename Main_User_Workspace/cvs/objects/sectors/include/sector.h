@@ -66,7 +66,6 @@ class ILogger;
 class GDP;
 class Tabs;
 class IInfo;
-class DependencyFinder;
 class Demographic;
 class NationalAccount;
 class MoreSectorInfo;
@@ -164,7 +163,6 @@ public:
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 
     virtual void completeInit( const IInfo* aRegionInfo,
-                               DependencyFinder* aDepFinder,
                                ILandAllocator* aLandAllocator ) = 0;
 
     virtual void initCalc( NationalAccount* aNationalAccount,

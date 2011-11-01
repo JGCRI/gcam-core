@@ -61,11 +61,7 @@ class Curve;
 class CalcCounter;
 class IClimateModel;
 class GHGPolicy;
-
-namespace objects {
-    class Atom;
-}
-template <class T, class U> class HashMap;
+class IActivity;
 
 /*! 
 * \ingroup Objects
@@ -95,15 +91,13 @@ public:
     void initCalc( const int period );
     void postCalc( const int aPeriod );
 
-    //! The type of the vector containing region atoms.
-    typedef std::vector<const objects::Atom*> AtomVector;
-    void calc( const int period, const AtomVector& aRegionsToCalc = AtomVector() );
+    void calc( const int period );
+    void calc( const int period, const std::vector<IActivity*>& aRegionsToCalc );
     void updateSummary( const std::list<std::string> aPrimaryFuelList, const int period ); 
     void runClimateModel();
     void csvOutputFile() const; 
     void dbOutput( const std::list<std::string>& aPrimaryFuelList ) const; 
     const std::map<std::string,int> getOutputRegionMap() const;
-    const AtomVector getRegionIDs() const;
     bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
     void setTax( const GHGPolicy* aTax );
     const IClimateModel* getClimateModel() const;
@@ -120,13 +114,6 @@ private:
 
     //! The type of a constant iterator over the Region vector.
     typedef std::vector<Region*>::const_iterator CRegionIterator;
-
-    //! The type of the fast Region lookup hashmap.
-    typedef HashMap<const objects::Atom*, unsigned int> FastRegionLookupMap;
-    
-    //! A fast hashmap which stores a mapping of region ID atom to region
-    //! location. This allows world calc calls for derivatives to be faster.
-	std::auto_ptr<FastRegionLookupMap> mRegionLookupMap;
     
     std::map<std::string, int> regionNamesToNumbers; //!< Map of region name to indice used for XML parsing.
     std::vector<Region*> regions; //!< array of pointers to Region objects
@@ -135,11 +122,12 @@ private:
     //! An object which maintains a count of the number of times
     //! calc() has been called.
     std::auto_ptr<CalcCounter> mCalcCounter;
+    
+    //! The global ordering of activities in which can be used to calculate the model.
+    std::vector<IActivity*> mGlobalOrdering;
 
     void clear();
 
-    const std::vector<unsigned int> getRegionIndexesToCalculate( const AtomVector& aRegionsToCalc );
-    void createFastLookupMap();
     void csvGlobalDataFile() const; 
     bool checkCalConsistancy( const int period );
 };

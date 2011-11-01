@@ -192,7 +192,7 @@ void SGMInput::completeInit( const string& aRegionName,
                              const string& aSectorName,
                              const string& aSubsectorName,
                              const string& aTechName,
-                             DependencyFinder* aDependencyFinder , const IInfo* aTechInfo)
+                             const IInfo* aTechInfo)
 {
 }
 

@@ -176,7 +176,10 @@ public:
     bool getEmissionsCoefInputStatus() const;
     void setEmissionsCoefInputStatus();
     std::string getGHGDriverName() const ;  // return a GHG driver name
-
+    
+    virtual void completeInit( const std::string& aRegionName,
+                               const std::string& aSectorName,
+                               const IInfo* aTechIInfo );
 
     /*!
      * \brief Perform initializations that only need to be done once per period.

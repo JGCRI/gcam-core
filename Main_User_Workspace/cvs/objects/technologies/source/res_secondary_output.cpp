@@ -101,6 +101,7 @@ void RESSecondaryOutput::setPhysicalOutput( const double aPrimaryOutput,
     // fill all of demand. If this technology also added to supply, supply would
     // not equal demand.
     Marketplace* marketplace = scenario->getMarketplace();
-    marketplace->addToSupply( mName, aRegionName, mPhysicalOutputs[ aPeriod ], aPeriod, true );
+    mLastCalcValue = marketplace->addToSupply( mName, aRegionName, mPhysicalOutputs[ aPeriod ],
+                              mLastCalcValue, aPeriod, true );
 
 }

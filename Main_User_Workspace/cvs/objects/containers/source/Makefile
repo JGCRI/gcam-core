@@ -24,6 +24,11 @@ OBJS       = batch_runner.o \
              sector_cycle_breaker.o \
              single_scenario_runner.o \
              total_policy_cost_calculator.o \
+             final_demand_activity.o \
+             land_allocator_activity.o \
+             resource_activity.o \
+             sector_activity.o \
+             market_dependency_finder.o \
              world.o
 
 containers_dir: ${OBJS}

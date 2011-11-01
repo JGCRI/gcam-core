@@ -53,7 +53,7 @@
 #include "technologies/include/ioutput.h"
 #include "technologies/include/generic_output.h"
 #include "functions/include/renewable_input.h"
-#include "containers/include/dependency_finder.h"
+#include "containers/include/market_dependency_finder.h"
 
 using namespace std;
 using namespace xercesc;
@@ -190,7 +190,6 @@ void UnmanagedLandTechnology::initCalc( const string& aRegionName,
 void UnmanagedLandTechnology::completeInit( const string& aRegionName,
                                                const string& aSectorName,
                                                const std::string& aSubsectorName,
-                                               DependencyFinder* aDepFinder,
                                                const IInfo* aSubsectorInfo,
                                                ILandAllocator* aLandAllocator )
 {
@@ -205,7 +204,7 @@ void UnmanagedLandTechnology::completeInit( const string& aRegionName,
         mInputs.push_back( new RenewableInput( getLandInputName() ) );
     }
 
-    Technology::completeInit( aRegionName, aSectorName, aSubsectorName, aDepFinder, aSubsectorInfo,
+    Technology::completeInit( aRegionName, aSectorName, aSubsectorName, aSubsectorInfo,
                               aLandAllocator );
 	
 	// Create the generic output for this technology. Insert the generic
@@ -216,11 +215,11 @@ void UnmanagedLandTechnology::completeInit( const string& aRegionName,
     mLandAllocator = aLandAllocator;
     mProductLeaf = mLandAllocator->findProductLeaf( mLandItemName );
     
-    // Unmanaged land sector is dependant on the land allocator, note that at
-    // the moment there is no explicit ordering for ag sectors however there
-    // will be in the future.  So adding this dependency is only to avoid errors
-    // until explicit ordering happens.
-    aDepFinder->addDependency( aSectorName, "land-allocator" );
+    // Unmanaged land sector is dependant on the land allocator
+    scenario->getMarketplace()->getDependencyFinder()->addDependency( "land-allocator",
+                                                                      aRegionName,
+                                                                      aSectorName,
+                                                                      aRegionName );
 
 }
 

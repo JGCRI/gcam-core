@@ -76,7 +76,6 @@ public:
     virtual ~AgSupplySector();
     static const std::string& getXMLNameStatic();
     virtual void completeInit( const IInfo* aRegionInfo,
-                               DependencyFinder* aDepFinder,
                                ILandAllocator* aLandAllocator );
 
     virtual void supply( const GDP* aGDP, const int aPeriod );

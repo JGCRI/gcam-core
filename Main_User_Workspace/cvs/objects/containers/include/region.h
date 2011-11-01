@@ -85,8 +85,6 @@ public:
     static const std::string& getXMLNameStatic();
     virtual void completeInit();
     const std::string& getName() const;
-
-    virtual void calc( const int period ) = 0;
     
     virtual void initCalc( const int period ) = 0;
     

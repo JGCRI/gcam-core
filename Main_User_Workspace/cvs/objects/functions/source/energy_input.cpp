@@ -53,10 +53,10 @@
 #include "functions/include/icoefficient.h"
 #include "functions/include/efficiency.h"
 #include "functions/include/intensity.h"
-#include "containers/include/dependency_finder.h"
 #include "containers/include/iinfo.h"
 #include "functions/include/function_utils.h"
 #include "marketplace/include/cached_market.h"
+#include "containers/include/market_dependency_finder.h"
 
 using namespace std;
 using namespace xercesc;
@@ -145,6 +145,8 @@ EnergyInput::EnergyInput( const EnergyInput& aOther ){
     
     // copy keywords
     mKeywordMap = aOther.mKeywordMap;
+    
+    mMarketName = aOther.mMarketName;
 }
 
 EnergyInput* EnergyInput::clone() const {
@@ -192,6 +194,9 @@ void EnergyInput::XMLParse( const xercesc::DOMNode* node ) {
         else if( nodeName == "price-unit-conversion" ){
             mPriceUnitConversionFactor = XMLHelper<double>::getValue( curr );
         }
+        else if( nodeName == "market-name" ){
+            mMarketName = XMLHelper<string>::getValue( curr );
+        }
         else if( nodeName == "keyword" ){
             DOMNamedNodeMap* keywordAttributes = curr->getAttributes();
             for( unsigned int attrNum = 0; attrNum < keywordAttributes->getLength(); ++attrNum ) {
@@ -225,6 +230,7 @@ void EnergyInput::toInputXML( ostream& aOut,
                                  aTabs, Value( 0 ) );
     XMLWriteElementCheckDefault( mPriceUnitConversionFactor, "price-unit-conversion", aOut,
                                  aTabs, Value( 1 ) );
+    XMLWriteElement( mMarketName, "market-name", aOut, aTabs );
     if( !mKeywordMap.empty() ) {
         XMLWriteElementWithAttributes( "", "keyword", aOut, aTabs, mKeywordMap );
     }
@@ -260,12 +266,14 @@ void EnergyInput::completeInit( const string& aRegionName,
                                 const string& aSectorName,
                                 const string& aSubsectorName,
                                 const string& aTechName,
-                                DependencyFinder* aDependencyFinder,
                                 const IInfo* aTechInfo )
 {
-
-    // Add the input dependency to the dependency finder.
-    aDependencyFinder->addDependency( aSectorName, mName );
+    if( mMarketName.empty() ) {
+        // Just a regional market.
+        mMarketName = aRegionName;
+    }
+    MarketDependencyFinder* depFinder = scenario->getMarketplace()->getDependencyFinder();
+    depFinder->addDependency( aSectorName, aRegionName, mName, mMarketName );
 
     // If there is a coefficient, initialize it and determine the current
     // coefficient. Otherwise use a default intensity of 1.
@@ -292,7 +300,7 @@ void EnergyInput::initCalc( const string& aRegionName,
 
     mPhysicalDemand[ aPeriod ].set( 0 );// initialize to 0 shk
     // Initialize the coefficient from the marketplace.
-    mCO2Coefficient = FunctionUtils::getCO2Coef( aRegionName, mName, aPeriod );
+    mCO2Coefficient = FunctionUtils::getCO2Coef( mMarketName, mName, aPeriod );
 
     // Set the coefficient for the current period if there is an explicit
     // coefficient read-in, or it was not initialized from the previous period.
@@ -303,7 +311,7 @@ void EnergyInput::initCalc( const string& aRegionName,
         mAdjustedCoefficients[ aPeriod ] = 1;
     }
     
-    mCachedMarket = scenario->getMarketplace()->locateMarket( mName, aRegionName, aPeriod );
+    mCachedMarket = scenario->getMarketplace()->locateMarket( mName, mMarketName, aPeriod );
 }
 
 void EnergyInput::copyParam( const IInput* aInput,
@@ -347,7 +355,7 @@ void EnergyInput::setPhysicalDemand( double aPhysicalDemand,
                                      const int aPeriod )
 {
     mPhysicalDemand[ aPeriod ].set( aPhysicalDemand );
-    mCachedMarket->addToDemand( mName, aRegionName,
+    mCachedMarket->addToDemand( mName, mMarketName,
                                        mPhysicalDemand[ aPeriod ],
                                        aPeriod, true );
     mCarbonContent[ aPeriod ].set( aPhysicalDemand * mCO2Coefficient );
@@ -374,7 +382,7 @@ double EnergyInput::getPrice( const string& aRegionName,
                               const int aPeriod ) const
 {
     return mPriceUnitConversionFactor *
-        mCachedMarket->getPrice( mName, aRegionName, aPeriod );
+        mCachedMarket->getPrice( mName, mMarketName, aPeriod );
 }
 
 void EnergyInput::setPrice( const string& aRegionName,

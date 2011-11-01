@@ -71,7 +71,8 @@ using namespace xercesc;
 //! Constructor
 TechnologyContainer::TechnologyContainer()
 :mInitialAvailableYear( -1 ),
-mFinalAvailableYear( -1 )
+mFinalAvailableYear( -1 ),
+mCachedVintageRangePeriod( -1 )
 {
 }
 
@@ -324,7 +325,6 @@ const string& TechnologyContainer::getName() const {
 void TechnologyContainer::completeInit( const string& aRegionName,
                                         const string& aSectorName,
                                         const string& aSubsectorName,
-                                        DependencyFinder* aDependencyFinder,
                                         const IInfo* aSubsecInfo,
                                         ILandAllocator* aLandAllocator )
 {
@@ -403,7 +403,7 @@ void TechnologyContainer::completeInit( const string& aRegionName,
     // completeInit.
     for( VintageIterator vintageIt = mVintages.begin(); vintageIt != mVintages.end(); ++vintageIt ) {
         // call complete init for all vintages, even those that are not a model year
-        ( *vintageIt ).second->completeInit( aRegionName, aSectorName, aSubsectorName, aDependencyFinder,
+        ( *vintageIt ).second->completeInit( aRegionName, aSectorName, aSubsectorName,
                                              aSubsecInfo, aLandAllocator );
     }
 }
@@ -441,6 +441,17 @@ void TechnologyContainer::initCalc( const string& aRegionName, const string& aSe
     // interpolate technology share weights
     interpolateShareWeights( aPeriod );
     
+    // Cache the first and last technologies to those that are operating in this period
+    // to avoid iterating over more technologies than necessary.
+    mCachedVintageRangePeriod = -1;
+    mCachedTechRangeBegin = getVintageBegin( aPeriod );
+    mCachedTechRangeEnd = mVintages.rend();
+    for( TechRangeIterator it = mCachedTechRangeBegin; it != mVintages.rend() && mCachedTechRangeEnd == mVintages.rend(); ++it ) {
+        if( !(*it).second->isOperating( aPeriod ) ) {
+            mCachedTechRangeEnd = it;
+        }
+    }
+    mCachedVintageRangePeriod = aPeriod;
 }
 
 void TechnologyContainer::postCalc( const string& aRegionName, const int aPeriod ) {
@@ -458,6 +469,11 @@ const ITechnology* TechnologyContainer::getNewVintageTechnology( const int aPeri
 }
 
 ITechnologyContainer::TechRangeIterator TechnologyContainer::getVintageBegin( const int aPeriod ) {
+    // If the given period matches the cached period then we can use the cached
+    // begin iterator and avoid having to find it.
+    if( aPeriod == mCachedVintageRangePeriod ) {
+        return mCachedTechRangeBegin;
+    }
     const int year = scenario->getModeltime()->getper_to_yr( aPeriod );
     
     // Lower bound will give us the first technology which is not < year so we must
@@ -469,12 +485,17 @@ ITechnologyContainer::TechRangeIterator TechnologyContainer::getVintageBegin( co
         --vintageIter;
     }
     
-    // Converting a forward iterator to a reverse in not completely inuitive.  We
+    // Converting a forward iterator to a reverse in not completely intuitive.  We
     // need to decrease one from the converted forward iterator to be in the same place.
     return --TechRangeIterator( vintageIter );
 }
 
 ITechnologyContainer::CTechRangeIterator TechnologyContainer::getVintageBegin( const int aPeriod ) const {
+    // If the given period matches the cached period then we can use the cached
+    // begin iterator and avoid having to find it.
+    if( aPeriod == mCachedVintageRangePeriod ) {
+        return mCachedTechRangeBegin;
+    }
     const int year = scenario->getModeltime()->getper_to_yr( aPeriod );
     
     // Lower bound will give us the first technology which is not < year so we must
@@ -486,17 +507,21 @@ ITechnologyContainer::CTechRangeIterator TechnologyContainer::getVintageBegin( c
         --vintageIter;
     }
     
-    // Converting a forward iterator to a reverse in not completely inuitive.  We
+    // Converting a forward iterator to a reverse in not completely intuitive.  We
     // need to decrease one from the converted forward iterator to be in the same place.
     return --CTechRangeIterator( vintageIter );
 }
 
-ITechnologyContainer::TechRangeIterator TechnologyContainer::getVintageEnd() {
-    return mVintages.rend();
+ITechnologyContainer::TechRangeIterator TechnologyContainer::getVintageEnd( const int aPeriod ) {
+    // If the given period matches the cached period then we can use the cached
+    // end iterator and avoid iterating over unnecessary technologies.
+    return aPeriod == mCachedVintageRangePeriod ? mCachedTechRangeEnd : mVintages.rend();
 }
 
-ITechnologyContainer::CTechRangeIterator TechnologyContainer::getVintageEnd() const {
-    return mVintages.rend();
+ITechnologyContainer::CTechRangeIterator TechnologyContainer::getVintageEnd( const int aPeriod ) const {
+    // If the given period matches the cached period then we can use the cached
+    // end iterator and avoid iterating over unnecessary technologies.
+    return aPeriod == mCachedVintageRangePeriod ? static_cast<CTechRangeIterator>( mCachedTechRangeEnd ) : mVintages.rend();
 }
 
 /*!

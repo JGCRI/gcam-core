@@ -115,7 +115,6 @@ public:
                                const std::string& aSectorName,
                                const std::string& aSubsectorName,
                                const std::string& aTechName,
-                               DependencyFinder* aDependencyFinder,
                                const IInfo* aTechInfo );
 
     virtual void initCalc( const std::string& aRegionName,
@@ -200,6 +199,10 @@ protected:
     //! A pre-located market which has been cahced from the marketplace to get
     //! the price and add demands to.
     std::auto_ptr<CachedMarket> mCachedMarket;
+    
+    //! The market name from which to demand.  It will default to the region
+    //! in which this input is contained.
+    std::string mMarketName;
 
 private:
     const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 

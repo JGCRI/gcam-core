@@ -112,7 +112,6 @@ public:
                                const std::string& aSectorName,
                                const std::string& aSubsectorName,
                                const std::string& aTechName,
-                               DependencyFinder* aDependencyFinder,
                                const IInfo* aTechInfo );
 
     virtual void initCalc( const std::string& aRegionName,
@@ -166,6 +165,9 @@ protected:
     //! Current coefficient after adjustments have been made by the technology's
     //! capture component.
     std::vector<Value> mAdjustedCoefficients;
+    
+    //! State value necessary to use Marketpalce::addToSupply
+    double mLastCalcValue;
 
 private:
     const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 

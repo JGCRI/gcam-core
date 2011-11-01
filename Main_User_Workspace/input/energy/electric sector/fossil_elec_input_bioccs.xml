@@ -3,7 +3,6 @@
    <world>
       <region name="USA">
          <supplysector name="electricity">
-            <has-trial-supply-market>1</has-trial-supply-market>
             <object-meta-info name="electricity-reserve-margin">
                <value>0.15</value>
             </object-meta-info>
@@ -2884,7 +2883,6 @@
       </region>
       <region name="Canada">
          <supplysector name="electricity">
-            <has-trial-supply-market>1</has-trial-supply-market>
             <object-meta-info name="electricity-reserve-margin">
                <value>0.15</value>
             </object-meta-info>
@@ -5765,7 +5763,6 @@
       </region>
       <region name="Western Europe">
          <supplysector name="electricity">
-            <has-trial-supply-market>1</has-trial-supply-market>
             <object-meta-info name="electricity-reserve-margin">
                <value>0.15</value>
             </object-meta-info>
@@ -8646,7 +8643,6 @@
       </region>
       <region name="Japan">
          <supplysector name="electricity">
-            <has-trial-supply-market>1</has-trial-supply-market>
             <object-meta-info name="electricity-reserve-margin">
                <value>0.15</value>
             </object-meta-info>
@@ -11527,7 +11523,6 @@
       </region>
       <region name="Former Soviet Union">
          <supplysector name="electricity">
-            <has-trial-supply-market>1</has-trial-supply-market>
             <object-meta-info name="electricity-reserve-margin">
                <value>0.15</value>
             </object-meta-info>
@@ -14408,7 +14403,6 @@
       </region>
       <region name="Australia_NZ">
          <supplysector name="electricity">
-            <has-trial-supply-market>1</has-trial-supply-market>
             <object-meta-info name="electricity-reserve-margin">
                <value>0.15</value>
             </object-meta-info>
@@ -17289,7 +17283,6 @@
       </region>
       <region name="China">
          <supplysector name="electricity">
-            <has-trial-supply-market>1</has-trial-supply-market>
             <object-meta-info name="electricity-reserve-margin">
                <value>0.15</value>
             </object-meta-info>
@@ -20170,7 +20163,6 @@
       </region>
       <region name="Middle East">
          <supplysector name="electricity">
-            <has-trial-supply-market>1</has-trial-supply-market>
             <object-meta-info name="electricity-reserve-margin">
                <value>0.15</value>
             </object-meta-info>
@@ -23051,7 +23043,6 @@
       </region>
       <region name="Africa">
          <supplysector name="electricity">
-            <has-trial-supply-market>1</has-trial-supply-market>
             <object-meta-info name="electricity-reserve-margin">
                <value>0.15</value>
             </object-meta-info>
@@ -25932,7 +25923,6 @@
       </region>
       <region name="Latin America">
          <supplysector name="electricity">
-            <has-trial-supply-market>1</has-trial-supply-market>
             <object-meta-info name="electricity-reserve-margin">
                <value>0.15</value>
             </object-meta-info>
@@ -28813,7 +28803,6 @@
       </region>
       <region name="Southeast Asia">
          <supplysector name="electricity">
-            <has-trial-supply-market>1</has-trial-supply-market>
             <object-meta-info name="electricity-reserve-margin">
                <value>0.15</value>
             </object-meta-info>
@@ -31694,7 +31683,6 @@
       </region>
       <region name="Eastern Europe">
          <supplysector name="electricity">
-            <has-trial-supply-market>1</has-trial-supply-market>
             <object-meta-info name="electricity-reserve-margin">
                <value>0.15</value>
             </object-meta-info>
@@ -34575,7 +34563,6 @@
       </region>
       <region name="Korea">
          <supplysector name="electricity">
-            <has-trial-supply-market>1</has-trial-supply-market>
             <object-meta-info name="electricity-reserve-margin">
                <value>0.15</value>
             </object-meta-info>
@@ -37456,7 +37443,6 @@
       </region>
       <region name="India">
          <supplysector name="electricity">
-            <has-trial-supply-market>1</has-trial-supply-market>
             <object-meta-info name="electricity-reserve-margin">
                <value>0.15</value>
             </object-meta-info>

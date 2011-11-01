@@ -302,7 +302,7 @@ void GHGPolicy::completeInit( const string& aRegionName ) {
             // and the current supply because addToSupply adds to the current
             // supply.  Passing false to suppress a warning the first time through.
             marketplace->addToSupply( mName, aRegionName, mConstraint[ i ] - 
-                marketplace->getSupply( mName, aRegionName, i ), i, false );
+                marketplace->getSupply( mName, aRegionName, i ), 0, i, false );
         }
     }
 }

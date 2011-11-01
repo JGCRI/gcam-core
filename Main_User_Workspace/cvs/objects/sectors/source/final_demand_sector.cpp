@@ -129,12 +129,10 @@ void FinalDemandSector::initCalc( NationalAccount* aNationalAccount,
 
 /*! \brief Complete the initialization of the final demand sector.
 * \param aRegionInfo The regional information object.
-* \param aDependencyFinder Region's dependency finder, should be null for CGE regions.
 * \param aLandAllocator Region's land allocator, should be null for CGE regions.
 */
 void FinalDemandSector::completeInit( const IInfo* aRegionInfo,
-                                      DependencyFinder* aDependencyFinder,
                                       ILandAllocator* aLandAllocator )
 {
-    Sector::completeInit( aRegionInfo, aDependencyFinder, aLandAllocator );
+    Sector::completeInit( aRegionInfo, aLandAllocator );
 }

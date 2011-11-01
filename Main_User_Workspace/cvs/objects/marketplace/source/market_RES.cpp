@@ -63,20 +63,15 @@ IMarketType::Type MarketRES::getType() const {
 }
 
 /* \brief Initialize the MarketRES price.
-* \details This method initializes the price of the tax market to a random number
+* \details This method initializes the price of the tax market to 1
 * or null if not a solved market.
 * \author Josh Lurz, Sonny Kim
 */
 void MarketRES::initPrice() {
-    const double MIN_PRICE = 5;
     // If price is near zero it needs to be initialized.
     if( price < util::getSmallNumber() ){
-        // If this market should be solved price should be initialized to a 
-        // random number between MIN_PRICE and (1 + MIN_PRICE)
         if( solveMarket ){
-            srand( (unsigned)time( NULL ) );
-            price = ((double) rand() / (double) RAND_MAX) + MIN_PRICE;
-            price = util::getSmallNumber();
+            price = 1;
         }
         // The market will not be solved so it is set to null. 
         else {
@@ -91,20 +86,16 @@ void MarketRES::setPrice( const double priceIn ) {
 
 /* \brief Initialize the MarketRES price from last period's price.
 * \details This method checks if the lastPrice was 0. This would mean that last period's constraint was 
-* 0. If it is, price is set to a random as this is the initial constrained period.
+* 0. If it is, price is set to 1 as this is the initial constrained period.
 * Otherwise price is set to the previous period's price as is done in the normal market.
 * \param lastPrice Previous period's price. This should have already been set in store to last!!
 * \author Josh Lurz, Sonny Kim
 */
 void MarketRES::set_price_to_last_if_default( const double lastPrice ) {
-    const double MIN_PRICE = 5;
     // If the price is zero and the solve flag is set so a constraint exists. 
     if( price <= util::getSmallNumber() && solveMarket ){
-        // If the last price is 0, we should set the price to a random number.
-        // New price is between MIN_PRICE and (1 + MIN_PRICE)
         if( lastPrice < util::getSmallNumber() ){
-            srand( (unsigned)time( NULL ) );
-            price = ((double) rand() / (double) RAND_MAX) + MIN_PRICE;
+            price = 1;
         }
         // Otherwise set the price to the previous period's price.
         else {
@@ -116,20 +107,16 @@ void MarketRES::set_price_to_last_if_default( const double lastPrice ) {
 
 /* \brief Initialize the MarketRES price from last period's price.
 * \details This method checks if the lastPrice was 0. This would mean that last period's constraint was 
-* 0. If it is, price is set to a random as this is the initial constrained period.
+* 0. If it is, price is set to 1 as this is the initial constrained period.
 * Otherwise price is set to the previous period's price as is done in the normal market.
 * \param lastPrice Previous period's price. This should have already been set in store to last!!
 * \author Josh Lurz, Sonny Kim
 */
 void MarketRES::set_price_to_last( const double lastPrice ) {
-    const double MIN_PRICE = 5;
     // If the price is zero and the solve flag is set so a constraint exists. 
     if( price <= util::getSmallNumber() && solveMarket ){
-        // If the last price is 0, we should set the price to a random number.
-        // New price is between MIN_PRICE and (1 + MIN_PRICE)
         if( lastPrice < util::getSmallNumber() ){
-            srand( (unsigned)time( NULL ) );
-            price = ((double) rand() / (double) RAND_MAX) + MIN_PRICE;
+            price = 1;
         }
         // Otherwise set the price to the previous period's price.
         else {
