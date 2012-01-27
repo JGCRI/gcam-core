@@ -15,7 +15,7 @@ main_dir: ${OBJS} gcam.exe
 
 gcam.exe : main.o
 	$(RANLIB) ${PATHOFFSET}/build/linux/libgcam.a
-	$(CXX) -o gcam.exe $(LDFLAGS) main.o $(LIB) -lgcam
+	$(CXX) -o gcam.exe $(LDFLAGS) main.o -lgcam $(LIB)
 
 clean:
 	rm *.o
