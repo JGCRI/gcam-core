@@ -635,9 +635,11 @@ void Technology::initCalc( const string& aRegionName,
     // Setup the technology production state which represents how the technology
     // decides to produce output.
     setProductionState( aPeriod );
+    
+    mTechnologyInfo->setBoolean( "new-vintage-tech", mProductionState[ aPeriod ]->isNewInvestment() );
 
     for( unsigned int i = 0; i < ghg.size(); i++ ) {
-        ghg[ i ]->initCalc( aRegionName, getTechInfo(), aPeriod );
+        ghg[ i ]->initCalc( aRegionName, mTechnologyInfo.get(), aPeriod );
     }
 
     if( !aPrevPeriodInfo.mIsFirstTech && !aPrevPeriodInfo.mInputs ){

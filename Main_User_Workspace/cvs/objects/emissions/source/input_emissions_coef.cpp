@@ -43,29 +43,39 @@
 
 #include "emissions/include/input_emissions_coef.h"
 #include "util/base/include/util.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
 
 //! Constructor that initializes input emissions.
 InputEmissionsCoef::InputEmissionsCoef( const double aInputEmissions ):
 AEmissionsCoef(),
-mInputEmissions( aInputEmissions ){
+mInputEmissions( aInputEmissions ),
+mUpdateCoef( false ) {
     // Cannot use member init. list because mOverridesFuturePeriods is a member of AEmissionsCoef
     mOverridesFuturePeriods = true;
 }
 
 //! Clone operator.
-InputEmissionsCoef* InputEmissionsCoef::clone() const {
-    return new InputEmissionsCoef( *this );
+AEmissionsCoef* InputEmissionsCoef::clone() const {
+    // Do not allow cloning of this emissions coefficient so that the default
+    // behavior is used such that the effective coefficient from this object
+    // gets copied forward when available.
+    return 0;
 }
 
 void InputEmissionsCoef::updateCoef( const double adjEmissDriver ){
     // Updates the emissions coefficient to be proportional to emissions divided by driver.
     // Check for divide by zero.
-    mEmissionsCoef = adjEmissDriver > util::getSmallNumber() ? mInputEmissions / adjEmissDriver : 0;
+    // Only update the coefficient when appropriate.
+    if( mUpdateCoef ) {
+        mEmissionsCoef = adjEmissDriver > util::getSmallNumber() ? mInputEmissions / adjEmissDriver : 0;
+    }
 }
 
-void InputEmissionsCoef::initCalc( const IInfo* aSubsectorInfo, const string& aName, const int aPeriod ){
+void InputEmissionsCoef::initCalc( const IInfo* aTechInfo, const string& aName, const int aPeriod ){
+    // Only derive the coefficient in the initial year of the technology
+    mUpdateCoef = aTechInfo->getBoolean( "new-vintage-tech", true );
 }
 
 double InputEmissionsCoef::getInputEmissions() const {

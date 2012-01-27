@@ -60,7 +60,7 @@ class InputEmissionsCoef : public AEmissionsCoef{
 
 public:
     InputEmissionsCoef( const double aInputEmissions );
-    virtual InputEmissionsCoef* clone() const;
+    virtual AEmissionsCoef* clone() const;
 
     virtual void updateCoef( const double adjEmissDriver );
     virtual void initCalc( const IInfo* aSubsectorInfo, const std::string& aName, const int aPeriod );
@@ -73,6 +73,9 @@ public:
     virtual double getXMLValue() const;
 private:
     double mInputEmissions;
+    
+    //! A flag to indicate when it is appropriate to update the coefficient.
+    bool mUpdateCoef;
 };
 
 
