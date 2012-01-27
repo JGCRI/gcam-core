@@ -599,9 +599,10 @@ void LandLeaf::calcLUCEmissions( const string& aRegionName,
 
     // Add emissions to the carbon market. 
     const static bool addLUCtoMarket = Configuration::getInstance()->getBool( "addLUCtoMarket", false );
-    if ( aEndYear != CarbonModelUtils::getEndYear() && addLUCtoMarket ) {
+    const Modeltime* modeltime = scenario->getModeltime();
+    if ( ( aEndYear != CarbonModelUtils::getEndYear() || aPeriod == modeltime->getmaxper() - 1 ) && addLUCtoMarket ) {
         double LUCEmissions = mCarbonContentCalc
-            ->getNetLandUseChangeEmission( scenario->getModeltime()->getper_to_yr( aPeriod ) );
+            ->getNetLandUseChangeEmission( modeltime->getper_to_yr( aPeriod ) );
         Marketplace* marketplace = scenario->getMarketplace();
         mLastCalcCO2Value = marketplace->addToDemand( "CO2", aRegionName, LUCEmissions,
                                                       mLastCalcCO2Value, aPeriod, false );
