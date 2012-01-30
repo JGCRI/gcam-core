@@ -29,12 +29,14 @@
             FSL;    /* Area fraction, southern hemisphere land  */
 } ;
 
-typedef struct {
+struct BCOC_block {
+    BCOC_block (): FBC1990(0),FSO2_dir1990(0), FSO2_ind1990(0), aBCUnitForcing(0),
+                   aOCUnitForcing(0),aBCBaseEmissions(0), aOCBaseEmissions(0) {}
     //F       COMMON/BCOC/FBC1990, FOC1990, FSO2_dir1990,FSO2_ind1990, aBCUnitForcing, aOCUnitForcing, &
     float FBC1990, FSO2_dir1990, FSO2_ind1990, aBCUnitForcing, aOCUnitForcing;
     //F              aBCBaseEmissions, aOCBaseEmissions !sjs
     float aBCBaseEmissions, aOCBaseEmissions;
-} BCOC_block;
+};
 
 typedef struct {
     //F       COMMON/CAR/EL1,EL2,EL3,TINV0(5),TINV(4,5),A(3,5),AA(4,5), &
@@ -199,10 +201,12 @@ typedef struct {
     magicc_array E143A, E227, E245, ESF6;
 } NEWCONCS_block;    
 
-typedef struct {
+struct NEWPARAMS_block {
+    NEWPARAMS_block (): aNewClimSens(0),aNewBTsoil(0), DT2XUSER(0), aNewBTGPP(0),aNewBTHumus(0),
+                   aNewDUSER(0),aNewFUSER(0), aNewSO2dir1990(0), aNewSO2ind1990(0) {}
     float aNewClimSens, aNewBTsoil, DT2XUSER, aNewBTGPP, aNewBTHumus, 
         aNewDUSER, aNewFUSER, aNewSO2dir1990, aNewSO2ind1990;
-} NEWPARAMS_block;
+};
 
 typedef struct {
     //F 206       COMMON /NSIM/NSIM,NCLIM,ISCENGEN,TEMEXP(2,40),IWNHOFF,IWSHOFF, &

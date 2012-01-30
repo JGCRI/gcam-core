@@ -599,8 +599,6 @@ void CLIMAT()
     //aOCUnitForcing = 0
     //aNewSO2dir1990 = 0
     //aNewSO2ind1990 = 0
-    BCOC.aBCUnitForcing = BCOC.aOCUnitForcing = NEWPARAMS.aNewSO2dir1990 = NEWPARAMS.aNewSO2ind1990 = 0.0;
-	BCOC.FSO2_dir1990 = BCOC.FSO2_ind1990 = BCOC.FBC1990 = 0.0;
     
     //F 347 !
     //F 348 !   Call overrite subroutine after each file that may have parameters to overwrite
@@ -3044,7 +3042,7 @@ void CLIMAT()
             //F1772           WRITE (8,231)
             outfile8 << "BALANCED EMISSIONS FOR CH4 & N2O : SO2 EMISSIONS RELATIVE TO 1990" << endl;
             //F1773           WRITE (8,21)
-            outfile8 << "YEAR,EFOSS,NETDEF,CH4,N2O,NOX,VOC,CO,SO2REG1,SO2REG2,SO2REG3,CF4,C2F6,HFC125,HFC134A,HFC143A,HFC227ea,HFC245ca,SF6,ESO2TOT,YEAR" << endl;
+            outfile8 << "YEAR,EFOSS,NETDEF,CH4,N2O,NOX,VOC,CO,SO2REG1,SO2REG2,SO2REG3,CF4,C2F6,HFC125,HFC134A,HFC143A,HFC227ea,HFC245ca,SF6,ESO2TOT,BC,OC,YEAR" << endl;
             //F1774 !
             //F1775 !  PRINTOUT INTERVAL IS DET BY VALUE OF IEMPRT
             //F1776 !
@@ -3053,11 +3051,11 @@ void CLIMAT()
                 //F1778             IYEAR=1764+K
                 int IYEAR = 1764 + K;
                 //F1779             ES1=ESO21(K)-ES1990
-                float ES1 = CONCS.ESO22.getval( K ) - Sulph.ES1990;
+                float ES1 = CONCS.ESO21.getval( K ) - Sulph.ES1990;
                 //F1780             ES2=ESO22(K)-ES1990
-                int ES2 = CONCS.ESO22.getval( K ) - Sulph.ES1990;
+                float ES2 = CONCS.ESO22.getval( K ) - Sulph.ES1990;
                 //F1781             ES3=ESO23(K)-ES1990
-                int ES3 = CONCS.ESO23.getval( K ) - Sulph.ES1990;
+                float ES3 = CONCS.ESO23.getval( K ) - Sulph.ES1990;
                 //F1782             EST=ES1+ES2+ES3
                 float EST = ES1 + ES2 + ES3;
                 //F1783             WRITE (8,222) IYEAR,EF(K),EDNET(K),ECH4(K),EN2O(K),ENOX(K), &
@@ -3180,7 +3178,8 @@ void CLIMAT()
                 //F1850              DELMASS(4,K),IYEAR
                 outfile8 << IYEAR << "," << TOTE << "," << CARB.EF.getval( K ) << "," << ECH4OX << "," << METH1.ednet.getval( K ) << "," 
                 << CARB.EDGROSS.getval( 4, K ) << "," <<   CARB.FOC.getval( 4, K ) << "," << CAR.ABFRAC.getval( 4, K ) << "," << CARB.PL.getval( 4, K ) << "," 
-                << CARB.HL.getval( 4, K ) << "," << CARB.SOIL.getval( 4, K ) << "," << CONCOUT << "," << CAR.DELMASS.getval( 4, K ) << "," << IYEAR << endl;
+                << CARB.HL.getval( 4, K ) << "," << CARB.SOIL.getval( 4, K ) << "," << CONCOUT << "," << CAR.DELMASS.getval( 4, K ) << "," << IYEAR 
+				<< "," << CARB.EF.getval( K ) + ECH4OX - (CARB.FOC.getval( 4, K ) + CAR.DELMASS.getval( 4, K )) << endl;
                 //F1851 !
                 //F1852           END DO
             }
@@ -3204,7 +3203,7 @@ void CLIMAT()
             //F1865           WRITE (8,201)
             outfile8 << "<- USER MODEL CONCS -><------ CH4 & CO2 MID CONCS & RANGES ------->" << endl;
             //F1866           WRITE (8,210)
-            outfile8 << "YEAR      CO2     CH4    N2O   CH4LO  CH4MID   CH4HI   CO2LO  CO2MID   CO2HI  YEAR TAUCH4" << endl;
+            outfile8 << "YEAR,CO2,CH4,N2O,CH4LO,CH4MID,CH4HI,CO2LO,CO2MID,CO2HI,YEAR,TAUCH4" << endl;
             //F1867 !
             //F1868 !  PRINTOUT INTERVAL IS DET BY VALUE OF ICONCPRT
             //F1869 !
@@ -3330,13 +3329,13 @@ void CLIMAT()
                     //F1943            ELSE
                     //F1944              WRITE (8,221) IYEAR,CO2MID,CH4MID,CN2OMID,IYEAR
                 }
-                else outfile8 << IYEAR << "," << CO2MID << "," << CH4MID << "," << CN2OMID << ",,,,,," << IYEAR << endl;
+                else outfile8 << IYEAR << "," << CO2MID << "," << CH4MID << "," << CN2OMID << ",,,,,,," << IYEAR << endl;
                     //F1945            ENDIF
                 //F1946          END DO
             }
             //F1947 !
             //F1948          WRITE (8,210)
-            outfile8 << "YEAR      CO2     CH4    N2O   CH4LO  CH4MID   CH4HI   CO2LO  CO2MID   CO2HI  YEAR TAUCH4" << endl;
+            outfile8 << ",CO2,CH4,N2O,CH4LO,CH4MID,CH4HI,CO2LO,CO2MID,CO2HI,YEAR,TAUCH4" << endl;
             //F1949          WRITE (8,201)
             outfile8 << "<- USER MODEL CONCS -><------ CH4 & CO2 MID CONCS & RANGES ------->" << endl;
             //F1950 !
@@ -3704,7 +3703,7 @@ void CLIMAT()
                 //F2194        QMONT(IYR),QSTRATOZ(IYR),QMONT(IYR)+ &
                 //F2195        QKYMAG(IYR)+QOTHER(IYR)+QSTRATOZ(IYR), &
                 //F2196        QKYMAG(IYR)+QOTHER(IYR)
-                outfile8 << HALOF.Q245_ar[ IYR ] << "," << HALOF.Q134A_ar[ IYR ] << "," << HALOF.Q125_ar[ IYR ] << "," 
+                outfile8 << K << "," << HALOF.Q245_ar[ IYR ] << "," << HALOF.Q134A_ar[ IYR ] << "," << HALOF.Q125_ar[ IYR ] << "," 
                 << HALOF.Q227_ar[ IYR ] << "," << HALOF.Q143A_ar[ IYR ] << "," << HALOF.QCF4_ar[ IYR ] << "," << HALOF.QC2F6_ar[ IYR ] << "," 
                 << HALOF.qSF6_ar[ IYR ] << "," << FORCE.QOTHER[ IYR ] << "," << FORCE.QMONT[ IYR ] << "," << FORCE.QSTRATOZ[ IYR ] << "," 
                 << FORCE.QMONT[ IYR ] + JSTART.QKYMAG[ IYR ] + FORCE.QOTHER[ IYR ] + FORCE.QSTRATOZ[ IYR ] << "," 

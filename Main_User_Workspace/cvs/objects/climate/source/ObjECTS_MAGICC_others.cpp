@@ -1338,9 +1338,9 @@ void runmod( Limits_block* Limits, CLIM_block* CLIM, CONCS_block* CONCS, CARB_bl
         if( Sulph->IFOC >= 3 && QADD->IQREAD != 2 ) {
             //F3889         ! Save total BC and OC Forcing
             //F3890         QBC(JC) = EHistBC(JC) * aBCUnitForcing
-            FORCE->QBC[ JC ] = QSPLIT->EHistBC[ JC ] * BCOC->aBCUnitForcing;
+            FORCE->QBC[ JC ] = ( QSPLIT->EHistBC[ JC ] - BCOC->aBCBaseEmissions ) * BCOC->aBCUnitForcing;
             //F3891         QOC(JC) = EHistOC(JC) * aOCUnitForcing
-            FORCE->QOC[ JC ] = QSPLIT->EHistOC[ JC ] * BCOC->aOCUnitForcing;
+            FORCE->QOC[ JC ] = ( QSPLIT->EHistOC[ JC ] - BCOC->aOCBaseEmissions ) * BCOC->aOCUnitForcing;
             //F3892 
             //F3893 !  A IS THE NH/SH FORCING RATIO
             //F3894 !  BN IS THE LAND/OCEAN FORCING RATIO IN THE NH
@@ -1369,9 +1369,9 @@ void runmod( Limits_block* Limits, CLIM_block* CLIM, CONCS_block* CONCS, CARB_bl
             //F3909         IF ( JC .GT. 225 ) THEN
             if( JC > 225 ) {
                 //F3910             QBC(JC) = EBC(JC) * aBCUnitForcing
-                FORCE->QBC[ JC ] = CONCS->EBC.getval( JC ) * BCOC->aBCUnitForcing;
+                FORCE->QBC[ JC ] = ( CONCS->EBC.getval( JC ) - BCOC->aBCBaseEmissions ) * BCOC->aBCUnitForcing;
                 //F3911             QOC(JC) = EOC(JC) * aOCUnitForcing
-                FORCE->QOC[ JC ] = CONCS->EOC.getval( JC ) * BCOC->aOCUnitForcing;
+                FORCE->QOC[ JC ] = ( CONCS->EOC.getval( JC ) - BCOC->aOCBaseEmissions ) * BCOC->aOCUnitForcing;
                 //F3912             
                 //F3913             QBCOCP = QBC(JPREV) + QOC(JPREV)
                 QBCOCP = FORCE->QBC[ JPREV ] + FORCE->QOC[ JPREV ];
@@ -4427,6 +4427,7 @@ void sulphate( const int JY, float ESO2, float ESO21, float ECO, float* QSO2,
         if( Sulph->IFOC == 1 ) *QFOC = e * Sulph->FOC90 / Sulph->ES1990;
         //F5941         IF(IFOC.EQ.2)QFOC=ECO*FOC90/ECO90
         if( Sulph->IFOC == 2 ) *QFOC = ECO * Sulph->FOC90 / Sulph->ECO90;
+        if( Sulph->IFOC >= 3 ) *QFOC = 0; // Zero internal energy BCOC forcing estimate if explicit calculation is enabled.
         //F5942       ENDIF
     }
     //F5943 !

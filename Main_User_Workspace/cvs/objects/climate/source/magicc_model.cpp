@@ -122,7 +122,11 @@ mHumusTempFeedback( -1 ),
 mGPPTempFeedback( -1 ),
 mClimateSensitivity( -1 ),
 mNetDeforestCarbFlux80s( -1 ),
-mOceanCarbFlux80s( -1 )
+mOceanCarbFlux80s( -1 ),
+mSO2Dir1990( 0 ), // initialize to zero since -1 is a legit value
+mSO2Ind1990( 0 ), // initialize to zero since -1 is a legit value
+mOCUnitForcing( 0 ), // initialize to zero since -1 is a legit value
+mBCUnitForcing( 0 )
 {
 
 }
@@ -207,6 +211,14 @@ void MagiccModel::overwriteMAGICCParameters( ){
     SETPARAMETERVALUES( varIndex, mNetDeforestCarbFlux80s );
     varIndex = 6;
     SETPARAMETERVALUES( varIndex, mOceanCarbFlux80s );
+    varIndex = 7;
+    SETPARAMETERVALUES( varIndex, mSO2Dir1990 );
+    varIndex = 8;
+    SETPARAMETERVALUES( varIndex, mSO2Ind1990 );
+    varIndex = 9;
+    SETPARAMETERVALUES( varIndex, mBCUnitForcing );
+    varIndex = 10;
+    SETPARAMETERVALUES( varIndex, mOCUnitForcing );
 }
 
 //! parse MAGICC xml object
@@ -253,6 +265,22 @@ void MagiccModel::XMLParse( const DOMNode* node ){
         else if ( nodeName == "deforestFlux80s" ){
             mNetDeforestCarbFlux80s = XMLHelper<double>::getValue( curr );
         }
+        // unit forcing for BC 
+        else if ( nodeName == "bc-unit-forcing" ){
+            mBCUnitForcing = XMLHelper<double>::getValue( curr );
+        }
+        // unit forcing for OC 
+        else if ( nodeName == "oc-unit-forcing" ){
+            mOCUnitForcing = XMLHelper<double>::getValue( curr );
+        }
+        // base-year direct SO2 forcing 
+        else if ( nodeName == "base-so2dir-forcing" ){
+            mSO2Dir1990 = XMLHelper<double>::getValue( curr );
+        }
+        // base-year indirect SO2 forcing 
+        else if ( nodeName == "base-so2ind-forcing" ){
+            mSO2Ind1990 = XMLHelper<double>::getValue( curr );
+        }
         else if( nodeName == "carbon-model-start-year" ){
             mCarbonModelStartYear = XMLHelper<int>::getValue( curr );
         }
@@ -286,6 +314,12 @@ void MagiccModel::toInputXML( ostream& out, Tabs* tabs ) const {
     // Write out 1980s net terrestrial Deforestation.
     XMLWriteElementCheckDefault( mNetDeforestCarbFlux80s, "deforestFlux80s", out, tabs, -1.0 );
 
+    // Write out aerosol forcing parameters.
+    XMLWriteElementCheckDefault( mSO2Dir1990, "base-so2dir-forcing", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( mSO2Ind1990, "base-so2ind-forcing", out, tabs, 0.0 );
+    XMLWriteElementCheckDefault( mBCUnitForcing, "bc-unit-forcing", out, tabs, -1.0 );
+    XMLWriteElementCheckDefault( mOCUnitForcing, "oc-unit-forcing", out, tabs, 0.0 );
+
     // Write out Carbon model start year.
     XMLWriteElementCheckDefault( mCarbonModelStartYear, "carbon-model-start-year", out, tabs, 1975 );
 
@@ -314,6 +348,12 @@ void MagiccModel::toDebugXML( const int period, ostream& out, Tabs* tabs ) const
 
     // Write out 1980s net terrestrial Deforestation.
     XMLWriteElement( mNetDeforestCarbFlux80s, "deforestFlux80s", out, tabs );
+
+    // Write out aerosol forcing parameters.
+    XMLWriteElement( mSO2Dir1990, "base-so2dir-forcing", out, tabs );
+    XMLWriteElement( mSO2Ind1990, "base-so2ind-forcing", out, tabs );
+    XMLWriteElement( mBCUnitForcing, "bc-unit-forcing", out, tabs );
+    XMLWriteElement( mOCUnitForcing, "oc-unit-forcing", out, tabs );
 
     // Write out Carbon model start year.
     XMLWriteElement( mCarbonModelStartYear, "carbon-model-start-year", out, tabs );

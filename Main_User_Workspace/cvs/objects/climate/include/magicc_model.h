@@ -183,6 +183,18 @@ private:
     //! 1980s net terrestrial Deforestation (MAGICC Parameter DUSER)
     double mNetDeforestCarbFlux80s;
 
+    //! 1990 Direct Sulfate Forcing (MAGICC Parameter S90Duser)
+    double mSO2Dir1990;
+
+    //! 1990 Indirect Sulfate Forcing (MAGICC Parameter S90Iuser)
+    double mSO2Ind1990;
+
+    //! Forcing per Tg BC Emissions
+    double mBCUnitForcing;
+
+    //! Forcing per Tg OC Emissions
+    double mOCUnitForcing;
+
     //! The year the carbon model should start running.
     int mCarbonModelStartYear;
 };
