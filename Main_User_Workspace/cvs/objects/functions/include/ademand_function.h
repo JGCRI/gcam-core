@@ -70,11 +70,12 @@ public:
         const std::string& regionName, const std::string& sectorName, const double aShutdownCoef,
         int period,
         double capitalStock = 0, double alphaZero = 0, double sigma = 0, 
-        double IBT = 0 ) const = 0;
+        double IBT = 0, const IInput* aParentInput = 0 ) const = 0;
     
     virtual double calcCoefficient( InputSet& input, double consumption,
         const std::string& regionName, const std::string& sectorName, int period,
-        double sigma = 0, double IBT = 0, double capitalStock = 0 ) const = 0;
+        double sigma = 0, double IBT = 0, double capitalStock = 0,
+        const IInput* aParentInput = 0 ) const = 0;
 	
     // Functions defined by DemandFunction.
     double applyTechnicalChange( InputSet& input, const TechChange& aTechChange, 
@@ -128,7 +129,8 @@ public:
     }
 
     double calcLevelizedCost( const InputSet& aInputs, const std::string& aRegionName,
-        const std::string& aSectorName, int aPeriod, double aAlphaZero, double aSigma ) const
+        const std::string& aSectorName, int aPeriod, double aAlphaZero, double aSigma,
+        const IInput* aParentInput = 0 ) const
     {
         return 0;
     }

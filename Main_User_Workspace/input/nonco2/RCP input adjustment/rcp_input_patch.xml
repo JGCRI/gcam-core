@@ -149,39 +149,30 @@
                      <generic-ghg delete="1" name="SO2_1"/>
                      <generic-ghg name="CH4">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>8.7715E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="N2O">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.53967E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NOx">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.61175E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="CO">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>0.001310633</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NMVOC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>0.00023427</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NH3">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.64884E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="BC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.89523E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.71427E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.92147E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2035">
@@ -372,6 +363,44 @@
                      </generic-ghg>
                      <generic-ghg name="SO2_1">
                         <output-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2010">
+                     <generic-ghg name="CH4">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>8.7715E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>2.53967E-06</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>3.61175E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>0.001310633</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>0.00023427</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>1.64884E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>7.89523E-06</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>6.71427E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>7.92147E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                </UnmanagedLandTechnology>
@@ -526,39 +555,30 @@
                      <generic-ghg delete="1" name="SO2_1"/>
                      <generic-ghg name="CH4">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>8.7715E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="N2O">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.53967E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NOx">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.61175E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="CO">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>0.001310633</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NMVOC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>0.00023427</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NH3">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.64884E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="BC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.89523E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.71427E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.92147E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2035">
@@ -749,6 +769,44 @@
                      </generic-ghg>
                      <generic-ghg name="SO2_1">
                         <output-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2010">
+                     <generic-ghg name="CH4">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>8.7715E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>2.53967E-06</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>3.61175E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>0.001310633</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>0.00023427</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>1.64884E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>7.89523E-06</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>6.71427E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>7.92147E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                </UnmanagedLandTechnology>
@@ -903,39 +961,30 @@
                      <generic-ghg delete="1" name="SO2_1"/>
                      <generic-ghg name="CH4">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>8.7715E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="N2O">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.53967E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NOx">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.61175E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="CO">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>0.001310633</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NMVOC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>0.00023427</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NH3">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.64884E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="BC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.89523E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.71427E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.92147E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2035">
@@ -1126,6 +1175,44 @@
                      </generic-ghg>
                      <generic-ghg name="SO2_1">
                         <output-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2010">
+                     <generic-ghg name="CH4">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>8.7715E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>2.53967E-06</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>3.61175E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>0.001310633</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>0.00023427</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>1.64884E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>7.89523E-06</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>6.71427E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>7.92147E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                </UnmanagedLandTechnology>
@@ -1280,39 +1367,30 @@
                      <generic-ghg delete="1" name="SO2_2"/>
                      <generic-ghg name="CH4">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>8.7715E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="N2O">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.53967E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NOx">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.61175E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="CO">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>0.001310633</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NMVOC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>0.00023427</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NH3">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.64884E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="BC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.89523E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.71427E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.92147E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2035">
@@ -1503,6 +1581,44 @@
                      </generic-ghg>
                      <generic-ghg name="SO2_2">
                         <output-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2010">
+                     <generic-ghg name="CH4">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>8.7715E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>2.53967E-06</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>3.61175E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>0.001310633</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>0.00023427</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>1.64884E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>7.89523E-06</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>6.71427E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_2">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>7.92147E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                </UnmanagedLandTechnology>
@@ -1657,39 +1773,30 @@
                      <generic-ghg delete="1" name="SO2_3"/>
                      <generic-ghg name="CH4">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>8.7715E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="N2O">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.53967E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NOx">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.61175E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="CO">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>0.001310633</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NMVOC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>0.00023427</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NH3">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.64884E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="BC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.89523E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.71427E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.92147E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2035">
@@ -1880,6 +1987,44 @@
                      </generic-ghg>
                      <generic-ghg name="SO2_3">
                         <output-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2010">
+                     <generic-ghg name="CH4">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>8.7715E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>2.53967E-06</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>3.61175E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>0.001310633</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>0.00023427</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>1.64884E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>7.89523E-06</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>6.71427E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_3">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>7.92147E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                </UnmanagedLandTechnology>
@@ -2034,39 +2179,30 @@
                      <generic-ghg delete="1" name="SO2_4"/>
                      <generic-ghg name="CH4">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>8.7715E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="N2O">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.53967E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NOx">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.61175E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="CO">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>0.001310633</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NMVOC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>0.00023427</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NH3">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.64884E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="BC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.89523E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.71427E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_4">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.92147E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2035">
@@ -2257,6 +2393,44 @@
                      </generic-ghg>
                      <generic-ghg name="SO2_4">
                         <output-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2010">
+                     <generic-ghg name="CH4">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>8.7715E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>2.53967E-06</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>3.61175E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>0.001310633</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>0.00023427</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>1.64884E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>7.89523E-06</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>6.71427E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_4">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>7.92147E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                </UnmanagedLandTechnology>
@@ -2411,39 +2585,30 @@
                      <generic-ghg delete="1" name="SO2_2"/>
                      <generic-ghg name="CH4">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>8.7715E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="N2O">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.53967E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NOx">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.61175E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="CO">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>0.001310633</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NMVOC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>0.00023427</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NH3">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.64884E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="BC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.89523E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.71427E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.92147E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2035">
@@ -2634,6 +2799,44 @@
                      </generic-ghg>
                      <generic-ghg name="SO2_2">
                         <output-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2010">
+                     <generic-ghg name="CH4">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>8.7715E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>2.53967E-06</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>3.61175E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>0.001310633</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>0.00023427</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>1.64884E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>7.89523E-06</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>6.71427E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_2">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>7.92147E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                </UnmanagedLandTechnology>
@@ -2788,39 +2991,30 @@
                      <generic-ghg delete="1" name="SO2_3"/>
                      <generic-ghg name="CH4">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>8.7715E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="N2O">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.53967E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NOx">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.61175E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="CO">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>0.001310633</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NMVOC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>0.00023427</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NH3">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.64884E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="BC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.89523E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.71427E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.92147E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2035">
@@ -3011,6 +3205,44 @@
                      </generic-ghg>
                      <generic-ghg name="SO2_3">
                         <output-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2010">
+                     <generic-ghg name="CH4">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>8.7715E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>2.53967E-06</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>3.61175E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>0.001310633</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>0.00023427</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>1.64884E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>7.89523E-06</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>6.71427E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_3">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>7.92147E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                </UnmanagedLandTechnology>
@@ -3165,39 +3397,30 @@
                      <generic-ghg delete="1" name="SO2_3"/>
                      <generic-ghg name="CH4">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>8.7715E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="N2O">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.53967E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NOx">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.61175E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="CO">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>0.001310633</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NMVOC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>0.00023427</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NH3">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.64884E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="BC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.89523E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.71427E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.92147E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2035">
@@ -3388,6 +3611,44 @@
                      </generic-ghg>
                      <generic-ghg name="SO2_3">
                         <output-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2010">
+                     <generic-ghg name="CH4">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>8.7715E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>2.53967E-06</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>3.61175E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>0.001310633</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>0.00023427</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>1.64884E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>7.89523E-06</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>6.71427E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_3">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>7.92147E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                </UnmanagedLandTechnology>
@@ -3542,39 +3803,30 @@
                      <generic-ghg delete="1" name="SO2_3"/>
                      <generic-ghg name="CH4">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>8.7715E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="N2O">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.53967E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NOx">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.61175E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="CO">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>0.001310633</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NMVOC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>0.00023427</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NH3">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.64884E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="BC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.89523E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.71427E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_3">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.92147E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2035">
@@ -3765,6 +4017,44 @@
                      </generic-ghg>
                      <generic-ghg name="SO2_3">
                         <output-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2010">
+                     <generic-ghg name="CH4">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>8.7715E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>2.53967E-06</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>3.61175E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>0.001310633</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>0.00023427</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>1.64884E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>7.89523E-06</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>6.71427E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_3">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>7.92147E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                </UnmanagedLandTechnology>
@@ -3919,39 +4209,30 @@
                      <generic-ghg delete="1" name="SO2_2"/>
                      <generic-ghg name="CH4">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>8.7715E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="N2O">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.53967E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NOx">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.61175E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="CO">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>0.001310633</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NMVOC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>0.00023427</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NH3">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.64884E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="BC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.89523E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.71427E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.92147E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2035">
@@ -4142,6 +4423,44 @@
                      </generic-ghg>
                      <generic-ghg name="SO2_2">
                         <output-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2010">
+                     <generic-ghg name="CH4">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>8.7715E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>2.53967E-06</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>3.61175E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>0.001310633</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>0.00023427</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>1.64884E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>7.89523E-06</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>6.71427E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_2">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>7.92147E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                </UnmanagedLandTechnology>
@@ -4296,39 +4615,30 @@
                      <generic-ghg delete="1" name="SO2_1"/>
                      <generic-ghg name="CH4">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>8.7715E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="N2O">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.53967E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NOx">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.61175E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="CO">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>0.001310633</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NMVOC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>0.00023427</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NH3">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.64884E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="BC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.89523E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.71427E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_1">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.92147E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2035">
@@ -4519,6 +4829,44 @@
                      </generic-ghg>
                      <generic-ghg name="SO2_1">
                         <output-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2010">
+                     <generic-ghg name="CH4">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>8.7715E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>2.53967E-06</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>3.61175E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>0.001310633</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>0.00023427</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>1.64884E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>7.89523E-06</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>6.71427E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_1">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>7.92147E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                </UnmanagedLandTechnology>
@@ -4673,39 +5021,30 @@
                      <generic-ghg delete="1" name="SO2_2"/>
                      <generic-ghg name="CH4">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>8.7715E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="N2O">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.53967E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NOx">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.61175E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="CO">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>0.001310633</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NMVOC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>0.00023427</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NH3">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.64884E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="BC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.89523E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.71427E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.92147E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2035">
@@ -4896,6 +5235,44 @@
                      </generic-ghg>
                      <generic-ghg name="SO2_2">
                         <output-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2010">
+                     <generic-ghg name="CH4">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>8.7715E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>2.53967E-06</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>3.61175E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>0.001310633</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>0.00023427</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>1.64884E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>7.89523E-06</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>6.71427E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_2">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>7.92147E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                </UnmanagedLandTechnology>
@@ -5050,39 +5427,30 @@
                      <generic-ghg delete="1" name="SO2_2"/>
                      <generic-ghg name="CH4">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>8.7715E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="N2O">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>2.53967E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NOx">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>3.61175E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="CO">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>0.001310633</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NMVOC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>0.00023427</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="NH3">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>1.64884E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="BC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.89523E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="OC">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>6.71427E-05</uncontrolled-emiss-coef>
                      </generic-ghg>
                      <generic-ghg name="SO2_2">
                         <output-driver/>
-                        <uncontrolled-emiss-coef>7.92147E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                   <period year="2035">
@@ -5273,6 +5641,44 @@
                      </generic-ghg>
                      <generic-ghg name="SO2_2">
                         <output-driver/>
+                     </generic-ghg>
+                  </period>
+                  <period year="2010">
+                     <generic-ghg name="CH4">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>8.7715E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="N2O">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>2.53967E-06</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NOx">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>3.61175E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="CO">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>0.001310633</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NMVOC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>0.00023427</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="NH3">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>1.64884E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="BC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>7.89523E-06</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="OC">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>6.71427E-05</uncontrolled-emiss-coef>
+                     </generic-ghg>
+                     <generic-ghg name="SO2_2">
+                        <output-driver/>
+                        <uncontrolled-emiss-coef>7.92147E-06</uncontrolled-emiss-coef>
                      </generic-ghg>
                   </period>
                </UnmanagedLandTechnology>

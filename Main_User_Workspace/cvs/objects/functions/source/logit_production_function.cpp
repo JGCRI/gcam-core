@@ -51,7 +51,7 @@ using namespace std;
 
 double LogitProductionFunction::calcCoefficient( InputSet& input, double consumption, const std::string& regionName,
                             const std::string& sectorName, int period, double sigma, double IBT,
-                            double capitalStock ) const
+                            double capitalStock, const IInput* aParentInput ) const
 {
     // period is really the period which we are setting the coef in
     // we want to use the base period prices and demands
@@ -99,7 +99,8 @@ double LogitProductionFunction::changeElasticity( InputSet& input, const std::st
 
 double LogitProductionFunction::calcDemand( InputSet& input, double consumption, const std::string& regionName,
                        const std::string& sectorName, const double aShutdownCoef, int period,
-                       double capitalStock, double alphaZero, double sigma, double IBT ) const
+                       double capitalStock, double alphaZero, double sigma, double IBT,
+                       const IInput* aParentInput ) const
 {
     double totalSum = 0;
     for( InputSet::const_iterator it = input.begin(); it != input.end(); ++it ) {
@@ -123,7 +124,8 @@ double LogitProductionFunction::calcDemand( InputSet& input, double consumption,
 }
 
 double LogitProductionFunction::calcLevelizedCost( const InputSet& aInputs, const std::string& aRegionName,
-                         const std::string& aSectorName, int aPeriod, double aAlphaZero, double aSigma ) const
+                         const std::string& aSectorName, int aPeriod, double aAlphaZero, double aSigma,
+                         const IInput* aParentInput ) const
 {
     double totalSum = 0;
     for( InputSet::const_iterator it = aInputs.begin(); it != aInputs.end(); ++it ) {

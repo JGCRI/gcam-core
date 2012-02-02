@@ -43,6 +43,7 @@
 #include <cassert>
 #include "functions/include/leaf_input_finder.h"
 #include "functions/include/sgm_input.h"
+#include "functions/include/building_service_input.h"
 
 using namespace std;
 
@@ -53,6 +54,12 @@ LeafInputFinder::LeafInputFinder() {
 void LeafInputFinder::startVisitSGMInput( const SGMInput* aSGMInput, const int aPeriod ) {
     // add this input the the list of found leaves
     SGMInput* tempPtr = const_cast<SGMInput*>( aSGMInput );
+    mInputs.push_back( tempPtr );
+}
+
+void LeafInputFinder::startVisitBuildingServiceInput( const BuildingServiceInput* aBuildingServiceInput, const int aPeriod ) {
+    // add this input the the list of found leaves
+    BuildingServiceInput* tempPtr = const_cast<BuildingServiceInput*>( aBuildingServiceInput );
     mInputs.push_back( tempPtr );
 }
 

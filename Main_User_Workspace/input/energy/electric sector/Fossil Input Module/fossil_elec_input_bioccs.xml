@@ -11578,6 +11578,9 @@
                         <half-life>-1</half-life>
                      </s-curve-shutdown-decider>
                      <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="heat plant">
+                        <input-cost>1.809202731</input-cost>
+                     </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
@@ -11594,6 +11597,9 @@
                         <half-life>45</half-life>
                      </s-curve-shutdown-decider>
                      <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="heat plant">
+                        <input-cost>1.818908376</input-cost>
+                     </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
@@ -12210,6 +12216,9 @@
                         <half-life>-1</half-life>
                      </s-curve-shutdown-decider>
                      <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="heat plant">
+                        <input-cost>4.415389803</input-cost>
+                     </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
@@ -12226,6 +12235,9 @@
                         <half-life>45</half-life>
                      </s-curve-shutdown-decider>
                      <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="heat plant">
+                        <input-cost>2.808286785</input-cost>
+                     </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="wholesale gas">
@@ -12961,6 +12973,9 @@
                         <half-life>-1</half-life>
                      </s-curve-shutdown-decider>
                      <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="heat plant">
+                        <input-cost>2.84129654</input-cost>
+                     </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids electricity">
@@ -12977,6 +12992,9 @@
                         <half-life>45</half-life>
                      </s-curve-shutdown-decider>
                      <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="heat plant">
+                        <input-cost>1.860625871</input-cost>
+                     </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="refined liquids electricity">
@@ -13713,6 +13731,9 @@
                         <half-life>-1</half-life>
                      </s-curve-shutdown-decider>
                      <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="heat plant">
+                        <input-cost>64.23604279</input-cost>
+                     </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional biomass">
@@ -13729,6 +13750,9 @@
                         <half-life>45</half-life>
                      </s-curve-shutdown-decider>
                      <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="heat plant">
+                        <input-cost>47.74114722</input-cost>
+                     </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
@@ -17338,6 +17362,9 @@
                         <half-life>-1</half-life>
                      </s-curve-shutdown-decider>
                      <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="heat plant">
+                        <input-cost>0.062974453</input-cost>
+                     </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
@@ -17354,6 +17381,9 @@
                         <half-life>45</half-life>
                      </s-curve-shutdown-decider>
                      <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="heat plant">
+                        <input-cost>0.012430736</input-cost>
+                     </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
@@ -17970,6 +18000,9 @@
                         <half-life>-1</half-life>
                      </s-curve-shutdown-decider>
                      <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="heat plant">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
@@ -17986,6 +18019,9 @@
                         <half-life>45</half-life>
                      </s-curve-shutdown-decider>
                      <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="heat plant">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="wholesale gas">
@@ -18721,6 +18757,9 @@
                         <half-life>-1</half-life>
                      </s-curve-shutdown-decider>
                      <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="heat plant">
+                        <input-cost>0.019582922</input-cost>
+                     </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids electricity">
@@ -18737,6 +18776,9 @@
                         <half-life>45</half-life>
                      </s-curve-shutdown-decider>
                      <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="heat plant">
+                        <input-cost>0.001168746</input-cost>
+                     </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="refined liquids electricity">
@@ -19473,6 +19515,9 @@
                         <half-life>-1</half-life>
                      </s-curve-shutdown-decider>
                      <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="heat plant">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional biomass">
@@ -19489,6 +19534,9 @@
                         <half-life>45</half-life>
                      </s-curve-shutdown-decider>
                      <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="heat plant">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">
@@ -31738,6 +31786,9 @@
                         <half-life>-1</half-life>
                      </s-curve-shutdown-decider>
                      <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="heat plant">
+                        <input-cost>1.155333457</input-cost>
+                     </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
@@ -31754,6 +31805,9 @@
                         <half-life>45</half-life>
                      </s-curve-shutdown-decider>
                      <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="heat plant">
+                        <input-cost>0.884370863</input-cost>
+                     </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional coal">
@@ -32370,6 +32424,9 @@
                         <half-life>-1</half-life>
                      </s-curve-shutdown-decider>
                      <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="heat plant">
+                        <input-cost>3.434734475</input-cost>
+                     </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
@@ -32386,6 +32443,9 @@
                         <half-life>45</half-life>
                      </s-curve-shutdown-decider>
                      <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="heat plant">
+                        <input-cost>3.521909024</input-cost>
+                     </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="wholesale gas">
@@ -33121,6 +33181,9 @@
                         <half-life>-1</half-life>
                      </s-curve-shutdown-decider>
                      <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="heat plant">
+                        <input-cost>2.940263406</input-cost>
+                     </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids electricity">
@@ -33137,6 +33200,9 @@
                         <half-life>45</half-life>
                      </s-curve-shutdown-decider>
                      <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="heat plant">
+                        <input-cost>3.274437225</input-cost>
+                     </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="refined liquids electricity">
@@ -33873,6 +33939,9 @@
                         <half-life>-1</half-life>
                      </s-curve-shutdown-decider>
                      <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="heat plant">
+                        <input-cost>6.027234783</input-cost>
+                     </minicam-non-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional biomass">
@@ -33889,6 +33958,9 @@
                         <half-life>45</half-life>
                      </s-curve-shutdown-decider>
                      <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="heat plant">
+                        <input-cost>0.910510144</input-cost>
+                     </minicam-non-energy-input>
                   </period>
                   <period year="2020">
                      <minicam-energy-input name="regional biomass">

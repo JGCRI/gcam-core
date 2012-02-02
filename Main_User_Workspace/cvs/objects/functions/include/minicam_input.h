@@ -96,6 +96,7 @@ public:
                            const std::string& aSectorName,
                            const bool aIsNewInvestmentPeriod,
                            const bool aIsTrade,
+                           const IInfo* aTechInfo,
                            const int aPeriod ) = 0;
 
     virtual void toInputXML( std::ostream& aOut,
@@ -149,9 +150,9 @@ public:
     
     virtual bool hasTypeFlag( const int aTypeFlag ) const = 0;
     
-    virtual double getPriceElasticity() const = 0;
+    virtual double getPriceElasticity( const int aPeriod ) const = 0;
     
-    virtual double getIncomeElasticity() const = 0;
+    virtual double getIncomeElasticity( const int aPeriod ) const = 0;
 
     virtual double getCalibrationQuantity( const int aPeriod ) const = 0;
 

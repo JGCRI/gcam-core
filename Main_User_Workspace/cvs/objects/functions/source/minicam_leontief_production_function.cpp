@@ -94,7 +94,8 @@ double MinicamLeontiefProductionFunction::calcCoefficient( InputSet& aInputs,
                                                            int aPeriod,
                                                            double aSigma,
                                                            double aIndBusTax,
-                                                           double aCapitalStock ) const
+                                                           double aCapitalStock,
+                                                           const IInput* aParentInput ) const
 {
     // MiniCAM coeffiicients are read in and do not require calculating.
     return 1;
@@ -123,7 +124,8 @@ double MinicamLeontiefProductionFunction::calcDemand( InputSet& aInputs,
                                                       double aCapitalStock,
                                                       double aAlphaZero,
                                                       double aSigma,
-                                                      double aIBT ) const
+                                                      double aIBT,
+                                                      const IInput* aParentInput ) const
 {
     assert( aAlphaZero >= 1 );
 
@@ -154,7 +156,8 @@ double MinicamLeontiefProductionFunction::calcLevelizedCost( const InputSet& aIn
                                                              const string& aSectorName,
                                                              int aPeriod,
                                                              double aAlphaZero,
-                                                             double aSigma ) const
+                                                             double aSigma,
+                                                             const IInput* aParentInput ) const
 {
     assert( aAlphaZero >= 1 );
 

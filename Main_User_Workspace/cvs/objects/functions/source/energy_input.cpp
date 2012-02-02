@@ -293,6 +293,7 @@ void EnergyInput::initCalc( const string& aRegionName,
                             const string& aSectorName,
                             const bool aIsNewInvestmentPeriod,
                             const bool aIsTrade,
+                            const IInfo* aTechInfo,
                             const int aPeriod )
 {
     // There must be a valid region name.
@@ -402,11 +403,11 @@ bool EnergyInput::hasTypeFlag( const int aTypeFlag ) const {
     return ( ( aTypeFlag & ~IInput::ENERGY ) == 0 );
 }
 
-double EnergyInput::getIncomeElasticity() const {
+double EnergyInput::getIncomeElasticity( const int aPeriod ) const {
     return mIncomeElasticity;
 }
 
-double EnergyInput::getPriceElasticity() const {
+double EnergyInput::getPriceElasticity( const int aPeriod ) const {
     return 0;
 }
 

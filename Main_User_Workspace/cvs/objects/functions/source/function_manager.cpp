@@ -56,6 +56,8 @@
 #include "functions/include/nested_ces_production_function.h"
 #include "functions/include/utility_demand_function.h"
 #include "functions/include/logit_production_function.h"
+#include "functions/include/building_function.h"
+#include "functions/include/building_service_function.h"
 #include "util/logger/include/ilogger.h"
 
 using namespace std;
@@ -79,6 +81,8 @@ FunctionManager::FunctionManager() {
     mFunctions[ "InvestDemandFn" ] = new InvestmentDemandFunction;
     mFunctions[ "UtilityDemandFunction" ] = new UtilityDemandFunction;
     mFunctions[ "Logit" ] = new LogitProductionFunction;
+    mFunctions[ "building-function" ] = new BuildingFunction;
+    mFunctions[ "building-service-function" ] = new BuildingServiceFunction;
 }
 
 //! Destructor

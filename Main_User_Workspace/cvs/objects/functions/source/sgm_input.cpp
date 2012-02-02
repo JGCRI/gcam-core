@@ -200,6 +200,7 @@ void SGMInput::initCalc( const string& aRegionName,
                          const string& aSectorName,
                          const bool aIsNewInvestmentPeriod,
                          const bool aIsTrade,
+                         const IInfo* aTechInfo,
                          const int aPeriod )
 {
     /*! \pre There must be a valid region name. */
@@ -253,7 +254,6 @@ void SGMInput::toInputXML( ostream& out, Tabs* tabs ) const {
 
     XMLWriteElement( mCoefficient[ 0 ], "coefficient", out, tabs );
     XMLWriteElement( mPhysicalDemand[ 0 ], "demandCurrency", out, tabs );
-    XMLWriteElement( mConversionFactor, "conversionFactor", out, tabs );
     XMLWriteElement( mPriceAdjustFactor, "priceAdjustFactor", out, tabs );
     XMLWriteElement( mSalesTaxRate, "sales-tax-rate", out, tabs );
 

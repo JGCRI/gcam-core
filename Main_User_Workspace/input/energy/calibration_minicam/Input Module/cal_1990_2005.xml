@@ -6144,7 +6144,7 @@
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>8.740040212</calOutputValue>
+                        <calOutputValue>7.626337108</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.126439845</coefficient>
@@ -6159,7 +6159,7 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>4.309026839</calOutputValue>
+                        <calOutputValue>4.092336392</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.10452958</coefficient>
@@ -6180,7 +6180,7 @@
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.002776608</calOutputValue>
+                        <calOutputValue>0.002422798</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional coal">
                         <coefficient>1.373253493</coefficient>
@@ -6189,7 +6189,7 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.009258914</calOutputValue>
+                        <calOutputValue>0.008793306</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional coal">
                         <coefficient>1.068341121</coefficient>
@@ -6206,7 +6206,7 @@
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>4.465273526</calOutputValue>
+                        <calOutputValue>5.57897663</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.126439845</coefficient>
@@ -6221,7 +6221,7 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>2.362651521</calOutputValue>
+                        <calOutputValue>2.579341968</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.10452958</coefficient>
@@ -6242,7 +6242,7 @@
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.001418565</calOutputValue>
+                        <calOutputValue>0.001772376</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional coal">
                         <coefficient>1.373253493</coefficient>
@@ -6251,7 +6251,7 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.005076689</calOutputValue>
+                        <calOutputValue>0.005542297</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional coal">
                         <coefficient>1.068341121</coefficient>
@@ -6271,6 +6271,9 @@
                         <efficiency>0.025615357</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="district heat">
+                        <output-ratio>23.1981982</output-ratio>
+                     </secondary-output>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional biomass">
@@ -6278,6 +6281,9 @@
                         <efficiency>0.016914988</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="district heat">
+                        <output-ratio>16.52777778</output-ratio>
+                     </secondary-output>
                   </period>
                </technology>
                <share-weight year="1990">1</share-weight>
@@ -6291,6 +6297,9 @@
                         <efficiency>0.237415186</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="district heat">
+                        <output-ratio>0.653375297</output-ratio>
+                     </secondary-output>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
@@ -6298,6 +6307,9 @@
                         <efficiency>0.262861289</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="district heat">
+                        <output-ratio>0.629698178</output-ratio>
+                     </secondary-output>
                   </period>
                </technology>
                <share-weight year="1990">1</share-weight>
@@ -6311,6 +6323,9 @@
                         <efficiency>0.26810415</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="district heat">
+                        <output-ratio>1.594573441</output-ratio>
+                     </secondary-output>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
@@ -6318,6 +6333,9 @@
                         <efficiency>0.278946891</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="district heat">
+                        <output-ratio>0.972216685</output-ratio>
+                     </secondary-output>
                   </period>
                </technology>
                <share-weight year="1990">1</share-weight>
@@ -6331,6 +6349,9 @@
                         <efficiency>0.258976745</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="district heat">
+                        <output-ratio>1.026105554</output-ratio>
+                     </secondary-output>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids electricity">
@@ -6338,6 +6359,9 @@
                         <efficiency>0.31682237</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="district heat">
+                        <output-ratio>0.644140594</output-ratio>
+                     </secondary-output>
                   </period>
                </technology>
                <share-weight year="1990">1</share-weight>
@@ -6815,13 +6839,13 @@
                <technology name="biomass">
                   <period year="1990">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.545102088</calibrated-value>
+                        <calibrated-value>0.396531828</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.28344613</calibrated-value>
+                        <calibrated-value>0.21206142</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -6833,13 +6857,13 @@
                <technology name="coal">
                   <period year="1990">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>3.705370744</calibrated-value>
+                        <calibrated-value>2.129862841</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>0.654843197</calibrated-value>
+                        <calibrated-value>0.301064414</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -6869,13 +6893,13 @@
                <technology name="gas">
                   <period year="1990">
                      <minicam-energy-input name="delivered gas">
-                        <calibrated-value>8.656331438</calibrated-value>
+                        <calibrated-value>4.611496432</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered gas">
-                        <calibrated-value>5.937285856</calibrated-value>
+                        <calibrated-value>4.053576024</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -6887,13 +6911,33 @@
                <technology name="refined liquids">
                   <period year="1990">
                      <minicam-energy-input name="refined liquids enduse">
-                        <calibrated-value>3.318419675</calibrated-value>
+                        <calibrated-value>2.20436276</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids enduse">
-                        <calibrated-value>1.119700344</calibrated-value>
+                        <calibrated-value>0.902544289</calibrated-value>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="district heat">
+               <technology name="district heat">
+                  <period year="1990">
+                     <minicam-energy-input name="district heat">
+                        <calibrated-value>6.091204109</calibrated-value>
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="district heat">
+                        <calibrated-value>3.394646595</calibrated-value>
+                        <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -6907,13 +6951,13 @@
                <technology name="biomass">
                   <period year="1990">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.056603874</calibrated-value>
+                        <calibrated-value>0.041210672</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.166945035</calibrated-value>
+                        <calibrated-value>0.102329921</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -6947,13 +6991,13 @@
                <technology name="coal">
                   <period year="1990">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>4.106589095</calibrated-value>
+                        <calibrated-value>3.943352451</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>2.579994936</calibrated-value>
+                        <calibrated-value>2.259765907</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -7005,13 +7049,13 @@
                <technology name="gas">
                   <period year="1990">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>4.145176478</calibrated-value>
+                        <calibrated-value>3.726095566</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>5.258776165</calibrated-value>
+                        <calibrated-value>3.553703388</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -7045,13 +7089,13 @@
                <technology name="refined liquids">
                   <period year="1990">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>3.619724846</calibrated-value>
+                        <calibrated-value>3.504298633</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>1.637629641</calibrated-value>
+                        <calibrated-value>1.441067054</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -7080,6 +7124,26 @@
                      </secondary-output>
                   </period>
                </technology>
+            </subsector>
+            <subsector name="district heat">
+               <technology name="district heat">
+                  <period year="1990">
+                     <minicam-energy-input name="district heat">
+                        <calibrated-value>5.513559533</calibrated-value>
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="district heat">
+                        <calibrated-value>3.072723514</calibrated-value>
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
             </subsector>
          </supplysector>
          <supplysector name="industrial feedstocks">
@@ -7156,6 +7220,412 @@
                      <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>0.681887369</calibrated-value>
                         <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+         </supplysector>
+         <supplysector name="district heat">
+            <subsector name="biomass">
+               <share-weight year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <technology name="biomass">
+                  <period year="1975">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.13</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.13</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.8</efficiency>
+                        <calibrated-value>0.163963462</calibrated-value>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2005">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.13</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.8</efficiency>
+                        <calibrated-value>0.135999824</calibrated-value>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2020">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.13</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2035">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.01</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2050">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.89</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2065">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.78</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2080">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.67</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2095">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.58</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="coal">
+               <share-weight year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <technology name="coal">
+                  <period year="1975">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.71</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.71</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.8</efficiency>
+                        <calibrated-value>1.738744546</calibrated-value>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2005">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.71</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.8</efficiency>
+                        <calibrated-value>0.674007811</calibrated-value>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2020">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.71</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2035">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.61</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2050">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.52</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2065">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.43</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2080">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.34</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2095">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.27</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="gas">
+               <share-weight year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <technology name="gas">
+                  <period year="1975">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.71</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.71</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <efficiency>0.8</efficiency>
+                        <calibrated-value>4.463915918</calibrated-value>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2005">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.71</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <efficiency>0.8</efficiency>
+                        <calibrated-value>3.588782609</calibrated-value>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2020">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.73</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2035">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.69</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2050">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.65</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2065">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.61</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2080">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.58</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2095">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.54</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="refined liquids">
+               <share-weight year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <technology name="refined liquids">
+                  <period year="1975">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.67</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="refined liquids industrial">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.67</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="refined liquids industrial">
+                        <efficiency>0.8</efficiency>
+                        <calibrated-value>1.229483128</calibrated-value>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2005">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.67</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="refined liquids industrial">
+                        <efficiency>0.8</efficiency>
+                        <calibrated-value>0.413718642</calibrated-value>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2020">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.69</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="refined liquids industrial">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2035">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.65</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="refined liquids industrial">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2050">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.61</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="refined liquids industrial">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2065">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.57</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="refined liquids industrial">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2080">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.54</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="refined liquids industrial">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2095">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.51</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="refined liquids industrial">
+                        <efficiency>0.8</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -7332,7 +7802,7 @@
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>1.671333617</calOutputValue>
+                        <calOutputValue>1.64061014</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.066642996</coefficient>
@@ -7347,7 +7817,7 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>6.806789921</calOutputValue>
+                        <calOutputValue>6.775146749</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.056625921</coefficient>
@@ -7394,7 +7864,7 @@
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>2.418110722</calOutputValue>
+                        <calOutputValue>2.448834199</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.066642996</coefficient>
@@ -7409,7 +7879,7 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>6.009457054</calOutputValue>
+                        <calOutputValue>6.041100226</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.056625921</coefficient>
@@ -7459,6 +7929,9 @@
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <share-weight>0</share-weight>
+                     <secondary-output name="district heat">
+                        <output-ratio>0</output-ratio>
+                     </secondary-output>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional biomass">
@@ -7466,6 +7939,9 @@
                         <efficiency>0.250064164</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="district heat">
+                        <output-ratio>0</output-ratio>
+                     </secondary-output>
                   </period>
                </technology>
                <share-weight year="1990">0</share-weight>
@@ -7479,6 +7955,9 @@
                         <efficiency>0.286290436</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="district heat">
+                        <output-ratio>0.021946983</output-ratio>
+                     </secondary-output>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
@@ -7486,6 +7965,9 @@
                         <efficiency>0.321013017</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="district heat">
+                        <output-ratio>0.004552916</output-ratio>
+                     </secondary-output>
                   </period>
                </technology>
                <share-weight year="1990">1</share-weight>
@@ -7499,6 +7981,9 @@
                         <efficiency>0.358618148</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="district heat">
+                        <output-ratio>0</output-ratio>
+                     </secondary-output>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
@@ -7506,6 +7991,9 @@
                         <efficiency>0.361513084</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="district heat">
+                        <output-ratio>0</output-ratio>
+                     </secondary-output>
                   </period>
                </technology>
                <share-weight year="1990">1</share-weight>
@@ -7519,6 +8007,9 @@
                         <efficiency>0.33334917</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="district heat">
+                        <output-ratio>0.006824768</output-ratio>
+                     </secondary-output>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids electricity">
@@ -7526,6 +8017,9 @@
                         <efficiency>0.334377385</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="district heat">
+                        <output-ratio>0.000428068</output-ratio>
+                     </secondary-output>
                   </period>
                </technology>
                <share-weight year="1990">1</share-weight>
@@ -8009,7 +8503,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.06910382</calibrated-value>
+                        <calibrated-value>0.063149504</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -8021,13 +8515,13 @@
                <technology name="coal">
                   <period year="1990">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>4.359033397</calibrated-value>
+                        <calibrated-value>4.233951742</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>3.254916933</calibrated-value>
+                        <calibrated-value>2.423206796</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -8057,13 +8551,13 @@
                <technology name="gas">
                   <period year="1990">
                      <minicam-energy-input name="delivered gas">
-                        <calibrated-value>0.126941856</calibrated-value>
+                        <calibrated-value>0.121124124</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered gas">
-                        <calibrated-value>0.776984957</calibrated-value>
+                        <calibrated-value>0.74473961</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -8075,13 +8569,13 @@
                <technology name="refined liquids">
                   <period year="1990">
                      <minicam-energy-input name="refined liquids enduse">
-                        <calibrated-value>0.348756992</calibrated-value>
+                        <calibrated-value>0.318033515</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids enduse">
-                        <calibrated-value>1.798845397</calibrated-value>
+                        <calibrated-value>1.767202225</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -8107,6 +8601,26 @@
                <share-weight year="1990">1</share-weight>
                <share-weight year="2005">1</share-weight>
             </subsector>
+            <subsector name="district heat">
+               <technology name="district heat">
+                  <period year="1990">
+                     <minicam-energy-input name="district heat">
+                        <calibrated-value>0.136954568</calibrated-value>
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="district heat">
+                        <calibrated-value>0.730476693</calibrated-value>
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
          </supplysector>
          <supplysector name="industrial energy use">
             <subsector name="biomass">
@@ -8119,7 +8633,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.066707598</calibrated-value>
+                        <calibrated-value>0.05158975</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -8153,13 +8667,13 @@
                <technology name="coal">
                   <period year="1990">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>10.67947356</calibrated-value>
+                        <calibrated-value>10.19271301</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>19.26711581</calibrated-value>
+                        <calibrated-value>17.155426</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -8211,13 +8725,13 @@
                <technology name="gas">
                   <period year="1990">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>0.450991456</calibrated-value>
+                        <calibrated-value>0.428351508</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>1.242488715</calibrated-value>
+                        <calibrated-value>1.160618641</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -8251,13 +8765,13 @@
                <technology name="refined liquids">
                   <period year="1990">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>1.624075729</calibrated-value>
+                        <calibrated-value>1.50451402</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>3.378890614</calibrated-value>
+                        <calibrated-value>3.298549446</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -8286,6 +8800,26 @@
                      </secondary-output>
                   </period>
                </technology>
+            </subsector>
+            <subsector name="district heat">
+               <technology name="district heat">
+                  <period year="1990">
+                     <minicam-energy-input name="district heat">
+                        <calibrated-value>0.532964489</calibrated-value>
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="district heat">
+                        <calibrated-value>1.854660806</calibrated-value>
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
             </subsector>
          </supplysector>
          <supplysector name="industrial feedstocks">
@@ -8362,6 +8896,412 @@
                      <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>2.63056644</calibrated-value>
                         <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+         </supplysector>
+         <supplysector name="district heat">
+            <subsector name="biomass">
+               <share-weight year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <technology name="biomass">
+                  <period year="1975">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.13</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.13</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.8</efficiency>
+                        <calibrated-value>0</calibrated-value>
+                     </minicam-energy-input>
+                     <share-weight>0</share-weight>
+                  </period>
+                  <period year="2005">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.13</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.8</efficiency>
+                        <calibrated-value>0.021072164</calibrated-value>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2020">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.13</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2035">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.01</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2050">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.89</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2065">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.78</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2080">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.67</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2095">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.58</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+               </technology>
+               <share-weight year="1990">0</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="coal">
+               <share-weight year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <technology name="coal">
+                  <period year="1975">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.71</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.71</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.8</efficiency>
+                        <calibrated-value>0.611842205</calibrated-value>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2005">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.71</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.8</efficiency>
+                        <calibrated-value>2.943399949</calibrated-value>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2020">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.71</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2035">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.61</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2050">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.52</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2065">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.43</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2080">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.34</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2095">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.27</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="gas">
+               <share-weight year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <technology name="gas">
+                  <period year="1975">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.71</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.71</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <efficiency>0.8</efficiency>
+                        <calibrated-value>0.02845768</calibrated-value>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2005">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.71</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <efficiency>0.8</efficiency>
+                        <calibrated-value>0.114115421</calibrated-value>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2020">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.73</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2035">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.69</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2050">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.65</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2065">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.61</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2080">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.58</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2095">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.54</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="refined liquids">
+               <share-weight year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <technology name="refined liquids">
+                  <period year="1975">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.67</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="refined liquids industrial">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.67</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="refined liquids industrial">
+                        <efficiency>0.8</efficiency>
+                        <calibrated-value>0.150285186</calibrated-value>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2005">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.67</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="refined liquids industrial">
+                        <efficiency>0.8</efficiency>
+                        <calibrated-value>0.11198434</calibrated-value>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2020">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.69</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="refined liquids industrial">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2035">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.65</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="refined liquids industrial">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2050">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.61</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="refined liquids industrial">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2065">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.57</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="refined liquids industrial">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2080">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.54</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="refined liquids industrial">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2095">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.51</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="refined liquids industrial">
+                        <efficiency>0.8</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -13350,7 +14290,7 @@
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>1.421284225</calOutputValue>
+                        <calOutputValue>1.35242851</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.060273238</coefficient>
@@ -13365,7 +14305,7 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>1.890280009</calOutputValue>
+                        <calOutputValue>1.871415864</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.046780986</coefficient>
@@ -13412,7 +14352,7 @@
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>1.355301052</calOutputValue>
+                        <calOutputValue>1.424156767</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.060273238</coefficient>
@@ -13427,7 +14367,7 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.971950449</calOutputValue>
+                        <calOutputValue>0.990814594</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional crude oil">
                         <coefficient>1.046780986</coefficient>
@@ -13477,6 +14417,9 @@
                         <efficiency>0.143307538</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="district heat">
+                        <output-ratio>2.149758454</output-ratio>
+                     </secondary-output>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional biomass">
@@ -13484,6 +14427,9 @@
                         <efficiency>0.273916091</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="district heat">
+                        <output-ratio>0.32324159</output-ratio>
+                     </secondary-output>
                   </period>
                </technology>
                <share-weight year="1990">1</share-weight>
@@ -13497,6 +14443,9 @@
                         <efficiency>0.294979205</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="district heat">
+                        <output-ratio>0.412077504</output-ratio>
+                     </secondary-output>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="regional coal">
@@ -13504,6 +14453,9 @@
                         <efficiency>0.319428201</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="district heat">
+                        <output-ratio>0.313961845</output-ratio>
+                     </secondary-output>
                   </period>
                </technology>
                <share-weight year="1990">1</share-weight>
@@ -13517,6 +14469,9 @@
                         <efficiency>0.19581875</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="district heat">
+                        <output-ratio>1.225080778</output-ratio>
+                     </secondary-output>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
@@ -13524,6 +14479,9 @@
                         <efficiency>0.288992622</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="district heat">
+                        <output-ratio>1.250318276</output-ratio>
+                     </secondary-output>
                   </period>
                </technology>
                <share-weight year="1990">1</share-weight>
@@ -13537,6 +14495,9 @@
                         <efficiency>0.18585678</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="district heat">
+                        <output-ratio>1.048715762</output-ratio>
+                     </secondary-output>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids electricity">
@@ -13544,6 +14505,9 @@
                         <efficiency>0.261544292</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
+                     <secondary-output name="district heat">
+                        <output-ratio>1.162462937</output-ratio>
+                     </secondary-output>
                   </period>
                </technology>
                <share-weight year="1990">1</share-weight>
@@ -14021,13 +14985,13 @@
                <technology name="biomass">
                   <period year="1990">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.179138792</calibrated-value>
+                        <calibrated-value>0.176758322</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.402112616</calibrated-value>
+                        <calibrated-value>0.396288994</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -14039,13 +15003,13 @@
                <technology name="coal">
                   <period year="1990">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>1.233865681</calibrated-value>
+                        <calibrated-value>0.966552088</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>0.423807856</calibrated-value>
+                        <calibrated-value>0.326821608</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -14075,13 +15039,13 @@
                <technology name="gas">
                   <period year="1990">
                      <minicam-energy-input name="delivered gas">
-                        <calibrated-value>0.660240787</calibrated-value>
+                        <calibrated-value>0.610276342</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered gas">
-                        <calibrated-value>1.007821072</calibrated-value>
+                        <calibrated-value>0.89638132</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -14093,13 +15057,33 @@
                <technology name="refined liquids">
                   <period year="1990">
                      <minicam-energy-input name="refined liquids enduse">
-                        <calibrated-value>0.315006061</calibrated-value>
+                        <calibrated-value>0.246150346</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids enduse">
-                        <calibrated-value>0.24323057</calibrated-value>
+                        <calibrated-value>0.224366425</calibrated-value>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="district heat">
+               <technology name="district heat">
+                  <period year="1990">
+                     <minicam-energy-input name="district heat">
+                        <calibrated-value>0.625194644</calibrated-value>
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="district heat">
+                        <calibrated-value>0.512897961</calibrated-value>
+                        <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -14113,13 +15097,13 @@
                <technology name="biomass">
                   <period year="1990">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.053005441</calibrated-value>
+                        <calibrated-value>0.050679947</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.122980655</calibrated-value>
+                        <calibrated-value>0.120141788</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -14153,13 +15137,13 @@
                <technology name="coal">
                   <period year="1990">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>1.89475764</calibrated-value>
+                        <calibrated-value>1.633617525</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>0.795879765</calibrated-value>
+                        <calibrated-value>0.748601445</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -14211,13 +15195,13 @@
                <technology name="gas">
                   <period year="1990">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>1.46631728</calibrated-value>
+                        <calibrated-value>1.417506739</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>0.716126048</calibrated-value>
+                        <calibrated-value>0.661802015</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -14251,13 +15235,13 @@
                <technology name="refined liquids">
                   <period year="1990">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.894783526</calibrated-value>
+                        <calibrated-value>0.827518</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.474937196</calibrated-value>
+                        <calibrated-value>0.465741407</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -14286,6 +15270,26 @@
                      </secondary-output>
                   </period>
                </technology>
+            </subsector>
+            <subsector name="district heat">
+               <technology name="district heat">
+                  <period year="1990">
+                     <minicam-energy-input name="district heat">
+                        <calibrated-value>0.610756076</calibrated-value>
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="district heat">
+                        <calibrated-value>0.25002466</calibrated-value>
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
             </subsector>
          </supplysector>
          <supplysector name="industrial feedstocks">
@@ -14362,6 +15366,412 @@
                      <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>0.447146053</calibrated-value>
                         <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+         </supplysector>
+         <supplysector name="district heat">
+            <subsector name="biomass">
+               <share-weight year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <technology name="biomass">
+                  <period year="1975">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.13</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.13</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.8</efficiency>
+                        <calibrated-value>0.004705963</calibrated-value>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2005">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.13</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.8</efficiency>
+                        <calibrated-value>0.008662489</calibrated-value>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2020">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.13</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2035">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>2.01</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2050">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.89</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2065">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.78</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2080">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.67</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2095">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.58</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered biomass">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="coal">
+               <share-weight year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <technology name="coal">
+                  <period year="1975">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.71</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.71</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.8</efficiency>
+                        <calibrated-value>0.528453709</calibrated-value>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2005">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.71</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.8</efficiency>
+                        <calibrated-value>0.144264568</calibrated-value>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2020">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.71</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2035">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.61</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2050">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.52</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2065">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.43</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2080">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.34</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2095">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>1.27</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="delivered coal">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="gas">
+               <share-weight year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <technology name="gas">
+                  <period year="1975">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.71</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.71</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <efficiency>0.8</efficiency>
+                        <calibrated-value>0.098774986</calibrated-value>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2005">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.71</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <efficiency>0.8</efficiency>
+                        <calibrated-value>0.165763786</calibrated-value>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2020">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.73</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2035">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.69</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2050">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.65</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2065">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.61</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2080">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.58</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2095">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.54</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="wholesale gas">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+               </technology>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+            </subsector>
+            <subsector name="refined liquids">
+               <share-weight year="1975">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <technology name="refined liquids">
+                  <period year="1975">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.67</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="refined liquids industrial">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="1990">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.67</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="refined liquids industrial">
+                        <efficiency>0.8</efficiency>
+                        <calibrated-value>0.136121242</calibrated-value>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2005">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.67</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="refined liquids industrial">
+                        <efficiency>0.8</efficiency>
+                        <calibrated-value>0.028059934</calibrated-value>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2020">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.69</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="refined liquids industrial">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2035">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.65</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="refined liquids industrial">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2050">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.61</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="refined liquids industrial">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2065">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.57</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="refined liquids industrial">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2080">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.54</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="refined liquids industrial">
+                        <efficiency>0.8</efficiency>
+                     </minicam-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2095">
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0.51</input-cost>
+                     </minicam-non-energy-input>
+                     <minicam-energy-input name="refined liquids industrial">
+                        <efficiency>0.8</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>

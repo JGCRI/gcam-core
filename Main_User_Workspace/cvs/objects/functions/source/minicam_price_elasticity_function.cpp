@@ -72,7 +72,7 @@ double MinicamPriceElasticityFunction::calcCosts( const InputSet& aInput,
         double priceRatio = FunctionUtils::calcPriceRatio( aRegionName, *input,
                                                            normPeriod, aPeriod );
         totalCost +=  ( *input )->getCoefficient( aPeriod )
-                      * pow( priceRatio, ( *input )->getPriceElasticity() )
+                      * pow( priceRatio, ( *input )->getPriceElasticity( aPeriod ) )
                       * ( *input )->getPrice( aRegionName, aPeriod );
     }
     return totalCost / aAlphaZero;
@@ -98,7 +98,8 @@ double MinicamPriceElasticityFunction::calcCoefficient( InputSet& input,
                                                         int period,
                                                         double sigma,
                                                         double indBusTax,
-                                                        double capitalStock ) const
+                                                        double capitalStock,
+                                                        const IInput* aParentInput ) const
 {
     // MiniCAM coefficients are read in and do not need to be calculated.
     return 1;
@@ -128,7 +129,8 @@ double MinicamPriceElasticityFunction::calcDemand( InputSet& aInputs,
                                                    double aCapitalStock,
                                                    double aAlphaZero,
                                                    double aSigma,
-                                                   double aIBT ) const
+                                                   double aIBT,
+                                                   const IInput* aParentInput ) const
 {
     int normPeriod = SectorUtils::getDemandNormPeriod( aPeriod );
 
@@ -141,7 +143,7 @@ double MinicamPriceElasticityFunction::calcDemand( InputSet& aInputs,
         // Calculate the input demand including any changes due to the price ratio.
         double inputDemand = ( *input )->getCoefficient( aPeriod )
                              * aConsumption
-                             * pow( priceRatio, ( *input )->getPriceElasticity() ); 
+                             * pow( priceRatio, ( *input )->getPriceElasticity( aPeriod ) ); 
 
         ( *input )->setPhysicalDemand( inputDemand, aRegionName, aPeriod );
         totalDemand += inputDemand;
@@ -166,7 +168,8 @@ double MinicamPriceElasticityFunction::calcLevelizedCost( const InputSet& aInput
                                                           const string& aSectorName,
                                                           int aPeriod,
                                                           double aAlphaZero,
-                                                          double aSigma ) const
+                                                          double aSigma,
+                                                          const IInput* aParentInput ) const
 {
     int normPeriod = SectorUtils::getDemandNormPeriod( aPeriod );
 
@@ -176,7 +179,7 @@ double MinicamPriceElasticityFunction::calcLevelizedCost( const InputSet& aInput
         double priceRatio = FunctionUtils::calcPriceRatio( aRegionName, *input,
                                                            normPeriod, aPeriod );
         levelizedCost += ( *input )->getCoefficient( aPeriod )
-                         * pow( priceRatio, ( *input )->getPriceElasticity() )
+                         * pow( priceRatio, ( *input )->getPriceElasticity( aPeriod ) )
                          * ( *input )->getPrice( aRegionName, aPeriod );
     }
     return levelizedCost / aAlphaZero;

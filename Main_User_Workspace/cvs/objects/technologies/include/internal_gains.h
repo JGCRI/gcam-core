@@ -61,11 +61,7 @@ class Tabs;
  *          a primary product which has a positive value in the heating market
  *          and a negative value in the cooling market. Output of the internal
  *          gain is not optimized, it is always produced at a fixed ratio to the
- *          primary output, and may not be discarded. The portion of the
- *          internal gains added to the heating market, and the portion
- *          subtracted from the cooling market, is determined by the fraction of
- *          year heating, or cooling, is active. This is defined at the regional
- *          level.
+ *          primary output, and may not be discarded.
  *          
  *          <b>XML specification for InternalGains</b>
  *          - XML name: \c internal-gains
@@ -74,10 +70,14 @@ class Tabs;
  *          - Attributes: None.
  *          - Elements:
  *              - \c output-ratio InternalGains::mOutputRatio
- *              - \c heating-market InternalGains::mHeatingMarket
- *              - \c cooling-market InternalGains::mCoolingMarket
+ *                   The ratio of primary product to internal gains in this
+ *                   technology year.
+ *              - \c internal-gains-market-name InternalGains::mTrialMarketName
+ *                   The name of the market to add internal gains into.
  *          
  * \author Josh Lurz
+ * \author Pralit Patel
+ * \author Jiyong Eom
  */
 class InternalGains : public IOutput {
     friend class OutputFactory;
@@ -136,14 +136,10 @@ public:
                                     const double aOutput,
                                     const int aPeriod )
     {
-        // TODO: This could work by converting from physical to currency with
-        // the market price.
     }
 
     virtual double getCurrencyOutput( const int aPeriod ) const
     {
-        // TODO: This could work by converting from physical to currency with
-        // the market price.
         return 0;
     }
 
@@ -175,27 +171,15 @@ protected:
     //! Physical output by period.
     std::vector<Value> mPhysicalOutputs;
 
-    //! Name of the heating service market.
-    std::string mHeatingMarket;
-
-    //! Name of the cooling service market.
-    std::string mCoolingMarket;
-
-    //! Fraction of the year in the region the cooling demand is active.
-    Value mCoolingFractionOfYearActive;
-
-    //! Fraction of the year in the region the heating demand is active.
-    Value mHeatingFractionOfYearActive;
+    //! Internal Gains trial market name.
+    std::string mTrialMarketName;
 
     //! Ratio of the internal gains to primary output production such that
     //! primary output multiplied by the ratio is equal to internal gains.
     Value mOutputRatio;
     
-    //! State value for heating market necessary to use Marketplace::addToDemand
-    double mLastCalcHeat;
-    
-    //! State value for cooling market necessary to use Marketplace::addToDemand
-    double mLastCalcCool;
+    //! State value necessary to use addToTrialDemand
+    double mLastCalcValue;
 
 private :
     const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 

@@ -180,11 +180,12 @@ void TradeInput::initCalc( const string& aRegionName,
                          const string& aSectorName,
                          const bool aIsNewInvestmentPeriod,
                          const bool aIsTrade,
+                         const IInfo* aTechInfo,
                          const int aPeriod )
 {
     // do the base init calc with the trading partner as the region name
     SGMInput::initCalc( mTradingPartner, aSectorName, aIsNewInvestmentPeriod,
-        aIsTrade, aPeriod );
+        aIsTrade, aTechInfo, aPeriod );
 
     // add traded to the type flags
     mTypeFlags |= IInput::TRADED;

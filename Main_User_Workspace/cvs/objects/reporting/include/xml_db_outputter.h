@@ -208,6 +208,16 @@ public:
     virtual void startVisitNationalAccount( const NationalAccount* aNationalAccount, const int aPeriod );
     virtual void endVisitNationalAccount( const NationalAccount* aNationalAccount, const int aPeriod );
 
+
+    virtual void startVisitGCAMConsumer( const GCAMConsumer* aGCAMConsumer, const int aPeriod );
+    virtual void endVisitGCAMConsumer( const GCAMConsumer* aGCAMConsumer, const int aPeriod );
+
+    virtual void startVisitBuildingNodeInput( const BuildingNodeInput* aBuildingNodeInput, const int aPeriod );
+    virtual void endVisitBuildingNodeInput( const BuildingNodeInput* aBuildingNodeInput, const int aPeriod );
+
+    virtual void startVisitBuildingServiceInput( const BuildingServiceInput* aBuildingServiceInput, const int aPeriod );
+    virtual void endVisitBuildingServiceInput( const BuildingServiceInput* aBuildingServiceInput, const int aPeriod );
+
     static bool appendData( const std::string& aData, const std::string& aLocation );
 private:
     //! std::stringstream containing all the information until it is printed.

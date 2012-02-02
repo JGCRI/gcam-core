@@ -121,6 +121,7 @@ public:
                            const std::string& aSectorName,
                            const bool aIsNewInvestmentPeriod,
                            const bool aIsTrade,
+                           const IInfo* aTechInfo,
                            const int aPeriod );
 
     virtual  double getCO2EmissionsCoefficient( const std::string& aGHGName,
@@ -150,9 +151,9 @@ public:
 
     virtual bool hasTypeFlag( const int aTypeFlag ) const;
     
-    virtual double getIncomeElasticity() const;
+    virtual double getIncomeElasticity( const int aPeriod ) const;
 
-    virtual double getPriceElasticity() const;
+    virtual double getPriceElasticity( const int aPeriod ) const;
 
     virtual double getTechChange( const int aPeriod ) const;
 

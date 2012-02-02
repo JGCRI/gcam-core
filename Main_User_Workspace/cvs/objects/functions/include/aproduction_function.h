@@ -67,11 +67,11 @@ public:
 	virtual double calcDemand( InputSet& input, double consumption, const std::string& regionName,
 							   const std::string& sectorName, const double aShutdownCoef, int period,
 							   double capitalStock = 0, double alphaZero = 0, double sigma = 0,
-							   double IBT = 0 ) const = 0;
+							   double IBT = 0, const IInput* aParentInput = 0 ) const = 0;
 
 	virtual double calcCoefficient( InputSet& input, double consumption, const std::string& regionName,
 									const std::string& sectorName, int period, double sigma = 0, double IBT = 0,
-									double capitalStock = 0 ) const = 0;
+									double capitalStock = 0, const IInput* aParentInput = 0 ) const = 0;
 
 	virtual double changeElasticity( InputSet& input, const std::string& aRegionName,
 									 double priceReceived, double aProfits, double capitalStock,
@@ -102,7 +102,7 @@ public:
     
     virtual double calcLevelizedCost( const InputSet& aInputs, const std::string& aRegionName,
 									  const std::string& aSectorName, int aPeriod, double aAlphaZero = 0,
-									  double aSigma = 0 ) const = 0;
+									  double aSigma = 0, const IInput* aParentInput = 0 ) const = 0;
 
     virtual double applyTechnicalChange( InputSet& input, const TechChange& aTechChange,
 										 const std::string& regionName, const std::string& sectorName,

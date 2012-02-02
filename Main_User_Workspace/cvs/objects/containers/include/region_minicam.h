@@ -72,6 +72,7 @@ class GDP;
 class Curve;
 class TotalSectorEmissions;
 class AFinalDemand;
+class Consumer;
 
 /*! 
 * \ingroup Objects
@@ -134,6 +135,9 @@ protected:
 
     std::vector<double> calibrationGDPs; //!< GDPs to calibrate to
     std::vector<double> GDPcalPerCapita; //!< GDP per capita to calibrate to
+
+    //! GCAM consumers
+    std::vector<Consumer*> mConsumers;
 
     std::vector<Summary> summary; //!< summary values and totals for reporting
     std::map<std::string,int> supplySectorNameMap; //!< Map of supplysector name to integer position in vector.

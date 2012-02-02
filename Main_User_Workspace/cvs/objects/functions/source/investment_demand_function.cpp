@@ -67,7 +67,7 @@ extern Scenario* scenario;
 double InvestmentDemandFunction::calcDemand( InputSet& input, double capitalTotal, const string& regionName,
 											 const string& sectorName, const double aShutdownCoef,
 											 int period, double capitalStock, double alphaZero,
-											 double sigma, double IBT ) const
+											 double sigma, double IBT, const IInput* aParentInput ) const
 {
 	double capitalSum = 0;
     for( unsigned int i = 0; i < input.size(); ++i ){
@@ -92,7 +92,7 @@ double InvestmentDemandFunction::calcDemand( InputSet& input, double capitalTota
 double InvestmentDemandFunction::calcCoefficient( InputSet& input, double consumption,
 												  const string& regionName, const string& sectorName,
 												  int period, double sigma, double IBT,
-												  double capitalStock ) const
+												  double capitalStock, const IInput* aParentInput ) const
 {
     return 0; // Investment coefficients are read in, not calculated
 }

@@ -203,6 +203,7 @@ void InputCapital::initCalc( const string& aRegionName,
                              const string& aSectorName,
                              const bool aIsNewInvestmentPeriod,
                              const bool aIsTrade,
+                             const IInfo* aTechInfo,
                              const int aPeriod )
 {
     // Initialize the current coefficient to 1 if it has not 
@@ -275,11 +276,11 @@ bool InputCapital::hasTypeFlag( const int aTypeFlag ) const {
     return ( ( aTypeFlag & ~( IInput::CAPITAL ) ) == 0 );
 }
 
-double InputCapital::getIncomeElasticity() const {
+double InputCapital::getIncomeElasticity( const int aPeriod ) const {
     return 0;
 }
 
-double InputCapital::getPriceElasticity() const {
+double InputCapital::getPriceElasticity( const int aPeriod ) const {
     return 0;
 }
 

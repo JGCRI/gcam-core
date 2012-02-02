@@ -45,9 +45,9 @@
 #include "technologies/include/internal_gains.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
-#include "containers/include/iinfo.h"
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/ivisitor.h"
+#include "sectors/include/sector_utils.h"
 #include "containers/include/market_dependency_finder.h"
 
 using namespace std;
@@ -65,7 +65,7 @@ const string& InternalGains::getXMLNameStatic()
 }
 
 InternalGains::InternalGains()
-    : mPhysicalOutputs( scenario->getModeltime()->getmaxper() )
+: mPhysicalOutputs( scenario->getModeltime()->getmaxper() )
 {
 }
 
@@ -116,11 +116,8 @@ bool InternalGains::XMLParse( const DOMNode* aNode )
         else if( nodeName == "output-ratio" ) {
             mOutputRatio = XMLHelper<double>::getValue( curr );
         }
-        else if( nodeName == "heating-market" ) {
-            mHeatingMarket = XMLHelper<string>::getValue( curr );
-        }
-        else if( nodeName == "cooling-market" ) {
-            mCoolingMarket = XMLHelper<string>::getValue( curr );
+        else if( nodeName == "internal-gains-market-name" ) {
+            mTrialMarketName = XMLHelper<string>::getValue( curr );
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -129,7 +126,6 @@ bool InternalGains::XMLParse( const DOMNode* aNode )
         }
     }
 
-    // TODO: Improve error handling.
     return true;
 }
 
@@ -138,8 +134,7 @@ void InternalGains::toInputXML( ostream& aOut,
 {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
     XMLWriteElement( mOutputRatio, "output-ratio", aOut, aTabs );
-    XMLWriteElement( mHeatingMarket, "heating-market", aOut, aTabs );
-    XMLWriteElement( mCoolingMarket, "cooling-market", aOut, aTabs );
+    XMLWriteElement( mTrialMarketName, "internal-gains-market-name", aOut, aTabs );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
@@ -149,11 +144,8 @@ void InternalGains::toDebugXML( const int aPeriod,
 {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs );
     XMLWriteElement( mOutputRatio, "output-ratio", aOut, aTabs );
-    XMLWriteElement( mHeatingMarket, "heating-market", aOut, aTabs );
-    XMLWriteElement( mCoolingMarket, "cooling-market", aOut, aTabs );
+    XMLWriteElement( mTrialMarketName, "internal-gains-market-name", aOut, aTabs );
     XMLWriteElement( mPhysicalOutputs[ aPeriod ], "output", aOut, aTabs );
-    XMLWriteElement( mCoolingFractionOfYearActive, "cooling-fraction-of-year-active", aOut, aTabs );
-    XMLWriteElement( mHeatingFractionOfYearActive, "heating-fraction-of-year-active", aOut, aTabs );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
@@ -162,16 +154,14 @@ void InternalGains::completeInit( const string& aSectorName,
                                   const IInfo* aTechInfo,
                                   const bool aIsTechOperating )
 {
-    // Internal gains are removed or added to demand, so add a dependency.
+    // Internal gains create a simultaneity so we use a trial value for it.  Create
+    // a link to that market.
     if( aIsTechOperating ) {
         MarketDependencyFinder* depFinder = scenario->getMarketplace()->getDependencyFinder();
-        depFinder->addDependency( aSectorName, aRegionName, mHeatingMarket, aRegionName );
-        depFinder->addDependency( aSectorName, aRegionName, mCoolingMarket, aRegionName );
+        depFinder->addDependency( aSectorName, aRegionName,
+                                  SectorUtils::getTrialMarketName( mTrialMarketName ),
+                                  aRegionName );
     }
-
-    // Store the fraction of year active for heating and cooling.
-    mHeatingFractionOfYearActive = aTechInfo->getDouble( "heating-fraction-of-year-active", true );
-    mCoolingFractionOfYearActive = aTechInfo->getDouble( "cooling-fraction-of-year-active", true );
 }
 
 void InternalGains::initCalc( const string& aRegionName,
@@ -187,7 +177,6 @@ void InternalGains::postCalc( const string& aRegionName,
 
 void InternalGains::scaleCoefficient( const double aScaler ){
     // InternalGains gains do not support scaling.
-    // TODO: Should they?
 }
 
 IOutput::OutputList InternalGains::calcPhysicalOutput( const double aPrimaryOutput,
@@ -196,15 +185,12 @@ IOutput::OutputList InternalGains::calcPhysicalOutput( const double aPrimaryOutp
                                                        const int aPeriod ) const
 {
     // Calculate total internal gains.
-    double totalGains = mOutputRatio * aPrimaryOutput;
+    double internalGains = mOutputRatio * aPrimaryOutput;
 
     OutputList outputList;
     
     // Add the heating internal gain.
-    outputList.push_back( make_pair( mHeatingMarket, totalGains * mHeatingFractionOfYearActive ) );
-
-    // Subtract the cooling interal gain.
-    outputList.push_back( make_pair( mCoolingMarket, -1 * totalGains * mCoolingFractionOfYearActive ) );
+    outputList.push_back( make_pair( mTrialMarketName, internalGains ) );
 
     return outputList;
 }
@@ -215,24 +201,12 @@ void InternalGains::setPhysicalOutput( const double aPrimaryOutput,
                                        const int aPeriod )
 {
     // Calculate total internal gains.
-    double totalGains = mOutputRatio * aPrimaryOutput;
+    double internalGains = mOutputRatio * aPrimaryOutput;
 
-    mPhysicalOutputs[ aPeriod ] = totalGains;
+    mPhysicalOutputs[ aPeriod ] = internalGains;
 
-    Marketplace* marketplace = scenario->getMarketplace();
-
-    // Subtract from the heating market demand. The internal gains is actually
-    // supplying heating services, but adding to demand is required due to
-    // ordering constraints.
-    mLastCalcHeat = marketplace->addToDemand( mHeatingMarket, aRegionName,
-                              -1 * totalGains * mHeatingFractionOfYearActive, mLastCalcHeat,
-                              aPeriod, true );
-
-    // Add to the demand for cooling services. Internal gains cause additional
-    // cooling services to be required.
-    mLastCalcCool = marketplace->addToDemand( mCoolingMarket, aRegionName,
-                              totalGains * mCoolingFractionOfYearActive, mLastCalcCool,
-                              aPeriod, true );
+    // Add to the actual internal gains in the trials market
+    SectorUtils::addToTrialDemand( aRegionName, mTrialMarketName, internalGains, mLastCalcValue, aPeriod );
 }
 
 double InternalGains::getPhysicalOutput( const int aPeriod ) const
@@ -245,21 +219,9 @@ double InternalGains::getValue( const string& aRegionName,
                                 const ICaptureComponent* aCaptureComponent,
                                 const int aPeriod ) const
 {
-    const Marketplace* marketplace = scenario->getMarketplace();
-    double heatingPrice = marketplace->getPrice( mHeatingMarket, aRegionName, aPeriod, true );
-    double coolingPrice = marketplace->getPrice( mCoolingMarket, aRegionName, aPeriod, true );
-
-    // The value of internal gains is equal to the ratio of output to the
-    // primary good multiplied by the value of each unit of internal gains. The
-    // value of each unit of internal gains is equal to the heating service
-    // market price multiplied by the amount of internal gains during the
-    // heating season(the positive value) minus the cooling price multiplied by
-    // the amount of internal gains during the cooling season(the negative
-    // value).
-    double averagePrice = mOutputRatio *
-                          ( heatingPrice * mHeatingFractionOfYearActive -
-                            coolingPrice * mCoolingFractionOfYearActive );
-    return averagePrice;
+    // There is no direct value for internal gains, only indirectly by changing
+    // thermal load requirements.
+    return 0;
 }
 
 double InternalGains::getEmissionsPerOutput( const string& aGHGName,
@@ -280,7 +242,6 @@ void InternalGains::doInterpolations( const int aYear, const int aPreviousYear,
                                       const int aNextYear, const IOutput* aPreviousOutput,
                                       const IOutput* aNextOutput )
 {
-    // TODO: do we really want to do this?
     const InternalGains* prevInternalGains = static_cast<const InternalGains*>( aPreviousOutput );
     const InternalGains* nextInternalGains = static_cast<const InternalGains*>( aNextOutput );
     

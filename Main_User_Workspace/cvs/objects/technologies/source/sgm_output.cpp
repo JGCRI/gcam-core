@@ -110,7 +110,9 @@ bool SGMOutput::XMLParse( const DOMNode* aNode )
 
     const Modeltime* modeltime = scenario->getModeltime();
 
-    mName = XMLHelper<string>::getAttr( aNode, "name" );
+    if( XMLHelper<string>::getAttr( aNode, "name" ) != "" ) {
+        mName = XMLHelper<string>::getAttr( aNode, "name" );
+    }
     // get all child nodes.
     DOMNodeList* nodeList = aNode->getChildNodes();
 

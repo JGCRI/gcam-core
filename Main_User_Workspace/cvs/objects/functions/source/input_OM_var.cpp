@@ -176,6 +176,7 @@ void InputOMVar::initCalc( const string& aRegionName,
                            const string& aSectorName,
                            const bool aIsNewInvestmentPeriod,
                            const bool aIsTrade,
+                           const IInfo* aTechInfo,
                            const int aPeriod )
 {
     // Initialize the current coefficient to 1 if it has not 
@@ -248,11 +249,11 @@ bool InputOMVar::hasTypeFlag( const int aTypeFlag ) const {
     return ( ( aTypeFlag & ~( IInput::OM_VAR ) ) == 0 );
 }
 
-double InputOMVar::getIncomeElasticity() const {
+double InputOMVar::getIncomeElasticity( const int aPeriod ) const {
     return 0;
 }
 
-double InputOMVar::getPriceElasticity() const {
+double InputOMVar::getPriceElasticity( const int aPeriod ) const {
     return 0;
 }
 

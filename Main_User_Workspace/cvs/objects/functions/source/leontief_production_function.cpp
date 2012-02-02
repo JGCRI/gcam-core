@@ -84,7 +84,7 @@ double LeontiefProductionFunction::calcCapitalScaler( const InputSet& input, dou
 double LeontiefProductionFunction::calcCoefficient( InputSet& input, double consumption, 
 												    const string& regionName, const string& sectorName, 
                                                     int period, double sigma, double indBusTax, 
-                                                    double capitalStock ) const 
+                                                    double capitalStock, const IInput* aParentInput ) const 
 {
     assert( sigma < 0.05 ); // Should be a CES.
     // If there is no capital stock, initialize technical coefficients to zero.
@@ -169,7 +169,7 @@ double LeontiefProductionFunction::calcDemand( InputSet& input, double personalI
 											   const string& regionName, const string& sectorName,
                                                const double aShutdownCoef,
                                                int period, double capitalStock, double alphaZero, 
-                                               double sigma, double IBT ) const 
+                                               double sigma, double IBT, const IInput* aParentInput ) const 
 {
     double qCapital = calcCapitalScaler( input, alphaZero, sigma, capitalStock, period );
 
@@ -232,7 +232,8 @@ double LeontiefProductionFunction::calcExpProfitRate( const InputSet& input, con
 */
 double LeontiefProductionFunction::calcLevelizedCost( const InputSet& aInputs, const string& aRegionName,
 													  const string& aSectorName, int aPeriod,
-													  double aAlphaZero, double aSigma ) const
+													  double aAlphaZero, double aSigma,
+                                                      const IInput* aParentInput ) const
 {
     // Loop through the inputs and add on their costs.
     double levelizedCost = 0;

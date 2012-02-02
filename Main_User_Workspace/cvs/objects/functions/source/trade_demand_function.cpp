@@ -66,7 +66,8 @@ extern Scenario* scenario;
 
 double TradeDemandFunction::calcDemand( InputSet& input, double consumption, const string& regionName,
                                         const string& sectorName, const double aShutdownCoef, int period,
-                                        double capitalStock, double alphaZero, double sigma, double IBT ) const 
+                                        double capitalStock, double alphaZero, double sigma, double IBT,
+                                        const IInput* aParentInput ) const 
 {
 	double totalNetExport = 0; // total demand used for scaling
 	Marketplace* marketplace = scenario->getMarketplace();
@@ -103,7 +104,7 @@ double TradeDemandFunction::calcDemand( InputSet& input, double consumption, con
 
 double TradeDemandFunction::calcCoefficient( InputSet& input, double consumption, const string& regionName,
                                              const string& sectorName, int period, double sigma, double IBT,
-                                             double capitalStock ) const
+                                             double capitalStock, const IInput* aParentInput ) const
 {
 	return 0; // function not needed for trade consumer class
 }

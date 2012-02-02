@@ -1,26 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- edited with XMLSPY v5 rel. 4 U (http://www.xmlspy.com) by Josh Lurz (PNNL) -->
-<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="D:/cvs/Code/Ciam/Configuration.xsd">
+<Configuration>
 	<Files>
-		<Value name="erbInputFileName">../cvs/objects/model_data/EERE/erbinput2.csv</Value>
-		<Value name="outFileName">outFile.csv</Value>
-		<Value name="bugOutFileName">bugoutfile.csv</Value>
-		<Value name="logOutFileName">logfile.csv</Value>
-		<Value name="climatFileName">gas.emk</Value>
 		<Value name="xmlInputFileName">../cvs/objects/model_data/base/core_model_input_2010-05-03.xml</Value>
 		<Value name="xmlOutputFileName">../output/output.xml</Value>
+		<Value name="xmldb-location">../output/database.dbxml</Value>
 		<Value name="xmlDebugFileName">debug.xml</Value>
-		<Value name="sdCurveFileName">sdcurve.csv</Value>
-		<Value name="sdFileName">sdall.csv</Value>
-		<Value name="dbOutFileName">dbout.csv</Value>
+		<Value name="BatchFileName">batch_ag.xml</Value>
+		<Value name="policy-target-file">../input/policy_target.xml</Value>
+		<Value name="climatFileName">gas.emk</Value>
+		<Value name="GHGInputFileName">../cvs/objects/magicc/inputs/input_gases.emk</Value>
+		<Value name="outFileName">outFile.csv</Value>
 		<Value name="dbFileName">../output/output.mdb</Value>
 		<Value name="supplyDemandOutputFileName">SDCurves.csv</Value>
-		<Value name="xmldb-location">../output/database.dbxml</Value>
-		<Value name="xmldb-environment">../output</Value>
-		<Value name="GHGInputFileName">../cvs/objects/magicc/inputs/input_gases.emk</Value>
 		<Value name="dependencyGraphName">DependencyGraph</Value>
-		<Value name="policy-target-file">../input/policy_target.xml</Value>
-		<Value name="BatchFileName">batch_ag.xml</Value>
 		<Value name="ObjectSGMFileName">ObjectSGMout.csv</Value>
 		<Value name="ObjectSGMGenFileName">ObjectSGMGen.csv</Value>
 	</Files>
@@ -29,7 +21,6 @@
 
 		<Value name="socioeconomics">../input/energy/socioeconomics/gdp_population.xml</Value>
 		<Value name="demand">../input/energy/socioeconomics/agg_demand_elasticities.xml</Value>
-		<Value name="bld_aeei">../input/energy/socioeconomics/agg_building_aeei_ref.xml</Value>
 		<Value name="ind_aeei">../input/energy/socioeconomics/agg_industry_aeei_ref.xml</Value>
 		<Value name="resources">../input/energy/fossil/resources.xml</Value>
 		<Value name="gas">../input/energy/fossil/gas_processing_input.xml</Value>
@@ -47,10 +38,11 @@
 		<Value name="elec_wind">../input/energy/wind/global_wind_input_ref.xml</Value>
 		<Value name="elec_geothermal">../input/energy/geothermal/geothermal_rsrc_input_ref.xml</Value>
 		<Value name="elec_geothermal">../input/energy/geothermal/geothermal_tech_input.xml</Value>
-		<Value name="bld">../input/energy/buildings/global_bld_input_ref.xml</Value>
 		<Value name="bld_tradbio">../input/energy/tradbio/tradbio.xml</Value>
 		<Value name="ind">../input/energy/industry/global_ind_input_ref.xml</Value>
 		<Value name="cal">../input/energy/calibration_minicam/cal_1990_2005.xml</Value>
+		<Value name="bld">../input/energy/buildings/global_det_bld_input.xml</Value>
+		<Value name="bld_nonco2">../input/energy/buildings/global_bld_nonco2.xml</Value>
 		<Value name="ind_cement">../input/energy/cement/cement_input_ref.xml</Value>
 		<Value name="trn">../input/energy/transportation/global_det_trn_input_ref.xml</Value>
 		<Value name="ind_cal_adj">../input/energy/industry/ind_cal_adj_cement.xml</Value>
@@ -98,25 +90,21 @@
 		<Value name="debug-region">Australia_NZ</Value>
 	</Strings>
 	<Bools>
-		<Value name="debugChecking">0</Value>
-		<Value name="write-access-db">0</Value>
-		<Value name="write-xml-db">1</Value>
-		<Value name="BatchMode">0</Value>
-		<Value name="timestamp">0</Value>
-		<Value name="agSubsidy">1</Value>
-		<Value name="simulActive">1</Value>
 		<Value name="CalibrationActive">1</Value>
-		<Value name="trackMaxED">0</Value>
+		<Value name="BatchMode">0</Value>
+		<Value name="find-path">0</Value>
+		<Value name="createCostCurve">0</Value>
+		<Value name="agSubsidy">1</Value>
+		<Value name="addLUCtoMarket">0</Value>
+		<Value name="write-xml-db">1</Value>
+		<Value name="write-access-db">0</Value>
+		<Value name="debugChecking">0</Value>
+		<Value name="debugFindSD">0</Value>
+		<Value name="simulActive">1</Value>
 		<Value name="PrintDependencyGraphs">0</Value>
 		<Value name="PrintValuesOnGraphs">1</Value>
-		<Value name="debugFindSD">0</Value>
-		<Value name="PrintSectorDependencies">1</Value>
 		<Value name="ShowNullPaths">0</Value>
 		<Value name="PrintPrices">1</Value>
-		<Value name="createCostCurve">0</Value>
-		<Value name="estimateCosts">0</Value>
-		<Value name="find-path">0</Value>
-		<Value name="addLUCtoMarket">0</Value>
 	</Bools>
 	<Ints>
 		<Value name="numMarketsToFindSD">10</Value>

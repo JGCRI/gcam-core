@@ -67,7 +67,9 @@ public:
 
     // IVisitor methods
     virtual void startVisitSGMInput( const SGMInput* aSGMInput, const int aPeriod );
-    // TODO: put a visit for any other type of input which could be a leaf here
+
+    virtual void startVisitBuildingServiceInput( const BuildingServiceInput* aBuildingServiceInput, const int aPeriod );
+    // Put a visit for any other type of input which could be a leaf here
 
 private:
     //! The vector of found leaves accumulated during visiting

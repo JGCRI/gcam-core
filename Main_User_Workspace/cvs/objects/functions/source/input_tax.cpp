@@ -216,6 +216,7 @@ void InputTax::initCalc( const string& aRegionName,
                              const string& aSectorName,
                              const bool aIsNewInvestmentPeriod,
                              const bool aIsTrade,
+                             const IInfo* aTechInfo,
                              const int aPeriod )
 {
     // There must be a valid region name.
@@ -312,11 +313,11 @@ bool InputTax::hasTypeFlag( const int aTypeFlag ) const {
     return ( ( aTypeFlag & ~IInput::TAX ) == 0 );
 }
 
-double InputTax::getIncomeElasticity() const {
+double InputTax::getIncomeElasticity( const int aPeriod ) const {
     return 0;
 }
 
-double InputTax::getPriceElasticity() const {
+double InputTax::getPriceElasticity( const int aPeriod ) const {
     return 0;
 }
 

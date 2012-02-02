@@ -219,6 +219,7 @@ void BuildingDemandInput::initCalc( const string& aRegionName,
                                     const string& aSectorName,
                                     const bool aIsNewInvestmentPeriod,
                                     const bool aIsTrade,
+                                    const IInfo* aTechInfo,
                                     const int aPeriod )
 {
     if( FunctionUtils::getCO2Coef( aRegionName, mName, aPeriod ) > util::getSmallNumber() ){
@@ -312,11 +313,11 @@ bool BuildingDemandInput::hasTypeFlag( const int aTypeFlag ) const {
     return ( ( aTypeFlag & ~IInput::ENERGY ) == 0 );
 }
 
-double BuildingDemandInput::getIncomeElasticity() const {
+double BuildingDemandInput::getIncomeElasticity( const int aPeriod ) const {
     return 0;
 }
 
-double BuildingDemandInput::getPriceElasticity() const {
+double BuildingDemandInput::getPriceElasticity( const int aPeriod ) const {
     return mPriceElasticity;
 }
 

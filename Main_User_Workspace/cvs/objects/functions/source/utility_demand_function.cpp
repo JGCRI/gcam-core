@@ -64,7 +64,7 @@ double UtilityDemandFunction::calcDemand( InputSet& input, double personalIncome
                                             const string& regionName, const string& sectorName,
                                             const double aShutdownCoef,
                                             int period, double capitalStock, double alphaZero, 
-                                            double sigma, double IBT ) const 
+                                            double sigma, double IBT, const IInput* aParentInput ) const 
 {
     // KVC: capitalStock is the mUtilityParameterA from the consumer
     double A = capitalStock;
@@ -87,8 +87,8 @@ double UtilityDemandFunction::calcDemand( InputSet& input, double personalIncome
         // TODO: income elasticity is really alpha, price elasticity is really beta,
         //       and getCoefficient is really gamma
         assert( (*it)->getPricePaid( regionName, period ) > 0 );
-        assert( (*it)->getPriceElasticity() >= 0 );
-        assert( (*it)->getIncomeElasticity() >= 0 );
+        assert( (*it)->getPriceElasticity( period ) >= 0 );
+        assert( (*it)->getIncomeElasticity( period ) >= 0 );
         
         double demand = (*it)->getCoefficient( period ) + ( 1 / (*it)->getPricePaid( regionName, period ) )
             * phi( (*it), trialUtility ) * availablePersonalIncome;
@@ -122,7 +122,7 @@ double UtilityDemandFunction::calcDemand( InputSet& input, double personalIncome
 double UtilityDemandFunction::calcCoefficient( InputSet& input, double consumption,
                                                  const string& regionName, const string& sectorName,
                                                  int period, double sigma, double IBT,
-                                                 double capitalStock ) const
+                                                 double capitalStock, const IInput* aParentInput ) const
 {
     // TODO: this does not actually calculate coefficients however that could be something
     // we do if they are not read in and just assume LES
@@ -149,7 +149,8 @@ double UtilityDemandFunction::calcCoefficient( InputSet& input, double consumpti
     const double phi = ( (*it)->getPhysicalDemand( basePeriod ) - ( (*it)->getPricePaid( regionName, basePeriod ) * 
         (*it)->getCoefficient( basePeriod ) ) ) / availablePersonalIncome;
     // price elasticity is really alpha and income elasticity is really beta
-    const double initialUtility = ( (*it)->getPriceElasticity() - phi ) / ( phi - (*it)->getIncomeElasticity() );
+    // note that alpha and beta do not change over time and the period paramater is ignored
+    const double initialUtility = ( (*it)->getPriceElasticity( basePeriod ) - phi ) / ( phi - (*it)->getIncomeElasticity( basePeriod ) );
     // note that initialUtility is really g( u ) however solve is currently working in e^u so this is what
     // we want to set as the price
     const string utilityMarketName = sectorName+"-utility";
@@ -178,7 +179,8 @@ double UtilityDemandFunction::applyTechnicalChange( InputSet& input, const TechC
  */
 double UtilityDemandFunction::phi( const InputSet::value_type& aInput, const double aUtility ) const {
     // TODO: income elasticity is really beta and price elasticity is really alpha
-    return ( aInput->getPriceElasticity() + aInput->getIncomeElasticity() * g( aUtility ) )
+    // note that alpha and beta do not change over time and the period paramater is ignored
+    return ( aInput->getPriceElasticity( 0 ) + aInput->getIncomeElasticity( 0 ) * g( aUtility ) )
         / ( 1 + g( aUtility ) );
 }
 

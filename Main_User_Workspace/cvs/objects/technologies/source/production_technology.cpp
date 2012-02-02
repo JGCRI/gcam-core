@@ -236,7 +236,8 @@ void ProductionTechnology::initCalc( const MoreSectorInfo* aMoreSectorInfo, cons
     const int BASE_PERIOD = 0; // for base period only
     // TODO: this is a hack to avoid copying coefs unecessarily
     if( ( isAvailable( aPeriod ) && !isRetired( aPeriod ) ) || ( aPeriod == BASE_PERIOD && isInitialYear() ) ) {
-        mNestedInputRoot->initCalc( aRegionName, aSectorName, isNewInvestment( aPeriod ), isTrade(), aPeriod );
+        mNestedInputRoot->initCalc( aRegionName, aSectorName, isNewInvestment( aPeriod ), isTrade(),
+            mTechInfo.get(), aPeriod );
     }
             
     BaseTechnology::initCalc( aMoreSectorInfo, aRegionName, aSectorName,

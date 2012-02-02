@@ -216,6 +216,7 @@ void InputSubsidy::initCalc( const string& aRegionName,
                              const string& aSectorName,
                              const bool aIsNewInvestmentPeriod,
                              const bool aIsTrade,
+                             const IInfo* aTechInfo,
                              const int aPeriod )
 {
     // There must be a valid region name.
@@ -317,11 +318,11 @@ bool InputSubsidy::hasTypeFlag( const int aTypeFlag ) const {
     return ( ( aTypeFlag & ~IInput::SUBSIDY ) == 0 );
 }
 
-double InputSubsidy::getIncomeElasticity() const {
+double InputSubsidy::getIncomeElasticity( const int aPeriod ) const {
     return 0;
 }
 
-double InputSubsidy::getPriceElasticity() const {
+double InputSubsidy::getPriceElasticity( const int aPeriod ) const {
     return 0;
 }
 

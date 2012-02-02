@@ -49,6 +49,7 @@
 #include "functions/include/production_input.h"
 #include "functions/include/demand_input.h"
 #include "functions/include/trade_input.h"
+#include "functions/include/building_node_input.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/xml_helper.h"
 #include "functions/include/function_utils.h"
@@ -105,6 +106,9 @@ void NodeInput::XMLParse( const xercesc::DOMNode* node ) {
         }
         else if ( nodeName == NodeInput::getXMLNameStatic() ) {
             parseContainerNode( curr, mNestedInputs, new NodeInput() );
+        }
+        else if ( nodeName == BuildingNodeInput::getXMLNameStatic() ) {
+            parseContainerNode( curr, mNestedInputs, new BuildingNodeInput() );
         }
         else if ( nodeName == "prodDmdFnType" ) {
             mProdDmdFnType = XMLHelper<string>::getValue( curr );
@@ -176,7 +180,7 @@ void NodeInput::completeInit( const string& aRegionName,
 
     // we sort the child inputs now to make things easier on us when it comes time to merge
     // node inputs in copyParamsInto.
-    InputNameComparator comp;
+    util::NameComparator<IInput> comp;
     sort( mNestedInputs.begin(), mNestedInputs.end(), comp );
 
     // have all contained inputs do completeInit as well
@@ -190,6 +194,7 @@ void NodeInput::initCalc( const string& aRegionName,
                          const string& aSectorName,
                          const bool aIsNewInvestmentPeriod,
                          const bool aIsTrade,
+                         const IInfo* aTechInfo,
                          const int aPeriod )
 {
     /*!
@@ -210,7 +215,7 @@ void NodeInput::initCalc( const string& aRegionName,
         nestedInputIter != mNestedInputs.end(); ++nestedInputIter )
     {
         (*nestedInputIter)->initCalc( aRegionName, aSectorName, aIsNewInvestmentPeriod, 
-                                      aIsTrade, aPeriod );
+                                      aIsTrade, aTechInfo, aPeriod );
         mChildInputsCache.push_back( *nestedInputIter );
     }
     // initialized the hack
@@ -762,12 +767,12 @@ double NodeInput::getCalibrationQuantity( const int aPeriod ) const {
     return 0;
 }
 
-double NodeInput::getPriceElasticity() const {
+double NodeInput::getPriceElasticity( const int aPeriod ) const {
     // TODO: should not be here
     return mAlphaUtilityParam;
 }
 
-double NodeInput::getIncomeElasticity() const {
+double NodeInput::getIncomeElasticity( const int aPeriod ) const {
     // TODO: should not be here
     return mBetaUtilityParam;
 }

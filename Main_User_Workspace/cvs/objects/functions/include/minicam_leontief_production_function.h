@@ -84,7 +84,8 @@ public:
 					   double aCapitalStock = 0,
                        double aAlphaZero = 0,
                        double aSigma = 0,
-                       double aIBT = 0 ) const;
+                       double aIBT = 0,
+                       const IInput* aParentInput = 0 ) const;
     
     double calcCoefficient( InputSet& aInputs,
                             double aConsumption,
@@ -93,7 +94,8 @@ public:
                             int aPeriod,
                             double aSigma = 0,
                             double aIBT = 0,
-							double aCapitalStock = 0 ) const;
+                            double aCapitalStock = 0,
+                            const IInput* aParentInput = 0 ) const;
 	
     double changeElasticity( InputSet& aInputs,
                              const std::string& aRegionName,
@@ -127,7 +129,8 @@ public:
                               const std::string& aSectorName,
                               int aPeriod,
                               double aAlphaZero,
-                              double aSigma ) const;
+                              double aSigma,
+                              const IInput* aParentInput = 0 ) const;
 
     double getCapitalOutputRatio( const InputSet& aInputs,
                                   const std::string& aRegionName,

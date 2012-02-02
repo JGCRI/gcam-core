@@ -97,6 +97,7 @@ public:
                            const std::string& aSectorName,
                            const bool aIsNewInvestmentPeriod,
                            const bool aIsTrade,
+                           const IInfo* aTechInfo,
                            const int aPeriod );
     virtual void setPhysicalDemand( const double aPhysicalDemand, const std::string& aRegionName, const int aPeriod );
     virtual double getPrice( const std::string& aRegionName, const int aPeriod ) const;
@@ -118,8 +119,8 @@ public:
     virtual void accept( IVisitor* aVisitor, const int period ) const;
     
     // IInput methods that are not implemented
-    virtual double getPriceElasticity() const { return 0; }
-    virtual double getIncomeElasticity() const { return 0; }
+    virtual double getPriceElasticity( const int aPeriod ) const { return 0; }
+    virtual double getIncomeElasticity( const int aPeriod ) const { return 0; }
     virtual void copyParamsInto( ProductionInput& aProductionInput, const int aPeriod ) const {}
     virtual void copyParamsInto( DemandInput& aDemandInput, const int aPeriod ) const {}
 protected:

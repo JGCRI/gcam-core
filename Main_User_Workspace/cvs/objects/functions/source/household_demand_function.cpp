@@ -69,7 +69,7 @@ double HouseholdDemandFunction::calcDemand( InputSet& input, double personalInco
                                             const string& regionName, const string& sectorName,
                                             const double aShutdownCoef,
 											int period, double capitalStock, double alphaZero, 
-											double sigma, double IBT ) const 
+											double sigma, double IBT, const IInput* aParentInput ) const 
 {
     // Find the numeraire to determine the price paid.
     const IInput* numInput = FunctionUtils::getNumeraireInput( input );
@@ -82,11 +82,11 @@ double HouseholdDemandFunction::calcDemand( InputSet& input, double personalInco
         if( !input[ i ]->hasTypeFlag( IInput::FACTOR ) ){
             assert( input[i]->getPricePaid( regionName, period ) > 0 );
             assert( input[i]->getCoefficient( period ) > 0 );
-            assert( input[i]->getIncomeElasticity() > 0 );
+            assert( input[i]->getIncomeElasticity( period ) > 0 );
 
             double demand = input[i]->getCoefficient( period ) * 
-                pow( personalIncome / pricePaidNumeraire, input[i]->getIncomeElasticity() ) *
-				pow( input[i]->getPricePaid( regionName, period ) / pricePaidNumeraire, input[i]->getPriceElasticity() );
+                pow( personalIncome / pricePaidNumeraire, input[i]->getIncomeElasticity( period ) ) *
+				pow( input[i]->getPricePaid( regionName, period ) / pricePaidNumeraire, input[i]->getPriceElasticity( period ) );
 
             assert( util::isValidNumber( demand ) );
 			input[i]->setPhysicalDemand( demand, regionName, period );
@@ -99,16 +99,16 @@ double HouseholdDemandFunction::calcDemand( InputSet& input, double personalInco
 double HouseholdDemandFunction::calcCoefficient( InputSet& input, double consumption,
                                                  const string& regionName, const string& sectorName,
                                                  int period, double sigma, double IBT,
-                                                 double capitalStock ) const
+                                                 double capitalStock, const IInput* aParentInput ) const
 {
 	for ( unsigned int i = 0; i < input.size(); ++i ) {
 		if( !input[ i ]->hasTypeFlag( IInput::FACTOR ) ){
             // if we use price paid for calcDemand probably need to use it here also
             // really currency demand
 			double tempCoefficient = input[i]->getPhysicalDemand( period ) /
-                                     pow( consumption, input[i]->getIncomeElasticity() ) *
+                                     pow( consumption, input[i]->getIncomeElasticity( period ) ) *
                                      pow( input[i]->getPrice( regionName, period ),
-                                          input[i]->getPriceElasticity() );
+                                          input[i]->getPriceElasticity( period ) );
 			input[i]->setCoefficient( tempCoefficient, period );
 		}
 	}

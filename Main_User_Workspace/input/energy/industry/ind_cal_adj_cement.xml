@@ -35,12 +35,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>3.242294697</calibrated-value>
+                        <calibrated-value>3.245083208</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>3.412016286</calibrated-value>
+                        <calibrated-value>3.409900587</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -54,7 +54,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>5.384264711</calibrated-value>
+                        <calibrated-value>5.279917795</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -109,12 +109,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.672880668</calibrated-value>
+                        <calibrated-value>0.673458381</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.918303176</calibrated-value>
+                        <calibrated-value>0.918875348</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -183,12 +183,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>3.488051565</calibrated-value>
+                        <calibrated-value>3.490910852</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>4.287840577</calibrated-value>
+                        <calibrated-value>4.290513062</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -257,12 +257,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.199666205</calibrated-value>
+                        <calibrated-value>1.202468389</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.235699483</calibrated-value>
+                        <calibrated-value>1.238646549</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -331,12 +331,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.274680199</calibrated-value>
+                        <calibrated-value>0.274731865</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.42191961</calibrated-value>
+                        <calibrated-value>0.421954436</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -377,12 +377,12 @@
                <technology name="biomass">
                   <period year="1990">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.049419634</calibrated-value>
+                        <calibrated-value>0.034105982</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.163135175</calibrated-value>
+                        <calibrated-value>0.098561929</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -391,12 +391,12 @@
                <technology name="coal">
                   <period year="1990">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>4.056856263</calibrated-value>
+                        <calibrated-value>3.89361962</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>2.553618992</calibrated-value>
+                        <calibrated-value>2.233389963</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -405,12 +405,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>3.92965347</calibrated-value>
+                        <calibrated-value>3.933052521</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>2.431977647</calibrated-value>
+                        <calibrated-value>2.433724673</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -419,12 +419,12 @@
                <technology name="gas">
                   <period year="1990">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>3.66205754</calibrated-value>
+                        <calibrated-value>3.242976628</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>5.002552715</calibrated-value>
+                        <calibrated-value>3.297479939</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -433,12 +433,26 @@
                <technology name="refined liquids">
                   <period year="1990">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>3.44921228</calibrated-value>
+                        <calibrated-value>3.333786067</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>1.547197836</calibrated-value>
+                        <calibrated-value>1.350635249</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="district heat">
+               <technology name="district heat">
+                  <period year="1990">
+                     <minicam-energy-input name="district heat">
+                        <calibrated-value>5.513559533</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="district heat">
+                        <calibrated-value>3.072723514</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -456,7 +470,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.066707598</calibrated-value>
+                        <calibrated-value>0.05158975</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -465,12 +479,12 @@
                <technology name="coal">
                   <period year="1990">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>9.675854994</calibrated-value>
+                        <calibrated-value>9.189094445</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>15.8624483</calibrated-value>
+                        <calibrated-value>13.75075849</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -479,12 +493,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.493003941</calibrated-value>
+                        <calibrated-value>1.493714618</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>5.169665584</calibrated-value>
+                        <calibrated-value>5.171253477</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -493,12 +507,12 @@
                <technology name="gas">
                   <period year="1990">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>0.450991456</calibrated-value>
+                        <calibrated-value>0.428351508</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>1.242488715</calibrated-value>
+                        <calibrated-value>1.160618641</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -507,12 +521,26 @@
                <technology name="refined liquids">
                   <period year="1990">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>1.560014969</calibrated-value>
+                        <calibrated-value>1.44045326</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>3.161571411</calibrated-value>
+                        <calibrated-value>3.081230243</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="district heat">
+               <technology name="district heat">
+                  <period year="1990">
+                     <minicam-energy-input name="district heat">
+                        <calibrated-value>0.532964489</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="district heat">
+                        <calibrated-value>1.854660806</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -553,12 +581,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.131540926</calibrated-value>
+                        <calibrated-value>0.139014061</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.408327836</calibrated-value>
+                        <calibrated-value>0.423178392</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -627,12 +655,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.5479937</calibrated-value>
+                        <calibrated-value>0.548041339</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.792539613</calibrated-value>
+                        <calibrated-value>0.794509422</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -701,12 +729,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.942192732</calibrated-value>
+                        <calibrated-value>0.942428412</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.684577565</calibrated-value>
+                        <calibrated-value>1.685841713</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -775,12 +803,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.450176906</calibrated-value>
+                        <calibrated-value>0.451013458</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.073615022</calibrated-value>
+                        <calibrated-value>1.074678086</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -821,12 +849,12 @@
                <technology name="biomass">
                   <period year="1990">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.05120368</calibrated-value>
+                        <calibrated-value>0.048878186</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered biomass">
-                        <calibrated-value>0.121214127</calibrated-value>
+                        <calibrated-value>0.118379447</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -835,12 +863,12 @@
                <technology name="coal">
                   <period year="1990">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>1.882145315</calibrated-value>
+                        <calibrated-value>1.6210052</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="delivered coal">
-                        <calibrated-value>0.783543372</calibrated-value>
+                        <calibrated-value>0.736265052</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -849,12 +877,12 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.758776233</calibrated-value>
+                        <calibrated-value>0.759305982</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.657940971</calibrated-value>
+                        <calibrated-value>0.658181579</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -863,12 +891,12 @@
                <technology name="gas">
                   <period year="1990">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>1.343797549</calibrated-value>
+                        <calibrated-value>1.294987008</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>0.596286803</calibrated-value>
+                        <calibrated-value>0.541962769</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -877,12 +905,26 @@
                <technology name="refined liquids">
                   <period year="1990">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.851541268</calibrated-value>
+                        <calibrated-value>0.784275742</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="refined liquids industrial">
-                        <calibrated-value>0.432640991</calibrated-value>
+                        <calibrated-value>0.423445203</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="district heat">
+               <technology name="district heat">
+                  <period year="1990">
+                     <minicam-energy-input name="district heat">
+                        <calibrated-value>0.610756076</calibrated-value>
+                     </minicam-energy-input>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="district heat">
+                        <calibrated-value>0.25002466</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>

@@ -227,6 +227,15 @@ public:
     
     virtual void startVisitBuildingGenericDmdTechnology( const BuildingGenericDmdTechnology* aBuildingTechnology, const int aPeriod ){}
     virtual void endVisitBuildingGenericDmdTechnology( const BuildingGenericDmdTechnology* aBuildingTechnology, const int aPeriod ){}
+
+    virtual void startVisitGCAMConsumer( const GCAMConsumer* aGCAMConsumer, const int aPeriod ){}
+    virtual void endVisitGCAMConsumer( const GCAMConsumer* aGCAMConsumer, const int aPeriod ){}
+
+    virtual void startVisitBuildingNodeInput( const BuildingNodeInput* aBuildingNodeInput, const int aPeriod ){}
+    virtual void endVisitBuildingNodeInput( const BuildingNodeInput* aBuildingNodeInput, const int aPeriod ){}
+
+    virtual void startVisitBuildingServiceInput( const BuildingServiceInput* aBuildingServiceInput, const int aPeriod ){}
+    virtual void endVisitBuildingServiceInput( const BuildingServiceInput* aBuildingServiceInput, const int aPeriod ){}
 };
 
 #endif // _DEFAULT_VISITOR_H_

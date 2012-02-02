@@ -245,12 +245,14 @@ public:
      * \param aIsInvestmentPeriod Whether this is the initial investment period
      *        of the Technology.
      * \param aIsTrade Whether this is a trade technology.
+     * \param aTechInfo Technology's info object.
      * \param aPeriod Model period.
      */
     virtual void initCalc( const std::string& aRegionName,
                            const std::string& aSectorName,
                            const bool aIsNewInvestmentPeriod,
                            const bool aIsTrade,
+                           const IInfo* aTechInfo,
                            const int aPeriod ) = 0;
 
     /*!
@@ -413,15 +415,17 @@ public:
 
     /*!
      * \brief Get the price elasticity of the input.
+     * \param aPeriod The period  for which to get the price elasticity.
      * \return The price elasticity.
      */
-    virtual double getPriceElasticity() const = 0;
+    virtual double getPriceElasticity( const int aPeriod ) const = 0;
 
     /*!
      * \brief Get the income elasticity of the input.
+     * \param aPeriod The period  for which to get the income elasticity.
      * \return The income elasticity.
      */
-    virtual double getIncomeElasticity() const = 0;
+    virtual double getIncomeElasticity( const int aPeriod ) const = 0;
 
     /*!
      * \brief Get the input specific technical change.

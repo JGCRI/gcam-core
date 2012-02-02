@@ -69,7 +69,8 @@ double GovernmentDemandFunction::calcDemand( InputSet& input, double consumption
 											 const string& sectorName,
 											 const double aShutdownCoef,
 											 int period, double capitalStock, 
-											 double alphaZero, double sigma, double IBT ) const 
+											 double alphaZero, double sigma, double IBT,
+                                             const IInput* aParentInput ) const 
 {
     double totalUnscaledDemand = 0; // total demand used for scaling
     for( unsigned int i = 0; i < input.size(); ++i ){
@@ -105,7 +106,7 @@ double GovernmentDemandFunction::calcDemand( InputSet& input, double consumption
 double GovernmentDemandFunction::calcCoefficient( InputSet& input, double consumption, 
 												  const string& regionName, const string& sectorName, 
 												  int period, double sigma, double IBT, 
-											      double capitalStock ) const 
+											      double capitalStock, const IInput* aParentInput ) const 
 {
 	// get government's demand for capital
 	double capitalDemand = 0;

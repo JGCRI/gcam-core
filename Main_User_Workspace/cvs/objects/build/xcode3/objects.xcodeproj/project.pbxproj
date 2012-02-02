@@ -288,9 +288,17 @@
 		CDAF62F2130DAB6900D93AFB /* ObjECTS_MAGICC_others.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDAF62EE130DAB6900D93AFB /* ObjECTS_MAGICC_others.cpp */; };
 		CDAF62F3130DAB6900D93AFB /* ObjECTS_MAGICC.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDAF62EF130DAB6900D93AFB /* ObjECTS_MAGICC.cpp */; };
 		CDBEAA2A13E9F2A700FA99F7 /* edfun.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EF7AF6713E1F0130034AA71 /* edfun.cpp */; };
+		CDCB33331469934E00BEA539 /* consumer_activity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCB33321469934E00BEA539 /* consumer_activity.cpp */; };
+		CDCBBF0D14BB6658008B5F4D /* thermal_building_service_input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDCBBF0C14BB6658008B5F4D /* thermal_building_service_input.cpp */; };
 		CDD5A20D130338B60088463C /* empty_technology.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD5A20A130338B60088463C /* empty_technology.cpp */; };
 		CDD5A20E130338B60088463C /* stub_technology_container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD5A20B130338B60088463C /* stub_technology_container.cpp */; };
 		CDD5A20F130338B60088463C /* technology_container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD5A20C130338B60088463C /* technology_container.cpp */; };
+		CDE074A41468959600432712 /* gcam_consumer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE074A31468959600432712 /* gcam_consumer.cpp */; };
+		CDE074AF146895AA00432712 /* building_function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE074AA146895AA00432712 /* building_function.cpp */; };
+		CDE074B0146895AA00432712 /* building_node_input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE074AB146895AA00432712 /* building_node_input.cpp */; };
+		CDE074B1146895AA00432712 /* building_service_function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE074AC146895AA00432712 /* building_service_function.cpp */; };
+		CDE074B2146895AA00432712 /* building_service_input.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE074AD146895AA00432712 /* building_service_input.cpp */; };
+		CDE074B3146895AA00432712 /* satiation_demand_function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE074AE146895AA00432712 /* satiation_demand_function.cpp */; };
 		CDF0CA10139FD0C100B20B01 /* luc_emissions_summer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF0CA0F139FD0C100B20B01 /* luc_emissions_summer.cpp */; };
 		CDF83C0E13A30C7C00DF178D /* market_RES.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF83C0D13A30C7C00DF178D /* market_RES.cpp */; };
 		CDF83C1313A30CA600DF178D /* res_secondary_output.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF83C1113A30CA600DF178D /* res_secondary_output.cpp */; };
@@ -1014,6 +1022,10 @@
 		CDB28D43130DDA1B00EDF70A /* magxtra_c.cfg */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = magxtra_c.cfg; sourceTree = "<group>"; };
 		CDB28D44130DDA1B00EDF70A /* qextra_c.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = qextra_c.in; sourceTree = "<group>"; };
 		CDB28D45130DDA1B00EDF70A /* qhalos_c.in */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = qhalos_c.in; sourceTree = "<group>"; };
+		CDCB3330146992B000BEA539 /* consumer_activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = consumer_activity.h; sourceTree = "<group>"; };
+		CDCB33321469934E00BEA539 /* consumer_activity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = consumer_activity.cpp; sourceTree = "<group>"; };
+		CDCBBF0B14BB6339008B5F4D /* thermal_building_service_input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = thermal_building_service_input.h; sourceTree = "<group>"; };
+		CDCBBF0C14BB6658008B5F4D /* thermal_building_service_input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = thermal_building_service_input.cpp; sourceTree = "<group>"; };
 		CDD5A206130338A90088463C /* empty_technology.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = empty_technology.h; sourceTree = "<group>"; };
 		CDD5A207130338A90088463C /* itechnology_container.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = itechnology_container.h; sourceTree = "<group>"; };
 		CDD5A208130338A90088463C /* stub_technology_container.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stub_technology_container.h; sourceTree = "<group>"; };
@@ -1021,6 +1033,18 @@
 		CDD5A20A130338B60088463C /* empty_technology.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = empty_technology.cpp; sourceTree = "<group>"; };
 		CDD5A20B130338B60088463C /* stub_technology_container.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = stub_technology_container.cpp; sourceTree = "<group>"; };
 		CDD5A20C130338B60088463C /* technology_container.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = technology_container.cpp; sourceTree = "<group>"; };
+		CDE074A01468959200432712 /* gcam_consumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gcam_consumer.h; sourceTree = "<group>"; };
+		CDE074A31468959600432712 /* gcam_consumer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gcam_consumer.cpp; sourceTree = "<group>"; };
+		CDE074A5146895A000432712 /* building_function.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = building_function.h; sourceTree = "<group>"; };
+		CDE074A6146895A000432712 /* building_node_input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = building_node_input.h; sourceTree = "<group>"; };
+		CDE074A7146895A000432712 /* building_service_function.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = building_service_function.h; sourceTree = "<group>"; };
+		CDE074A8146895A000432712 /* building_service_input.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = building_service_input.h; sourceTree = "<group>"; };
+		CDE074A9146895A000432712 /* satiation_demand_function.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = satiation_demand_function.h; sourceTree = "<group>"; };
+		CDE074AA146895AA00432712 /* building_function.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = building_function.cpp; sourceTree = "<group>"; };
+		CDE074AB146895AA00432712 /* building_node_input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = building_node_input.cpp; sourceTree = "<group>"; };
+		CDE074AC146895AA00432712 /* building_service_function.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = building_service_function.cpp; sourceTree = "<group>"; };
+		CDE074AD146895AA00432712 /* building_service_input.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = building_service_input.cpp; sourceTree = "<group>"; };
+		CDE074AE146895AA00432712 /* satiation_demand_function.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = satiation_demand_function.cpp; sourceTree = "<group>"; };
 		CDF0CA0E139FD0BB00B20B01 /* luc_emissions_summer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = luc_emissions_summer.h; sourceTree = "<group>"; };
 		CDF0CA0F139FD0C100B20B01 /* luc_emissions_summer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = luc_emissions_summer.cpp; sourceTree = "<group>"; };
 		CDF83C0C13A30C7200DF178D /* market_RES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = market_RES.h; sourceTree = "<group>"; };
@@ -1231,6 +1255,7 @@
 		CD488441122873C000F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				CDE074A01468959200432712 /* gcam_consumer.h */,
 				CD488442122873C000F5A88A /* calc_capital_good_price_visitor.h */,
 				CD488443122873C000F5A88A /* consumer.h */,
 				CD488444122873C000F5A88A /* govt_consumer.h */,
@@ -1244,6 +1269,7 @@
 		CD488448122873C000F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				CDE074A31468959600432712 /* gcam_consumer.cpp */,
 				CD488449122873C000F5A88A /* calc_capital_good_price_visitor.cpp */,
 				CD48844A122873C000F5A88A /* consumer.cpp */,
 				CD48844B122873C000F5A88A /* govt_consumer.cpp */,
@@ -1294,6 +1320,7 @@
 				0E4247BB143D018400A8BBD3 /* land_allocator_activity.h */,
 				0E4247C5143D029E00A8BBD3 /* final_demand_activity.h */,
 				0E4247CD143D03B600A8BBD3 /* sector_activity.h */,
+				CDCB3330146992B000BEA539 /* consumer_activity.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -1324,6 +1351,7 @@
 				0E4247C0143D022E00A8BBD3 /* land_allocator_activity.cpp */,
 				0E4247C8143D033700A8BBD3 /* final_demand_activity.cpp */,
 				0E4247D1143D0DCC00A8BBD3 /* sector_activity.cpp */,
+				CDCB33321469934E00BEA539 /* consumer_activity.cpp */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -1498,6 +1526,11 @@
 		CD4884CE122873C100F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				CDE074A5146895A000432712 /* building_function.h */,
+				CDE074A6146895A000432712 /* building_node_input.h */,
+				CDE074A7146895A000432712 /* building_service_function.h */,
+				CDE074A8146895A000432712 /* building_service_input.h */,
+				CDE074A9146895A000432712 /* satiation_demand_function.h */,
 				CD4884CF122873C100F5A88A /* ademand_function.h */,
 				CD4884D0122873C100F5A88A /* aproduction_function.h */,
 				CD4884D1122873C100F5A88A /* building_demand_input.h */,
@@ -1535,6 +1568,7 @@
 				CD4884F1122873C100F5A88A /* trade_demand_function.h */,
 				CD4884F2122873C100F5A88A /* trade_input.h */,
 				CD4884F3122873C100F5A88A /* utility_demand_function.h */,
+				CDCBBF0B14BB6339008B5F4D /* thermal_building_service_input.h */,
 			);
 			path = include;
 			sourceTree = "<group>";
@@ -1542,6 +1576,11 @@
 		CD4884F4122873C100F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				CDE074AA146895AA00432712 /* building_function.cpp */,
+				CDE074AB146895AA00432712 /* building_node_input.cpp */,
+				CDE074AC146895AA00432712 /* building_service_function.cpp */,
+				CDE074AD146895AA00432712 /* building_service_input.cpp */,
+				CDE074AE146895AA00432712 /* satiation_demand_function.cpp */,
 				CD4884F5122873C100F5A88A /* ademand_function.cpp */,
 				CD4884F6122873C100F5A88A /* aproduction_function.cpp */,
 				CD4884F7122873C100F5A88A /* building_demand_input.cpp */,
@@ -1575,6 +1614,7 @@
 				CD488513122873C100F5A88A /* trade_demand_function.cpp */,
 				CD488514122873C100F5A88A /* trade_input.cpp */,
 				CD488515122873C100F5A88A /* utility_demand_function.cpp */,
+				CDCBBF0C14BB6658008B5F4D /* thermal_building_service_input.cpp */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -2870,6 +2910,14 @@
 				0E4247C1143D022E00A8BBD3 /* land_allocator_activity.cpp in Sources */,
 				0E4247C9143D033700A8BBD3 /* final_demand_activity.cpp in Sources */,
 				0E4247D2143D0DCC00A8BBD3 /* sector_activity.cpp in Sources */,
+				CDE074A41468959600432712 /* gcam_consumer.cpp in Sources */,
+				CDE074AF146895AA00432712 /* building_function.cpp in Sources */,
+				CDE074B0146895AA00432712 /* building_node_input.cpp in Sources */,
+				CDE074B1146895AA00432712 /* building_service_function.cpp in Sources */,
+				CDE074B2146895AA00432712 /* building_service_input.cpp in Sources */,
+				CDE074B3146895AA00432712 /* satiation_demand_function.cpp in Sources */,
+				CDCB33331469934E00BEA539 /* consumer_activity.cpp in Sources */,
+				CDCBBF0D14BB6658008B5F4D /* thermal_building_service_input.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -664,7 +664,8 @@ void Technology::initCalc( const string& aRegionName,
 
     // Initialize the inputs.
     for( unsigned int i = 0; i < mInputs.size(); ++i ) {
-        mInputs[ i ]->initCalc( aRegionName, aSectorName, mProductionState[ aPeriod ]->isNewInvestment(), false, aPeriod );
+        mInputs[ i ]->initCalc( aRegionName, aSectorName, mProductionState[ aPeriod ]->isNewInvestment(), false,
+			mTechnologyInfo.get(), aPeriod );
     }
 
     if( mCaptureComponent.get() ) {
@@ -1449,7 +1450,7 @@ double Technology::calcFuelPrefElasticity( const int aPeriod ) const
     for( CInputIterator i = mInputs.begin(); i != mInputs.end(); ++i ){
         if( (*i)->hasTypeFlag( IInput::ENERGY ) ){
             totalElas += (*i)->getCoefficient( aPeriod ) *
-                         (*i)->getIncomeElasticity();
+                         (*i)->getIncomeElasticity( aPeriod );
             totalEnergyCoefficients += (*i)->getCoefficient( aPeriod );
         }
     }

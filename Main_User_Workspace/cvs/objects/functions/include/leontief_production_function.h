@@ -70,11 +70,12 @@ public:
 	double calcDemand( InputSet& input, double consumption, const std::string& regionName,
 					   const std::string& sectorName, const double aShutdownCoef, int period,
 					   double capitalStock = 0, double alphaZero = 0, double sigma = 0,
-                       double IBT = 0 ) const;
+                       double IBT = 0, const IInput* aParentInput = 0 ) const;
     
     double calcCoefficient( InputSet& input, double consumption, const std::string& regionName,
                             const std::string& sectorName, int period, double sigma = 0, double IBT = 0,
-							double capitalStock = 0 ) const;
+							double capitalStock = 0,
+                            const IInput* aParentInput = 0 ) const;
 	
     double changeElasticity( InputSet& input, const std::string& aRegionName, double priceReceived,
 							 double aProfits, double capitalStock, const int aPeriod, double alphaZero = 0,
@@ -89,7 +90,8 @@ public:
                               double sigma = 0 ) const;
     
     double calcLevelizedCost( const InputSet& aInputs, const std::string& aRegionName,
-                              const std::string& aSectorName, int aPeriod, double aAlphaZero, double aSigma ) const;
+                              const std::string& aSectorName, int aPeriod, double aAlphaZero, double aSigma,
+                              const IInput* aParentInput = 0 ) const;
 
     double getCapitalOutputRatio( const InputSet& aInputs, const std::string& aRegionName,
                                   const std::string& aSectorName, double aLifeTimeYears, int aPeriod,

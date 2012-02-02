@@ -61,6 +61,7 @@
 #include "functions/include/node_input.h"
 #include "technologies/include/icapture_component.h"
 #include "technologies/include/capture_component_factory.h"
+#include "containers/include/info_factory.h"
 
 
 using namespace std;
@@ -285,10 +286,12 @@ void BaseTechnology::completeInit( const string& aRegionName,
 {
     const Modeltime* modeltime = scenario->getModeltime();
     const int initialYear = max( modeltime->getStartYear(), year );
+    
+    mTechInfo.reset( InfoFactory::constructInfo( 0, name ) );
 
     // technologies before the base year will not have inputs yet
     if( mNestedInputRoot ) {
-        mNestedInputRoot->completeInit( aRegionName, aSectorName, aSubsectorName, name, 0 );
+        mNestedInputRoot->completeInit( aRegionName, aSectorName, aSubsectorName, name, mTechInfo.get() );
     }
 
     // Check if CO2 is missing. 
@@ -310,7 +313,7 @@ void BaseTechnology::completeInit( const string& aRegionName,
     }
         
     for( unsigned int i = 0; i < mOutputs.size(); ++i ){
-        mOutputs[ i ]->completeInit( aSectorName, 0, 0, true );
+        mOutputs[ i ]->completeInit( aSectorName, aRegionName, 0, true );
     }
 }
 

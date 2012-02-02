@@ -57,6 +57,7 @@
 #include "investment/include/iinvestable.h"
 #include "util/base/include/iround_trippable.h"
 #include "util/base/include/value.h"
+#include "containers/include/iinfo.h"
 
 class IInput;
 class IOutput;
@@ -269,6 +270,9 @@ protected:
 
     //! A sequestration device to capture emissions
     std::auto_ptr<ICaptureComponent> mSequestrationDevice;
+    
+    //! Technology info store.
+    std::auto_ptr<IInfo> mTechInfo;
 private:
     void clear();
     void copy( const BaseTechnology& baseTechIn );

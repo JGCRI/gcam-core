@@ -264,7 +264,7 @@ void CalibrateShareWeightVisitor::startVisitBuildingGenericDmdTechnology( const 
             
             if( calSupply > 0 && calDemand > 0 ) {
                 double priceRatio = SectorUtils::calcPriceRatio( mCurrentRegionName, (*it)->getName(), normPeriod, aPeriod );
-                double adjustedDemand = calDemand * pow( priceRatio, (*it)->getPriceElasticity() );
+                double adjustedDemand = calDemand * pow( priceRatio, (*it)->getPriceElasticity( aPeriod ) );
                 // Calculate a coefficient that would cause actual demand to equal
                 // calibrated demand.
                 double coef = adjustedDemand > util::getSmallNumber() ? calSupply / adjustedDemand : 0;
@@ -272,7 +272,7 @@ void CalibrateShareWeightVisitor::startVisitBuildingGenericDmdTechnology( const 
                 
                 // Double check things worked correctly.
                 assert( util::isEqual( coef / aBuildingTech->mAlphaZero * calDemand *
-                                      pow( priceRatio, ( *it )->getPriceElasticity() ), calSupply ) );
+                                      pow( priceRatio, ( *it )->getPriceElasticity( aPeriod ) ), calSupply ) );
             }
             else {
                 // we are missing a calibration value so we will not be able to calibrate

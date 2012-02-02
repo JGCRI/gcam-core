@@ -165,6 +165,7 @@ void RenewableInput::initCalc( const string& aRegionName,
                                const string& aSectorName,
                                const bool aIsNewInvestmentPeriod,
                                const bool aIsTrade,
+                               const IInfo* aTechInfo,
                                const int aPeriod )
 {
 }
@@ -226,11 +227,11 @@ bool RenewableInput::hasTypeFlag( const int aTypeFlag ) const {
     return (  ( aTypeFlag & ~IInput::ENERGY ) == 0 );
 }
 
-double RenewableInput::getIncomeElasticity() const {
+double RenewableInput::getIncomeElasticity( const int aPeriod ) const {
     return 0;
 }
 
-double RenewableInput::getPriceElasticity() const {
+double RenewableInput::getPriceElasticity( const int aPeriod ) const {
     return 0;
 }
 

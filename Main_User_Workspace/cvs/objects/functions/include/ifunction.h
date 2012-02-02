@@ -110,11 +110,13 @@ public:
         const std::string& aRegionName, const std::string& aSectorName, 
         const double aShutdownCoef,
         int aPeriod, 
-        double aCapitalStock = 0, double aAlphaZero = 0, double aSigma = 0, double aIBT = 0 ) const = 0;
+        double aCapitalStock = 0, double aAlphaZero = 0, double aSigma = 0, double aIBT = 0,
+        const IInput* aParentInput = 0 ) const = 0;
     
     virtual double calcCoefficient( InputSet& aInput, double aConsumption, 
         const std::string& aRegionName, const std::string& aSectorName, int aPeriod, double aSigma = 0, 
-        double aIBT = 0, double aCapitalStock = 0 ) const = 0;
+        double aIBT = 0, double aCapitalStock = 0,
+        const IInput* aParentInput = 0 ) const = 0;
 
     virtual double changeElasticity( InputSet& aInputs,  const std::string& aRegionName, 
 		double aPriceReceived, double aProfits, double aCapitalStock, const int aPeriod, double aAlphaZero = 0,
@@ -138,7 +140,8 @@ public:
 
     virtual double calcLevelizedCost( const InputSet& aInputs,
         const std::string& aRegionName, const std::string& aSectorName, int aPeriod,
-        double aAlphaZero, double aSigma ) const = 0;
+        double aAlphaZero, double aSigma,
+        const IInput* aParentInput = 0 ) const = 0;
 
     virtual double calcCosts( const InputSet& aInputs,
                               const std::string& aRegionName,

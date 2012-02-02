@@ -108,6 +108,10 @@
 #include "land_allocator/include/land_use_history.h"
 #include "ccarbon_model/include/carbon_model_utils.h"
 #include "util/base/include/version.h"
+#include "consumers/include/gcam_consumer.h"
+#include "functions/include/building_node_input.h"
+#include "functions/include/building_service_input.h"
+#include "functions/include/satiation_demand_function.h"
 #include <typeinfo>
 
 // Whether to write a text file with the contents that are to be inserted
@@ -1501,7 +1505,7 @@ void XMLDBOutputter::startVisitLandLeaf( const LandLeaf* aLandLeaf,
     for( int i = 0; i < modeltime->getmaxper(); ++i ){
         writeItem( "profit-rate", "$/thous km2", aLandLeaf->mProfitRate[ i ], i );
     }
-	for( int i = 0; i < modeltime->getmaxper(); ++i ){
+    for( int i = 0; i < modeltime->getmaxper(); ++i ){
         writeItem( "profit-scaler", "", aLandLeaf->mProfitScaler[ i ], i );
     }
 }
@@ -1619,11 +1623,13 @@ void XMLDBOutputter::startVisitNodeInput( const NodeInput* aNodeInput, const int
     mBufferStack.push( parentBuffer );
     mBufferStack.push( childBuffer );
 
-    if( !objects::isEqual<double>( aNodeInput->getPriceElasticity(), 0.0 ) ||
-        !objects::isEqual<double>( aNodeInput->getIncomeElasticity(), 0.0 ) ) {
+    // note that the price/income (alpha/beta) do not really change over time so we will just
+    // use the base period
+    if( !objects::isEqual<double>( aNodeInput->getPriceElasticity( 0 ), 0.0 ) ||
+        !objects::isEqual<double>( aNodeInput->getIncomeElasticity( 0 ), 0.0 ) ) {
         // we have AIDADS/LES paramaters so write them out
-        XMLWriteElement( aNodeInput->getPriceElasticity(), "alpha-utility-param", *childBuffer, mTabs.get() );
-        XMLWriteElement( aNodeInput->getIncomeElasticity(), "beta-utility-param", *childBuffer, mTabs.get() );
+        XMLWriteElement( aNodeInput->getPriceElasticity( 0 ), "alpha-utility-param", *childBuffer, mTabs.get() );
+        XMLWriteElement( aNodeInput->getIncomeElasticity( 0 ), "beta-utility-param", *childBuffer, mTabs.get() );
         XMLWriteElement( aNodeInput->getCoefficient( aPeriod ), "gamma-utility-param", *childBuffer, mTabs.get() );
         XMLWriteElement( aNodeInput->getPricePaid( "", aPeriod ), "price", *childBuffer, mTabs.get() );
         XMLWriteElement( aNodeInput->getPhysicalDemand( aPeriod ), "demand", *childBuffer, mTabs.get() );
@@ -1804,6 +1810,92 @@ void XMLDBOutputter::startVisitNationalAccount( const NationalAccount* aNational
 
 void XMLDBOutputter::endVisitNationalAccount( const NationalAccount* aNationalAccount, const int aPeriod ) {
     XMLWriteClosingTag( NationalAccount::getXMLNameStatic(), mBuffer, mTabs.get() ) ;
+}
+
+void XMLDBOutputter::startVisitGCAMConsumer( const GCAMConsumer* aGCAMConsumer, const int aPeriod ) {
+    XMLWriteOpeningTag( aGCAMConsumer->getXMLName(), mBuffer, mTabs.get(), aGCAMConsumer->getName() );
+
+    const Modeltime* modeltime = scenario->getModeltime();
+    XMLWriteVector( aGCAMConsumer->mSubregionalIncome, "subregional-percapita-income", mBuffer, mTabs.get(), modeltime );
+    XMLWriteVector( aGCAMConsumer->mSubregionalPopulation, "subregional-population", mBuffer, mTabs.get(), modeltime );
+}
+
+void XMLDBOutputter::endVisitGCAMConsumer( const GCAMConsumer* aGCAMConsumer, const int aPeriod ) {
+    XMLWriteClosingTag( aGCAMConsumer->getXMLName(), mBuffer, mTabs.get() );
+}
+
+void XMLDBOutputter::startVisitBuildingNodeInput( const BuildingNodeInput* aBuildingNodeInput, const int aPeriod ) {
+    // write the BuildingNodeInput tag and it's children in temp buffers so that we can
+    // check if anything was really written out and avoid writing blank node inputs
+    stringstream* parentBuffer = new stringstream();
+    stringstream* childBuffer = new stringstream();
+
+    XMLWriteOpeningTag( BuildingNodeInput::getXMLNameStatic(), *parentBuffer, mTabs.get(),
+        aBuildingNodeInput->getName() );
+
+    // put the buffers on a stack so that we have the correct ordering
+    mBufferStack.push( parentBuffer );
+    mBufferStack.push( childBuffer );
+
+    writeItemToBuffer( aBuildingNodeInput->getSatiationDemandFunction()->mSatiationImpedance,
+                       "satiation-impedance", *childBuffer, mTabs.get(), 1, "unitless" );
+    writeItemToBuffer( aBuildingNodeInput->getSatiationDemandFunction()->mSatiationLevel,
+                       "satiation-level", *childBuffer, mTabs.get(), 1, "GJ/m^2" );
+    const Modeltime* modeltime = scenario->getModeltime();
+    for( int per = 0; per < modeltime->getmaxper(); ++per ) {
+        double price = aBuildingNodeInput->getPricePaid( mCurrentRegion, per );
+        if( !objects::isEqual<double>( price, 0.0 ) ) {
+            writeItemToBuffer( price, "price",
+                *childBuffer, mTabs.get(), per, "1975$/m^2" );
+        }
+        double floorspace = aBuildingNodeInput->getPhysicalDemand( per );
+        if( !objects::isEqual<double>( floorspace, 0.0 ) ) {
+            writeItemToBuffer( floorspace, "floorspace",
+                *childBuffer, mTabs.get(), per, "billion m^2" );
+        }
+    }
+}
+
+void XMLDBOutputter::endVisitBuildingNodeInput( const BuildingNodeInput* aBuildingNodeInput, const int aPeriod ) {
+    // Write the BuildingNodeInput (open tag, children, and closing tag) to the buffer at
+    // the top of the stack only if the child buffer is not empty
+    stringstream* childBuffer = popBufferStack();
+    stringstream* parentBuffer = popBufferStack();
+    if( !childBuffer->str().empty() ){
+        // retBuffer is still at the top of the stack
+        stringstream* retBuffer = mBufferStack.top();
+        (*retBuffer) << parentBuffer->str() << childBuffer->str();
+        XMLWriteClosingTag( BuildingNodeInput::getXMLNameStatic(), *retBuffer, mTabs.get() );
+    }
+    else {
+        // if we don't write the closing tag we still need to decrease the indent
+        mTabs->decreaseIndent();
+    }
+    
+    // clean up any extra buffers
+    delete childBuffer;
+    delete parentBuffer;
+}
+
+void XMLDBOutputter::startVisitBuildingServiceInput( const BuildingServiceInput* aBuildingServiceInput, const int aPeriod ) {
+    startVisitInput( aBuildingServiceInput, aPeriod );
+
+    writeItemToBuffer( aBuildingServiceInput->getSatiationDemandFunction()->mSatiationImpedance,
+                       "satiation-impedance", *mBufferStack.top(), mTabs.get(), 1, "unitless" );
+    writeItemToBuffer( aBuildingServiceInput->getSatiationDemandFunction()->mSatiationLevel,
+                       "satiation-level", *mBufferStack.top(), mTabs.get(), 1, "GJ/m^2" );
+    const Modeltime* modeltime = scenario->getModeltime();
+    for( int per = 0; per < modeltime->getmaxper(); ++per ) {
+        double serviceDensity = aBuildingServiceInput->mServiceDensity[ per ];
+        if( !objects::isEqual<double>( serviceDensity, 0.0 ) ) {
+            writeItemToBuffer( serviceDensity, "service-density",
+                *mBufferStack.top(), mTabs.get(), per, "GJ/m^2" );
+        }
+    }
+}
+
+void XMLDBOutputter::endVisitBuildingServiceInput( const BuildingServiceInput* aBuildingServiceInput, const int aPeriod ) {
+    endVisitInput( aBuildingServiceInput, aPeriod );
 }
 
 /*!

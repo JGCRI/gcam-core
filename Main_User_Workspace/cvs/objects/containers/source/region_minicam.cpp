@@ -69,6 +69,9 @@
 #include "sectors/include/building_final_demand.h"
 #include "sectors/include/export_sector.h"
 
+#include "consumers/include/gcam_consumer.h"
+#include "containers/include/national_account.h"
+
 #include "resources/include/resource.h"
 
 #include "demographics/include/demographic.h"
@@ -95,6 +98,7 @@
 #include "containers/include/sector_activity.h"
 #include "containers/include/final_demand_activity.h"
 #include "containers/include/land_allocator_activity.h"
+#include "containers/include/consumer_activity.h"
 
 using namespace std;
 using namespace xercesc;
@@ -107,6 +111,9 @@ typedef std::vector<GHGPolicy*>::const_iterator CGHGPolicyIterator;
 typedef std::vector<Sector*>::iterator SectorIterator;
 typedef std::vector<Sector*>::reverse_iterator SectorReverseIterator;
 typedef std::vector<Sector*>::const_iterator CSectorIterator;
+typedef std::vector<Consumer*>::iterator ConsumerIterator;
+typedef std::vector<Consumer*>::const_iterator CConsumerIterator;
+
 
 extern Scenario* scenario;
 
@@ -138,6 +145,10 @@ void RegionMiniCAM::clear(){
 
     for ( FinalDemandIterator demIter = mFinalDemands.begin(); demIter != mFinalDemands.end(); ++demIter ) {
         delete *demIter;
+    }
+
+    for( CConsumerIterator consumerIter = mConsumers.begin(); consumerIter != mConsumers.end(); ++consumerIter ) {
+        delete *consumerIter;
     }
 }
 
@@ -182,6 +193,9 @@ bool RegionMiniCAM::XMLDerivedClassParse( const std::string& nodeName, const xer
     }
     else if( nodeName == BuildingFinalDemand::getXMLNameStatic() ){
         parseContainerNode( curr, mFinalDemands, new BuildingFinalDemand );
+    }
+    else if( nodeName == GCAMConsumer::getXMLNameStatic() ) {
+        parseContainerNode( curr, mConsumers, new GCAMConsumer );
     }
     else if( nodeName == TotalSectorEmissions::getXMLNameStatic() ){
         parseContainerNode( curr, mAggEmissionsCalculators, new TotalSectorEmissions );
@@ -275,6 +289,12 @@ void RegionMiniCAM::completeInit() {
     {
         ( *demandSectorIter )->completeInit( name, mRegionInfo.get() );
     }
+
+    for( ConsumerIterator consumerIter = mConsumers.begin(); consumerIter != mConsumers.end();
+         ++consumerIter )
+    {
+        ( *consumerIter )->completeInit( name, "", "" );
+    }
     
     // Wrap objects which are used to calculate the region so that they can
     // be sorted into a global ordering and called directly from the world.
@@ -299,6 +319,10 @@ void RegionMiniCAM::completeInit() {
     if( mLandAllocator.get() ) {
         markDepFinder->resolveActivityToDependency( name, "land-allocator",
             new LandAllocatorActivity( mLandAllocator.get(), name ) );
+    }
+    for( int i = 0; i < mConsumers.size(); ++i ) {
+        markDepFinder->resolveActivityToDependency( name, mConsumers[ i ]->getName(),
+            new ConsumerActivity( mConsumers[ i ], demographic.get(), name ) );
     }
 }
 
@@ -329,6 +353,11 @@ void RegionMiniCAM::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
     // write out demand sector objects.
     for( CFinalDemandIterator k = mFinalDemands.begin(); k != mFinalDemands.end(); k++ ){
         ( *k )->toInputXML( out, tabs );
+    }
+
+    // write out consumer objects.
+    for( CConsumerIterator consumerIter = mConsumers.begin(); consumerIter != mConsumers.end(); consumerIter++ ){
+        ( *consumerIter )->toInputXML( out, tabs );
     }
 
     for( unsigned int i = 0; i < mAggEmissionsCalculators.size(); ++i ){
@@ -385,6 +414,11 @@ void RegionMiniCAM::toDebugXMLDerived( const int period, std::ostream& out, Tabs
     // write out demand sector objects.
     for( CFinalDemandIterator currSector = mFinalDemands.begin(); currSector != mFinalDemands.end(); ++currSector ){
         (*currSector)->toDebugXML( period, out, tabs );
+    }
+
+    // write out consumer objects.
+    for( CConsumerIterator consumerIter = mConsumers.begin(); consumerIter != mConsumers.end(); consumerIter++ ){
+        ( *consumerIter )->toDebugXML( period, out, tabs );
     }
 
     for( unsigned int i = 0; i < mAggEmissionsCalculators.size(); ++i ){
@@ -462,6 +496,7 @@ double RegionMiniCAM::getEndUseServicePrice( const int period ) const {
     for ( CFinalDemandIterator currDemSector = mFinalDemands.begin(); currDemSector != mFinalDemands.end(); ++currDemSector ) {
         servicePrice += (*currDemSector)->getWeightedEnergyPrice( name, period );
     }
+
     return servicePrice;
 }
 
@@ -542,7 +577,7 @@ void RegionMiniCAM::initCalc( const int period )
 
 
     for( SectorIterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ){
-        (*currSector)->initCalc( /*nationalAccount[ period ]*/0, demographic.get(), period );
+        (*currSector)->initCalc( 0, demographic.get(), period );
     }
     for ( FinalDemandIterator currSector = mFinalDemands.begin(); currSector != mFinalDemands.end(); ++currSector ) {
         (*currSector)->initCalc( name, gdp.get(), demographic.get(), period  );
@@ -550,15 +585,22 @@ void RegionMiniCAM::initCalc( const int period )
     for( ResourceIterator currResource = mResources.begin(); currResource != mResources.end(); ++currResource ){
         (*currResource)->initCalc( name, period );
     }
+
     calcGDP( period );
     gdp->adjustGDP( period, 1.0 );
+    
+    for( ConsumerIterator currConsumer = mConsumers.begin(); currConsumer != mConsumers.end(); ++currConsumer ) {
+        NationalAccount nationalAccount;
+        // Note that we are using the unadjusted gdp for these equations and so
+        // gdp price feedbacks will be ignored.
+        (*currConsumer)->initCalc( 0, name, "", nationalAccount, demographic.get(), gdp->getGDP( period ), period );
+    }
 
     // Call initCalc for land allocator last. It needs profit from the ag sectors
     // before it can calculate share weights
     if ( mLandAllocator.get() ) {
         mLandAllocator->initCalc( name, period );
     }
-
 }
 
 /*
@@ -597,6 +639,10 @@ void RegionMiniCAM::setCO2CoefsIntoMarketplace( const int aPeriod ){
  */
 void RegionMiniCAM::postCalc( const int aPeriod ) {
     Region::postCalc( aPeriod );
+
+    for( CConsumerIterator consumerIter = mConsumers.begin(); consumerIter != mConsumers.end(); ++consumerIter ) {
+        (*consumerIter)->postCalc( name, "", aPeriod );
+    }
     
     mLandAllocator->postCalc( name, aPeriod );
  }
@@ -1040,5 +1086,10 @@ void RegionMiniCAM::accept( IVisitor* aVisitor, const int aPeriod ) const {
         (*currDem)->accept( aVisitor, aPeriod );
     }
 
+    // Visit Consumers
+    for( CConsumerIterator consumerIter = mConsumers.begin(); consumerIter != mConsumers.end(); ++consumerIter ) {
+        (*consumerIter)->accept( aVisitor, aPeriod );
+    }
+    
     aVisitor->endVisitRegionMiniCAM( this, aPeriod );
 }

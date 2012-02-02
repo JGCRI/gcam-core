@@ -71,11 +71,11 @@ public:
     double calcDemand( InputSet& input, double consumption,const std::string& regionName,
                         const std::string& sectorName, const double aShutdownCoef,
                         int period, double capitalStock = 0, double alphaZero = 0, double sigma = 0,
-                        double IBT = 0 ) const;
+                        double IBT = 0, const IInput* aParentInput = 0 ) const;
 
     double calcCoefficient( InputSet& input, double consumption, const std::string& regionName,
                         const std::string& sectorName, int period, double sigma = 0, double IBT = 0,
-                        double capitalStock = 0 ) const;
+                        double capitalStock = 0, const IInput* aParentInput = 0 ) const;
                             
     double applyTechnicalChange( InputSet& input, const TechChange& aTechChange, 
                         const std::string& regionName, const std::string& sectorName, 

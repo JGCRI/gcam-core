@@ -188,6 +188,7 @@ public:
                            const std::string& aSectorName,
                            const bool aIsNewInvestmentPeriod,
                            const bool aIsTrade,
+                           const IInfo* aTechInfo,
                            const int aPeriod );
 
     virtual double getCurrencyDemand( const int aPeriod ) const;
@@ -238,9 +239,9 @@ public:
 
     virtual double getCalibrationQuantity( const int aPeriod ) const;
 
-    virtual double getPriceElasticity() const;
+    virtual double getPriceElasticity( const int aPeriod ) const;
 
-    virtual double getIncomeElasticity() const;
+    virtual double getIncomeElasticity( const int aPeriod ) const;
 
     virtual double getTechChange( const int aPeriod ) const;
 
@@ -359,20 +360,6 @@ protected:
     Value mTechChange;
     
     void copy( const NodeInput& aNodeInput );
-
-    //! A binary functor to compare IInputs by name so that they can be sorted.
-    struct InputNameComparator : public std::binary_function<IInput*, IInput*, bool> {
-        /*!
-         * \brief Determine if the left hand operand is less than the
-         *        right.
-         * \param lhs The left hand side operand for the sort comparison.
-         * \param rhs The right hand side operand for the sort comparison.
-         * \return True if lhs is less than rhs, false otherwise.
-         */
-        bool operator()( const IInput* lhs, const IInput* rhs ){
-            return lhs->getName() < rhs->getName();
-        }
-    };
 };
 
 #endif // _NODE_INPUT_H_

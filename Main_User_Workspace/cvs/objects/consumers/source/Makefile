@@ -12,6 +12,7 @@ OBJS       = consumer.o \
              household_consumer.o \
              invest_consumer.o \
              trade_consumer.o \
+             gcam_consumer.o \
              calc_capital_good_price_visitor.o
 
 consumers_dir: ${OBJS}

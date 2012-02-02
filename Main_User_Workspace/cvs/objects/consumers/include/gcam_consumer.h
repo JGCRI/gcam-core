@@ -1,0 +1,146 @@
+#ifndef _GCAM_CONSUMER_H_
+#define _GCAM_CONSUMER_H_
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
+/*
+ * LEGAL NOTICE
+ * This computer software was prepared by Battelle Memorial Institute,
+ * hereinafter the Contractor, under Contract No. DE-AC05-76RL0 1830
+ * with the Department of Energy (DOE). NEITHER THE GOVERNMENT NOR THE
+ * CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY
+ * LIABILITY FOR THE USE OF THIS SOFTWARE. This notice including this
+ * sentence must appear on any copies of this computer software.
+ * 
+ * EXPORT CONTROL
+ * User agrees that the Software will not be shipped, transferred or
+ * exported into any country or used in any manner prohibited by the
+ * United States Export Administration Act or any other applicable
+ * export laws, restrictions or regulations (collectively the "Export Laws").
+ * Export of the Software may require some form of license or other
+ * authority from the U.S. Government, and failure to obtain such
+ * export control license may result in criminal liability under
+ * U.S. laws. In addition, if the Software is identified as export controlled
+ * items under the Export Laws, User represents and warrants that User
+ * is not a citizen, or otherwise located within, an embargoed nation
+ * (including without limitation Iran, Syria, Sudan, Cuba, and North Korea)
+ *     and that User is not otherwise prohibited
+ * under the Export Laws from receiving the Software.
+ * 
+ * All rights to use the Software are granted on condition that such
+ * rights are forfeited if User fails to comply with the terms of
+ * this Agreement.
+ * 
+ * User agrees to identify, defend and hold harmless BATTELLE,
+ * its officers, agents and employees from all liability involving
+ * the violation of such Export Laws, either directly or indirectly,
+ * by User.
+ */
+
+/*! 
+ * \file gcam_consumer.h
+ * \ingroup Objects
+ * \brief GCAMConsumer class header file.
+ * \author Pralit Patel
+ * \author Sonny Kim
+ */
+
+#include <string>
+#include <xercesc/dom/DOMNode.hpp>
+
+#include "consumers/include/consumer.h"
+#include "util/base/include/value.h"
+#include "util/base/include/time_vector.h"
+
+class NationalAccount;
+class Demographic;
+class Tabs;
+class MoreSectorInfo;
+class IVisitor;
+
+/*!
+ * \ingroup Objects
+ * \brief A SGM style consumer to drive final demands in GCAM.
+ * \details Subregional population and income may be calculated within this consumer
+ *          to allow for regional disaggregation of end use consumption.  This is
+ *          done through exogenously specified shares of the regional population
+ *          and GDP.
+ *
+ *          <b>XML specification for GCAMConsumer</b>
+ *          - XML name: \c GCAMConsumer::getXMLNameStatic()
+ *          - Contained by: RegionMiniCAM
+ *          - Parsing inherited from class: BaseTechnology
+ *          - Attributes: \c name BaseTechnology::name
+ *          - Elements:
+ *              - \c subregional-population-share GCAMConsumer::mSubregionalPopulationShare
+ *                   The fraction of the total regional population which is represented in
+ *                   this consumer.  Specified by year.
+ *              - \c subregional-income-share GCAMConsumer::mSubregionalIncomeShare
+ *                   The fraction of the total regional GDP that is represented in
+ *                   this consumer.  This will then be converted to GDP per capita
+ *                   or in other terms income.  Specified by year.
+ *
+ * \author Pralit Patel
+ * \author Jiyong Eom
+ */
+class GCAMConsumer : public Consumer
+{
+    friend class XMLDBOutputter;
+public:
+    GCAMConsumer();
+    virtual GCAMConsumer* clone() const;
+    virtual ~GCAMConsumer();
+    
+    virtual void copyParam( const BaseTechnology* baseTech,
+                            const int aPeriod );
+    
+    virtual void completeInit( const std::string& aRegionName,
+                               const std::string& aSectorName,
+                               const std::string& aSubsectorName );
+    
+    virtual void initCalc( const MoreSectorInfo* aMoreSectorInfo,
+                           const std::string& aRegionName, 
+                           const std::string& aSectorName,
+                           NationalAccount& nationalAccount,
+                           const Demographic* aDemographics,
+                           const double aCapitalStock,
+                           const int aPeriod );
+    
+    virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographics, 
+                          const MoreSectorInfo* aMoreSectorInfo, const std::string& aRegionName, 
+                          const std::string& aSectorName, const bool aIsNewVintageMode, const int aPeriod );
+
+    virtual void postCalc( const std::string& aRegionName, const std::string& aSectorName, 
+                           const int aPeriod );
+    
+    static const std::string& getXMLNameStatic();
+    
+    // This should probably be removed or moved to a visitor
+    virtual void csvSGMOutputFile( std::ostream& aFile, const int period ) const {
+    }
+
+    virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
+    
+protected:
+    //! Subregional population for reporting
+    objects::PeriodVector<Value> mSubregionalPopulation;
+
+    //! Subregional income for reporting
+    objects::PeriodVector<Value> mSubregionalIncome;
+
+    //! Subregional Population Share
+    objects::PeriodVector<Value> mSubregionalPopulationShare;
+
+    //! Subregional Income Share
+    objects::PeriodVector<Value> mSubregionalIncomeShare;
+
+    virtual const std::string& getXMLName() const;
+    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
+    virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
+    virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
+    // not sure what this is for
+    bool isCoefBased() const { return true; }
+};
+
+#endif // _GCAM_CONSUMER_H_

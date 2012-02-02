@@ -1,6 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Itanium">
+      <Configuration>Debug</Configuration>
+      <Platform>Itanium</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
       <Platform>Win32</Platform>
@@ -8,6 +12,10 @@
     <ProjectConfiguration Include="Debug|x64">
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Itanium">
+      <Configuration>Release</Configuration>
+      <Platform>Itanium</Platform>
     </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Win32">
       <Configuration>Release</Configuration>
@@ -33,11 +41,20 @@
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>Windows7.1SDK</PlatformToolset>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Itanium'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>Windows7.1SDK</PlatformToolset>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Itanium'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -50,10 +67,16 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Itanium'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Itanium'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
@@ -61,17 +84,24 @@
     <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../../../exe/Debug\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../../exe/Debug\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Itanium'">../../../../exe/Debug\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">../../../../exe/Debug\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">../../../../exe/Debug\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Itanium'">../../../../exe/Debug\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Itanium'">true</LinkIncremental>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../../../exe/Release\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../../../exe/</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Itanium'">../../../../exe/</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../../../exe/Release\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../../../exe/Release\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Itanium'">../../../../exe/Release\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Itanium'">false</LinkIncremental>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Objects-Main</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Itanium'">Objects-Main</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -101,6 +131,31 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalOptions>/WL %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MaxSpeed</Optimization>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <AdditionalIncludeDirectories>C:\PNNL\ObjECTS\Libs\xerces-c-src_2_7_0\lib;C:\PNNL\ObjECTS\Libs\dbxml2.5.16\include;..\..\..\..\..\libs\boost-lib\;..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_AFXDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libdb48d.lib;libdbxml25d.lib;ddao36D.lib;xerces-c_3D.lib;magiccd.lib;aglud.lib;xqilla22d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)../Objects-Main-D.exe</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\..\..\libs\access;..\..\..\..\..\libs\dbxml2.5.16\lib;..\..\..\..\..\libs\AgLib\lib;..\..\..\..\..\libs\magicclib\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>$(OutDir)Object-main-d.pdb</ProgramDatabaseFile>
+      <SubSystem>Console</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Itanium'">
     <ClCompile>
       <AdditionalOptions>/WL %(AdditionalOptions)</AdditionalOptions>
       <Optimization>MaxSpeed</Optimization>
@@ -182,6 +237,33 @@
       <AdditionalDependencies>libdb48.lib;libdbxml25.lib;xerces-c_3.lib;xqilla22.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Itanium'">
+    <ClCompile>
+      <AdditionalOptions>/WL /MP %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>..\..\..\..\libs\dbxml\include;..\..\..\..\libs\boost-lib;..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_AFXDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\..\..\..\libs\dbxml\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <AdditionalDependencies>libdb48.lib;libdbxml25.lib;xerces-c_3.lib;xqilla22.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\ccarbon_model\source\asimple_carbon_calc.cpp" />
     <ClCompile Include="..\..\ccarbon_model\source\carbon_model_utils.cpp" />
@@ -190,7 +272,9 @@
     <ClCompile Include="..\..\climate\source\MAGICC_IO_helpers.cpp" />
     <ClCompile Include="..\..\climate\source\ObjECTS_MAGICC.cpp" />
     <ClCompile Include="..\..\climate\source\ObjECTS_MAGICC_others.cpp" />
+    <ClCompile Include="..\..\consumers\source\gcam_consumer.cpp" />
     <ClCompile Include="..\..\containers\source\batch_runner.cpp" />
+    <ClCompile Include="..\..\containers\source\consumer_activity.cpp" />
     <ClCompile Include="..\..\containers\source\dependency_finder.cpp" />
     <ClCompile Include="..\..\containers\source\final_demand_activity.cpp" />
     <ClCompile Include="..\..\containers\source\gdp.cpp" />
@@ -242,6 +326,12 @@
     <ClCompile Include="..\..\emissions\source\read_emissions_coef.cpp" />
     <ClCompile Include="..\..\emissions\source\so2_emissions.cpp" />
     <ClCompile Include="..\..\emissions\source\total_sector_emissions.cpp" />
+    <ClCompile Include="..\..\functions\source\building_function.cpp" />
+    <ClCompile Include="..\..\functions\source\building_node_input.cpp" />
+    <ClCompile Include="..\..\functions\source\building_service_function.cpp" />
+    <ClCompile Include="..\..\functions\source\building_service_input.cpp" />
+    <ClCompile Include="..\..\functions\source\satiation_demand_function.cpp" />
+    <ClCompile Include="..\..\functions\source\thermal_building_service_input.cpp" />
     <ClCompile Include="..\..\land_allocator\source\carbon_land_leaf.cpp" />
     <ClCompile Include="..\..\land_allocator\source\land_allocator.cpp" />
     <ClCompile Include="..\..\marketplace\source\cached_market.cpp" />
@@ -481,7 +571,9 @@
     <ClInclude Include="..\..\ccarbon_model\include\land_carbon_densities.h" />
     <ClInclude Include="..\..\climate\include\MAGICC_array.h" />
     <ClInclude Include="..\..\climate\include\ObjECTS_MAGICC.h" />
+    <ClInclude Include="..\..\consumers\include\gcam_consumer.h" />
     <ClInclude Include="..\..\containers\include\batch_runner.h" />
+    <ClInclude Include="..\..\containers\include\consumer_activity.h" />
     <ClInclude Include="..\..\containers\include\dependency_finder.h" />
     <ClInclude Include="..\..\containers\include\final_demand_activity.h" />
     <ClInclude Include="..\..\containers\include\gdp.h" />
@@ -540,6 +632,12 @@
     <ClInclude Include="..\..\emissions\include\read_emissions_coef.h" />
     <ClInclude Include="..\..\emissions\include\so2_emissions.h" />
     <ClInclude Include="..\..\emissions\include\total_sector_emissions.h" />
+    <ClInclude Include="..\..\functions\include\building_function.h" />
+    <ClInclude Include="..\..\functions\include\building_node_input.h" />
+    <ClInclude Include="..\..\functions\include\building_service_function.h" />
+    <ClInclude Include="..\..\functions\include\building_service_input.h" />
+    <ClInclude Include="..\..\functions\include\satiation_demand_function.h" />
+    <ClInclude Include="..\..\functions\include\thermal_building_service_input.h" />
     <ClInclude Include="..\..\land_allocator\include\carbon_land_leaf.h" />
     <ClInclude Include="..\..\land_allocator\include\land_allocator.h" />
     <ClInclude Include="..\..\land_allocator\include\land_use_history.h" />

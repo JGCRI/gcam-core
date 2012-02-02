@@ -99,12 +99,12 @@ void ProductionInput::toDebugXMLDerived( const int period, ostream& out, Tabs* t
 }
 
 //! Get Price Elasticity
-double ProductionInput::getPriceElasticity() const {
+double ProductionInput::getPriceElasticity( const int aPeriod ) const {
 	return 0;
 }
 
 //! Get Income Elasticity
-double ProductionInput::getIncomeElasticity() const {
+double ProductionInput::getIncomeElasticity( const int aPeriod ) const {
 	return 0;
 }
 

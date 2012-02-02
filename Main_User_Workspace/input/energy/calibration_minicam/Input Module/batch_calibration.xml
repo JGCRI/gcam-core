@@ -6,7 +6,7 @@
 	  -->
 	<class name="ModelInterface.ModelGUI2.InputViewer">
 		<!-- The command you want to run.  It would be the same name as
-		     the name in the Open.. submenu.
+		     the name in the Open/Users/pralitp/model/workspace-global-bld submenu.
 		  -->
 		<command name="CSV file">
 			<!-- For csv conversions you need to give it a header file,
@@ -14,13 +14,14 @@
 			     csv files which you want to convert with the given 
 			     header file
 			  -->
-		 <headerFile>../Biomass/Main_User_Workspace_AGLU/input/energy/calibration_minicam/Input Module/header_cal_2005.txt</headerFile>
-			<outFile>../Biomass/Main_User_Workspace_AGLU/input/energy/calibration_minicam/Input Module/cal_1990_2005.xml</outFile>
-			<csvFile>../Biomass/Main_User_Workspace_AGLU/input/energy/calibration_minicam/Input Module/gas_cal.csv</csvFile>
-			<csvFile>../Biomass/Main_User_Workspace_AGLU/input/energy/calibration_minicam/Input Module/ref_liquids_cal.csv</csvFile>
-			<csvFile>../Biomass/Main_User_Workspace_AGLU/input/energy/calibration_minicam/Input Module/elec_supply_cal.csv</csvFile>
-			<csvFile>../Biomass/Main_User_Workspace_AGLU/input/energy/calibration_minicam/Input Module/elec_td_ownuse.csv</csvFile>
-			<csvFile>../Biomass/Main_User_Workspace_AGLU/input/energy/calibration_minicam/Input Module/final_enduse_cal.csv</csvFile>
+		 <headerFile>../New-Dtl-Bld-Workspace/input/energy/calibration_minicam/Input Module/header_cal_2005.txt</headerFile>
+			<outFile>../New-Dtl-Bld-Workspace/input/energy/calibration_minicam/Input Module/cal_1990_2005.xml</outFile>
+			<csvFile>../New-Dtl-Bld-Workspace/input/energy/calibration_minicam/Input Module/gas_cal.csv</csvFile>
+			<csvFile>../New-Dtl-Bld-Workspace/input/energy/calibration_minicam/Input Module/ref_liquids_cal.csv</csvFile>
+			<csvFile>../New-Dtl-Bld-Workspace/input/energy/calibration_minicam/Input Module/elec_supply_cal.csv</csvFile>
+			<csvFile>../New-Dtl-Bld-Workspace/input/energy/calibration_minicam/Input Module/elec_td_ownuse.csv</csvFile>
+			<csvFile>../New-Dtl-Bld-Workspace/input/energy/calibration_minicam/Input Module/final_enduse_cal.csv</csvFile>
+			<csvFile>../New-Dtl-Bld-Workspace/input/energy/calibration_minicam/Input Module/heat_cal.csv</csvFile>
 		</command>
 	</class>
 </ModelInterfaceBatch>

@@ -84,9 +84,6 @@
       <UniqueIdentifier>{f3c20036-5b61-4188-a152-0a918586d252}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc</Extensions>
     </Filter>
-    <Filter Include="Header Files\containers">
-      <UniqueIdentifier>{faa4b2da-4e16-41a9-ac39-838da9a72319}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\demographics">
       <UniqueIdentifier>{523174cc-8492-4a3b-8f3e-69a3598f961f}</UniqueIdentifier>
     </Filter>
@@ -152,6 +149,9 @@
     </Filter>
     <Filter Include="Header Files\policy">
       <UniqueIdentifier>{c7a1d0c7-52d2-4f90-a12e-e89109d9ba62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\containers">
+      <UniqueIdentifier>{faa4b2da-4e16-41a9-ac39-838da9a72319}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -998,6 +998,24 @@
     <ClCompile Include="..\..\target_finder\source\secanter.cpp">
       <Filter>Source Files\target_finder</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\consumers\source\gcam_consumer.cpp">
+      <Filter>Source Files\consumers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\functions\source\building_function.cpp">
+      <Filter>Source Files\functions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\functions\source\building_node_input.cpp">
+      <Filter>Source Files\functions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\functions\source\building_service_function.cpp">
+      <Filter>Source Files\functions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\functions\source\building_service_input.cpp">
+      <Filter>Source Files\functions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\functions\source\satiation_demand_function.cpp">
+      <Filter>Source Files\functions</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\containers\source\market_dependency_finder.cpp">
       <Filter>Source Files\containers</Filter>
     </ClCompile>
@@ -1024,6 +1042,12 @@
     </ClCompile>
     <ClCompile Include="..\..\containers\source\sector_activity.cpp">
       <Filter>Source Files\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\containers\source\consumer_activity.cpp">
+      <Filter>Source Files\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\functions\source\thermal_building_service_input.cpp">
+      <Filter>Source Files\functions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2029,6 +2053,24 @@
     <ClInclude Include="..\..\target_finder\include\simple_policy_target_runner.h">
       <Filter>Header Files\target_finder</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\consumers\include\gcam_consumer.h">
+      <Filter>Header Files\consumers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\functions\include\building_function.h">
+      <Filter>Header Files\functions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\functions\include\building_node_input.h">
+      <Filter>Header Files\functions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\functions\include\building_service_function.h">
+      <Filter>Header Files\functions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\functions\include\building_service_input.h">
+      <Filter>Header Files\functions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\functions\include\satiation_demand_function.h">
+      <Filter>Header Files\functions</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\containers\include\market_dependency_finder.h">
       <Filter>Header Files\containers</Filter>
     </ClInclude>
@@ -2052,6 +2094,12 @@
     </ClInclude>
     <ClInclude Include="..\..\containers\include\sector_activity.h">
       <Filter>Header Files\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\containers\include\consumer_activity.h">
+      <Filter>Header Files\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\functions\include\thermal_building_service_input.h">
+      <Filter>Header Files\functions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

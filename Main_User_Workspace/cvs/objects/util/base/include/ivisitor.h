@@ -104,6 +104,9 @@ class LandUseHistory;
 class AgProductionTechnology;
 class BuildingGenericDmdTechnology;
 class NodeInput;
+class BuildingServiceInput;
+class BuildingNodeInput;
+class GCAMConsumer;
 
 /*!
  * \brief An interface to a class which visits every node in the tree and
@@ -290,6 +293,15 @@ public:
 
     virtual void startVisitNodeInput( const NodeInput* aNodeInput, const int aPeriod ) = 0;
     virtual void endVisitNodeInput( const NodeInput* aNodeInput, const int aPeriod ) = 0;
+
+    virtual void startVisitGCAMConsumer( const GCAMConsumer* aGCAMConsumer, const int aPeriod ) = 0;
+    virtual void endVisitGCAMConsumer( const GCAMConsumer* aGCAMConsumer, const int aPeriod ) = 0;
+
+    virtual void startVisitBuildingNodeInput( const BuildingNodeInput* aBuildingNodeInput, const int aPeriod ) = 0;
+    virtual void endVisitBuildingNodeInput( const BuildingNodeInput* aBuildingNodeInput, const int aPeriod ) = 0;
+
+    virtual void startVisitBuildingServiceInput( const BuildingServiceInput* aBuildingServiceInput, const int aPeriod ) = 0;
+    virtual void endVisitBuildingServiceInput( const BuildingServiceInput* aBuildingServiceInput, const int aPeriod ) = 0;
 
     // Following are the derived class accepts
     virtual void startVisitTranTechnology( const TranTechnology* aTranTechnology, const int aPeriod ) = 0;

@@ -196,6 +196,7 @@ void NonEnergyInput::initCalc( const string& aRegionName,
                                const string& aSectorName,
                                const bool aIsNewInvestmentPeriod,
                                const bool aIsTrade,
+                               const IInfo* aTechInfo,
                                const int aPeriod )
 {
     // Initialize the current coefficient to 1 if it has not 
@@ -259,11 +260,11 @@ bool NonEnergyInput::hasTypeFlag( const int aTypeFlag ) const {
     return (  ( aTypeFlag & ~( IInput::CAPITAL | IInput::MATERIAL ) ) == 0 );
 }
 
-double NonEnergyInput::getIncomeElasticity() const {
+double NonEnergyInput::getIncomeElasticity( const int aPeriod ) const {
     return 0;
 }
 
-double NonEnergyInput::getPriceElasticity() const {
+double NonEnergyInput::getPriceElasticity( const int aPeriod ) const {
     return 0;
 }
 

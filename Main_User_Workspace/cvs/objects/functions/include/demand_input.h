@@ -71,8 +71,8 @@ public:
     void copyParam( const IInput* aInput,
                     const int aPeriod  );
 
-    double getPriceElasticity() const;
-    double getIncomeElasticity() const;
+    double getPriceElasticity( const int aPeriod ) const;
+    double getIncomeElasticity( const int aPeriod ) const;
     
 	static const std::string& getXMLNameStatic();
     void accept( IVisitor* aVisitor ) const;

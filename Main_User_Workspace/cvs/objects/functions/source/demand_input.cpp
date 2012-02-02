@@ -83,12 +83,12 @@ void DemandInput::copyParamsInto( ProductionInput& aProductionInput,
 }
 
 //! Get Price Elasticity
-double DemandInput::getPriceElasticity() const {
+double DemandInput::getPriceElasticity( const int aPeriod ) const {
     return mPriceElasticity;
 }
 
 //! Get Income Elasticity
-double DemandInput::getIncomeElasticity() const {
+double DemandInput::getIncomeElasticity( const int aPeriod ) const {
     return mIncomeElasticity;
 }
 

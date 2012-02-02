@@ -39,6 +39,12 @@ OBJS       = ademand_function.o \
              input_OM_fixed.o \
              input_OM_var.o \
              input_capital.o \
+             building_function.o \
+             building_node_input.o \
+             building_service_function.o \
+             building_service_input.o \
+             satiation_demand_function.o \
+             thermal_building_service_input.o \
              leaf_input_finder.o
 
 functions_dir: ${OBJS}

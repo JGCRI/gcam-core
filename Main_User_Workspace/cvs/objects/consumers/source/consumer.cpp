@@ -83,8 +83,10 @@ void Consumer::initCalc( const MoreSectorInfo* aMoreSectorInfo,
 {
     const Modeltime* modeltime = scenario->getModeltime();
     const bool isInitialYear = modeltime->getper_to_yr( aPeriod ) == year;
-    if( isInitialYear ) {
-        mNestedInputRoot->initCalc( aRegionName, aSectorName, isNewInvestment( aPeriod ), isTrade(), aPeriod );
+    // GCAM consumers do not have years thus they should always call initCalc
+    if( isInitialYear || year == 0) {
+        mNestedInputRoot->initCalc( aRegionName, aSectorName, isNewInvestment( aPeriod ), isTrade(),
+			mTechInfo.get(), aPeriod );
         if( aPeriod == 0 ) {
             mNestedInputRoot->initialize();
             // consumers do not use alpha zero

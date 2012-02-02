@@ -19,6 +19,8 @@
 
 180,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,{year=1990}period/../minicam-non-energy-input/+input-cost,{year=2005}period/../minicam-non-energy-input/+input-cost,scenario,scenario/world,@technology/period,@period/{name=non-energy}minicam-non-energy-input
 
+181,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,period/+{name}minicam-non-energy-input,{year=1990}period/../minicam-non-energy-input/+input-cost,{year=2005}period/../minicam-non-energy-input/+input-cost,scenario,scenario/world,@technology/period
+
 19,scenario,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,technology/+initial-available-year,world/{name=USA}region,world/{name=Canada}region,world/{name=Western Europe}region,world/{name=Japan}region,world/{name=Former Soviet Union}region,world/{name=Australia_NZ}region,world/{name=China}region,world/{name=Middle East}region,world/{name=Africa}region,world/{name=Latin America}region,world/{name=Southeast Asia}region,world/{name=Eastern Europe}region,world/{name=Korea}region,world/{name=India}region,scenario,scenario/world
 
 20,scenario,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,technology/+final-available-year,world/{name=USA}region,world/{name=Canada}region,world/{name=Western Europe}region,world/{name=Japan}region,world/{name=Former Soviet Union}region,world/{name=Australia_NZ}region,world/{name=China}region,world/{name=Middle East}region,world/{name=Africa}region,world/{name=Latin America}region,world/{name=Southeast Asia}region,world/{name=Eastern Europe}region,world/{name=Korea}region,world/{name=India}region,scenario,scenario/world

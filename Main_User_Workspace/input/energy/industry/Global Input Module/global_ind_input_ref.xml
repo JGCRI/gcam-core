@@ -1787,85 +1787,85 @@
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <calibrated-value>14.31369675</calibrated-value>
-                        <coefficient>0.747626455</coefficient>
+                        <calibrated-value>14.31648526</calibrated-value>
+                        <coefficient>0.747663207</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
                         <calibrated-value>4.831822595</calibrated-value>
-                        <coefficient>0.252373545</coefficient>
+                        <coefficient>0.252336793</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <calibrated-value>13.20876801</calibrated-value>
-                        <coefficient>0.664629505</coefficient>
+                        <calibrated-value>13.11440802</calibrated-value>
+                        <coefficient>0.66302959</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
                         <calibrated-value>6.665113458</calibrated-value>
-                        <coefficient>0.335370495</coefficient>
+                        <coefficient>0.33697041</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.664629505</coefficient>
+                        <coefficient>0.66302959</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.335370495</coefficient>
+                        <coefficient>0.33697041</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.664629505</coefficient>
+                        <coefficient>0.66302959</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.335370495</coefficient>
+                        <coefficient>0.33697041</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.664629505</coefficient>
+                        <coefficient>0.66302959</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.335370495</coefficient>
+                        <coefficient>0.33697041</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.664629505</coefficient>
+                        <coefficient>0.66302959</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.335370495</coefficient>
+                        <coefficient>0.33697041</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.664629505</coefficient>
+                        <coefficient>0.66302959</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.335370495</coefficient>
+                        <coefficient>0.33697041</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.664629505</coefficient>
+                        <coefficient>0.66302959</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.335370495</coefficient>
+                        <coefficient>0.33697041</coefficient>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -1873,8 +1873,8 @@
          </supplysector>
          <energy-final-demand name="industry">
             <price-elasticity fillout="1" year="2020">-0.65</price-elasticity>
-            <base-service year="1990">19.14551934</base-service>
-            <base-service year="2005">19.87388147</base-service>
+            <base-service year="1990">19.14830785</base-service>
+            <base-service year="2005">19.77952148</base-service>
          </energy-final-demand>
       </region>
       <region name="Canada">
@@ -3663,85 +3663,85 @@
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <calibrated-value>2.289472167</calibrated-value>
-                        <coefficient>0.786406646</coefficient>
+                        <calibrated-value>2.29004988</calibrated-value>
+                        <coefficient>0.786449023</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
                         <calibrated-value>0.621836096</calibrated-value>
-                        <coefficient>0.213593354</coefficient>
+                        <coefficient>0.213550977</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <calibrated-value>2.931649421</calibrated-value>
-                        <coefficient>0.748098652</coefficient>
+                        <calibrated-value>2.932221592</calibrated-value>
+                        <coefficient>0.748135426</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
                         <calibrated-value>0.987151144</calibrated-value>
-                        <coefficient>0.251901348</coefficient>
+                        <coefficient>0.251864574</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.748098652</coefficient>
+                        <coefficient>0.748135426</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.251901348</coefficient>
+                        <coefficient>0.251864574</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.748098652</coefficient>
+                        <coefficient>0.748135426</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.251901348</coefficient>
+                        <coefficient>0.251864574</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.748098652</coefficient>
+                        <coefficient>0.748135426</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.251901348</coefficient>
+                        <coefficient>0.251864574</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.748098652</coefficient>
+                        <coefficient>0.748135426</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.251901348</coefficient>
+                        <coefficient>0.251864574</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.748098652</coefficient>
+                        <coefficient>0.748135426</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.251901348</coefficient>
+                        <coefficient>0.251864574</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.748098652</coefficient>
+                        <coefficient>0.748135426</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.251901348</coefficient>
+                        <coefficient>0.251864574</coefficient>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -3749,8 +3749,8 @@
          </supplysector>
          <energy-final-demand name="industry">
             <price-elasticity fillout="1" year="2020">-0.65</price-elasticity>
-            <base-service year="1990">2.911308264</base-service>
-            <base-service year="2005">3.918800565</base-service>
+            <base-service year="1990">2.911885977</base-service>
+            <base-service year="2005">3.919372736</base-service>
          </energy-final-demand>
       </region>
       <region name="Western Europe">
@@ -5539,85 +5539,85 @@
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <calibrated-value>12.38836513</calibrated-value>
-                        <coefficient>0.765316242</coefficient>
+                        <calibrated-value>12.39122442</calibrated-value>
+                        <coefficient>0.765357688</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
                         <calibrated-value>3.798884606</calibrated-value>
-                        <coefficient>0.234683758</coefficient>
+                        <coefficient>0.234642312</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <calibrated-value>13.7726627</calibrated-value>
-                        <coefficient>0.759253851</coefficient>
+                        <calibrated-value>13.77533518</calibrated-value>
+                        <coefficient>0.759289314</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
                         <calibrated-value>4.367071048</calibrated-value>
-                        <coefficient>0.240746149</coefficient>
+                        <coefficient>0.240710686</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.759253851</coefficient>
+                        <coefficient>0.759289314</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.240746149</coefficient>
+                        <coefficient>0.240710686</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.759253851</coefficient>
+                        <coefficient>0.759289314</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.240746149</coefficient>
+                        <coefficient>0.240710686</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.759253851</coefficient>
+                        <coefficient>0.759289314</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.240746149</coefficient>
+                        <coefficient>0.240710686</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.759253851</coefficient>
+                        <coefficient>0.759289314</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.240746149</coefficient>
+                        <coefficient>0.240710686</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.759253851</coefficient>
+                        <coefficient>0.759289314</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.240746149</coefficient>
+                        <coefficient>0.240710686</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.759253851</coefficient>
+                        <coefficient>0.759289314</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.240746149</coefficient>
+                        <coefficient>0.240710686</coefficient>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -5625,8 +5625,8 @@
          </supplysector>
          <energy-final-demand name="industry">
             <price-elasticity fillout="1" year="2020">-0.65</price-elasticity>
-            <base-service year="1990">16.18724974</base-service>
-            <base-service year="2005">18.13973374</base-service>
+            <base-service year="1990">16.19010902</base-service>
+            <base-service year="2005">18.14240623</base-service>
          </energy-final-demand>
       </region>
       <region name="Japan">
@@ -7415,85 +7415,85 @@
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <calibrated-value>4.879085961</calibrated-value>
-                        <coefficient>0.766170496</coefficient>
+                        <calibrated-value>4.881888146</calibrated-value>
+                        <coefficient>0.766273343</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
                         <calibrated-value>1.489060541</calibrated-value>
-                        <coefficient>0.233829504</coefficient>
+                        <coefficient>0.233726657</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <calibrated-value>4.763305786</calibrated-value>
-                        <coefficient>0.733788178</coefficient>
+                        <calibrated-value>4.766252853</calibrated-value>
+                        <coefficient>0.733908983</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
                         <calibrated-value>1.728084953</calibrated-value>
-                        <coefficient>0.266211822</coefficient>
+                        <coefficient>0.266091017</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.733788178</coefficient>
+                        <coefficient>0.733908983</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.266211822</coefficient>
+                        <coefficient>0.266091017</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.733788178</coefficient>
+                        <coefficient>0.733908983</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.266211822</coefficient>
+                        <coefficient>0.266091017</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.733788178</coefficient>
+                        <coefficient>0.733908983</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.266211822</coefficient>
+                        <coefficient>0.266091017</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.733788178</coefficient>
+                        <coefficient>0.733908983</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.266211822</coefficient>
+                        <coefficient>0.266091017</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.733788178</coefficient>
+                        <coefficient>0.733908983</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.266211822</coefficient>
+                        <coefficient>0.266091017</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.733788178</coefficient>
+                        <coefficient>0.733908983</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.266211822</coefficient>
+                        <coefficient>0.266091017</coefficient>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -7501,8 +7501,8 @@
          </supplysector>
          <energy-final-demand name="industry">
             <price-elasticity fillout="1" year="2020">-0.65</price-elasticity>
-            <base-service year="1990">6.368146502</base-service>
-            <base-service year="2005">6.491390739</base-service>
+            <base-service year="1990">6.370948686</base-service>
+            <base-service year="2005">6.494337806</base-service>
          </energy-final-demand>
       </region>
       <region name="Australia_NZ">
@@ -9291,85 +9291,85 @@
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <calibrated-value>1.124635577</calibrated-value>
-                        <coefficient>0.851051841</coefficient>
+                        <calibrated-value>1.124687243</calibrated-value>
+                        <coefficient>0.851057664</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
                         <calibrated-value>0.196829842</calibrated-value>
-                        <coefficient>0.148948159</coefficient>
+                        <coefficient>0.148942336</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <calibrated-value>1.433408153</calibrated-value>
-                        <coefficient>0.867321671</coefficient>
+                        <calibrated-value>1.433442979</calibrated-value>
+                        <coefficient>0.867324466</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
                         <calibrated-value>0.219275276</calibrated-value>
-                        <coefficient>0.132678329</coefficient>
+                        <coefficient>0.132675534</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.867321671</coefficient>
+                        <coefficient>0.867324466</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.132678329</coefficient>
+                        <coefficient>0.132675534</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.867321671</coefficient>
+                        <coefficient>0.867324466</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.132678329</coefficient>
+                        <coefficient>0.132675534</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.867321671</coefficient>
+                        <coefficient>0.867324466</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.132678329</coefficient>
+                        <coefficient>0.132675534</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.867321671</coefficient>
+                        <coefficient>0.867324466</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.132678329</coefficient>
+                        <coefficient>0.132675534</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.867321671</coefficient>
+                        <coefficient>0.867324466</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.132678329</coefficient>
+                        <coefficient>0.132675534</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.867321671</coefficient>
+                        <coefficient>0.867324466</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.132678329</coefficient>
+                        <coefficient>0.132675534</coefficient>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -9377,8 +9377,8 @@
          </supplysector>
          <energy-final-demand name="industry">
             <price-elasticity fillout="1" year="2020">-0.65</price-elasticity>
-            <base-service year="1990">1.321465419</base-service>
-            <base-service year="2005">1.65268343</base-service>
+            <base-service year="1990">1.321517085</base-service>
+            <base-service year="2005">1.652718256</base-service>
          </energy-final-demand>
       </region>
       <region name="Former Soviet Union">
@@ -10588,6 +10588,110 @@
                   </period>
                </technology>
             </subsector>
+            <subsector name="district heat">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <technology name="district heat">
+                  <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+                     <interpolation-function name="fixed"/>
+                  </interpolation-rule>
+                  <period year="1975">
+                     <minicam-energy-input name="district heat">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="district heat">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="district heat">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="district heat">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="district heat">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="district heat">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="district heat">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="district heat">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="district heat">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+               </technology>
+            </subsector>
          </supplysector>
          <supplysector name="industrial feedstocks">
             <output-unit>EJ</output-unit>
@@ -11167,85 +11271,85 @@
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <calibrated-value>14.05553177</calibrated-value>
-                        <coefficient>0.884358676</coefficient>
+                        <calibrated-value>18.93950938</calibrated-value>
+                        <coefficient>0.911541491</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
                         <calibrated-value>1.837942398</calibrated-value>
-                        <coefficient>0.115641324</coefficient>
+                        <coefficient>0.088458509</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <calibrated-value>11.07819798</calibrated-value>
-                        <coefficient>0.841865639</coefficient>
+                        <calibrated-value>12.1237509</calibrated-value>
+                        <coefficient>0.853505332</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
                         <calibrated-value>2.080906589</calibrated-value>
-                        <coefficient>0.158134361</coefficient>
+                        <coefficient>0.146494668</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.841865639</coefficient>
+                        <coefficient>0.853505332</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.158134361</coefficient>
+                        <coefficient>0.146494668</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.841865639</coefficient>
+                        <coefficient>0.853505332</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.158134361</coefficient>
+                        <coefficient>0.146494668</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.841865639</coefficient>
+                        <coefficient>0.853505332</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.158134361</coefficient>
+                        <coefficient>0.146494668</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.841865639</coefficient>
+                        <coefficient>0.853505332</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.158134361</coefficient>
+                        <coefficient>0.146494668</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.841865639</coefficient>
+                        <coefficient>0.853505332</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.158134361</coefficient>
+                        <coefficient>0.146494668</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.841865639</coefficient>
+                        <coefficient>0.853505332</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.158134361</coefficient>
+                        <coefficient>0.146494668</coefficient>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -11253,8 +11357,8 @@
          </supplysector>
          <energy-final-demand name="industry">
             <price-elasticity fillout="1" year="2020">-0.65</price-elasticity>
-            <base-service year="1990">15.89347417</base-service>
-            <base-service year="2005">13.15910457</base-service>
+            <base-service year="1990">20.77745178</base-service>
+            <base-service year="2005">14.20465749</base-service>
          </energy-final-demand>
       </region>
       <region name="China">
@@ -12464,6 +12568,110 @@
                   </period>
                </technology>
             </subsector>
+            <subsector name="district heat">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <technology name="district heat">
+                  <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+                     <interpolation-function name="fixed"/>
+                  </interpolation-rule>
+                  <period year="1975">
+                     <minicam-energy-input name="district heat">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="district heat">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="district heat">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="district heat">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="district heat">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="district heat">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="district heat">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="district heat">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="district heat">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+               </technology>
+            </subsector>
          </supplysector>
          <supplysector name="industrial feedstocks">
             <output-unit>EJ</output-unit>
@@ -13043,85 +13251,85 @@
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <calibrated-value>11.56403644</calibrated-value>
-                        <coefficient>0.866059725</coefficient>
+                        <calibrated-value>11.55107262</calibrated-value>
+                        <coefficient>0.865929557</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
                         <calibrated-value>1.788433488</calibrated-value>
-                        <coefficient>0.133940275</coefficient>
+                        <coefficient>0.134070443</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <calibrated-value>23.14530806</calibrated-value>
-                        <coefficient>0.857225836</coefficient>
+                        <calibrated-value>23.01196356</calibrated-value>
+                        <coefficient>0.856517226</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
                         <calibrated-value>3.854937485</calibrated-value>
-                        <coefficient>0.142774164</coefficient>
+                        <coefficient>0.143482774</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.839444701</coefficient>
+                        <coefficient>0.838822547</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.160555299</coefficient>
+                        <coefficient>0.161177453</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.822032394</coefficient>
+                        <coefficient>0.82149342</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.177967606</coefficient>
+                        <coefficient>0.17850658</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.804981264</coefficient>
+                        <coefficient>0.804522293</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.195018736</coefficient>
+                        <coefficient>0.195477707</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.78828382</coefficient>
+                        <coefficient>0.78790177</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.21171618</coefficient>
+                        <coefficient>0.21209823</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.771932725</coefficient>
+                        <coefficient>0.771624609</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.228067275</coefficient>
+                        <coefficient>0.228375391</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.755920795</coefficient>
+                        <coefficient>0.755683715</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.244079205</coefficient>
+                        <coefficient>0.244316285</coefficient>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -13129,8 +13337,8 @@
          </supplysector>
          <energy-final-demand name="industry">
             <price-elasticity fillout="1" year="2020">-0.65</price-elasticity>
-            <base-service year="1990">13.35246992</base-service>
-            <base-service year="2005">27.00024555</base-service>
+            <base-service year="1990">13.33950611</base-service>
+            <base-service year="2005">26.86690104</base-service>
          </energy-final-demand>
       </region>
       <region name="Middle East">
@@ -14919,85 +15127,85 @@
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <calibrated-value>1.879231229</calibrated-value>
-                        <coefficient>0.695978383</coefficient>
+                        <calibrated-value>1.886704365</calibrated-value>
+                        <coefficient>0.6968175</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
                         <calibrated-value>0.820897502</calibrated-value>
-                        <coefficient>0.304021617</coefficient>
+                        <coefficient>0.3031825</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <calibrated-value>3.505599677</calibrated-value>
-                        <coefficient>0.64593172</coefficient>
+                        <calibrated-value>3.520450234</calibrated-value>
+                        <coefficient>0.64689792</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
                         <calibrated-value>1.921598849</calibrated-value>
-                        <coefficient>0.35406828</coefficient>
+                        <coefficient>0.35310208</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.64593172</coefficient>
+                        <coefficient>0.64689792</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.35406828</coefficient>
+                        <coefficient>0.35310208</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.64593172</coefficient>
+                        <coefficient>0.64689792</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.35406828</coefficient>
+                        <coefficient>0.35310208</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.64593172</coefficient>
+                        <coefficient>0.64689792</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.35406828</coefficient>
+                        <coefficient>0.35310208</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.64593172</coefficient>
+                        <coefficient>0.64689792</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.35406828</coefficient>
+                        <coefficient>0.35310208</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.64593172</coefficient>
+                        <coefficient>0.64689792</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.35406828</coefficient>
+                        <coefficient>0.35310208</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.64593172</coefficient>
+                        <coefficient>0.64689792</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.35406828</coefficient>
+                        <coefficient>0.35310208</coefficient>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -15005,8 +15213,8 @@
          </supplysector>
          <energy-final-demand name="industry">
             <price-elasticity fillout="1" year="2020">-0.65</price-elasticity>
-            <base-service year="1990">2.700128732</base-service>
-            <base-service year="2005">5.427198526</base-service>
+            <base-service year="1990">2.707601867</base-service>
+            <base-service year="2005">5.442049082</base-service>
          </energy-final-demand>
       </region>
       <region name="Africa">
@@ -16797,85 +17005,85 @@
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <calibrated-value>2.504721035</calibrated-value>
-                        <coefficient>0.843236964</coefficient>
+                        <calibrated-value>2.504768674</calibrated-value>
+                        <coefficient>0.843239479</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
                         <calibrated-value>0.465643336</calibrated-value>
-                        <coefficient>0.156763036</coefficient>
+                        <coefficient>0.156760521</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <calibrated-value>5.237318907</calibrated-value>
-                        <coefficient>0.896726548</coefficient>
+                        <calibrated-value>5.239288716</calibrated-value>
+                        <coefficient>0.896761367</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
                         <calibrated-value>0.603167155</calibrated-value>
-                        <coefficient>0.103273452</coefficient>
+                        <coefficient>0.103238633</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.874043254</coefficient>
+                        <coefficient>0.874073682</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.125956746</coefficient>
+                        <coefficient>0.125926318</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.85193375</coefficient>
+                        <coefficient>0.851959985</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.14806625</coefficient>
+                        <coefficient>0.148040015</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.830383519</coefficient>
+                        <coefficient>0.830405756</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.169616481</coefficient>
+                        <coefficient>0.169594244</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.809378416</coefficient>
+                        <coefficient>0.809396839</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.190621584</coefficient>
+                        <coefficient>0.190603161</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.788904652</coefficient>
+                        <coefficient>0.78891944</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.211095348</coefficient>
+                        <coefficient>0.21108056</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.768948784</coefficient>
+                        <coefficient>0.768960109</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.231051216</coefficient>
+                        <coefficient>0.231039891</coefficient>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -16883,8 +17091,8 @@
          </supplysector>
          <energy-final-demand name="industry">
             <price-elasticity fillout="1" year="2020">-0.65</price-elasticity>
-            <base-service year="1990">2.97036437</base-service>
-            <base-service year="2005">5.840486062</base-service>
+            <base-service year="1990">2.970412009</base-service>
+            <base-service year="2005">5.842455872</base-service>
          </energy-final-demand>
       </region>
       <region name="Latin America">
@@ -18674,85 +18882,85 @@
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <calibrated-value>6.075734518</calibrated-value>
-                        <coefficient>0.851214964</coefficient>
+                        <calibrated-value>6.075970197</calibrated-value>
+                        <coefficient>0.851219876</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
                         <calibrated-value>1.061986007</calibrated-value>
-                        <coefficient>0.148785036</coefficient>
+                        <coefficient>0.148780124</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <calibrated-value>8.12681911</calibrated-value>
-                        <coefficient>0.837815969</coefficient>
+                        <calibrated-value>8.128083258</calibrated-value>
+                        <coefficient>0.837837103</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
                         <calibrated-value>1.573185913</calibrated-value>
-                        <coefficient>0.162184031</coefficient>
+                        <coefficient>0.162162897</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.822383588</coefficient>
+                        <coefficient>0.822402186</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.177616412</coefficient>
+                        <coefficient>0.177597814</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.807235467</coefficient>
+                        <coefficient>0.807251617</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.192764533</coefficient>
+                        <coefficient>0.192748383</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.792366372</coefficient>
+                        <coefficient>0.792380156</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.207633628</coefficient>
+                        <coefficient>0.207619844</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.777771162</coefficient>
+                        <coefficient>0.777782663</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.222228838</coefficient>
+                        <coefficient>0.222217337</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.763444793</coefficient>
+                        <coefficient>0.763454089</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.236555207</coefficient>
+                        <coefficient>0.236545911</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.749382311</coefficient>
+                        <coefficient>0.749389482</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.250617689</coefficient>
+                        <coefficient>0.250610518</coefficient>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -18760,8 +18968,8 @@
          </supplysector>
          <energy-final-demand name="industry">
             <price-elasticity fillout="1" year="2020">-0.65</price-elasticity>
-            <base-service year="1990">7.137720524</base-service>
-            <base-service year="2005">9.700005023</base-service>
+            <base-service year="1990">7.137956204</base-service>
+            <base-service year="2005">9.701269171</base-service>
          </energy-final-demand>
       </region>
       <region name="Southeast Asia">
@@ -20550,85 +20758,85 @@
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <calibrated-value>3.388233655</calibrated-value>
-                        <coefficient>0.801597062</coefficient>
+                        <calibrated-value>3.389070208</calibrated-value>
+                        <coefficient>0.801636321</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
                         <calibrated-value>0.838620227</calibrated-value>
-                        <coefficient>0.198402938</coefficient>
+                        <coefficient>0.198363679</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <calibrated-value>6.041229185</calibrated-value>
-                        <coefficient>0.751648428</coefficient>
+                        <calibrated-value>6.042292249</calibrated-value>
+                        <coefficient>0.751681272</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
                         <calibrated-value>1.996077834</calibrated-value>
-                        <coefficient>0.248351572</coefficient>
+                        <coefficient>0.248318728</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.751648428</coefficient>
+                        <coefficient>0.751681272</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.248351572</coefficient>
+                        <coefficient>0.248318728</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.751648428</coefficient>
+                        <coefficient>0.751681272</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.248351572</coefficient>
+                        <coefficient>0.248318728</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.751648428</coefficient>
+                        <coefficient>0.751681272</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.248351572</coefficient>
+                        <coefficient>0.248318728</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.751648428</coefficient>
+                        <coefficient>0.751681272</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.248351572</coefficient>
+                        <coefficient>0.248318728</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.751648428</coefficient>
+                        <coefficient>0.751681272</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.248351572</coefficient>
+                        <coefficient>0.248318728</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.751648428</coefficient>
+                        <coefficient>0.751681272</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.248351572</coefficient>
+                        <coefficient>0.248318728</coefficient>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -20636,8 +20844,8 @@
          </supplysector>
          <energy-final-demand name="industry">
             <price-elasticity fillout="1" year="2020">-0.65</price-elasticity>
-            <base-service year="1990">4.226853882</base-service>
-            <base-service year="2005">8.037307019</base-service>
+            <base-service year="1990">4.227690435</base-service>
+            <base-service year="2005">8.038370083</base-service>
          </energy-final-demand>
       </region>
       <region name="Eastern Europe">
@@ -21847,6 +22055,110 @@
                   </period>
                </technology>
             </subsector>
+            <subsector name="district heat">
+               <share-weight year="1975">1</share-weight>
+               <share-weight year="1990">1</share-weight>
+               <share-weight year="2005">1</share-weight>
+               <interpolation-rule apply-to="share-weight" from-year="2005" to-year="9999">
+                  <interpolation-function name="fixed"/>
+               </interpolation-rule>
+               <logit-exponent fillout="1" year="1975">-6</logit-exponent>
+               <technology name="district heat">
+                  <interpolation-rule apply-to="share-weight" from-year="2005" to-year="2095">
+                     <interpolation-function name="fixed"/>
+                  </interpolation-rule>
+                  <period year="1975">
+                     <minicam-energy-input name="district heat">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>0</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="1990">
+                     <minicam-energy-input name="district heat">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2005">
+                     <minicam-energy-input name="district heat">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2020">
+                     <minicam-energy-input name="district heat">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2035">
+                     <minicam-energy-input name="district heat">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2050">
+                     <minicam-energy-input name="district heat">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2065">
+                     <minicam-energy-input name="district heat">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2080">
+                     <minicam-energy-input name="district heat">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+                  <period year="2095">
+                     <minicam-energy-input name="district heat">
+                        <efficiency>1</efficiency>
+                     </minicam-energy-input>
+                     <CO2 name="CO2"/>
+                     <minicam-non-energy-input name="non-energy">
+                        <input-cost>3</input-cost>
+                     </minicam-non-energy-input>
+                     <share-weight>1</share-weight>
+                  </period>
+               </technology>
+            </subsector>
          </supplysector>
          <supplysector name="industrial feedstocks">
             <output-unit>EJ</output-unit>
@@ -22426,85 +22738,85 @@
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <calibrated-value>4.610184201</calibrated-value>
-                        <coefficient>0.891892271</coefficient>
+                        <calibrated-value>4.890821635</calibrated-value>
+                        <coefficient>0.897459452</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
                         <calibrated-value>0.558808009</calibrated-value>
-                        <coefficient>0.108107729</coefficient>
+                        <coefficient>0.102540548</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <calibrated-value>2.601959972</calibrated-value>
-                        <coefficient>0.791856376</coefficient>
+                        <calibrated-value>2.752017406</calibrated-value>
+                        <coefficient>0.800946566</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="industrial feedstocks">
                         <calibrated-value>0.683938901</calibrated-value>
-                        <coefficient>0.208143624</coefficient>
+                        <coefficient>0.199053434</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                   </period>
                   <period year="2020">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.791856376</coefficient>
+                        <coefficient>0.800946566</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.208143624</coefficient>
+                        <coefficient>0.199053434</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2035">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.791856376</coefficient>
+                        <coefficient>0.800946566</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.208143624</coefficient>
+                        <coefficient>0.199053434</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2050">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.791856376</coefficient>
+                        <coefficient>0.800946566</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.208143624</coefficient>
+                        <coefficient>0.199053434</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2065">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.791856376</coefficient>
+                        <coefficient>0.800946566</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.208143624</coefficient>
+                        <coefficient>0.199053434</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2080">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.791856376</coefficient>
+                        <coefficient>0.800946566</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.208143624</coefficient>
+                        <coefficient>0.199053434</coefficient>
                      </minicam-energy-input>
                   </period>
                   <period year="2095">
                      <share-weight>1</share-weight>
                      <minicam-energy-input name="industrial energy use">
-                        <coefficient>0.791856376</coefficient>
+                        <coefficient>0.800946566</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-energy-input name="industrial feedstocks">
-                        <coefficient>0.208143624</coefficient>
+                        <coefficient>0.199053434</coefficient>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -22512,8 +22824,8 @@
          </supplysector>
          <energy-final-demand name="industry">
             <price-elasticity fillout="1" year="2020">-0.65</price-elasticity>
-            <base-service year="1990">5.16899221</base-service>
-            <base-service year="2005">3.285898873</base-service>
+            <base-service year="1990">5.449629644</base-service>
+            <base-service year="2005">3.435956307</base-service>
          </energy-final-demand>
       </region>
       <region name="Korea">

@@ -69,7 +69,7 @@ extern Scenario* scenario;
 double CESProductionFunction::calcCoefficient( InputSet& input, double consumption, 
                                                const string& regionName, const string& sectorName, 
                                                int period, double sigma, double indBusTax, 
-                                               double capitalStock ) const 
+                                               double capitalStock, const IInput* aParentInput ) const 
 {
     /*! \pre sigma is greater than 0.05, otherwise we should be using a Leontief
     *        production function. 
@@ -271,7 +271,7 @@ double CESProductionFunction::calcDemand( InputSet& input, double personalIncome
                                           const string& regionName, const string& sectorName,
                                           const double aShutdownCoef, int period, double capitalStock,
                                           double alphaZero, 
-                                          double sigma, double IBT) const 
+                                          double sigma, double IBT, const IInput* aParentInput ) const 
 {
     /*! \pre sigma is greater than 0.05, otherwise we should be using a Leontief
     *        production function. 
@@ -399,7 +399,8 @@ double CESProductionFunction::calcLevelizedCost( const InputSet& aInputs,
                                                  const string& aSectorName,
                                                  int aPeriod,
                                                  double aAlphaZero,
-                                                 double aSigma ) const
+                                                 double aSigma,
+                                                 const IInput* aParentInput ) const
 {
     // Calculate the exponents.
     const double rho = FunctionUtils::getRho( aSigma );

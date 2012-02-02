@@ -61,7 +61,7 @@ extern Scenario* scenario;
 
 double NestedCESProductionFunction::calcCoefficient( InputSet& input, double consumption, const std::string& regionName,
                             const std::string& sectorName, int period, double sigma, double IBT,
-                            double capitalStock ) const
+                            double capitalStock, const IInput* aParentInput ) const
 {
     // the first input is the parent node input
     InputSet::iterator it = input.begin();
@@ -128,7 +128,8 @@ double NestedCESProductionFunction::changeElasticity( InputSet& input, const std
 
 double NestedCESProductionFunction::calcDemand( InputSet& input, double consumption, const std::string& regionName,
                        const std::string& sectorName, const double aShutdownCoef, int period,
-                       double capitalStock, double alphaZero, double sigma, double IBT ) const
+                       double capitalStock, double alphaZero, double sigma, double IBT,
+                       const IInput* aParentInput ) const
 {   
     // IBT is really output price
     const double outputPrice = IBT;
@@ -187,7 +188,8 @@ double NestedCESProductionFunction::calcExpProfitRate( const InputSet& input, co
 }
 
 double NestedCESProductionFunction::calcLevelizedCost( const InputSet& aInputs, const std::string& aRegionName,
-                         const std::string& aSectorName, int aPeriod, double aAlphaZero, double aSigma ) const
+                         const std::string& aSectorName, int aPeriod, double aAlphaZero, double aSigma,
+                         const IInput* aParentInput ) const
 {
     // TODO: shouldn't aPeriod, aAlphaZero, and aSigma all be const?
 
