@@ -72,39 +72,7 @@ public:
 	virtual DefaultTechnology* clone() const;
 
 	static const std::string& getXMLNameStatic();
-	
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName,
-                               const std::string& aSubsectorName,
-                               const IInfo* aSubsectorIInfo,
-                               ILandAllocator* aLandAllocator );
 
-    virtual void initCalc( const std::string& aRegionName,
-                           const std::string& aSectorName,
-                           const IInfo* aSubsectorInfo,
-                           const Demographic* aDemographics,
-                           PreviousPeriodInfo& aPrevPeriodInfo,
-                           const int aPeriod );
-
-    virtual void postCalc( const std::string& aRegionName,
-                           const int aPeriod );	
-	
-    virtual void production( const std::string& aRegionName,
-                             const std::string& aSectorName, 
-		                     double aVariableDemand,
-                             double aFixedOutputScaleFactor,
-                             const GDP* aGDP,
-                             const int aPeriod );
-    
-    virtual void calcCost( const std::string& aRegionName,
-                           const std::string& aSectorName,
-		                   const int aPeriod );
-	
-    virtual double calcShare( const std::string& aRegionName,
-                              const std::string& aSectorName, 
-		                      const GDP* aGDP,
-                              const double aLogitExp,
-                              const int aPeriod ) const;
 protected:
 
 	virtual bool XMLDerivedClassParse( const std::string& aNodeName,

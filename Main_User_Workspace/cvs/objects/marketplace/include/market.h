@@ -114,11 +114,13 @@ public:
 
     virtual void nullDemand();
     virtual void addToDemand( const double demandIn ) = 0;
+    virtual double getSolverDemand() const;
     double getRawDemand() const;
     double getStoredRawDemand() const;
     virtual double getDemand() const = 0;
 
     virtual void nullSupply() = 0;
+    virtual double getSolverSupply() const;
     double getRawSupply() const;
     double getStoredRawSupply() const;
     virtual double getSupply() const = 0;

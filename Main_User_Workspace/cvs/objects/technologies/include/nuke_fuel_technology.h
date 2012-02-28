@@ -80,22 +80,12 @@ public:
                            PreviousPeriodInfo& aPrevPeriodInfo,
                            const int aPeriod );
     
-    virtual void postCalc( const std::string& aRegionName, const int aPeriod );
-	
-    virtual void calcCost( const std::string& aRegionName,
-		                   const std::string& aSectorName,
-		                   const int aPeriod );
-    
     double getNonEnergyCost( const int aPeriod ) const;
 
 	virtual void production( const std::string& aRegionName,const std::string& aSectorName, 
 							 double aVariableDemand, double aFixedOutputScaleFactor, const GDP* aGDP,
 							 const int aPeriod );
-	virtual double calcShare( const std::string& aRegionName,
-                              const std::string& aSectorName, 
-		                      const GDP* aGDP,
-                              const double aLogitExp,
-                              const int aPeriod ) const;
+
 protected:
 
     bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );

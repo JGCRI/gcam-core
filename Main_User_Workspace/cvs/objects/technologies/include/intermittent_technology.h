@@ -122,11 +122,6 @@ public:
                              const GDP* aGDP,
                              const int aPeriod );
 
-    virtual double calcShare( const std::string& aRegionName,
-                              const std::string& aSectorName, 
-                              const GDP* aGDP,
-                              const double aLogitExp,
-                              const int aPeriod ) const;
     
     virtual void calcCost( const std::string& aRegionName,
                            const std::string& aSectorName,

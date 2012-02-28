@@ -195,13 +195,13 @@ void SolutionInfo::setPriceToCenter(){
 
 /*! \brief Get Demand */
 double SolutionInfo::getDemand() const {
-    return linkedMarket->getRawDemand();
+    return linkedMarket->getSolverDemand();
 }
 
 
 /*! \brief Get the Supply */
 double SolutionInfo::getSupply() const {
-    return linkedMarket->getRawSupply();
+    return linkedMarket->getSolverSupply();
 }
 
 //! Get the Excess Demand, calculated dynamically.

@@ -96,7 +96,7 @@
             <bracket-interval>0.4</bracket-interval>
             <max-bracket-iterations>40</max-bracket-iterations>
             <max-iterations>30</max-iterations>
-            <solution-info-filter>market-name="globalCO2" &amp;&amp; solvable</solution-info-filter>
+            <solution-info-filter>solvable &amp;&amp; (market-type="Tax" || market-type="Subsidy" || market-type="RES")</solution-info-filter>
         </bisect-all-solver-component>
         <log-newton-raphson-backtracking-solver-component>
             <max-iterations>10</max-iterations>
@@ -104,7 +104,7 @@
 		         tolerance.  We will rerun with a tighter ftol below -->
 	        <ftol>5.0e-2</ftol>
             <!-- include the tax market in the newton-raphson -->
-            <solution-info-filter>solvable-nr || (market-type="Tax" &amp;&amp; solvable)</solution-info-filter>
+            <solution-info-filter>solvable-nr</solution-info-filter>
         </log-newton-raphson-backtracking-solver-component>
         <bisect-all-solver-component>
             <bracket-interval>10.0</bracket-interval>
@@ -122,7 +122,7 @@
             <max-iterations>25</max-iterations>
 	        <ftol>1.0e-3</ftol>
             <!-- include the tax market in the newton-raphson -->
-            <solution-info-filter>solvable-nr || (market-type="Tax" &amp;&amp; solvable)</solution-info-filter>
+            <solution-info-filter>solvable-nr</solution-info-filter>
         </log-newton-raphson-backtracking-solver-component> 
     </user-configurable-solver>
     <!-- The SolutionInfoParamParser object allows us to specify the following solution algorithm

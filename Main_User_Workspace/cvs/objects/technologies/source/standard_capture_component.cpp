@@ -222,7 +222,7 @@ double StandardCaptureComponent::getStorageCost( const string& aRegionName,
 
     // If there is no carbon market, return a large number to disable the
     // capture technology.
-    if( carbonMarketPrice == Marketplace::NO_MARKET_PRICE || carbonMarketPrice < util::getSmallNumber() ){
+    if( carbonMarketPrice == Marketplace::NO_MARKET_PRICE || carbonMarketPrice == 0.0 ){
         return util::getLargeNumber();
     }
 

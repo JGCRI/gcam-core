@@ -632,18 +632,22 @@ double Subsector::getAverageFuelPrice( const GDP* aGDP, const int aPeriod ) cons
 * \return A vector of technology shares.
 */
 const vector<double> Subsector::calcTechShares( const GDP* aGDP, const int aPeriod ) const {
-    vector<double> techShares( mTechContainers.size() );
+    vector<double> logTechShares ( mTechContainers.size() ); 
+
     for( unsigned int i = 0; i < mTechContainers.size(); ++i ){
         // determine shares based on Technology costs
-        techShares[ i ] = mTechContainers[i]->getNewVintageTechnology(aPeriod)->calcShare( regionName, sectorName, aGDP,
-            mTechLogitExp[ aPeriod ], aPeriod );
+        double lts = mTechContainers[ i ]->getNewVintageTechnology( aPeriod )->
+            calcShare( regionName, sectorName, aGDP, mTechLogitExp[ aPeriod ], aPeriod );
 
         // Check that Technology shares are valid.
-        assert( util::isValidNumber( techShares[ i ] ) );
+        assert( util::isValidNumber( lts ) || lts == -numberic_limits<double>::infinity() );
+        logTechShares[ i ] = lts;
     }
-    // Normalize technology shares.
-    SectorUtils::normalizeShares( techShares );
-    return techShares;
+    // Normalize technology shares.  After normalization they will be
+    // shares, not log(shares).
+    SectorUtils::normalizeLogShares( logTechShares );
+
+    return logTechShares;
 }
 
 /*!
@@ -674,33 +678,41 @@ void Subsector::calcCost( const int aPeriod ){
 *                  subsector nest.
 * \warning There is no difference between demand and supply technologies.
 *          Control behavior with value of parameter fuelPrefElasticity
-* \return The subsector share.
+* \return The log of the subsector share.
 */
 double Subsector::calcShare(const int aPeriod, const GDP* aGdp, const double aLogitExp ) const {
     double subsectorPrice = getPrice( aGdp, aPeriod );
 
-    if( subsectorPrice >= util::getSmallNumber() ){
+    if( subsectorPrice > 0.0 ){
+        double logprice = log( subsectorPrice );
         double scaledGdpPerCapita = aGdp->getBestScaledGDPperCap( aPeriod );
-        double share = mShareWeights[ aPeriod ] * pow( subsectorPrice, aLogitExp )
-                        * pow( scaledGdpPerCapita, fuelPrefElasticity[ aPeriod ] );
-        /*! \post Share is zero or positive. */
+        assert( scaledGdpPerCapita > 0.0 );
+        // We have taken the log of the logit share equation in order to avoid the
+        // possibility of numerical underflow.  The sharing still behaves the same.
+        double logsharewt = mShareWeights[ aPeriod ] > 0.0
+            ? log( mShareWeights[ aPeriod ] ) : -numeric_limits<double>::infinity();
+        double logshare = logsharewt + aLogitExp * logprice + fuelPrefElasticity[ aPeriod ]
+            * log( scaledGdpPerCapita );
+
+        /*! \post loghare is finite or minus-infinity. */
         // Check for invalid shares.
-        if( share < -util::getSmallNumber() || !util::isValidNumber( share ) ) {
+        if( !( util::isValidNumber( logshare ) || logshare == -numeric_limits<double>::infinity() ) ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
             mainLog << "Invalid share for " << name << " in " << regionName 
-                << " of " << share << endl;
+                << " log(share) =  " << logshare << endl;
         }
-        return share;
+        return logshare;
     }
 
     // We want to allow regional and delivered biomass prices to be negative
-    if( subsectorPrice < 0 && ( sectorName == "regional biomass"  || sectorName == "delivered biomass" ) ) {
+    if( subsectorPrice < 0.0 && ( sectorName == "regional biomass"  || sectorName == "delivered biomass" ) ) {
         // This assumes that there is only one subsector in regional biomass
-        return 1;
+        // so we give a share of 1 thus return log( 1 ) which is zero.
+        return 0.0;
     }
 
-    return 0;
+    return -numeric_limits<double>::infinity();
 }
 
 /*! \brief Return the total exogenously fixed Technology output for this sector.

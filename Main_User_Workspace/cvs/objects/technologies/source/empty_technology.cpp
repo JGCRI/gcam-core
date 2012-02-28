@@ -117,7 +117,7 @@ double EmptyTechnology::calcShare( const string& aRegionName,
                              const double aLogitExp,
                              const int aPeriod ) const
 {
-    return 0;
+    return -numeric_limits<double>::infinity();
 }
 
 double EmptyTechnology::getFixedOutput( const string& aRegionName,

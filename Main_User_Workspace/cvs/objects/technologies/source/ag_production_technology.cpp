@@ -263,12 +263,6 @@ void AgProductionTechnology::initCalc( const string& aRegionName,
     mLandAllocator->setProfitRate( aRegionName, mName, profitRate, aPeriod );
 }
 
-void AgProductionTechnology::postCalc( const string& aRegionName,
-                                         const int aPeriod )
-{
-    Technology::postCalc( aRegionName, aPeriod );
-}
-
 void AgProductionTechnology::completeInit( const std::string& aRegionName,
                                              const std::string& aSectorName,
                                              const std::string& aSubsectorName,
@@ -366,7 +360,7 @@ void AgProductionTechnology::setCalYields(const std::string& aRegionName) {
 * \param aSectorName Sector name, also the name of the product.
 * \param aGDP Regional GDP container.
 * \param aPeriod Model period.
-* \return The technology share, always 1 for AgProductionTechnologies.
+* \return The log of the technology share, always 1 for AgProductionTechnologies.
 * \author James Blackwood, Steve Smith
 */
 double AgProductionTechnology::calcShare( const string& aRegionName,
@@ -379,7 +373,7 @@ double AgProductionTechnology::calcShare( const string& aRegionName,
     
     // Ag production technologies of output is determined by land amount
     // and yield, so the share among technologies is not used.
-    return 1;
+    return 0.0;
 }
 
 

@@ -123,7 +123,7 @@ void SupplyDemandCurve::calculatePoints( const int numPoints, World* world, Mark
         // calculate the world.
         world->calc( period );
 
-        points.push_back( new SupplyDemandPoint(  market->getRawPrice(), market->getRawDemand(), market->getRawSupply() ) );
+        points.push_back( new SupplyDemandPoint(  market->getRawPrice(), market->getSolverDemand(), market->getSolverSupply() ) );
 
     } // Completed iterating through all price points.
 

@@ -46,7 +46,7 @@
 * \author Sonny Kim
 */
 
-#include "marketplace/include/market.h"
+#include "marketplace/include/market_RES.h"
 
 /*!
 * \ingroup Objects
@@ -54,28 +54,15 @@
 * \author Sonny Kim
 */
 
-class MarketTax: public Market {
+class MarketTax: public MarketRES {
 public:
     MarketTax( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
     virtual IMarketType::Type getType() const;
 
-    virtual void initPrice();
-    virtual void setPrice( const double priceIn );
-    virtual void set_price_to_last_if_default( const double lastPrice );
-    virtual void set_price_to_last( const double lastPrice );
-    virtual double getPrice() const;
-
-    virtual void addToDemand( const double demandIn );
-    virtual double getDemand() const;
-
     virtual void nullSupply();
-    virtual double getSupply() const;
-    virtual void addToSupply( const double supplyIn );
-    virtual bool meetsSpecialSolutionCriteria() const;
-    virtual bool shouldSolve() const;
-    virtual bool shouldSolveNR() const;
 protected:
     virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const;
+    virtual double getDefaultPrice() const;
 };
 
 #endif // _MARKET_TAX_H_

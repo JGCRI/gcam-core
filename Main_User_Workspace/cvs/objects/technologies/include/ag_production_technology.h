@@ -89,9 +89,6 @@ public:
                            PreviousPeriodInfo& aPrevPeriodInfo,
                            const int aPeriod );
 
-    virtual void postCalc( const std::string& aRegionName,
-                           const int aPeriod );
-
     virtual double calcShare( const std::string& aRegionName,
                               const std::string& aSectorName,
                               const GDP* aGDP,

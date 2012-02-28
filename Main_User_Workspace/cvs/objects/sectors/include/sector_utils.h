@@ -82,6 +82,7 @@ public:
                                               const double aFixedOutput );
 
     static double normalizeShares( std::vector<double>& aShares );
+    static double normalizeLogShares( std::vector<double> & alogShares );
 
     static double calcPriceRatio( const std::string& aRegionName,
                                   const std::string& aSectorName,

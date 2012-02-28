@@ -337,7 +337,7 @@ void SupplySector::calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ){
 void SupplySector::supply( const GDP* aGDP, const int aPeriod ) {
 	Marketplace* marketplace = scenario->getMarketplace();
 	// demand for the good produced by this Sector
-	double marketDemand = marketplace->getDemand( name, regionName, aPeriod );
+	double marketDemand = max( marketplace->getDemand( name, regionName, aPeriod ), 0.0 );
 
 	// Determine if fixed output must be scaled because fixed supply
 	// exceeded demand.

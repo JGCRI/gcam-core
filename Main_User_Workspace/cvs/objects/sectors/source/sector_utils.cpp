@@ -235,9 +235,48 @@ double SectorUtils::calcFixedOutputScaleFactor( const double aMarketDemand,
  *          shares. If all shares are zero, there are no children which can
  *          produce output and the function returns 0 without adjusting the
  *          shares.
- * \param aShares A set of shares to normalize.
+ * \param alogShares A vector of logs of unnormalized shares on input, normalized shares
+ *                   (not logs) on output
  * \return The normalized sum of the shares.
  */
+double SectorUtils::normalizeLogShares( vector<double>& alogShares ){
+    // find the log of the largest unnormalized share
+    double lfac = *max_element(alogShares.begin(), alogShares.end());
+    double sum = 0.0;
+    
+    // check for all zero prices
+    if( lfac == -numeric_limits<double>::infinity() ) {
+        // In this case, set all shares to zero and return.
+        // This is arguably wrong, but the rest of the code seems to expect it.
+        for( size_t i = 0; i < alogShares.size(); ++i ) {
+            alogShares[ i ] = 0.0;
+        }
+        return 0.0;
+    }
+
+    // in theory we could check for lfac == +Inf here, but in light of how the log
+    // shares are calculated, it would seem like that can't happen.
+    
+    // rescale and get normalization sum
+    for( size_t i = 0; i < alogShares.size(); ++i ) {
+        alogShares[ i ] -= lfac;
+        sum += exp( alogShares[ i ] );
+    }
+    double norm = log( sum );
+    sum = 0.0;                               // double check the normalization
+    for( size_t i = 0; i < alogShares.size(); ++i ) {
+        alogShares[ i ] = exp( alogShares[ i ] - norm );   // divide by norm constant and unlog
+        sum += alogShares[ i ];                      // accumulate sum of normalized shares 
+                                                     //   (should be 1.0 when we're done.)
+    }
+    
+    // In actuality, this rescaling scheme should eliminate the problem of
+    // failed normalizations, but we'll allow for the possibility anyhow.
+    assert( sum < numeric_limits<double>::min() || util::isEqual( sum, 1.0 ) );
+
+    return sum;
+}
+
 double SectorUtils::normalizeShares( vector<double>& aShares ){
     // Calculate the total of the shares so they can be normalized.
     const double sum = accumulate( aShares.begin(), aShares.end(), 0.0 );

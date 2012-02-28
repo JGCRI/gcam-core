@@ -231,7 +231,7 @@ void UnmanagedLandTechnology::completeInit( const string& aRegionName,
 * \param aSectorName Sector name, also the name of the product.
 * \param aGDP Regional GDP container.
 * \param aPeriod Model period.
-* \return Technology share, always 1 for UnmanagedLandTechnologies.
+* \return log of the technology share, always 0 (==log(1)) for UnmanagedLandTechnologies.
 * \author Steve Smith
 */
 double UnmanagedLandTechnology::calcShare( const string& aRegionName,
@@ -240,7 +240,7 @@ double UnmanagedLandTechnology::calcShare( const string& aRegionName,
                                               const double aLogitExp,
                                               const int aPeriod ) const
 {
-    return 1;
+    return 0.0;
 }
 
 void UnmanagedLandTechnology::calcCost( const string& aRegionName,

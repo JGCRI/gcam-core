@@ -177,34 +177,34 @@ public:
                                const std::string& aSectorName,
                                const std::string& aSubsectorName,
                                const IInfo* aSubsectorIInfo,
-                               ILandAllocator* aLandAllocator ) = 0;
+                               ILandAllocator* aLandAllocator );
     
     virtual void initCalc( const std::string& aRegionName,
                            const std::string& aSectorName,
                            const IInfo* aSubsectorInfo,
                            const Demographic* aDemographics,
                            PreviousPeriodInfo& aPrevPeriodInfo,
-                           const int aPeriod ) = 0;
+                           const int aPeriod );
     
     virtual void postCalc( const std::string& aRegionName,
-                           const int aPeriod ) = 0;
+                           const int aPeriod );
 
     virtual void production( const std::string& aRegionName,
                              const std::string& aSectorName, 
                              double aVariableDemand,
                              double aFixedOutputScaleFactor,
                              const GDP* aGDP,
-                             const int aPeriod ) = 0;
+                             const int aPeriod );
 
     virtual double calcShare( const std::string& aRegionName,
                               const std::string& aSectorName, 
                               const GDP* aGDP,
                               const double aLogitExp,
-                              const int aPeriod ) const = 0;
+                              const int aPeriod ) const;
     
     virtual void calcCost( const std::string& aRegionName,
                            const std::string& aSectorName,
-                           const int aPeriod ) = 0;
+                           const int aPeriod );
 
     double getCost( const int aPeriod ) const;
 

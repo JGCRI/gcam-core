@@ -461,13 +461,30 @@ const vector<double> Sector::calcSubsectorShares( const GDP* aGDP, const int aPe
         subsecShares[ i ] = subsec[ i ]->calcShare( aPeriod, aGDP, mSubsectorLogitExp[ aPeriod ] );
     }
 
-    // Normalize the shares.
-    double shareSum = SectorUtils::normalizeShares( subsecShares );
+    // Normalize the shares.  After normalization they will be true shares, not log(shares).
+    double shareSum = SectorUtils::normalizeLogShares( subsecShares );
     if( !util::isEqual( shareSum, 1.0 ) && !outputsAllFixed( aPeriod ) ){
+        // This should no longer happen, but it's still technically possible.
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::DEBUG );
         mainLog << "Shares for sector " << name << " in region " << regionName
             << " did not normalize correctly. Sum is " << shareSum << "." << endl;
+        
+        // All shares are zero likely due to underflow.  Give 100% share to the
+        // minimum cost subsector.
+        assert( subsec.size() > 0 );
+        int minPriceIndex = 0;
+        double minPrice = subsec[ minPriceIndex ]->getPrice( aGDP, aPeriod );
+        subsecShares[ 0 ] = 0.0;
+        for( int i = 1; i < subsec.size(); ++i ) {
+            double currPrice = subsec[ i ]->getPrice( aGDP, aPeriod );
+            subsecShares[ i ] = 0.0;                  // zero out all subsector shares ...
+            if( currPrice < minPrice ) {
+                minPrice = currPrice;
+                minPriceIndex = i;
+            }
+        }
+        subsecShares[ minPriceIndex ] = 1.0;        // ... except the lowest price
     }
     /*! \post There is one share per subsector. */
     assert( subsecShares.size() == subsec.size() );
@@ -503,19 +520,6 @@ double Sector::getPrice( const GDP* aGDP, const int aPeriod ) const {
         }
     }
 
-    // For sectors with non-zero subsector shares, check if the overall sector price is zero.
-    // Zero sector price would cause infinite demand.
-    if( (sumSubsecShares > util::getSmallNumber()) 
-             && (sectorPrice < util::getSmallNumber()) ){
-        // Allow sector price to be negative
-        if ( ( name != "regional biomass" && name != "delivered biomass" ) ){
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::DEBUG );
-            mainLog << "Zero price for sector " << name << " in region " << regionName
-                    << " Resetting to last period's price." << endl;
-            sectorPrice = aPeriod > 0 ? getPrice( aGDP, aPeriod - 1 ) : 1;
-        }
-    }
     return sectorPrice;
 }
 

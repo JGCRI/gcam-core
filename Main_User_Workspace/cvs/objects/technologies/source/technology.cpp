@@ -825,40 +825,48 @@ double Technology::getTotalGHGCost( const string& aRegionName,
 * \param aGDP Regional GDP container.
 * \param aLogitExp The logit exponent for this technology nest.
 * \param aPeriod Model period.
-* \todo Check to see if power function for trivial values really wastes time
-* \return The Technology share.
-*/
+* \return Log of the numerator of the technology share.
+*/ 
 double Technology::calcShare( const string& aRegionName,
                               const string& aSectorName,
                               const GDP* aGDP,
                               const double aLogitExp,
                               const int aPeriod ) const
 {
+    const double mininf = -numeric_limits<double>::infinity();
     // A Technology which is not operating does not have a share.
     if( !mProductionState[ aPeriod ]->isOperating() ){
-        return 0;
+        return mininf;
     }
 
     // Vintages and fixed output technologies should never have a share.
     if( !mProductionState[ aPeriod ]->isNewInvestment() ||
-        mFixedOutput != IProductionState::fixedOutputDefault() ){
-        return 0;
+        mFixedOutput != IProductionState::fixedOutputDefault() )
+    {
+        return mininf;
     }
 
     // Calculate the new vintage share.
-    assert( getCost( aPeriod ) > 0 );
-    double share = mShareWeight* pow( getCost( aPeriod ), aLogitExp );
+    double cost = getCost( aPeriod );
+    
+    // We want to allow negative costs for biomass
+    if( cost < 0.0 && ( aSectorName == "regional biomass"  || aSectorName == "delivered biomass" ) ) {
+        // This assumes that there is only one technology in regional biomass
+        // so we give a share of 1 thus return log( 1 ) which is zero.
+        return 0.0;
+    }
+    
+    double logsharewt = mShareWeight > 0.0 ? log( mShareWeight ) : mininf;
+    double logshare = cost > 0.0 ? logsharewt + aLogitExp * log( cost ) : mininf;
 
     double fuelPrefElasticity = calcFuelPrefElasticity( aPeriod );
-    // This is rarely used, so probably worth it to not to waste cycles on the
-    // power function.
     if( fuelPrefElasticity != 0 ) {
         double scaledGdpPerCapita = aGDP->getBestScaledGDPperCap( aPeriod );
-        share *= pow( scaledGdpPerCapita, fuelPrefElasticity );
+        assert( scaledGdpPerCapita > 0.0) ;
+        logshare += fuelPrefElasticity * log( scaledGdpPerCapita );
     }
-
-    assert( share >= 0 && util::isValidNumber( share ) );
-    return share;
+    assert( util::isValidNumber( logshare ) || logshare == mininf );
+    return logshare;
 }
 
 /*! \brief Return true if technology is fixed for no output or input
@@ -1411,7 +1419,7 @@ void Technology::calcCost( const string& aRegionName,
         }
         else {
             // techcost can drift below zero in disequilibrium.
-            mCosts[ aPeriod ] = max( techCost, util::getSmallNumber() );
+            mCosts[ aPeriod ] = max( techCost, 0.001 );
         }
     }
 

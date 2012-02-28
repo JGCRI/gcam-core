@@ -66,21 +66,12 @@ public:
     virtual const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();
 
-    virtual void completeInit( const std::string& aRegionName,
-        const std::string& aSectorName,
-        const std::string& aSubsectorName,
-        const IInfo* aSubsectorInfo,
-        ILandAllocator* aLandAllocator );
-
     virtual void initCalc( const std::string& aRegionName,
         const std::string& aSectorName,
         const IInfo* aSubsectorInfo,
         const Demographic* aDemographics,
         PreviousPeriodInfo& aPrevPeriodInfo,
         const int aPeriod );
-
-    virtual void postCalc( const std::string& aRegionName,
-        const int aPeriod ); 
 
     virtual void production( const std::string& aRegionName,
         const std::string& aSectorName, 
@@ -101,12 +92,6 @@ public:
 
     virtual double getEnergyCost( const std::string& aRegionName,
         const std::string& aSectorName,
-        const int aPeriod ) const;
-
-    virtual double calcShare( const std::string& aRegionName,
-        const std::string& aSectorName, 
-        const GDP* aGDP,
-        const double aLogitExp,
         const int aPeriod ) const;
 
     double getCalibrationOutput( const bool aHasRequiredInput,

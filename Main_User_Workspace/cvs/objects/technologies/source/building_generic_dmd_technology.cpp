@@ -179,11 +179,6 @@ void BuildingGenericDmdTechnology::initCalc( const string& aRegionName,
     }
 }
 
-
-void BuildingGenericDmdTechnology::postCalc( const string& aRegionName, const int aPeriod ) {
-    Technology::postCalc( aRegionName, aPeriod );
-}
-
 bool BuildingGenericDmdTechnology::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurr ) {
     if( aNodeName == "aveInsulation" ){
         mAveInsulation = XMLHelper<double>::getValue( aCurr );
@@ -212,6 +207,9 @@ void BuildingGenericDmdTechnology::toDebugXMLDerived( const int period, ostream&
 * \details Building technologies are really just calculating demands for
 *          specific services so shares are always 1. This ensures that sector
 *          price is correctly calculated.
+* \remark I don't see how you square the description above with what is actually happening
+* 	in this function.  It calls the Technology base class calcShare, which is assuredly not
+*       always returning 1 (unless there is only ever one technology?)
 * \author Steve Smith
 * \param aRegionName Region name.
 * \param aSectorName Sector name.
@@ -226,23 +224,6 @@ double BuildingGenericDmdTechnology::calcShare( const string& aRegionName,
                                                 const int aPeriod ) const
 {
     return Technology::calcShare( aRegionName, aSectorName, aGDP, aLogitExp, aPeriod );
-}
-
-void BuildingGenericDmdTechnology::production( const string& aRegionName,
-                                               const string& aSectorName,
-											   double aVariableDemand,
-                                               double aFixedOutputScaleFactor,
-											   const GDP* aGDP, const int aPeriod )
-{
-    Technology::production( aRegionName, aSectorName, aVariableDemand,
-                            aFixedOutputScaleFactor, aGDP, aPeriod );
-}
-
-void BuildingGenericDmdTechnology::calcCost( const string& aRegionName,
-                                             const string& aSectorName,
-											 const int aPeriod )
-{
-	Technology::calcCost( aRegionName, aSectorName, aPeriod );
 }
 
 double BuildingGenericDmdTechnology::getTotalInputCost( const string& aRegionName,

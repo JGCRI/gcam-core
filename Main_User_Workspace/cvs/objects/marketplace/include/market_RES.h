@@ -70,15 +70,18 @@ public:
 
     virtual void addToDemand( const double demandIn );
     virtual double getDemand() const;
+    virtual void nullDemand();
 
     virtual void nullSupply();
     virtual double getSupply() const;
+    virtual double getSolverSupply() const;
     virtual void addToSupply( const double supplyIn );
     virtual bool meetsSpecialSolutionCriteria() const;
     virtual bool shouldSolve() const;
     virtual bool shouldSolveNR() const;
 protected:
     virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const;
+    virtual double getDefaultPrice() const;
 };
 
 #endif // _MARKET_RES_H_

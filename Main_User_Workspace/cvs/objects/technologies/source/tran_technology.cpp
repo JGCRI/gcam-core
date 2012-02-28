@@ -117,15 +117,6 @@ void TranTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* ta
     XMLWriteElement( getOutput( period ), "serviceOutput", out, tabs );
 }   
 
-void TranTechnology::completeInit( const string& aRegionName,
-                                   const string& aSectorName,
-                                   const string& aSubsectorName,
-                                   const IInfo* aSubsectorInfo,
-                                   ILandAllocator* aLandAllocator )
-{
-    Technology::completeInit( aRegionName, aSectorName, aSubsectorName,
-                              aSubsectorInfo, aLandAllocator );
-}
 
 void TranTechnology::initCalc( const string& aRegionName,
                                const string& aSectorName, 
@@ -157,10 +148,6 @@ void TranTechnology::initCalc( const string& aRegionName,
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "LoadFactor was zero in technology: " << mName << ". Reset to 1." << endl;
     }
-}
-
-void TranTechnology::postCalc( const string& aRegionName, const int aPeriod ) {
-    Technology::postCalc( aRegionName, aPeriod );
 }
 
 double TranTechnology::getTotalInputCost( const string& aRegionName,
@@ -397,14 +384,6 @@ double TranTechnology::getCalibrationOutput( const bool aHasRequiredInput,
     return totalCalOutput;
 }
 
-double TranTechnology::calcShare( const string& aRegionName,
-                                  const string& aSectorName,
-                                  const GDP* aGDP,
-                                  const double aLogitExp,
-                                  const int aPeriod ) const
-{
-    return Technology::calcShare( aRegionName, aSectorName, aGDP, aLogitExp, aPeriod );
-}
 
 void TranTechnology::acceptDerived( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitTranTechnology( this, aPeriod );

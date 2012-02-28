@@ -84,82 +84,12 @@ const string& DefaultTechnology::getXMLNameStatic() {
     return XML_NAME1D;
 }
 
-/*!
-* \brief Complete the initialization of the technology.
-* \note This routine is only called once per model run
-* \param aSectorName Sector name, also the name of the product.
-* \param aDepDefinder Regional dependency finder.
-* \param aSubsectorInfo Subsector information object.
-* \param aLandAllocator Regional land allocator.
-* \author Josh Lurz
-* \warning Markets are not necesarilly set when completeInit is called
-*/
-void DefaultTechnology::completeInit( const std::string& aRegionName,
-                                      const std::string& aSectorName,
-                                      const std::string& aSubsectorName,
-                                      const IInfo* aSubsectorInfo,
-                                      ILandAllocator* aLandAllocator )
-{
-    Technology::completeInit( aRegionName, aSectorName, aSubsectorName,
-                              aSubsectorInfo, aLandAllocator );
-}
-
-void DefaultTechnology::initCalc( const string& aRegionName,
-                                  const string& aSectorName,
-                                  const IInfo* aSubsectorInfo,
-                                  const Demographic* aDemographics,
-                                  PreviousPeriodInfo& aPrevPeriodInfo,
-                                  const int aPeriod )
-{
-    Technology::initCalc( aRegionName, aSectorName, aSubsectorInfo,
-                          aDemographics, aPrevPeriodInfo, aPeriod );
-}
-
-void DefaultTechnology::postCalc( const string& aRegionName,
-                                  const int aPeriod )
-{
-    Technology::postCalc( aRegionName, aPeriod );
-}
-
-void DefaultTechnology::production( const string& aRegionName,
-                                    const string& aSectorName,
-                                    double aVariableDemand,
-                                    double aFixedOutputScaleFactor,
-                                    const GDP* aGDP,
-                                    const int aPeriod )
-{
-    Technology::production( aRegionName, aSectorName, aVariableDemand,
-                            aFixedOutputScaleFactor, aGDP, aPeriod );
-}
-
-/*! \brief Calculate Technology fuel cost and total cost.
-* \details Return the base technology's getCost.
-* \param aRegionName Region name.
-* \param aSectorName SectorName
-* \param aPeriod Model period.
-* \author Josh Lurz
-*/
-void DefaultTechnology::calcCost( const string& aRegionName,
-                                  const string& aSectorName,
-                                  const int aPeriod )
-{
-    Technology::calcCost( aRegionName, aSectorName, aPeriod );
-}
-
 double DefaultTechnology::getTotalInputCost( const string& aRegionName, const string& aSectorName,
 									   const int aPeriod ) const
 {
 	return Technology::getTotalInputCost( aRegionName, aSectorName, aPeriod );
 }
 
-double DefaultTechnology::calcShare( const string& aRegionName,
-                                     const string& aSectorName,
-                                     const GDP* aGDP,
-                                     const double aLogitExp,
-                                     const int aPeriod ) const
-{
-    return Technology::calcShare( aRegionName, aSectorName, aGDP, aLogitExp, aPeriod );
-}
 
 //! Parses any input variables specific to derived classes
 bool DefaultTechnology::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ){

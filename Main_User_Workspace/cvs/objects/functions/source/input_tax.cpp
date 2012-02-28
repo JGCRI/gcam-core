@@ -272,7 +272,7 @@ void InputTax::setPhysicalDemand( double aPhysicalDemand,
     mPhysicalDemand[ aPeriod ].set( aPhysicalDemand );
     // Each technology share is additive.
     mLastCalcValue = marketplace->addToDemand( mName, aRegionName, mPhysicalDemand[ aPeriod ],
-                              aPeriod, mLastCalcValue, true );
+                              mLastCalcValue, aPeriod, true );
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
 }

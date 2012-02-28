@@ -368,16 +368,6 @@ void IntermittentTechnology::production( const string& aRegionName,
     SectorUtils::addToTrialDemand( aRegionName, mTrialMarketName, currentTechRatio, mLastCalcValue, aPeriod );
 }
 
-double IntermittentTechnology::calcShare( const string& aRegionName,
-                                          const string& aSectorName, 
-                                          const GDP* aGDP,
-                                          const double aLogitExp,
-                                          const int aPeriod ) const
-{
-    // Use the base class calcShare.
-    return Technology::calcShare( aRegionName, aSectorName, aGDP, aLogitExp, aPeriod );
-}
-
 /*! \brief Set tech shares based on backup energy needs for an intermittent
 *          resource.
 * \author Marshall Wise

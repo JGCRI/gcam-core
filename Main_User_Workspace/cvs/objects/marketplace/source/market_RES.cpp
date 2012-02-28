@@ -40,13 +40,8 @@
 */
 
 #include "util/base/include/definitions.h"
-#include <string>
-#include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
 #include "marketplace/include/market_RES.h"
 #include "util/base/include/util.h"
-#include "util/logger/include/ilogger.h"
 
 using namespace std;
 
@@ -62,6 +57,16 @@ IMarketType::Type MarketRES::getType() const {
     return IMarketType::RES;
 }
 
+/*!
+ * \brief Get the default price to use when a constraint is set and no other
+ *        price information is available.
+ * \return The appropriate default price to use for this market.
+ */
+double MarketRES::getDefaultPrice() const {
+    const double DEFAULT_PRICE = 1;
+    return DEFAULT_PRICE;
+}
+
 /* \brief Initialize the MarketRES price.
 * \details This method initializes the price of the tax market to 1
 * or null if not a solved market.
@@ -71,7 +76,7 @@ void MarketRES::initPrice() {
     // If price is near zero it needs to be initialized.
     if( price < util::getSmallNumber() ){
         if( solveMarket ){
-            price = 1;
+            price = getDefaultPrice();
         }
         // The market will not be solved so it is set to null. 
         else {
@@ -93,9 +98,9 @@ void MarketRES::setPrice( const double priceIn ) {
 */
 void MarketRES::set_price_to_last_if_default( const double lastPrice ) {
     // If the price is zero and the solve flag is set so a constraint exists. 
-    if( price <= util::getSmallNumber() && solveMarket ){
+    if( price == getDefaultPrice() && solveMarket ){
         if( lastPrice < util::getSmallNumber() ){
-            price = 1;
+            price = getDefaultPrice();
         }
         // Otherwise set the price to the previous period's price.
         else {
@@ -114,9 +119,9 @@ void MarketRES::set_price_to_last_if_default( const double lastPrice ) {
 */
 void MarketRES::set_price_to_last( const double lastPrice ) {
     // If the price is zero and the solve flag is set so a constraint exists. 
-    if( price <= util::getSmallNumber() && solveMarket ){
+    if( solveMarket ){
         if( lastPrice < util::getSmallNumber() ){
-            price = 1;
+            price = getDefaultPrice();
         }
         // Otherwise set the price to the previous period's price.
         else {
@@ -138,6 +143,10 @@ double MarketRES::getDemand() const {
     return Market::getDemand();
 }
 
+void MarketRES::nullDemand() {
+    Market::nullDemand();
+}
+
 //! The supply in MarketRES is the constraint, but unlike a fixed constraint
 // like a CO2 target it is updated each iteration and should call nullSupply
 void MarketRES::nullSupply() {
@@ -146,6 +155,20 @@ void MarketRES::nullSupply() {
 
 double MarketRES::getSupply() const {
     return Market::getSupply();
+}
+
+double MarketRES::getSolverSupply() const {
+    // If the price is sufficiently small then have it appear to the solver that
+    // the constraint is ramping down linearly to zero.  In this way the solver
+    // will be able to find equilibrium even for non-binding constraints.
+    const double threshold = 0.001;
+    if( price <= threshold ) {
+        const double slope = 1.0 / threshold;
+        return slope * price * supply;
+    }
+    else {
+        return Market::getSolverSupply();
+    }
 }
 
 void MarketRES::addToSupply( const double supplyIn ) {
@@ -171,7 +194,7 @@ bool MarketRES::shouldSolve() const {
 		    doSolveMarket = true;
             // if constraint exists but not binding with null price
             // don't solve
-            if( (price <= util::getSmallNumber()) && (demand <= supply)){
+            if( (price <= 0.001) && (demand <= supply)){
                 doSolveMarket = false;
             }
         }
@@ -196,7 +219,7 @@ bool MarketRES::shouldSolveNR() const {
             doSolveMarket = true;
             // if constraint exists but not binding with null price
             // don't solve
-            if( (price <= util::getSmallNumber()) && (demand <= supply)){
+            if( (price <= 0.001) && (demand <= supply)){
                 doSolveMarket = false;
             }
         }
@@ -220,15 +243,7 @@ bool MarketRES::meetsSpecialSolutionCriteria() const {
 
     // If price is zero, demand cannot be driven any higher.
     // The constraint is not binding (greater than the demand), so this market is solved.
-    if( ( price <= util::getSmallNumber() ) && ( supply >= demand ) ){
-
-		//maw Log
-        /*ILogger& mainLog = ILogger::getLogger( "kate_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "meetsSpecialSolutionCriteria " << mName << "price " << price;
-		mainLog << " supply " << supply << " demand " << demand << endl;
-         */
-		
+    if( ( price <= 0.001 ) && ( supply >= demand ) ){
 		return true;
     }
     return false;

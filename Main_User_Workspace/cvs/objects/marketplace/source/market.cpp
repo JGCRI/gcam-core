@@ -424,6 +424,17 @@ double Market::getRawDemand() const {
     return demand;
 }
 
+/*! \brief Get the demand used in the solver.
+ * \details This method can be overridden in subclasses to produce better
+ *          behavior in the solver (i.e., by mitigating known numerical issues).
+ *          By default, it just returns the raw demand.
+ * \return Demand value to be used in the solver
+ * \sa getRawDemand
+ */
+double Market::getSolverDemand() const {
+    return demand;
+}
+
 /*! \brief Get the stored demand.
 * \details This method is used to get the value of the storedDemand variable in
 *          the Market. It is often used in the solution mechanism. This is used
@@ -461,6 +472,18 @@ void Market::nullSupply() {
 * \sa getSupply
 */
 double Market::getRawSupply() const {
+    return supply;
+}
+
+/*! \brief Get the supply value to be used in the solver
+* \details This method can be overridden in subclasses to produce better
+*          behavior in the solver (i.e., by mitigating known numerical issues
+*          -- see the market_RES override for an example of this).
+*          By default, it just returns the raw supply.
+* \return Supply value to be used in the solver.
+* \sa getRawSupply
+*/
+double Market::getSolverSupply() const {
     return supply;
 }
 

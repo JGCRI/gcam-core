@@ -261,17 +261,6 @@ void NukeFuelTechnology::completeInit( const string& aRegionName,
     }
 }
 
-void NukeFuelTechnology::postCalc( const string& aRegionName, const int aPeriod ) {
-    Technology::postCalc( aRegionName, aPeriod );
-}
-
-void NukeFuelTechnology::calcCost( const string& aRegionName,
-                                  const string& aSectorName,
-                                  const int aPeriod )
-{
-    Technology::calcCost( aRegionName, aSectorName, aPeriod );
-}
-
 double NukeFuelTechnology::getTotalInputCost( const string& aRegionName,
                                              const string& aSectorName,
                                              const int aPeriod ) const
@@ -352,15 +341,6 @@ void NukeFuelTechnology::production( const string& aRegionName,
     // content of nuclear fuel kg/GJ equal to MMT/EJ. byProduct coeffcient is
     // composition of waste in percentage.
     calcEmissionsAndOutputs( aRegionName, primaryOutput, aGDP, aPeriod );
-}
-
-double NukeFuelTechnology::calcShare( const string& aRegionName,
-                                     const string& aSectorName,
-                                     const GDP* aGDP,
-                                     const double aLogitExp,
-                                     const int aPeriod ) const
-{
-    return Technology::calcShare( aRegionName, aSectorName, aGDP, aLogitExp, aPeriod );
 }
 
 
