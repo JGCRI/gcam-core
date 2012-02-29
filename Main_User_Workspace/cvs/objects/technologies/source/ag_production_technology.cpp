@@ -193,6 +193,16 @@ void AgProductionTechnology::initCalc( const string& aRegionName,
   
     const Modeltime* modeltime = scenario->getModeltime();
 
+    // We need to and do set the profit rate in the land allocator
+    //           so that it can calculate share weights.
+    // Calculate the technology's profit rate. This rate is in $/GCal
+    // The prices/profitRate needed are set in period 0.  We will calculate
+    // it once in that period and store it for future use so that it
+    // does not need to be calculated again.
+    if( aPeriod == 0 ) {
+        mBaseYearProfitRate = calcProfitRate( aRegionName, aSectorName, aPeriod );
+    }
+
     // Only do tech changes if this is the initial year of the
     // technology.
     if( !mProductionState[ aPeriod ]->isNewInvestment() ){
@@ -251,16 +261,9 @@ void AgProductionTechnology::initCalc( const string& aRegionName,
         nextPerMarketInfo->setDouble( preYieldName, mYield );
     }
 
-    // We need to and do set the profit rate in the land allocator
-    //           so that it can calculate share weights.
-    // Calculate the technology's profit rate. This rate is in $/GCal
-    // Note that we are hard coding period 0 so that the cal price is used
-    // during calibration.  Another approach may be worth consideration.
-    double profitRate = calcProfitRate( aRegionName, aSectorName, 0 );
-
     // If yield is GCal/kHa and prices are $/GCal, then rental rate is $/kHa
     // And this is what is now passed in ($/kHa)
-    mLandAllocator->setProfitRate( aRegionName, mName, profitRate, aPeriod );
+    mLandAllocator->setProfitRate( aRegionName, mName, mBaseYearProfitRate, aPeriod );
 }
 
 void AgProductionTechnology::completeInit( const std::string& aRegionName,
@@ -476,11 +479,11 @@ double AgProductionTechnology::calcProfitRate( const string& aRegionName,
     double price = marketplace->getPrice( aProductName, aRegionName, aPeriod );
 
     // Compute cost of variable inputs (such as water and fertilizer)
-	// TODO: modify profit to reflect these costs.
-    double inputCosts = getTotalInputCost( aRegionName, aProductName, aPeriod );
+    // TODO: modify profit to reflect these costs.
+    // double inputCosts = getTotalInputCost( aRegionName, aProductName, aPeriod );
 
     // Price in model is 1975$/kg.  land and ag costs are now assumed to be in 1975$ also
-	// We are assuming that secondary values will be in 1975$/kg
+    // We are assuming that secondary values will be in 1975$/kg
     double profitRate = ( price - mNonLandVariableCost + secondaryValue) * mYield; 
 
     // We multiply by 1e9 since profitRate above is in $/m2

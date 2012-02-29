@@ -42,6 +42,7 @@
 #include "util/base/include/definitions.h"
 #include <cassert>
 #include "util/base/include/calibrate_resource_visitor.h"
+#include "util/logger/include/ilogger.h"
 #include "resources/include/subresource.h"
 #include "resources/include/renewable_subresource.h"
 #include "resources/include/resource.h"
@@ -126,11 +127,21 @@ void CalibrateResourceVisitor::startVisitSubResource( const SubResource* aSubRes
         // Finally, calculate the price adder. This is the difference between the
         // effective price and the global price
         const_cast<SubResource*>( aSubResource )->mPriceAdder[ aPeriod ] = tempEffectivePrice - mktPrice;
+    } 
+    else {
+        // If no calibration, then set price adder to zero
+        if ( aSubResource->mPriceAdder[ aPeriod ].isInited() && aSubResource->mPriceAdder[ aPeriod ] != 0 ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "User input value >"
+                    << aSubResource->mPriceAdder[ aPeriod ]
+                    << "< for price-adder variable in SubResource being re-set in period " << aPeriod << endl;
+        }
+        const_cast<SubResource*>( aSubResource )->mPriceAdder[ aPeriod ] = 0;
     }
 }
 
-void CalibrateResourceVisitor::startVisitSubRenewableResource( const SubRenewableResource* aSubResource, 
-                                                                                const int aPeriod ) {
+void CalibrateResourceVisitor::startVisitSubRenewableResource( const SubRenewableResource* aSubResource, const int aPeriod ) {
     // If calibration is active and a calibrated production quantity was read in, 
     // then we need to calculate the price adder needed to produce that quantity
     if( aSubResource->mCalProduction[ aPeriod ] != -1.0 && aPeriod > 0 ){
@@ -180,5 +191,16 @@ void CalibrateResourceVisitor::startVisitSubRenewableResource( const SubRenewabl
         // Finally, calculate the price adder. This is the difference between the
         // effective price and the global price
         const_cast<SubRenewableResource*>( aSubResource )->mPriceAdder[ aPeriod ] = tempEffectivePrice - mktPrice;
+    }
+    else {
+        // If no calibration, then set price adder to zero
+        if ( aSubResource->mPriceAdder[ aPeriod ].isInited() && aSubResource->mPriceAdder[ aPeriod ] != 0 ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "User input value >"
+                    << aSubResource->mPriceAdder[ aPeriod ]
+                    << "< for price-adder variable in SubRenewableResource being re-set in period " << aPeriod << endl;
+        }
+        const_cast<SubRenewableResource*>( aSubResource )->mPriceAdder[ aPeriod ] = 0;
     }
 }

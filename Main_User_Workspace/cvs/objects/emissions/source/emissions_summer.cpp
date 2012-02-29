@@ -103,7 +103,6 @@ void GroupedEmissionsSummer::addEmissionsSummer( EmissionsSummer* aEmissionsSumm
 
 void GroupedEmissionsSummer::startVisitGHG( const AGHG* aGHG, const int aPeriod ) {
     // We are currently assuming all periods should be updated.
-    assert( aPeriod == -1 );
     
     CSummerIterator it = mEmissionsSummers.find( aGHG->getName() );
     if( it != mEmissionsSummers.end() ) {

@@ -50,6 +50,7 @@
 #include "containers/include/iinfo.h"
 #include "demographics/include/demographic.h"
 #include "sectors/include/sector_utils.h"
+#include "technologies/include/generic_output.h"
 
 using namespace std;
 using namespace xercesc;
@@ -131,6 +132,14 @@ void GCAMConsumer::completeInit( const string& aRegionName, const string& aSecto
                                  const string& aSubsectorName ) {
     BaseTechnology::completeInit( aRegionName, aSectorName, aSubsectorName );
     
+    // Basetechnology creates a SGMOutput. This is not needed for GCAM and
+    // could cause problems with asserts so replace it with a GenericOutput
+    for( unsigned int i = 0; i < mOutputs.size(); ++i ){
+        delete mOutputs[ i ];
+    }
+    mOutputs.clear();
+    mOutputs.insert( mOutputs.begin(), new GenericOutput( "generic-output" ) );
+
     // Interpolate shares for missing periods.
     SectorUtils::fillMissingPeriodVectorInterpolated( mSubregionalPopulationShare );
     SectorUtils::fillMissingPeriodVectorInterpolated( mSubregionalIncomeShare );

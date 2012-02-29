@@ -171,6 +171,22 @@ void CalQuantityTabulator::startVisitTechnology( const Technology* aTechnology,
     }
 }
 
+void CalQuantityTabulator::startVisitBaseTechnology( const BaseTechnology* aBaseTechnology,
+                                                     const int aPeriod )
+{
+    // Set technology state so that output and other visitors work
+    // Currently is only being used for GCAM building consumer, where output does nothing
+    mTechState = eFixed;
+}
+
+void CalQuantityTabulator::endVisitBaseTechnology( const BaseTechnology* aBaseTechnology,
+                                                   const int aPeriod )
+{
+    assert( mTechState != eUnknown );
+    mTechState = eUnknown;
+    mCurrentOutput = 0;
+}
+
 void CalQuantityTabulator::endVisitTechnology( const Technology* aTechnology,
                                                const int aPeriod )
 {

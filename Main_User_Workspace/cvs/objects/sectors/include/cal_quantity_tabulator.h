@@ -111,9 +111,15 @@ public:
 
     virtual void startVisitTechnology( const Technology* aTechnology,
                                        const int aPeriod );
-
+    
     virtual void endVisitTechnology( const Technology* aTechnology,
                                      const int aPeriod );
+    
+    virtual void startVisitBaseTechnology( const BaseTechnology* aBaseTechnology,
+                                           const int aPeriod );
+    
+    virtual void endVisitBaseTechnology( const BaseTechnology* aBaseTechnology,
+                                         const int aPeriod );
     
     virtual void startVisitOutput( const IOutput* aOutput,
                                    const int aPeriod );

@@ -291,10 +291,12 @@ void World::initCalc( const int period ) {
  * \return It will always return false currently.
 */
 bool World::checkCalConsistancy( const int period ) {
-
+    const bool isCalibrationPeriod = period > 0 && period <= scenario->getModeltime()->getFinalCalibrationPeriod();
+ 
     // Don't check for this unless calibration is active
+    // Also don't check if beyond calibration periods as this causes routines to be called before data is available
     Configuration* conf = Configuration::getInstance();
-    if( !conf->getBool( "CalibrationActive" ) ){
+    if( !conf->getBool( "CalibrationActive" ) || !isCalibrationPeriod ){
         return false;
     }
 

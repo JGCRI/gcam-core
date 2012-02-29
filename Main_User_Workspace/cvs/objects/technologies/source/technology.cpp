@@ -1438,7 +1438,7 @@ double Technology::getCost( const int aPeriod ) const
     // Check that the cost has been calculated for the period. This could still
     // be a stale cost however if the cost has not been calculated for the
     // iteration.
-//    assert( mCosts[ aPeriod ] != -1 ); //sjsTEMP
+    assert( mCosts[ aPeriod ] != -1 );
     return mCosts[ aPeriod ];
 }
 

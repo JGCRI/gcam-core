@@ -231,7 +231,12 @@ const string& BuildingServiceInput::getName() const {
  * \return Physical demand.
  */
 double BuildingServiceInput::getPhysicalDemand( const int aPeriod ) const {
-    assert( mServiceDemand[ aPeriod ].isInited() );
+    /*!
+     * \pre The service demand has been calculated for this period.
+     * \note The buildings model does not run in period 0 so we will
+     *       allow an uninitialized value for that period.
+     */
+    assert( aPeriod == 0 || mServiceDemand[ aPeriod ].isInited() );
     
     return mServiceDemand[ aPeriod ];
 }

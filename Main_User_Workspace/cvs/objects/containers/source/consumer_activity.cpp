@@ -61,7 +61,10 @@ ConsumerActivity::~ConsumerActivity() {
 
 void ConsumerActivity::calc( const int aPeriod ) {
     NationalAccount nationalAccount;
-    mConsumer->operate( nationalAccount, mDemographic, 0, mRegionName, "", true, aPeriod );
+    // Don't calculate in 1975 since it doesn't have data
+    if ( aPeriod != 0 ) {
+        mConsumer->operate( nationalAccount, mDemographic, 0, mRegionName, "", true, aPeriod );
+    }
 }
 
 void ConsumerActivity::setStale() {

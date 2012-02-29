@@ -69,7 +69,7 @@ double BuildingServiceFunction::calcCoefficient( InputSet& input, double consump
         double coefficient = 1;
         // Guard against zero floorspace which happens for 1975 since no data was read in for
         // that period.
-        assert( floorSpace == 0 && period != 0 );
+        assert( floorSpace != 0 || period == 0 );
         if( floorSpace != 0 ) {
             BuildingServiceInput* buildingServiceInput = static_cast<BuildingServiceInput*>( *inputIter );
             double thermalLoad = buildingServiceInput->calcThermalLoad( buildingParentInput, internalGainsPerSqMeter, period );
@@ -99,7 +99,7 @@ double BuildingServiceFunction::calcDemand( InputSet& input, double consumption,
         double demand = 0;
         // Guard against zero floorspace which happens for 1975 since no data was read in for
         // that period.
-        assert( floorSpace == 0 && period != 0 );
+        assert( floorSpace != 0 || period == 0 );
         if( floorSpace != 0 ) {
             // calculations for energy service
             BuildingServiceInput* buildingServiceInput = static_cast<BuildingServiceInput*>( *inputIter );

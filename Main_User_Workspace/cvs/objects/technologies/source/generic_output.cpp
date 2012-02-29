@@ -92,7 +92,11 @@ void GenericOutput::initCalc( const string& aRegionName,
                               const string& aSectorName,
                               const int aPeriod )
 {
-    // Do nothing
+    // Do mostly nothing
+    
+    // Initialize the cached CO2 coefficient.
+    mCachedCO2Coef.set( 0 ); // Avoid potential assert later
+
 }
 
 void GenericOutput::setPhysicalOutput( const double aPrimaryOutput,

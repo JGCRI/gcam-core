@@ -617,7 +617,7 @@ void LandLeaf::calcLUCEmissions( const string& aRegionName,
 double LandLeaf::getLandAllocation( const string& aProductName,
                                     const int aPeriod ) const
 {
-    assert( aProductName == mName );
+    assert( aProductName == mName || aProductName == "" ); // Residue output object calls this without product information
 
     return mLandAllocation[ aPeriod ];
 }

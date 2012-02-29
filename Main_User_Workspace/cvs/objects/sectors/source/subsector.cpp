@@ -640,7 +640,7 @@ const vector<double> Subsector::calcTechShares( const GDP* aGDP, const int aPeri
             calcShare( regionName, sectorName, aGDP, mTechLogitExp[ aPeriod ], aPeriod );
 
         // Check that Technology shares are valid.
-        assert( util::isValidNumber( lts ) || lts == -numberic_limits<double>::infinity() );
+        assert( util::isValidNumber( lts ) || lts == -numeric_limits<double>::infinity() );
         logTechShares[ i ] = lts;
     }
     // Normalize technology shares.  After normalization they will be

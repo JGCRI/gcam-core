@@ -221,7 +221,7 @@
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>global</market>
-            <price year="1975">1</price>
+            <price fillout="1" year="1975">1</price>
          </unlimited-resource>
       </region>
       <region name="Canada">
@@ -444,7 +444,7 @@
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>global</market>
-            <price year="1975">1</price>
+            <price fillout="1" year="1975">1</price>
          </unlimited-resource>
       </region>
       <region name="Western Europe">
@@ -667,7 +667,7 @@
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>global</market>
-            <price year="1975">1</price>
+            <price fillout="1" year="1975">1</price>
          </unlimited-resource>
       </region>
       <region name="Japan">
@@ -890,7 +890,7 @@
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>global</market>
-            <price year="1975">1</price>
+            <price fillout="1" year="1975">1</price>
          </unlimited-resource>
       </region>
       <region name="Australia_NZ">
@@ -1113,7 +1113,7 @@
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>global</market>
-            <price year="1975">1</price>
+            <price fillout="1" year="1975">1</price>
          </unlimited-resource>
       </region>
       <region name="Former Soviet Union">
@@ -1336,7 +1336,7 @@
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>global</market>
-            <price year="1975">1</price>
+            <price fillout="1" year="1975">1</price>
          </unlimited-resource>
       </region>
       <region name="China">
@@ -1559,7 +1559,7 @@
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>global</market>
-            <price year="1975">1</price>
+            <price fillout="1" year="1975">1</price>
          </unlimited-resource>
       </region>
       <region name="Middle East">
@@ -1782,7 +1782,7 @@
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>global</market>
-            <price year="1975">1</price>
+            <price fillout="1" year="1975">1</price>
          </unlimited-resource>
       </region>
       <region name="Africa">
@@ -2005,7 +2005,7 @@
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>global</market>
-            <price year="1975">1</price>
+            <price fillout="1" year="1975">1</price>
          </unlimited-resource>
       </region>
       <region name="Latin America">
@@ -2228,7 +2228,7 @@
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>global</market>
-            <price year="1975">1</price>
+            <price fillout="1" year="1975">1</price>
          </unlimited-resource>
       </region>
       <region name="Southeast Asia">
@@ -2451,7 +2451,7 @@
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>global</market>
-            <price year="1975">1</price>
+            <price fillout="1" year="1975">1</price>
          </unlimited-resource>
       </region>
       <region name="Eastern Europe">
@@ -2674,7 +2674,7 @@
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>global</market>
-            <price year="1975">1</price>
+            <price fillout="1" year="1975">1</price>
          </unlimited-resource>
       </region>
       <region name="Korea">
@@ -2897,7 +2897,7 @@
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>global</market>
-            <price year="1975">1</price>
+            <price fillout="1" year="1975">1</price>
          </unlimited-resource>
       </region>
       <region name="India">
@@ -3120,7 +3120,7 @@
             <output-unit>EJ</output-unit>
             <price-unit>1975$/GJ</price-unit>
             <market>global</market>
-            <price year="1975">1</price>
+            <price fillout="1" year="1975">1</price>
          </unlimited-resource>
       </region>
    </world>

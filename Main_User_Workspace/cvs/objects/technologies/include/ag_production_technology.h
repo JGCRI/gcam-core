@@ -130,6 +130,9 @@ protected:
     //! used to save time finding it over and over
     ALandAllocatorItem* mProductLeaf;
 
+    //! The profit rate in the base year stored for convience.
+    double mBaseYearProfitRate;
+
     virtual void toInputXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
