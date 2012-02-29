@@ -63,7 +63,6 @@ class DemandInput;
 class ProductionInput;
 class NodeInput;
 class TradeInput;
-class BuildingDemandInput;
 class EnergyInput;
 class NonEnergyInput;
 class RenewableInput;
@@ -482,9 +481,6 @@ public:
 	
     virtual void copyParamsInto( InputOMVar& aInput,
 								const int aPeriod ) const = 0;
-
-    virtual void copyParamsInto( BuildingDemandInput& aInput,
-                                 const int aPeriod ) const = 0;
 
     virtual void copyParamsInto( RenewableInput& aInput,
                                  const int aPeriod ) const = 0;

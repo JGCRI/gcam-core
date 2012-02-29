@@ -96,9 +96,6 @@ class Sector: public IVisitable,
     friend class SectorReport;
     friend class SGMGenTable;
     friend class XMLDBOutputter;
-    // TODO: Replace with visitor.
-    friend class TotalSectorEmissions;
-    friend class CalQuantityTabulator;
     friend class CalibrateShareWeightVisitor;
 protected:
     std::string name; //!< Sector name

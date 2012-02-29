@@ -95,15 +95,6 @@ public:
     virtual double getWeightedEnergyPrice( const std::string& aRegionName,
                                            const int aPeriod ) const;
 
-    virtual void tabulateFixedDemands( const std::string& aRegionName,
-                                       const Demographic* aDemographic,
-                                       const GDP* aGDP,
-                                       const int aPeriod ) const;
-
-    virtual void scaleCalibratedValues( const std::string& aFuelName,
-                                        const double aScaleValue,
-                                        const int aPeriod );
-
     virtual void csvOutputFile( const std::string& aRegionName ) const;
 
     virtual void dbOutput( const std::string& aRegionName ) const;

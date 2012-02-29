@@ -182,9 +182,6 @@ public:
     virtual void copyParamsInto( NonEnergyInput& aInput,
                                  const int aPeriod ) const {}
 
-    virtual void copyParamsInto( BuildingDemandInput& aInput,
-                                 const int aPeriod ) const {}
-
     virtual void copyParamsInto( RenewableInput& aInput,
                                  const int aPeriod ) const {}
 

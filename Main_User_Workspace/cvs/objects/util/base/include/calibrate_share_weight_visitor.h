@@ -67,7 +67,6 @@ class GDP;
  *          Where _i indicates the current child, and _r indicates the child we are
  *          making the share weights relative to.
  * \author Pralit Patel
- * \note Calibration of detailed buildings are also handled by this class.
  * \warning This class never actually checks whether calibration is active.
  * \warning This methodology will not work if in a given nest there is a mix
  *          of subsectors/technologies with and without calibrated values.
@@ -86,11 +85,6 @@ public:
 
     virtual void startVisitSubsector( const Subsector* aSubsector,
                                      const int aPeriod );
-
-    // need to visit BuildingGenericDmdTechnology to handle the specialized
-    // calibration for detailed buildings
-    virtual void startVisitBuildingGenericDmdTechnology( const BuildingGenericDmdTechnology* aBuildingTech,
-                                                        const int aPeriod );
 
 private:
     //! Name of the Region the for which we are calibrating

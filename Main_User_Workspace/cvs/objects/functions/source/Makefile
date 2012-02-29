@@ -9,7 +9,6 @@ include ${PATHOFFSET}/build/linux/configure.gcam
 
 OBJS       = ademand_function.o \
              aproduction_function.o \
-             building_demand_input.o \
              ces_production_function.o \
              demand_input.o \
              efficiency.o \

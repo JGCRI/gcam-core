@@ -8,8 +8,6 @@ PATHOFFSET = ../..
 include ${PATHOFFSET}/build/linux/configure.gcam
 
 OBJS       = backup_calculator_factory.o \
-             building_final_demand.o \
-             cal_quantity_tabulator.o \
              capacity_limit_backup_calculator.o \
              CSP_backup_calculator.o \
              energy_final_demand.o \

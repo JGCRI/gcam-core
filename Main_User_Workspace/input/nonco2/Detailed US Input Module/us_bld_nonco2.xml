@@ -2,7 +2,7 @@
 <scenario>
    <world>
       <region name="USA">
-         <supplysector name="bld_res heating" nocreate="1">
+         <supplysector name="resid heating" nocreate="1">
             <subsector name="gas" nocreate="1">
                <technology name="gas furnace" nocreate="1">
                   <period year="1975">
@@ -796,7 +796,7 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="bld_res hot water" nocreate="1">
+         <supplysector name="resid hot water" nocreate="1">
             <subsector name="gas" nocreate="1">
                <technology name="gas water heater" nocreate="1">
                   <period year="1975">
@@ -1295,7 +1295,7 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="bld_comm heating" nocreate="1">
+         <supplysector name="comm heating" nocreate="1">
             <subsector name="gas" nocreate="1">
                <technology name="gas furnace" nocreate="1">
                   <period year="1975">
@@ -2089,7 +2089,7 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="bld_comm hot water" nocreate="1">
+         <supplysector name="comm hot water" nocreate="1">
             <subsector name="gas" nocreate="1">
                <technology name="gas water heater" nocreate="1">
                   <period year="1975">
@@ -2588,7 +2588,7 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="bld_res cooling" nocreate="1">
+         <supplysector name="resid cooling" nocreate="1">
             <subsector name="electricity" nocreate="1">
                <technology name="air conditioning" nocreate="1">
                   <period year="1975">
@@ -2658,7 +2658,7 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="bld_comm cooling" nocreate="1">
+         <supplysector name="comm cooling" nocreate="1">
             <subsector name="electricity" nocreate="1">
                <technology name="air conditioning" nocreate="1">
                   <period year="1975">

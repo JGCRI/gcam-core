@@ -59,7 +59,6 @@
 
 #include "policy/include/policy_portfolio_standard.h"
 #include "policy/include/policy_ghg.h"
-#include "emissions/include/total_sector_emissions.h"
 #include "emissions/include/emissions_summer.h"
 
 #include "util/curves/include/curve.h"

@@ -49,14 +49,6 @@
 #include "containers/include/gdp.h"
 #include "util/logger/include/ilogger.h"
 
-// includes for detailed buildings calibration
-#include "technologies/include/building_generic_dmd_technology.h"
-#include "sectors/include/sector_utils.h"
-#include "marketplace/include/marketplace.h"
-#include "containers/include/scenario.h"
-#include "containers/include/iinfo.h"
-#include "functions/include/iinput.h"
-
 using namespace std;
 
 extern Scenario* scenario;
@@ -227,65 +219,6 @@ void CalibrateShareWeightVisitor::startVisitSubsector( const Subsector* aSubsect
                 double currShareWeight = ( currShare / anchorShare )
                     * pow( anchorPrice / currTech->getCost( aPeriod ), aSubsector->mTechLogitExp[ aPeriod ] );
                 currTech->setShareWeight( currShareWeight );
-            }
-        }
-    }
-}
-
-void CalibrateShareWeightVisitor::startVisitBuildingGenericDmdTechnology( const BuildingGenericDmdTechnology* aBuildingTech,
-                                                                         const int aPeriod )
-{
-    // We must handle the detailed buildings as a special case here due to internal gains making it difficult
-    // to know what the proper calibrated supply should be outside of the model.
-    // We handle special detailed buildings calibration requirement by getting the total calibrated supply
-    // for each input (including internal gains) and backing out the what the coef should be (excluding the demand
-    // adjustment factor which will be handled by the BuildingDemandInput).
-    // Note that this methodology relies on calibration values having already been tablulated.  Also the calibrated
-    // values (including those from internal gains) do no change per iteration however if there is a price
-    // elasticity for an input that could change the coef per iteration.
-    typedef vector<IInput*>::const_iterator CInputIterator;
-    int normPeriod = SectorUtils::getDemandNormPeriod( aPeriod );
-    const Marketplace* marketplace = scenario->getMarketplace();
-    for( CInputIterator it = aBuildingTech->mInputs.begin(); it != aBuildingTech->mInputs.end(); ++it ) {
-        // skip non-energy inputs
-        if( (*it)->hasTypeFlag( IInput::ENERGY ) ) {
-            // Get the calibration value for the output.
-            const IInfo* tempInfo = marketplace->getMarketInfo( (*it)->getName(),
-                                                                mCurrentRegionName,
-                                                                aPeriod,
-                                                                true );
-            double calSupply = tempInfo ? tempInfo->getDouble( "calSupply", true ) : -1;
-            
-            tempInfo = marketplace->getMarketInfo( mCurrentSectorName,
-                                                  mCurrentRegionName,
-                                                  aPeriod,
-                                                  true );
-            double calDemand = tempInfo ? tempInfo->getDouble( "calDemand", true ) : -1;
-            
-            if( calSupply > 0 && calDemand > 0 ) {
-                double priceRatio = SectorUtils::calcPriceRatio( mCurrentRegionName, (*it)->getName(), normPeriod, aPeriod );
-                double adjustedDemand = calDemand * pow( priceRatio, (*it)->getPriceElasticity( aPeriod ) );
-                // Calculate a coefficient that would cause actual demand to equal
-                // calibrated demand.
-                double coef = adjustedDemand > util::getSmallNumber() ? calSupply / adjustedDemand : 0;
-                const_cast<IInput*>( *it )->setCoefficient( coef / aBuildingTech->mAlphaZero, aPeriod );
-                
-                // Double check things worked correctly.
-                assert( util::isEqual( coef / aBuildingTech->mAlphaZero * calDemand *
-                                      pow( priceRatio, ( *it )->getPriceElasticity( aPeriod ) ), calSupply ) );
-            }
-            else {
-                // we are missing a calibration value so we will not be able to calibrate
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
-                mainLog.setLevel( ILogger::WARNING );
-                calibrationLog.setLevel( ILogger::WARNING );
-                mainLog << "Missing cal value for building input " << (*it)->getName() << " in technology "
-                    << aBuildingTech->getName() << " sector " << mCurrentSectorName << " region " << mCurrentRegionName
-                    << " calSupply: " << calSupply << " calDemand: " << calDemand << endl;
-                calibrationLog << "Missing cal value for building input " << (*it)->getName() << " in technology "
-                    << aBuildingTech->getName() << " sector " << mCurrentSectorName << " region " << mCurrentRegionName
-                    << " calSupply: " << calSupply << " calDemand: " << calDemand << endl;
             }
         }
     }

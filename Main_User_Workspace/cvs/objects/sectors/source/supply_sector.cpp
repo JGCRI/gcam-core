@@ -56,7 +56,6 @@
 #include "util/base/include/configuration.h"
 #include "containers/include/iinfo.h"
 #include "sectors/include/sector_utils.h"
-#include "sectors/include/cal_quantity_tabulator.h"
 #include "reporting/include/indirect_emissions_calculator.h"
 #include "util/base/include/summary.h"
 

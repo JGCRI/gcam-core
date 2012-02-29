@@ -63,14 +63,12 @@ class Population;
 class Demographic;
 class Sector;
 class SupplySector;
-class DemandSector;
 class ILandAllocator;
 class GHGPolicy;
 class Summary;
 class ILogger;
 class GDP;
 class Curve;
-class TotalSectorEmissions;
 class AFinalDemand;
 class Consumer;
 
@@ -79,7 +77,7 @@ class Consumer;
 * \brief This class defines a single region of the model and contains other
 *        regional information such as demographics, resources, supply and demand
 *        sectors, and GDPs. The classes contained in the Region are the
-*        Populations, Resource, Sector, DemandSector.  Since this particular
+*        Populations, Resource, Sector, FinalDemands.  Since this particular
 *        implementation of the model is based on a partial equilibrium concept,
 *        it is not mandatory to instantiate all of these classes.  The region
 *        can contain just one of these objects or any combination of each of
@@ -117,8 +115,6 @@ public:
     virtual const Summary& getSummary( const int period ) const;
 
     virtual bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
-    virtual void setCalSuppliesAndDemands( const int period );
-    virtual void initializeCalValues( const int period );
     virtual void updateAllOutputContainers( const int period );
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
@@ -129,10 +125,6 @@ protected:
 
     std::vector<AFinalDemand*> mFinalDemands; //!< vector of pointers to demand sector objects
 
-    //! Container of objects which calculate an aggregate emissions coefficient
-    //! for a set of sectors.
-    std::vector<TotalSectorEmissions*> mAggEmissionsCalculators;
-
     std::vector<double> calibrationGDPs; //!< GDPs to calibrate to
     std::vector<double> GDPcalPerCapita; //!< GDP per capita to calibrate to
 
@@ -142,22 +134,6 @@ protected:
     std::vector<Summary> summary; //!< summary values and totals for reporting
     std::map<std::string,int> supplySectorNameMap; //!< Map of supplysector name to integer position in vector.
     std::map<std::string, double> primaryFuelCO2Coef; //!< map of CO2 emissions coefficient for primary fuels only
-    
-    //! Cooling degree days for this region(used to drive cooling demands)
-    Value mCoolingDegreeDays;
-
-    //! Heating degree days for this region(used to drive heating demands)
-    Value mHeatingDegreeDays;
-    
-    //! Fraction of the year in the region the cooling demand is active.
-    Value mCoolingFractionOfYearActive;
-
-    //! Fraction of the year in the region the heating demand is active.
-    Value mHeatingFractionOfYearActive;
-
-    //! The rotation period of forests in this region in years.
-    // TODO: If this is in years it shouldn't be called rotation period.
-    int mRotationPeriod;
 
     //! Interest rate for the region.
     double mInterestRate;

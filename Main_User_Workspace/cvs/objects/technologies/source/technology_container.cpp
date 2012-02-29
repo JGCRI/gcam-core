@@ -53,7 +53,6 @@
 #include "technologies/include/technology.h"
 #include "technologies/include/itechnology.h"
 #include "technologies/include/default_technology.h"
-#include "technologies/include/building_generic_dmd_technology.h"
 #include "technologies/include/intermittent_technology.h"
 #include "technologies/include/wind_technology.h"
 #include "technologies/include/solar_technology.h"
@@ -126,7 +125,6 @@ ITechnologyContainer* TechnologyContainer::clone() const {
  */
 bool TechnologyContainer::hasTechnologyType( const string& aTechNodeName ) {
     return ( aTechNodeName == DefaultTechnology::getXMLNameStatic() ||
-             aTechNodeName == BuildingGenericDmdTechnology::getXMLNameStatic() ||
              aTechNodeName == IntermittentTechnology::getXMLNameStatic() ||
              aTechNodeName == WindTechnology::getXMLNameStatic() ||
              aTechNodeName == SolarTechnology::getXMLNameStatic() ||
@@ -168,9 +166,6 @@ bool TechnologyContainer::createAndParseVintage( const DOMNode* aNode, const str
         // has not been added yet so we must create a new one
         if( aTechType == DefaultTechnology::getXMLNameStatic() ) {
             newVintage = new DefaultTechnology( mName, techYear );
-        }
-        else if( aTechType == BuildingGenericDmdTechnology::getXMLNameStatic() ) {
-            newVintage = new BuildingGenericDmdTechnology( mName, techYear );
         }
         else if( aTechType == IntermittentTechnology::getXMLNameStatic() ) {
             newVintage = new IntermittentTechnology( mName, techYear );

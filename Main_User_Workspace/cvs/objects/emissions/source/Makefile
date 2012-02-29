@@ -9,7 +9,6 @@ include ${PATHOFFSET}/build/linux/configure.gcam
 
 OBJS       = acomplex_emissions.o \
              aemissions_coef.o \
-             aggr_emissions_coef.o \
              aghg.o \
              by_product.o \
              co2_emissions.o \
@@ -24,8 +23,7 @@ OBJS       = acomplex_emissions.o \
              luc_emissions_summer.o \
              output_driver.o \
              read_emissions_coef.o \
-             so2_emissions.o \
-             total_sector_emissions.o
+             so2_emissions.o
 
 emissions_dir: ${OBJS}
 

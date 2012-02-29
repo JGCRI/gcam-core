@@ -102,7 +102,6 @@ class IInput;
 class TranTechnology;
 class LandUseHistory;
 class AgProductionTechnology;
-class BuildingGenericDmdTechnology;
 class NodeInput;
 class BuildingServiceInput;
 class BuildingNodeInput;
@@ -306,9 +305,6 @@ public:
     // Following are the derived class accepts
     virtual void startVisitTranTechnology( const TranTechnology* aTranTechnology, const int aPeriod ) = 0;
     virtual void endVisitTranTechnology( const TranTechnology* aTranTechnology, const int aPeriod ) = 0;
-    
-    virtual void startVisitBuildingGenericDmdTechnology( const BuildingGenericDmdTechnology* aBuildingTechnology, const int aPeriod ) = 0;
-    virtual void endVisitBuildingGenericDmdTechnology( const BuildingGenericDmdTechnology* aBuildingTechnology, const int aPeriod ) = 0;
 };
 
 IVisitor::~IVisitor(){

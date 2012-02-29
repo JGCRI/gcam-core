@@ -129,7 +129,6 @@ private:
     void clear();
 
     void csvGlobalDataFile() const; 
-    bool checkCalConsistancy( const int period );
 };
 
 #endif // _WORLD_H_

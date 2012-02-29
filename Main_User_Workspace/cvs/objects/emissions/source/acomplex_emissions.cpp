@@ -59,7 +59,6 @@
 #include "emissions/include/aemissions_coef.h"
 #include "emissions/include/input_emissions_coef.h"
 #include "emissions/include/read_emissions_coef.h"
-#include "emissions/include/aggr_emissions_coef.h"
 #include "functions/include/function_utils.h"
 #include "marketplace/include/cached_market.h"
 
@@ -314,9 +313,6 @@ bool AComplexEmissions::XMLDerivedClassParse( const string& nodeName, const DOMN
     }
     else if( nodeName == GhgMAC::getXMLNameStatic() ){
         parseSingleNode( curr, ghgMac, new GhgMAC );
-    }
-    else if( nodeName == "aggregate" ){
-        mEmissionsCoef.reset( new AggrEmissionsCoef );
     }
     else{
         return false;

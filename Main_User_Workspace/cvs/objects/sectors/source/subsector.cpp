@@ -1078,56 +1078,6 @@ void Subsector::MCoutputSupplySector( const GDP* aGDP ) const {
     }
 }
 
-/*! \brief Write demand sector MiniCAM style Subsector output to database.
-*
-* Writes outputs with titles and units appropriate to demand sectors.
-* Part B is for demand sector, titles and units are different from Part A
-*
-* \author Sonny Kim
-*/
-void Subsector::MCoutputDemandSector( const GDP* aGDP ) const {
-    // function protocol
-    void dboutput4(string var1name,string var2name,string var3name,string var4name,
-        string uname,vector<double> dout);
-    const Modeltime* modeltime = scenario->getModeltime();
-    const int maxper = modeltime->getmaxper();
-    const string& outputUnit = mSubsectorInfo->getString( "output-unit", true );
-    const string& priceUnit = mSubsectorInfo->getString( "price-unit", true );
-    vector<double> temp(maxper);
-    
-    // total Subsector output
-    for( int per = 0; per < maxper; ++per ){
-        temp[ per ] = getOutput( per );
-    }
-    dboutput4(regionName,"End-Use Service",sectorName+" by Subsec",name,outputUnit,temp);
-    dboutput4(regionName,"End-Use Service",sectorName+" "+name,"zTotal",outputUnit,temp);
-    // Subsector price
-    for( int m = 0; m < maxper; m++ ){
-        temp[ m ] = getPrice( aGDP, m );
-    }
-    dboutput4(regionName,"Price",sectorName,name+" Tot Cost",priceUnit,temp);
-    
-    // do for all technologies in the Subsector
-    for( unsigned int i = 0; i < mTechContainers.size(); ++i ){
-        if( mTechContainers.size() > 1 ) {  // write out if more than one Technology
-            // output or demand for each Technology
-            for ( int m=0;m<maxper;m++) {
-                temp[ m ] = 0;
-                for( unsigned int j = 0; j <= m; ++j ){
-                    temp[m] += mTechContainers[i]->getNewVintageTechnology(j)->getOutput( m );
-                }
-            }
-            dboutput4(regionName,"End-Use Service",sectorName+" "+name,mTechContainers[i]->getName(),outputUnit,temp);
-            // total Technology cost
-            for ( int m=0;m<maxper;m++) {
-                temp[m] = mTechContainers[i]->getNewVintageTechnology(m)->getCost( m );
-            }
-
-            dboutput4(regionName,"Price",sectorName+" "+name,mTechContainers[i]->getName(),priceUnit,temp);
-        }
-    }
-}
-
 /*! \brief Write common MiniCAM style Subsector output to database.
 *
 * Writes outputs that are common to both supply and demand sectors.

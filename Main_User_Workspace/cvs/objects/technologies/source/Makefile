@@ -8,7 +8,6 @@ PATHOFFSET = ../..
 include ${PATHOFFSET}/build/linux/configure.gcam
 
 OBJS       = base_technology.o \
-             building_generic_dmd_technology.o \
              cal_data_output.o \
              cal_data_output_percap.o \
              capture_component_factory.o \

@@ -281,19 +281,6 @@ void UnlimitedResource::dbOutput( const string& aRegionName ){
     dboutput4( aRegionName, "Resource", "annual-production", mName, mOutputUnit, temp );
 }
 
-void UnlimitedResource::setCalibratedSupplyInfo( const int aPeriod,
-                                                 const string& aRegionName )
-{
-    const double MKT_NOT_ALL_FIXED = -1;
-    Marketplace* marketplace = scenario->getMarketplace();
-
-    IInfo* resourceInfo = marketplace->getMarketInfo( mName, aRegionName,
-                                                      aPeriod, true );
-    assert( resourceInfo );
-
-    resourceInfo->setDouble( "calSupply", MKT_NOT_ALL_FIXED );
-}
-
 /*
 * \brief Create the resource market.
 * \details The unlimited resource creates a single unsolved market for the

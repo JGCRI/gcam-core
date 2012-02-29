@@ -121,9 +121,6 @@ public:
 
     virtual void csvOutputFile( const std::string& aRegionName ); 
 
-    virtual void setCalibratedSupplyInfo( const int aPeriod,
-                                          const std::string& aRegionName );
-
     virtual void accept( IVisitor* aVisitor,
                          const int aPeriod ) const;
 

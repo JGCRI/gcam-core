@@ -70,7 +70,6 @@ protected:
     double subResourceVariance;
     //! read in average capacity factor for each subresource
     double subResourceCapacityFactor;  
-    virtual void postCalc( const std::string& aRegionName, const std::string& aResourceName, const int aPeriod );
     virtual const std::string& getXMLName() const;
     virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node );
     virtual void toXMLforDerivedClass( std::ostream& out, Tabs* tabs ) const;

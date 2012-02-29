@@ -58,15 +58,13 @@
 #include "containers/include/info_factory.h"
 #include "containers/include/iinfo.h"
 #include "containers/include/market_dependency_finder.h"
-#include "sectors/include/cal_quantity_tabulator.h"
 
 // TODO: This needs a factory.
 #include "sectors/include/sector.h"
 #include "sectors/include/supply_sector.h"
 #include "sectors/include/production_sector.h"
-#include "sectors/include/demand_sector.h"
 #include "sectors/include/ag_supply_sector.h"
-#include "sectors/include/building_final_demand.h"
+#include "sectors/include/energy_final_demand.h"
 #include "sectors/include/export_sector.h"
 
 #include "consumers/include/gcam_consumer.h"
@@ -82,7 +80,6 @@
 #include "emissions/include/emissions_summer.h"
 #include "emissions/include/luc_emissions_summer.h"
 #include "policy/include/policy_ghg.h"
-#include "emissions/include/total_sector_emissions.h"
 
 #include "util/base/include/summary.h"
 #include "util/base/include/ivisitor.h"
@@ -130,7 +127,6 @@ RegionMiniCAM::RegionMiniCAM() {
     calibrationGDPs.resize( maxper );
     GDPcalPerCapita.resize( maxper );
 
-    mRotationPeriod = 0;
     mInterestRate = 0;
 }
 
@@ -161,23 +157,8 @@ bool RegionMiniCAM::XMLDerivedClassParse( const std::string& nodeName, const xer
     else if( nodeName == GDP::getXMLNameStatic() ){
         parseSingleNode( curr, gdp, new GDP );
     }
-    else if( nodeName == "coolingDegreeDays" ){
-        mCoolingDegreeDays = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == "heatingDegreeDays" ) {
-        mHeatingDegreeDays = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == "rotationPeriod" ) {
-        mRotationPeriod = XMLHelper<int>::getValue( curr );
-    }
     else if( nodeName == "interest-rate" ){
         mInterestRate = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == "cooling-fraction-of-year-active" ){
-        mCoolingFractionOfYearActive = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == "heating-fraction-of-year-active" ){
-        mHeatingFractionOfYearActive = XMLHelper<double>::getValue( curr );
     }
     else if( nodeName == SupplySector::getXMLNameStatic() ){
         parseContainerNode( curr, supplySector, supplySectorNameMap, new SupplySector( name ) );
@@ -191,14 +172,8 @@ bool RegionMiniCAM::XMLDerivedClassParse( const std::string& nodeName, const xer
     else if( nodeName == EnergyFinalDemand::getXMLNameStatic() ){
         parseContainerNode( curr, mFinalDemands, new EnergyFinalDemand );
     }
-    else if( nodeName == BuildingFinalDemand::getXMLNameStatic() ){
-        parseContainerNode( curr, mFinalDemands, new BuildingFinalDemand );
-    }
     else if( nodeName == GCAMConsumer::getXMLNameStatic() ) {
         parseContainerNode( curr, mConsumers, new GCAMConsumer );
-    }
-    else if( nodeName == TotalSectorEmissions::getXMLNameStatic() ){
-        parseContainerNode( curr, mAggEmissionsCalculators, new TotalSectorEmissions );
     }
     else if ( nodeName == LandAllocator::getXMLNameStatic() ) {
         parseSingleNode( curr, mLandAllocator, new LandAllocator );
@@ -249,13 +224,6 @@ void RegionMiniCAM::completeInit() {
 
     // Region info has no parent Info.
     mRegionInfo.reset( InfoFactory::constructInfo( 0, name ) );
-    mRegionInfo->setInteger( "rotationPeriod", mRotationPeriod );
-    mRegionInfo->setDouble( "heating-fraction-of-year-active",
-                            mHeatingFractionOfYearActive );
-    mRegionInfo->setDouble( "cooling-fraction-of-year-active",
-                            mCoolingFractionOfYearActive );
-    mRegionInfo->setDouble( "heatingDegreeDays", mHeatingDegreeDays );
-    mRegionInfo->setDouble( "coolingDegreeDays", mCoolingDegreeDays );
 
     if( mInterestRate == 0 ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -332,11 +300,6 @@ void RegionMiniCAM::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
         XMLWriteElement( coefAllIter->second, "PrimaryFuelCO2Coef", out, tabs, 0, coefAllIter->first );
     }
 
-    XMLWriteElementCheckDefault( mHeatingDegreeDays, "heatingDegreeDays", out, tabs, Value( 0.0 ) );
-    XMLWriteElementCheckDefault( mCoolingDegreeDays, "coolingDegreeDays", out, tabs, Value( 0.0 ) );
-    XMLWriteElementCheckDefault( mCoolingFractionOfYearActive, "cooling-fraction-of-year-active", out, tabs, Value( 0.0 ) );
-    XMLWriteElementCheckDefault( mHeatingFractionOfYearActive, "heating-fraction-of-year-active", out, tabs, Value( 0.0 ) );
-    XMLWriteElementCheckDefault( mRotationPeriod, "rotationPeriod", out, tabs, 0 );
     XMLWriteElementCheckDefault( mInterestRate, "interest-rate", out, tabs, 0.0 );
 
     // write the xml for the class members.
@@ -360,10 +323,6 @@ void RegionMiniCAM::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
         ( *consumerIter )->toInputXML( out, tabs );
     }
 
-    for( unsigned int i = 0; i < mAggEmissionsCalculators.size(); ++i ){
-        mAggEmissionsCalculators[ i ]->toInputXML( out, tabs );
-    }
-
     // Note: The count function is an STL algorithm that counts the number of
     // times a value occurs within the a range of a container. The first two
     // arguments to the function are the range of the container to search, the
@@ -385,11 +344,6 @@ void RegionMiniCAM::toInputXMLDerived( ostream& out, Tabs* tabs ) const {
 
 void RegionMiniCAM::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {
     // write out basic datamembers
-    XMLWriteElement( mHeatingDegreeDays, "heatingDegreeDays", out, tabs );
-    XMLWriteElement( mCoolingDegreeDays, "coolingDegreeDays", out, tabs );
-    XMLWriteElement( mCoolingFractionOfYearActive, "cooling-fraction-of-year-active", out, tabs  );
-    XMLWriteElement( mHeatingFractionOfYearActive, "heating-fraction-of-year-active", out, tabs );
-    XMLWriteElement( mRotationPeriod, "rotationPeriod", out, tabs );
     XMLWriteElement( mInterestRate, "interest-rate", out, tabs );
 
     XMLWriteElement( calibrationGDPs[ period ], "calibrationGDPs", out, tabs );
@@ -419,10 +373,6 @@ void RegionMiniCAM::toDebugXMLDerived( const int period, std::ostream& out, Tabs
     // write out consumer objects.
     for( CConsumerIterator consumerIter = mConsumers.begin(); consumerIter != mConsumers.end(); consumerIter++ ){
         ( *consumerIter )->toDebugXML( period, out, tabs );
-    }
-
-    for( unsigned int i = 0; i < mAggEmissionsCalculators.size(); ++i ){
-        mAggEmissionsCalculators[ i ]->toDebugXML( period, out, tabs );
     }
 }
 
@@ -559,18 +509,6 @@ bool RegionMiniCAM::isAllCalibrated( const int period, double calAccuracy, const
 */
 void RegionMiniCAM::initCalc( const int period )
 {
-
-    // Set aggregate emissions factor to region info if needed
-    for ( unsigned int i = 0; i < mAggEmissionsCalculators.size(); i++ ) {
-        mAggEmissionsCalculators[ i ]->setAggregateEmissionFactor( name,
-                                                                   supplySector,
-                                                                   mRegionInfo.get(),
-                                                                   period );
-    }
-
-    mRegionInfo->setDouble( "heatingDegreeDays", mHeatingDegreeDays );
-    mRegionInfo->setDouble( "coolingDegreeDays", mCoolingDegreeDays );
-
     // Set the CO2 coefficients into the Marketplace before the Technologies and
     // GHGs are initialized so they can be accessed.
     setCO2CoefsIntoMarketplace( period );
@@ -645,109 +583,6 @@ void RegionMiniCAM::postCalc( const int aPeriod ) {
     }
     
     mLandAllocator->postCalc( name, aPeriod );
- }
-
-/*! \brief Tabulates all calibrated supplies and demands with in the region.
-*
-* The result of this routine, once called for all regions, is a set of calSupply
-* and calDemand values in marketInfo. The calSupply variable has a non-negative
-* value for each supply sector that is completely calibrated. Similarly, the
-* calDemand variable has a non-negative value for each demand good that is
-* completely calibrated. Only those markets where all supplies or demands are
-* calibrated will have non-zero values for these variables.
-* Note that currently only the detailed buildings rely on these calibration values
-* being set.  See the calculation in
-* CalibrateShareWeightVisitor::startVisitBuildingGenericDmdTechnology.  We could
-* remove this code if we just read in the proper input coefficients into
-* BuildingDemandInput however that tends to be a bit of work due to all the 
-* internal gains to keep track of.
-*
-* \author Steve Smith
-* \param period Model period
-*/
-
-void RegionMiniCAM::setCalSuppliesAndDemands( const int period ) {
-    // Check for fully calibrated/fixed supplies. This will search sectors and
-    // resources for calibrated and fixed supples.
-    CalQuantityTabulator calSupplyTabulator( "" );
-    accept( &calSupplyTabulator, period );
-
-    Marketplace* marketplace = scenario->getMarketplace();
-
-    // Flag that the market is not all fixed.
-    const double MARKET_NOT_ALL_FIXED = -1;
-
-    // Name of the cal supply info string.
-    const string CAL_SUPPLY_NAME = "calSupply";
-
-    // Iterate over the entire map of goods.
-    const CalQuantityTabulator::CalInfoMap& calSupplies = calSupplyTabulator.getSupplyInfo();
-
-    for( CalQuantityTabulator::CalInfoMap::const_iterator iter = calSupplies.begin();
-         iter != calSupplies.end(); ++iter )
-    {
-        // Get the market info for the good.
-        // TODO: Require market info to exist once demand sectors are separated.
-        IInfo* marketInfo = marketplace->getMarketInfo( iter->first, name, period, false );
-
-        // Incorrect input files may cause the market to not exist. This will be
-        // flagged elsewhere.
-        if( !marketInfo ){
-            continue;
-        }
-
-        double existingCalSupply = marketInfo->getDouble( CAL_SUPPLY_NAME, false );
-        // Check is to see if some other region has flagged this as having all
-        // inputs not fixed.
-        if ( existingCalSupply != MARKET_NOT_ALL_FIXED && iter->second.mAllFixed ) {
-            // If supply of this good has not been elimiated from the search and
-            // output is fixed then add to fixed supply value.
-            marketInfo->setDouble( CAL_SUPPLY_NAME, max( existingCalSupply, 0.0 )
-                                   + iter->second.mCalQuantity + iter->second.mFixedQuantity );
-        }
-        else {
-            // If supply of this good is not fixed then set flag to eliminate
-            // this from other searches
-            marketInfo->setDouble( CAL_SUPPLY_NAME, MARKET_NOT_ALL_FIXED );
-        }
-    }
-
-    // Check for fully calibrated/fixed demands. Search through all demand
-    // technologies
-    for ( unsigned int i = 0; i < mFinalDemands.size(); i++ ) {
-        mFinalDemands[ i ]->tabulateFixedDemands(name, demographic.get(), gdp.get(), period );
-    }
-}
-
-/*! \brief Initializes calDemand and calSupply values for all sectors
-*
-* All calSupply and calDemand values are reset to -1 This erases any information
-* from a prior period and eliminates warning messages for value not found in
-* information store
-*
-* \author Steve Smith
-* \param period Model period
-*/
-void RegionMiniCAM::initializeCalValues( const int period ) {
-    Marketplace* marketplace = scenario->getMarketplace();
-    // This will get set to -1 if this market is not fixed and a value >= 0
-    // otherwise.
-    const double DEFAULT_CAL_VALUE = -2;
-
-    typedef list<string>::const_iterator CI;
-    for ( unsigned int i = 0; i < supplySector.size(); i++ ) {
-        // Set default values for supply sector
-        IInfo* marketInfo = marketplace->getMarketInfo( supplySector[ i ]->getName(), name, period, true );
-        marketInfo->setDouble( "calSupply", DEFAULT_CAL_VALUE );
-        marketInfo->setDouble( "calDemand", DEFAULT_CAL_VALUE );
-    }
-
-    for ( unsigned int i = 0; i < mResources.size(); i++ ) {
-        // Now prepare to loop through all the fuels used by this sector
-        IInfo* resourceMarketInfo = marketplace->getMarketInfo( mResources[ i ]->getName(), name, period, true );
-        resourceMarketInfo->setDouble( "calSupply", DEFAULT_CAL_VALUE );
-        resourceMarketInfo->setDouble( "calDemand", DEFAULT_CAL_VALUE );
-    }
 }
 
 //! Calculate regional emissions from resources.

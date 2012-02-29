@@ -308,7 +308,6 @@
     <ClCompile Include="..\..\demographics\source\population_sgm_rate.cpp" />
     <ClCompile Include="..\..\emissions\source\acomplex_emissions.cpp" />
     <ClCompile Include="..\..\emissions\source\aemissions_coef.cpp" />
-    <ClCompile Include="..\..\emissions\source\aggr_emissions_coef.cpp" />
     <ClCompile Include="..\..\emissions\source\aghg.cpp" />
     <ClCompile Include="..\..\emissions\source\by_product.cpp" />
     <ClCompile Include="..\..\emissions\source\co2_emissions.cpp" />
@@ -325,7 +324,6 @@
     <ClCompile Include="..\..\emissions\source\output_driver.cpp" />
     <ClCompile Include="..\..\emissions\source\read_emissions_coef.cpp" />
     <ClCompile Include="..\..\emissions\source\so2_emissions.cpp" />
-    <ClCompile Include="..\..\emissions\source\total_sector_emissions.cpp" />
     <ClCompile Include="..\..\functions\source\building_function.cpp" />
     <ClCompile Include="..\..\functions\source\building_node_input.cpp" />
     <ClCompile Include="..\..\functions\source\building_service_function.cpp" />
@@ -359,8 +357,6 @@
     <ClCompile Include="..\..\sectors\source\ag_supply_sector.cpp" />
     <ClCompile Include="..\..\sectors\source\ag_supply_subsector.cpp" />
     <ClCompile Include="..\..\sectors\source\backup_calculator_factory.cpp" />
-    <ClCompile Include="..\..\sectors\source\building_final_demand.cpp" />
-    <ClCompile Include="..\..\sectors\source\cal_quantity_tabulator.cpp" />
     <ClCompile Include="..\..\sectors\source\capacity_limit_backup_calculator.cpp" />
     <ClCompile Include="..\..\sectors\source\CSP_backup_calculator.cpp" />
     <ClCompile Include="..\..\sectors\source\energy_final_demand.cpp" />
@@ -412,7 +408,6 @@
     <ClCompile Include="..\..\target_finder\source\secanter.cpp" />
     <ClCompile Include="..\..\technologies\source\ag_production_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\base_technology.cpp" />
-    <ClCompile Include="..\..\technologies\source\building_generic_dmd_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\cal_data_output.cpp" />
     <ClCompile Include="..\..\technologies\source\cal_data_output_percap.cpp" />
     <ClCompile Include="..\..\technologies\source\capture_component_factory.cpp" />
@@ -515,7 +510,6 @@
     <ClCompile Include="..\..\climate\source\magicc_model.cpp" />
     <ClCompile Include="..\..\functions\source\ademand_function.cpp" />
     <ClCompile Include="..\..\functions\source\aproduction_function.cpp" />
-    <ClCompile Include="..\..\functions\source\building_demand_input.cpp" />
     <ClCompile Include="..\..\functions\source\ces_production_function.cpp" />
     <ClCompile Include="..\..\functions\source\demand_input.cpp" />
     <ClCompile Include="..\..\functions\source\efficiency.cpp" />
@@ -614,7 +608,6 @@
     <ClInclude Include="..\..\emissions\include\acomplex_emissions.h" />
     <ClInclude Include="..\..\emissions\include\aemissions_coef.h" />
     <ClInclude Include="..\..\emissions\include\aemissions_driver.h" />
-    <ClInclude Include="..\..\emissions\include\aggr_emissions_coef.h" />
     <ClInclude Include="..\..\emissions\include\aghg.h" />
     <ClInclude Include="..\..\emissions\include\by_product.h" />
     <ClInclude Include="..\..\emissions\include\co2_emissions.h" />
@@ -631,7 +624,6 @@
     <ClInclude Include="..\..\emissions\include\output_driver.h" />
     <ClInclude Include="..\..\emissions\include\read_emissions_coef.h" />
     <ClInclude Include="..\..\emissions\include\so2_emissions.h" />
-    <ClInclude Include="..\..\emissions\include\total_sector_emissions.h" />
     <ClInclude Include="..\..\functions\include\building_function.h" />
     <ClInclude Include="..\..\functions\include\building_node_input.h" />
     <ClInclude Include="..\..\functions\include\building_service_function.h" />
@@ -669,11 +661,8 @@
     <ClInclude Include="..\..\sectors\include\ag_supply_sector.h" />
     <ClInclude Include="..\..\sectors\include\ag_supply_subsector.h" />
     <ClInclude Include="..\..\sectors\include\backup_calculator_factory.h" />
-    <ClInclude Include="..\..\sectors\include\building_final_demand.h" />
-    <ClInclude Include="..\..\sectors\include\cal_quantity_tabulator.h" />
     <ClInclude Include="..\..\sectors\include\capacity_limit_backup_calculator.h" />
     <ClInclude Include="..\..\sectors\include\CSP_backup_calculator.h" />
-    <ClInclude Include="..\..\sectors\include\demand_sector.h" />
     <ClInclude Include="..\..\sectors\include\energy_final_demand.h" />
     <ClInclude Include="..\..\sectors\include\export_sector.h" />
     <ClInclude Include="..\..\sectors\include\factor_supply.h" />
@@ -728,7 +717,6 @@
     <ClInclude Include="..\..\target_finder\include\simple_policy_target_runner.h" />
     <ClInclude Include="..\..\technologies\include\ag_production_technology.h" />
     <ClInclude Include="..\..\technologies\include\base_technology.h" />
-    <ClInclude Include="..\..\technologies\include\building_generic_dmd_technology.h" />
     <ClInclude Include="..\..\technologies\include\cal_data_output.h" />
     <ClInclude Include="..\..\technologies\include\cal_data_output_percap.h" />
     <ClInclude Include="..\..\technologies\include\capture_component_factory.h" />
@@ -847,7 +835,6 @@
     <ClInclude Include="..\..\reporting\include\xml_db_outputter.h" />
     <ClInclude Include="..\..\functions\include\ademand_function.h" />
     <ClInclude Include="..\..\functions\include\aproduction_function.h" />
-    <ClInclude Include="..\..\functions\include\building_demand_input.h" />
     <ClInclude Include="..\..\functions\include\ces_production_function.h" />
     <ClInclude Include="..\..\functions\include\demand_input.h" />
     <ClInclude Include="..\..\functions\include\efficiency.h" />

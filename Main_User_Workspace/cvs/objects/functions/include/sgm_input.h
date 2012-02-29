@@ -197,7 +197,6 @@ public:
     // MiniCAM input types which SGM inputs should ignore.
     virtual void copyParamsInto( EnergyInput& aInput, const int aPeriod ) const {}
     virtual void copyParamsInto( NonEnergyInput& aInput, const int aPeriod ) const {}
-    virtual void copyParamsInto( BuildingDemandInput& aInput, const int aPeriod ) const {}
     virtual void copyParamsInto( RenewableInput& aInput, const int aPeriod ) const {}
     virtual void copyParamsInto( InputSubsidy& aInput, const int aPeriod ) const {}
     virtual void copyParamsInto( InputTax& aInput, const int aPeriod ) const {}

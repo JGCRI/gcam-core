@@ -223,32 +223,6 @@ const string& NonEnergyFinalDemand::getName() const {
     return mName;
 }
 
-/* \brief Tabulate the fixed demands of the energy final demand.
-*
-* For now this sets -1 to flag that final demands are not fixed.
-* \author Steve Smith
-* \param period model period.
-*/
-void NonEnergyFinalDemand::tabulateFixedDemands( const string& aRegionName,
-                                                 const Demographic* aDemographics,
-                                                 const GDP* aGDP,
-                                                 const int aPeriod ) const
-{
-	Marketplace* marketplace = scenario->getMarketplace();
-	marketplace->getMarketInfo( mName, aRegionName, aPeriod, true )->setDouble( "calDemand", 1 );
-}
-
-void NonEnergyFinalDemand::scaleCalibratedValues( const string& aFuelName,
-                                                  const double aScaleValue,
-                                                  const int aPeriod )
-{
-    // Only scale if the input is the input of the final demand, or if all inputs should be scaled.
-    if( aFuelName == mName || aFuelName == "allInputs" ){
-        // Adjust the base service level.
-        mBaseService *= aScaleValue;
-    }
-}
-
 /*! \brief Calculate the final demand and set it into the marketplace.
 * \details Calls the internal method to calculate final demand, stores the value for the period, and sets it into the marketplace.
 * \param aRegionName Region name.

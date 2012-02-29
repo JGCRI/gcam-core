@@ -279,20 +279,6 @@ void DepletingFixedResource::dbOutput( const string& aRegionName ){
     dboutput4( aRegionName, "Resource", "annual-production", mName, mOutputUnit, temp );
 }
 
-void DepletingFixedResource::setCalibratedSupplyInfo( const int aPeriod,
-                                                 const string& aRegionName )
-{
-    // TODO: is this fine?
-    const double MKT_NOT_ALL_FIXED = -1;
-    Marketplace* marketplace = scenario->getMarketplace();
-
-    IInfo* resourceInfo = marketplace->getMarketInfo( mName, aRegionName,
-                                                      aPeriod, true );
-    assert( resourceInfo );
-
-    resourceInfo->setDouble( "calSupply", MKT_NOT_ALL_FIXED );
-}
-
 /*
 * \brief Create the resource market.
 * \details The resource creates a single solved market for the

@@ -298,46 +298,6 @@ void EnergyFinalDemand::initCalc( const string& aRegionName,
 {
 }
 
-void EnergyFinalDemand::tabulateFixedDemands( const string& aRegionName,
-                                              const Demographic* aDemographics,
-                                              const GDP* aGDP,
-                                              const int aPeriod )
-{
-    Marketplace* marketplace = scenario->getMarketplace();
-    IInfo* demandMarketInfo = marketplace->getMarketInfo( mName, aRegionName,
-                                                          aPeriod, true );
-    const Modeltime* modeltime = scenario->getModeltime();
-
-    // Must have a market info.
-    assert( demandMarketInfo );
-
-    // sjsTEMP - the logic in this function is not correct for purposes of pre-calibratioon
-    // scaling. It may or may not be necessary for final energy calibration.
-    
-    // In periods 0 and 1, demand is fixed because there is no price elasticity.
-    // The demand is not calibrated though, and should be adjusted to match the
-    // sum of supply sector calibrated outputs. TODO: This could also be true in
-    // later periods if the price elasticity is zero and the GDP elasticity is
-    // zero.
-
-    // Scales calibrated demands to calibrated supplies up to and including the read-in 
-    // final calibration period.
-    if( aPeriod <= modeltime->getFinalCalibrationPeriod() ){
-        const double currServiceDemand = calcFinalDemand( aRegionName, aDemographics, aGDP, aPeriod );
-        
-        // Set the calibrated demand value in the market info to the calculated 
-        // service demand.
-        demandMarketInfo->setDouble( "calDemand", currServiceDemand );        
-    }
-    else if( mFinalEnergyConsumer->getCalibratedFinalEnergy( aPeriod ) !=
-        FinalEnergyConsumer::noCalibrationValue() )
-    {
-        // Demand is calibrated if there is a read-in calibrated final energy.
-        demandMarketInfo->setDouble( "calDemand",
-            mFinalEnergyConsumer->getCalibratedFinalEnergy( aPeriod ) );
-    }
-}
-
 /*! \brief Set the final demand for service into the marketplace after 
 * calling the aggregate demand function.
 *

@@ -52,7 +52,6 @@
 #include "functions/include/input_OM_fixed.h"
 #include "functions/include/input_OM_var.h"
 #include "functions/include/renewable_input.h"
-#include "functions/include/building_demand_input.h"
 #include "functions/include/input_subsidy.h"
 #include "functions/include/input_tax.h"
 
@@ -81,9 +80,6 @@ bool InputFactory::isOfType( const std::string& aType ) {
         return true;
     }
     if( aType == InputOMVar::getXMLNameStatic() ){
-        return true;
-    }
-    if( aType == BuildingDemandInput::getXMLNameStatic() ) {
         return true;
     }
     if( aType == InputSubsidy::getXMLNameStatic() ) {
@@ -119,9 +115,6 @@ auto_ptr<IInput> InputFactory::create( const std::string& aType ) {
     }
     if( aType == RenewableInput::getXMLNameStatic() ){
         return auto_ptr<IInput>( new RenewableInput );
-    }
-    if( aType == BuildingDemandInput::getXMLNameStatic() ){
-        return auto_ptr<IInput>( new BuildingDemandInput );
     }
     if( aType == InputSubsidy::getXMLNameStatic() ){
         return auto_ptr<IInput>( new InputSubsidy );

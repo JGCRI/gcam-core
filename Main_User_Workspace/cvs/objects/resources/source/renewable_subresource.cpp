@@ -113,43 +113,6 @@ void SubRenewableResource::completeInit( const IInfo* aSectorInfo ) {
     SubResource::completeInit( aSectorInfo );
 }
 
-/*! \brief Perform any initializations needed for each period.
-* \details Any initializations or calculations that only need to be done once per
-*          period(instead of every iteration) should be placed in this function.
-* \author Sonny Kim
-* \param aRegionName Region name.
-* \param aResourceName Resource name.
-* \param aPeriod Model aPeriod
-*/
-void SubRenewableResource::postCalc( const string& aRegionName, const string& aResourceName,
-                           const int aPeriod )
-{
-
-    // Call parent class
-    SubResource::postCalc( aRegionName, aResourceName, aPeriod );
-
-    // Check if max regional resource might be insufficient to cover Calibrated Demand
-    //TODO extend this to cover fixed demand
-    
-    Marketplace* marketplace = scenario->getMarketplace();
-    IInfo* marketInfo = marketplace->getMarketInfo( aResourceName, aRegionName, aPeriod, true );
-    double calDemand = marketInfo->getDouble( "calDemand", false );
- 
-    std::string marketRegion = marketInfo->getString( "Market-Region", false );
-
-    if ( calDemand >= 0) {
-        if ( maxSubResource < calDemand && marketRegion == aRegionName ) { 
-            ILogger& calibrationLog = ILogger::getLogger( "calibration_log" );
-            calibrationLog.setLevel( ILogger::WARNING );
-            calibrationLog  << "Max Supply in sub-resource " << getName() 
-                            << " in region " << aRegionName 
-                            << " is less than calibrated demand by " 
-                            << ( calDemand - maxSubResource ) / calDemand << "%."
-                            << " The technology with this demand may not calibrate. " << endl;
-        }
-    }
-}
-
 //! Write out to XML variables specific to this derived class
 void SubRenewableResource::toXMLforDerivedClass( ostream& out, Tabs* tabs ) const {
 	XMLWriteElementCheckDefault( maxSubResource, "maxSubResource", out, tabs, 0.0 );

@@ -270,47 +270,10 @@ void World::initCalc( const int period ) {
             (*reigonIt)->accept( &table, period );
             table.finish();
         }
-        
-        // TODO: could rename although we could also just get rid of it
-        // see the comments for RegionMiniCAM::setCalSuppliesAndDemands
-        checkCalConsistancy( period );
     }
     
     // Reset the calc counter.
     mCalcCounter->startNewPeriod();
-}
-
-/*! \brief Tabulates calibrated supplies and demands and stores them in the
- *         corresponding market info.
- * \details Has each region set their calibrated supplies and demands.  This method
- *          no longer checks for consistency however.
- * \param period The current model period.
- * \author Steve Smith
- * \todo Shouldn't this all be at the regional level?
- * \todo This method could be eliminated if it were not for detailed buildings.
- * \return It will always return false currently.
-*/
-bool World::checkCalConsistancy( const int period ) {
-    const bool isCalibrationPeriod = period > 0 && period <= scenario->getModeltime()->getFinalCalibrationPeriod();
- 
-    // Don't check for this unless calibration is active
-    // Also don't check if beyond calibration periods as this causes routines to be called before data is available
-    Configuration* conf = Configuration::getInstance();
-    if( !conf->getBool( "CalibrationActive" ) || !isCalibrationPeriod ){
-        return false;
-    }
-
-    //Setup for checking by initializing fixed supplies and demands counter to null value
-    for( RegionIterator i = regions.begin(); i != regions.end(); ++i ){
-        ( *i )->initializeCalValues( period );
-    }
-
-    //Setup for checking by adding up all fixed supplies and demands
-    for( RegionIterator i = regions.begin(); i != regions.end(); ++i ){
-        ( *i )->setCalSuppliesAndDemands( period );
-    }
-
-    return false;
 }
 
 /*!

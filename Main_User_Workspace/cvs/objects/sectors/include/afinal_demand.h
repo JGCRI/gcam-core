@@ -139,18 +139,6 @@ public:
                                            const int aPeriod ) const = 0;
 
     /*!
-     * \brief Tabulate all known fixed demands.
-     * \details Adds to a central location the values of any known fixed
-     *          demands.
-     * \param aRegionName Region name.
-     * \param aPeriod Model period.
-     */
-    virtual void tabulateFixedDemands( const std::string& aRegionName,
-                                       const Demographic* aDemographic,
-                                       const GDP* aGDP,
-                                       const int aPeriod ) = 0;
-
-    /*!
      * \brief Write output to the CSV file.
      * \param aRegionName Region name.
      */
