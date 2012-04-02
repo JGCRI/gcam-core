@@ -2062,7 +2062,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <efficiency>1.000</efficiency>
+                        <efficiency>0.154</efficiency>
                         <calibrated-value>0.0000</calibrated-value>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
@@ -2072,7 +2072,7 @@
                      </minicam-non-energy-input>
                      <internal-gains name="internal-gains">
                         <internal-gains-market-name>resid-internal-gains-trial-market</internal-gains-market-name>
-                        <output-ratio>0.694</output-ratio>
+                        <output-ratio>4.512</output-ratio>
                      </internal-gains>
                   </period>
                   <period year="2020">
@@ -5482,7 +5482,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <efficiency>1.000</efficiency>
+                        <efficiency>0.154</efficiency>
                         <calibrated-value>0.0000</calibrated-value>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
@@ -5492,7 +5492,7 @@
                      </minicam-non-energy-input>
                      <internal-gains name="internal-gains">
                         <internal-gains-market-name>comm-internal-gains-trial-market</internal-gains-market-name>
-                        <output-ratio>0.846</output-ratio>
+                        <output-ratio>5.505</output-ratio>
                      </internal-gains>
                   </period>
                   <period year="2020">
