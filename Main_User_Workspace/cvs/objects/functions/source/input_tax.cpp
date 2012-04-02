@@ -306,7 +306,7 @@ void InputTax::setPrice( const string& aRegionName,
 
 double InputTax::getCalibrationQuantity( const int aPeriod ) const
 {
-    return 0;
+    return -1;
 }
 
 bool InputTax::hasTypeFlag( const int aTypeFlag ) const {

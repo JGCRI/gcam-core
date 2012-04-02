@@ -311,7 +311,7 @@ void InputSubsidy::setPrice( const string& aRegionName,
 
 double InputSubsidy::getCalibrationQuantity( const int aPeriod ) const
 {
-    return 0;
+    return -1;
 }
 
 bool InputSubsidy::hasTypeFlag( const int aTypeFlag ) const {
