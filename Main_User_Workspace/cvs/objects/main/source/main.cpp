@@ -141,17 +141,16 @@ int main( int argc, char *argv[] ) {
     mainLog << "User represents and warrants that User is not a citizen, or otherwise" << endl;
     mainLog << "located within, an embargoed nation (including without limitation Iran," << endl;
     mainLog << "Syria, Sudan, Cuba, and North Korea) and that User is not otherwise" << endl;
-    mainLog << "prohibited under the Export Laws from receiving the Software. Note that" << endl;
-    mainLog << "the United States Department of Commerce has determined that this" << endl;
-    mainLog << "software has been assigned an export licensing code (ECCN) of EAR99." << endl;
-    mainLog << "This ECCN applies to both the ObjECTS modeling framework and the ObjECTS" << endl;
-    mainLog << "Model Interface. All rights to use the Software are granted on condition" << endl;
-    mainLog << "that such rights are forfeited if User fails to comply with the terms of" << endl;
-    mainLog << "this Agreement. User agrees to indemnify, defend and hold harmless" << endl;
-    mainLog << "BATTELLE, its officers, agents and employees from all liability" << endl;
-    mainLog << "involving the violation of such Export Laws, either directly or" << endl;
-    mainLog << "indirectly, by User." << endl << endl;
-
+    mainLog << "prohibited under the Export Laws from receiving the Software." << endl << endl;
+    
+    // print licence
+    mainLog << "Copyright 2011 Battelle Memorial Institute.  All Rights Reserved." << endl;
+    mainLog << "Distributed as open-source under the terms of the Educational Community" << endl;
+    mainLog << "License version 2.0 (ECL 2.0). http://www.opensource.org/licenses/ecl2.php" << endl << endl;
+    
+    // print web site
+    mainLog << "For further details, see: http://www.globalchange.umd.edu/models/gcam/" << endl << endl;
+    
     mainLog << "Running GCAM model code base version " << __ObjECTS_VER__ << " revision "
         << __REVISION_NUMBER__ << endl << endl;
 
