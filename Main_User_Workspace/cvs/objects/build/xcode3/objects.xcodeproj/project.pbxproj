@@ -339,7 +339,6 @@
 		0EF7AF6513E1F0050034AA71 /* nrsolver.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = nrsolver.hh; sourceTree = "<group>"; };
 		0EF7AF6613E1F0050034AA71 /* ublas-helpers.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "ublas-helpers.hh"; sourceTree = "<group>"; };
 		0EF7AF6713E1F0130034AA71 /* edfun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = edfun.cpp; sourceTree = "<group>"; };
-		3E79695D153F6FD80095626F /* project.pbxproj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.pbxproject; name = project.pbxproj; path = objects.xcodeproj/project.pbxproj; sourceTree = "<group>"; };
 		CD299E9611B9C11800E6D196 /* objects */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = objects; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD48840C122873C000F5A88A /* Ag2Calibrate.f90 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.fortran.f90; path = Ag2Calibrate.f90; sourceTree = "<group>"; };
 		CD48840D122873C000F5A88A /* Ag2CH4N2O.f90 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.fortran.f90; path = Ag2CH4N2O.f90; sourceTree = "<group>"; };
@@ -1057,7 +1056,6 @@
 			isa = PBXGroup;
 			children = (
 				CD488409122873C000F5A88A /* objects */,
-				3E79695D153F6FD80095626F /* project.pbxproj */,
 				CD299E9711B9C11800E6D196 /* Products */,
 			);
 			name = objects;
