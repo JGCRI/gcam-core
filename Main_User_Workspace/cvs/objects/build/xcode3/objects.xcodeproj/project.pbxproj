@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 45;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -339,6 +339,7 @@
 		0EF7AF6513E1F0050034AA71 /* nrsolver.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = nrsolver.hh; sourceTree = "<group>"; };
 		0EF7AF6613E1F0050034AA71 /* ublas-helpers.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = "ublas-helpers.hh"; sourceTree = "<group>"; };
 		0EF7AF6713E1F0130034AA71 /* edfun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = edfun.cpp; sourceTree = "<group>"; };
+		3E4432CE14D75E3100B3EBF6 /* BC-OC_Emissions History.xls */ = {isa = PBXFileReference; lastKnownFileType = file; path = "BC-OC_Emissions History.xls"; sourceTree = "<group>"; };
 		CD299E9611B9C11800E6D196 /* objects */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = objects; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD48840C122873C000F5A88A /* Ag2Calibrate.f90 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.fortran.f90; path = Ag2Calibrate.f90; sourceTree = "<group>"; };
 		CD48840D122873C000F5A88A /* Ag2CH4N2O.f90 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.fortran.f90; path = Ag2CH4N2O.f90; sourceTree = "<group>"; };
@@ -1695,6 +1696,7 @@
 		CD488549122873C100F5A88A /* inputs */ = {
 			isa = PBXGroup;
 			children = (
+				3E4432CE14D75E3100B3EBF6 /* BC-OC_Emissions History.xls */,
 				CDB28D3C130DDA1B00EDF70A /* BCOCHist_c.csv */,
 				CDB28D3D130DDA1B00EDF70A /* co2hist_c.in */,
 				CDB28D3E130DDA1B00EDF70A /* maggas_c.cfg */,
@@ -2576,7 +2578,12 @@
 			mainGroup = 08FB7794FE84155DC02AAC07 /* objects */;
 			productRefGroup = CD299E9711B9C11800E6D196 /* Products */;
 			projectDirPath = "";
-			projectRoot = "";
+			projectRoots = (
+				../../..,
+				../../../../input,
+				../../../../output/queries,
+				../../../../proposals,
+			);
 			targets = (
 				8DD76F620486A84900D96B5E /* objects */,
 			);
