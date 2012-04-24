@@ -264,7 +264,7 @@ private:
     std::vector<IActivity*> mGlobalOrdering;
     
     void findVerticesToCalculate( CalcVertex* aVertex, std::set<IActivity*>& aVisited ) const;
-    bool markCycles( CalcVertex* aCurrVertex, std::list<CalcVertex*>& aHasVisited, std::map<CalcVertex*, int>& aTotalVisists ) const;
+    int markCycles( CalcVertex* aCurrVertex, std::list<CalcVertex*>& aHasVisited, std::map<CalcVertex*, int>& aTotalVisists ) const;
 };
 
 #endif // _MARKET_DEPENDENCY_FINDER_H_

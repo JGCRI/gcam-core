@@ -58,12 +58,16 @@ mIsPriceNegative( false )
 }
 
 //! Copy Constructor.
-PriceMarket::PriceMarket( const Market& marketIn, Market* demandMarketIn ) : 
+PriceMarket::PriceMarket( Market& marketIn, Market* demandMarketIn ) : 
 Market( marketIn ),
 mIsPriceNegative( false )
 {
     assert( demandMarketIn );
     demandMarketPointer = demandMarketIn;
+    
+    // Info objects can not be copied instead we will have the original market
+    // release it's info object to this market.
+    mMarketInfo.reset( marketIn.releaseMarketInfo() );
     mMarketInfo->setBoolean( "has-split-market", true );
 }
 

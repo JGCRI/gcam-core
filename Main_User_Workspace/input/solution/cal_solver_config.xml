@@ -45,13 +45,13 @@
         <max-model-calcs>2500</max-model-calcs>
         <bisect-all-solver-component>
             <bracket-interval>0.4</bracket-interval>
-            <max-bracket-iterations>40</max-bracket-iterations>
+            <max-bracket-iterations>30</max-bracket-iterations>
             <max-iterations>30</max-iterations>
 			<solution-info-filter>unsolved &amp;&amp; solvable &amp;&amp; !(market-name="globalcrude oil" || market-name="globalnatural gas" || market-name="globalcoal")</solution-info-filter>
         </bisect-all-solver-component>
         <log-newton-raphson-backtracking-solver-component>
             <max-iterations>50</max-iterations>
-	    <ftol>1.0e-3</ftol>
+            <ftol>1.0e-3</ftol>
             <solution-info-filter>solvable-nr &amp;&amp; !(market-name="globalcrude oil" || market-name="globalnatural gas" || market-name="globalcoal")</solution-info-filter>
         </log-newton-raphson-backtracking-solver-component>
     </user-configurable-solver>
@@ -66,6 +66,20 @@
             <max-iterations>1</max-iterations>
             <solution-info-filter>unsolved &amp;&amp; solvable &amp;&amp; (price-greater-than="1000000" || price-less-than="0.0000001")</solution-info-filter>
         </bisect-all-solver-component>
+        <log-newton-raphson-backtracking-solver-component>
+            <max-iterations>10</max-iterations>
+            <!-- This is a preliminary solution, so use a loose
+		         tolerance.  We will rerun with a tighter ftol below -->
+	        <ftol>5.0e-2</ftol>
+            <!-- include the tax market in the newton-raphson -->
+            <solution-info-filter>solvable-nr &amp;&amp; !(market-name="globalcrude oil" || market-name="globalnatural gas" || market-name="globalcoal" || market-name="USAtraded unconventional oil")</solution-info-filter>
+        </log-newton-raphson-backtracking-solver-component>
+        <bisect-all-solver-component>
+            <bracket-interval>10.0</bracket-interval>
+            <max-bracket-iterations>40</max-bracket-iterations>
+            <max-iterations>1</max-iterations>
+            <solution-info-filter>unsolved &amp;&amp; solvable &amp;&amp; (price-greater-than="1000000" || price-less-than="0.0000001")</solution-info-filter>
+        </bisect-all-solver-component>
         <bisect-all-solver-component>
             <bracket-interval>0.4</bracket-interval>
             <max-bracket-iterations>40</max-bracket-iterations>
@@ -74,7 +88,7 @@
         </bisect-all-solver-component>
         <log-newton-raphson-backtracking-solver-component>
             <max-iterations>15</max-iterations>
-	    <ftol>1.0e-3</ftol>
+            <ftol>1.0e-3</ftol>
             <!-- include the tax market in the newton-raphson -->
             <solution-info-filter>solvable-nr &amp;&amp; !(market-name="globalcrude oil" || market-name="globalnatural gas" || market-name="globalcoal")</solution-info-filter>
         </log-newton-raphson-backtracking-solver-component>
@@ -146,5 +160,20 @@
     <solution-info-param-parser>
         <!-- applies to all regions since region attribute is not included -->
         <max-price-change fillout="1" market-type="Trial-Value" period="1">10</max-price-change>
+        <bracket-interval fillout="1" good="unconventional oil" region= "USA" period="4">0.005</bracket-interval>
+        <bracket-interval fillout="1" good="unconventional oil" region= "Canada" period="4">0.005</bracket-interval>
+        <bracket-interval fillout="1" good="unconventional oil" region= "Western Europe" period="4">0.005</bracket-interval>
+        <bracket-interval fillout="1" good="unconventional oil" region= "Japan" period="4">0.005</bracket-interval>
+        <bracket-interval fillout="1" good="unconventional oil" region= "Australia_NZ" period="4">0.005</bracket-interval>
+        <bracket-interval fillout="1" good="unconventional oil" region= "Former Soviet Union" period="4">0.005</bracket-interval>
+        <bracket-interval fillout="1" good="unconventional oil" region= "China" period="4">0.005</bracket-interval>
+        <bracket-interval fillout="1" good="unconventional oil" region= "Middle East" period="4">0.005</bracket-interval>
+        <bracket-interval fillout="1" good="unconventional oil" region= "Africa" period="4">0.005</bracket-interval>
+        <bracket-interval fillout="1" good="unconventional oil" region= "Latin America" period="4">0.005</bracket-interval>
+        <bracket-interval fillout="1" good="unconventional oil" region= "Southeast Asia" period="4">0.005</bracket-interval>
+        <bracket-interval fillout="1" good="unconventional oil" region= "Eastern Europe" period="4">0.005</bracket-interval>
+        <bracket-interval fillout="1" good="unconventional oil" region= "Korea" period="4">0.005</bracket-interval>
+        <bracket-interval fillout="1" good="unconventional oil" region= "India" period="4">0.005</bracket-interval>
+        <bracket-interval fillout="1" good="biomassOil" region= "Africa" period="15">0.005</bracket-interval>
     </solution-info-param-parser>
 </scenario>

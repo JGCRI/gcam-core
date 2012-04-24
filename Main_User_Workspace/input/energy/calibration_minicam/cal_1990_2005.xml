@@ -58,38 +58,6 @@
                <share-weight year="2005">1</share-weight>
             </subsector>
          </supplysector>
-         <supplysector name="refined liquids electricity">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <share-weight>1</share-weight>
-                     <CalDataOutput>
-                        <calOutputValue>1.14121701</calOutputValue>
-                     </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
-                        <coefficient>1.069550056</coefficient>
-                     </minicam-energy-input>
-                     <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.020816352</coefficient>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2005">
-                     <share-weight>1</share-weight>
-                     <CalDataOutput>
-                        <calOutputValue>1.210558792</calOutputValue>
-                     </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
-                        <coefficient>1.039401448</coefficient>
-                     </minicam-energy-input>
-                     <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.017181595</coefficient>
-                     </minicam-energy-input>
-                  </period>
-               </technology>
-               <share-weight year="1990">1</share-weight>
-               <share-weight year="2005">1</share-weight>
-            </subsector>
-         </supplysector>
          <supplysector name="refined liquids enduse">
             <subsector name="biomass liquids">
                <technology name="biomass liquids-ethanol">
@@ -193,14 +161,14 @@
                   </period>
                </technology>
             </subsector>
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
+            <subsector name="oil refining">
+               <technology name="oil refining">
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
                         <calOutputValue>23.5799613</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.069550056</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -215,7 +183,7 @@
                      <CalDataOutput>
                         <calOutputValue>29.19643627</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.039401448</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -255,14 +223,14 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
+            <subsector name="oil refining">
+               <technology name="oil refining">
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>6.904757516</calOutputValue>
+                        <calOutputValue>8.045974526</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.069550056</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -275,9 +243,9 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>8.419897634</calOutputValue>
+                        <calOutputValue>9.630456426</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.039401448</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -380,14 +348,14 @@
             <subsector name="oil">
                <technology name="Oil (existing)">
                   <period year="1990">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>1.14121701</calibrated-value>
                         <efficiency>0.394972031</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>1.210558792</calibrated-value>
                         <efficiency>0.375800335</efficiency>
                      </minicam-energy-input>
@@ -905,13 +873,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>6.341281892</calibrated-value>
+                        <calibrated-value>6.341279118</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>9.979454213</calibrated-value>
+                        <calibrated-value>9.979428794</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -1041,13 +1009,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>3.28812532</calibrated-value>
+                        <calibrated-value>3.283894687</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>3.468895</calibrated-value>
+                        <calibrated-value>3.463431906</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -1065,7 +1033,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>5.293502646</calibrated-value>
+                        <calibrated-value>4.360817384</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -1276,38 +1244,6 @@
                <share-weight year="2005">1</share-weight>
             </subsector>
          </supplysector>
-         <supplysector name="refined liquids electricity">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <share-weight>1</share-weight>
-                     <CalDataOutput>
-                        <calOutputValue>0.15898117</calOutputValue>
-                     </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
-                        <coefficient>1.063911072</coefficient>
-                     </minicam-energy-input>
-                     <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.018518148</coefficient>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2005">
-                     <share-weight>1</share-weight>
-                     <CalDataOutput>
-                        <calOutputValue>0.174978932</calOutputValue>
-                     </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
-                        <coefficient>1.042152122</coefficient>
-                     </minicam-energy-input>
-                     <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.017241379</coefficient>
-                     </minicam-energy-input>
-                  </period>
-               </technology>
-               <share-weight year="1990">1</share-weight>
-               <share-weight year="2005">1</share-weight>
-            </subsector>
-         </supplysector>
          <supplysector name="refined liquids enduse">
             <subsector name="biomass liquids">
                <technology name="biomass liquids-ethanol">
@@ -1381,14 +1317,14 @@
                   </period>
                </technology>
             </subsector>
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
+            <subsector name="oil refining">
+               <technology name="oil refining">
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
                         <calOutputValue>2.124855428</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.063911072</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -1403,7 +1339,7 @@
                      <CalDataOutput>
                         <calOutputValue>2.662046989</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.042152122</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -1443,14 +1379,14 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
+            <subsector name="oil refining">
+               <technology name="oil refining">
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.857029586</calOutputValue>
+                        <calOutputValue>1.016010756</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.063911072</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -1463,9 +1399,9 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>1.225107922</calOutputValue>
+                        <calOutputValue>1.400086854</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.042152122</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -1568,14 +1504,14 @@
             <subsector name="oil">
                <technology name="Oil (existing)">
                   <period year="1990">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>0.15898117</calibrated-value>
                         <efficiency>0.372904541</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>0.174978932</calibrated-value>
                         <efficiency>0.399997869</efficiency>
                      </minicam-energy-input>
@@ -2093,13 +2029,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.859898694</calibrated-value>
+                        <calibrated-value>0.859900208</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>1.074519679</calibrated-value>
+                        <calibrated-value>1.074545479</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -2229,13 +2165,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.680721419</calibrated-value>
+                        <calibrated-value>0.679688263</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.926603558</calibrated-value>
+                        <calibrated-value>0.925560769</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -2464,38 +2400,6 @@
                <share-weight year="2005">1</share-weight>
             </subsector>
          </supplysector>
-         <supplysector name="refined liquids electricity">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <share-weight>1</share-weight>
-                     <CalDataOutput>
-                        <calOutputValue>1.68297637</calOutputValue>
-                     </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
-                        <coefficient>1.044874101</coefficient>
-                     </minicam-energy-input>
-                     <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.002080054</coefficient>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2005">
-                     <share-weight>1</share-weight>
-                     <CalDataOutput>
-                        <calOutputValue>1.024874212</calOutputValue>
-                     </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
-                        <coefficient>1.048239132</coefficient>
-                     </minicam-energy-input>
-                     <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.002835343</coefficient>
-                     </minicam-energy-input>
-                  </period>
-               </technology>
-               <share-weight year="1990">1</share-weight>
-               <share-weight year="2005">1</share-weight>
-            </subsector>
-         </supplysector>
          <supplysector name="refined liquids enduse">
             <subsector name="biomass liquids">
                <technology name="biomass liquids-ethanol">
@@ -2575,14 +2479,14 @@
                   </period>
                </technology>
             </subsector>
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
+            <subsector name="oil refining">
+               <technology name="oil refining">
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
                         <calOutputValue>17.00166323</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.044874101</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -2595,9 +2499,9 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>20.3730133</calOutputValue>
+                        <calOutputValue>20.3730123</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.048239132</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -2637,14 +2541,14 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
+            <subsector name="oil refining">
+               <technology name="oil refining">
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>6.556275508</calOutputValue>
+                        <calOutputValue>8.239251878</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.044874101</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -2657,9 +2561,9 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>7.127978311</calOutputValue>
+                        <calOutputValue>8.152853526</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.048239132</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -2762,14 +2666,14 @@
             <subsector name="oil">
                <technology name="Oil (existing)">
                   <period year="1990">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>1.68297637</calibrated-value>
                         <efficiency>0.379727257</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>1.024874212</calibrated-value>
                         <efficiency>0.382612808</efficiency>
                      </minicam-energy-input>
@@ -3287,13 +3191,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>3.679380916</calibrated-value>
+                        <calibrated-value>3.679369034</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>5.321941707</calibrated-value>
+                        <calibrated-value>5.3218998</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -3423,13 +3327,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>3.598469501</calibrated-value>
+                        <calibrated-value>3.592936986</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>4.403118563</calibrated-value>
+                        <calibrated-value>4.398298443</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -3658,38 +3562,6 @@
                <share-weight year="2005">1</share-weight>
             </subsector>
          </supplysector>
-         <supplysector name="refined liquids electricity">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <share-weight>1</share-weight>
-                     <CalDataOutput>
-                        <calOutputValue>2.041479493</calOutputValue>
-                     </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
-                        <coefficient>1.037419301</coefficient>
-                     </minicam-energy-input>
-                     <minicam-energy-input name="wholesale gas">
-                        <coefficient>2.05256E-05</coefficient>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2005">
-                     <share-weight>1</share-weight>
-                     <CalDataOutput>
-                        <calOutputValue>1.097385401</calOutputValue>
-                     </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
-                        <coefficient>1.04665414</coefficient>
-                     </minicam-energy-input>
-                     <minicam-energy-input name="wholesale gas">
-                        <coefficient>6.17876E-05</coefficient>
-                     </minicam-energy-input>
-                  </period>
-               </technology>
-               <share-weight year="1990">1</share-weight>
-               <share-weight year="2005">1</share-weight>
-            </subsector>
-         </supplysector>
          <supplysector name="refined liquids enduse">
             <subsector name="biomass liquids">
                <technology name="biomass liquids-ethanol">
@@ -3763,14 +3635,14 @@
                   </period>
                </technology>
             </subsector>
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
+            <subsector name="oil refining">
+               <technology name="oil refining">
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
                         <calOutputValue>4.882775951</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.037419301</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -3785,7 +3657,7 @@
                      <CalDataOutput>
                         <calOutputValue>5.693989385</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.04665414</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -3825,14 +3697,14 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
+            <subsector name="oil refining">
+               <technology name="oil refining">
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>3.478715824</calOutputValue>
+                        <calOutputValue>5.520195317</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.037419301</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -3845,9 +3717,9 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>3.440561515</calOutputValue>
+                        <calOutputValue>4.537946916</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.04665414</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -3950,14 +3822,14 @@
             <subsector name="oil">
                <technology name="Oil (existing)">
                   <period year="1990">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>2.041479493</calibrated-value>
                         <efficiency>0.440415886</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>1.097385401</calibrated-value>
                         <efficiency>0.478917252</efficiency>
                      </minicam-energy-input>
@@ -4475,13 +4347,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>1.41851667</calibrated-value>
+                        <calibrated-value>1.418517629</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>2.224051012</calibrated-value>
+                        <calibrated-value>2.224053511</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -4611,13 +4483,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.238788954</calibrated-value>
+                        <calibrated-value>1.233650379</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.26947288</calibrated-value>
+                        <calibrated-value>1.264901337</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -4846,38 +4718,6 @@
                <share-weight year="2005">1</share-weight>
             </subsector>
          </supplysector>
-         <supplysector name="refined liquids electricity">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <share-weight>1</share-weight>
-                     <CalDataOutput>
-                        <calOutputValue>0.036617753</calOutputValue>
-                     </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
-                        <coefficient>1.024805182</coefficient>
-                     </minicam-energy-input>
-                     <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.006178192</coefficient>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2005">
-                     <share-weight>1</share-weight>
-                     <CalDataOutput>
-                        <calOutputValue>0.017739472</calOutputValue>
-                     </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
-                        <coefficient>1.024907114</coefficient>
-                     </minicam-energy-input>
-                     <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.00464993</coefficient>
-                     </minicam-energy-input>
-                  </period>
-               </technology>
-               <share-weight year="1990">1</share-weight>
-               <share-weight year="2005">1</share-weight>
-            </subsector>
-         </supplysector>
          <supplysector name="refined liquids enduse">
             <subsector name="biomass liquids">
                <technology name="biomass liquids-ethanol">
@@ -4951,14 +4791,14 @@
                   </period>
                </technology>
             </subsector>
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
+            <subsector name="oil refining">
+               <technology name="oil refining">
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
                         <calOutputValue>1.15512556</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.024805182</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -4973,7 +4813,7 @@
                      <CalDataOutput>
                         <calOutputValue>1.562798462</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.024907114</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -5013,14 +4853,14 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
+            <subsector name="oil refining">
+               <technology name="oil refining">
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.348609715</calOutputValue>
+                        <calOutputValue>0.385227468</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.024805182</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -5033,9 +4873,9 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.457968931</calOutputValue>
+                        <calOutputValue>0.475708403</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.024907114</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -5138,14 +4978,14 @@
             <subsector name="oil">
                <technology name="Oil (existing)">
                   <period year="1990">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>0.036617753</calibrated-value>
                         <efficiency>0.414290852</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>0.017739472</calibrated-value>
                         <efficiency>0.391668938</efficiency>
                      </minicam-energy-input>
@@ -5663,13 +5503,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.294188249</calibrated-value>
+                        <calibrated-value>0.294188238</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.470586045</calibrated-value>
+                        <calibrated-value>0.470586154</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -5799,13 +5639,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.278749529</calibrated-value>
+                        <calibrated-value>0.278650009</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.42643466</calibrated-value>
+                        <calibrated-value>0.426369075</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -6034,38 +5874,6 @@
                <share-weight year="2005">1</share-weight>
             </subsector>
          </supplysector>
-         <supplysector name="refined liquids electricity">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <share-weight>1</share-weight>
-                     <CalDataOutput>
-                        <calOutputValue>3.447733504</calOutputValue>
-                     </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
-                        <coefficient>1.126439845</coefficient>
-                     </minicam-energy-input>
-                     <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.001260838</coefficient>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2005">
-                     <share-weight>1</share-weight>
-                     <CalDataOutput>
-                        <calOutputValue>0.442105146</calOutputValue>
-                     </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
-                        <coefficient>1.10452958</coefficient>
-                     </minicam-energy-input>
-                     <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.000512625</coefficient>
-                     </minicam-energy-input>
-                  </period>
-               </technology>
-               <share-weight year="1990">1</share-weight>
-               <share-weight year="2005">1</share-weight>
-            </subsector>
-         </supplysector>
          <supplysector name="refined liquids enduse">
             <subsector name="biomass liquids">
                <technology name="biomass liquids-ethanol">
@@ -6139,14 +5947,14 @@
                   </period>
                </technology>
             </subsector>
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
+            <subsector name="oil refining">
+               <technology name="oil refining">
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>7.626337108</calOutputValue>
+                        <calOutputValue>7.626838582</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.126439845</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -6159,9 +5967,9 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>4.092336392</calOutputValue>
+                        <calOutputValue>4.092881777</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.10452958</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -6180,7 +5988,7 @@
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.002422798</calOutputValue>
+                        <calOutputValue>0.001921325</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional coal">
                         <coefficient>1.373253493</coefficient>
@@ -6189,7 +5997,7 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.008793306</calOutputValue>
+                        <calOutputValue>0.008247922</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional coal">
                         <coefficient>1.068341121</coefficient>
@@ -6201,14 +6009,14 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
+            <subsector name="oil refining">
+               <technology name="oil refining">
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>5.57897663</calOutputValue>
+                        <calOutputValue>9.02620866</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.126439845</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -6221,9 +6029,9 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>2.579341968</calOutputValue>
+                        <calOutputValue>3.02090173</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.10452958</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -6242,7 +6050,7 @@
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.001772376</calOutputValue>
+                        <calOutputValue>0.002273849</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional coal">
                         <coefficient>1.373253493</coefficient>
@@ -6251,7 +6059,7 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.005542297</calOutputValue>
+                        <calOutputValue>0.006087682</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional coal">
                         <coefficient>1.068341121</coefficient>
@@ -6344,7 +6152,7 @@
             <subsector name="oil">
                <technology name="Oil (existing)">
                   <period year="1990">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>3.447733504</calibrated-value>
                         <efficiency>0.258976745</efficiency>
                      </minicam-energy-input>
@@ -6354,7 +6162,7 @@
                      </secondary-output>
                   </period>
                   <period year="2005">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>0.442105146</calibrated-value>
                         <efficiency>0.31682237</efficiency>
                      </minicam-energy-input>
@@ -6875,13 +6683,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.912587409</calibrated-value>
+                        <calibrated-value>0.912638887</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>1.250618282</calibrated-value>
+                        <calibrated-value>1.250651391</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -7031,13 +6839,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>4.004286383</calibrated-value>
+                        <calibrated-value>3.990367082</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>2.470263449</calibrated-value>
+                        <calibrated-value>2.46572904</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -7692,38 +7500,6 @@
                <share-weight year="2005">1</share-weight>
             </subsector>
          </supplysector>
-         <supplysector name="refined liquids electricity">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <share-weight>1</share-weight>
-                     <CalDataOutput>
-                        <calOutputValue>0.556475962</calOutputValue>
-                     </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
-                        <coefficient>1.066642996</coefficient>
-                     </minicam-energy-input>
-                     <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.001539212</coefficient>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2005">
-                     <share-weight>1</share-weight>
-                     <CalDataOutput>
-                        <calOutputValue>0.698634569</calOutputValue>
-                     </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
-                        <coefficient>1.056625921</coefficient>
-                     </minicam-energy-input>
-                     <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.003826239</coefficient>
-                     </minicam-energy-input>
-                  </period>
-               </technology>
-               <share-weight year="1990">1</share-weight>
-               <share-weight year="2005">1</share-weight>
-            </subsector>
-         </supplysector>
          <supplysector name="refined liquids enduse">
             <subsector name="biomass liquids">
                <technology name="biomass liquids-ethanol">
@@ -7797,14 +7573,14 @@
                   </period>
                </technology>
             </subsector>
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
+            <subsector name="oil refining">
+               <technology name="oil refining">
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
                         <calOutputValue>1.64061014</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.066642996</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -7819,7 +7595,7 @@
                      <CalDataOutput>
                         <calOutputValue>6.775146749</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.056625921</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -7859,14 +7635,14 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
+            <subsector name="oil refining">
+               <technology name="oil refining">
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>2.448834199</calOutputValue>
+                        <calOutputValue>3.005310161</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.066642996</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -7879,9 +7655,9 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>6.041100226</calOutputValue>
+                        <calOutputValue>6.739734794</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.056625921</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -8002,7 +7778,7 @@
             <subsector name="oil">
                <technology name="Oil (existing)">
                   <period year="1990">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>0.556475962</calibrated-value>
                         <efficiency>0.33334917</efficiency>
                      </minicam-energy-input>
@@ -8012,7 +7788,7 @@
                      </secondary-output>
                   </period>
                   <period year="2005">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>0.698634569</calibrated-value>
                         <efficiency>0.334377385</efficiency>
                      </minicam-energy-input>
@@ -8533,13 +8309,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.373727178</calibrated-value>
+                        <calibrated-value>0.373724542</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>2.046115993</calibrated-value>
+                        <calibrated-value>2.046119869</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -8707,13 +8483,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.612994872</calibrated-value>
+                        <calibrated-value>1.609383471</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>5.679752025</calibrated-value>
+                        <calibrated-value>5.673926871</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -9368,38 +9144,6 @@
                <share-weight year="2005">0</share-weight>
             </subsector>
          </supplysector>
-         <supplysector name="refined liquids electricity">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <share-weight>1</share-weight>
-                     <CalDataOutput>
-                        <calOutputValue>1.195293719</calOutputValue>
-                     </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
-                        <coefficient>1.049610197</coefficient>
-                     </minicam-energy-input>
-                     <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.037148745</coefficient>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2005">
-                     <share-weight>1</share-weight>
-                     <CalDataOutput>
-                        <calOutputValue>2.458589443</calOutputValue>
-                     </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
-                        <coefficient>1.079199543</coefficient>
-                     </minicam-energy-input>
-                     <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.057615052</coefficient>
-                     </minicam-energy-input>
-                  </period>
-               </technology>
-               <share-weight year="1990">1</share-weight>
-               <share-weight year="2005">1</share-weight>
-            </subsector>
-         </supplysector>
          <supplysector name="refined liquids enduse">
             <subsector name="biomass liquids">
                <technology name="biomass liquids-ethanol">
@@ -9473,14 +9217,14 @@
                   </period>
                </technology>
             </subsector>
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
+            <subsector name="oil refining">
+               <technology name="oil refining">
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
                         <calOutputValue>3.670215869</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.049610197</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -9495,7 +9239,7 @@
                      <CalDataOutput>
                         <calOutputValue>6.175735153</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.079199543</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -9535,14 +9279,14 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
+            <subsector name="oil refining">
+               <technology name="oil refining">
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>1.567165295</calOutputValue>
+                        <calOutputValue>2.762459014</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.049610197</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -9555,9 +9299,9 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>2.74643613</calOutputValue>
+                        <calOutputValue>5.205025573</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.079199543</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -9660,14 +9404,14 @@
             <subsector name="oil">
                <technology name="Oil (existing)">
                   <period year="1990">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>1.195293719</calibrated-value>
                         <efficiency>0.342105705</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>2.458589443</calibrated-value>
                         <efficiency>0.351798794</efficiency>
                      </minicam-energy-input>
@@ -10185,13 +9929,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.54841063</calibrated-value>
+                        <calibrated-value>0.548425899</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>1.35940952</calibrated-value>
+                        <calibrated-value>1.359403774</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -10321,13 +10065,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.162516559</calibrated-value>
+                        <calibrated-value>0.152963325</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.464451471</calibrated-value>
+                        <calibrated-value>0.444740549</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -10556,38 +10300,6 @@
                <share-weight year="2005">1</share-weight>
             </subsector>
          </supplysector>
-         <supplysector name="refined liquids electricity">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <share-weight>1</share-weight>
-                     <CalDataOutput>
-                        <calOutputValue>0.466761211</calOutputValue>
-                     </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
-                        <coefficient>1.119371699</coefficient>
-                     </minicam-energy-input>
-                     <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.006673088</coefficient>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2005">
-                     <share-weight>1</share-weight>
-                     <CalDataOutput>
-                        <calOutputValue>0.70902202</calOutputValue>
-                     </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
-                        <coefficient>1.137242292</coefficient>
-                     </minicam-energy-input>
-                     <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.003748271</coefficient>
-                     </minicam-energy-input>
-                  </period>
-               </technology>
-               <share-weight year="1990">1</share-weight>
-               <share-weight year="2005">1</share-weight>
-            </subsector>
-         </supplysector>
          <supplysector name="refined liquids enduse">
             <subsector name="biomass liquids">
                <technology name="biomass liquids-ethanol">
@@ -10661,14 +10373,14 @@
                   </period>
                </technology>
             </subsector>
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
+            <subsector name="oil refining">
+               <technology name="oil refining">
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>2.313348207</calOutputValue>
+                        <calOutputValue>2.330761076</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.119371699</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -10681,9 +10393,9 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>3.693998314</calOutputValue>
+                        <calOutputValue>3.723235747</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.137242292</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -10702,7 +10414,7 @@
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.143415791</calOutputValue>
+                        <calOutputValue>0.126002922</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional coal">
                         <coefficient>2.981971843</coefficient>
@@ -10711,7 +10423,7 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.236046176</calOutputValue>
+                        <calOutputValue>0.206808743</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional coal">
                         <coefficient>2.423998554</coefficient>
@@ -10723,14 +10435,14 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
+            <subsector name="oil refining">
+               <technology name="oil refining">
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.867058116</calOutputValue>
+                        <calOutputValue>1.316406458</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.119371699</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -10743,9 +10455,9 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>1.019990982</calOutputValue>
+                        <calOutputValue>1.699775568</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.137242292</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -10764,7 +10476,7 @@
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.053753181</calOutputValue>
+                        <calOutputValue>0.07116605</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional coal">
                         <coefficient>2.981971843</coefficient>
@@ -10773,7 +10485,7 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.065177337</calOutputValue>
+                        <calOutputValue>0.09441477</calOutputValue>
                      </CalDataOutput>
                      <minicam-energy-input name="regional coal">
                         <coefficient>2.423998554</coefficient>
@@ -10848,14 +10560,14 @@
             <subsector name="oil">
                <technology name="Oil (existing)">
                   <period year="1990">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>0.466761211</calibrated-value>
                         <efficiency>0.332834855</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>0.70902202</calibrated-value>
                         <efficiency>0.298303288</efficiency>
                      </minicam-energy-input>
@@ -11373,13 +11085,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.360142532</calibrated-value>
+                        <calibrated-value>0.360144532</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.813262576</calibrated-value>
+                        <calibrated-value>0.813259259</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -11527,13 +11239,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.572254246</calibrated-value>
+                        <calibrated-value>0.572137486</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.835869442</calibrated-value>
+                        <calibrated-value>0.831937627</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -11762,38 +11474,6 @@
                <share-weight year="2005">1</share-weight>
             </subsector>
          </supplysector>
-         <supplysector name="refined liquids electricity">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <share-weight>1</share-weight>
-                     <CalDataOutput>
-                        <calOutputValue>1.273126331</calOutputValue>
-                     </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
-                        <coefficient>1.117132155</coefficient>
-                     </minicam-energy-input>
-                     <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.01410658</coefficient>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2005">
-                     <share-weight>1</share-weight>
-                     <CalDataOutput>
-                        <calOutputValue>1.692283626</calOutputValue>
-                     </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
-                        <coefficient>1.117489652</coefficient>
-                     </minicam-energy-input>
-                     <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.019455593</coefficient>
-                     </minicam-energy-input>
-                  </period>
-               </technology>
-               <share-weight year="1990">1</share-weight>
-               <share-weight year="2005">1</share-weight>
-            </subsector>
-         </supplysector>
          <supplysector name="refined liquids enduse">
             <subsector name="biomass liquids">
                <technology name="biomass liquids-ethanol">
@@ -11873,14 +11553,14 @@
                   </period>
                </technology>
             </subsector>
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
+            <subsector name="oil refining">
+               <technology name="oil refining">
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>5.588893529</calOutputValue>
+                        <calOutputValue>5.588774807</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.117132155</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -11893,9 +11573,9 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>8.134134958</calOutputValue>
+                        <calOutputValue>8.133851727</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.117489652</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -11935,14 +11615,14 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
+            <subsector name="oil refining">
+               <technology name="oil refining">
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>2.445852</calOutputValue>
+                        <calOutputValue>3.719097053</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.117132155</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -11955,9 +11635,9 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>3.053597541</calOutputValue>
+                        <calOutputValue>4.746164399</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.117489652</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -12060,14 +11740,14 @@
             <subsector name="oil">
                <technology name="Oil (existing)">
                   <period year="1990">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>1.273126331</calibrated-value>
                         <efficiency>0.341802058</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>1.692283626</calibrated-value>
                         <efficiency>0.34843521</efficiency>
                      </minicam-energy-input>
@@ -12585,13 +12265,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.828563883</calibrated-value>
+                        <calibrated-value>0.828565229</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>1.529461519</calibrated-value>
+                        <calibrated-value>1.5294581</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -12739,13 +12419,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.982467117</calibrated-value>
+                        <calibrated-value>0.981957224</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.74501597</calibrated-value>
+                        <calibrated-value>1.742320094</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -12974,38 +12654,6 @@
                <share-weight year="2005">1</share-weight>
             </subsector>
          </supplysector>
-         <supplysector name="refined liquids electricity">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <share-weight>1</share-weight>
-                     <CalDataOutput>
-                        <calOutputValue>1.053273276</calOutputValue>
-                     </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
-                        <coefficient>1.057421603</coefficient>
-                     </minicam-energy-input>
-                     <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.007735379</coefficient>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2005">
-                     <share-weight>1</share-weight>
-                     <CalDataOutput>
-                        <calOutputValue>1.075082317</calOutputValue>
-                     </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
-                        <coefficient>1.113850421</coefficient>
-                     </minicam-energy-input>
-                     <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.002546626</coefficient>
-                     </minicam-energy-input>
-                  </period>
-               </technology>
-               <share-weight year="1990">1</share-weight>
-               <share-weight year="2005">1</share-weight>
-            </subsector>
-         </supplysector>
          <supplysector name="refined liquids enduse">
             <subsector name="biomass liquids">
                <technology name="biomass liquids-ethanol">
@@ -13079,14 +12727,14 @@
                   </period>
                </technology>
             </subsector>
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
+            <subsector name="oil refining">
+               <technology name="oil refining">
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
                         <calOutputValue>3.511393798</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.057421603</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -13101,7 +12749,7 @@
                      <CalDataOutput>
                         <calOutputValue>7.2852539</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.113850421</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -13141,14 +12789,14 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
+            <subsector name="oil refining">
+               <technology name="oil refining">
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>1.675984414</calOutputValue>
+                        <calOutputValue>2.72925769</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.057421603</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -13161,9 +12809,9 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>3.023120808</calOutputValue>
+                        <calOutputValue>4.098203125</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.113850421</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -13266,14 +12914,14 @@
             <subsector name="oil">
                <technology name="Oil (existing)">
                   <period year="1990">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>1.053273276</calibrated-value>
                         <efficiency>0.346850156</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>1.075082317</calibrated-value>
                         <efficiency>0.395366934</efficiency>
                      </minicam-energy-input>
@@ -13791,13 +13439,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.484926813</calibrated-value>
+                        <calibrated-value>0.484931092</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>1.483985691</calibrated-value>
+                        <calibrated-value>1.483969613</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -13945,13 +13593,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.486221421</calibrated-value>
+                        <calibrated-value>0.48455654</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>1.139299239</calibrated-value>
+                        <calibrated-value>1.137411859</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -14180,38 +13828,6 @@
                <share-weight year="2005">1</share-weight>
             </subsector>
          </supplysector>
-         <supplysector name="refined liquids electricity">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <share-weight>1</share-weight>
-                     <CalDataOutput>
-                        <calOutputValue>0.408740537</calOutputValue>
-                     </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
-                        <coefficient>1.060273238</coefficient>
-                     </minicam-energy-input>
-                     <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.006987363</coefficient>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2005">
-                     <share-weight>1</share-weight>
-                     <CalDataOutput>
-                        <calOutputValue>0.078402017</calOutputValue>
-                     </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
-                        <coefficient>1.046780986</coefficient>
-                     </minicam-energy-input>
-                     <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.021474803</coefficient>
-                     </minicam-energy-input>
-                  </period>
-               </technology>
-               <share-weight year="1990">1</share-weight>
-               <share-weight year="2005">1</share-weight>
-            </subsector>
-         </supplysector>
          <supplysector name="refined liquids enduse">
             <subsector name="biomass liquids">
                <technology name="biomass liquids-ethanol">
@@ -14285,14 +13901,14 @@
                   </period>
                </technology>
             </subsector>
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
+            <subsector name="oil refining">
+               <technology name="oil refining">
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
                         <calOutputValue>1.35242851</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.060273238</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -14307,7 +13923,7 @@
                      <CalDataOutput>
                         <calOutputValue>1.871415864</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.046780986</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -14347,14 +13963,14 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
+            <subsector name="oil refining">
+               <technology name="oil refining">
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>1.424156767</calOutputValue>
+                        <calOutputValue>1.832897304</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.060273238</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -14367,9 +13983,9 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.990814594</calOutputValue>
+                        <calOutputValue>1.06921661</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.046780986</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -14490,7 +14106,7 @@
             <subsector name="oil">
                <technology name="Oil (existing)">
                   <period year="1990">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>0.408740537</calibrated-value>
                         <efficiency>0.18585678</efficiency>
                      </minicam-energy-input>
@@ -14500,7 +14116,7 @@
                      </secondary-output>
                   </period>
                   <period year="2005">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>0.078402017</calibrated-value>
                         <efficiency>0.261544292</efficiency>
                      </minicam-energy-input>
@@ -15021,13 +14637,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.44722618</calibrated-value>
+                        <calibrated-value>0.447185933</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_bld">
-                        <calibrated-value>0.73084208</calibrated-value>
+                        <calibrated-value>0.730857849</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -15177,13 +14793,13 @@
                <technology name="electricity">
                   <period year="1990">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.779773264</calibrated-value>
+                        <calibrated-value>0.778349459</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="elect_td_ind">
-                        <calibrated-value>0.677479904</calibrated-value>
+                        <calibrated-value>0.677042759</calibrated-value>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
@@ -15838,38 +15454,6 @@
                <share-weight year="2005">1</share-weight>
             </subsector>
          </supplysector>
-         <supplysector name="refined liquids electricity">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <share-weight>1</share-weight>
-                     <CalDataOutput>
-                        <calOutputValue>0.178960579</calOutputValue>
-                     </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
-                        <coefficient>1.021449033</coefficient>
-                     </minicam-energy-input>
-                     <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.00001</coefficient>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2005">
-                     <share-weight>1</share-weight>
-                     <CalDataOutput>
-                        <calOutputValue>0.193400852</calOutputValue>
-                     </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
-                        <coefficient>1.044223512</coefficient>
-                     </minicam-energy-input>
-                     <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.00001</coefficient>
-                     </minicam-energy-input>
-                  </period>
-               </technology>
-               <share-weight year="1990">1</share-weight>
-               <share-weight year="2005">1</share-weight>
-            </subsector>
-         </supplysector>
          <supplysector name="refined liquids enduse">
             <subsector name="biomass liquids">
                <technology name="biomass liquids-ethanol">
@@ -15943,14 +15527,14 @@
                   </period>
                </technology>
             </subsector>
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
+            <subsector name="oil refining">
+               <technology name="oil refining">
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
                         <calOutputValue>1.106550306</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.021449033</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -15965,7 +15549,7 @@
                      <CalDataOutput>
                         <calOutputValue>2.168127148</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.044223512</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -16005,14 +15589,14 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
+            <subsector name="oil refining">
+               <technology name="oil refining">
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.794319696</calOutputValue>
+                        <calOutputValue>0.973280275</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.021449033</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -16025,9 +15609,9 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>1.84633579</calOutputValue>
+                        <calOutputValue>2.039736642</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.044223512</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -16130,14 +15714,14 @@
             <subsector name="oil">
                <technology name="Oil (existing)">
                   <period year="1990">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>0.178960579</calibrated-value>
                         <efficiency>0.379330467</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>0.193400852</calibrated-value>
                         <efficiency>0.391661149</efficiency>
                      </minicam-energy-input>
@@ -17008,38 +16592,6 @@
                <share-weight year="2005">0</share-weight>
             </subsector>
          </supplysector>
-         <supplysector name="refined liquids electricity">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
-                  <period year="1990">
-                     <share-weight>1</share-weight>
-                     <CalDataOutput>
-                        <calOutputValue>0.150435911</calOutputValue>
-                     </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
-                        <coefficient>1.054478857</coefficient>
-                     </minicam-energy-input>
-                     <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.00001</coefficient>
-                     </minicam-energy-input>
-                  </period>
-                  <period year="2005">
-                     <share-weight>1</share-weight>
-                     <CalDataOutput>
-                        <calOutputValue>0.343769774</calOutputValue>
-                     </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
-                        <coefficient>1.099936946</coefficient>
-                     </minicam-energy-input>
-                     <minicam-energy-input name="wholesale gas">
-                        <coefficient>0.00001</coefficient>
-                     </minicam-energy-input>
-                  </period>
-               </technology>
-               <share-weight year="1990">1</share-weight>
-               <share-weight year="2005">1</share-weight>
-            </subsector>
-         </supplysector>
          <supplysector name="refined liquids enduse">
             <subsector name="biomass liquids">
                <technology name="biomass liquids-ethanol">
@@ -17113,14 +16665,14 @@
                   </period>
                </technology>
             </subsector>
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
+            <subsector name="oil refining">
+               <technology name="oil refining">
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
                         <calOutputValue>1.536978467</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.054478857</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -17135,7 +16687,7 @@
                      <CalDataOutput>
                         <calOutputValue>2.37591689</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.099936946</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -17175,14 +16727,14 @@
             </subsector>
          </supplysector>
          <supplysector name="refined liquids industrial">
-            <subsector name="crude oil refining">
-               <technology name="crude oil refining">
+            <subsector name="oil refining">
+               <technology name="oil refining">
                   <period year="1990">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>0.723273887</calOutputValue>
+                        <calOutputValue>0.873709798</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.054478857</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -17195,9 +16747,9 @@
                   <period year="2005">
                      <share-weight>1</share-weight>
                      <CalDataOutput>
-                        <calOutputValue>2.074417049</calOutputValue>
+                        <calOutputValue>2.418186823</calOutputValue>
                      </CalDataOutput>
-                     <minicam-energy-input name="regional crude oil">
+                     <minicam-energy-input name="regional oil">
                         <coefficient>1.099936946</coefficient>
                      </minicam-energy-input>
                      <minicam-energy-input name="wholesale gas">
@@ -17300,14 +16852,14 @@
             <subsector name="oil">
                <technology name="Oil (existing)">
                   <period year="1990">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>0.150435911</calibrated-value>
                         <efficiency>0.240453226</efficiency>
                      </minicam-energy-input>
                      <share-weight>1</share-weight>
                   </period>
                   <period year="2005">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>0.343769774</calibrated-value>
                         <efficiency>0.326960682</efficiency>
                      </minicam-energy-input>

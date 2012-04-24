@@ -452,20 +452,16 @@ void MarketDependencyFinder::createOrdering() {
             // when searching the graph from all of the vertices which have not
             // yet been cleared.
             map<CalcVertex*, int> totalVisits;
-            int numSearches = 0;
             /*!
              * \warning Searching from every vertex to every other vertex to find a
-             *          cycle is overkill.  Instead we are limiting the number of
-             *          searches to an arbitrary threshold however this provides
-             *          no guarantees that it will find the cycle.  In practice it
-             *          tends to be more than enough and significantly reduces
-             *          runtime.
+             *          cycle is expensive however a search threshold has been placed
+             *          in markCycles to avoid excessive searching.  This keeps total
+             *          time spent here reasonable while still finding at least one
+             *          cycle.
              */
-            const double MAX_SEARCHES = 50;
-            for( NumDepIterator it = numDependencies.begin(); it != numDependencies.end() && numSearches < MAX_SEARCHES; ++it ) {
+            for( NumDepIterator it = numDependencies.begin(); it != numDependencies.end(); ++it ) {
                 list<CalcVertex*> hasVisited;
                 markCycles( (*it).first, hasVisited, totalVisits );
-                ++numSearches;
             }
             int max = 0;
             CalcVertex* maxVertex = 0;
@@ -475,12 +471,11 @@ void MarketDependencyFinder::createOrdering() {
                     max = (*it).second;
                 }
             }
-            if( !maxVertex ) {
-                depLog.setLevel( ILogger::SEVERE );
-                depLog << "Unable to find a vertex in a cycle with maximum searches of "
-                       << MAX_SEARCHES << "." << endl;
-                exit( 1 );
-            }
+            /*!
+             * \invariant At least one cycle must have be found by markCycles.
+             */
+            assert( maxVertex );
+            
             depLog << "The following activity has been chosen to break the cycle: "
                    << maxVertex->mCalcItem->getDescription() << endl;
             
@@ -565,14 +560,16 @@ void MarketDependencyFinder::createOrdering() {
  *        number of times each vertex has been visited in a cycle.
  * \details Since this graph can have a cycle so the stop point for searching is 
  *          when the current search path has returned to a vertex that is already
- *          in the search path.
+ *          in the search path.  Note an arbitrary threshold is placed on the number
+ *          of times a vertex can be found to be in a cycle to avoid excessive searching
+ *          when a good vertex to break a cycle has already been found.
  * \param aCurrVertex The current vertex being visited.
  * \param aHasVisited The list of vertices which make up the current search path.
  * \param aTotalVisists The map of vertices to the total number of this that node
  *                      has been visited.
- * \return Whether the search eventually lead to a cycle.
+ * \return The maximum number of cycle-visits so far.
  */
-bool MarketDependencyFinder::markCycles( CalcVertex* aCurrVertex, list<CalcVertex*>& aHasVisited,
+int MarketDependencyFinder::markCycles( CalcVertex* aCurrVertex, list<CalcVertex*>& aHasVisited,
                                          map<CalcVertex*, int>& aTotalVisists ) const
 {
     typedef map<CalcVertex*, int>::iterator NumDepIterator;
@@ -586,21 +583,22 @@ bool MarketDependencyFinder::markCycles( CalcVertex* aCurrVertex, list<CalcVerte
         else {
             ++aTotalVisists[ aCurrVertex ];
         }
-        return true;
+        return aTotalVisists[ aCurrVertex ];
     }
     else {
         // Have not yet created a cycle so add this vertex to the search path and
         // keep searching.
         aHasVisited.push_back( aCurrVertex );
-        bool didFindCycle = false;
-        for( VertexIterator it = aCurrVertex->mOutEdges.begin(); it != aCurrVertex->mOutEdges.end(); ++it ) {
-            didFindCycle |= markCycles( *it, aHasVisited, aTotalVisists );
+        const int MAX_CYCLE_VISITS = 1000;
+        int cycleVisits = 0;
+        for( VertexIterator it = aCurrVertex->mOutEdges.begin(); it != aCurrVertex->mOutEdges.end() && cycleVisits < MAX_CYCLE_VISITS; ++it ) {
+            cycleVisits = max( cycleVisits, markCycles( *it, aHasVisited, aTotalVisists ) );
         }
         aHasVisited.pop_back();
         
         // If any searches from this vertex eventually leads to a cycle then we
         // must increase the visit count for this vertex.
-        if( didFindCycle ) {
+        if( cycleVisits ) {
             NumDepIterator it = aTotalVisists.find( aCurrVertex );
             if( it == aTotalVisists.end() ) {
                 aTotalVisists[ aCurrVertex ] = 1;
@@ -609,6 +607,6 @@ bool MarketDependencyFinder::markCycles( CalcVertex* aCurrVertex, list<CalcVerte
                 ++aTotalVisists[ aCurrVertex ];
             }
         }
-        return didFindCycle;
+        return cycleVisits;
     }
 }

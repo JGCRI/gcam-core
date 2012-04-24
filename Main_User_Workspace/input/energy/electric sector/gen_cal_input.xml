@@ -188,12 +188,12 @@
             <subsector name="oil">
                <technology name="oil_subpeak_exist">
                   <period year="1990">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>0.570608505</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>0.605279396</calibrated-value>
                      </minicam-energy-input>
                   </period>
@@ -232,12 +232,12 @@
             <subsector name="oil">
                <technology name="oil_peak_exist">
                   <period year="1990">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>0.570608505</calibrated-value>
                      </minicam-energy-input>
                   </period>
                   <period year="2005">
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <calibrated-value>0.605279396</calibrated-value>
                      </minicam-energy-input>
                   </period>

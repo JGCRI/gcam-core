@@ -5129,7 +5129,7 @@
                <technology name="oil_int_IGCC">
                   <period year="1975">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -5153,7 +5153,7 @@
                   </period>
                   <period year="1990">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -5177,7 +5177,7 @@
                   </period>
                   <period year="2005">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.42624803</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -5201,7 +5201,7 @@
                   </period>
                   <period year="2020">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.42624803</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -5225,7 +5225,7 @@
                   </period>
                   <period year="2035">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.449038642</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -5249,7 +5249,7 @@
                   </period>
                   <period year="2050">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.46959835</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -5273,7 +5273,7 @@
                   </period>
                   <period year="2065">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.485914627</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -5297,7 +5297,7 @@
                   </period>
                   <period year="2080">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.496390322</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -5321,7 +5321,7 @@
                   </period>
                   <period year="2095">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.5</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -5347,7 +5347,7 @@
                <technology name="oil_int_IGCC_CCS">
                   <period year="1975">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -5374,7 +5374,7 @@
                   </period>
                   <period year="1990">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -5401,7 +5401,7 @@
                   </period>
                   <period year="2005">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.35983912</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -5430,7 +5430,7 @@
                   </period>
                   <period year="2020">
                      <share-weight>0.333</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.363613943</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -5459,7 +5459,7 @@
                   </period>
                   <period year="2035">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.38996481</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -5488,7 +5488,7 @@
                   </period>
                   <period year="2050">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.4138824</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -5517,7 +5517,7 @@
                   </period>
                   <period year="2065">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.430198677</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -5546,7 +5546,7 @@
                   </period>
                   <period year="2080">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.440674372</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -5575,7 +5575,7 @@
                   </period>
                   <period year="2095">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.44428405</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -6537,7 +6537,7 @@
                <technology name="oil_subpeak_exist">
                   <period year="1975">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.395</efficiency>
                      </minicam-energy-input>
                      <s-curve-shutdown-decider name="s-curve-shutdown-decider">
@@ -6562,7 +6562,7 @@
                   </period>
                   <period year="1990">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.395</efficiency>
                      </minicam-energy-input>
                      <s-curve-shutdown-decider name="s-curve-shutdown-decider">
@@ -6587,7 +6587,7 @@
                   </period>
                   <period year="2005">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.376</efficiency>
                      </minicam-energy-input>
                      <s-curve-shutdown-decider name="s-curve-shutdown-decider">
@@ -6612,7 +6612,7 @@
                   </period>
                   <period year="2020">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.376</efficiency>
                      </minicam-energy-input>
                      <s-curve-shutdown-decider name="s-curve-shutdown-decider">
@@ -6637,7 +6637,7 @@
                   </period>
                   <period year="2035">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.376</efficiency>
                      </minicam-energy-input>
                      <s-curve-shutdown-decider name="s-curve-shutdown-decider">
@@ -6662,7 +6662,7 @@
                   </period>
                   <period year="2050">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.376</efficiency>
                      </minicam-energy-input>
                      <s-curve-shutdown-decider name="s-curve-shutdown-decider">
@@ -6687,7 +6687,7 @@
                   </period>
                   <period year="2065">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.376</efficiency>
                      </minicam-energy-input>
                      <s-curve-shutdown-decider name="s-curve-shutdown-decider">
@@ -6712,7 +6712,7 @@
                   </period>
                   <period year="2080">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.376</efficiency>
                      </minicam-energy-input>
                      <s-curve-shutdown-decider name="s-curve-shutdown-decider">
@@ -6737,7 +6737,7 @@
                   </period>
                   <period year="2095">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.376</efficiency>
                      </minicam-energy-input>
                      <s-curve-shutdown-decider name="s-curve-shutdown-decider">
@@ -6765,7 +6765,7 @@
                <technology name="oil_subpeak_turbine">
                   <period year="1975">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -6789,7 +6789,7 @@
                   </period>
                   <period year="1990">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -6813,7 +6813,7 @@
                   </period>
                   <period year="2005">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.384365909</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -6837,7 +6837,7 @@
                   </period>
                   <period year="2020">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.384365909</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -6861,7 +6861,7 @@
                   </period>
                   <period year="2035">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.393105542</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -6885,7 +6885,7 @@
                   </period>
                   <period year="2050">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.402043894</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -6909,7 +6909,7 @@
                   </period>
                   <period year="2065">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.411185484</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -6933,7 +6933,7 @@
                   </period>
                   <period year="2080">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.420534935</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -6957,7 +6957,7 @@
                   </period>
                   <period year="2095">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.430096971</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -6983,7 +6983,7 @@
                <technology name="oil_subpeak_IGCC">
                   <period year="1975">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -7007,7 +7007,7 @@
                   </period>
                   <period year="1990">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -7031,7 +7031,7 @@
                   </period>
                   <period year="2005">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.42624803</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -7055,7 +7055,7 @@
                   </period>
                   <period year="2020">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.42624803</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -7079,7 +7079,7 @@
                   </period>
                   <period year="2035">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.449038642</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -7103,7 +7103,7 @@
                   </period>
                   <period year="2050">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.46959835</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -7127,7 +7127,7 @@
                   </period>
                   <period year="2065">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.485914627</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -7151,7 +7151,7 @@
                   </period>
                   <period year="2080">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.496390322</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -7175,7 +7175,7 @@
                   </period>
                   <period year="2095">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.5</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -7201,7 +7201,7 @@
                <technology name="oil_subpeak_IGCC_CCS">
                   <period year="1975">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -7228,7 +7228,7 @@
                   </period>
                   <period year="1990">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -7255,7 +7255,7 @@
                   </period>
                   <period year="2005">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.35983912</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -7284,7 +7284,7 @@
                   </period>
                   <period year="2020">
                      <share-weight>0.333</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.363613943</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -7313,7 +7313,7 @@
                   </period>
                   <period year="2035">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.38996481</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -7342,7 +7342,7 @@
                   </period>
                   <period year="2050">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.4138824</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -7371,7 +7371,7 @@
                   </period>
                   <period year="2065">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.430198677</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -7400,7 +7400,7 @@
                   </period>
                   <period year="2080">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.440674372</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -7429,7 +7429,7 @@
                   </period>
                   <period year="2095">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.44428405</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -9569,7 +9569,7 @@
                <technology name="oil_peak_exist">
                   <period year="1975">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.395</efficiency>
                      </minicam-energy-input>
                      <s-curve-shutdown-decider name="s-curve-shutdown-decider">
@@ -9594,7 +9594,7 @@
                   </period>
                   <period year="1990">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.395</efficiency>
                      </minicam-energy-input>
                      <s-curve-shutdown-decider name="s-curve-shutdown-decider">
@@ -9619,7 +9619,7 @@
                   </period>
                   <period year="2005">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.376</efficiency>
                      </minicam-energy-input>
                      <s-curve-shutdown-decider name="s-curve-shutdown-decider">
@@ -9644,7 +9644,7 @@
                   </period>
                   <period year="2020">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.376</efficiency>
                      </minicam-energy-input>
                      <s-curve-shutdown-decider name="s-curve-shutdown-decider">
@@ -9669,7 +9669,7 @@
                   </period>
                   <period year="2035">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.376</efficiency>
                      </minicam-energy-input>
                      <s-curve-shutdown-decider name="s-curve-shutdown-decider">
@@ -9694,7 +9694,7 @@
                   </period>
                   <period year="2050">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.376</efficiency>
                      </minicam-energy-input>
                      <s-curve-shutdown-decider name="s-curve-shutdown-decider">
@@ -9719,7 +9719,7 @@
                   </period>
                   <period year="2065">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.376</efficiency>
                      </minicam-energy-input>
                      <s-curve-shutdown-decider name="s-curve-shutdown-decider">
@@ -9744,7 +9744,7 @@
                   </period>
                   <period year="2080">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.376</efficiency>
                      </minicam-energy-input>
                      <s-curve-shutdown-decider name="s-curve-shutdown-decider">
@@ -9769,7 +9769,7 @@
                   </period>
                   <period year="2095">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.376</efficiency>
                      </minicam-energy-input>
                      <s-curve-shutdown-decider name="s-curve-shutdown-decider">
@@ -9797,7 +9797,7 @@
                <technology name="oil_peak_turbine">
                   <period year="1975">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -9821,7 +9821,7 @@
                   </period>
                   <period year="1990">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -9845,7 +9845,7 @@
                   </period>
                   <period year="2005">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.384365909</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -9869,7 +9869,7 @@
                   </period>
                   <period year="2020">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.384365909</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -9893,7 +9893,7 @@
                   </period>
                   <period year="2035">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.393105542</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -9917,7 +9917,7 @@
                   </period>
                   <period year="2050">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.402043894</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -9941,7 +9941,7 @@
                   </period>
                   <period year="2065">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.411185484</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -9965,7 +9965,7 @@
                   </period>
                   <period year="2080">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.420534935</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -9989,7 +9989,7 @@
                   </period>
                   <period year="2095">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.430096971</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -10015,7 +10015,7 @@
                <technology name="oil_peak_IGCC">
                   <period year="1975">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -10039,7 +10039,7 @@
                   </period>
                   <period year="1990">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -10063,7 +10063,7 @@
                   </period>
                   <period year="2005">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.42624803</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -10087,7 +10087,7 @@
                   </period>
                   <period year="2020">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.42624803</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -10111,7 +10111,7 @@
                   </period>
                   <period year="2035">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.449038642</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -10135,7 +10135,7 @@
                   </period>
                   <period year="2050">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.46959835</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -10159,7 +10159,7 @@
                   </period>
                   <period year="2065">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.485914627</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -10183,7 +10183,7 @@
                   </period>
                   <period year="2080">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.496390322</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -10207,7 +10207,7 @@
                   </period>
                   <period year="2095">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.5</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -10233,7 +10233,7 @@
                <technology name="oil_peak_IGCC_CCS">
                   <period year="1975">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -10260,7 +10260,7 @@
                   </period>
                   <period year="1990">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>1</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -10287,7 +10287,7 @@
                   </period>
                   <period year="2005">
                      <share-weight>0</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.35983912</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -10316,7 +10316,7 @@
                   </period>
                   <period year="2020">
                      <share-weight>0.333</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.363613943</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -10345,7 +10345,7 @@
                   </period>
                   <period year="2035">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.38996481</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -10374,7 +10374,7 @@
                   </period>
                   <period year="2050">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.4138824</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -10403,7 +10403,7 @@
                   </period>
                   <period year="2065">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.430198677</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -10432,7 +10432,7 @@
                   </period>
                   <period year="2080">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.440674372</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">
@@ -10461,7 +10461,7 @@
                   </period>
                   <period year="2095">
                      <share-weight>1</share-weight>
-                     <minicam-energy-input name="refined liquids electricity">
+                     <minicam-energy-input name="refined liquids industrial">
                         <efficiency>0.44428405</efficiency>
                      </minicam-energy-input>
                      <phased-shutdown-decider name="phased-shutdown-decider">

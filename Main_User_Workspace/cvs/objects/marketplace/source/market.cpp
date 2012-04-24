@@ -700,3 +700,14 @@ const string& Market::convert_type_to_string( const IMarketType::Type aType ) {
 bool Market::isSolvable() const {
     return solveMarket;
 }
+
+/*!
+ * \brief Relinquishes control of the market info object.
+ * \details This becomes useful for instance when a market gets replaced with a
+ *          price market.
+ * \return The pointer to this market's info object for which the caller will
+ *         subsequently be responsible for.
+ */
+IInfo* Market::releaseMarketInfo() {
+    return mMarketInfo.release();
+}

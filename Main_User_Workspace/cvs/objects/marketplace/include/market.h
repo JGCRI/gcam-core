@@ -92,6 +92,7 @@ namespace objects {
 class Market: public IVisitable
 {
     friend class XMLDBOutputter;
+    friend class PriceMarket;
 public:
     Market( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
     virtual ~Market();
@@ -204,7 +205,8 @@ protected:
     *        tabs. 
     */
     virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const = 0;
-
+    
+    IInfo* releaseMarketInfo();
 };
 
 #endif // _MARKET_H_

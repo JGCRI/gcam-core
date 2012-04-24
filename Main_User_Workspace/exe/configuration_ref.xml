@@ -26,6 +26,7 @@
 		<Value name="gas">../input/energy/fossil/gas_processing_input.xml</Value>
 		<Value name="liquids">../input/energy/refined liquids/ref_liquids_supply.xml</Value>
 		<Value name="liquids">../input/energy/refined liquids/ref_liquids_ccs.xml</Value>
+		<Value name="liquids">../input/energy/refined liquids/cal_unconv_oil.xml</Value>
 		<Value name="h2">../input/energy/hydrogen/h2_input_ref_bioccs.xml</Value>
 		<Value name="delete">../input/energy/electric sector/delete_elec_solar_wind.xml</Value>
 		<Value name="elec_fossil_bio">../input/energy/electric sector/fossil_elec_input_bioccs.xml</Value>

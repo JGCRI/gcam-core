@@ -6,7 +6,7 @@
             <subresource name="crude oil">
                <cal-production year="1975">10.47374075</cal-production>
                <cal-production year="1990">13.6682222</cal-production>
-               <cal-production year="2005">20.39842011</cal-production>
+               <cal-production year="2005">19.93010795</cal-production>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <environCost fillout="1" year="1975">0</environCost>
             </subresource>
@@ -44,7 +44,7 @@
             <subresource name="crude oil">
                <cal-production year="1975">0.888522696</cal-production>
                <cal-production year="1990">1.299056133</cal-production>
-               <cal-production year="2005">1.054165588</cal-production>
+               <cal-production year="2005">1.029963783</cal-production>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <environCost fillout="1" year="1975">0</environCost>
             </subresource>
@@ -82,7 +82,7 @@
             <subresource name="crude oil">
                <cal-production year="1975">3.557607696</cal-production>
                <cal-production year="1990">3.947144997</cal-production>
-               <cal-production year="2005">6.170972429</cal-production>
+               <cal-production year="2005">6.029297659</cal-production>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <environCost fillout="1" year="1975">0</environCost>
             </subresource>
@@ -120,7 +120,7 @@
             <subresource name="crude oil">
                <cal-production year="1975">3.284418996</cal-production>
                <cal-production year="1990">5.914009228</cal-production>
-               <cal-production year="2005">8.406454716</cal-production>
+               <cal-production year="2005">8.213457169</cal-production>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <environCost fillout="1" year="1975">0</environCost>
             </subresource>
@@ -158,7 +158,7 @@
             <subresource name="crude oil">
                <cal-production year="1975">0.804368016</cal-production>
                <cal-production year="1990">0.650576233</cal-production>
-               <cal-production year="2005">0.462481826</cal-production>
+               <cal-production year="2005">0.451864049</cal-production>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <environCost fillout="1" year="1975">0</environCost>
             </subresource>
@@ -196,7 +196,7 @@
             <subresource name="crude oil">
                <cal-production year="1975">20.6502187</cal-production>
                <cal-production year="1990">24.40669212</cal-production>
-               <cal-production year="2005">24.08404451</cal-production>
+               <cal-production year="2005">23.53111683</cal-production>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <environCost fillout="1" year="1975">0</environCost>
             </subresource>
@@ -234,7 +234,7 @@
             <subresource name="crude oil">
                <cal-production year="1975">0.361488312</cal-production>
                <cal-production year="1990">1.481017907</cal-production>
-               <cal-production year="2005">1.554566738</cal-production>
+               <cal-production year="2005">1.518876595</cal-production>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <environCost fillout="1" year="1975">0</environCost>
             </subresource>
@@ -348,7 +348,7 @@
             <subresource name="crude oil">
                <cal-production year="1975">10.04082563</cal-production>
                <cal-production year="1990">16.44276192</cal-production>
-               <cal-production year="2005">23.76306957</cal-production>
+               <cal-production year="2005">23.21751091</cal-production>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <environCost fillout="1" year="1975">0</environCost>
             </subresource>
@@ -386,7 +386,7 @@
             <subresource name="crude oil">
                <cal-production year="1975">41.97941075</cal-production>
                <cal-production year="1990">35.49952631</cal-production>
-               <cal-production year="2005">51.9264549</cal-production>
+               <cal-production year="2005">50.73431401</cal-production>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <environCost fillout="1" year="1975">0</environCost>
             </subresource>
@@ -424,7 +424,7 @@
             <subresource name="crude oil">
                <cal-production year="1975">3.41705682</cal-production>
                <cal-production year="1990">5.277897697</cal-production>
-               <cal-production year="2005">5.118648398</cal-production>
+               <cal-production year="2005">5.001133153</cal-production>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <environCost fillout="1" year="1975">0</environCost>
             </subresource>
@@ -462,7 +462,7 @@
             <subresource name="crude oil">
                <cal-production year="1975">20.31263701</cal-production>
                <cal-production year="1990">18.13567725</cal-production>
-               <cal-production year="2005">13.49994912</cal-production>
+               <cal-production year="2005">13.19001383</cal-production>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <environCost fillout="1" year="1975">0</environCost>
             </subresource>
@@ -500,7 +500,7 @@
             <subresource name="crude oil">
                <cal-production year="1975">1.22191758</cal-production>
                <cal-production year="1990">8.778355887</cal-production>
-               <cal-production year="2005">11.25643095</cal-production>
+               <cal-production year="2005">10.99800292</cal-production>
                <severanceTax fillout="1" year="1975">0</severanceTax>
                <environCost fillout="1" year="1975">0</environCost>
             </subresource>

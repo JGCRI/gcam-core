@@ -57,7 +57,7 @@ class Tabs;
 class PriceMarket: public Market {
 public:
     PriceMarket( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn, Market* demandMarketIn );
-    PriceMarket( const Market& marketIn, Market* demandMarketIn );
+    PriceMarket( Market& marketIn, Market* demandMarketIn );
 
     virtual IMarketType::Type getType() const;
 

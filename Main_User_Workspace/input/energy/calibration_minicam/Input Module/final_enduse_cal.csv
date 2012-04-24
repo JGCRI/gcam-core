@@ -9,66 +9,66 @@ Variable ID,,,,,,,,,,,,,,,
 region,supplysector,subsector,technology,minicam-energy-input,1990,2005,1990,2005,1990,2005,,,,,region ID
 USA,building,biomass,biomass,delivered biomass,0.566783863,0.503839512,1,1,1,1,,,,,1
 USA,building,coal,coal,delivered coal,0.399701236,0.079687364,1,1,1,1,,,,,1
-USA,building,electricity,electricity,elect_td_bld,6.341281892,9.979454213,1,1,1,1,,,,,1
+USA,building,electricity,electricity,elect_td_bld,6.341279118,9.979428794,1,1,1,1,,,,,1
 USA,building,gas,gas,delivered gas,6.858325904,7.678628881,1,1,1,1,,,,,1
 USA,building,refined liquids,refined liquids,refined liquids enduse,2.018410225,1.924470994,1,1,1,1,,,,,1
 Canada,building,biomass,biomass,delivered biomass,0.067281876,0.08542328,1,1,1,1,,,,,2
 Canada,building,coal,coal,delivered coal,0.002152015,0.001042513,1,1,1,1,,,,,2
-Canada,building,electricity,electricity,elect_td_bld,0.859898694,1.074519679,1,1,1,1,,,,,2
+Canada,building,electricity,electricity,elect_td_bld,0.859900208,1.074545479,1,1,1,1,,,,,2
 Canada,building,gas,gas,delivered gas,0.823761274,1.036019473,1,1,1,1,,,,,2
 Canada,building,refined liquids,refined liquids,refined liquids enduse,0.37085837,0.465015316,1,1,1,1,,,,,2
 Western Europe,building,biomass,biomass,delivered biomass,1.232755097,1.324916676,1,1,1,1,,,,,3
 Western Europe,building,coal,coal,delivered coal,1.225596029,0.242991772,1,1,1,1,,,,,3
-Western Europe,building,electricity,electricity,elect_td_bld,3.679380916,5.321941707,1,1,1,1,,,,,3
+Western Europe,building,electricity,electricity,elect_td_bld,3.679369034,5.3218998,1,1,1,1,,,,,3
 Western Europe,building,gas,gas,delivered gas,4.127747513,6.711080546,1,1,1,1,,,,,3
 Western Europe,building,refined liquids,refined liquids,refined liquids enduse,3.977625369,3.455030936,1,1,1,1,,,,,3
 Japan,building,biomass,biomass,delivered biomass,0.004333338,0.001201612,1,1,1,1,,,,,4
 Japan,building,coal,coal,delivered coal,0.041386518,0.027490529,1,1,1,1,,,,,4
-Japan,building,electricity,electricity,elect_td_bld,1.41851667,2.224051012,1,1,1,1,,,,,4
+Japan,building,electricity,electricity,elect_td_bld,1.418517629,2.224053511,1,1,1,1,,,,,4
 Japan,building,gas,gas,delivered gas,0.477973462,0.960728249,1,1,1,1,,,,,4
 Japan,building,refined liquids,refined liquids,refined liquids enduse,1.510170386,1.623050701,1,1,1,1,,,,,4
 Australia_NZ,building,biomass,biomass,delivered biomass,0.07673567,0.066963679,1,1,1,1,,,,,5
 Australia_NZ,building,coal,coal,delivered coal,0.010667966,0.00846571,1,1,1,1,,,,,5
-Australia_NZ,building,electricity,electricity,elect_td_bld,0.294188249,0.470586045,1,1,1,1,,,,,5
+Australia_NZ,building,electricity,electricity,elect_td_bld,0.294188238,0.470586154,1,1,1,1,,,,,5
 Australia_NZ,building,gas,gas,delivered gas,0.119943446,0.176963476,1,1,1,1,,,,,5
 Australia_NZ,building,refined liquids,refined liquids,refined liquids enduse,0.033833531,0.046707941,1,1,1,1,,,,,5
 Former Soviet Union,building,biomass,biomass,delivered biomass,0.396531828,0.21206142,1,1,1,1,,,,,6
 Former Soviet Union,building,coal,coal,delivered coal,2.129862841,0.301064414,1,1,1,1,,,,,6
-Former Soviet Union,building,electricity,electricity,elect_td_bld,0.912587409,1.250618282,1,1,1,1,,,,,6
+Former Soviet Union,building,electricity,electricity,elect_td_bld,0.912638887,1.250651391,1,1,1,1,,,,,6
 Former Soviet Union,building,gas,gas,delivered gas,4.611496432,4.053576024,1,1,1,1,,,,,6
 Former Soviet Union,building,refined liquids,refined liquids,refined liquids enduse,2.20436276,0.902544289,1,1,1,1,,,,,6
 China,building,biomass,biomass,delivered biomass,0.040461235,0.063149504,1,1,1,1,,,,,7
 China,building,coal,coal,delivered coal,4.233951742,2.423206796,1,1,1,1,,,,,7
-China,building,electricity,electricity,elect_td_bld,0.373727178,2.046115993,1,1,1,1,,,,,7
+China,building,electricity,electricity,elect_td_bld,0.373724542,2.046119869,1,1,1,1,,,,,7
 China,building,gas,gas,delivered gas,0.121124124,0.74473961,1,1,1,1,,,,,7
 China,building,refined liquids,refined liquids,refined liquids enduse,0.318033515,1.767202225,1,1,1,1,,,,,7
 China,building,trad biomass,trad biomass,traditional biomass,9.183109406,10.26255856,1,1,1,1,,,,,7
 Middle East,building,biomass,biomass,delivered biomass,0.028872173,0.03034174,1,1,1,1,,,,,8
 Middle East,building,coal,coal,delivered coal,0,0.000770371,0,1,0,1,,,,,8
-Middle East,building,electricity,electricity,elect_td_bld,0.54841063,1.35940952,1,1,1,1,,,,,8
+Middle East,building,electricity,electricity,elect_td_bld,0.548425899,1.359403774,1,1,1,1,,,,,8
 Middle East,building,gas,gas,delivered gas,0.143586306,1.287549857,1,1,1,1,,,,,8
 Middle East,building,refined liquids,refined liquids,refined liquids enduse,0.80020215,1.164951979,1,1,1,1,,,,,8
 Africa,building,biomass,biomass,delivered biomass,0.049571712,1.438107185,1,1,1,1,,,,,9
 Africa,building,coal,coal,delivered coal,0.116912203,0.215871408,1,1,1,1,,,,,9
-Africa,building,electricity,electricity,elect_td_bld,0.360142532,0.813262576,1,1,1,1,,,,,9
+Africa,building,electricity,electricity,elect_td_bld,0.360144532,0.813259259,1,1,1,1,,,,,9
 Africa,building,gas,gas,delivered gas,0.054813586,0.195360275,1,1,1,1,,,,,9
 Africa,building,refined liquids,refined liquids,refined liquids enduse,0.606478914,0.938931768,1,1,1,1,,,,,9
 Africa,building,trad biomass,trad biomass,traditional biomass,7.825627429,8.020598332,1,1,1,1,,,,,9
 Latin America,building,biomass,biomass,delivered biomass,0.083040991,0.101923459,1,1,1,1,,,,,10
 Latin America,building,coal,coal,delivered coal,0.006229958,0.002754914,1,1,1,1,,,,,10
-Latin America,building,electricity,electricity,elect_td_bld,0.828563883,1.529461519,1,1,1,1,,,,,10
+Latin America,building,electricity,electricity,elect_td_bld,0.828565229,1.5294581,1,1,1,1,,,,,10
 Latin America,building,gas,gas,delivered gas,0.300306604,0.536324893,1,1,1,1,,,,,10
 Latin America,building,refined liquids,refined liquids,refined liquids enduse,1.092704558,1.178065037,1,1,1,1,,,,,10
 Latin America,building,trad biomass,trad biomass,traditional biomass,1.338092906,1.328894507,1,1,1,1,,,,,10
 Southeast Asia,building,biomass,biomass,delivered biomass,0.354559158,0.297082768,1,1,1,1,,,,,11
 Southeast Asia,building,coal,coal,delivered coal,0.005162324,0.002880518,1,1,1,1,,,,,11
-Southeast Asia,building,electricity,electricity,elect_td_bld,0.484926813,1.483985691,1,1,1,1,,,,,11
+Southeast Asia,building,electricity,electricity,elect_td_bld,0.484931092,1.483969613,1,1,1,1,,,,,11
 Southeast Asia,building,gas,gas,delivered gas,0.134634928,0.369296694,1,1,1,1,,,,,11
 Southeast Asia,building,refined liquids,refined liquids,refined liquids enduse,0.655761737,0.931140133,1,1,1,1,,,,,11
 Southeast Asia,building,trad biomass,trad biomass,traditional biomass,3.511439852,4.446168073,1,1,1,1,,,,,11
 Eastern Europe,building,biomass,biomass,delivered biomass,0.176758322,0.396288994,1,1,1,1,,,,,12
 Eastern Europe,building,coal,coal,delivered coal,0.966552088,0.326821608,1,1,1,1,,,,,12
-Eastern Europe,building,electricity,electricity,elect_td_bld,0.44722618,0.73084208,1,1,1,1,,,,,12
+Eastern Europe,building,electricity,electricity,elect_td_bld,0.447185933,0.730857849,1,1,1,1,,,,,12
 Eastern Europe,building,gas,gas,delivered gas,0.610276342,0.89638132,1,1,1,1,,,,,12
 Eastern Europe,building,refined liquids,refined liquids,refined liquids enduse,0.246150346,0.224366425,1,1,1,1,,,,,12
 Korea,building,biomass,biomass,delivered biomass,0.018350744,0.015341944,1,1,1,1,,,,,13
@@ -93,62 +93,62 @@ Variable ID,,,,,,,,,,,,,,,
 region,supplysector,subsector,technology,minicam-energy-input,1990,2005,1990,2005,1990,2005,,,,,region ID
 USA,industrial energy use,biomass,biomass,delivered biomass,0.501808043,0.989437712,1,1,1,1,,,,,1
 USA,industrial energy use,coal,coal,delivered coal,2.15990975,1.37625773,1,1,1,1,,,,,1
-USA,industrial energy use,electricity,electricity,elect_td_ind,3.28812532,3.468895,1,1,1,1,,,,,1
-USA,industrial energy use,gas,gas,wholesale gas,5.483855682,5.293502646,1,1,1,1,,,,,1
+USA,industrial energy use,electricity,electricity,elect_td_ind,3.283894687,3.463431906,1,1,1,1,,,,,1
+USA,industrial energy use,gas,gas,wholesale gas,5.483855682,4.360817384,1,1,1,1,,,,,1
 USA,industrial energy use,refined liquids,refined liquids,refined liquids industrial,2.575959383,2.158706268,1,1,1,1,,,,,1
 Canada,industrial energy use,biomass,biomass,delivered biomass,0.238166118,0.348706012,1,1,1,1,,,,,2
 Canada,industrial energy use,coal,coal,delivered coal,0.132604998,0.15091552,1,1,1,1,,,,,2
-Canada,industrial energy use,electricity,electricity,elect_td_ind,0.680721419,0.926603558,1,1,1,1,,,,,2
+Canada,industrial energy use,electricity,electricity,elect_td_ind,0.679688263,0.925560769,1,1,1,1,,,,,2
 Canada,industrial energy use,gas,gas,wholesale gas,1.09381406,1.425366752,1,1,1,1,,,,,2
 Canada,industrial energy use,refined liquids,refined liquids,refined liquids industrial,0.390414913,0.394203967,1,1,1,1,,,,,2
 Western Europe,industrial energy use,biomass,biomass,delivered biomass,0.590479497,0.537060845,1,1,1,1,,,,,3
 Western Europe,industrial energy use,coal,coal,delivered coal,3.229563696,2.103048482,1,1,1,1,,,,,3
-Western Europe,industrial energy use,electricity,electricity,elect_td_ind,3.598469501,4.403118563,1,1,1,1,,,,,3
+Western Europe,industrial energy use,electricity,electricity,elect_td_ind,3.592936986,4.398298443,1,1,1,1,,,,,3
 Western Europe,industrial energy use,gas,gas,wholesale gas,3.337072743,4.160248468,1,1,1,1,,,,,3
 Western Europe,industrial energy use,refined liquids,refined liquids,refined liquids industrial,2.958576786,2.835705814,1,1,1,1,,,,,3
 Japan,industrial energy use,biomass,biomass,delivered biomass,0.108145044,0.101630383,1,1,1,1,,,,,4
 Japan,industrial energy use,coal,coal,delivered coal,1.81046097,1.718604675,1,1,1,1,,,,,4
-Japan,industrial energy use,electricity,electricity,elect_td_ind,1.238788954,1.26947288,1,1,1,1,,,,,4
+Japan,industrial energy use,electricity,electricity,elect_td_ind,1.233650379,1.264901337,1,1,1,1,,,,,4
 Japan,industrial energy use,gas,gas,wholesale gas,0.368610059,0.48190068,1,1,1,1,,,,,4
 Japan,industrial energy use,refined liquids,refined liquids,refined liquids industrial,2.018188325,1.743404454,1,1,1,1,,,,,4
 Australia_NZ,industrial energy use,biomass,biomass,delivered biomass,0.094319057,0.141745612,1,1,1,1,,,,,5
 Australia_NZ,industrial energy use,coal,coal,delivered coal,0.249894855,0.206833731,1,1,1,1,,,,,5
-Australia_NZ,industrial energy use,electricity,electricity,elect_td_ind,0.278749529,0.42643466,1,1,1,1,,,,,5
+Australia_NZ,industrial energy use,electricity,electricity,elect_td_ind,0.278650009,0.426369075,1,1,1,1,,,,,5
 Australia_NZ,industrial energy use,gas,gas,wholesale gas,0.436789944,0.422920076,1,1,1,1,,,,,5
 Australia_NZ,industrial energy use,refined liquids,refined liquids,refined liquids industrial,0.192601174,0.312109193,1,1,1,1,,,,,5
 Former Soviet Union,industrial energy use,biomass,biomass,delivered biomass,0.041210672,0.102329921,1,1,1,1,,,,,6
 Former Soviet Union,industrial energy use,coal,coal,delivered coal,3.943352451,2.259765907,1,1,1,1,,,,,6
-Former Soviet Union,industrial energy use,electricity,electricity,elect_td_ind,4.004286383,2.470263449,1,1,1,1,,,,,6
+Former Soviet Union,industrial energy use,electricity,electricity,elect_td_ind,3.990367082,2.46572904,1,1,1,1,,,,,6
 Former Soviet Union,industrial energy use,gas,gas,wholesale gas,3.726095566,3.553703388,1,1,1,1,,,,,6
 Former Soviet Union,industrial energy use,refined liquids,refined liquids,refined liquids industrial,3.504298633,1.441067054,1,1,1,1,,,,,6
 China,industrial energy use,biomass,biomass,delivered biomass,0.000184219,0.05158975,1,1,1,1,,,,,7
 China,industrial energy use,coal,coal,delivered coal,10.19271301,17.155426,1,1,1,1,,,,,7
-China,industrial energy use,electricity,electricity,elect_td_ind,1.612994872,5.679752025,1,1,1,1,,,,,7
+China,industrial energy use,electricity,electricity,elect_td_ind,1.609383471,5.673926871,1,1,1,1,,,,,7
 China,industrial energy use,gas,gas,wholesale gas,0.428351508,1.160618641,1,1,1,1,,,,,7
 China,industrial energy use,refined liquids,refined liquids,refined liquids industrial,1.50451402,3.298549446,1,1,1,1,,,,,7
 Middle East,industrial energy use,biomass,biomass,delivered biomass,0.01423512,0.018974578,1,1,1,1,,,,,8
 Middle East,industrial energy use,coal,coal,delivered coal,0.027791978,0.051476706,1,1,1,1,,,,,8
-Middle East,industrial energy use,electricity,electricity,elect_td_ind,0.162516559,0.464451471,1,1,1,1,,,,,8
+Middle East,industrial energy use,electricity,electricity,elect_td_ind,0.152963325,0.444740549,1,1,1,1,,,,,8
 Middle East,industrial energy use,gas,gas,wholesale gas,0.95554499,2.034391241,1,1,1,1,,,,,8
 Middle East,industrial energy use,refined liquids,refined liquids,refined liquids industrial,1.089112284,1.620241358,1,1,1,1,,,,,8
 Africa,industrial energy use,biomass,biomass,delivered biomass,0.313809034,3.072667399,1,1,1,1,,,,,9
 Africa,industrial energy use,coal,coal,delivered coal,0.78425064,0.716740262,1,1,1,1,,,,,9
-Africa,industrial energy use,electricity,electricity,elect_td_ind,0.572254246,0.835869442,1,1,1,1,,,,,9
+Africa,industrial energy use,electricity,electricity,elect_td_ind,0.572137486,0.831937627,1,1,1,1,,,,,9
 Africa,industrial energy use,gas,gas,wholesale gas,0.628991338,1.075249789,1,1,1,1,,,,,9
 Africa,industrial energy use,refined liquids,refined liquids,refined liquids industrial,0.680543406,0.773670398,1,1,1,1,,,,,9
 Latin America,industrial energy use,biomass,biomass,delivered biomass,2.067914948,2.451300224,1,1,1,1,,,,,10
 Latin America,industrial energy use,coal,coal,delivered coal,0.537328139,0.625740819,1,1,1,1,,,,,10
-Latin America,industrial energy use,electricity,electricity,elect_td_ind,0.982467117,1.74501597,1,1,1,1,,,,,10
+Latin America,industrial energy use,electricity,electricity,elect_td_ind,0.981957224,1.742320094,1,1,1,1,,,,,10
 Latin America,industrial energy use,gas,gas,wholesale gas,1.80452336,2.643248257,1,1,1,1,,,,,10
 Latin America,industrial energy use,refined liquids,refined liquids,refined liquids industrial,1.64729646,1.972962511,1,1,1,1,,,,,10
 Southeast Asia,industrial energy use,biomass,biomass,delivered biomass,1.230086027,1.508001624,1,1,1,1,,,,,11
 Southeast Asia,industrial energy use,coal,coal,delivered coal,0.432324108,1.305410946,1,1,1,1,,,,,11
-Southeast Asia,industrial energy use,electricity,electricity,elect_td_ind,0.486221421,1.139299239,1,1,1,1,,,,,11
+Southeast Asia,industrial energy use,electricity,electricity,elect_td_ind,0.48455654,1.137411859,1,1,1,1,,,,,11
 Southeast Asia,industrial energy use,gas,gas,wholesale gas,0.743663603,1.810296958,1,1,1,1,,,,,11
 Southeast Asia,industrial energy use,refined liquids,refined liquids,refined liquids industrial,1.183415767,1.615610758,1,1,1,1,,,,,11
 Eastern Europe,industrial energy use,biomass,biomass,delivered biomass,0.050679947,0.120141788,1,1,1,1,,,,,12
 Eastern Europe,industrial energy use,coal,coal,delivered coal,1.633617525,0.748601445,1,1,1,1,,,,,12
-Eastern Europe,industrial energy use,electricity,electricity,elect_td_ind,0.779773264,0.677479904,1,1,1,1,,,,,12
+Eastern Europe,industrial energy use,electricity,electricity,elect_td_ind,0.778349459,0.677042759,1,1,1,1,,,,,12
 Eastern Europe,industrial energy use,gas,gas,wholesale gas,1.417506739,0.661802015,1,1,1,1,,,,,12
 Eastern Europe,industrial energy use,refined liquids,refined liquids,refined liquids industrial,0.827518,0.465741407,1,1,1,1,,,,,12
 Korea,industrial energy use,biomass,biomass,delivered biomass,0.011425777,0.067981204,1,1,1,1,,,,,13

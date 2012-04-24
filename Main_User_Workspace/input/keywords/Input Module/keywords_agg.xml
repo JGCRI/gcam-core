@@ -68,9 +68,40 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="regional crude oil" nocreate="1">
-            <subsector name="regional crude oil" nocreate="1">
-               <technology name="regional crude oil" nocreate="1">
+         <supplysector name="regional oil" nocreate="1">
+            <subsector name="crude oil" nocreate="1">
+               <technology name="crude oil" nocreate="1">
+                  <period year="1975">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="1990">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2005">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2020">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2035">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2050">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2065">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2080">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2095">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="unconventional oil" nocreate="1">
+               <technology name="unconventional oil" nocreate="1">
                   <period year="1975">
                      <keyword primary-consumption="oil"/>
                   </period>
@@ -130,39 +161,6 @@
                   </period>
                   <period year="2095">
                      <keyword primary-consumption="biomass"/>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="regional unconventional oil" nocreate="1">
-            <subsector name="regional unconventional oil" nocreate="1">
-               <technology name="regional unconventional oil" nocreate="1">
-                  <period year="1975">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="1990">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2005">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2020">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2035">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2050">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2065">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2080">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2095">
-                     <keyword primary-consumption="oil"/>
                   </period>
                </technology>
             </subsector>
@@ -1917,9 +1915,40 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="regional crude oil" nocreate="1">
-            <subsector name="regional crude oil" nocreate="1">
-               <technology name="regional crude oil" nocreate="1">
+         <supplysector name="regional oil" nocreate="1">
+            <subsector name="crude oil" nocreate="1">
+               <technology name="crude oil" nocreate="1">
+                  <period year="1975">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="1990">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2005">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2020">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2035">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2050">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2065">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2080">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2095">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="unconventional oil" nocreate="1">
+               <technology name="unconventional oil" nocreate="1">
                   <period year="1975">
                      <keyword primary-consumption="oil"/>
                   </period>
@@ -1979,39 +2008,6 @@
                   </period>
                   <period year="2095">
                      <keyword primary-consumption="biomass"/>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="regional unconventional oil" nocreate="1">
-            <subsector name="regional unconventional oil" nocreate="1">
-               <technology name="regional unconventional oil" nocreate="1">
-                  <period year="1975">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="1990">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2005">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2020">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2035">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2050">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2065">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2080">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2095">
-                     <keyword primary-consumption="oil"/>
                   </period>
                </technology>
             </subsector>
@@ -3027,9 +3023,40 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="regional crude oil" nocreate="1">
-            <subsector name="regional crude oil" nocreate="1">
-               <technology name="regional crude oil" nocreate="1">
+         <supplysector name="regional oil" nocreate="1">
+            <subsector name="crude oil" nocreate="1">
+               <technology name="crude oil" nocreate="1">
+                  <period year="1975">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="1990">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2005">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2020">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2035">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2050">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2065">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2080">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2095">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="unconventional oil" nocreate="1">
+               <technology name="unconventional oil" nocreate="1">
                   <period year="1975">
                      <keyword primary-consumption="oil"/>
                   </period>
@@ -3089,39 +3116,6 @@
                   </period>
                   <period year="2095">
                      <keyword primary-consumption="biomass"/>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="regional unconventional oil" nocreate="1">
-            <subsector name="regional unconventional oil" nocreate="1">
-               <technology name="regional unconventional oil" nocreate="1">
-                  <period year="1975">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="1990">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2005">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2020">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2035">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2050">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2065">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2080">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2095">
-                     <keyword primary-consumption="oil"/>
                   </period>
                </technology>
             </subsector>
@@ -4137,9 +4131,40 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="regional crude oil" nocreate="1">
-            <subsector name="regional crude oil" nocreate="1">
-               <technology name="regional crude oil" nocreate="1">
+         <supplysector name="regional oil" nocreate="1">
+            <subsector name="crude oil" nocreate="1">
+               <technology name="crude oil" nocreate="1">
+                  <period year="1975">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="1990">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2005">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2020">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2035">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2050">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2065">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2080">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2095">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="unconventional oil" nocreate="1">
+               <technology name="unconventional oil" nocreate="1">
                   <period year="1975">
                      <keyword primary-consumption="oil"/>
                   </period>
@@ -4199,39 +4224,6 @@
                   </period>
                   <period year="2095">
                      <keyword primary-consumption="biomass"/>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="regional unconventional oil" nocreate="1">
-            <subsector name="regional unconventional oil" nocreate="1">
-               <technology name="regional unconventional oil" nocreate="1">
-                  <period year="1975">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="1990">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2005">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2020">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2035">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2050">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2065">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2080">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2095">
-                     <keyword primary-consumption="oil"/>
                   </period>
                </technology>
             </subsector>
@@ -5247,9 +5239,40 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="regional crude oil" nocreate="1">
-            <subsector name="regional crude oil" nocreate="1">
-               <technology name="regional crude oil" nocreate="1">
+         <supplysector name="regional oil" nocreate="1">
+            <subsector name="crude oil" nocreate="1">
+               <technology name="crude oil" nocreate="1">
+                  <period year="1975">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="1990">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2005">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2020">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2035">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2050">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2065">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2080">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2095">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="unconventional oil" nocreate="1">
+               <technology name="unconventional oil" nocreate="1">
                   <period year="1975">
                      <keyword primary-consumption="oil"/>
                   </period>
@@ -5309,39 +5332,6 @@
                   </period>
                   <period year="2095">
                      <keyword primary-consumption="biomass"/>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="regional unconventional oil" nocreate="1">
-            <subsector name="regional unconventional oil" nocreate="1">
-               <technology name="regional unconventional oil" nocreate="1">
-                  <period year="1975">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="1990">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2005">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2020">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2035">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2050">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2065">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2080">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2095">
-                     <keyword primary-consumption="oil"/>
                   </period>
                </technology>
             </subsector>
@@ -6357,9 +6347,40 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="regional crude oil" nocreate="1">
-            <subsector name="regional crude oil" nocreate="1">
-               <technology name="regional crude oil" nocreate="1">
+         <supplysector name="regional oil" nocreate="1">
+            <subsector name="crude oil" nocreate="1">
+               <technology name="crude oil" nocreate="1">
+                  <period year="1975">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="1990">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2005">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2020">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2035">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2050">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2065">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2080">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2095">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="unconventional oil" nocreate="1">
+               <technology name="unconventional oil" nocreate="1">
                   <period year="1975">
                      <keyword primary-consumption="oil"/>
                   </period>
@@ -6419,39 +6440,6 @@
                   </period>
                   <period year="2095">
                      <keyword primary-consumption="biomass"/>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="regional unconventional oil" nocreate="1">
-            <subsector name="regional unconventional oil" nocreate="1">
-               <technology name="regional unconventional oil" nocreate="1">
-                  <period year="1975">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="1990">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2005">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2020">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2035">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2050">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2065">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2080">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2095">
-                     <keyword primary-consumption="oil"/>
                   </period>
                </technology>
             </subsector>
@@ -7467,9 +7455,40 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="regional crude oil" nocreate="1">
-            <subsector name="regional crude oil" nocreate="1">
-               <technology name="regional crude oil" nocreate="1">
+         <supplysector name="regional oil" nocreate="1">
+            <subsector name="crude oil" nocreate="1">
+               <technology name="crude oil" nocreate="1">
+                  <period year="1975">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="1990">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2005">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2020">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2035">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2050">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2065">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2080">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2095">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="unconventional oil" nocreate="1">
+               <technology name="unconventional oil" nocreate="1">
                   <period year="1975">
                      <keyword primary-consumption="oil"/>
                   </period>
@@ -7529,39 +7548,6 @@
                   </period>
                   <period year="2095">
                      <keyword primary-consumption="biomass"/>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="regional unconventional oil" nocreate="1">
-            <subsector name="regional unconventional oil" nocreate="1">
-               <technology name="regional unconventional oil" nocreate="1">
-                  <period year="1975">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="1990">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2005">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2020">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2035">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2050">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2065">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2080">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2095">
-                     <keyword primary-consumption="oil"/>
                   </period>
                </technology>
             </subsector>
@@ -8577,9 +8563,40 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="regional crude oil" nocreate="1">
-            <subsector name="regional crude oil" nocreate="1">
-               <technology name="regional crude oil" nocreate="1">
+         <supplysector name="regional oil" nocreate="1">
+            <subsector name="crude oil" nocreate="1">
+               <technology name="crude oil" nocreate="1">
+                  <period year="1975">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="1990">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2005">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2020">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2035">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2050">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2065">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2080">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2095">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="unconventional oil" nocreate="1">
+               <technology name="unconventional oil" nocreate="1">
                   <period year="1975">
                      <keyword primary-consumption="oil"/>
                   </period>
@@ -8639,39 +8656,6 @@
                   </period>
                   <period year="2095">
                      <keyword primary-consumption="biomass"/>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="regional unconventional oil" nocreate="1">
-            <subsector name="regional unconventional oil" nocreate="1">
-               <technology name="regional unconventional oil" nocreate="1">
-                  <period year="1975">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="1990">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2005">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2020">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2035">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2050">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2065">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2080">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2095">
-                     <keyword primary-consumption="oil"/>
                   </period>
                </technology>
             </subsector>
@@ -9687,9 +9671,40 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="regional crude oil" nocreate="1">
-            <subsector name="regional crude oil" nocreate="1">
-               <technology name="regional crude oil" nocreate="1">
+         <supplysector name="regional oil" nocreate="1">
+            <subsector name="crude oil" nocreate="1">
+               <technology name="crude oil" nocreate="1">
+                  <period year="1975">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="1990">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2005">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2020">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2035">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2050">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2065">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2080">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2095">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="unconventional oil" nocreate="1">
+               <technology name="unconventional oil" nocreate="1">
                   <period year="1975">
                      <keyword primary-consumption="oil"/>
                   </period>
@@ -9749,39 +9764,6 @@
                   </period>
                   <period year="2095">
                      <keyword primary-consumption="biomass"/>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="regional unconventional oil" nocreate="1">
-            <subsector name="regional unconventional oil" nocreate="1">
-               <technology name="regional unconventional oil" nocreate="1">
-                  <period year="1975">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="1990">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2005">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2020">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2035">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2050">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2065">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2080">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2095">
-                     <keyword primary-consumption="oil"/>
                   </period>
                </technology>
             </subsector>
@@ -10797,9 +10779,40 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="regional crude oil" nocreate="1">
-            <subsector name="regional crude oil" nocreate="1">
-               <technology name="regional crude oil" nocreate="1">
+         <supplysector name="regional oil" nocreate="1">
+            <subsector name="crude oil" nocreate="1">
+               <technology name="crude oil" nocreate="1">
+                  <period year="1975">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="1990">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2005">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2020">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2035">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2050">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2065">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2080">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2095">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="unconventional oil" nocreate="1">
+               <technology name="unconventional oil" nocreate="1">
                   <period year="1975">
                      <keyword primary-consumption="oil"/>
                   </period>
@@ -10859,39 +10872,6 @@
                   </period>
                   <period year="2095">
                      <keyword primary-consumption="biomass"/>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="regional unconventional oil" nocreate="1">
-            <subsector name="regional unconventional oil" nocreate="1">
-               <technology name="regional unconventional oil" nocreate="1">
-                  <period year="1975">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="1990">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2005">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2020">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2035">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2050">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2065">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2080">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2095">
-                     <keyword primary-consumption="oil"/>
                   </period>
                </technology>
             </subsector>
@@ -11907,9 +11887,40 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="regional crude oil" nocreate="1">
-            <subsector name="regional crude oil" nocreate="1">
-               <technology name="regional crude oil" nocreate="1">
+         <supplysector name="regional oil" nocreate="1">
+            <subsector name="crude oil" nocreate="1">
+               <technology name="crude oil" nocreate="1">
+                  <period year="1975">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="1990">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2005">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2020">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2035">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2050">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2065">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2080">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2095">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="unconventional oil" nocreate="1">
+               <technology name="unconventional oil" nocreate="1">
                   <period year="1975">
                      <keyword primary-consumption="oil"/>
                   </period>
@@ -11969,39 +11980,6 @@
                   </period>
                   <period year="2095">
                      <keyword primary-consumption="biomass"/>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="regional unconventional oil" nocreate="1">
-            <subsector name="regional unconventional oil" nocreate="1">
-               <technology name="regional unconventional oil" nocreate="1">
-                  <period year="1975">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="1990">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2005">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2020">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2035">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2050">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2065">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2080">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2095">
-                     <keyword primary-consumption="oil"/>
                   </period>
                </technology>
             </subsector>
@@ -13017,9 +12995,40 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="regional crude oil" nocreate="1">
-            <subsector name="regional crude oil" nocreate="1">
-               <technology name="regional crude oil" nocreate="1">
+         <supplysector name="regional oil" nocreate="1">
+            <subsector name="crude oil" nocreate="1">
+               <technology name="crude oil" nocreate="1">
+                  <period year="1975">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="1990">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2005">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2020">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2035">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2050">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2065">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2080">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2095">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="unconventional oil" nocreate="1">
+               <technology name="unconventional oil" nocreate="1">
                   <period year="1975">
                      <keyword primary-consumption="oil"/>
                   </period>
@@ -13079,39 +13088,6 @@
                   </period>
                   <period year="2095">
                      <keyword primary-consumption="biomass"/>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="regional unconventional oil" nocreate="1">
-            <subsector name="regional unconventional oil" nocreate="1">
-               <technology name="regional unconventional oil" nocreate="1">
-                  <period year="1975">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="1990">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2005">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2020">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2035">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2050">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2065">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2080">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2095">
-                     <keyword primary-consumption="oil"/>
                   </period>
                </technology>
             </subsector>
@@ -14127,9 +14103,40 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="regional crude oil" nocreate="1">
-            <subsector name="regional crude oil" nocreate="1">
-               <technology name="regional crude oil" nocreate="1">
+         <supplysector name="regional oil" nocreate="1">
+            <subsector name="crude oil" nocreate="1">
+               <technology name="crude oil" nocreate="1">
+                  <period year="1975">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="1990">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2005">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2020">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2035">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2050">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2065">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2080">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2095">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="unconventional oil" nocreate="1">
+               <technology name="unconventional oil" nocreate="1">
                   <period year="1975">
                      <keyword primary-consumption="oil"/>
                   </period>
@@ -14189,39 +14196,6 @@
                   </period>
                   <period year="2095">
                      <keyword primary-consumption="biomass"/>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="regional unconventional oil" nocreate="1">
-            <subsector name="regional unconventional oil" nocreate="1">
-               <technology name="regional unconventional oil" nocreate="1">
-                  <period year="1975">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="1990">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2005">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2020">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2035">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2050">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2065">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2080">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2095">
-                     <keyword primary-consumption="oil"/>
                   </period>
                </technology>
             </subsector>
@@ -15206,9 +15180,40 @@
                </technology>
             </subsector>
          </supplysector>
-         <supplysector name="regional crude oil" nocreate="1">
-            <subsector name="regional crude oil" nocreate="1">
-               <technology name="regional crude oil" nocreate="1">
+         <supplysector name="regional oil" nocreate="1">
+            <subsector name="crude oil" nocreate="1">
+               <technology name="crude oil" nocreate="1">
+                  <period year="1975">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="1990">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2005">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2020">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2035">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2050">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2065">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2080">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+                  <period year="2095">
+                     <keyword primary-consumption="oil"/>
+                  </period>
+               </technology>
+            </subsector>
+            <subsector name="unconventional oil" nocreate="1">
+               <technology name="unconventional oil" nocreate="1">
                   <period year="1975">
                      <keyword primary-consumption="oil"/>
                   </period>
@@ -15268,39 +15273,6 @@
                   </period>
                   <period year="2095">
                      <keyword primary-consumption="biomass"/>
-                  </period>
-               </technology>
-            </subsector>
-         </supplysector>
-         <supplysector name="regional unconventional oil" nocreate="1">
-            <subsector name="regional unconventional oil" nocreate="1">
-               <technology name="regional unconventional oil" nocreate="1">
-                  <period year="1975">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="1990">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2005">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2020">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2035">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2050">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2065">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2080">
-                     <keyword primary-consumption="oil"/>
-                  </period>
-                  <period year="2095">
-                     <keyword primary-consumption="oil"/>
                   </period>
                </technology>
             </subsector>

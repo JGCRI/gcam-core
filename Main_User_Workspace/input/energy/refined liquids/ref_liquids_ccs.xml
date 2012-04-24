@@ -9,7 +9,7 @@
                      <lifetime>-1</lifetime>
                      <share-weight>0</share-weight>
                      <minicam-energy-input name="regional coal">
-                        <coefficient>2.1120</coefficient>
+                        <coefficient>2.112</coefficient>
                      </minicam-energy-input>
                      <CO2 name="CO2"/>
                      <minicam-non-energy-input name="non-energy">

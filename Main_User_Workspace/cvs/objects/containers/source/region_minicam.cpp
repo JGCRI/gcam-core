@@ -263,6 +263,14 @@ void RegionMiniCAM::completeInit() {
         ( *consumerIter )->completeInit( name, "", "" );
     }
     
+    // Set the CO2 coefficients into the Marketplace before the Technologies and
+    // GHGs are initialized so they can be accessed.  Note that these are set during
+    // completeInit so that we can be sure that they will always be available
+    // during initCalc when they will be retrieved.
+    for( int period = 0; period < scenario->getModeltime()->getmaxper(); ++period ) {
+        setCO2CoefsIntoMarketplace( period );
+    }
+    
     // Wrap objects which are used to calculate the region so that they can
     // be sorted into a global ordering and called directly from the world.
     // Note that the region continues to own and manage these object.  The memory
@@ -508,11 +516,6 @@ bool RegionMiniCAM::isAllCalibrated( const int period, double calAccuracy, const
 */
 void RegionMiniCAM::initCalc( const int period )
 {
-    // Set the CO2 coefficients into the Marketplace before the Technologies and
-    // GHGs are initialized so they can be accessed.
-    setCO2CoefsIntoMarketplace( period );
-
-
     for( SectorIterator currSector = supplySector.begin(); currSector != supplySector.end(); ++currSector ){
         (*currSector)->initCalc( 0, demographic.get(), period );
     }
@@ -581,7 +584,9 @@ void RegionMiniCAM::postCalc( const int aPeriod ) {
         (*consumerIter)->postCalc( name, "", aPeriod );
     }
     
-    mLandAllocator->postCalc( name, aPeriod );
+    if( mLandAllocator.get() ) {
+        mLandAllocator->postCalc( name, aPeriod );
+    }
 }
 
 //! Calculate regional emissions from resources.

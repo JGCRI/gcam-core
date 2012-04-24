@@ -128,7 +128,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>1.416353787</calibrated-value>
+                        <calibrated-value>1.108591734</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
@@ -748,7 +748,7 @@
                   </period>
                   <period year="2005">
                      <minicam-energy-input name="wholesale gas">
-                        <calibrated-value>2.547975061</calibrated-value>
+                        <calibrated-value>2.380071155</calibrated-value>
                      </minicam-energy-input>
                   </period>
                </technology>
