@@ -64,7 +64,7 @@ const string GhgMAC::XML_NAME = "MAC";
 GhgMAC::GhgMAC(){
     const Modeltime* modeltime = scenario->getModeltime();
 
-    phaseIn = 1;
+    phaseInYear = 2020;
     finalReduction = 0;
     finalReductionYear = modeltime->getEndYear();
     fuelShiftRange = 0;
@@ -96,7 +96,7 @@ void GhgMAC::copy( const GhgMAC& other ){
     macCurve.reset( other.macCurve->clone() );
     
     // Copy member variables as well
-    phaseIn = other.phaseIn;
+    phaseInYear = other.phaseInYear;
     fuelShiftRange = other.fuelShiftRange;
     costReductionRate = other.costReductionRate;
     baseCostYear = other.baseCostYear;
@@ -156,29 +156,29 @@ void GhgMAC::XMLParse( const xercesc::DOMNode* node ){
         if( nodeName == "#text" ){
             continue;
         }
-        else if ( nodeName == "phase-in" ){
-             phaseIn = XMLHelper<double>::getValue( curr);
+        else if ( nodeName == "phase-in-year" ){
+             phaseInYear = XMLHelper<double>::getValue( curr );
         }
         else if ( nodeName == "cost-reduction" ){
-             costReductionRate = XMLHelper<double>::getValue( curr);
+             costReductionRate = XMLHelper<double>::getValue( curr );
         }
         else if ( nodeName == "base-cost-year"){
-            baseCostYear = XMLHelper<int>::getValue( curr);
+            baseCostYear = XMLHelper<int>::getValue( curr );
         }
         else if ( nodeName == "fuel-shift-range" ){
-             fuelShiftRange = XMLHelper<double>::getValue( curr);
+             fuelShiftRange = XMLHelper<double>::getValue( curr );
         }
         else if ( nodeName == "curve-shift-fuel-name"){
-            curveShiftFuelName = XMLHelper<string>::getValue( curr);
+            curveShiftFuelName = XMLHelper<string>::getValue( curr );
         }
         else if ( nodeName == "final-reduction"){
-            finalReduction = XMLHelper<double>::getValue( curr);
+            finalReduction = XMLHelper<double>::getValue( curr );
         }
         else if ( nodeName == "finalReductionYear"){
-            finalReductionYear = XMLHelper<int>::getValue( curr);
+            finalReductionYear = XMLHelper<int>::getValue( curr );
         }
         else if ( nodeName == "no-below-zero"){
-            noBelowZero = XMLHelper<bool>::getValue( curr);
+            noBelowZero = XMLHelper<bool>::getValue( curr );
         }
         else if ( nodeName == "reduction" ){
             double taxVal = XMLHelper<double>::getAttr( curr, "tax" );  
@@ -206,7 +206,7 @@ void GhgMAC::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteElementCheckDefault( fuelShiftRange, "fuel-shift-range", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( costReductionRate, "cost-reduction", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( baseCostYear, "base-cost-year", out, tabs, modeltime->getper_to_yr( modeltime->getBasePeriod() ) );
-    XMLWriteElementCheckDefault( phaseIn, "phase-in", out, tabs, 1.0 );
+    XMLWriteElementCheckDefault( phaseInYear, "phase-in-year", out, tabs, 2020.0 );
     XMLWriteElementCheckDefault( finalReduction, "final-reduction", out, tabs, 0.0 );
     XMLWriteElementCheckDefault( finalReductionYear, "finalReductionYear", out, tabs, modeltime->getEndYear() );
     XMLWriteElementCheckDefault( curveShiftFuelName, "curve-shift-fuel-name", out, tabs, string() );
@@ -229,7 +229,7 @@ void GhgMAC::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( fuelShiftRange, "fuel-shift-range", out, tabs );
     XMLWriteElement( costReductionRate, "cost-reduction", out, tabs );
     XMLWriteElement( baseCostYear, "base-cost-year", out, tabs );
-    XMLWriteElement( phaseIn, "phase-in", out, tabs);
+    XMLWriteElement( phaseInYear, "phase-in-year", out, tabs);
     XMLWriteElement( finalReduction, "final-reduction", out, tabs);
     XMLWriteElement( curveShiftFuelName, "curve-shift-fuel-name", out, tabs );
 
@@ -300,17 +300,23 @@ double GhgMAC::findReduction( const string& regionName, const int period ) const
     return reduction;
 }
 
-/*! \brief returns a multiplier that phases in the Mac Curve.
-*  if for example, the MAC curve was to be phased in over 3 periods, in the first 
-*  period, it would return a multiplier of 0, the next period, 1/3, the next period 2/3,
-*  and by and after the 3rd period after the base year, it would return a 1.
-* \author Nick Fernandez
+/*! \brief returns a multiplier that phases in the Mac Curve
+*  if for example, the MAC curve was to be phased in over 20 years (the default), in 
+*  2000 it would return a multiplier of 0 (no MAC curve effects),
+*  in 2010 1/2, and for 2020 and after this would return 1 (so no impact).
+* \author Nick Fernandez and Steve Smith
 * \param period the current period
 */
 double GhgMAC::adjustPhaseIn( const int period ) const {
     double mult = 1;
-    if( ( period - 1 < phaseIn ) && ( phaseIn >= 1 ) ){
-         mult = ( period - 1.0 ) / ( 1.0 * phaseIn );
+    const Modeltime* modeltime = scenario->getModeltime();
+    int thisYear = modeltime->getper_to_yr( period );
+
+    const int EMISSIONS_BASE_YEAR = 2000;
+    
+    if( ( thisYear > EMISSIONS_BASE_YEAR ) && (  thisYear < phaseInYear ) ){
+        // Make sure all calcs are floating point.
+        mult = static_cast<double>( thisYear - EMISSIONS_BASE_YEAR ) / ( phaseInYear - EMISSIONS_BASE_YEAR );
     }
     return mult;
 }

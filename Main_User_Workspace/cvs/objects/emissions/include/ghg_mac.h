@@ -84,8 +84,8 @@ protected:
     double shiftCostReduction( const int period, const double costReductionRate ) const;
     double getMACValue( const double carbonPrice ) const;
 
-    //! number of periods over which phase in occurs. can be a non-integer
-    double phaseIn;
+    //! Year by which phase in occurs. Can be a non-integer.
+    double phaseInYear;
     
     //! the initial range over which carbon price changes due to the standard range of Nat. Gas price changes
     double fuelShiftRange;
