@@ -39,6 +39,7 @@
 
 
 #include "climate/include/ObjECTS_MAGICC.h"
+#include "util/logger/include/ilogger.h"
 
 #define DEBUG_IO false
 
@@ -155,23 +156,23 @@ void CLIMAT()
     // This is now defined in header file
     //F 101 !
     //F 102   	  REAL*4 MAGICCCResults(0:30,75) ! sjs pass data to ObjECTS
-    float MAGICCCResults[ 22 ][ 75+1 ];
+    float MAGICCCResults[ 22 ][ 400+1 ];
     //F 103 	  REAL*4 getForcing, getSLR
     //F 104   	  
     //F 105       INTEGER IY1(100),OVRWRITE
-    int IY1[ 100+1 ], OVRWRITE;
+    int IY1[ 400+1 ], OVRWRITE;
     //F 106 !
     //F 107 ! sjs removed TEMUSER(iTp), QSO2SAVE(0:iTp+1),QDIRSAVE(0:iTp+1) from dimension statement since now in common block
     //F 108       DIMENSION FOS(100),DEF(100),DCH4(100),DN2O(100), &
-    float FOS[ 100+1 ], DEF[ 100+1 ], DCH4[ 100+1 ], DN2O[ 100+ 1 ];
+    float FOS[ 400+1 ], DEF[ 400+1 ], DCH4[ 400+1 ], DN2O[ 400+1 ];
     //F 109       DNOX(100),DVOC(100),DCO(100),DSO2(100), &
-    float DNOX[ 100+1 ], DVOC[ 100+1 ], DCO[ 100+1 ], DSO2[ 100+1 ]; 
+    float DNOX[ 400+1 ], DVOC[ 400+1 ], DCO[ 400+1 ], DSO2[ 400+1 ]; 
     //F 110       DSO21(100),DSO22(100),DSO23(100),DCF4(100),DC2F6(100), &
-    float DSO21[ 100+1 ], DSO22[ 100+1 ], DSO23[ 100+1 ], DCF4[ 100+1 ], DC2F6[ 100+1 ]; 
+    float DSO21[ 400+1 ], DSO22[ 400+1 ], DSO23[ 400+1 ], DCF4[ 400+1 ], DC2F6[ 400+1 ]; 
     //F 111       D125(100),D134A(100),D143A(100),D227(100),D245(100),DSF6(100), &
-    float D125[ 100+1 ], D134A[ 100+1 ], D143A[ 100+1 ], D227[ 100+1 ], D245[ 100+1 ], DSF6[ 100+1 ];
+    float D125[ 400+1 ], D134A[ 400+1 ], D143A[ 400+1 ], D227[ 400+1 ], D245[ 400+1 ], DSF6[ 400+1 ];
     //F 112       DBC(100),DOC(100), &
-    float DBC[ 100+1 ], DOC[ 100+1 ];
+    float DBC[ 400+1 ], DOC[ 400+1 ];
     //F 113       TEMLO(iTp),TEMMID(iTp),TEMHI(iTp),TEMNOSO2(iTp), &
     float TEMLO[ iTp+1 ], TEMMID[ iTp+1 ], TEMHI[ iTp+1 ], TEMNOSO2[ iTp+1 ];
     //F 114       SLUSER(iTp),SLLO(iTp),SLMID(iTp),SLHI(iTp), &
@@ -1671,7 +1672,15 @@ void CLIMAT()
     //F 970 !  READ HEADER AND NUMBER OR ROWS OF EMISIONS DATA FROM GAS.EMK
     //F 971 !
     //F 972       read(lun,4243)  NVAL
-    const int NVAL = read_and_discard( &infile, DEBUG_IO );
+    int NVAL = read_and_discard( &infile, DEBUG_IO );
+    
+    if ( NVAL > 400 ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "MAGICC+ input limited encountered. Data truncated to 400. " << endl;            
+        NVAL = 400;
+    }
+    
     //F 973       read(lun,'(a)') mnem
     getline( infile, mnem );
     //F 974       read(lun,*) !   skip description
@@ -2333,7 +2342,7 @@ void CLIMAT()
              &OZ, &NEWCONCS, &CARB, &CAR, &METH1,
              &METH2, &METH3, &METH4, &CO2READ, &JSTART,
              &CORREN, &HALOF, &COBS, &TauNitr );     
-        //F1372 !
+         //F1372 !
         //F1373       IF(NESO2.EQ.1)THEN
         if( NESO2 == 1 ) {
             //F1374         WRITE (8,179)

@@ -129,6 +129,9 @@ private:
     static unsigned int getNumInputGases();
     void readFile();
     void overwriteMAGICCParameters( );
+    void writeMAGICCEmissionsFile( );
+    void writeComma( int gasNumber, int& numberOfDataPoints, std::ostringstream& gasFile );
+        
     static int getNumAdditionalGasPoints();
 
     //! A fixed list of the gases Magicc reads in.
@@ -146,9 +149,15 @@ private:
     //! MAGICC critcal start year in gas.emk that must be present
     static const int GAS_EMK_CRIT_YEAR;
 
-    //! Emissions levels by gas and period.
-    std::vector<std::vector<double> > mEmissionsByGas;
+    //! Emissions levels by gas and period from model
+    std::vector<std::vector<double> > mModelEmissionsByGas;
 	
+    //! Default emissions levels by gas and year from exogenous input file
+    std::vector<std::vector<double> > mDefaultEmissionsByGas;
+    
+    //! A vector of years for the default emissions
+    std::vector<int> mDefaultEmissionsYears;
+    
 	//! LUC CO2 Emissions by year.
 	std::vector<double> mLUCEmissionsByYear;
 
@@ -194,8 +203,14 @@ private:
     //! Forcing per Tg OC Emissions
     double mOCUnitForcing;
 
+    //! Use read-in default emissions up until this year
+    int mLastHistoricalYear;
+    
     //! The year the carbon model should start running.
     int mCarbonModelStartYear;
+
+    //! Number of historical data points read in.
+    int mNumberHistoricalDataPoints;
 };
 
 #endif // _MAGICC_MODEL_H_

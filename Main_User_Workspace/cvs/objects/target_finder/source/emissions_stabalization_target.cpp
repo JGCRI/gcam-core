@@ -98,6 +98,8 @@ double EmissionsStabalizationTarget::getStatus( const int aYear ) const
      */
     assert( year >= mFirstTaxYear );
 
+    // Note that mClimateModel->getEmissions will not contain values until GCAM
+    // has solved for a given year.
     double totalEmissions = mClimateModel->getEmissions( "CO2", year );
 
     // Year can be between two years
@@ -131,6 +133,8 @@ int EmissionsStabalizationTarget::getYearOfMaxTargetValue() const {
     // Loop over possible year and find the min difference in emisssions and the
     // year it occurs in.
     for( int year = mFirstTaxYear; year <= finalYearToCheck; ++year ) {
+        // Note that mClimateModel->getEmissions will not contain values until GCAM
+        // has solved for a given year.
         double totalEmissions = mClimateModel->getEmissions( "CO2", year );
         double netOceanUp = mClimateModel->getNetOceanUptake( year );
         double netTerrUp = mClimateModel->getNetTerrestrialUptake( year );

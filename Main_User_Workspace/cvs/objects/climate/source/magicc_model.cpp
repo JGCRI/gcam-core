@@ -125,7 +125,9 @@ mOceanCarbFlux80s( -1 ),
 mSO2Dir1990( 0 ), // initialize to zero since -1 is a legit value
 mSO2Ind1990( 0 ), // initialize to zero since -1 is a legit value
 mOCUnitForcing( 0 ), // initialize to zero since -1 is a legit value
-mBCUnitForcing( 0 )
+mBCUnitForcing( 0 ),
+mLastHistoricalYear ( 0 ), // default to zero -- use only model data
+mNumberHistoricalDataPoints( 0 ) // internal counter
 {
 
 }
@@ -143,13 +145,12 @@ void MagiccModel::completeInit( const string& aScenarioName ){
 
     mScenarioName = aScenarioName;
     // Resize to the number of gases based on the gas name vector.
-    mEmissionsByGas.resize( getNumInputGases() );
+    mModelEmissionsByGas.resize( getNumInputGases() );
 
     // Resize all the vectors to the number of data points for MAGICC.
-    // Add comment here.
-    const int numGasPoints = mModeltime->getmaxper() + getNumAdditionalGasPoints();
-    for( unsigned int i = 0; i < mEmissionsByGas.size(); ++i ){
-        mEmissionsByGas[ i ].resize( numGasPoints );
+    const int numGasPoints = mModeltime->getmaxper() + getNumAdditionalGasPoints() + 1; //Add space for 1975 to make later code clearer
+    for( unsigned int i = 0; i < mModelEmissionsByGas.size(); ++i ){
+        mModelEmissionsByGas[ i ].resize( numGasPoints );
     }
 	
 	// Resize the LUC CO2 vector to the number of years plus the number of additional points
@@ -174,20 +175,20 @@ void MagiccModel::completeInit( const string& aScenarioName ){
     mOutputGasNameMap[ "SF6" ] = 9;
     mOutputGasNameMap[ "CF4" ] = 10;
     mOutputGasNameMap[ "HFC227ea" ] = 11;
-    mOutputGasNameMap[ "OtherHC" ] = 12; // Other halocarbon
-    mOutputGasNameMap[ "SO2" ] = 13; // Total SO2
-    mOutputGasNameMap[ "DirSO2" ] = 14; // Direct SO2
-    mOutputGasNameMap[ "TropO3" ] = 15; 
-    mOutputGasNameMap[ "O3_CH4" ] = 16; // Ozone from CH4
-    mOutputGasNameMap[ "H2O_CH4" ] = 17; // Water vapor from CH4
-    mOutputGasNameMap[ "Montreal" ] = 18; // Montreal Gases
-    mOutputGasNameMap[ "O3_CFC" ] = 19; // Ozone from CFCs
-    mOutputGasNameMap[ "BioBurn" ] = 20;
-    mOutputGasNameMap[ "FOC" ] = 21; // Fossil BC/OC
-    mOutputGasNameMap[ "Land" ] = 22; // Land surface albedo
-    mOutputGasNameMap[ "MinNOx" ] = 23; // Mineral Dust and Nitrate
-    mOutputGasNameMap[ "BC" ] = 24; // Total BC (land and combustion)
-    mOutputGasNameMap[ "OC" ] = 25; // Total OC (land and combustion)
+    mOutputGasNameMap[ "OtherHC" ] = 12; // Forcing of "other" halocarbons
+    mOutputGasNameMap[ "SO2" ] = 13; // Total SO2 forcing
+    mOutputGasNameMap[ "DirSO2" ] = 14; // Direct SO2 forcing
+    mOutputGasNameMap[ "TropO3" ] = 15; // TropO3 forcing, including CH4 component
+    mOutputGasNameMap[ "O3_CH4" ] = 16; // TropO3 CH4 component only
+    mOutputGasNameMap[ "H2O_CH4" ] = 17; // Stratospheric water vapor forcing from CH4
+    mOutputGasNameMap[ "Montreal" ] = 18; // Montreal Protocol Gases forcing
+    mOutputGasNameMap[ "O3_CFC" ] = 19; // Stratospheric Ozone Forcing due to CFC
+    mOutputGasNameMap[ "BioBurn" ] = 20; // Biomass burning OC + BC forcing (old magicc version only)
+    mOutputGasNameMap[ "FOC" ] = 21; // Fossil BC & OC (old magicc version only)
+    mOutputGasNameMap[ "Land" ] = 22; // Land surface albedo forcing
+    mOutputGasNameMap[ "MinNOx" ] = 23; // Mineral Dust and Nitrate forcing
+    mOutputGasNameMap[ "BC" ] = 24; // Total BC forcing (land and combustion)
+    mOutputGasNameMap[ "OC" ] = 25; // Total OC forcing(land and combustion)
     mOutputGasNameMap[ "EXTRA" ] = 26; // Extra forcing
     mOutputGasNameMap[ "RCP" ] = 27; // RCP radiative forcing (total - nitrate, albedo, mineral dust)
     
@@ -239,6 +240,10 @@ void MagiccModel::XMLParse( const DOMNode* node ){
         // GHG input file
         else if ( nodeName == "ghgInputFileName" ){
             mGHGInputFileName = XMLHelper<string>::getValue( curr );
+        }
+        // Use historical data up to this year
+        else if ( nodeName == "last-historical-year" ){
+            mLastHistoricalYear = XMLHelper<double>::getValue( curr );
         }
         // Climate Sensitivity
         else if ( nodeName == "climateSensitivity" ){
@@ -295,6 +300,9 @@ void MagiccModel::XMLParse( const DOMNode* node ){
 void MagiccModel::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), out, tabs );
 
+    // Write out mLastHistoricalYear
+    XMLWriteElementCheckDefault( mLastHistoricalYear, "last-historical-year", out, tabs, 0 );
+
     // Write out mClimateSensitivity
     XMLWriteElementCheckDefault( mClimateSensitivity, "climateSensitivity", out, tabs, -1.0 );
 
@@ -329,6 +337,9 @@ void MagiccModel::toInputXML( ostream& out, Tabs* tabs ) const {
 void MagiccModel::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 
     XMLWriteOpeningTag( getXMLNameStatic(), out, tabs );
+
+    // Write out mLastHistoricalYear
+    XMLWriteElement( mLastHistoricalYear, "last-historical-year", out, tabs );
 
     // Write out mClimateSensitivity
     XMLWriteElement( mClimateSensitivity, "climateSensitivity", out, tabs );
@@ -408,7 +419,7 @@ bool MagiccModel::setEmissions( const string& aGasName, const int aPeriod, const
 
     // Set the gas level. Base year values are not passed to MAGICC, so remove
     // one from the model period to determine the index.
-    mEmissionsByGas[ gasIndex ][ aPeriod - 1 ] = aEmission;
+    mModelEmissionsByGas[ gasIndex ][ aPeriod ] = aEmission;
 
     // Invalidate the output because an input has changed.
     mIsValid = false;
@@ -453,11 +464,12 @@ bool MagiccModel::setLUCEmissions( const string& aGasName, const int aYear, cons
 }
 
 /*!
- * \brief Get the emissions that are currently set to be sent to MAGICC.
- * \details This method only retrieves the values that are currently set and
+ * \brief Get the GCAM emissions that would currently be set to be sent to MAGICC.
+ * \details This method only retrieves the values that are currently would be sent and
  *          provides no indication if they are the latest emissions from GCAM nor
- *          if they were the actual emissions MAGICC ran with.  This DOES NOT
- *          attempt to retrieve emissions from within MAGICC.
+ *          if they were the actual emissions MAGICC ran with. This DOES NOT
+ *          attempt to retrieve emissions from within MAGICC. This does not return 
+ *          the read-in default emissions, only emissions generated by GCAM.
  * \param aGasName The name of the gas to get emissions for.
  * \param aYear Any valid year.  Emissions may be linearly interpolated if they
  *              are not stored in the given year.
@@ -489,190 +501,233 @@ double MagiccModel::getEmissions( const string& aGasName,
 
     // If invalid model period is passed, return -1 to indicate no valid emission data
     if( currPeriod <= 0 ) {
-            return -1;
+        return -1;
     }
-
-    // Check if we don't need to interpolate. This will also handle the last
-    // year of period 0.
+    
+    // For first model period, return marker value indicating invalid emissions,
+    // since GCAM does not return valid values for 1975
+    if( currPeriod == 0 ) {
+        return 99999999;
+    }
+    
+    // Check if we don't need to interpolate.
     if( aYear == modeltime->getper_to_yr( currPeriod ) ){
-        // NOTE: MAGICC indices are shifted by 1 position because
-        //       the array does not have data for MiniCAM period 0.
-        return mEmissionsByGas[ gasIndex ][ currPeriod - 1 ];
+         return mModelEmissionsByGas[ gasIndex ][ currPeriod ];
     }
 
     // Find the year which is the last year of the previous period.
-    int x1 = modeltime->getper_to_yr( currPeriod - 1 );
+    int x1 = modeltime->getper_to_yr( currPeriod );
 
     // Find the year which is the last year of the current period.
-    int x2 = modeltime->getper_to_yr( currPeriod );
+    int x2 = modeltime->getper_to_yr( currPeriod + 1 );
 
     // Emissions level in the last year of the current period.
-    // NOTE: MAGICC indices are shifted by 1 position because
-    //       the array does not have data for MiniCAM period 0.
-    double y2 = mEmissionsByGas[ gasIndex ][ currPeriod - 1 ];
+    double y2 = mModelEmissionsByGas[ gasIndex ][ currPeriod ];
 
     // Emissions level in the last year of the previous period.
-    double y1 = mEmissionsByGas[ gasIndex ][ currPeriod - 2 ];
+    double y1 = mModelEmissionsByGas[ gasIndex ][ currPeriod - 1 ];
 
     // Linearly interpolate the emissions for the current year based on the
     // emissions levels in the surrounding periods.
     return static_cast<double>( ( aYear - x1 ) * ( y2 - y1 ) ) / static_cast<double>( ( x2 - x1 ) ) + y1;
 }
 
-/*! \brief Run the MAGICC emissions model.
-* \details This function will run the MAGICC model with the currently stored
-*          emissions levels. It will first extrapolate future points for each
-*          gas, set equal to the last period. It then prints the gases to the
-*          MAGICC input file and calls MAGICC.
-* \return Whether the model ran successfully.
-* \todo Fix up the calculation of years past the end of the model.
-*/
-bool MagiccModel::runModel(){
-    // Add on extra periods MAGICC needs. 
-    // Loop through the gases and copy forward emissions.
-    for( unsigned int gasNumber = 0; gasNumber < getNumInputGases(); ++gasNumber ){
-        // Note the final period index is shifted by 1.
-        const int finalPeriod = mModeltime->getmaxper() - 2;
-        // Fill in data for extra periods
-        fill( mEmissionsByGas[ gasNumber ].begin() + finalPeriod,
-              mEmissionsByGas[ gasNumber ].end(),
-              mEmissionsByGas[ gasNumber ][ finalPeriod ] );
+/*! \brief Write out the MAGICC emissions file.
+ * \details This function writes emissions to the MAGICC input file.
+ *          The first part of this function writes out historical data from
+ *          the default emissions file. This data can be for any years, but
+ *          must include the model critical year (2000). 
+ *          GCAM emissions are used for years past the last historical year
+ *          as specified by the user. 
+ *          Emissions are interpolated in-between years without data.
+ */
+void MagiccModel::writeMAGICCEmissionsFile(){
+    const int OUT_PRECISION = 4; // Number of decimals
+    
+    // Open a stringstream until are ready to print to file
+    ostringstream gasFileData;
+    
+    // Setup the output format.
+    gasFileData.setf( ios::right, ios::adjustfield );
+    gasFileData.setf( ios::fixed, ios::floatfield );
+    gasFileData.setf( ios::showpoint );
+
+    int lastHistoricalData = 0; // Last historical data point written out
+    int numberOfDataPoints = 0; // Number of data points written to magicc input file
+
+    // First write out data for historical years
+    for( unsigned int index = 0; index < mNumberHistoricalDataPoints; ++index ){
+        int year = static_cast<int>( floor( mDefaultEmissionsByGas[ 0 ][ index ] ) );
+        if ( ( year <= mLastHistoricalYear ) ) {
+            gasFileData << setw( 4 ) <<  year << ",";
+            lastHistoricalData = index;
+            for( unsigned int gasNumber = 0; gasNumber < getNumInputGases(); ++gasNumber ){
+                // Write out exogenous emissions for each gas.
+                gasFileData << setw( 6 + OUT_PRECISION ) << setprecision( OUT_PRECISION ) << mDefaultEmissionsByGas[ gasNumber +1 ][ index ];
+                
+                // Need to deal with 1) interpolation between history and model, 
+                writeComma( gasNumber, numberOfDataPoints, gasFileData );
+            }
+        }
+        else { // If are past last historical year, exit loop, finished writting default emissions
+            break;
+        }
+    }
+    
+	const int startYear = mModeltime->getper_to_yr( 1 );
+	const int endYear = mModeltime->getEndYear();
+	const int finalCalYear = mModeltime->getper_to_yr( mModeltime->getFinalCalibrationPeriod() ); 
+    
+    // Keep track of the next model year to use for interpolating in-between historical and model data.
+    int firstModelYear = startYear; 
+
+    // Now begin to write out model output emissions
+    // We want to write model emissions to MAGICC annually to eliminate errors
+    // with the LUC CO2 emissions
+    for( unsigned int year = startYear; year <= endYear; year++ ) {
+		int period =  mModeltime->getyr_to_per( year );
+        
+        // If are past historical years, write out model emissions for every year past final cal year, a model year, and GAS_EMK_CRIT_YEAR 
+        if ( year > mLastHistoricalYear ) { 
+            if ( mModeltime->isModelYear( year ) || year == GAS_EMK_CRIT_YEAR || year > finalCalYear ) { 
+                std::vector<int>::iterator yearIterator; // Need this several times
+               
+                // Write out model emissions for all the gases if past historical emissions year.
+                for( unsigned int gasNumber = 0; gasNumber < getNumInputGases(); ++gasNumber ){
+                     if ( gasNumber == 0 ) {
+                        gasFileData << setw( 4 ) << year << ",";
+                    }
+                    // We are always passing GCAM LUC carbon emissions to MAGICC annually.
+                    // Therefore, LUC Emissions are not interpolated between historical and GCAM values.
+                    // Historical LUC emissions vary from year-to year in any event, so some jumps between historical
+                    // and model data are acceptable
+                    if ( sInputGasNames[ gasNumber ] == "CO2NetLandUse" ) { 
+                        gasFileData << setw(  6 + OUT_PRECISION ) << setprecision( OUT_PRECISION )
+                                    << mLUCEmissionsByYear[ year - mModeltime->getStartYear() - 1 ];
+                    }
+                    // For all emissions other than LUC carbon
+                    else {
+                        bool needToInterpolate = !mModeltime->isModelYear( year );
+                        if( needToInterpolate ) {
+                            int nextYear = mModeltime->getper_to_yr( period );
+                            int prevYear = mModeltime->getper_to_yr( period - 1);
+                            double nextValue = mModelEmissionsByGas[ gasNumber ][ period ];
+                            double previousValue = mModelEmissionsByGas[ gasNumber ][ period - 1 ];
+                            
+                            // If are making the transition from historical to model data, then interpolate 
+                            // between the two by providing previous year value from historical data.
+                            if ( firstModelYear == nextYear ) {
+                                prevYear = floor( mDefaultEmissionsByGas[ 0 ][ lastHistoricalData ] );
+                                previousValue = mDefaultEmissionsByGas[ gasNumber + 1 ] [ lastHistoricalData ];
+                            }
+                            
+                            gasFileData << setw(  6 + OUT_PRECISION ) << setprecision( OUT_PRECISION )
+                             << util::linearInterpolateY( year, prevYear, nextYear, previousValue, nextValue );
+                        }
+                        else {
+                            // Write out model emission for this gas.
+                            gasFileData << setw(  6 + OUT_PRECISION ) << setprecision( OUT_PRECISION )
+                                        << mModelEmissionsByGas[ gasNumber ][ period ];
+                        }
+                    }
+                    writeComma( gasNumber, numberOfDataPoints, gasFileData );
+                } // end gasnumber loop 
+            } // end loop - write-out model emissions.
+        } 
+        else {
+            // If this was a historical year, then keep track of next model period.
+            firstModelYear = mModeltime->getper_to_yr( period );
+        }
+    } // End of year loop
+    
+    // Add an additional data point if needed so that MAGICC has data at least out to 2100.
+    if ( mLastHistoricalYear < 2100 && endYear < 2100 ) {
+        int year = endYear;
+        int period = mModeltime->getmaxper();
+        for ( unsigned int extra = 0; extra < getNumAdditionalGasPoints(); extra++ ) {
+            year = year + 10;
+            gasFileData << setw( 4 ) << year << ",";
+            // Write out all the gases.
+            for( unsigned int gasNumber = 0; gasNumber < getNumInputGases(); ++gasNumber ){
+                if ( sInputGasNames[ gasNumber ] == "CO2NetLandUse" ) {
+                    int index = mModeltime->getEndYear() - mModeltime->getStartYear() + extra - 1;
+                    gasFileData << setw(  6 + OUT_PRECISION ) << setprecision( OUT_PRECISION )
+                    << mLUCEmissionsByYear[ index ];
+                }
+                else {
+                    gasFileData << setw(  6 + OUT_PRECISION ) << setprecision( OUT_PRECISION ) 
+                                << mModelEmissionsByGas[ gasNumber ][ period ]; //sjsTEMP - this should be +1, but that's strange.
+                }
+                writeComma( gasNumber, numberOfDataPoints, gasFileData );
+            }
+        }
     }
     
     // Open the gas file to write emissions into so that MAGICC can get them by
     // reading this file.
     ofstream gasFile;
     gasFile.open( Configuration::getInstance()->getFile( "climatFileName" ).c_str(), ios::out );
-    // The first 5 lines of the gas file is skipped before the data is read by MAGICC.
-
-	const int startYear = mModeltime->getper_to_yr( 1 );
-	const int endYear = mModeltime->getEndYear();
-	const int finalCalYear = mModeltime->getper_to_yr( mModeltime->getFinalCalibrationPeriod() ); 
-	const int numCalPer = mModeltime->getFinalCalibrationPeriod();
-
-    // Calculate the number of points which will be passed to magicc.
-	// We are sending MAGICC annual emissions after the final calibration year 
-	// (endYear - finalCalYear), emissions for each calibration period (numCalPer),
-	// and some years after the final model period (getNumAdditionalGasPoints() )
-	int numPoints = endYear - finalCalYear + getNumAdditionalGasPoints() + numCalPer;
-	// In addition, MAGICC must have year 2000 as input.  If this isn't a model year,
-	// we need to increment the number of points
-	if ( !mModeltime->isModelYear(GAS_EMK_CRIT_YEAR) ) {
-		numPoints += 1;
-	}
-	gasFile << numPoints << endl;
+    
+    // Write out file header information
+    gasFile << numberOfDataPoints << endl;
 	
-    /*line 2: Name of the scenario*/
+    // line 2: Name of the scenario
     gasFile << " Scenario " << mScenarioName << endl;
-    /*line 3: Blank line*/
+    // line 3: Blank line*/
     gasFile << endl;
-    /*line 4: Gas names includes one extra space for commas*/
+    // line 4: Gas names includes one extra space for commas
     gasFile << setw(5) << " ,"; // Year
     for( unsigned int gasNumber = 0; gasNumber < getNumInputGases(); ++gasNumber ) {
         gasFile << setw(9) << sInputGasNames[ gasNumber ] << ',';
     }
     gasFile << endl;
-    /*line 5: Gas units*/
+    // line 5: Gas units
     gasFile << setw(5) << "Year,";
     for( unsigned int gasNumber = 0; gasNumber < getNumInputGases(); ++gasNumber ) {
         gasFile << setw(9) << sInputGasUnits[ gasNumber ] << ',';
     }
     gasFile << endl;
     
-    // Setup the output format.
-    gasFile.setf( ios::right, ios::adjustfield );
-    gasFile.setf( ios::fixed, ios::floatfield );
-    gasFile.setf( ios::showpoint );
+    // Transfer bulk of data to output file.
+    gasFile << gasFileData.str(); 
     
-    for( unsigned int year = startYear; year <= endYear; year++ ) {
-		int period =  mModeltime->getyr_to_per( year );
-		bool needToInterpolate = !mModeltime->isModelYear(year);
-		
-        // We want to write emissions to MAGICC annually to eliminate errors
-		// with the LUC CO2 emissions
-        if( needToInterpolate && ( year > finalCalYear || year == GAS_EMK_CRIT_YEAR ) ) {
-            // note period is offset by 1
-			int nextYear = mModeltime->getper_to_yr( period );
-            int prevYear = mModeltime->getper_to_yr( period - 1);
-            gasFile << setw( 4 ) << year << ",";
-            // Write out all the gases.
-            for( unsigned int gasNumber = 0; gasNumber < getNumInputGases(); ++gasNumber ){
-				// We are passing LUC emissions to MAGICC annually.
-				if ( sInputGasNames[ gasNumber ] == "CO2NetLandUse" ) {
-					gasFile << setw( 8 ) << setprecision( 2 )
-					<< mLUCEmissionsByYear[ year - mModeltime->getStartYear() - 1 ];
-				
-				}
-				// For all other emissions, we need to linearly interpolate
-				else {
-					gasFile << setw( 8 ) << setprecision( 2 )
-						<< util::linearInterpolateY( year, prevYear, nextYear,
-											mEmissionsByGas[ gasNumber ][ period - 2 ],
-											mEmissionsByGas[ gasNumber ][ period - 1 ] );
-					
-				}
-                // Write a comma as long as this is not the last gas.
-                if( gasNumber != getNumInputGases() - 1 ){
-                    gasFile << ",";
-                }
-                else {
-                    gasFile << endl;
-                }
-            }
-        }
-		else if ( !needToInterpolate ) {
-			gasFile << setw( 4 ) << year << ",";
-			// Write out all the gases.
-			for( unsigned int gasNumber = 0; gasNumber < getNumInputGases(); ++gasNumber ){
-				// We are passing LUC emissions to MAGICC annually.
-				if ( sInputGasNames[ gasNumber ] == "CO2NetLandUse" ) {
-					gasFile << setw( 8 ) << setprecision( 2 )
-					<< mLUCEmissionsByYear[ year - mModeltime->getStartYear() - 1 ];
-					
-				}
-				else {
-					gasFile << setw( 8 ) << setprecision( 2 ) 
-						<< mEmissionsByGas[ gasNumber ][ period - 1 ];
-				}
-				// Write a comma as long as this is not the last gas.
-				if( gasNumber != getNumInputGases() - 1 ){
-					gasFile << ",";
-				}
-				else {
-					gasFile << endl;
-				}
-			}
-		}
-    }
-	int year = endYear;
-	int period = mModeltime->getmaxper();
-	for ( unsigned int extra = 0; extra < getNumAdditionalGasPoints(); extra++ ) {
-		year = year + 100;
-		gasFile << setw( 4 ) << year << ",";
-		// Write out all the gases.
-		for( unsigned int gasNumber = 0; gasNumber < getNumInputGases(); ++gasNumber ){
-			// We are passing LUC emissions to MAGICC annually.
-			if ( sInputGasNames[ gasNumber ] == "CO2NetLandUse" ) {
-				int index = mModeltime->getEndYear() - mModeltime->getStartYear() + extra - 1;
-				gasFile << setw( 8 ) << setprecision( 2 )
-				<< mLUCEmissionsByYear[ index ];
-				
-			}
-			else {
-				gasFile << setw( 8 ) << setprecision( 2 ) << mEmissionsByGas[ gasNumber ][ period + extra - 1 ];
-			}
-			// Write a comma as long as this is not the last gas.
-			if( gasNumber != getNumInputGases() - 1 ){
-				gasFile << ",";
-			}
-			else {
-				gasFile << endl;
-			}
-		}
-	}
-	
     gasFile.close();
+}
 
+/*! \brief Write comma.
+ * \details Helper function that writes comma separator for emissions and adds one to line counter.
+ */
+void MagiccModel::writeComma( int gasNumber, int& numberOfDataPoints, ostringstream& gasFile ){
+    // Write a comma as long as this is not the last gas.
+    if( gasNumber != getNumInputGases() - 1 ){
+        gasFile << ",";
+    }
+    else {
+        gasFile << endl;
+        numberOfDataPoints++;
+    }
+}
+    
+/*! \brief Run the MAGICC emissions model.
+* \details This function will run the MAGICC model with the currently stored
+*          emissions levels. It will first extrapolate future points for each
+*          gas, set equal to the last period. It then prints the gases to the
+*          MAGICC input file and calls MAGICC.
+* \return Whether the model ran successfully.
+*/
+bool MagiccModel::runModel(){
+    // Add on extra periods MAGICC needs. 
+    // Loop through the gases and copy forward emissions.
+    for( unsigned int gasNumber = 0; gasNumber < getNumInputGases(); ++gasNumber ){
+        const int finalPeriod = mModeltime->getmaxper() - 1;
+        // Fill in data for extra periods
+        fill( mModelEmissionsByGas[ gasNumber ].begin() + finalPeriod,
+              mModelEmissionsByGas[ gasNumber ].end(),
+              mModelEmissionsByGas[ gasNumber ][ finalPeriod ] );
+    }
+    
+    writeMAGICCEmissionsFile( );
+    
     // First overwrite parameters
     overwriteMAGICCParameters( );
 
@@ -976,8 +1031,7 @@ int MagiccModel::getInputGasIndex( const string& aGasName ) const {
 * \details This function reads in the initial values for each gas from an input
 *          file specified by the configuration file.
 * \warning input file data lines must end in a ","
-* \warning The model currently assumes that all input files are in terms of model periods.
-* \todo make routine more general to interpolate between read-in periods if necessary to get model data
+* \warning Input data, in order to be used, must contain the year 2000 (GAS_EMK_CRIT_YEAR)
 */
 void MagiccModel::readFile(){
     // Open up the file with default emissions data and read it in.
@@ -990,12 +1044,26 @@ void MagiccModel::readFile(){
     inputGasFile.open( gasFileName.c_str(), ios::in ); // open input file for reading
     util::checkIsOpen( inputGasFile, gasFileName );
 
-    // Read in all other gases from fossil fuels. The first line will tell us how many
+    // Read in all other gases from fossil fuels. 
+    
+    // The first line will tell us how many
     // lines to parse.  We are assuming there are a maximum of getNumAdditionalGasPoints()
     // years beyond the end of the model years.
-    int remainingExtraGasPoints = getNumAdditionalGasPoints();
     int numInputGasPoints;
     inputGasFile >> numInputGasPoints;  //reads the # of data points in the first line
+
+    // Resize to the number of gases plus 1 to accomidate year
+    mDefaultEmissionsByGas.resize( getNumInputGases() + 1 );
+    
+    // Resize all the vectors to the number of data points in input file + potential extras.
+    for( unsigned int i = 0; i < mDefaultEmissionsByGas.size(); ++i ){
+        mDefaultEmissionsByGas[ i ].resize( numInputGasPoints + getNumAdditionalGasPoints() );
+    }
+    mDefaultEmissionsYears.resize ( numInputGasPoints + getNumAdditionalGasPoints() );
+    
+    // Check to see if read-in data has critical year
+    bool hasCriticalYear = false;
+    
     
     // Ignore initial header lines of file.
     const int SKIP_LINES = 5;
@@ -1003,6 +1071,7 @@ void MagiccModel::readFile(){
         inputGasFile.ignore( 200, '\n' );
     }
     
+    int gasYearIndex = -1;
     // Now read in all the gases. 
     for ( int gasInputIndex = 0; gasInputIndex <= numInputGasPoints; ++gasInputIndex ) {
         // Parse the year as a double so that the comma after the year does
@@ -1011,29 +1080,21 @@ void MagiccModel::readFile(){
         inputGasFile >> year;
         inputGasFile.ignore( 80, ',' ); // skip comma
         int yearAsInteger = static_cast<int>( floor( year ) );
-        int gasYearIndex = -1;
         
-        if( yearAsInteger > mModeltime->getEndYear() ) {
-            // parsing a year beyond the last model year
-            if( remainingExtraGasPoints == 0 ) {
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::WARNING );
-                mainLog << "Invalid Year: " << year << " found while parsing MAGICC input file " << gasFileName.c_str() << endl;
-                mainLog << "The maximum: " << getNumAdditionalGasPoints()
-                    << " points beyond the last model year have already been parsed" << endl;
-            }
-            else {
-                gasYearIndex = mModeltime->getmaxper() + getNumAdditionalGasPoints()
-                    - remainingExtraGasPoints - 1;
-                // Decrement the remaining allowed lines beyond the last model year.
-                --remainingExtraGasPoints;
-            }
+        // A potentially valid data year.
+        if ( yearAsInteger >= 1990 ) {
+            gasYearIndex++;
+            mDefaultEmissionsByGas[ 0 ][ gasYearIndex ] = year;
+            mDefaultEmissionsYears[ gasYearIndex ] = year;
+            
+            // Count number of valid data points. 
+            // This way 1) can deal with any pre 1990 data by ignoring it,
+            // and does not rely on read-in file being correct about number of points.
+            mNumberHistoricalDataPoints++;
         }
-        else {
-            // A potential model year.  If an invalid model year was parsed modeltime
-            // will print the warning and return 0.  Note that 1975 is ignored and the
-            // indices are then shift over by 1 so we must subtract 1 here.
-            gasYearIndex = mModeltime->getyr_to_per( yearAsInteger ) - 1;
+        
+        if ( yearAsInteger == GAS_EMK_CRIT_YEAR ) {
+            hasCriticalYear = true;
         }
         
         // Loop through all the gases.
@@ -1042,8 +1103,8 @@ void MagiccModel::readFile(){
             inputGasFile >> value;
             // Only set the parsed value if we have a valid year, no warnings are necessary
             // as they should have already been given.
-            if( gasYearIndex != -1 ) {
-                mEmissionsByGas[ gasNumber ][ gasYearIndex ] = value;
+            if( gasYearIndex != -1 && yearAsInteger >= 1990 ) {
+                mDefaultEmissionsByGas[ gasNumber  + 1 ][ gasYearIndex ] = value;
             }
             inputGasFile.ignore( 80, ','); // skip comma
         }
@@ -1051,6 +1112,14 @@ void MagiccModel::readFile(){
         inputGasFile.ignore( 80, '\n' ); // next line
     }
     inputGasFile.close();
+    
+    // If critical year data is not read-in, then don't use exogenous emissions at all.
+    if ( !hasCriticalYear ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "Data For Critical Year " << GAS_EMK_CRIT_YEAR << " not found in input emissions file. Model data will be used instead. " << endl;
+        mNumberHistoricalDataPoints = 0;
+    }
 }
 
 /*! \brief Return the name of the XML node for this object.
@@ -1068,6 +1137,6 @@ const string& MagiccModel::getnetDefor80sName(){
  *         written-out for MAGICC input files.
  */
 int MagiccModel::getNumAdditionalGasPoints() {
-    static const int ADDITIONAL_POINTS = 2;
+    static const int ADDITIONAL_POINTS = 1;
     return ADDITIONAL_POINTS;
 }
