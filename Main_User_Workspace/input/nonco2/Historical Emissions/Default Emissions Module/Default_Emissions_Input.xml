@@ -1,0 +1,8 @@
+<scenario>
+	<world>
+		<MagiccModel>
+			<ghgInputFileName>../input/nonco2/Historical Emissions/Default Emissions Module/Hist_to_2008_Annual.csv</ghgInputFileName>
+			<last-historical-year>2005</last-historical-year>
+       </MagiccModel>
+    </world>
+</scenario>

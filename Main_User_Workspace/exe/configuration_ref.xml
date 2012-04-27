@@ -18,6 +18,7 @@
 	</Files>
 	<ScenarioComponents>
 		<Value name="CC">../input/aglu/CCcycle_Start_1700.xml</Value>
+		<Value name = "emissions">../input/nonco2/Historical Emissions/Default Emissions Module/Default_Emissions_Input.xml</Value>
 
 		<Value name="socioeconomics">../input/energy/socioeconomics/gdp_population.xml</Value>
 		<Value name="demand">../input/energy/socioeconomics/agg_demand_elasticities.xml</Value>

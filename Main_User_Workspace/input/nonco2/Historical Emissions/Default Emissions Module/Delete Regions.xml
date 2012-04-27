@@ -1,0 +1,18 @@
+<scenario>
+	<world>
+		<region name="USA" delete="1"/>
+		<region name="Canada" delete="1"/>
+		<region name="Western Europe" delete="1"/>
+		<region name="Japan" delete="1"/>
+		<region name="Australia_NZ" delete="1"/>
+		<region name="Former Soviet Union" delete="1"/>
+		<region name="China" delete="1"/>
+		<region name="Middle East" delete="1"/>
+		<region name="Africa" delete="1"/>
+		<region name="Latin America" delete="1"/>
+		<region name="Southeast Asia" delete="1"/>
+		<region name="Eastern Europe" delete="1"/>
+		<region name="Korea" delete="1"/>
+		<region name="India" delete="1"/>
+	</world>
+</scenario>
