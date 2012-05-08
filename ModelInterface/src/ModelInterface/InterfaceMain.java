@@ -53,6 +53,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
 
 	public static final int FILE_MENU_POS = 0;
 	public static final int EDIT_MENU_POS = 1;
+	public static final int HELP_MENU_POS = 100;
 	public static final int FILE_NEW_MENUITEM_POS = 0;
 	public static final int FILE_OPEN_SUBMENU_POS = 5;
 	public static final int FILE_SAVE_MENUITEM_POS = 10;
@@ -145,8 +146,6 @@ public class InterfaceMain extends JFrame implements ActionListener {
 				savedProperties.loadFromXML(new FileInputStream(propertiesFile));
 			} catch (FileNotFoundException notFound) {
 				// well I checked if it existed before so..
-				System.out.println("Wow you made it get here, you win 1 million dollars...");
-				System.out.println("Ask James for you prize");
 			} catch (IOException ioe) {
 				ioe.printStackTrace();
 			}
@@ -216,6 +215,8 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		batchMenu.addActionListener(this);
 		menuMan.getSubMenuManager(FILE_MENU_POS).addMenuItem(batchMenu, FILE_OPEN_SUBMENU_POS);
 
+		menuMan.addMenuItem(new JMenu("Help"), HELP_MENU_POS);
+
 		setupUndo(menuMan);
 	}
 
@@ -237,6 +238,8 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		DMView.addMenuItems(menuMan);
 		final MenuAdder recentFilesList = RecentFilesList.getInstance();
 		recentFilesList.addMenuItems(menuMan);
+		final MenuAdder aboutDialog = new AboutDialog(this);
+		aboutDialog.addMenuItems(menuMan);
 
 		// Create the Configuration editor and allow it to add its menu items to the
 		// menu system.
@@ -249,6 +252,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		menuAdders.add(PPView);
 		menuAdders.add(DMView);
 		menuAdders.add(recentFilesList);
+		menuAdders.add(aboutDialog);
 		menuAdders.add(confEditor);
 	}
 
@@ -377,13 +381,13 @@ public class InterfaceMain extends JFrame implements ActionListener {
 	}
 	public class MenuManager {
 		private JMenuItem menuValue;
-		private Map subItems;
-		private SortedSet sepList;
+		private Map<Integer, MenuManager> subItems;
+		private SortedSet<Integer> sepList;
 		MenuManager(JMenuItem menuValue) {
 			this.menuValue = menuValue;
 			sepList = null;
 			if(menuValue == null || menuValue instanceof JMenu) {
-				subItems = new TreeMap();
+				subItems = new TreeMap<Integer, MenuManager>();
 			} else {
 				subItems = null;
 			}
@@ -398,7 +402,7 @@ public class InterfaceMain extends JFrame implements ActionListener {
 		*/
 		public void addSeparator(int where) {
 			if(sepList == null) {
-				sepList = new TreeSet();
+				sepList = new TreeSet<Integer>();
 			}
 			sepList.add(where);
 		}
