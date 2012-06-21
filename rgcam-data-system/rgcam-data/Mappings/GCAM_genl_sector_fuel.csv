@@ -1,0 +1,35 @@
+GCAM_sector,GCAM_fuel,ID_S_F,supplysector,subsector,technology,chp_technology,minicam_energy_input
+bld_comm,biomass,bld_commbiomass,bld_commercial,biomass,biomass,na,delivered biomass
+bld_comm,coal,bld_commcoal,bld_commercial,coal,coal,na,delivered coal
+bld_comm,electricity,bld_commelectricity,bld_commercial,electricity,electricity,na,elect_td_bld
+bld_comm,gas,bld_commgas,bld_commercial,gas,gas,na,delivered gas
+bld_comm,refined liquids,bld_commrefined liquids,bld_commercial,refined liquids,refined liquids,na,refined liquids enduse
+bld_res,biomass,bld_resbiomass,bld_residential,biomass,biomass,na,delivered biomass
+bld_res,coal,bld_rescoal,bld_residential,coal,coal,na,delivered coal
+bld_res,electricity,bld_reselectricity,bld_residential,electricity,electricity,na,elect_td_bld
+bld_res,gas,bld_resgas,bld_residential,gas,gas,na,delivered gas
+bld_res,refined liquids,bld_resrefined liquids,bld_residential,refined liquids,refined liquids,na,refined liquids enduse
+electricity,biomass,electricitybiomass,electricity,biomass,Biomass (existing),na,regional biomass
+electricity,coal,electricitycoal,electricity,coal,Coal (existing),na,regional coal
+electricity,gas,electricitygas,electricity,gas,Gas (existing),na,wholesale gas
+electricity,geothermal,electricitygeothermal,electricity,geothermal,geothermal,na,geothermal
+electricity,hydro,electricityhydro,electricity,hydro,hydro,na,renewable
+electricity,nuclear,electricitynuclear,electricity,nuclear,Gen_II_LWR,na,nuclearFuelGenII
+electricity,refined liquids,electricityrefined liquids,electricity,oil,Oil (existing),na,refined liquids electricity
+electricity,solar,electricitysolar,electricity,solar,PV,na,global solar resource
+electricity,wind,electricitywind,electricity,wind,wind,na,large onshore windresource
+biomass gasification,biomass,biomass gasificationbiomass,gas processing,biomass gasification,biomass gasification,na,regional biomass
+coal gasification,coal,coal gasificationcoal,gas processing,coal gasification,coal gasification,na,regional coal
+natural gas,natural gas,natural gasnatural gas,gas processing,natural gas,natural gas,na,regional natural gas
+industrial energy use,biomass,industrial energy usebiomass,industrial energy use,biomass,biomass,biomass cogen,delivered biomass
+industrial energy use,coal,industrial energy usecoal,industrial energy use,coal,coal,coal cogen,delivered coal
+industrial energy use,electricity,industrial energy useelectricity,industrial energy use,electricity,electricity,na,elect_td_ind
+industrial energy use,gas,industrial energy usegas,industrial energy use,gas,gas,gas cogen,wholesale gas
+industrial energy use,refined liquids,industrial energy userefined liquids,industrial energy use,refined liquids,refined liquids,refined liquids cogen,refined liquids industrial
+own use,electricity,own useelectricity,electricity_net_ownuse,electricity_net_ownuse,electricity_net_ownuse,na,electricity
+gas pipeline,gas,gas pipelinegas,gas pipeline,gas pipeline,gas pipeline,na,gas processing
+biomass liquids-ethanol,biomass,biomass liquids-ethanolbiomass,refined liquids,biomass liquids-ethanol,biomass liquids-ethanol,na,regional biomass
+biomass liquids-FT,biomass,biomass liquids-FTbiomass,refined liquids,biomass liquids-FT,biomass liquids-FT,na,regional biomass
+crude oil refining,crude oil,crude oil refiningcrude oil,refined liquids,crude oil refining,crude oil refining,na,regional crude oil
+crude oil refining,electricity,crude oil refiningelectricity,refined liquids,crude oil refining,crude oil refining,na,elect_td_ind
+crude oil refining,gas,crude oil refininggas,refined liquids,crude oil refining,crude oil refining,na,wholesale gas

@@ -1,0 +1,11 @@
+# Retirement function parameters,,,,,
+# Source: Tables_BEND_Data.xlsx,,,,,
+supplysector,lifetime,half_life_stock,steepness_stock,half_life_new,steepness_new
+resid heating,40,20,0.1219,20,0.1886
+resid cooling,30,15,0.1620,18,0.2598
+resid hot water,30,15,0.1620,17,0.2266
+resid ventilation,30,15,0.161967156,18,0.259812003
+comm heating,40,20,0.1219,20,0.1886
+comm cooling,30,15,0.1620,18,0.2598
+comm hot water,30,15,0.1620,17,0.2266
+comm ventilation,30,15,0.161967156,18,0.259812003

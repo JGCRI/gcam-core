@@ -1,0 +1,49 @@
+#Read in table with correct names for input to GCAM
+genl_sector_fuel<-read.table("Inventory Data/Rdata_in/genl_sector_fuel.csv",header=T,sep=',',na.strings="..")
+
+#ELECTRICITY SECTOR - SUBREGION
+#Input
+GCAM_elec_in<-in_EJ_sR_elec_F[,1:11]
+GCAM_elec_in$ID_S_F<-paste(GCAM_elec_in$GCAM_sector,GCAM_elec_in$GCAM_fuel,sep="")
+GCAM_elec_in$region<-GCAM_elec_in$GCAM_subregion
+GCAM_elec_in$supplysector<-genl_sector_fuel$supplysector[match(GCAM_elec_in$GCAM_sector,genl_sector_fuel$GCAM_sector)]
+GCAM_elec_in$subsector<-genl_sector_fuel$subsector[match(GCAM_elec_in$ID_S_F,genl_sector_fuel$ID_S_F)]
+GCAM_elec_in$technology<-genl_sector_fuel$technology[match(GCAM_elec_in$ID_S_F,genl_sector_fuel$ID_S_F)]
+GCAM_elec_in$input<-genl_sector_fuel$minicam_energy_input[match(GCAM_elec_in$ID_S_F,genl_sector_fuel$ID_S_F)]
+GCAM_elec_in<-GCAM_elec_in[,c(13:17,4:11)]
+
+#Output
+GCAM_elec_out<-out_EJ_sR_elec_F[,1:11]
+GCAM_elec_out$ID_S_F<-paste(GCAM_elec_out$GCAM_sector,GCAM_elec_out$GCAM_fuel,sep="")
+GCAM_elec_out$region<-GCAM_elec_out$GCAM_subregion
+GCAM_elec_out$supplysector<-genl_sector_fuel$supplysector[match(GCAM_elec_out$GCAM_sector,genl_sector_fuel$GCAM_sector)]
+GCAM_elec_out$subsector<-genl_sector_fuel$subsector[match(GCAM_elec_out$ID_S_F,genl_sector_fuel$ID_S_F)]
+GCAM_elec_out$technology<-genl_sector_fuel$technology[match(GCAM_elec_out$ID_S_F,genl_sector_fuel$ID_S_F)]
+GCAM_elec_out<-GCAM_elec_out[,c(13:16,4:11)]
+
+#Efficiency
+GCAM_elec_eff<-GCAM_elec_in[,1:5]
+GCAM_elec_eff[,6:13]<-GCAM_elec_out[,5:12] / GCAM_elec_in[,6:13]
+GCAM_elec_eff[is.na(GCAM_elec_eff)]<-1
+
+#Tables for model input
+#Inputs are read for biomass, coal, gas, and oil
+GCAM_elec_in_final<-GCAM_elec_in[GCAM_elec_in$subsector %in% c("biomass","coal","gas","oil"),]
+write.table(GCAM_elec_in_final,file="Rdata_out/GCAM_elec_in_final.csv",sep=",",col.names=TRUE,row.names=FALSE)
+
+#Fixed outputs are read for hydro and nuclear
+GCAM_elec_fixout_final<-GCAM_elec_out[GCAM_elec_out$subsector %in% c("hydro","nuclear"),]
+write.table(GCAM_elec_fixout_final,file="Rdata_out/GCAM_elec_fixout_final.csv",sep=",",col.names=TRUE,row.names=FALSE)
+
+#Calibrated output is read for geothermal
+GCAM_elec_calout_final<-GCAM_elec_out[GCAM_elec_out$subsector=="geothermal",]
+write.table(GCAM_elec_calout_final,file="Rdata_out/GCAM_elec_calout_final.csv",sep=",",col.names=TRUE,row.names=FALSE)
+
+#Calibrated outputs are read for intermittent techs of wind and solar
+GCAM_elec_calout_inttech_final<-GCAM_elec_out[GCAM_elec_out$subsector %in% c("wind","solar"),]
+names(GCAM_elec_calout_inttech_final)[names(GCAM_elec_calout_inttech_final)=="technology"]<-"intermittent_technology"
+write.table(GCAM_elec_calout_inttech_final,file="Rdata_out/GCAM_elec_calout_inttech_final.csv",sep=",",col.names=TRUE,row.names=FALSE)
+
+
+
+

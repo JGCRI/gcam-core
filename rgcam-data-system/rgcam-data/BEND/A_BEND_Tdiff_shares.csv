@@ -1,0 +1,5 @@
+# Base-year energy shares of different GCAM technologies within a BEND technology (i.e. not efficiency-partitioned technologies),,,,,,,,,
+# Source: Tables_BEND_Data.xlsx,,,,,,,,,
+supplysector,subsector,technology1,technology2,share_tech1,share_tech2,BEND_sector,BEND_service,BEND_fuel,BEND_technology
+resid lighting,electricity,incandescent,fluorescent,0.90,0.10,Residential,Lighting Energy (kBtu/Yr),Electricity,electric lighting
+comm lighting,electricity,incandescent,fluorescent,0.32,0.68,Commercial,Lighting Energy (kBtu/Yr),Electricity,electric lighting

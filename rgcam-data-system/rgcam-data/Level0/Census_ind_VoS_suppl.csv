@@ -1,0 +1,20 @@
+state_name,state,NAICS_code,industry,year,VoS_thousUSD_NA,VoS_thousUSD
+District of Columbia,DC,311,Food mfg,1997,"28,557",28557
+Delaware,DE,313,Textile mills,1997,"34,799",34799
+Alaska,AK,321,Wood product mfg,1997,"50,439",50439
+Delaware,DE,321,Wood product mfg,1997,"90,248",90248
+Delaware,DE,322,Paper mfg,1997,"804,382",804382
+Alaska,AK,323,Printing and related support activities,1997,"40,527",40527
+Delaware,DE,323,Printing and related support activities,1997,"77,344",77344
+Alaska,AK,324,Petroleum and coal products mfg,1997,"1,362,562",1362562
+Alaska,AK,327,Nonmetallic mineral product mfg,1997,43553,43553
+Delaware,DE,327,Nonmetallic mineral product mfg,1997,185783,185783
+Delaware,DE,3273,Cement and concrete product mfg,1997,"92,969",92969
+District of Columbia,DC,327,Nonmetallic mineral product mfg,1997,25771,25771
+District of Columbia,DC,3273,Cement and concrete product mfg,1997,25771,25771
+Alaska,AK,332,Fabricated metal product mfg,1997,"50,243",50243
+Delaware,DE,333,Machinery mfg,1997,"152,122",152122
+Delaware,DE,335,"Electrical equipment, appliance, and component mfg",1997,"173,045",173045
+Delaware,DE,336,Transportation equipment mfg,1997,"1,874,347",1874347
+Alaska,AK,339,Miscellaneous mfg,1997,"15,456",15456
+District of Columbia,DC,339,Miscellaneous mfg,1997,"11,013",11013

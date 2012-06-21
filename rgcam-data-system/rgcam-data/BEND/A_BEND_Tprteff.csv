@@ -1,0 +1,16 @@
+# Technologies to be partitioned on the basis of efficiency,,,,,,,,,,,
+# Source: Tables_BEND_Data.xlsx,,,,,,,,,,,
+supplysector,subsector,technology1,technology2,minicam-energy-input,eff_tech1,eff_tech2,stockavg,BEND_sector,BEND_service,BEND_fuel,BEND_technology
+resid heating,electricity,electric heat pump,electric heat pump hi-eff,elect_td_bld,2.638,4.396,3.332,Residential,Heating Energy (kBtu/Yr),Electricity,Heat Pump
+resid heating,gas,gas furnace,gas furnace hi-eff,delivered gas,0.780,0.900,0.814,Residential,Heating Energy (kBtu/Yr),Gas,Direct Fired
+resid heating,refined liquids,fuel furnace,fuel furnace hi-eff,refined liquids enduse,0.780,0.850,0.817,Residential,Heating Energy (kBtu/Yr),Refined Liquids,Direct Fired
+resid cooling,electricity,air conditioning,air conditioning hi-eff,elect_td_bld,2.637,3.956,2.918,Residential,Cooling Energy (kBtu/Yr),Electricity,Air Conditioning
+resid hot water,electricity,electric resistance water heater,electric resistance water heater hi-eff,elect_td_bld,0.842,0.901,0.888,Residential,Hot Water Heating Energy (kBtu/Yr),Electricity,electric water heater
+resid hot water,gas,gas water heater,gas water heater hi-eff,delivered gas,0.537,0.747,0.576,Residential,Hot Water Heating Energy (kBtu/Yr),Gas,gas water heater
+resid hot water,refined liquids,fuel water heater,fuel water heater hi-eff,refined liquids enduse,0.530,0.680,0.545,Residential,Hot Water Heating Energy (kBtu/Yr),Refined Liquids,fuel water heater
+comm heating,electricity,electric heat pump,electric heat pump hi-eff,elect_td_bld,2.638,4.396,3.100,Commercial,Heating Energy (kBtu/Yr),Electricity,Heat Pump
+comm heating,gas,gas furnace,gas furnace hi-eff,delivered gas,0.700,0.855,0.728,Commercial,Heating Energy (kBtu/Yr),Gas,Direct Fired
+comm heating,refined liquids,fuel boiler,fuel boiler hi-eff,refined liquids enduse,0.700,0.850,0.757,Commercial,Heating Energy (kBtu/Yr),Refined Liquids,Direct Fired
+comm cooling,electricity,air conditioning,air conditioning hi-eff,elect_td_bld,2.400,3.660,2.730,Commercial,Cooling Energy (kBtu/Yr),Electricity,Air Conditioning
+comm hot water,gas,gas water heater,gas water heater hi-eff,delivered gas,0.780,0.940,0.790,Commercial,Hot Water Heating Energy (kBtu/Yr),Gas,gas water heater
+comm ventilation,electricity,ventilation,ventilation hi-eff,elect_td_bld,0.710,0.854,0.743,Commercial,Ventilation (kBtu/Yr),Electricity,ventilation

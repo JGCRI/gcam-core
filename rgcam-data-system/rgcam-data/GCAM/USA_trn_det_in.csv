@@ -1,0 +1,19 @@
+region,supplysector,tranSubsector,tranTechnology,minicam-energy-input,1990,2005
+USA,trn_freight,air,air,refined liquids enduse,0.493404202,0.543211817
+USA,trn_freight,rail,rail ICE,refined liquids enduse,0.432781599,0.497982403
+USA,trn_freight,rail,rail electric,elect_td_trn,0,0
+USA,trn_freight,road,truck ICE,refined liquids enduse,3.483726982,4.701162565
+USA,trn_freight,domestic ship,domestic ship ICE,refined liquids enduse,0.16195733,0.166222857
+USA,trn_passenger,air,air,refined liquids enduse,2.731653291,3.00740517
+USA,trn_passenger,high speed rail,high speed rail,elect_td_trn,0,0
+USA,trn_passenger,rail,rail ICE,refined liquids enduse,0.014442152,0.016617937
+USA,trn_passenger,rail,rail electric,elect_td_trn,0.014850668,0.026851177
+USA,trn_shipping_intl,international ship,international ship ICE,refined liquids enduse,1.207795334,1.085955511
+USA,trn_pass_road,LDV,LDV ICE,refined liquids enduse,12.90181572,17.41052999
+USA,trn_pass_road,LDV,LDV electric,elect_td_trn,0,0
+USA,trn_pass_road,LDV,LDV gas,delivered gas,0,0
+USA,trn_pass_road,LDV,LDV fuel cell,H2 Enduse,0,0
+USA,trn_pass_road,bus,bus ICE,refined liquids enduse,0.13397447,0.180793663
+USA,trn_pass_road,bus,bus electric,elect_td_trn,0,0
+USA,trn_pass_road,bus,bus gas,delivered gas,0,0.021750426
+USA,trn_pass_road,bus,bus fuel cell,H2 Enduse,0,0

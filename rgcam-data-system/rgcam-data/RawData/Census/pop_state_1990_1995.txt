@@ -1,0 +1,271 @@
+ST-99-3  State Population Estimates:  Annual Time Series, July 1, 1990 to July 1, 1999
+  
+The documentation is located at the end of the data file.
+  
+Source:  Population Estimates Program, Population Division, U.S. Census Bureau, Washington, DC 20233
+Contact: Statistical Information Staff, Population Division, U.S. Census Bureau (301-457-2422)
+  
+Internet Release Date:  December 29, 1999
+
+                                     7/1/99      7/1/98      7/1/97      7/1/96      7/1/95      7/1/94
+Block                            Population  Population  Population  Population  Population  Population
+Number Area Name                 (Estimate)  (Estimate)  (Estimate)  (Estimate)  (Estimate)  (Estimate)
+------ ------------------------------------------------------------------------------------------------ 
+  1    United States              272690813   270248003   267783607   265228572   262803276   260327021
+  1    Northeast                   51829962    51685676    51591325    51520274    51443931    51360744
+  1      New England               13495933    13428630    13378075    13328837    13282700    13242751
+  1      Middle Atlantic           38334029    38257046    38213250    38191437    38161231    38117993
+  1    Midwest                     63242284    62950532    62675478    62371519    61991920    61572173
+  1      East North Central        44442146    44257498    44082062    43887955    43629122    43342048
+  1      West North Central        18800138    18693034    18593416    18483564    18362798    18230125
+  1    South                       96468455    95348823    94176777    92947197    91777714    90573372
+  1      South Atlantic            49560021    48926635    48293338    47612747    46974427    46349183
+  1      East South Central        16582841    16469361    16338356    16194955    16049935    15882646
+  1      West South Central        30325593    29952827    29545083    29139495    28753352    28341543
+  1    West                        61150112    60262972    59340027    58389582    57589711    56820732
+  1      Mountain                  17127479    16804614    16476792    16114351    15741906    15306988
+  1      Pacific                   44022633    43458358    42863235    42275231    41847805    41513744
+  1    Alabama                      4369862     4351037     4320281     4290403     4262731     4232965
+  1    Alaska                        619500      615205      608846      604918      601345      600624
+  1    Arizona                      4778332     4667277     4552207     4432308     4306908     4147561
+  1    Arkansas                     2551373     2538202     2524007     2504858     2480121     2450605
+  1    California                  33145121    32682794    32217708    31780829    31493525    31317179
+  1    Colorado                     4056133     3968967     3891293     3812716     3738061     3653910
+  1    Connecticut                  3282031     3272563     3268514     3267030     3265293     3268346
+  1    Delaware                      753538      744066      735024      727090      718265      708416
+  1    District of Columbia          519000      521426      528752      538273      551273      564982
+  1    Florida                     15111244    14908230    14683350    14426911    14185403    13961798
+  1    Georgia                      7788240     7636522     7486094     7332225     7188538     7045900
+  1    Hawaii                       1185497     1190472     1189322     1184434     1180490     1173903
+  1    Idaho                        1251700     1230923     1210638     1187706     1165000     1135459
+  1    Illinois                    12128370    12069774    12011509    11953003    11884935    11804986
+  1    Indiana                      5942901     5907617     5872370     5834908     5791819     5745626
+  1    Iowa                         2869413     2861025     2854396     2848473     2840860     2829422
+  1    Kansas                       2654052     2638667     2616339     2598266     2586942     2569118
+  1    Kentucky                     3960825     3934310     3907816     3881051     3855248     3823215
+  1    Louisiana                    4372035     4362758     4351390     4338763     4327978     4306500
+  1    Maine                        1253040     1247554     1245215     1241436     1237438     1237687
+  1    Maryland                     5171634     5130072     5092914     5057142     5023650     4985411
+  1    Massachusetts                6175169     6144407     6115476     6085393     6062335     6031352
+  1    Michigan                     9863775     9820231     9785450     9739184     9659871     9584481
+  1    Minnesota                    4775508     4726411     4687726     4647723     4605445     4566028
+  1    Mississippi                  2768619     2751335     2731826     2709925     2690788     2663450
+  1    Missouri                     5468338     5437562     5407113     5367888     5324610     5281206
+  1    Montana                       882779      879533      878706      876656      868522      854923
+  1    Nebraska                     1666028     1660772     1656042     1647657     1635142     1621551
+  1    Nevada                       1809253     1743772     1675581     1596476     1525777     1456388
+  1    New Hampshire                1201134     1185823     1173239     1160768     1145604     1133054
+  1    New Jersey                   8143412     8095542     8054178     8009624     7965523     7918796
+  1    New Mexico                   1739844     1733535     1722939     1706151     1682417     1653329
+  1    New York                    18196601    18159175    18143184    18143805    18150928    18156652
+  1    North Carolina               7650789     7545828     7428672     7307658     7185403     7060959
+  1    North Dakota                  633666      637808      640945      642858      641548      639762
+  1    Ohio                        11256654    11237752    11212498    11187032    11155493    11111451
+  1    Oklahoma                     3358044     3339478     3314259     3289634     3265547     3246119
+  1    Oregon                       3316154     3282055     3243254     3195087     3141421     3087142
+  1    Pennsylvania                11994016    12002329    12015888    12038008    12044780    12042545
+  1    Rhode Island                  990819      987704      986966      987858      989203      993412
+  1    South Carolina               3885736     3839578     3790066     3738974     3699943     3666456
+  1    South Dakota                  733133      730789      730855      730699      728251      723038
+  1    Tennessee                    5483535     5432679     5378433     5313576     5241168     5163016
+  1    Texas                       20044141    19712389    19355427    19006240    18679706    18338319
+  1    Utah                         2129836     2100562     2065397     2022253     1976774     1930436
+  1    Vermont                       593740      590579      588665      586352      582827      578900
+  1    Virginia                     6872912     6789225     6732878     6665491     6601392     6536771
+  1    Washington                   5756361     5687832     5604105     5509963     5431024     5334896
+  1    West Virginia                1806928     1811688     1815588     1818983     1820560     1818490
+  1    Wisconsin                    5250446     5222124     5200235     5173828     5137004     5095504
+  1    Wyoming                       479602      480045      480031      480085      478447      474982
+ 
+                                                                                           
+ 
+  
+
+                                     7/1/93      7/1/92      7/1/91      7/1/90      4/1/90
+Block                            Population  Population  Population  Population  Population
+Number Area Name                 (Estimate)  (Estimate)  (Estimate)  (Estimate)    (Census)
+------ ------------------------------------------------------------------------------------
+  2    United States              257782608   255029699   252153092   249464396   248790925
+  2    Northeast                   51253425    51078292    50957878    50875639    50828313
+  2      New England               13215512    13187671    13200917    13220022    13206943
+  2      Middle Atlantic           38037913    37890621    37756961    37655617    37621370
+  2    Midwest                     61176124    60711099    60217499    59765440    59669320
+  2      East North Central        43082892    42766414    42419415    42076640    42009114
+  2      West North Central        18093232    17944685    17798084    17688800    17660206
+  2    South                       89329642    88101757    86892174    85731747    85455793
+  2      South Atlantic            45688915    45062338    44430356    43757262    43571473
+  2      East South Central        15706642    15519819    15343827    15209144    15179959
+  2      West South Central        27934085    27519600    27117991    26765341    26704361
+  2    West                        56023417    55138551    54085541    53091570    52837499
+  2      Mountain                  14835514    14412687    14038554    13716309    13658794
+  2      Pacific                   41187903    40725864    40046987    39375261    39178705
+  2    Alabama                      4193114     4139269     4091025     4048508     4040389
+  2    Alaska                        596993      587073      569273      553120      550043
+  2    Arizona                      3993390     3867333     3762394     3679056     3665339
+  2    Arkansas                     2423743     2394098     2370666     2354343     2350624
+  2    California                  31147208    30875920    30414114    29950111    29811427
+  2    Colorado                     3560884     3459995     3367567     3303862     3294473
+  2    Connecticut                  3272325     3274997     3288640     3289056     3287116
+  2    Delaware                      699475      690158      680495      669063      666168
+  2    District of Columbia          576358      584183      593239      603814      606900
+  2    Florida                     13713593    13504775    13289497    13018365    12938071
+  2    Georgia                      6894092     6759474     6621279     6506531     6478149
+  2    Hawaii                       1161508     1149926     1131412     1112703     1108229
+  2    Idaho                        1101204     1066490     1038915     1011882     1006734
+  2    Illinois                    11725984    11635197    11535973    11446979    11430602
+  2    Indiana                      5701965     5648649     5602062     5555097     5544156
+  2    Iowa                         2820525     2806923     2791227     2779769     2776831
+  2    Kansas                       2547605     2526042     2495209     2480683     2477588
+  2    Kentucky                     3792288     3756358     3714686     3692584     3686892
+  2    Louisiana                    4284749     4270849     4240950     4219179     4221826
+  2    Maine                        1238256     1235748     1235439     1231296     1227928
+  2    Maryland                     4942504     4902545     4856176     4797431     4780753
+  2    Massachusetts                6010884     5993474     5998652     6018664     6016425
+  2    Michigan                     9529240     9470323     9395022     9310462     9295287
+  2    Minnesota                    4521709     4471503     4427429     4387283     4375665
+  2    Mississippi                  2635574     2610193     2591230     2577426     2575475
+  2    Missouri                     5237757     5193686     5157770     5126370     5116901
+  2    Montana                       839876      822436      807837      799824      799065
+  2    Nebraska                     1612149     1602406     1590805     1580664     1578417
+  2    Nevada                       1380197     1330694     1285046     1218629     1201675
+  2    New Hampshire                1122191     1112766     1107055     1111831     1109252
+  2    New Jersey                   7874891     7827770     7784269     7757158     7747750
+  2    New Mexico                   1614937     1580750     1547115     1519933     1515069
+  2    New York                    18140894    18082032    18029532    18002855    17990778
+  2    North Carolina               6947412     6831850     6748135     6656987     6632448
+  2    North Dakota                  637229      635427      634199      637364      638800
+  2    Ohio                        11070385    11007609    10933683    10861837    10847115
+  2    Oklahoma                     3228829     3204174     3166471     3147105     3145576
+  2    Oregon                       3034490     2973934     2918745     2858547     2842337
+  2    Pennsylvania                12022128    11980819    11943160    11895604    11882842
+  2    Rhode Island                  997852     1000571     1003990     1004649     1003464
+  2    South Carolina               3634507     3600576     3559470     3499064     3486310
+  2    South Dakota                  716258      708698      701445      696667      696004
+  2    Tennessee                    5085666     5013999     4946886     4890626     4877203
+  2    Texas                       17996764    17650479    17339904    17044714    16986335
+  2    Utah                         1875993     1821498     1771941     1729722     1722850
+  2    Vermont                       574004      570115      567141      564526      562758
+  2    Virginia                     6464795     6383315     6283853     6213526     6189197
+  2    Washington                   5247704     5139011     5013443     4900780     4866669
+  2    West Virginia                1816179     1805462     1798212     1792481     1793477
+  2    Wisconsin                    5055318     5004636     4952675     4902265     4891954
+  2    Wyoming                       469033      463491      457739      453401      453589
+
+Documentation Notes for the December, 1999 release of July 1, 1999 
+state population estimates.
+
+These population estimates incorporate revisions of estimates
+from previous years and the results of special censuses and test
+censuses conducted by the Census Bureau.
+
+4/1/90 Census Population - The revised April 1, 1990 Census 
+population of an area.
+
+Births - Total number of live births occurring to
+residents of an area during the period, as reported from the
+Census Bureau's Federal-State Cooperative Program for Population
+Estimates (FSCPE) and the National Center for Health Statistics.
+
+Census Regions and Divisions - The Census Bureau delineates
+two sets of sub-national areas that are formed of states.
+This two-tiered system of areas consists of 9 census divisions
+nested in 4 census regions.  The Northeast region includes the New
+England division: Connecticut, Maine, Massachusetts, New
+Hampshire, Rhode Island, and Vermont; and the Middle Atlantic
+division: New Jersey, New York, and Pennsylvania.  The Midwest
+region includes the East North Central division: Illinois,
+Indiana, Michigan, Ohio, and Wisconsin; and the West North
+Central division: Iowa, Kansas, Minnesota, Missouri, Nebraska,
+North Dakota, and South Dakota.  The South region includes the
+South Atlantic division: Delaware, District of Columbia, Florida,
+Georgia, Maryland, North Carolina, South Carolina, Virginia, West
+Virginia; the East South Central division: Alabama, Kentucky,
+Mississippi, and Tennessee; and the West South Central division:
+Arkansas, Louisiana, Oklahoma, and Texas.  The West region
+includes the Mountain division: Arizona, Colorado, Idaho,
+Montana, Nevada, New Mexico, Utah, and Wyoming; and the Pacific
+division: Alaska, California, Hawaii, Oregon, and Washington.
+
+Deaths - Total number of deaths occurring within the
+resident population of an area during the period, as reported by
+the Census Bureau's Federal-State Cooperative Program for
+Population Estimates (FSCPE) and the National Center for Health
+Statistics.
+
+Demographic Components of Change - The demographic components of
+population change consist of births, deaths, net domestic
+migration, and net international migration.
+
+FIPS State Code - Two digit Federal Information Processing Standards 
+(FIPS) codes uniquely identify each state and state equivalent. They 
+are issued by the National Institute of Standards and Technology (NIST) 
+of the U.S. Department of Commerce.
+
+Natural Increase - births minus deaths in an area.  The rate of 
+natural increase expresses natural increase during a time period
+as a percentage of an area's initial population.
+
+Net Domestic Migration - the difference between
+domestic in-migration to an area and domestic
+out-migration from it during the period.  Domestic in-migration and
+out-migration consist of moves where both the origins and
+destinations are within the United States (excluding Puerto
+Rico). The net domestic migration rate expresses net domestic 
+migration during a time period as a percentage of an area's 
+initial population.
+
+Net Federal Movement - Net Federal movement is the difference
+between the movement of federal employees (both military and
+civilian) and their dependents into and out of the United States
+(excluding Puerto Rico) during the period.
+
+Net International Migration - the difference
+between migration to an area from outside the
+United States (immigration) and migration from the area to
+outside the United States (emigration) during the period.  For
+the purposes of these population estimates, the geographic extent
+of the United States is defined as excluding Puerto Rico.
+Net international migration includes: (1) legal
+immigration to the United States as reported by the Immigration
+and Naturalization Service, (2) an estimate of net undocumented
+immigration from abroad, (3) an estimate of emigration from the
+United States, and (4) net movement between Puerto Rico and the
+(balance of) the United States.  The net international migration
+rate expresses net international migration during a time period
+as a percentage of an area's initial population.
+
+Numeric Population Change - the difference between the population
+of an area at the beginning and end of a time period.
+
+Percent Change- the difference between the population of an area
+at the beginning and end of a time period, expressed as a percentage
+of the beginning population.
+
+Population (Estimate) -  The estimated population is the computed
+number of persons living in the area (resident population) as of
+July 1.  The estimated population is calculated from a
+demographic components of change model that incorporates
+information on natural change (births and deaths) and net
+migration (net domestic migration and net movement from abroad)
+that has occurred in the area since the reference date of the
+1990 census.  Additional information on the methodology used to
+produce these population estimates is contained in Current
+Population Reports P25-1127 and at our Internet site at:
+http://www.census.gov/population/www/methodep.html
+
+Resident Population - These population estimates are for the
+resident population.  The resident population of a state includes
+all residents (both civilian and Armed Forces) living in the
+state.  The geographic universe for the resident population is
+the 50 states and the District of Columbia.  It excludes Puerto
+Rico and outlying areas under United States jurisdiction.  The
+resident population excludes U.S. citizens residing abroad.
+
+Residual - The subnational estimates are constrained to sum to an
+independently derived estimate of the national population.  The
+residual is the difference between an area's population as
+estimated by the subnational population estimation procedure
+before and after imposing this constraint.  The residual is not a
+demographic component of population change; rather, it is a
+statistical artifact of the procedures employed to produce the
+estimates.  

@@ -1,0 +1,4 @@
+# This table lists the various elements to be deleted from the existing buildings sector for the USA,,,,,,,,,
+# Source: Tables_BEND_Data.xlsx,,,,,,,,,
+region,gcam-consumer,gcam-consumer,supplysector,supplysector,supplysector,supplysector,supplysector,supplysector,renewresource
+USA,resid,comm,resid heating,resid cooling,resid others,comm heating,comm cooling,comm others,traditional biomass

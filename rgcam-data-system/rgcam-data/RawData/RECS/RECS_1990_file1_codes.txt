@@ -1,0 +1,567 @@
+FILE1 STRUCTUR
+
+
+HHID 'HOUSEHOLD ID'
+
+NWEIGHT 'FINAL HOUSEHOLD WEIGHT'
+
+REGIONC 'CENSUS REGION'
+       'NORTHEAST'            = 1
+       'MIDWEST'              = 2
+       'SOUTH'                = 3
+       'WEST'                 = 4
+ 
+DIVISION 'CENSUS DIVISION'
+       'NEW ENGLAND'          = 1
+       'MIDDLE ATLANTIC'      = 2
+       'EAST NORTH CENTRAL'   = 3
+       'WEST NORTH CENTRAL'   = 4
+       'SOUTH ATLANTIC'       = 5
+       'EAST SOUTH CENTRAL'   = 6
+       'WEST SOUTH CENTRAL'   = 7
+       'MOUNTAIN'             = 8
+       'PACIFIC'              = 9
+
+TYPEHUQ 'HOUSING TYPE'                             
+       Q.A-1  
+       QUESTION DIFFERENT FROM RECS 87      
+       THIS VARIABLE NOT IMPUTED            
+      'MOBILE HOME OR TRAILER'         = 1
+      'ONE-FAMILY DETACHED'            = 2
+      'ONE-FAMILY ATTACHED'            = 3
+      'HOUSE/BLDG. W/2-4 UNITS'        = 4
+      'HOUSE/BLDG. W/5+ UNITS'         = 5     
+
+STORIES 'NUMBER OF STORIES IN HOUSING UNIT'        
+       Q A-2  
+       QUESTION IDENTICAL TO RECS 87  
+       THIS VARIABLE NOT IMPUTED      
+      'ONE STORY'            = 1
+      'TWO STORIES'          = 2
+      'THREE STORIES'        = 3
+      'SPLIT LEVEL'          = 4
+      'OTHER'                = 5
+      'NO ANSWER'            = 8
+      'NOT APPLICABLE'       = 9     
+
+DIRACC 'OTHER PEOPLE HAVE DIRECT ACCESS'           
+       Q.A-4B, POSITION 0023           
+       QUESTION NEW TO RECS 90         
+       THIS VARIABLE NOT IMPUTED       
+      'NO'                   = 0
+      'YES'                  = 1
+      'NO ANSWER'            = 8
+      'NOT APPLICABLE'       = 9
+                 
+YEARMADE 'YEAR HOME BUILT'                         
+       Q.A-6  
+       QUESTION DIFF. FROM RECS 87    
+       IMPUTED FOR NONRESPONSE        
+      'BEFORE 1940'          = 01
+      '1940-1949'            = 02
+      '1950-1959'            = 03
+      '1960-1969'            = 04
+      '1970-1979'            = 05
+      '1980-1984'            = 06
+      '1985-1986'            = 07
+      '1987'                 = 08
+      '1988'                 = 09
+      '1989'                 = 10
+      '1990'                 = 11
+      '1991'                 = 12
+               
+HOTH2O 'HAVE HOT RUNNING WATER IN HOME'            
+       Q.C-1  
+       QUESTION DIFF. FROM RECS 87    
+       IMPUTED FOR NONRESPONSE        
+      'YES'                  = 1
+      'NO'                   = 0
+               
+HEATWATR 'ABLE TO HEAT WATER'                      
+       Q.C-2  
+       QUESTION NEW TO RECS 90         
+       THIS VARIABLE NOT IMPUTED       
+      'NO'                   = 0
+      'YES'                  = 1
+      'NOT APPLICABLE'       = 9
+                 
+HINATTIC 'HAVE ROOF OR CEILING INSULATION'         
+       Q.M-3  
+       QUESTION SAME AS RECS 87       
+       THIS VARIABLE NOT IMPUTED      
+      'YES'                  = 1
+      'NO'                   = 0
+      'DONT KNOW'            = 6
+      'NO ANSWER'            = 8
+      'NOT APPLICABLE'       = 9
+               
+ROOFPCT 'PERCENT OF ROOF INSULATED'                
+       Q.M-4  
+       QUESTION IDENTICAL TO RECS 87  
+       THIS VARIABLE NOT IMPUTED      
+      'LESS THAN 5 PERCENT'  = 0
+      ' 5 -  33 PERCENT'     = 1
+      '34 -  66 PERCENT'     = 2
+      '67 -  95 PERCENT'     = 3
+      '96 - 100 PERCENT'     = 4
+      'DONT KNOW'            = 6
+      'NO ANSWER'            = 8
+      'NOT APPLICABLE'       = 9
+               
+ATTIC3YR 'ATTIC INSULATED SINCE SEPT 87'           
+       Q.M-5  
+       QUESTION DIFF FROM RECS 87     
+       IMPUTED FOR NONRESPONSE        
+      'YES'                  = 1
+      'NO'                   = 0
+      'IN PROCESS'           = 2
+      'DONT KNOW'            = 6
+      'NOT APPLICABLE'       = 9
+               
+WALLINS 'PRESENCE OF WALL INSULATION'              
+       Q.M-6  
+       QUESTION IDENTICAL TO RECS 87  
+       THIS VARIABLE NOT IMPUTED      
+      'ALL'                  = 1
+      'SOME'                 = 2
+      'NONE'                 = 0
+      'DO NOT KNOW'          = 6
+      'NO ANSWER'            = 8
+      'NOT APPLICABLE'       = 9
+               
+WALLS3YR 'OUTER WALLS INSULATED SINCE SEPT 87'     
+       Q.M-7  
+       QUESTION DIFF FROM RECS 87     
+       IMPUTED FOR NONRESPONSE        
+      'YES'                  = 1
+      'NO'                   = 0
+      'IN PROCESS'           = 2
+      'DONT KNOW'            = 6
+      'NOT APPLICABLE'       = 9
+               
+DUCTS  'HEATING AND COOLING DUCTS INSULATED'       
+       Q.M-8A  
+       QUESTION IDENTICAL TO RECS 87  
+       IMPUTED FOR NONRESPONSE        
+      'YES'                  = 1
+      'NO'                   = 0
+      'DO NOT KNOW'          = 6
+      'NOT APPLICABLE'       = 9
+                
+PIPEINS 'HOT H20 PIPES INSULATED'                  
+       Q.M-8B  
+       QUESTION DIFF FROM RECS 87     
+       IMPUTED FOR NONRESPONSE        
+      'YES'                  = 1
+      'NO'                   = 0
+      'DO NOT KNOW'          = 6
+      'NOT APPLICABLE'       = 9
+                
+WATERINS 'HOT WATER HEATER INSULATED'              
+       Q.M-8C  
+       QUESTION IDENTICAL TO RECS 87  
+       IMPUTED FOR NONRESPONSE        
+      'YES'                  = 1
+      'NO'                   = 0
+      'DO NOT KNOW'          = 6
+      'NOT APPLICABLE'       = 9
+                
+STRIP 'WEATHER STRIPPING PRESENT IN HOME'          
+       Q.M-8D  
+       QUESTION IDENTICAL TO RECS 87  
+       IMPUTED FOR NONRESPONSE        
+      'YES'                  = 1
+      'NO'                   = 0
+      'DO NOT KNOW'          = 6
+      'NOT APPLICABLE'       = 9
+                
+CAULKADD 'CAULKING PRESENT IN HOME'                
+       Q.M-8E  
+       QUESTION IDENTICAL TO RECS 87  
+       IMPUTED FOR NONRESPONSE        
+      'YES'                  = 1
+      'NO'                   = 0
+      'DO NOT KNOW'          = 6
+      'NOT APPLICABLE'       = 9
+                
+BASEMENT 'HAVE BASEMENT OR CRAWL SPACE'            
+       Q.M-9  
+       QUESTION NEW TO RECS 90        
+       IMPUTED FOR NONRESPONSE        
+      'YES'                  = 1
+      'NO'                   = 0
+      'NOT APPLICABLE'       = 9
+               
+BASEINS  'BASEMENT OR CRAWL SPACE INSULATION'      
+       Q.M-10  
+       QUESTION IDENTICAL TO RECS 87  
+       IMPUTED FOR NONRESPONSE        
+      'YES'                  = 1
+      'NO'                   = 0
+      'DO NOT KNOW'          = 6
+      'NOT APPLICABLE'       = 9
+                
+FLOOREXT 'PERCENT  FLOOR INSULATED'           
+       Q.M-11  
+       QUESTION DIFF FROM RECS 87     
+       IMPUTED FOR NONRESPONSE        
+      'LESS THAN 5%'         = 0
+      '5% - 33%'             = 1
+      '34% - 66%'            = 2
+      '67% - 95%'            = 3
+      '95% - 100%'           = 4
+      'DONT KNOW'            = 6
+      'NOT APPLICABLE'       = 9
+               
+DOORS 'NUMBER OF DOORS'                           
+       Q.N-1A, N-1B  
+       QUESTION DIFFERENT FROM RECS 87  
+       IMPUTED FOR NONRESPONSE  
+      'NO DOORS'              = 00
+      'ONE DOOR'              = 01
+      'TWO DOORS'             = 02
+      'THREE DOORS'           = 03
+      'FOUR DOORS'            = 04
+      'FIVE  OR MORE DOORS'   = 05
+               
+STORMSO 'NUMBER OF STORM DOORS'                   
+       Q.N-2  
+       QUESTION DIFFERENT FROM RECS 87  
+       IMPUTED FOR NONRESPONSE  
+      'NO DOORS'              = 00
+      'ONE DOOR'              = 01
+      'TWO DOORS'             = 02
+      'THREE DOORS'           = 03
+      'FOUR DOORS'            = 04
+      'FIVE  OR MORE DOORS'   = 05
+      'NOT APPLICABLE'        = 99
+               
+WINDOWS 'NUMBER OF WINDOWS IN HOME'            
+       Q.N-3  
+       QUESTION SAME AS RECS 87 
+       IMPUTED FOR NONRESPONSE        
+       00 = NONE  
+       50 = 50 OR MORE  
+
+PANESINS 'NUMBER OF WINDOWS WITH STORMS'        
+        Q.N-4  
+       QUESTION IDENTICAL TO RECS 87  
+       IMPUTED FOR NONRESPONSE        
+       00 = NONE  
+       50 = 50 OR MORE  
+       99 = NOT APPLICABLE  
+
+CHANGES 'SPACE CHANGES SINCE SEPT 87'              
+       Q.P-1  
+       QUESTION SAME AS RECS 87       
+       THIS VARIABLE NOT IMPUTED      
+      'YES'                  = 1
+      'NO'                   = 0
+      'IN PROCESS'           = 2
+      'NO ANSWER'            = 8
+               
+SAMEFEET 'SQ FEET CHANGED SINCE SEPT 87'           
+       Q.P-2  
+       QUESTION SAME AS RECS 87  
+       THIS VARIABLE NOT IMPUTED    
+      'INCREASED'            = 1
+      'DECREASED'            = 2
+      'REMAINED THE SAME'    = 3
+      'NO ANSWER'            = 8
+      'NOT APPLICABLE'       = 9
+               
+SAMEHEAT 'HTD SPACE CHNGED SINCE SPT 87'           
+       Q.P-3  
+       QUESTION SAME AS RECS 87       
+       THIS VARIABLE NOT IMPUTED      
+      'INCREASED'            = 1
+      'DECREASED'            = 2
+      'REMAINED THE SAME'    = 3
+      'NO ANSWER'            = 8
+      'NOT APPLICABLE'       = 9
+               
+BEDROOMS 'NUMBER OF BEDROOMS IN HOME'             
+       Q.P-4A  
+       QUESTION DIFFERENT FROM RECS 87  
+       IMPUTED FOR NONRESPONSE  
+      'NO BEDROOMS'           = 0
+      'ONE BEDROOM'           = 1
+      'TWO BEDROOMS'          = 2
+      'THREE BEDROOMS'        = 3
+      'FOUR BEDROOMS'         = 4
+      'FIVE BEDROOMS'         = 5
+      'SIX BEDROOMS'          = 6
+      'SEVEN OR MORE'         = 7
+               
+NCOMBATH 'NUMBER OF COMPLETE BATHS'                
+       Q.P-4B  
+       QUESTION IDENTICAL TO RECS 87  
+       IMPUTED FOR NONRESPONSE        
+      'NONE'                 = 0
+      'ONE'                  = 1
+      'TWO'                  = 2
+      'THREE'                = 3
+      'FOUR'                 = 4
+      'FIVE OR MORE'         = 5
+               
+NHAFBATH 'NUMBER OF HALF BATHS'                    
+       Q.P-4C  
+       QUESTION IDENTICAL TO RECS 87  
+       IMPUTED FOR NONRESPONSE        
+      'NONE'                 = 0
+      'ONE'                  = 1
+      'TWO'                  = 2
+      'THREE'                = 3
+      'FOUR'                 = 4
+      'FIVE OR MORE'         = 5
+               
+OTHROOMS 'NUMBER OF OTHER ROOMS'                  
+       Q.P-4D  
+       QUESTION DIFFERENT FROM RECS 87  
+       IMPUTED FOR NONRESPONSE  
+      'NO OTHER ROOMS'       = 0
+      'ONE OTHER ROOM'       = 1
+      'TWO OTHER ROOMS'      = 2
+      'THREE OTHER ROOMS'    = 3
+      'FOUR OTHER ROOMS'     = 4
+      'FIVE OTHER ROOMS'     = 5
+      'SIX OTHER ROOMS'      = 6
+      'SEVEN OR MORE'        = 7               
+
+CARHOME  'ATTACHED GARAGE PRESENT'                 
+       Q.P-8  
+       QUESTION IDENTICAL TO RECS 87  
+       THIS VARIABLE NOT IMPUTED      
+      'YES'                  = 1
+      'NO'                   = 0
+      'NO ANSWER'            = 8
+      'NOT APPLICABLE'       = 9
+               
+GARHEAT  'GARAGE HEATED IN WINTER MONTHS'          
+       Q.P-9  
+       QUESTION IDENTICAL TO RECS 87  
+       THIS VARIABLE NOT IMPUTED      
+      'YES'                  = 1
+      'NO'                   = 0
+      'NO ANSWER'            = 8
+      'NOT APPLICABLE'       = 9
+               
+GARHETON 'FREQUENCY GARAGE HEATED IN WINTER'       
+       Q.P-10  
+       QUESTION DIFF FROM RECS 87     
+       THIS VARIABLE NOT IMPUTED      
+      'NEVER'                = 0
+      'ALMOST NEVER'         = 1
+      'OCCASIONALLY'         = 2
+      'USUALLY'              = 3
+      'ALWAYS'               = 4
+      'NO ANSWER'            = 8
+      'NOT APPLICABLE'       = 9
+               
+HOMEBASE 'TYPE OF FOUNDATION UNDER HOME'           
+       Q.P-11  
+       QUESTION IDENTICAL TO RECS 87  
+       IMPUTED FOR NONRESPONSE        
+      'OTHER'                = 0
+      'BASEMENT'             = 1
+      'ENCLOSED CRAWL SPACE' = 2
+      'OPEN CRAWL SPACE'     = 3
+      'CONCRETE SLAB'        = 4
+      'COMBINATION'          = 5
+      'NOT APPLICABLE'       = 9
+               
+CELLAR 'BASEMENT AND OTHER FOUNDATION'             
+       Q.P-11  
+       QUESTION IDENTICAL TO RECS 87  
+       IMPUTED FOR NONRESPONSE        
+      'YES'                  = 1
+      'NO'                   = 0
+      'NOT APPLICABLE'       = 9
+               
+AREASHUT 'ENCLOSED CRAWL SPACE AND OTHER'          
+       Q.P-11  
+       QUESTION IDENTICAL TO RECS 87  
+       IMPUTED FOR NONRESPONSE        
+      'YES'                  = 1
+      'NO'                   = 0
+      'NOT APPLICABLE'       = 9
+               
+AREAOPEN 'OPEN CRAWL SPACE AND OTHER'              
+       Q.P-11  
+       QUESTION IDENTICAL TO RECS 87  
+       IMPUTED FOR NONRESPONSE        
+      'YES'                  = 1
+      'NO'                   = 0
+      'NOT APPLICABLE'       = 9
+               
+CONCRETE 'CONCRETE SLAB AND OTHER'                 
+       Q.P-11  
+       QUESTION IDENTICAL TO RECS 87  
+       IMPUTED FOR NONRESPONSE        
+      'YES'                  = 1
+      'NO'                   = 0
+      'NOT APPLICABLE'       = 9
+               
+BASEHEAT 'BASEMENT OR CRAWL SPACE HEATED'          
+       Q.P-12  
+       QUESTION IDENTICAL TO RECS 87  
+       IMPUTED FOR NONRESPONSE        
+      'ALL'                  = 1
+      'PART'                 = 2
+      'NONE'                 = 0
+      'NOT APPLICABLE'       = 9
+               
+INSIDE 'HOME MEASURED INSIDE OR OUTSIDE'           
+       QUESTION IDENTICAL TO RECS 87  
+       THIS VARIABLE NOT IMPUTED      
+      'MEASURED INSIDE'      = 01
+      'MEASURED OUTSIDE'     = 02
+      'INSIDE AND OUTSIDE'   = 03
+      'FLOOR PLAN'           = 04
+      'ESTIMATED'            = 05
+      'OTHER OR COMBINATION' = 21
+      'MEASURES NOT USABLE'  = 95
+      'NO MEASUREMENTS'      = 00
+      'PROCEDURE UNKNOWN'    = 98
+               
+LINEARFL 'NUMBER OF FLOORS WITH LINEAR EST'        
+       QUESTION IDENTICAL TO RECS 87  
+       THIS VARIABLE NOT IMPUTED      
+       WHEN ONLY TOTAL SQUARE FOOTAGE ESTIMATES ARE  
+       POSSIBLE OR WHEN THE MEASUREMENTS ARE NOT  
+       USABLE, CODE HERE IS ZERO  
+      'NO MEASUREMENTS'      = 0
+      'ONE FLOOR'            = 1
+      'TWO'                  = 2
+      'THREE'                = 3
+      'FOUR'                 = 4
+      'FIVE'                 = 5
+      'NOT APPLICABLE'       = 9
+               
+PREHEAT 'ESTIMATED SQ FT HEATED AREA'
+       QUESTION IDENTICAL TO RECS 87  
+       THIS VARIABLE NOT IMPUTED      
+       99999 = NOT AVAILABLE  
+
+PREUN 'ESTIMATED SQ FT UNHEATED AREA'           
+       QUESTION IDENTICAL TO RECS 87  
+       THIS VARIABLE NOT IMPUTED      
+       99999 = NOT APPLICABLE
+  
+PREHOME 'EST SQFT, DK HEATED OR UNHEATED'       
+       QUESTION IDENTICAL TO RECS 87  
+       THIS VARIABLE NOT IMPUTED      
+       99999 = NOT APPLICABLE  
+
+HEATED 'TOTAL SQ FT HEATED AREA'                
+       INFORMATION TAKEN FROM RECS 87 AS  
+       APPROPRIATE. SEE COL 1164
+  
+UNHEATED 'TOTAL SQ FT UNHEATED AREA'            
+       INFORMATION TAKEN FROM RECS 87 AS  
+       APPROPRIATE.
+   
+HOMEAREA 'TOTAL SQ FT HEATED AND UNHEATED'      
+       INFORMATION TAKEN FROM RECS 87 AS  
+       APPROPRIATE.
+  
+SCALE 'SCALE FACTOR'                            
+       INFORMATION TAKEN FROM RECS 87 AS  
+       APPROPRIATE.  
+       A SCALE FACTOR IS RPRTD FOR THE VARS HTED,  
+       UNHEATED, & HOMEAREA WHEN THE  MEASURE-  
+       MENTS OR ESTIMS.WERE BASED ON INSD DIMEN-  
+       SIONS.  THE SCALE FACTOR HAS AN IMPLIED  
+       DECIMAL POINT BEFORE THE FIRST DIGIT,  
+       AND MUST BE ADDED TO 1.000 TO PRODUCE  
+       THE ACTUAL SCALE FACTOR:  E.G., SCALE =  
+       149 REPRESENTS A SCALE FACTOR OF 1.149.   
+       WHEN THE VARIABLES HEATED, UNHEATED, AND  
+       HOMEAREA ARE NOT BASED ON INSIDE MEASURE-  
+       MENTS, SCALE IS SET AT 999.  ALSO, SCALE = 999  
+       WHENEVER THE VARIABLES HEATED, UNHEATED AND  
+       HOMEAREA WERE ALL IMPUTED.   
+
+SOURCE 'SOURCE OF SQUARE FOOT MEASUREMENTS'        
+       ALL SQUARE FOOTAGE DATA  REPORTED IN TERMS  
+       OF MEASUREMENTS OR ESTIM. BASED ON OUTSIDE  
+       DIMENSIONS. A SCALE FACTOR, COLUMNS 1161 - 1163  
+       HAS BEEN USED TO CNVRT INSIDE TTLS TO OUTSIDE  
+       TOTALS AS REQUIRED.   
+       CODE 0 = THE VARIABLES HOMEAREA, HEATED, AND  
+       UNHEATED ARE AVAILABLE.   
+       MEASUREMENTS ARE BASED ON OUTSIDE  
+       DIMENSIONS:  I.E., VARIABLE INSIDE = 02.   
+       IN ADDITION, QUESTION P-12, VARIABLE  
+       BASEHEAT, IS CONSISTENT WITH BASEMENT DATA  
+       CODE 1 = THE VARIABLES HOMEAREA, HEATED, &  
+         UNHEATED ARE AVAILABLE.   
+         MSRMNTS  BASED ON INSIDE DIMENSIONS:  I.E.,  
+         VARIABLE INSIDE = 01.   
+         IN ADDITION, QUESTION P-12, VARIABLE  
+         BASEHEAT, IS CONSISTENT WITH BASEMENT DATA,  
+       CODE 2 = THE VARS HOMEAREA, HEATED, & UNHEATED  
+         ARE AVAILABLE.   
+         IT IS NOT KNOWN WHETHER MSRMNTS OR ESTIMATES  
+         ARE BASED ON INSIDE OR OUTSIDE DIMS:  I.E.,  
+         VARIABLE INSIDE = 03, 04, 05, 21, 98.  
+         IN ADDITION, QUESTION P-12, VARIABLE  
+         BASEHEAT, IS CONSISTENT WITH BASEMENT DATA,  
+       CODE 3 = HOMEAREA IS AVAIL. BUT HTD AND UNHTD  
+         ARE NOT AVAILABLE.    
+       CODE 4 = NONE OF THE VARS HOMEAREA, HTD OR UN-  
+         HEATED ARE AVAILABLE.  MSRMNTS  NOT USABLE:  
+         VARIABLE INSIDE = 00 OR 95,  
+       CODE 5 = ALL MEASUREMENTS ARE USABLE EXCEPT FOR  
+         A BASEMENT.  LINEARFL = 1,2, OR 3, BUT  
+         0846-0869 IS NOT SUFFICIENTLY COMPLETE TO  
+         PERMIT COMPUTATION OF A TOTAL FOR HOMEAREA.   
+       CODE 6 = THE VARIABLE HOMEAREA IS AVAILABLE AND  
+         HEATED AND UNHEATED SUBTOTALS ARE KNOWN FOR  
+         ALL FLOORS EXCEPT THE BASEMENT. IN THIS CASE,  
+         THE BREAKDOWN BETWEEN HEATED AND UNHEATED FOR  
+         THE BASEMENT IS IMPUTED.                     
+       CODE 7 = IF THE HOUSEHOLD WOULD BE SOURCE CODE  
+         4  SEE ABOVE  ACCORDING TO RECS90 MSRMNTS  
+         AND IF RECS87 SOURCE CODE = 0,1, OR 2  SEE     
+         C87SQFT, 1649 , HEATED,UNHEATED,HOMEAREA, AND  
+         SCALE WERE ALL TAKEN FROM RECS87.            
+      'OUTSIDE MEASUREMENTS' = 0
+      'INSIDE MEASUREMENTS'  = 1
+      'OUT OR IN UNKNOWN'    = 2
+      'TOTAL ONLY KNOWN'     = 3
+      'ALL DATA IMPUTED'     = 4
+      'BASEMENT PROBLEM1'    = 5
+      'BASEMENT PROBLEM2'    = 6
+      'MEAS FROM RECS87'     = 7               
+
+TYPEHOME 'TYPE OF LIVING QUARTERS'                 
+       CODE 99 APPLIES ONLY TO NONHOUSING UNITS AND HOUSING  
+       UNITS THAT WERE NOT VISITED IN PERSON   
+      'MOBILE HOME'          = 11
+      '1-FAMILY DETACHED'    = 21
+      '1-FAMILY ATTACHED'    = 22
+      '2-4 UNITS'            = 31
+      '5 OR MORE UNITS'      = 41
+      'NOT APPLICABLE'       = 99
+                     
+UNITS 'NUMBER OF HOUSING UNITS IN BLDG'         
+       995 = 995 OR MORE UNITS  
+       998 = UNKNOWN  
+       999 = NOT APPLICABLE
+  
+FLOORS 'NUMBER OF FLOORS IN BLDG'               
+       95 = 95 OR MORE FLOORS  
+       98 = UNKNOWN  
+       99 = NOT APPLICABLE
+  
+OCCUP 'TYPE OF OCCUPANCY'                          
+        CODE 9 APPLIES ONLY TO NONHOUSING UNITS  
+      'YEAR-ROUND UNIT'      = 1
+      'SEASONAL UNIT'        = 2
+      'MIGRATORY UNIT'       = 3
+      'UNKNOWN'              = 8
+      'NOT APPLICABLE'       = 9               
+
+
+END OF FILE1 STRUCTUR

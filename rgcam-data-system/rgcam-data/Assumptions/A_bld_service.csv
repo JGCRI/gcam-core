@@ -1,0 +1,19 @@
+# Assumed satiation levels and internal gains scalers,,,,,,
+# Source: Tables_Bld_Data.xlsx,,,,,,
+gcam_consumer,nodeInput,building_node_input,building_service_input,satiation_base_year_increase,satiation_adder,internal_gains_scaler
+resid,resid,resid_building,resid heating,1.001,0,-930
+resid,resid,resid_building,resid cooling,1.001,0,350
+resid,resid,resid_building,resid hot water,1.001,0,NA
+resid,resid,resid_building,resid lighting,1.001,0,NA
+resid,resid,resid_building,resid appliances,1.001,0,NA
+resid,resid,resid_building,resid other appliances,1.25,0,NA
+resid,resid,resid_building,resid other,1.35,0,NA
+comm,comm,comm_building,comm heating,1.001,0,-930
+comm,comm,comm_building,comm cooling,1.001,0,350
+comm,comm,comm_building,comm hot water,1.001,0,NA
+comm,comm,comm_building,comm ventilation,1.001,0,NA
+comm,comm,comm_building,comm cooking,1.001,0,NA
+comm,comm,comm_building,comm lighting,1.001,0,NA
+comm,comm,comm_building,comm refrigeration,1.001,0,NA
+comm,comm,comm_building,comm office,1.5,-0.1,NA
+comm,comm,comm_building,comm other,1.5,0,NA

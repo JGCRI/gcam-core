@@ -1,0 +1,11 @@
+<ModelInterfaceBatch>
+	<class name="ModelInterface.ModelGUI2.InputViewer">
+	<command name="CSV file">
+		<headerFile>../../Energy/RGCAM/Data_V2//rgcam-processing-code/headers//headers_rgcam.txt</headerFile>
+		<csvFile>../../Energy/RGCAM/Data_V2//rgcam-data/Level2//L201_BldShell_adv.csv</csvFile>
+		<csvFile>../../Energy/RGCAM/Data_V2//rgcam-data/Level2//L201_GlobalTechEff_adv.csv</csvFile>
+		<csvFile>../../Energy/RGCAM/Data_V2//rgcam-data/Level2//L201_GlobalTechCost_adv.csv</csvFile>
+		<outFile>../../Energy/RGCAM/Data_V2//rgcam-xml//rgcam_bld_adv.xml</outFile>
+ 	</command>
+	</class>
+</ModelInterfaceBatch>

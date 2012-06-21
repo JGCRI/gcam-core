@@ -1,0 +1,1001 @@
+File layout for File 11 (Records are comma-delimited.  First line contains a
+list of variables on the file.  The remaining lines contain the values of the
+variables with fixed column positions.)
+
+Variables on all files
+
+DOEID    '4-digit identification number'                    Columns 1-4
+NWEIGHT  'The Final Weight'                                 Columns 6-11
+MQRESULT 'Mail Questionnaire Codes'                         Columns 13
+REGIONC  'Census Region'                                    Columns 15
+DIVISION 'Census Division'                                  Columns 17
+LRGSTATE 'Four Largest States'                              Columns 19
+CDD65    'Cooling Degree-Days to base 65, 1-97 TO 12-97'    Columns 21-24
+HDD65    'Heating Degree-Days to base 65, 1-97 TO 12-97'    Columns 26-30
+TYPEHUQ  'Type of Home: as report by Respondent'            Columns 32
+
+Variables in File 11 only.
+
+GALLONKR 'Gallons Of Kerosene Bought'                       Columns 34-36
+BTUKER 'Annual Kerosene Use In Thousands Of BTU'            Columns 38-43
+KWH 'Kilowatt Hours Of Electricity Used'                    Columns 45-49
+BTUEL 'Electric Annual Use In Thousands Of BTU'             Columns 51-56
+CUFEETNG 'CCFS (Hundred Cubic Feet) Of Natural Gas'         Columns 58-61
+BTUNG 'Natural Gas Annual Use In Thousands Of BTU'          Columns 63-68
+GALLONFO 'Gallons Of Fuel Oil Bought'                       Columns 70-73
+BTUFO 'Fuel Oil Annual Use In Thousands Of BTU'             Columns 75-80
+GALLONLP 'Gallons Of LPG Bought'                            Columns 82-85
+BTULP 'LPG Annual Use In Thousands Of BTU'                  Columns 87-92
+BTUELSPH 'Electric Space Heat Use (Estimated)               Columns 94-99
+BTUNGSPH 'Natural Gas Space Heat Use (Estimated)            Columns 101-106
+BTUFOSPH 'Fuel Oil Space Heat Use (Estimated)               Columns 108-113
+BTULPSPH 'LPG Space Heat Use (Estimated)                    Columns 115-120
+BTUKRSPH 'Kerosene Space Heat Use (Estimated)               Columns 122-127
+BTUELWTH 'Electric Water Heat Use (Estimated)               Columns 129-133
+BTUNGWTH 'Natural Gas Water Heat Use (Estimated)            Columns 135-140
+BTUFOWTH 'Fuel Oil Water Heat Use (Estimated)               Columns 142-147
+BTULPWTH 'LPG Water Heat Use (Estimated)                    Columns 149-153
+BTUKRWTH 'Kerosene Water Heat Use (Estimated)               Columns 155-159
+BTUELAPL 'Electric Appliance Use (Estimated)                Columns 161-166
+BTUNGAPL 'Natural Gas Appliance Use (Estimated)             Columns 168-173
+BTUFOAPL 'Fuel Oil Appliance Use (Estimated)                Columns 175-178
+BTULPAPL 'LPG Appliance Use (Estimated)                     Columns 180-184
+BTUKRAPL 'Kerosene Appliance Use (Estimated)                Columns 186
+BTUELCOL 'Electric AC Use (Estimated)                       Columns 188-192
+BTUNGCOL 'Natural Gas AC Use (Estimated)                    Columns 194-197
+BTUELRFG 'Electric Refrigerator Use (Estimated)             Columns 199-203
+BTUELFZZ 'Electric Freezer Use (Estimated)                  Columns 205-209
+BTUELCOK 'Electric Cooking Use (Estimated)                  Columns 211-214
+BTUELDWH 'Electric Dishwasher Use (Estimated)               Columns 216-219
+BTUELCDR 'Electric Dryer Use (Estimated)                    Columns 221-225
+Codebook for File 11
+
+Variables DOEID, NWEIGHT, MQRESULT, REGIONC, DIVISION, LRGSTATE CDD65, HDD65,
+and TYPEHUQ are on all files.
+
+DOEID '4-digit identification number'                       Columns 1-4
+     Included in all files
+     Numerical Variable
+     Variable length: 4
+
+          The variable DOEID will be on all files.  Each respondent is assigned an
+     unique value of DOEID.  It can be used to merge data from one file with
+     data from another file.
+
+     Minimum Value: 1,001
+     Maximum Value: 6,903
+
+NWEIGHT 'The Final Weight'                                  Columns 6-11
+     Included in all files
+     Numerical Variable
+     Variable length: 6
+
+     Minimum Value:  3,841
+     Maximum Value: 79,878
+
+          The sample design for RECS is not a simple random sample. Consequently,
+     to estimate the number or percent of households/housing units with a
+     certain characteristic, the sampling weight should be used.  The
+     variable NWEIGHT is the sampling weight for the observation.  It is
+     approximately the inverse of the probability of selection.  It gives the
+     number of households that the response represents in the sample.  For
+     most categorical variables, the codebooks contain both the unweighted
+     frequency and the weighted frequency.  The unweighted frequency gives
+     the number of observations, the weighted frequency gives survey estimate
+     of the number of households/housing units for each possible value of the
+     variable.  The weighted frequencies are rounded to the nearest 100,000
+     households.  This is the limit of the accuracy for RECS.  When the
+     unweighted frequency is less than 10 or the weighted frequency is less
+     than 150,000; then weighted frequency is suppressed.  A 'Q' is placed in
+     the frequency to denote that the number is suppressed.  This indicates
+     that there are too few observation upon which to determine an accurate
+     estimate.
+
+MQRESULT 'Mail Questionnaire Codes'                         Columns 13
+     Included in all files
+     Categorical Variable 
+     Variable length 1
+
+     Mail Questionnaire (MQ)
+     Authorization Form (AF)
+     Personal Interview (PI)
+
+     1 = MQ Completed, AF Signed
+     2 = MQ Completed, AF not required
+     7 = MQ returned after a PI was completed
+     8 = PI was completed after MQ was returned
+     9 = Not Applicable
+
+               Number         Weighted
+               Of             Number of
+     Value     Observations   Households
+     1           173             3,400,000
+     2             8                     Q
+     7             1                     Q
+     8            12               200,000
+     9         5,706            97,600,000
+
+     Q = Data withheld because fewer than 10 observation in the category.
+
+          When MQRESULT equals 1 or 2, the household and housing unit data was not
+     obtained via a personal interview.  The data were obtained using a
+     shortened mail questionnaire.  A hot-deck imputation procedure was used
+     to match each mail respondent to a personal interview respondent.  The
+     critical matching variables were FUELHEAT, FUELH2O, TYPECOOL, TYPEHUQ,
+     and REGIONC.  Additional  variables used in a scoring function to
+     determine the best match were MONEYPY, NHSLDMEM, VEHICLES, HHAGE, and
+     TOTROOMS.  The remaining household/housing unit characteristics for the
+     mail respondents were determined by the values of the matched personal
+     interview respondent.  The energy consumption and expenditures data for
+     the mail respondents was based upon data obtained from their energy
+     suppliers.  It was not imputed using a hot deck procedure.
+
+          Questionnaire data from personal interview respondents sometime is
+     missing and needs to be imputed.  'Z' variables are used to indicate the
+     presence of imputed data.  For example, if ZURBRUR = 0 then URBRUR was
+     not imputed.  If ZURBRUR = 1 then URBRUR was imputed.
+
+Census Division/Region:   A geographic area consisting of several States
+defined by the U.S. Department of Commerce, Bureau of the Census.  The States
+are grouped into nine divisions and four regions.
+
+Region    Division            States 
+
+Northeast New England         Connecticut, Maine, Massachusetts, 
+                              New Hampshire, Vermont, and Rhode Island
+
+          Middle Atlantic     New Jersey, New York, and Pennsylvania
+
+Midwest   East North Central  Illinois, Indiana, Michigan, 
+                              Ohio, and Wisconsin
+
+          West North Central  Iowa, Kansas, Minnesota, Missouri,
+                              Nebraska, North Dakota, and South Dakota
+
+South     South Atlantic      Delaware, the District of Columbia,
+                              Florida, Georgia, Maryland, North 
+                              Carolina, South Carolina, Virginia,
+                              and West Virginia 
+
+          East South Central  Alabama, Kentucky, Mississippi, 
+                              and Tennessee
+
+          West South Central  Arkansas, Louisiana, Oklahoma, 
+                              and Texas
+
+West      Mountain            Arizona, Colorado, Idaho, Montana,
+                              Nevada, New Mexico, Utah, and Wyoming
+
+          Pacific             Alaska, California, Hawaii, Oregon, 
+                              and Washington
+
+REGIONC 'Census Region'                                     Columns 15
+     Included in all files
+     Categorical Variable 
+     Variable length 1
+
+     1 = Northeast Census Region
+     2 = Midwest Census Region
+     3 = South Census Region
+     4 = West Census Region
+
+               Number         Weighted
+               Of             Number of
+     Value     Observations   Households
+     1         1,332               19,700,000
+     2         1,234               24,100,000
+     3         1,979               35,900,000
+     4         1,355               21,800,000
+
+DIVISION 'Census Division'                                  Columns 17
+     Included in all files
+     Categorical Variable 
+     Variable length 1
+
+     1 = New England Census Division
+     2 = Middle Atlantic Census Division
+     3 = East North Central Census Division
+     4 = West North Central Census Division
+     5 = South Atlantic Census Division
+     6 = East South Central Census Division
+     7 = West South Central Census Division
+     8 = Mountain Census Division
+     9 = Pacific Census Division
+
+               Number         Weighted
+               Of             Number of
+     Value     Observations   Households
+     1         490             5,300,000
+     2         842            14,400,000
+     3         783            16,900,000
+     4         451             7,200,000
+     5         871            18,700,000
+     6         527             6,300,000
+     7         581            10,800,000
+     8         466             6,200,000
+     9         889            15,600,000
+
+LRGSTATE 'Four Largest States'                              Columns 19
+     Included in all files
+     Categorical Variable 
+     Variable length 1
+
+     0 = Other
+     1 = New York State
+     2 = California
+     3 = Texas
+     4 = Florida
+
+               Number         Weighted
+               Of             Number of
+     Value     Observations   Households
+     0         4,258          70,300,000
+     1           399           6,800,000
+     2           609          11,500,000 
+     3           369           7,000,000
+     4           265           5,900,000
+
+CDD65 and HDD65 are weather data.  The values of CDD65 and HDD65 were based
+upon data obtained from the NOAA.  A random error was added to both HDD65 and
+CDD65 to mask the location of the weather station from which the data was
+obtained.
+
+CDD65 'Cooling Degree-Days to base 65, 1-97 TO 12-97'       Columns 21-24
+     Included in all files
+     Numerical Variable 
+     Variable length 4
+
+     Minimum Value:     0
+     Maximum Value: 5,954
+
+HDD65 'Heating Degree-Days to base 65, 1-97 TO 12-97'       Columns 26-30
+     Included in all files
+     Numerical Variable 
+     Variable length 5
+
+     Minimum Value:      0
+     Maximum Value: 11,672
+
+          Cooling degree days are the number of degrees the average daily
+     temperature (ADT) is above the base temperature.  Heating degree days
+     are the number of degrees the ADT is below the base temperature.  To
+     calculate daily degree days (base 65 degrees):
+
+          ADT = (daily high + daily low)/2
+
+          CDD(daily)     = 0            if ADT <= 65
+                         = ADT - 65     if ADT > 65
+
+          HDD(daily)     = 0            if ADT >= 65
+                         = 65 - ADT     if ADT < 65.
+
+          Annual degrees days are calculated by summing the daily degree days. 
+     The .5 is carried over in the summation.  The total is rounded up after
+     the summation.
+
+TYPEHUQ 'Type of Home: as report by Respondent'             Columns 32
+     Included in all files
+     Categorical Variable
+     Variable length: 1
+     Question (A-2B) 
+          different than RECS93
+     Variable was constructed form responses to questions
+          A-2A, A-2B, A-5, and A-9
+     Imputed for Nonresponse
+
+          There is a fine line between the definitions of various types of housing
+     units. The distinction between a single-family attached unit and a unit
+     in an apartment building is particularly complex. The collection and
+     editing of the data on housing type changed from the paper-and-pencil
+     questionnaire for the 1993 RECS to the CAPI questionnaire for the 1997
+     RECS. The change in the data collection and editing procedures may have
+     contributed to changes in the survey results. For example, the estimated
+     number of occupied single-family attached units increased from 7.3
+     million for the 1993 RECS to 10.0 million for the 1997 RECS. Conversely,
+     the number of occupied housing units in buildings with two to four units
+     decreased from 8.0 million for the 1993 RECS to 5.6 million for the 1997
+     RECS.
+
+
+     1 = Mobile Home
+     2 = Single-Family detached
+     3 = Single-Family Attached
+     4 = Apartment in Building containing 2-4 units
+     5 = Apartment in Building Containing 5 or more units
+
+               Number         Weighted
+               Of             Number of
+     Value     Observations   Households
+     1           402           6,300,000
+     2         3,661          63,800,000
+     3           552           9,900,000 
+     4           351           5,600,000
+     5           934          15,800,000
+
+The remaining variables a present only in File 11.
+
+GALLONKR 'Gallons Of Kerosene Bought'                       Columns 34-36
+     Numerical Variable 
+     Variable Length 3
+
+          GALLONKR is the amount of kerosene bought.  The amount that the
+     household uses may vary from the amount that they bought.
+
+          GALLONKR is based upon one of the following:
+                         1.   The respondent's estimate of the amount purchased in 12 months
+               prior to the interview.  See variables KEROCASH, NOKRCASH, and
+               NKRGALNC on File 6.
+                         2.   Supplier data on the amount delivered to the household in
+               1997.
+          3.   Regression estimate.
+
+          The variable ORIGKERQ on file 10 summarizes the source of the data for
+     GALLONKR.
+
+          The variable USEKERO on File 6 can be used to determine if a household
+     uses kerosene.   
+
+               Number of      Number of
+               Observations   Observations
+     Value     Where          Where          Maximum   Minimum
+     of        GALLONKR       GALLONKR       Value of  Value of
+     USEKERO   Is Zero        Is Positive    GALLONKR  GALLONKR
+
+     0         5,671              0            0         0
+     1            11            218          978         0
+
+          The 11 cases where USEKERO equals 1 and GALLONKR equals 0 occur when the
+     household uses kerosene but did not report buying kerosene in the 12
+     months prior to the interview or the supplier reported that they did not
+     deliver kerosene to the household during 1997.
+
+BTUKER 'Annual Kerosene Use In Thousands Of BTU'            Columns 38-43
+     Numerical Variable 
+     Variable Length 6
+
+          Conversion factor for converting gallons of kerosene (GALLONKR) into
+     thousands of BTU: One gallon of kerosene = 135,000 Btu
+
+          BTUKER = GALLONKR x 135.0
+
+                              Number of      Number of
+               Observations   Observations
+     Value     Where          Where          Maximum   Minimum
+     of        BTUKER         BTUKER         Value of  Value of
+     USEKERO   Is Zero        Is Positive    BTUKER    BTUKER
+
+     0         5,671              0                0        0
+     1            11            218          132,030        0
+     
+KWH 'Kilowatt Hours Of Electricity Used'                    Columns 45-49
+     Numerical Variable 
+     Variable Length 5
+
+          KWH is based upon one of the following:
+          
+                         1.   Utility records.
+          2.   Regression estimate.
+
+          The variable ORIGELQ on file 10 summarizes the source of the data for
+     KWH.
+
+          The variable USEEL on File 6 can be used to determine if a household
+     uses electricity.   
+
+               Number of      Number of
+               Observations   Observations
+     Value     Where          Where          Maximum   Minimum
+     of        KWH            KWH            Value of  Value of
+     USEEL     Is Zero        Is Positive    KWH       KWH
+
+     0             2              0               0           0
+     1         5,898          5,898          92,332          10
+
+BTUEL 'Electric Annual Use In Thousands Of BTU'             Columns 51-56
+     Numerical Variable 
+     Variable Length 6
+
+          Conversion factor for converting kWh's of electricity (KWH) into
+     thousands of BTU: One kWh of electricity = 3,412 Btu
+
+          BTUEL = KWH x 3.412
+
+                    Number of      Number of
+               Observations   Observations
+     Value     Where          Where          Maximum   Minimum
+     of        BTUEL          BTUEL          Value of  Value of
+     USEEL     Is Zero        Is Positive    BTUEL     BTUEL
+
+     0             2              0                0          0
+     1             0          5,898          315,037         34
+
+
+CUFEETNG 'CCFS (Hundred Cubic Feet) Of Natural Gas'         Columns 58-61
+     Numerical Variable 
+     Variable Length 4
+
+          CUFEETNG is based upon one of the following:
+          
+                         1.   Utility records.
+          2.   Regression estimate.
+
+          The variable ORIGNGQ on file 10 summarizes the source of the data for
+     CUFEETNG.
+
+          The variable USENG on File 6 can be used to determine if a household
+     uses Natural gas.   
+
+               Number of      Number of
+               Observations   Observations
+     Value     Where          Where          Maximum   Minimum
+     of        CUFEETNG       CUFEETNG       Value of  Value of
+     USENG     Is Zero        Is Positive    CUFEETNG  CUFEETNG
+
+     0         2,429              0              0            0
+     1             3          3,468          5,025            0
+
+There are 3 cases where USENG = 1 and CUFEETNG = 0.  All three respondents
+claimed natural gas was their main space-heating fuel.  The utility data for
+two of the cases indicated that the natural gas had been shut off for
+nonpayment.  For the third case, utility data indicates that the household
+used natural gas prior to December 1996 and after January 1998, but did not
+use natural gas from December 1996 through January 1998.
+
+BTUNG 'Natural Gas Annual Use In Thousands Of BTU'          Columns 63-68
+     Numerical Variable 
+     Variable Length 6
+
+          Conversion factor for converting hundreds of cubic feet of natural gas
+     (CUFEETNG) into thousands of BTU: 
+          One cubic foot of natural gas = 1,027 Btu
+
+          BTUNG = CUFEETNG x 102.7
+
+                    Number of      Number of
+               Observations   Observations
+     Value     Where          Where          Maximum   Minimum
+     of        BTUNG          BTUNG          Value of  Value of
+     USENG     Is Zero        Is Positive    BTUNG     BTUNG
+
+     0         2,429              0                0       0
+     1             3          3,468          516,067       0
+
+GALLONFO 'Gallons Of Fuel Oil Bought'                       Columns 70-73
+     Numerical Variable 
+     Variable Length 4
+
+          GALLONFO is based upon one of the following:
+
+                         1.   Supplier data on the amount delivered to the household in
+               1997.
+          2.   Regression estimate.
+
+          The variable ORIGFOQ On file 10 summarizes the source of the data for
+     GALLONFO.
+
+          The variable USEFO on File 6 can be used to determine if a household
+     uses kerosene.   
+
+               Number of      Number of
+               Observations   Observations
+     Value     Where          Where          Maximum   Minimum
+     of        GALLONFO       GALLONFO       Value of  Value of
+     USEFO     Is Zero        Is Positive    GALLONFO  GALLONFO
+
+     0         5,190              0              0       0
+     1            14            696          3,328       0
+
+          The 14 cases where USEFO equals 1 and GALLONFO equals 0 occur when the
+     household uses fuel oil but did not report buying fuel oil in the 12
+     months prior to the interview or the supplier reported that they did not
+     deliver fuel oil to the household during 1997.
+
+BTUFO 'Fuel Oil Annual Use In Thousands Of BTU'             Columns 75-80
+     Numerical Variable 
+     Variable Length 6
+
+     For Converting Gallons Into Thousands OF
+     BTU, the Following Conversion Factors Were
+     Multiplied Times Gallons:
+     138.690 For Fuel Oil NO. 2
+     135.000 For Fuel Oil NO. 1
+
+               Number of      Number of
+               Observations   Observations
+     Value     Where          Where          Maximum   Minimum
+     of        BTUFO          BTUFO          Value of  Value of
+     USEFO     Is Zero        Is Positive    BTUFO     BTUFO
+
+     0         5,190              0                0     0
+     1            14            696          461,593     0
+
+GALLONLP 'Gallons Of LPG Bought'                            Columns 82-85
+     Numerical Variable 
+     Variable Length 4
+
+          GALLONLP is based upon one of the following:
+
+                         1.   Supplier data on the amount delivered to the household in
+               1997.
+          2.   Regression estimate.
+
+          The variable ORIGLPQ On file 10 summarizes the source of the data for
+     GALLONLP.
+
+          The variable USELP on File 6 can be used to determine if a household
+     uses kerosene.   
+
+               Number of      Number of
+               Observations   Observations
+     Value     Where          Where          Maximum   Minimum
+     of        GALLONLP       GALLONLP       Value of  Value of
+     USELP     Is Zero        Is Positive    GALLONLP  GALLONLP
+
+     0         5,361              0              0       0
+     1            25            514          3,285       0
+
+          The 25 cases where USELP equals 1 and GALLONLP equals 0 occur when the
+     household uses LPG but did not report buying LPG in the 12 months prior
+     to the interview or the supplier reported that they did not deliver LPG
+     to the household during 1997.
+
+BTULP 'LPG Annual Use In Thousands Of BTU'                  Columns 87-92
+     Numerical Variable 
+     Variable Length 6
+
+     Conversion Factor: 91.33 Thousand Btu Per Gallon
+
+               Number of      Number of
+               Observations   Observations
+     Value     Where          Where          Maximum   Minimum
+     of        GALLONLP       GALLONLP       Value of  Value of
+     USELP     Is Zero        Is Positive    GALLONLP  GALLONLP
+
+     0         5,361              0                0     0
+     1            25            514          300,019     0
+
+
+The remaining variables are estimates of consumption by end use.  
+
+For each household that responded to the 1997 RECS, the annual amount of
+energy used for five end-use categories-- space heating, water heating, air-
+conditioning, refrigerators, and general appliance usage--was estimated.  The
+end-use estimates were produced for each of the five main energy sources:
+electricity, natural gas, fuel oil, kerosene, and liquefied petroleum gas
+(LPG).  The end-use amounts were not based on data produced by placing meters
+on individual appliances; rather, they were obtained by estimating how much
+of the total annual consumption for each energy source can be attributed to
+each of the end-use categories for each household by using a regression
+technique.
+
+The end-use estimates were normalized so that the sum of the end-use
+estimates was equal to the actual or imputed yearly consumption for each
+energy source used by the household.
+
+In particular:
+
+     BTUEL  = BTUELSPH + BTUELWTH + BTUELAPL + BTUELCOL + BTUELRFG
+     BTUNG  = BTUNGSPH + BTUNGWTH + BTUNGAPL + BTUNGCOL
+     BTUFO  = BTUFOSPH + BTUFOWTH + BTUFOAPL
+     BTULP  = BTULPSPH + BTULPWTH + BTULPAPL
+     BTUKER = BTUKRSPH + BTUKRWTH + BTUKRAPL
+
+For all energy sources, the space-heating component was defined as all energy
+used to generate heat by space-heating equipment.  The equipment could be the
+main space-heating equipment or secondary space-heating equipment.  Hence,
+for all energy sources, a household could have had a positive amount of
+energy assigned to the space-heating component even if the energy source was
+not used as the main space-heating energy source.
+
+The component for water heating was defined as all energy used to heat water
+for hot running water, as well as water heated at point sources (such as
+stoves or auxiliary water-heating equipment) for bathing, cleaning and other
+noncooking applications of hot water.  Energy used at point sources to heat
+water for cooking and hot drinks was considered part of the general appliance
+component, as was energy used to heat water for a swimming pool, hot tub,
+spa, or Jacuzzi. 
+
+For electricity, end use estimates were also made for freezers, cooking,
+dishwashers, and clothes dryers.  The estimates are BTUELFRZ, BTUELCOK,
+BTUELDWH, and BTUELCDR.  BTUELAPL also includes these end uses, hence
+BTUELAPL equals the sum of BTUELFRZ, BTUELCOK, BTUELDWH, and BTUELCDR plus
+the consumption for lights and other numerous appliances.  The electricity
+used in refrigerators is not included in BTUELAPL.  BTUELAPL includes all
+electricity consumption except electricity use for space heating, water
+heating, air conditioning, and refrigerators.  This includes electricity used
+for freezers, cooking, dishwashers, clothes dryers, lights, TV's, VCR's,
+stereos, coffee makers, power tools, pool heaters, furnace fans, home
+computers, and many more uses.
+BTUELSPH 'Electric Space Heat Use (Estimated)               Columns 94-99
+     In 1,000's Of BTU'
+     Numerical Variable 
+     Variable Length 6
+
+          For the 1987 and subsequent RECS, the electricity regression equation
+     assigned the electricity associated with the operation of fans in any
+     central forced-air heating equipment was assigned to the electricity
+     appliance component and not to the space-heating component.  Hence, if
+     ELWARM = 0 then BTUELSPH = 0.
+
+
+                              Number of      Number of
+                         Observations   Observations
+     Value     Value     Where          Where          Maximum   Minimum
+     of        of        BTUELSPH       BTUELSPH       Value of  Value of
+     USEEL     ELWARM    Is Zero        Is Positive    BTUELSPH  BTUELSPH
+
+     0         0             2              0                0          0
+     1         0         3,504              0                0          0  
+     1         1             0          2,394          120,115          9
+
+
+BTUNGSPH 'Natural Gas Space Heat Use (Estimated)            Columns 101-106
+     1,000's of BTU'
+     Numerical Variable 
+     Variable Length 6
+
+                              Number of      Number of
+                         Observations   Observations
+     Value     Value     Where          Where          Maximum   Minimum
+     of        of        BTUNGSPH       BTUNGSPH       Value of  Value of
+     USENG     UGWARM    Is Zero        Is Positive    BTUNGSPH  BTUNGSPH
+
+     0         0         2,429              0                0          0
+     1         0           462              0                0          0  
+     1         1             3          3,006          496,246          0
+
+BTUFOSPH 'Fuel Oil Space Heat Use (Estimated)               Columns 108-113
+     1,000's of BTU'
+     Numerical Variable 
+     Variable Length 6
+
+                              Number of      Number of
+                         Observations   Observations
+     Value     Value     Where          Where          Maximum   Minimum
+     of        of        BTUFOSPH       BTUFOSPH       Value of  Value of
+     USEFO     FOWARM    Is Zero        Is Positive    BTUFOSPH  BTUFOSPH
+
+     0         0         5,190              0                0          0
+     1         0             9              0                0          0  
+     1         1            13            688          418,428          0
+
+
+BTULPSPH 'LPG Space Heat Use (Estimated)                    Columns 115-120
+     In 1,000's Of BTU'
+     Numerical Variable 
+     Variable Length 6
+
+                              Number of      Number of
+                         Observations   Observations
+     Value     Value     Where          Where          Maximum   Minimum
+     of        of        BTULPSPH       BTULPSPH       Value of  Value of
+     USELP     LPWARM    Is Zero        Is Positive    BTULPSPH  BTULPSPH
+
+     0         0         5,361              0                0          0
+     1         0           170              0                0          0  
+     1         1             8            361          247,322          0
+
+BTUKRSPH 'Kerosene Space Heat Use (Estimated)               Columns 122-127
+     In 1,000's Of BTU'
+     Numerical Variable 
+     Variable Length 6
+
+                              Number of      Number of
+                         Observations   Observations
+     Value     Value     Where          Where          Maximum   Minimum
+     of        of        BTUKRSPH       BTUKRSPH       Value of  Value of
+     USEKERO   KRWARM    Is Zero        Is Positive    BTUKRSPH  BTUKRSPH
+
+     0         0         5,671              0                0          0
+     1         0             1              0                0          0  
+     1         1            10            218          132,030          0
+
+BTUELWTH 'Electric Water Heat Use (Estimated)               Columns 129-133
+     In 1,000's Of BTU'
+     Numerical Variable 
+     Variable Length 5
+
+                              Number of      Number of
+                         Observations   Observations
+     Value     Value     Where          Where          Maximum   Minimum
+     of        of        BTUELWTH       BTUELWTH       Value of  Value of
+     USEEL     ELWATER   Is Zero        Is Positive    BTUELWTH  BTUELWTH
+
+     0         0             2              0                0          0
+     1         0         3,509              0                0          0  
+     1         1             0          2,389           39,452        239
+
+BTUNGWTH 'Natural Gas Water Heat Use (Estimated)            Columns 135-140
+     In 1,000 Of BTU'
+     Numerical Variable 
+     Variable Length 6
+
+                              Number of      Number of
+                         Observations   Observations
+     Value     Value     Where          Where          Maximum   Minimum
+     of        of        BTUNGWTH       BTUNGWTH       Value of  Value of
+     USENG     UGWATER   Is Zero        Is Positive    BTUNGWTH  BTUNGWTH
+
+     0         0         2,429              0                0          0
+     1         0           559              0                0          0  
+     1         1             2          2,910          203,038          0
+
+BTUFOWTH 'Fuel Oil Water Heat Use (Estimated)               Columns 142-147
+     In 1,000's Of BTU'
+     Numerical Variable 
+     Variable Length 6
+
+                              Number of      Number of
+                         Observations   Observations
+     Value     Value     Where          Where          Maximum   Minimum
+     of        of        BTUFOWTH       BTUFOWTH       Value of  Value of
+     USEFO     FOWATER   Is Zero        Is Positive    BTUFOWTH  BTUFOWTH
+
+     0         0         5,190              0                0         0
+     1         0           326              0                0         0   
+     1         1             2            382          127,595         0
+
+BTULPWTH 'LPG Water Heat Use (Estimated)                    Columns 149-153
+     In 1,000 Of BTU'
+     Numerical Variable 
+     Variable Length 5
+
+                              Number of      Number of
+                         Observations   Observations
+     Value     Value     Where          Where          Maximum   Minimum
+     of        of        BTULPWTH       BTULPWTH       Value of  Value of
+     USELP     LPWATER   Is Zero        Is Positive    BTULPWTH  BTULPWTH
+
+     0         0         5,361              0                0         0
+     1         0           326              0                0         0   
+     1         1             6            207           82,629         0
+
+BTUKRWTH 'Kerosene Water Heat Use (Estimated)               Columns 155-159
+     In 1,000 Of BTU'
+     Numerical Variable 
+     Variable Length 5
+
+                              Number of      Number of
+                         Observations   Observations
+     Value     Value     Where          Where          Maximum   Minimum
+     of        of        BTUKRWTH       BTUKRWTH       Value of  Value of
+     USEKERO   KRWATER   Is Zero        Is Positive    BTUKRWTH  BTUKRWTH
+
+     0         0         5,671              0                0         0
+     1         0           227              0                0         0   
+     1         1             1              1           22,904         0   
+
+BTUELAPL 'Electric Appliance Use (Estimated)                Columns 161-166
+     In 1,000 Of BTU'
+     Numerical Variable 
+     Variable Length 6
+
+     Includes BTUELFZZ BTUELCOK BTUELDWH BTUELCDR
+
+                    Number of      Number of
+               Observations   Observations
+     Value     Where          Where          Maximum   Minimum
+     of        BTUELAPL       BTUELAPL       Value of  Value of
+     USEEL     Is Zero        Is Positive    BTUELAPL  BTUELAPL
+
+     0             2              0                0         0
+     1             0          5,898          104,064        21
+
+BTUNGAPL 'Natural Gas Appliance Use (Estimated)             Columns 168-173
+     In 1,000's Of  BTU'
+     Numerical Variable 
+     Variable Length 6
+
+                    Number of      Number of
+               Observations   Observations
+     Value     Where          Where          Maximum   Minimum            
+     of        BTUNGAPL       BTUNGAPL       Value of  Value of
+     USENG     Is Zero        Is Positive    BTUNGAPL  BTUNGAPL
+
+     0         2,429              0                0         0
+     1         1,208          2,263          100,674         0
+
+BTUFOAPL 'Fuel Oil Appliance Use (Estimated)                Columns 175-178
+     In 1,000's Of BTU'
+     Numerical Variable 
+     Variable Length 4
+
+                    Number of      Number of
+               Observations   Observations
+     Value     Where          Where          Maximum   Minimum            
+     of        BTUFOAPL       BTUFOAPL       Value of  Value of
+     USEFO     Is Zero        Is Positive    BTUFOAPL  BTUFOAPL
+
+     0         5,190              0                0         0
+     1           706              4            2,231         0
+
+          All four cases where BTUFOAPL was positive correspond to cases where
+     fuel oil was used to heat water for a hot tub, spa, or Jacuzzi.
+
+BTULPAPL 'LPG Appliance Use (Estimated)                     Columns 180-184
+     In Thousands Of BTU'
+     Numerical Variable 
+     Variable Length 5
+
+                    Number of      Number of
+               Observations   Observations
+     Value     Where          Where          Maximum   Minimum            
+     of        BTULPAPL       BTULPAPL       Value of  Value of
+     USELP     Is Zero        Is Positive    BTULPAPL  BTULPAPL
+
+     0         5,361              0                0         0
+     1           236            303           46,413         0
+
+BTUKRAPL 'Kerosene Appliance Use (Estimated)                Columns 186
+     In Thousands Of BTU'
+     Numerical Variable 
+     Variable Length 1
+
+                    Number of      Number of
+               Observations   Observations
+     Value     Where          Where          Maximum   Minimum            
+     of        BTUKRAPL       BTUKRAPL       Value of  Value of
+     USEKERO   Is Zero        Is Positive    BTUKRAPL  BTUKRAPL
+
+     0         5,671              0                0         0
+     1           229              0                0         0
+
+BTUELCOL 'Electric AC Use (Estimated)                       Columns 188-192
+     In 1,000's Of BTU'
+     Numerical Variable
+     Variable Length 5
+
+          The cases where AIRCOND = 1 yet BTUELCOL = 0 correspond to cases where
+     the household has air-conditioning equipment but reported that the
+     equipment was not used.                                  
+
+          The electricity air-conditioning component was defined as all
+     electricity associated with (1) electric air-conditioning equipment and
+     (2) fans in any central air-conditioning equipment including natural gas
+     air-conditioning equipment.  The regression equations for electricity do
+     not contain specific terms for whole-house fans, window fans, and
+     evaporative (swamp) coolers.  Hence, the consumption of electricity to
+     operate these fans and evaporative coolers was not assigned to the air-
+     conditioning component; it was included in the appliance component.
+     There is a term for ceiling fans in the electricity appliance component.
+
+          In the 1997 RECS, the households that reported that they had
+     air-conditioning equipment but did not use the equipment, were assigned
+     a value of zero for their electricity air-conditioning component.  In
+     RECS prior to 1987, these households were assigned small but positive
+     values for their electricity air-conditioning component.
+
+                              Number of      Number of
+                         Observations   Observations
+     Value     Value     Where          Where          Maximum   Minimum
+     of        of        BTUELCOL       BTUELCOL       Value of  Value of
+     USEEL     AIRCOND   Is Zero        Is Positive    BTUELCOL  BTUELCOL
+
+     0         0             2              0                0          0
+     1         0         1,823              0                0          0  
+     1         1            58          4,017           44,218          0
+
+BTUNGCOL 'Natural Gas AC Use (Estimated)                    Columns 194-197
+     In 1,000's Of BTU'
+     Numerical Variable 
+     Variable Length 4
+
+          The two cases where BTUNGCOL was positive correspond to cases where the
+     household claimed that the fuel for the central air-conditioning system
+     was natural gas and no conflicting information was discovered during the
+     editing process.
+
+                              Number of      Number of
+                         Observations   Observations
+     Value     Value     Where          Where          Maximum   Minimum
+     of        of        BTUNGCOL       BTUNGCOL       Value of  Value of
+     USENG     AIRCOND   Is Zero        Is Positive    BTUNGCOL  BTUNGCOL
+
+     0         0           698              0                0          0
+     0         1         1,731              0                0          0  
+     1         0         1,127              0                0          0  
+     1         1         2,342              2            9,060          0
+
+BTUELRFG 'Electric Refrigerator Use (Estimated)             Columns 199-203
+     In Thousands Of BTU'
+     Numerical Variable 
+     Variable Length 5
+
+          The one case where USEEL = 0 and NUMFRIG = 1 corresponds to a case where
+     the household uses LPG but does not use electricity.  
+
+                              Number of      Number of
+                         Observations   Observations
+     Value     Value     Where          Where          Maximum   Minimum
+     of        of        BTUELRFG       BTUELRFG       Value of  Value of
+     USEEL     NUMFRIG   Is Zero        Is Positive    BTUELRFG  BTUELRFG
+
+     0         0             1              0                0          0
+     0         1             1              0                0          0
+     1         0             9              0                0          0  
+     1         1,2,3         0          5,889           43,222         13
+
+BTUELFZZ 'Electric Freezer Use (Estimated)                  Columns 205-209
+     In 1,000's Of BTU'
+     Numerical Variable 
+     Variable Length 5
+     Is a subset Of BTUELAPL
+
+                         Number of      Number of
+                         Observations   Observations
+     Value     Value     Where          Where          Maximum   Minimum
+     of        of        BTUELFZZ       BTUELFZZ       Value of  Value of
+     USEEL     SEPFREEZ  Is Zero        Is Positive    BTUELFZZ  BTUELFZZ
+
+     0         0             2              0                0          0
+     1         0         3,917              0                0          0  
+     1         1             0          1,981           39,148         71
+
+BTUELCOK 'Electric Cooking Use (Estimated)                  Columns 211-214
+     In 1,000's Of BTU'
+     Numerical Variable 
+     Variable Length 4
+     Is a subset Of BTUELAPL
+
+          In order for BTUELCOK to be positive, the household had to have an
+     electric stove or oven (STOVENA = 5, or STOVEA = 5, or OVENA = 5)or the
+     main cooking fuel had to be electricity (FUELFOOD = 5).  In addition,
+     the household had to report that they cook hot meals at least once a
+     week or more (NUMMEAL equals 1, 2, 3, 4, or 5) or the households had to
+     report that they used their electric oven once a day or more (OVENUSE =
+     1 or 2).  
+
+          There are 1,581 cases where ELFOOD = 1 yet BTUELCOK = 0.  Of these,
+     there were 120 cases where FUELFOOD = 5 (electricity).  For all of these
+     120 cases, NUMMEAL equals 0 (Doesn't Cook/Never Cooks) or NUMMEAL equals
+     6 (Cooks Less Than Once a Week).  
+
+          For all cases where ELFOOD = 1, BTUELCOK = 0, and FUELFOOD does not
+     equal 5, the respondent reported that they had a microwave oven (MICRO =
+     1).
+
+                         Number of      Number of
+                         Observations   Observations
+     Value     Value     Where          Where          Maximum   Minimum
+     of        of        BTUELCOK       BTUELCOK       Value of  Value of
+     USEEL     ELFOOD    Is Zero        Is Positive    BTUELCOK  BTUELCOK
+
+     0         0             2              0                0          0
+     1         0           569              0                0          0  
+     1         1         1,581          3,748            8,658          0
+
+BTUELDWH 'Electric Dishwasher Use (Estimated)               Columns 216-219
+     In 1,000's Of BTU'
+     Numerical Variable 
+     Variable Length 4
+     Is a subset Of BTUELAPL
+
+                         Number of      Number of
+                         Observations   Observations
+     Value     Value     Where          Where          Maximum   Minimum
+     of        of        BTUELDWH       BTUELDWH       Value of  Value of
+     USEEL     DISHWASH  Is Zero        Is Positive    BTUELDWH  BTUELDWH
+
+     0         0             2              0                0          0
+     1         0         3,179              0                0          0  
+     1         1             0          2,719            8,348         31
+
+BTUELCDR 'Electric Dryer Use (Estimated)                    Columns 221-225
+     In Thousands Of BTU'
+     Numerical Variable 
+     Variable Length 5
+     Is a subset Of BTUELAPL
+
+          The 119 cases where the household has an electric dryer yet BTUELCDR = 0
+     correspond to cases where the household reported that they used their
+     dryer infrequently (DRYRUSE = 3).
+
+                         Number of      Number of
+                         Observations   Observations
+     Value     Value     Where          Where          Maximum   Minimum
+     of        of        BTUELCDR       BTUELCDR       Value of  Value of
+     USEEL     DRYRFUEL  Is Zero        Is Positive    BTUELCDR  BTUELCDR
+
+     0         Not 5         2              0                0          0
+     1         Not 5     2,672              0                0          0  
+     1         5           119          3,107           20,094          0

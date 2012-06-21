@@ -1,0 +1,41 @@
+industry,NAICS_code,fuel,Bkwh
+Refining,324,refined liquids,0.66
+Refining,324,gas,16.81
+Refining,324,coal,0.43
+Refining,324,biomass,5.49
+Food,311,refined liquids,0.07
+Food,311,gas,1.3
+Food,311,coal,4.18
+Food,311,biomass,0.13
+Paper,322,refined liquids,2.82
+Paper,322,gas,6.32
+Paper,322,coal,6.57
+Paper,322,biomass,28.95
+Bulk Chemical,325,refined liquids,0.15
+Bulk Chemical,325,gas,44.57
+Bulk Chemical,325,coal,2.53
+Bulk Chemical,325,biomass,5.35
+Cement,3273,refined liquids,0.17
+Cement,3273,gas,0.03
+Cement,3273,coal,0.23
+Cement,3273,biomass,0.01
+Iron and Steel,3311,refined liquids,0.03
+Iron and Steel,3311,gas,0.41
+Iron and Steel,3311,coal,2.25
+Iron and Steel,3311,biomass,3.63
+Aluminum,3313,refined liquids,0
+Aluminum,3313,gas,0
+Aluminum,3313,coal,0
+Aluminum,3313,biomass,0.9
+Metal Based Durables,332,refined liquids,0.06
+Metal Based Durables,332,gas,0.29
+Metal Based Durables,332,coal,0.61
+Metal Based Durables,332,biomass,0.03
+Other Manufacturing,na,refined liquids,0.01
+Other Manufacturing,na,gas,0.12
+Other Manufacturing,na,coal,0.32
+Other Manufacturing,na,biomass,1.43
+Nonmanufacturing,na,refined liquids,0.02
+Nonmanufacturing,na,gas,0.8
+Nonmanufacturing,na,coal,0
+Nonmanufacturing,na,biomass,0.2

@@ -1,0 +1,13 @@
+GCAM_industry,GCAM_service,in_pct
+chemicals,boilers_CHP,0.63
+chemicals,boilers,0.37
+chemicals,process heat,0
+food processing,boilers_CHP,0.2
+food processing,boilers,0.53
+food processing,process heat,0.27
+iron and steel,boilers_CHP,0.15
+iron and steel,boilers,0.1
+iron and steel,process heat,0.75
+pulp paper and wood,boilers_CHP,0.9
+pulp paper and wood,boilers,0.1
+pulp paper and wood,process heat,0

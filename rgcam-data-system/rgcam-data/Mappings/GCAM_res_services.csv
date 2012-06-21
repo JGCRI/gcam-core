@@ -1,0 +1,8 @@
+RECS_service,service
+apl,resid appliances
+col,resid cooling
+lgt,resid lighting
+oth,resid other
+othapl,resid other appliances
+sph,resid heating
+wth,resid hot water

@@ -1,0 +1,51 @@
+GCAM_service,GCAM_fuel,efficiency,elec_out
+boilers,biomass,0.7,0
+boilers_CHP,biomass,0.55,0.2
+process heat,biomass,0.75,0
+machine drive,biomass,0.3,0
+electrochemical,biomass,1,0
+other end uses,biomass,1,0
+agricultural energy use,biomass,1,0
+mining energy use,biomass,1,0
+construction energy use,biomass,1,0
+feedstocks,biomass,1,0
+boilers,coal,0.8,0
+boilers_CHP,coal,0.6,0.25
+process heat,coal,0.85,0
+machine drive,coal,0.3,0
+electrochemical,coal,1,0
+other end uses,coal,1,0
+agricultural energy use,coal,1,0
+mining energy use,coal,1,0
+construction energy use,coal,1,0
+feedstocks,coal,1,0
+boilers,electricity,1,0
+boilers_CHP,electricity,1,0
+process heat,electricity,1,0
+machine drive,electricity,1,0
+electrochemical,electricity,1,0
+other end uses,electricity,1,0
+agricultural energy use,electricity,1,0
+mining energy use,electricity,1,0
+construction energy use,electricity,1,0
+feedstocks,electricity,1,0
+boilers,gas,0.8,0
+boilers_CHP,gas,0.6,0.25
+process heat,gas,0.85,0
+machine drive,gas,0.35,0
+electrochemical,gas,1,0
+other end uses,gas,1,0
+agricultural energy use,gas,1,0
+mining energy use,gas,1,0
+construction energy use,gas,1,0
+feedstocks,gas,1,0
+boilers,refined liquids,0.8,0
+boilers_CHP,refined liquids,0.6,0.25
+process heat,refined liquids,0.85,0
+machine drive,refined liquids,0.4,0
+electrochemical,refined liquids,1,0
+other end uses,refined liquids,1,0
+agricultural energy use,refined liquids,1,0
+mining energy use,refined liquids,1,0
+construction energy use,refined liquids,1,0
+feedstocks,refined liquids,1,0

@@ -1,0 +1,13 @@
+# Interpolation rule over-writes for selected technologies,,,,,,
+# Source: Tables_BEND_Data.xlsx,,,,,,
+supplysector,subsector,technology,from_year,to_year,interpolation_function,share-weight
+resid hot water,electricity,electric heat pump water heater,2005,2050,s-curve,1
+resid lighting,electricity,incandescent,2005,2050,s-curve,1
+resid lighting,electricity,fluorescent,2005,2050,s-curve,1
+resid lighting,electricity,solid state,2005,2050,s-curve,1
+resid ventilation,electricity,ventilation hi-eff,2005,2020,s-curve,1
+comm hot water,electricity,electric heat pump water heater,2005,2050,s-curve,1
+comm lighting,electricity,incandescent,2005,2020,s-curve,1
+comm lighting,electricity,fluorescent,2005,2050,s-curve,1
+comm lighting,electricity,solid state,2005,2050,s-curve,1
+comm ventilation,electricity,ventilation hi-eff,2005,2020,s-curve,1

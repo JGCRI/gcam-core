@@ -1,0 +1,10 @@
+CBECS_service,service
+sph,comm heating
+col,comm cooling
+wth,comm hot water
+vnt,comm ventilation
+ckg,comm cooking
+lgt,comm lighting
+rfg,comm refrigeration
+ofc,comm office
+othint,comm other

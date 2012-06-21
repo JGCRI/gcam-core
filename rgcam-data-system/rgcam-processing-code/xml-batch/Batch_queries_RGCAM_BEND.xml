@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<queries>   
+
+	<aQuery>
+		<region name="AK"/>
+		<region name="AL"/>
+		<region name="AR"/>
+		<region name="AZ"/>
+		<region name="CA"/>
+		<region name="CO"/>
+		<region name="CT"/>
+		<region name="DC"/>
+		<region name="DE"/>
+		<region name="FL"/>
+		<region name="GA"/>
+		<region name="HI"/>
+		<region name="IA"/>
+		<region name="ID"/>
+		<region name="IL"/>
+		<region name="IN"/>
+		<region name="KS"/>
+		<region name="KY"/>
+		<region name="LA"/>
+		<region name="MA"/>
+		<region name="MD"/>
+		<region name="ME"/>
+		<region name="MI"/>
+		<region name="MN"/>
+		<region name="MO"/>
+		<region name="MS"/>
+		<region name="MT"/>
+		<region name="NC"/>
+		<region name="ND"/>
+		<region name="NE"/>
+		<region name="NH"/>
+		<region name="NJ"/>
+		<region name="NM"/>
+		<region name="NV"/>
+		<region name="NY"/>
+		<region name="OH"/>
+		<region name="OK"/>
+		<region name="OR"/>
+		<region name="PA"/>
+		<region name="RI"/>
+		<region name="SC"/>
+		<region name="SD"/>
+		<region name="TN"/>
+		<region name="TX"/>
+		<region name="UT"/>
+		<region name="VA"/>
+		<region name="VT"/>
+		<region name="WA"/>
+		<region name="WI"/>
+		<region name="WV"/>
+		<region name="WY"/>
+      <supplyDemandQuery title="Building final energy by technology and fuel">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' and (@name='building' or (exists(child::keyword[@final-energy='building'])))]//*[@type = 'technology']/*[@type='input']/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+	</aQuery>
+ 	<aQuery>
+		<region name="AK"/>
+		<region name="AL"/>
+		<region name="AR"/>
+		<region name="AZ"/>
+		<region name="CA"/>
+		<region name="CO"/>
+		<region name="CT"/>
+		<region name="DC"/>
+		<region name="DE"/>
+		<region name="FL"/>
+		<region name="GA"/>
+		<region name="HI"/>
+		<region name="IA"/>
+		<region name="ID"/>
+		<region name="IL"/>
+		<region name="IN"/>
+		<region name="KS"/>
+		<region name="KY"/>
+		<region name="LA"/>
+		<region name="MA"/>
+		<region name="MD"/>
+		<region name="ME"/>
+		<region name="MI"/>
+		<region name="MN"/>
+		<region name="MO"/>
+		<region name="MS"/>
+		<region name="MT"/>
+		<region name="NC"/>
+		<region name="ND"/>
+		<region name="NE"/>
+		<region name="NH"/>
+		<region name="NJ"/>
+		<region name="NM"/>
+		<region name="NV"/>
+		<region name="NY"/>
+		<region name="OH"/>
+		<region name="OK"/>
+		<region name="OR"/>
+		<region name="PA"/>
+		<region name="RI"/>
+		<region name="SC"/>
+		<region name="SD"/>
+		<region name="TN"/>
+		<region name="TX"/>
+		<region name="UT"/>
+		<region name="VA"/>
+		<region name="VT"/>
+		<region name="WA"/>
+		<region name="WI"/>
+		<region name="WV"/>
+		<region name="WY"/>
+      <supplyDemandQuery title="Building service output by technology">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='building' or (exists(child::keyword[@final-energy='building'])))]/*[@type = 'subsector']/*[@type = 'technology']/*[@type='output' (:collapse:) and not(@name= 'internal-gains')]/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+	</aQuery>
+</queries>

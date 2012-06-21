@@ -1,0 +1,10 @@
+fuel,service,share,efficiency
+electricity,heating,0.313199105,0.95
+electricity,cooling,0.413953488,2
+electricity,hot water,0.300254049,0.9
+gas,heating,0.414988814,0.8
+gas,cooling,0.437209302,0.75
+gas,hot water,0.567640521,0.75
+refined liquids,heating,0.271812081,0.8
+refined liquids,cooling,0.148837209,0.75
+refined liquids,hot water,0.13210543,0.75

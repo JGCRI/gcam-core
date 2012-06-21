@@ -1,0 +1,7 @@
+# Base-year energy shares of different technologies within a service / fuel (i.e. not efficiency-partitioned technologies),,,,,
+# Source: Tables_Bld_Data.xlsx,,,,,
+supplysector,subsector,technology1,technology2,share_tech1,share_tech2
+resid heating,electricity,electric furnace,electric heat pump,0.86,0.54
+resid lighting,electricity,incandescent,fluorescent,0.90,0.10
+comm heating,electricity,electric furnace,electric heat pump,0.46,0.54
+comm lighting,electricity,incandescent,fluorescent,0.32,0.68
