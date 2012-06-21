@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project default="javadoc">
-<target name="javadoc">
-<javadoc access="private" author="true" classpath="xml-apis.jar;xercesImpl.jar;xalan.jar" destdir="C:\work_area\docs" doctitle="Configuration Editor Documentation" nodeprecated="false" nodeprecatedlist="false" noindex="false" nonavbar="false" notree="false" packagenames="configurationeditor,guicomponents,actions,utils" source="1.5" sourcepath="src" splitindex="true" use="true" version="true"/>
-</target>
-</project>
