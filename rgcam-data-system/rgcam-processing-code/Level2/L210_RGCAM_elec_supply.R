@@ -165,6 +165,14 @@ L210_TechCal <- L210_TechCal[, c(1, L210_TechCal.numcols-2, L210_TechCal.numcols
 L210_empty_subs <- L210_TechCal[ L210_TechCal$calibrated_value <= 0, c( "state", "supplysector", "subsector", "year" ) ]
 L210_TechCal <- L210_TechCal[ L210_TechCal$calibrated_value > 0, ]
 L210_TechCal$efficiency <- round( L210_TechCal$efficiency, CalInput_digits )
+# Special case the renewables since the code seems to override the efficiencies to 1 regardless
+L210_TechCal[ L210_TechCal$subsector %in% c( "wind", "solar" ), c( "calibrated_value", "efficiency" ) ] <-
+    cbind( L210_TechCal[ L210_TechCal$subsector %in% c( "wind", "solar" ), ]$calibrated_value *
+           L210_TechCal[ L210_TechCal$subsector %in% c( "wind", "solar" ), ]$efficiency, 1 )
+# Special case the geothermal efficiency since it seems to be very different than assumed
+L210_TechCal[ L210_TechCal$subsector %in% c( "geothermal" ), c( "calibrated_value", "efficiency" ) ] <-
+    cbind( L210_TechCal[ L210_TechCal$subsector %in% c( "geothermal" ), ]$calibrated_value *
+           L210_TechCal[ L210_TechCal$subsector %in% c( "geothermal" ), ]$efficiency / 0.1, 0.1 )
 
 # Reset subsector share-weights in the base year to zero where there is zero production
 # and 1 otherwise
