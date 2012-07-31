@@ -1,1 +1,37 @@
-fuel,segment,technology,fraction1990,fraction2005coal,base load generation,coal_base_exist,0.80336,0.87143coal,intermediate generation,coal_int_exist,0.19664,0.12857coal,subpeak generation,coal_subpeak_exist,0.00000,0.00000coal,peak generation,coal_peak_exist,0.00000,0.00000gas,base load generation,gas_base_exist,0.03000,0.15050gas,intermediate generation,gas_int_exist,0.45092,0.50204gas,subpeak generation,gas_subpeak_exist,0.26455,0.17668gas,peak generation,gas_peak_exist,0.25453,0.17078refined liquids,base load generation,oil_base_exist,0.00000,0.00000refined liquids,intermediate generation,oil_int_exist,0.00000,0.00000refined liquids,subpeak generation,oil_subpeak_exist,0.50000,0.50000refined liquids,peak generation,oil_peak_exist,0.50000,0.50000biomass,base load generation,bio_base_exist,0.30000,0.50000biomass,intermediate generation,bio_int_exist,0.70000,0.50000biomass,subpeak generation,bio_subpeak_exist,0.00000,0.00000biomass,peak generation,bio_peak_exist,0.00000,0.00000nuclear,base load generation,nuc_base_gen2,1.00000,1.00000nuclear,intermediate generation,nuc_int_gen2,0.00000,0.00000nuclear,subpeak generation,nuc_subpeak_gen2,0.00000,0.00000nuclear,peak generation,nuc_peak_gen2,0.00000,0.00000wind,base load generation,wind_base,1.00000,1.00000wind,intermediate generation,wind_int,0.00000,0.00000wind,subpeak generation,wind_subpeak,0.00000,0.00000wind,peak generation,wind_peak,0.00000,0.00000solar,base load generation,pv_base,0.00000,0.00000solar,intermediate generation,pv_int,0.00000,0.00000solar,subpeak generation,pv_subpeak,1.00000,1.00000solar,peak generation,pv_peak,0.00000,0.00000hydro,base load generation,hydro_base,1.00000,1.00000hydro,intermediate generation,hydro_int,0.00000,0.00000hydro,subpeak generation,hydro_subpeak,0.00000,0.00000hydro,peak generation,hydro_peak,0.00000,0.00000geothermal,base load generation,geo_base,1.00000,1.00000geothermal,intermediate generation,geo_int,0.00000,0.00000geothermal,subpeak generation,geo_subpeak,0.00000,0.00000geothermal,peak generation,geo_peak,0.00000,0.00000,,,,
+fuel,segment,technology,fraction1990,fraction2005
+coal,base load generation,coal_base_exist,0.80336,0.87143
+coal,intermediate generation,coal_int_exist,0.19664,0.12857
+coal,subpeak generation,coal_subpeak_exist,0.00000,0.00000
+coal,peak generation,coal_peak_exist,0.00000,0.00000
+gas,base load generation,gas_base_exist,0.03000,0.15050
+gas,intermediate generation,gas_int_exist,0.45092,0.50204
+gas,subpeak generation,gas_subpeak_exist,0.26455,0.17668
+gas,peak generation,gas_peak_exist,0.25453,0.17078
+refined liquids,base load generation,oil_base_exist,0.00000,0.00000
+refined liquids,intermediate generation,oil_int_exist,0.00000,0.00000
+refined liquids,subpeak generation,oil_subpeak_exist,0.50000,0.50000
+refined liquids,peak generation,oil_peak_exist,0.50000,0.50000
+biomass,base load generation,bio_base_exist,0.30000,0.50000
+biomass,intermediate generation,bio_int_exist,0.70000,0.50000
+biomass,subpeak generation,bio_subpeak_exist,0.00000,0.00000
+biomass,peak generation,bio_peak_exist,0.00000,0.00000
+nuclear,base load generation,nuc_base_gen2,1.00000,1.00000
+nuclear,intermediate generation,nuc_int_gen2,0.00000,0.00000
+nuclear,subpeak generation,nuc_subpeak_gen2,0.00000,0.00000
+nuclear,peak generation,nuc_peak_gen2,0.00000,0.00000
+wind,base load generation,wind_base,1.00000,1.00000
+wind,intermediate generation,wind_int,0.00000,0.00000
+wind,subpeak generation,wind_subpeak,0.00000,0.00000
+wind,peak generation,wind_peak,0.00000,0.00000
+solar,base load generation,pv_base,0.00000,0.00000
+solar,intermediate generation,pv_int,0.00000,0.00000
+solar,subpeak generation,pv_subpeak,1.00000,1.00000
+solar,peak generation,pv_peak,0.00000,0.00000
+hydro,base load generation,hydro_base,1.00000,1.00000
+hydro,intermediate generation,hydro_int,0.00000,0.00000
+hydro,subpeak generation,hydro_subpeak,0.00000,0.00000
+hydro,peak generation,hydro_peak,0.00000,0.00000
+geothermal,base load generation,geo_base,1.00000,1.00000
+geothermal,intermediate generation,geo_int,0.00000,0.00000
+geothermal,subpeak generation,geo_subpeak,0.00000,0.00000
+geothermal,peak generation,geo_peak,0.00000,0.00000

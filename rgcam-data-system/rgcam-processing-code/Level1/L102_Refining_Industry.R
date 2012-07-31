@@ -12,7 +12,6 @@ printlog( "Refining sector inputs and outputs, industrial sector inputs, and ind
 L101_inEIA_EJ_state_S_F <- readdata( "L101_inEIA_EJ_state_S_F" )
 USA_refining_in <- readdata( "USA_refining_in" )
 USA_refining_out <- readdata( "USA_refining_out" )
-USA_ind_elec_refining <- readdata( "USA_ind_elec_refining" )
 NE_ethanol_Mgal.yr <- readdata( "NE_ethanol_Mgal.yr" )
 USA_final_in <- readdata( "USA_final_in" )
 USA_elec_chp_out <- readdata( "USA_elec_chp_out" )
@@ -44,12 +43,6 @@ L102_out_EJ_state_cor <- data.frame( state = states,
 printlog( "Crude oil refining inputs by state and fuel" )
 #Inputs to crude oil refining - same method, but built to handle multiple inputs
 L102_in_EJ_USA_cor_F <- USA_refining_in [USA_refining_in$technology == "crude oil refining", ]
-
-#At this point, the elec input includes the input to "refined liquids electricity", which needs to be deducted
-printlog( "Deducting electricity input to refined liquids electricity (accounted under industrial energy)" )
-L102_in_EJ_USA_cor_F[ L102_in_EJ_USA_cor_F$minicam.energy.input == "elect_td_ind", X_base_years ] <-
-      L102_in_EJ_USA_cor_F[ L102_in_EJ_USA_cor_F$minicam.energy.input == "elect_td_ind", X_base_years ] - 
-      USA_ind_elec_refining[ X_base_years ]
 
 L102_in_EJ_USA_cor_F_repstate <- L102_in_EJ_USA_cor_F[ rep( 1:nrow( L102_in_EJ_USA_cor_F ), times = length( states ) ), ]
 L102_in_EJ_USA_cor_F_repstate <- L102_in_EJ_USA_cor_F_repstate[ order( L102_in_EJ_USA_cor_F_repstate$minicam.energy.input ), ]

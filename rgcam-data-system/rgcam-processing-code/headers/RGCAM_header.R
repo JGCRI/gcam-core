@@ -30,7 +30,7 @@ if( !exists( "GCAM_SOURCE_FN" ) ) {		# i.e. #ifndef
 GCAM_DATA_COMMENT 		<- "#"								# Comment character for files
 XML_TEMPLATE_FILENAME 	<- "batch_rgcam_template.xml"		# XML template file name
 GCAM_HEADERS_RGCAM 		<- "headers_rgcam.txt"				# RGCAM header file name
-PATH_FROM_MI 			<- "../../Energy/RGCAM/Data_V2/"		# Path from Model Interface
+PATH_FROM_MI 			<- "./"		                        # Path from Model Interface
 DEPENDENCY_FOLDER 		<- "rgcam-dependencies"				# Dependency data folder
 FILEPATHMAP 			<- "rgcam-processing-code/headers/filemapping.csv"	# List of file mappings
 

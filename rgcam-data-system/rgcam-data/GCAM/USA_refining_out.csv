@@ -1,4 +1,4 @@
 supplysector,subsector,technology,minicam-energy-input,1975,1980,1985,1990,1995,2000,2005,2008
-refined liquids,crude oil refining,crude oil refining,regional crude oil,31.2337265,32.9470594,29.699558,31.5836334,32.7452271,36.464313,38.7367595,35.2516432
-refined liquids,biomass liquids,biomass liquids-ethanol (conv),regional corn for ethanol,0,0,0,0,0.1109931,0.1326973,0.3257725,0.777245
-refined liquids,biomass liquids,biomass liquids-biodiesel (conv),regional biomassOil,0,0,0,0,0,0.0008799,0.0124024,0.0564393
+refined liquids,crude oil refining,crude oil refining,regional crude oil,31.2337265,32.9470594,29.699558,31.62593583,32.7452271,36.464313,38.8268927,35.2516432
+refined liquids,biomass liquids,biomass liquids-ethanol (conv),regional corn for ethanol,0,0,0,0,0.1109931,0.1326973,0.325515326,0.777245
+refined liquids,biomass liquids,biomass liquids-biodiesel (conv),regional biomassOil,0,0,0,0,0,0.0008799,0.012401302,0.0564393

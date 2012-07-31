@@ -1,5 +1,5 @@
 supplysector,subsector,technology,1975,1980,1985,1990,1995,2000,2005,2008
 industrial energy use,biomass,biomass cogen,0,0,0,0.2227932,0.13257,0.1324872,0.1225224,0.1178136
 industrial energy use,coal,coal cogen,0,0,0,0.0898956,0.124812,0.1560096,0.0716688,0.0715032
-industrial energy use,gas,gas cogen,0,0,0,0.3567348,0.681876,0.31239,0.274014,0.2934432
-industrial energy use,refined liquids,refined liquids cogen,0,0,0,0.0195876,0.0743184,0.0224892,0.053676,0.0321156
+industrial energy use,gas,gas cogen,0,0,0,0.3567348,0.681876,0.31239,0.2738772,0.2934432
+industrial energy use,refined liquids,refined liquids cogen,0,0,0,0.0195876,0.0743184,0.0224892,0.0538128,0.0321156
