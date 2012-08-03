@@ -1,0 +1,19 @@
+INPUT_TABLE
+Variable ID
+Subsector
+
+region,supplysector,subsector,logit.exponent,share.weight.year,share.weight,apply.to,from.year,to.year,interpolation.function
+Africa,N fertilizer,Imports,-12,1975,0,share-weight,2005,9999,fixed
+Australia_NZ,N fertilizer,Imports,-12,1975,0,share-weight,2005,9999,fixed
+Canada,N fertilizer,Imports,-12,1975,0,share-weight,2005,9999,fixed
+China,N fertilizer,Imports,-12,1975,0,share-weight,2005,9999,fixed
+Eastern Europe,N fertilizer,Imports,-12,1975,0,share-weight,2005,9999,fixed
+Former Soviet Union,N fertilizer,Imports,-12,1975,0,share-weight,2005,9999,fixed
+India,N fertilizer,Imports,-12,1975,0,share-weight,2005,9999,fixed
+Japan,N fertilizer,Imports,-12,1975,0,share-weight,2005,9999,fixed
+Korea,N fertilizer,Imports,-12,1975,0,share-weight,2005,9999,fixed
+Latin America,N fertilizer,Imports,-12,1975,0,share-weight,2005,9999,fixed
+Middle East,N fertilizer,Imports,-12,1975,0,share-weight,2005,9999,fixed
+Southeast Asia,N fertilizer,Imports,-12,1975,0,share-weight,2005,9999,fixed
+USA,N fertilizer,Imports,-12,1975,0,share-weight,2005,9999,fixed
+Western Europe,N fertilizer,Imports,-12,1975,0,share-weight,2005,9999,fixed

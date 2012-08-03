@@ -1,0 +1,1520 @@
+INPUT_TABLE
+Variable ID
+AgSubsectorDelete
+
+region,AgSupplySector,AgSupplySubsector,AEZ
+USA,biomass,biomassAEZ01,AEZ01
+Canada,biomass,biomassAEZ01,AEZ01
+Western Europe,biomass,biomassAEZ01,AEZ01
+Japan,biomass,biomassAEZ01,AEZ01
+Former Soviet Union,biomass,biomassAEZ01,AEZ01
+China,biomass,biomassAEZ01,AEZ01
+Eastern Europe,biomass,biomassAEZ01,AEZ01
+Korea,biomass,biomassAEZ01,AEZ01
+USA,Corn,CornAEZ01,AEZ01
+Canada,Corn,CornAEZ01,AEZ01
+Western Europe,Corn,CornAEZ01,AEZ01
+Japan,Corn,CornAEZ01,AEZ01
+Former Soviet Union,Corn,CornAEZ01,AEZ01
+China,Corn,CornAEZ01,AEZ01
+Eastern Europe,Corn,CornAEZ01,AEZ01
+Korea,Corn,CornAEZ01,AEZ01
+USA,FiberCrop,FiberCropAEZ01,AEZ01
+Canada,FiberCrop,FiberCropAEZ01,AEZ01
+Western Europe,FiberCrop,FiberCropAEZ01,AEZ01
+Japan,FiberCrop,FiberCropAEZ01,AEZ01
+Former Soviet Union,FiberCrop,FiberCropAEZ01,AEZ01
+China,FiberCrop,FiberCropAEZ01,AEZ01
+Eastern Europe,FiberCrop,FiberCropAEZ01,AEZ01
+Korea,FiberCrop,FiberCropAEZ01,AEZ01
+USA,FodderGrass,FodderGrassAEZ01,AEZ01
+Canada,FodderGrass,FodderGrassAEZ01,AEZ01
+Western Europe,FodderGrass,FodderGrassAEZ01,AEZ01
+Japan,FodderGrass,FodderGrassAEZ01,AEZ01
+Former Soviet Union,FodderGrass,FodderGrassAEZ01,AEZ01
+China,FodderGrass,FodderGrassAEZ01,AEZ01
+Eastern Europe,FodderGrass,FodderGrassAEZ01,AEZ01
+Korea,FodderGrass,FodderGrassAEZ01,AEZ01
+USA,FodderHerb,FodderHerbAEZ01,AEZ01
+Canada,FodderHerb,FodderHerbAEZ01,AEZ01
+Western Europe,FodderHerb,FodderHerbAEZ01,AEZ01
+Japan,FodderHerb,FodderHerbAEZ01,AEZ01
+Former Soviet Union,FodderHerb,FodderHerbAEZ01,AEZ01
+China,FodderHerb,FodderHerbAEZ01,AEZ01
+Eastern Europe,FodderHerb,FodderHerbAEZ01,AEZ01
+Korea,FodderHerb,FodderHerbAEZ01,AEZ01
+USA,Forest,ForestAEZ01,AEZ01
+Canada,Forest,ForestAEZ01,AEZ01
+Western Europe,Forest,ForestAEZ01,AEZ01
+Japan,Forest,ForestAEZ01,AEZ01
+Former Soviet Union,Forest,ForestAEZ01,AEZ01
+China,Forest,ForestAEZ01,AEZ01
+Eastern Europe,Forest,ForestAEZ01,AEZ01
+Korea,Forest,ForestAEZ01,AEZ01
+USA,MiscCrop,MiscCropAEZ01,AEZ01
+Canada,MiscCrop,MiscCropAEZ01,AEZ01
+Western Europe,MiscCrop,MiscCropAEZ01,AEZ01
+Japan,MiscCrop,MiscCropAEZ01,AEZ01
+Former Soviet Union,MiscCrop,MiscCropAEZ01,AEZ01
+China,MiscCrop,MiscCropAEZ01,AEZ01
+Eastern Europe,MiscCrop,MiscCropAEZ01,AEZ01
+Korea,MiscCrop,MiscCropAEZ01,AEZ01
+USA,OilCrop,OilCropAEZ01,AEZ01
+Canada,OilCrop,OilCropAEZ01,AEZ01
+Western Europe,OilCrop,OilCropAEZ01,AEZ01
+Japan,OilCrop,OilCropAEZ01,AEZ01
+Former Soviet Union,OilCrop,OilCropAEZ01,AEZ01
+China,OilCrop,OilCropAEZ01,AEZ01
+Eastern Europe,OilCrop,OilCropAEZ01,AEZ01
+Korea,OilCrop,OilCropAEZ01,AEZ01
+USA,OtherGrain,OtherGrainAEZ01,AEZ01
+Canada,OtherGrain,OtherGrainAEZ01,AEZ01
+Western Europe,OtherGrain,OtherGrainAEZ01,AEZ01
+Japan,OtherGrain,OtherGrainAEZ01,AEZ01
+Former Soviet Union,OtherGrain,OtherGrainAEZ01,AEZ01
+China,OtherGrain,OtherGrainAEZ01,AEZ01
+Eastern Europe,OtherGrain,OtherGrainAEZ01,AEZ01
+Korea,OtherGrain,OtherGrainAEZ01,AEZ01
+USA,PalmFruit,PalmFruitAEZ01,AEZ01
+Canada,PalmFruit,PalmFruitAEZ01,AEZ01
+Western Europe,PalmFruit,PalmFruitAEZ01,AEZ01
+Japan,PalmFruit,PalmFruitAEZ01,AEZ01
+Former Soviet Union,PalmFruit,PalmFruitAEZ01,AEZ01
+China,PalmFruit,PalmFruitAEZ01,AEZ01
+Eastern Europe,PalmFruit,PalmFruitAEZ01,AEZ01
+Korea,PalmFruit,PalmFruitAEZ01,AEZ01
+USA,Pasture,PastureAEZ01,AEZ01
+Canada,Pasture,PastureAEZ01,AEZ01
+Western Europe,Pasture,PastureAEZ01,AEZ01
+Japan,Pasture,PastureAEZ01,AEZ01
+Former Soviet Union,Pasture,PastureAEZ01,AEZ01
+China,Pasture,PastureAEZ01,AEZ01
+Eastern Europe,Pasture,PastureAEZ01,AEZ01
+Korea,Pasture,PastureAEZ01,AEZ01
+USA,Rice,RiceAEZ01,AEZ01
+Canada,Rice,RiceAEZ01,AEZ01
+Western Europe,Rice,RiceAEZ01,AEZ01
+Japan,Rice,RiceAEZ01,AEZ01
+Former Soviet Union,Rice,RiceAEZ01,AEZ01
+China,Rice,RiceAEZ01,AEZ01
+Eastern Europe,Rice,RiceAEZ01,AEZ01
+Korea,Rice,RiceAEZ01,AEZ01
+USA,Root_Tuber,Root_TuberAEZ01,AEZ01
+Canada,Root_Tuber,Root_TuberAEZ01,AEZ01
+Western Europe,Root_Tuber,Root_TuberAEZ01,AEZ01
+Japan,Root_Tuber,Root_TuberAEZ01,AEZ01
+Former Soviet Union,Root_Tuber,Root_TuberAEZ01,AEZ01
+China,Root_Tuber,Root_TuberAEZ01,AEZ01
+Eastern Europe,Root_Tuber,Root_TuberAEZ01,AEZ01
+Korea,Root_Tuber,Root_TuberAEZ01,AEZ01
+USA,SugarCrop,SugarCropAEZ01,AEZ01
+Canada,SugarCrop,SugarCropAEZ01,AEZ01
+Western Europe,SugarCrop,SugarCropAEZ01,AEZ01
+Japan,SugarCrop,SugarCropAEZ01,AEZ01
+Former Soviet Union,SugarCrop,SugarCropAEZ01,AEZ01
+China,SugarCrop,SugarCropAEZ01,AEZ01
+Eastern Europe,SugarCrop,SugarCropAEZ01,AEZ01
+Korea,SugarCrop,SugarCropAEZ01,AEZ01
+USA,Wheat,WheatAEZ01,AEZ01
+Canada,Wheat,WheatAEZ01,AEZ01
+Western Europe,Wheat,WheatAEZ01,AEZ01
+Japan,Wheat,WheatAEZ01,AEZ01
+Former Soviet Union,Wheat,WheatAEZ01,AEZ01
+China,Wheat,WheatAEZ01,AEZ01
+Eastern Europe,Wheat,WheatAEZ01,AEZ01
+Korea,Wheat,WheatAEZ01,AEZ01
+USA,biomass,biomassAEZ02,AEZ02
+Canada,biomass,biomassAEZ02,AEZ02
+Western Europe,biomass,biomassAEZ02,AEZ02
+Japan,biomass,biomassAEZ02,AEZ02
+Former Soviet Union,biomass,biomassAEZ02,AEZ02
+China,biomass,biomassAEZ02,AEZ02
+Southeast Asia,biomass,biomassAEZ02,AEZ02
+Eastern Europe,biomass,biomassAEZ02,AEZ02
+Korea,biomass,biomassAEZ02,AEZ02
+USA,Corn,CornAEZ02,AEZ02
+Canada,Corn,CornAEZ02,AEZ02
+Western Europe,Corn,CornAEZ02,AEZ02
+Japan,Corn,CornAEZ02,AEZ02
+Former Soviet Union,Corn,CornAEZ02,AEZ02
+China,Corn,CornAEZ02,AEZ02
+Southeast Asia,Corn,CornAEZ02,AEZ02
+Eastern Europe,Corn,CornAEZ02,AEZ02
+Korea,Corn,CornAEZ02,AEZ02
+USA,FiberCrop,FiberCropAEZ02,AEZ02
+Canada,FiberCrop,FiberCropAEZ02,AEZ02
+Western Europe,FiberCrop,FiberCropAEZ02,AEZ02
+Japan,FiberCrop,FiberCropAEZ02,AEZ02
+Former Soviet Union,FiberCrop,FiberCropAEZ02,AEZ02
+China,FiberCrop,FiberCropAEZ02,AEZ02
+Southeast Asia,FiberCrop,FiberCropAEZ02,AEZ02
+Eastern Europe,FiberCrop,FiberCropAEZ02,AEZ02
+Korea,FiberCrop,FiberCropAEZ02,AEZ02
+USA,FodderGrass,FodderGrassAEZ02,AEZ02
+Canada,FodderGrass,FodderGrassAEZ02,AEZ02
+Western Europe,FodderGrass,FodderGrassAEZ02,AEZ02
+Japan,FodderGrass,FodderGrassAEZ02,AEZ02
+Former Soviet Union,FodderGrass,FodderGrassAEZ02,AEZ02
+China,FodderGrass,FodderGrassAEZ02,AEZ02
+Southeast Asia,FodderGrass,FodderGrassAEZ02,AEZ02
+Eastern Europe,FodderGrass,FodderGrassAEZ02,AEZ02
+Korea,FodderGrass,FodderGrassAEZ02,AEZ02
+USA,FodderHerb,FodderHerbAEZ02,AEZ02
+Canada,FodderHerb,FodderHerbAEZ02,AEZ02
+Western Europe,FodderHerb,FodderHerbAEZ02,AEZ02
+Japan,FodderHerb,FodderHerbAEZ02,AEZ02
+Former Soviet Union,FodderHerb,FodderHerbAEZ02,AEZ02
+China,FodderHerb,FodderHerbAEZ02,AEZ02
+Southeast Asia,FodderHerb,FodderHerbAEZ02,AEZ02
+Eastern Europe,FodderHerb,FodderHerbAEZ02,AEZ02
+Korea,FodderHerb,FodderHerbAEZ02,AEZ02
+USA,Forest,ForestAEZ02,AEZ02
+Canada,Forest,ForestAEZ02,AEZ02
+Western Europe,Forest,ForestAEZ02,AEZ02
+Japan,Forest,ForestAEZ02,AEZ02
+Former Soviet Union,Forest,ForestAEZ02,AEZ02
+China,Forest,ForestAEZ02,AEZ02
+Southeast Asia,Forest,ForestAEZ02,AEZ02
+Eastern Europe,Forest,ForestAEZ02,AEZ02
+Korea,Forest,ForestAEZ02,AEZ02
+USA,MiscCrop,MiscCropAEZ02,AEZ02
+Canada,MiscCrop,MiscCropAEZ02,AEZ02
+Western Europe,MiscCrop,MiscCropAEZ02,AEZ02
+Japan,MiscCrop,MiscCropAEZ02,AEZ02
+Former Soviet Union,MiscCrop,MiscCropAEZ02,AEZ02
+China,MiscCrop,MiscCropAEZ02,AEZ02
+Southeast Asia,MiscCrop,MiscCropAEZ02,AEZ02
+Eastern Europe,MiscCrop,MiscCropAEZ02,AEZ02
+Korea,MiscCrop,MiscCropAEZ02,AEZ02
+USA,OilCrop,OilCropAEZ02,AEZ02
+Canada,OilCrop,OilCropAEZ02,AEZ02
+Western Europe,OilCrop,OilCropAEZ02,AEZ02
+Japan,OilCrop,OilCropAEZ02,AEZ02
+Former Soviet Union,OilCrop,OilCropAEZ02,AEZ02
+China,OilCrop,OilCropAEZ02,AEZ02
+Southeast Asia,OilCrop,OilCropAEZ02,AEZ02
+Eastern Europe,OilCrop,OilCropAEZ02,AEZ02
+Korea,OilCrop,OilCropAEZ02,AEZ02
+USA,OtherGrain,OtherGrainAEZ02,AEZ02
+Canada,OtherGrain,OtherGrainAEZ02,AEZ02
+Western Europe,OtherGrain,OtherGrainAEZ02,AEZ02
+Japan,OtherGrain,OtherGrainAEZ02,AEZ02
+Former Soviet Union,OtherGrain,OtherGrainAEZ02,AEZ02
+China,OtherGrain,OtherGrainAEZ02,AEZ02
+Southeast Asia,OtherGrain,OtherGrainAEZ02,AEZ02
+Eastern Europe,OtherGrain,OtherGrainAEZ02,AEZ02
+Korea,OtherGrain,OtherGrainAEZ02,AEZ02
+USA,PalmFruit,PalmFruitAEZ02,AEZ02
+Canada,PalmFruit,PalmFruitAEZ02,AEZ02
+Western Europe,PalmFruit,PalmFruitAEZ02,AEZ02
+Japan,PalmFruit,PalmFruitAEZ02,AEZ02
+Former Soviet Union,PalmFruit,PalmFruitAEZ02,AEZ02
+China,PalmFruit,PalmFruitAEZ02,AEZ02
+Southeast Asia,PalmFruit,PalmFruitAEZ02,AEZ02
+Eastern Europe,PalmFruit,PalmFruitAEZ02,AEZ02
+Korea,PalmFruit,PalmFruitAEZ02,AEZ02
+USA,Pasture,PastureAEZ02,AEZ02
+Canada,Pasture,PastureAEZ02,AEZ02
+Western Europe,Pasture,PastureAEZ02,AEZ02
+Japan,Pasture,PastureAEZ02,AEZ02
+Former Soviet Union,Pasture,PastureAEZ02,AEZ02
+China,Pasture,PastureAEZ02,AEZ02
+Southeast Asia,Pasture,PastureAEZ02,AEZ02
+Eastern Europe,Pasture,PastureAEZ02,AEZ02
+Korea,Pasture,PastureAEZ02,AEZ02
+USA,Rice,RiceAEZ02,AEZ02
+Canada,Rice,RiceAEZ02,AEZ02
+Western Europe,Rice,RiceAEZ02,AEZ02
+Japan,Rice,RiceAEZ02,AEZ02
+Former Soviet Union,Rice,RiceAEZ02,AEZ02
+China,Rice,RiceAEZ02,AEZ02
+Southeast Asia,Rice,RiceAEZ02,AEZ02
+Eastern Europe,Rice,RiceAEZ02,AEZ02
+Korea,Rice,RiceAEZ02,AEZ02
+USA,Root_Tuber,Root_TuberAEZ02,AEZ02
+Canada,Root_Tuber,Root_TuberAEZ02,AEZ02
+Western Europe,Root_Tuber,Root_TuberAEZ02,AEZ02
+Japan,Root_Tuber,Root_TuberAEZ02,AEZ02
+Former Soviet Union,Root_Tuber,Root_TuberAEZ02,AEZ02
+China,Root_Tuber,Root_TuberAEZ02,AEZ02
+Southeast Asia,Root_Tuber,Root_TuberAEZ02,AEZ02
+Eastern Europe,Root_Tuber,Root_TuberAEZ02,AEZ02
+Korea,Root_Tuber,Root_TuberAEZ02,AEZ02
+USA,SugarCrop,SugarCropAEZ02,AEZ02
+Canada,SugarCrop,SugarCropAEZ02,AEZ02
+Western Europe,SugarCrop,SugarCropAEZ02,AEZ02
+Japan,SugarCrop,SugarCropAEZ02,AEZ02
+Former Soviet Union,SugarCrop,SugarCropAEZ02,AEZ02
+China,SugarCrop,SugarCropAEZ02,AEZ02
+Southeast Asia,SugarCrop,SugarCropAEZ02,AEZ02
+Eastern Europe,SugarCrop,SugarCropAEZ02,AEZ02
+Korea,SugarCrop,SugarCropAEZ02,AEZ02
+USA,Wheat,WheatAEZ02,AEZ02
+Canada,Wheat,WheatAEZ02,AEZ02
+Western Europe,Wheat,WheatAEZ02,AEZ02
+Japan,Wheat,WheatAEZ02,AEZ02
+Former Soviet Union,Wheat,WheatAEZ02,AEZ02
+China,Wheat,WheatAEZ02,AEZ02
+Southeast Asia,Wheat,WheatAEZ02,AEZ02
+Eastern Europe,Wheat,WheatAEZ02,AEZ02
+Korea,Wheat,WheatAEZ02,AEZ02
+USA,biomass,biomassAEZ03,AEZ03
+Canada,biomass,biomassAEZ03,AEZ03
+Western Europe,biomass,biomassAEZ03,AEZ03
+Japan,biomass,biomassAEZ03,AEZ03
+Former Soviet Union,biomass,biomassAEZ03,AEZ03
+China,biomass,biomassAEZ03,AEZ03
+Eastern Europe,biomass,biomassAEZ03,AEZ03
+Korea,biomass,biomassAEZ03,AEZ03
+USA,Corn,CornAEZ03,AEZ03
+Canada,Corn,CornAEZ03,AEZ03
+Western Europe,Corn,CornAEZ03,AEZ03
+Japan,Corn,CornAEZ03,AEZ03
+Former Soviet Union,Corn,CornAEZ03,AEZ03
+China,Corn,CornAEZ03,AEZ03
+Eastern Europe,Corn,CornAEZ03,AEZ03
+Korea,Corn,CornAEZ03,AEZ03
+USA,FiberCrop,FiberCropAEZ03,AEZ03
+Canada,FiberCrop,FiberCropAEZ03,AEZ03
+Western Europe,FiberCrop,FiberCropAEZ03,AEZ03
+Japan,FiberCrop,FiberCropAEZ03,AEZ03
+Former Soviet Union,FiberCrop,FiberCropAEZ03,AEZ03
+China,FiberCrop,FiberCropAEZ03,AEZ03
+Eastern Europe,FiberCrop,FiberCropAEZ03,AEZ03
+Korea,FiberCrop,FiberCropAEZ03,AEZ03
+USA,FodderGrass,FodderGrassAEZ03,AEZ03
+Canada,FodderGrass,FodderGrassAEZ03,AEZ03
+Western Europe,FodderGrass,FodderGrassAEZ03,AEZ03
+Japan,FodderGrass,FodderGrassAEZ03,AEZ03
+Former Soviet Union,FodderGrass,FodderGrassAEZ03,AEZ03
+China,FodderGrass,FodderGrassAEZ03,AEZ03
+Eastern Europe,FodderGrass,FodderGrassAEZ03,AEZ03
+Korea,FodderGrass,FodderGrassAEZ03,AEZ03
+USA,FodderHerb,FodderHerbAEZ03,AEZ03
+Canada,FodderHerb,FodderHerbAEZ03,AEZ03
+Western Europe,FodderHerb,FodderHerbAEZ03,AEZ03
+Japan,FodderHerb,FodderHerbAEZ03,AEZ03
+Former Soviet Union,FodderHerb,FodderHerbAEZ03,AEZ03
+China,FodderHerb,FodderHerbAEZ03,AEZ03
+Eastern Europe,FodderHerb,FodderHerbAEZ03,AEZ03
+Korea,FodderHerb,FodderHerbAEZ03,AEZ03
+USA,Forest,ForestAEZ03,AEZ03
+Canada,Forest,ForestAEZ03,AEZ03
+Western Europe,Forest,ForestAEZ03,AEZ03
+Japan,Forest,ForestAEZ03,AEZ03
+Former Soviet Union,Forest,ForestAEZ03,AEZ03
+China,Forest,ForestAEZ03,AEZ03
+Eastern Europe,Forest,ForestAEZ03,AEZ03
+Korea,Forest,ForestAEZ03,AEZ03
+USA,MiscCrop,MiscCropAEZ03,AEZ03
+Canada,MiscCrop,MiscCropAEZ03,AEZ03
+Western Europe,MiscCrop,MiscCropAEZ03,AEZ03
+Japan,MiscCrop,MiscCropAEZ03,AEZ03
+Former Soviet Union,MiscCrop,MiscCropAEZ03,AEZ03
+China,MiscCrop,MiscCropAEZ03,AEZ03
+Eastern Europe,MiscCrop,MiscCropAEZ03,AEZ03
+Korea,MiscCrop,MiscCropAEZ03,AEZ03
+USA,OilCrop,OilCropAEZ03,AEZ03
+Canada,OilCrop,OilCropAEZ03,AEZ03
+Western Europe,OilCrop,OilCropAEZ03,AEZ03
+Japan,OilCrop,OilCropAEZ03,AEZ03
+Former Soviet Union,OilCrop,OilCropAEZ03,AEZ03
+China,OilCrop,OilCropAEZ03,AEZ03
+Eastern Europe,OilCrop,OilCropAEZ03,AEZ03
+Korea,OilCrop,OilCropAEZ03,AEZ03
+USA,OtherGrain,OtherGrainAEZ03,AEZ03
+Canada,OtherGrain,OtherGrainAEZ03,AEZ03
+Western Europe,OtherGrain,OtherGrainAEZ03,AEZ03
+Japan,OtherGrain,OtherGrainAEZ03,AEZ03
+Former Soviet Union,OtherGrain,OtherGrainAEZ03,AEZ03
+China,OtherGrain,OtherGrainAEZ03,AEZ03
+Eastern Europe,OtherGrain,OtherGrainAEZ03,AEZ03
+Korea,OtherGrain,OtherGrainAEZ03,AEZ03
+USA,PalmFruit,PalmFruitAEZ03,AEZ03
+Canada,PalmFruit,PalmFruitAEZ03,AEZ03
+Western Europe,PalmFruit,PalmFruitAEZ03,AEZ03
+Japan,PalmFruit,PalmFruitAEZ03,AEZ03
+Former Soviet Union,PalmFruit,PalmFruitAEZ03,AEZ03
+China,PalmFruit,PalmFruitAEZ03,AEZ03
+Eastern Europe,PalmFruit,PalmFruitAEZ03,AEZ03
+Korea,PalmFruit,PalmFruitAEZ03,AEZ03
+USA,Pasture,PastureAEZ03,AEZ03
+Canada,Pasture,PastureAEZ03,AEZ03
+Western Europe,Pasture,PastureAEZ03,AEZ03
+Japan,Pasture,PastureAEZ03,AEZ03
+Former Soviet Union,Pasture,PastureAEZ03,AEZ03
+China,Pasture,PastureAEZ03,AEZ03
+Eastern Europe,Pasture,PastureAEZ03,AEZ03
+Korea,Pasture,PastureAEZ03,AEZ03
+USA,Rice,RiceAEZ03,AEZ03
+Canada,Rice,RiceAEZ03,AEZ03
+Western Europe,Rice,RiceAEZ03,AEZ03
+Japan,Rice,RiceAEZ03,AEZ03
+Former Soviet Union,Rice,RiceAEZ03,AEZ03
+China,Rice,RiceAEZ03,AEZ03
+Eastern Europe,Rice,RiceAEZ03,AEZ03
+Korea,Rice,RiceAEZ03,AEZ03
+USA,Root_Tuber,Root_TuberAEZ03,AEZ03
+Canada,Root_Tuber,Root_TuberAEZ03,AEZ03
+Western Europe,Root_Tuber,Root_TuberAEZ03,AEZ03
+Japan,Root_Tuber,Root_TuberAEZ03,AEZ03
+Former Soviet Union,Root_Tuber,Root_TuberAEZ03,AEZ03
+China,Root_Tuber,Root_TuberAEZ03,AEZ03
+Eastern Europe,Root_Tuber,Root_TuberAEZ03,AEZ03
+Korea,Root_Tuber,Root_TuberAEZ03,AEZ03
+USA,SugarCrop,SugarCropAEZ03,AEZ03
+Canada,SugarCrop,SugarCropAEZ03,AEZ03
+Western Europe,SugarCrop,SugarCropAEZ03,AEZ03
+Japan,SugarCrop,SugarCropAEZ03,AEZ03
+Former Soviet Union,SugarCrop,SugarCropAEZ03,AEZ03
+China,SugarCrop,SugarCropAEZ03,AEZ03
+Eastern Europe,SugarCrop,SugarCropAEZ03,AEZ03
+Korea,SugarCrop,SugarCropAEZ03,AEZ03
+USA,Wheat,WheatAEZ03,AEZ03
+Canada,Wheat,WheatAEZ03,AEZ03
+Western Europe,Wheat,WheatAEZ03,AEZ03
+Japan,Wheat,WheatAEZ03,AEZ03
+Former Soviet Union,Wheat,WheatAEZ03,AEZ03
+China,Wheat,WheatAEZ03,AEZ03
+Eastern Europe,Wheat,WheatAEZ03,AEZ03
+Korea,Wheat,WheatAEZ03,AEZ03
+USA,biomass,biomassAEZ04,AEZ04
+Canada,biomass,biomassAEZ04,AEZ04
+Japan,biomass,biomassAEZ04,AEZ04
+Former Soviet Union,biomass,biomassAEZ04,AEZ04
+Middle East,biomass,biomassAEZ04,AEZ04
+Eastern Europe,biomass,biomassAEZ04,AEZ04
+Korea,biomass,biomassAEZ04,AEZ04
+USA,Corn,CornAEZ04,AEZ04
+Canada,Corn,CornAEZ04,AEZ04
+Japan,Corn,CornAEZ04,AEZ04
+Former Soviet Union,Corn,CornAEZ04,AEZ04
+Middle East,Corn,CornAEZ04,AEZ04
+Eastern Europe,Corn,CornAEZ04,AEZ04
+Korea,Corn,CornAEZ04,AEZ04
+USA,FiberCrop,FiberCropAEZ04,AEZ04
+Canada,FiberCrop,FiberCropAEZ04,AEZ04
+Japan,FiberCrop,FiberCropAEZ04,AEZ04
+Former Soviet Union,FiberCrop,FiberCropAEZ04,AEZ04
+Middle East,FiberCrop,FiberCropAEZ04,AEZ04
+Eastern Europe,FiberCrop,FiberCropAEZ04,AEZ04
+Korea,FiberCrop,FiberCropAEZ04,AEZ04
+USA,FodderGrass,FodderGrassAEZ04,AEZ04
+Canada,FodderGrass,FodderGrassAEZ04,AEZ04
+Japan,FodderGrass,FodderGrassAEZ04,AEZ04
+Former Soviet Union,FodderGrass,FodderGrassAEZ04,AEZ04
+Middle East,FodderGrass,FodderGrassAEZ04,AEZ04
+Eastern Europe,FodderGrass,FodderGrassAEZ04,AEZ04
+Korea,FodderGrass,FodderGrassAEZ04,AEZ04
+USA,FodderHerb,FodderHerbAEZ04,AEZ04
+Canada,FodderHerb,FodderHerbAEZ04,AEZ04
+Japan,FodderHerb,FodderHerbAEZ04,AEZ04
+Former Soviet Union,FodderHerb,FodderHerbAEZ04,AEZ04
+Middle East,FodderHerb,FodderHerbAEZ04,AEZ04
+Eastern Europe,FodderHerb,FodderHerbAEZ04,AEZ04
+Korea,FodderHerb,FodderHerbAEZ04,AEZ04
+USA,Forest,ForestAEZ04,AEZ04
+Canada,Forest,ForestAEZ04,AEZ04
+Japan,Forest,ForestAEZ04,AEZ04
+Former Soviet Union,Forest,ForestAEZ04,AEZ04
+Middle East,Forest,ForestAEZ04,AEZ04
+Eastern Europe,Forest,ForestAEZ04,AEZ04
+Korea,Forest,ForestAEZ04,AEZ04
+USA,MiscCrop,MiscCropAEZ04,AEZ04
+Canada,MiscCrop,MiscCropAEZ04,AEZ04
+Japan,MiscCrop,MiscCropAEZ04,AEZ04
+Former Soviet Union,MiscCrop,MiscCropAEZ04,AEZ04
+Middle East,MiscCrop,MiscCropAEZ04,AEZ04
+Eastern Europe,MiscCrop,MiscCropAEZ04,AEZ04
+Korea,MiscCrop,MiscCropAEZ04,AEZ04
+USA,OilCrop,OilCropAEZ04,AEZ04
+Canada,OilCrop,OilCropAEZ04,AEZ04
+Japan,OilCrop,OilCropAEZ04,AEZ04
+Former Soviet Union,OilCrop,OilCropAEZ04,AEZ04
+Middle East,OilCrop,OilCropAEZ04,AEZ04
+Eastern Europe,OilCrop,OilCropAEZ04,AEZ04
+Korea,OilCrop,OilCropAEZ04,AEZ04
+USA,OtherGrain,OtherGrainAEZ04,AEZ04
+Canada,OtherGrain,OtherGrainAEZ04,AEZ04
+Japan,OtherGrain,OtherGrainAEZ04,AEZ04
+Former Soviet Union,OtherGrain,OtherGrainAEZ04,AEZ04
+Middle East,OtherGrain,OtherGrainAEZ04,AEZ04
+Eastern Europe,OtherGrain,OtherGrainAEZ04,AEZ04
+Korea,OtherGrain,OtherGrainAEZ04,AEZ04
+USA,PalmFruit,PalmFruitAEZ04,AEZ04
+Canada,PalmFruit,PalmFruitAEZ04,AEZ04
+Japan,PalmFruit,PalmFruitAEZ04,AEZ04
+Former Soviet Union,PalmFruit,PalmFruitAEZ04,AEZ04
+Middle East,PalmFruit,PalmFruitAEZ04,AEZ04
+Eastern Europe,PalmFruit,PalmFruitAEZ04,AEZ04
+Korea,PalmFruit,PalmFruitAEZ04,AEZ04
+USA,Pasture,PastureAEZ04,AEZ04
+Canada,Pasture,PastureAEZ04,AEZ04
+Japan,Pasture,PastureAEZ04,AEZ04
+Former Soviet Union,Pasture,PastureAEZ04,AEZ04
+Middle East,Pasture,PastureAEZ04,AEZ04
+Eastern Europe,Pasture,PastureAEZ04,AEZ04
+Korea,Pasture,PastureAEZ04,AEZ04
+USA,Rice,RiceAEZ04,AEZ04
+Canada,Rice,RiceAEZ04,AEZ04
+Japan,Rice,RiceAEZ04,AEZ04
+Former Soviet Union,Rice,RiceAEZ04,AEZ04
+Middle East,Rice,RiceAEZ04,AEZ04
+Eastern Europe,Rice,RiceAEZ04,AEZ04
+Korea,Rice,RiceAEZ04,AEZ04
+USA,Root_Tuber,Root_TuberAEZ04,AEZ04
+Canada,Root_Tuber,Root_TuberAEZ04,AEZ04
+Japan,Root_Tuber,Root_TuberAEZ04,AEZ04
+Former Soviet Union,Root_Tuber,Root_TuberAEZ04,AEZ04
+Middle East,Root_Tuber,Root_TuberAEZ04,AEZ04
+Eastern Europe,Root_Tuber,Root_TuberAEZ04,AEZ04
+Korea,Root_Tuber,Root_TuberAEZ04,AEZ04
+USA,SugarCrop,SugarCropAEZ04,AEZ04
+Canada,SugarCrop,SugarCropAEZ04,AEZ04
+Japan,SugarCrop,SugarCropAEZ04,AEZ04
+Former Soviet Union,SugarCrop,SugarCropAEZ04,AEZ04
+Middle East,SugarCrop,SugarCropAEZ04,AEZ04
+Eastern Europe,SugarCrop,SugarCropAEZ04,AEZ04
+Korea,SugarCrop,SugarCropAEZ04,AEZ04
+USA,Wheat,WheatAEZ04,AEZ04
+Canada,Wheat,WheatAEZ04,AEZ04
+Japan,Wheat,WheatAEZ04,AEZ04
+Former Soviet Union,Wheat,WheatAEZ04,AEZ04
+Middle East,Wheat,WheatAEZ04,AEZ04
+Eastern Europe,Wheat,WheatAEZ04,AEZ04
+Korea,Wheat,WheatAEZ04,AEZ04
+USA,biomass,biomassAEZ05,AEZ05
+Canada,biomass,biomassAEZ05,AEZ05
+Western Europe,biomass,biomassAEZ05,AEZ05
+Japan,biomass,biomassAEZ05,AEZ05
+Former Soviet Union,biomass,biomassAEZ05,AEZ05
+Middle East,biomass,biomassAEZ05,AEZ05
+Eastern Europe,biomass,biomassAEZ05,AEZ05
+Korea,biomass,biomassAEZ05,AEZ05
+USA,Corn,CornAEZ05,AEZ05
+Canada,Corn,CornAEZ05,AEZ05
+Western Europe,Corn,CornAEZ05,AEZ05
+Japan,Corn,CornAEZ05,AEZ05
+Former Soviet Union,Corn,CornAEZ05,AEZ05
+Middle East,Corn,CornAEZ05,AEZ05
+Eastern Europe,Corn,CornAEZ05,AEZ05
+Korea,Corn,CornAEZ05,AEZ05
+USA,FiberCrop,FiberCropAEZ05,AEZ05
+Canada,FiberCrop,FiberCropAEZ05,AEZ05
+Western Europe,FiberCrop,FiberCropAEZ05,AEZ05
+Japan,FiberCrop,FiberCropAEZ05,AEZ05
+Former Soviet Union,FiberCrop,FiberCropAEZ05,AEZ05
+Middle East,FiberCrop,FiberCropAEZ05,AEZ05
+Eastern Europe,FiberCrop,FiberCropAEZ05,AEZ05
+Korea,FiberCrop,FiberCropAEZ05,AEZ05
+USA,FodderGrass,FodderGrassAEZ05,AEZ05
+Canada,FodderGrass,FodderGrassAEZ05,AEZ05
+Western Europe,FodderGrass,FodderGrassAEZ05,AEZ05
+Japan,FodderGrass,FodderGrassAEZ05,AEZ05
+Former Soviet Union,FodderGrass,FodderGrassAEZ05,AEZ05
+Middle East,FodderGrass,FodderGrassAEZ05,AEZ05
+Eastern Europe,FodderGrass,FodderGrassAEZ05,AEZ05
+Korea,FodderGrass,FodderGrassAEZ05,AEZ05
+USA,FodderHerb,FodderHerbAEZ05,AEZ05
+Canada,FodderHerb,FodderHerbAEZ05,AEZ05
+Western Europe,FodderHerb,FodderHerbAEZ05,AEZ05
+Japan,FodderHerb,FodderHerbAEZ05,AEZ05
+Former Soviet Union,FodderHerb,FodderHerbAEZ05,AEZ05
+Middle East,FodderHerb,FodderHerbAEZ05,AEZ05
+Eastern Europe,FodderHerb,FodderHerbAEZ05,AEZ05
+Korea,FodderHerb,FodderHerbAEZ05,AEZ05
+USA,Forest,ForestAEZ05,AEZ05
+Canada,Forest,ForestAEZ05,AEZ05
+Western Europe,Forest,ForestAEZ05,AEZ05
+Japan,Forest,ForestAEZ05,AEZ05
+Former Soviet Union,Forest,ForestAEZ05,AEZ05
+Middle East,Forest,ForestAEZ05,AEZ05
+Eastern Europe,Forest,ForestAEZ05,AEZ05
+Korea,Forest,ForestAEZ05,AEZ05
+USA,MiscCrop,MiscCropAEZ05,AEZ05
+Canada,MiscCrop,MiscCropAEZ05,AEZ05
+Western Europe,MiscCrop,MiscCropAEZ05,AEZ05
+Japan,MiscCrop,MiscCropAEZ05,AEZ05
+Former Soviet Union,MiscCrop,MiscCropAEZ05,AEZ05
+Middle East,MiscCrop,MiscCropAEZ05,AEZ05
+Eastern Europe,MiscCrop,MiscCropAEZ05,AEZ05
+Korea,MiscCrop,MiscCropAEZ05,AEZ05
+USA,OilCrop,OilCropAEZ05,AEZ05
+Canada,OilCrop,OilCropAEZ05,AEZ05
+Western Europe,OilCrop,OilCropAEZ05,AEZ05
+Japan,OilCrop,OilCropAEZ05,AEZ05
+Former Soviet Union,OilCrop,OilCropAEZ05,AEZ05
+Middle East,OilCrop,OilCropAEZ05,AEZ05
+Eastern Europe,OilCrop,OilCropAEZ05,AEZ05
+Korea,OilCrop,OilCropAEZ05,AEZ05
+USA,OtherGrain,OtherGrainAEZ05,AEZ05
+Canada,OtherGrain,OtherGrainAEZ05,AEZ05
+Western Europe,OtherGrain,OtherGrainAEZ05,AEZ05
+Japan,OtherGrain,OtherGrainAEZ05,AEZ05
+Former Soviet Union,OtherGrain,OtherGrainAEZ05,AEZ05
+Middle East,OtherGrain,OtherGrainAEZ05,AEZ05
+Eastern Europe,OtherGrain,OtherGrainAEZ05,AEZ05
+Korea,OtherGrain,OtherGrainAEZ05,AEZ05
+USA,PalmFruit,PalmFruitAEZ05,AEZ05
+Canada,PalmFruit,PalmFruitAEZ05,AEZ05
+Western Europe,PalmFruit,PalmFruitAEZ05,AEZ05
+Japan,PalmFruit,PalmFruitAEZ05,AEZ05
+Former Soviet Union,PalmFruit,PalmFruitAEZ05,AEZ05
+Middle East,PalmFruit,PalmFruitAEZ05,AEZ05
+Eastern Europe,PalmFruit,PalmFruitAEZ05,AEZ05
+Korea,PalmFruit,PalmFruitAEZ05,AEZ05
+USA,Pasture,PastureAEZ05,AEZ05
+Canada,Pasture,PastureAEZ05,AEZ05
+Western Europe,Pasture,PastureAEZ05,AEZ05
+Japan,Pasture,PastureAEZ05,AEZ05
+Former Soviet Union,Pasture,PastureAEZ05,AEZ05
+Middle East,Pasture,PastureAEZ05,AEZ05
+Eastern Europe,Pasture,PastureAEZ05,AEZ05
+Korea,Pasture,PastureAEZ05,AEZ05
+USA,Rice,RiceAEZ05,AEZ05
+Canada,Rice,RiceAEZ05,AEZ05
+Western Europe,Rice,RiceAEZ05,AEZ05
+Japan,Rice,RiceAEZ05,AEZ05
+Former Soviet Union,Rice,RiceAEZ05,AEZ05
+Middle East,Rice,RiceAEZ05,AEZ05
+Eastern Europe,Rice,RiceAEZ05,AEZ05
+Korea,Rice,RiceAEZ05,AEZ05
+USA,Root_Tuber,Root_TuberAEZ05,AEZ05
+Canada,Root_Tuber,Root_TuberAEZ05,AEZ05
+Western Europe,Root_Tuber,Root_TuberAEZ05,AEZ05
+Japan,Root_Tuber,Root_TuberAEZ05,AEZ05
+Former Soviet Union,Root_Tuber,Root_TuberAEZ05,AEZ05
+Middle East,Root_Tuber,Root_TuberAEZ05,AEZ05
+Eastern Europe,Root_Tuber,Root_TuberAEZ05,AEZ05
+Korea,Root_Tuber,Root_TuberAEZ05,AEZ05
+USA,SugarCrop,SugarCropAEZ05,AEZ05
+Canada,SugarCrop,SugarCropAEZ05,AEZ05
+Western Europe,SugarCrop,SugarCropAEZ05,AEZ05
+Japan,SugarCrop,SugarCropAEZ05,AEZ05
+Former Soviet Union,SugarCrop,SugarCropAEZ05,AEZ05
+Middle East,SugarCrop,SugarCropAEZ05,AEZ05
+Eastern Europe,SugarCrop,SugarCropAEZ05,AEZ05
+Korea,SugarCrop,SugarCropAEZ05,AEZ05
+USA,Wheat,WheatAEZ05,AEZ05
+Canada,Wheat,WheatAEZ05,AEZ05
+Western Europe,Wheat,WheatAEZ05,AEZ05
+Japan,Wheat,WheatAEZ05,AEZ05
+Former Soviet Union,Wheat,WheatAEZ05,AEZ05
+Middle East,Wheat,WheatAEZ05,AEZ05
+Eastern Europe,Wheat,WheatAEZ05,AEZ05
+Korea,Wheat,WheatAEZ05,AEZ05
+USA,biomass,biomassAEZ06,AEZ06
+Canada,biomass,biomassAEZ06,AEZ06
+Western Europe,biomass,biomassAEZ06,AEZ06
+Japan,biomass,biomassAEZ06,AEZ06
+Former Soviet Union,biomass,biomassAEZ06,AEZ06
+Middle East,biomass,biomassAEZ06,AEZ06
+Eastern Europe,biomass,biomassAEZ06,AEZ06
+Korea,biomass,biomassAEZ06,AEZ06
+USA,Corn,CornAEZ06,AEZ06
+Canada,Corn,CornAEZ06,AEZ06
+Western Europe,Corn,CornAEZ06,AEZ06
+Japan,Corn,CornAEZ06,AEZ06
+Former Soviet Union,Corn,CornAEZ06,AEZ06
+Middle East,Corn,CornAEZ06,AEZ06
+Eastern Europe,Corn,CornAEZ06,AEZ06
+Korea,Corn,CornAEZ06,AEZ06
+USA,FiberCrop,FiberCropAEZ06,AEZ06
+Canada,FiberCrop,FiberCropAEZ06,AEZ06
+Western Europe,FiberCrop,FiberCropAEZ06,AEZ06
+Japan,FiberCrop,FiberCropAEZ06,AEZ06
+Former Soviet Union,FiberCrop,FiberCropAEZ06,AEZ06
+Middle East,FiberCrop,FiberCropAEZ06,AEZ06
+Eastern Europe,FiberCrop,FiberCropAEZ06,AEZ06
+Korea,FiberCrop,FiberCropAEZ06,AEZ06
+USA,FodderGrass,FodderGrassAEZ06,AEZ06
+Canada,FodderGrass,FodderGrassAEZ06,AEZ06
+Western Europe,FodderGrass,FodderGrassAEZ06,AEZ06
+Japan,FodderGrass,FodderGrassAEZ06,AEZ06
+Former Soviet Union,FodderGrass,FodderGrassAEZ06,AEZ06
+Middle East,FodderGrass,FodderGrassAEZ06,AEZ06
+Eastern Europe,FodderGrass,FodderGrassAEZ06,AEZ06
+Korea,FodderGrass,FodderGrassAEZ06,AEZ06
+USA,FodderHerb,FodderHerbAEZ06,AEZ06
+Canada,FodderHerb,FodderHerbAEZ06,AEZ06
+Western Europe,FodderHerb,FodderHerbAEZ06,AEZ06
+Japan,FodderHerb,FodderHerbAEZ06,AEZ06
+Former Soviet Union,FodderHerb,FodderHerbAEZ06,AEZ06
+Middle East,FodderHerb,FodderHerbAEZ06,AEZ06
+Eastern Europe,FodderHerb,FodderHerbAEZ06,AEZ06
+Korea,FodderHerb,FodderHerbAEZ06,AEZ06
+USA,Forest,ForestAEZ06,AEZ06
+Canada,Forest,ForestAEZ06,AEZ06
+Western Europe,Forest,ForestAEZ06,AEZ06
+Japan,Forest,ForestAEZ06,AEZ06
+Former Soviet Union,Forest,ForestAEZ06,AEZ06
+Middle East,Forest,ForestAEZ06,AEZ06
+Eastern Europe,Forest,ForestAEZ06,AEZ06
+Korea,Forest,ForestAEZ06,AEZ06
+USA,MiscCrop,MiscCropAEZ06,AEZ06
+Canada,MiscCrop,MiscCropAEZ06,AEZ06
+Western Europe,MiscCrop,MiscCropAEZ06,AEZ06
+Japan,MiscCrop,MiscCropAEZ06,AEZ06
+Former Soviet Union,MiscCrop,MiscCropAEZ06,AEZ06
+Middle East,MiscCrop,MiscCropAEZ06,AEZ06
+Eastern Europe,MiscCrop,MiscCropAEZ06,AEZ06
+Korea,MiscCrop,MiscCropAEZ06,AEZ06
+USA,OilCrop,OilCropAEZ06,AEZ06
+Canada,OilCrop,OilCropAEZ06,AEZ06
+Western Europe,OilCrop,OilCropAEZ06,AEZ06
+Japan,OilCrop,OilCropAEZ06,AEZ06
+Former Soviet Union,OilCrop,OilCropAEZ06,AEZ06
+Middle East,OilCrop,OilCropAEZ06,AEZ06
+Eastern Europe,OilCrop,OilCropAEZ06,AEZ06
+Korea,OilCrop,OilCropAEZ06,AEZ06
+USA,OtherGrain,OtherGrainAEZ06,AEZ06
+Canada,OtherGrain,OtherGrainAEZ06,AEZ06
+Western Europe,OtherGrain,OtherGrainAEZ06,AEZ06
+Japan,OtherGrain,OtherGrainAEZ06,AEZ06
+Former Soviet Union,OtherGrain,OtherGrainAEZ06,AEZ06
+Middle East,OtherGrain,OtherGrainAEZ06,AEZ06
+Eastern Europe,OtherGrain,OtherGrainAEZ06,AEZ06
+Korea,OtherGrain,OtherGrainAEZ06,AEZ06
+USA,PalmFruit,PalmFruitAEZ06,AEZ06
+Canada,PalmFruit,PalmFruitAEZ06,AEZ06
+Western Europe,PalmFruit,PalmFruitAEZ06,AEZ06
+Japan,PalmFruit,PalmFruitAEZ06,AEZ06
+Former Soviet Union,PalmFruit,PalmFruitAEZ06,AEZ06
+Middle East,PalmFruit,PalmFruitAEZ06,AEZ06
+Eastern Europe,PalmFruit,PalmFruitAEZ06,AEZ06
+Korea,PalmFruit,PalmFruitAEZ06,AEZ06
+USA,Pasture,PastureAEZ06,AEZ06
+Canada,Pasture,PastureAEZ06,AEZ06
+Western Europe,Pasture,PastureAEZ06,AEZ06
+Japan,Pasture,PastureAEZ06,AEZ06
+Former Soviet Union,Pasture,PastureAEZ06,AEZ06
+Middle East,Pasture,PastureAEZ06,AEZ06
+Eastern Europe,Pasture,PastureAEZ06,AEZ06
+Korea,Pasture,PastureAEZ06,AEZ06
+USA,Rice,RiceAEZ06,AEZ06
+Canada,Rice,RiceAEZ06,AEZ06
+Western Europe,Rice,RiceAEZ06,AEZ06
+Japan,Rice,RiceAEZ06,AEZ06
+Former Soviet Union,Rice,RiceAEZ06,AEZ06
+Middle East,Rice,RiceAEZ06,AEZ06
+Eastern Europe,Rice,RiceAEZ06,AEZ06
+Korea,Rice,RiceAEZ06,AEZ06
+USA,Root_Tuber,Root_TuberAEZ06,AEZ06
+Canada,Root_Tuber,Root_TuberAEZ06,AEZ06
+Western Europe,Root_Tuber,Root_TuberAEZ06,AEZ06
+Japan,Root_Tuber,Root_TuberAEZ06,AEZ06
+Former Soviet Union,Root_Tuber,Root_TuberAEZ06,AEZ06
+Middle East,Root_Tuber,Root_TuberAEZ06,AEZ06
+Eastern Europe,Root_Tuber,Root_TuberAEZ06,AEZ06
+Korea,Root_Tuber,Root_TuberAEZ06,AEZ06
+USA,SugarCrop,SugarCropAEZ06,AEZ06
+Canada,SugarCrop,SugarCropAEZ06,AEZ06
+Western Europe,SugarCrop,SugarCropAEZ06,AEZ06
+Japan,SugarCrop,SugarCropAEZ06,AEZ06
+Former Soviet Union,SugarCrop,SugarCropAEZ06,AEZ06
+Middle East,SugarCrop,SugarCropAEZ06,AEZ06
+Eastern Europe,SugarCrop,SugarCropAEZ06,AEZ06
+Korea,SugarCrop,SugarCropAEZ06,AEZ06
+USA,Wheat,WheatAEZ06,AEZ06
+Canada,Wheat,WheatAEZ06,AEZ06
+Western Europe,Wheat,WheatAEZ06,AEZ06
+Japan,Wheat,WheatAEZ06,AEZ06
+Former Soviet Union,Wheat,WheatAEZ06,AEZ06
+Middle East,Wheat,WheatAEZ06,AEZ06
+Eastern Europe,Wheat,WheatAEZ06,AEZ06
+Korea,Wheat,WheatAEZ06,AEZ06
+Japan,biomass,biomassAEZ07,AEZ07
+Eastern Europe,biomass,biomassAEZ07,AEZ07
+Korea,biomass,biomassAEZ07,AEZ07
+Japan,Corn,CornAEZ07,AEZ07
+Eastern Europe,Corn,CornAEZ07,AEZ07
+Korea,Corn,CornAEZ07,AEZ07
+Japan,FiberCrop,FiberCropAEZ07,AEZ07
+Eastern Europe,FiberCrop,FiberCropAEZ07,AEZ07
+Korea,FiberCrop,FiberCropAEZ07,AEZ07
+Japan,FodderGrass,FodderGrassAEZ07,AEZ07
+Eastern Europe,FodderGrass,FodderGrassAEZ07,AEZ07
+Korea,FodderGrass,FodderGrassAEZ07,AEZ07
+Japan,FodderHerb,FodderHerbAEZ07,AEZ07
+Eastern Europe,FodderHerb,FodderHerbAEZ07,AEZ07
+Korea,FodderHerb,FodderHerbAEZ07,AEZ07
+Japan,Forest,ForestAEZ07,AEZ07
+Eastern Europe,Forest,ForestAEZ07,AEZ07
+Korea,Forest,ForestAEZ07,AEZ07
+Japan,MiscCrop,MiscCropAEZ07,AEZ07
+Eastern Europe,MiscCrop,MiscCropAEZ07,AEZ07
+Korea,MiscCrop,MiscCropAEZ07,AEZ07
+Japan,OilCrop,OilCropAEZ07,AEZ07
+Eastern Europe,OilCrop,OilCropAEZ07,AEZ07
+Korea,OilCrop,OilCropAEZ07,AEZ07
+Japan,OtherGrain,OtherGrainAEZ07,AEZ07
+Eastern Europe,OtherGrain,OtherGrainAEZ07,AEZ07
+Korea,OtherGrain,OtherGrainAEZ07,AEZ07
+Japan,PalmFruit,PalmFruitAEZ07,AEZ07
+Eastern Europe,PalmFruit,PalmFruitAEZ07,AEZ07
+Korea,PalmFruit,PalmFruitAEZ07,AEZ07
+Japan,Pasture,PastureAEZ07,AEZ07
+Eastern Europe,Pasture,PastureAEZ07,AEZ07
+Korea,Pasture,PastureAEZ07,AEZ07
+Japan,Rice,RiceAEZ07,AEZ07
+Eastern Europe,Rice,RiceAEZ07,AEZ07
+Korea,Rice,RiceAEZ07,AEZ07
+Japan,Root_Tuber,Root_TuberAEZ07,AEZ07
+Eastern Europe,Root_Tuber,Root_TuberAEZ07,AEZ07
+Korea,Root_Tuber,Root_TuberAEZ07,AEZ07
+Japan,SugarCrop,SugarCropAEZ07,AEZ07
+Eastern Europe,SugarCrop,SugarCropAEZ07,AEZ07
+Korea,SugarCrop,SugarCropAEZ07,AEZ07
+Japan,Wheat,WheatAEZ07,AEZ07
+Eastern Europe,Wheat,WheatAEZ07,AEZ07
+Korea,Wheat,WheatAEZ07,AEZ07
+Japan,biomass,biomassAEZ08,AEZ08
+Korea,biomass,biomassAEZ08,AEZ08
+Japan,Corn,CornAEZ08,AEZ08
+Korea,Corn,CornAEZ08,AEZ08
+Japan,FiberCrop,FiberCropAEZ08,AEZ08
+Korea,FiberCrop,FiberCropAEZ08,AEZ08
+Japan,FodderGrass,FodderGrassAEZ08,AEZ08
+Korea,FodderGrass,FodderGrassAEZ08,AEZ08
+Japan,FodderHerb,FodderHerbAEZ08,AEZ08
+Korea,FodderHerb,FodderHerbAEZ08,AEZ08
+Japan,Forest,ForestAEZ08,AEZ08
+Korea,Forest,ForestAEZ08,AEZ08
+Japan,MiscCrop,MiscCropAEZ08,AEZ08
+Korea,MiscCrop,MiscCropAEZ08,AEZ08
+Japan,OilCrop,OilCropAEZ08,AEZ08
+Korea,OilCrop,OilCropAEZ08,AEZ08
+Japan,OtherGrain,OtherGrainAEZ08,AEZ08
+Korea,OtherGrain,OtherGrainAEZ08,AEZ08
+Japan,PalmFruit,PalmFruitAEZ08,AEZ08
+Korea,PalmFruit,PalmFruitAEZ08,AEZ08
+Japan,Pasture,PastureAEZ08,AEZ08
+Korea,Pasture,PastureAEZ08,AEZ08
+Japan,Rice,RiceAEZ08,AEZ08
+Korea,Rice,RiceAEZ08,AEZ08
+Japan,Root_Tuber,Root_TuberAEZ08,AEZ08
+Korea,Root_Tuber,Root_TuberAEZ08,AEZ08
+Japan,SugarCrop,SugarCropAEZ08,AEZ08
+Korea,SugarCrop,SugarCropAEZ08,AEZ08
+Japan,Wheat,WheatAEZ08,AEZ08
+Korea,Wheat,WheatAEZ08,AEZ08
+Korea,biomass,biomassAEZ09,AEZ09
+Korea,Corn,CornAEZ09,AEZ09
+Korea,FiberCrop,FiberCropAEZ09,AEZ09
+Korea,FodderGrass,FodderGrassAEZ09,AEZ09
+Korea,FodderHerb,FodderHerbAEZ09,AEZ09
+Korea,Forest,ForestAEZ09,AEZ09
+Korea,MiscCrop,MiscCropAEZ09,AEZ09
+Korea,OilCrop,OilCropAEZ09,AEZ09
+Korea,OtherGrain,OtherGrainAEZ09,AEZ09
+Korea,PalmFruit,PalmFruitAEZ09,AEZ09
+Korea,Pasture,PastureAEZ09,AEZ09
+Korea,Rice,RiceAEZ09,AEZ09
+Korea,Root_Tuber,Root_TuberAEZ09,AEZ09
+Korea,SugarCrop,SugarCropAEZ09,AEZ09
+Korea,Wheat,WheatAEZ09,AEZ09
+Middle East,biomass,biomassAEZ11,AEZ11
+Middle East,Corn,CornAEZ11,AEZ11
+Middle East,FiberCrop,FiberCropAEZ11,AEZ11
+Middle East,FodderGrass,FodderGrassAEZ11,AEZ11
+Middle East,FodderHerb,FodderHerbAEZ11,AEZ11
+Middle East,Forest,ForestAEZ11,AEZ11
+Middle East,MiscCrop,MiscCropAEZ11,AEZ11
+Middle East,OilCrop,OilCropAEZ11,AEZ11
+Middle East,OtherGrain,OtherGrainAEZ11,AEZ11
+Middle East,PalmFruit,PalmFruitAEZ11,AEZ11
+Middle East,Pasture,PastureAEZ11,AEZ11
+Middle East,Rice,RiceAEZ11,AEZ11
+Middle East,Root_Tuber,Root_TuberAEZ11,AEZ11
+Middle East,SugarCrop,SugarCropAEZ11,AEZ11
+Middle East,Wheat,WheatAEZ11,AEZ11
+Canada,biomass,biomassAEZ12,AEZ12
+Middle East,biomass,biomassAEZ12,AEZ12
+Korea,biomass,biomassAEZ12,AEZ12
+Canada,Corn,CornAEZ12,AEZ12
+Middle East,Corn,CornAEZ12,AEZ12
+Korea,Corn,CornAEZ12,AEZ12
+Canada,FiberCrop,FiberCropAEZ12,AEZ12
+Middle East,FiberCrop,FiberCropAEZ12,AEZ12
+Korea,FiberCrop,FiberCropAEZ12,AEZ12
+Canada,FodderGrass,FodderGrassAEZ12,AEZ12
+Middle East,FodderGrass,FodderGrassAEZ12,AEZ12
+Korea,FodderGrass,FodderGrassAEZ12,AEZ12
+Canada,FodderHerb,FodderHerbAEZ12,AEZ12
+Middle East,FodderHerb,FodderHerbAEZ12,AEZ12
+Korea,FodderHerb,FodderHerbAEZ12,AEZ12
+Canada,Forest,ForestAEZ12,AEZ12
+Middle East,Forest,ForestAEZ12,AEZ12
+Korea,Forest,ForestAEZ12,AEZ12
+Canada,MiscCrop,MiscCropAEZ12,AEZ12
+Middle East,MiscCrop,MiscCropAEZ12,AEZ12
+Korea,MiscCrop,MiscCropAEZ12,AEZ12
+Canada,OilCrop,OilCropAEZ12,AEZ12
+Middle East,OilCrop,OilCropAEZ12,AEZ12
+Korea,OilCrop,OilCropAEZ12,AEZ12
+Canada,OtherGrain,OtherGrainAEZ12,AEZ12
+Middle East,OtherGrain,OtherGrainAEZ12,AEZ12
+Korea,OtherGrain,OtherGrainAEZ12,AEZ12
+Canada,PalmFruit,PalmFruitAEZ12,AEZ12
+Middle East,PalmFruit,PalmFruitAEZ12,AEZ12
+Korea,PalmFruit,PalmFruitAEZ12,AEZ12
+Canada,Pasture,PastureAEZ12,AEZ12
+Middle East,Pasture,PastureAEZ12,AEZ12
+Korea,Pasture,PastureAEZ12,AEZ12
+Canada,Rice,RiceAEZ12,AEZ12
+Middle East,Rice,RiceAEZ12,AEZ12
+Korea,Rice,RiceAEZ12,AEZ12
+Canada,Root_Tuber,Root_TuberAEZ12,AEZ12
+Middle East,Root_Tuber,Root_TuberAEZ12,AEZ12
+Korea,Root_Tuber,Root_TuberAEZ12,AEZ12
+Canada,SugarCrop,SugarCropAEZ12,AEZ12
+Middle East,SugarCrop,SugarCropAEZ12,AEZ12
+Korea,SugarCrop,SugarCropAEZ12,AEZ12
+Canada,Wheat,WheatAEZ12,AEZ12
+Middle East,Wheat,WheatAEZ12,AEZ12
+Korea,Wheat,WheatAEZ12,AEZ12
+Japan,biomass,biomassAEZ13,AEZ13
+Australia_NZ,biomass,biomassAEZ13,AEZ13
+Middle East,biomass,biomassAEZ13,AEZ13
+Africa,biomass,biomassAEZ13,AEZ13
+Eastern Europe,biomass,biomassAEZ13,AEZ13
+Korea,biomass,biomassAEZ13,AEZ13
+Japan,Corn,CornAEZ13,AEZ13
+Australia_NZ,Corn,CornAEZ13,AEZ13
+Middle East,Corn,CornAEZ13,AEZ13
+Africa,Corn,CornAEZ13,AEZ13
+Eastern Europe,Corn,CornAEZ13,AEZ13
+Korea,Corn,CornAEZ13,AEZ13
+Japan,FiberCrop,FiberCropAEZ13,AEZ13
+Australia_NZ,FiberCrop,FiberCropAEZ13,AEZ13
+Middle East,FiberCrop,FiberCropAEZ13,AEZ13
+Africa,FiberCrop,FiberCropAEZ13,AEZ13
+Eastern Europe,FiberCrop,FiberCropAEZ13,AEZ13
+Korea,FiberCrop,FiberCropAEZ13,AEZ13
+Japan,FodderGrass,FodderGrassAEZ13,AEZ13
+Australia_NZ,FodderGrass,FodderGrassAEZ13,AEZ13
+Middle East,FodderGrass,FodderGrassAEZ13,AEZ13
+Africa,FodderGrass,FodderGrassAEZ13,AEZ13
+Eastern Europe,FodderGrass,FodderGrassAEZ13,AEZ13
+Korea,FodderGrass,FodderGrassAEZ13,AEZ13
+Japan,FodderHerb,FodderHerbAEZ13,AEZ13
+Australia_NZ,FodderHerb,FodderHerbAEZ13,AEZ13
+Middle East,FodderHerb,FodderHerbAEZ13,AEZ13
+Africa,FodderHerb,FodderHerbAEZ13,AEZ13
+Eastern Europe,FodderHerb,FodderHerbAEZ13,AEZ13
+Korea,FodderHerb,FodderHerbAEZ13,AEZ13
+Japan,Forest,ForestAEZ13,AEZ13
+Australia_NZ,Forest,ForestAEZ13,AEZ13
+Middle East,Forest,ForestAEZ13,AEZ13
+Africa,Forest,ForestAEZ13,AEZ13
+Eastern Europe,Forest,ForestAEZ13,AEZ13
+Korea,Forest,ForestAEZ13,AEZ13
+Japan,MiscCrop,MiscCropAEZ13,AEZ13
+Australia_NZ,MiscCrop,MiscCropAEZ13,AEZ13
+Middle East,MiscCrop,MiscCropAEZ13,AEZ13
+Africa,MiscCrop,MiscCropAEZ13,AEZ13
+Eastern Europe,MiscCrop,MiscCropAEZ13,AEZ13
+Korea,MiscCrop,MiscCropAEZ13,AEZ13
+Japan,OilCrop,OilCropAEZ13,AEZ13
+Australia_NZ,OilCrop,OilCropAEZ13,AEZ13
+Middle East,OilCrop,OilCropAEZ13,AEZ13
+Africa,OilCrop,OilCropAEZ13,AEZ13
+Eastern Europe,OilCrop,OilCropAEZ13,AEZ13
+Korea,OilCrop,OilCropAEZ13,AEZ13
+Japan,OtherGrain,OtherGrainAEZ13,AEZ13
+Australia_NZ,OtherGrain,OtherGrainAEZ13,AEZ13
+Middle East,OtherGrain,OtherGrainAEZ13,AEZ13
+Africa,OtherGrain,OtherGrainAEZ13,AEZ13
+Eastern Europe,OtherGrain,OtherGrainAEZ13,AEZ13
+Korea,OtherGrain,OtherGrainAEZ13,AEZ13
+Japan,PalmFruit,PalmFruitAEZ13,AEZ13
+Australia_NZ,PalmFruit,PalmFruitAEZ13,AEZ13
+Middle East,PalmFruit,PalmFruitAEZ13,AEZ13
+Africa,PalmFruit,PalmFruitAEZ13,AEZ13
+Eastern Europe,PalmFruit,PalmFruitAEZ13,AEZ13
+Korea,PalmFruit,PalmFruitAEZ13,AEZ13
+Japan,Pasture,PastureAEZ13,AEZ13
+Australia_NZ,Pasture,PastureAEZ13,AEZ13
+Middle East,Pasture,PastureAEZ13,AEZ13
+Africa,Pasture,PastureAEZ13,AEZ13
+Eastern Europe,Pasture,PastureAEZ13,AEZ13
+Korea,Pasture,PastureAEZ13,AEZ13
+Japan,Rice,RiceAEZ13,AEZ13
+Australia_NZ,Rice,RiceAEZ13,AEZ13
+Middle East,Rice,RiceAEZ13,AEZ13
+Africa,Rice,RiceAEZ13,AEZ13
+Eastern Europe,Rice,RiceAEZ13,AEZ13
+Korea,Rice,RiceAEZ13,AEZ13
+Japan,Root_Tuber,Root_TuberAEZ13,AEZ13
+Australia_NZ,Root_Tuber,Root_TuberAEZ13,AEZ13
+Middle East,Root_Tuber,Root_TuberAEZ13,AEZ13
+Africa,Root_Tuber,Root_TuberAEZ13,AEZ13
+Eastern Europe,Root_Tuber,Root_TuberAEZ13,AEZ13
+Korea,Root_Tuber,Root_TuberAEZ13,AEZ13
+Japan,SugarCrop,SugarCropAEZ13,AEZ13
+Australia_NZ,SugarCrop,SugarCropAEZ13,AEZ13
+Middle East,SugarCrop,SugarCropAEZ13,AEZ13
+Africa,SugarCrop,SugarCropAEZ13,AEZ13
+Eastern Europe,SugarCrop,SugarCropAEZ13,AEZ13
+Korea,SugarCrop,SugarCropAEZ13,AEZ13
+Japan,Wheat,WheatAEZ13,AEZ13
+Australia_NZ,Wheat,WheatAEZ13,AEZ13
+Middle East,Wheat,WheatAEZ13,AEZ13
+Africa,Wheat,WheatAEZ13,AEZ13
+Eastern Europe,Wheat,WheatAEZ13,AEZ13
+Korea,Wheat,WheatAEZ13,AEZ13
+Japan,biomass,biomassAEZ14,AEZ14
+Australia_NZ,biomass,biomassAEZ14,AEZ14
+Middle East,biomass,biomassAEZ14,AEZ14
+Africa,biomass,biomassAEZ14,AEZ14
+Eastern Europe,biomass,biomassAEZ14,AEZ14
+Korea,biomass,biomassAEZ14,AEZ14
+Japan,Corn,CornAEZ14,AEZ14
+Australia_NZ,Corn,CornAEZ14,AEZ14
+Middle East,Corn,CornAEZ14,AEZ14
+Africa,Corn,CornAEZ14,AEZ14
+Eastern Europe,Corn,CornAEZ14,AEZ14
+Korea,Corn,CornAEZ14,AEZ14
+Japan,FiberCrop,FiberCropAEZ14,AEZ14
+Australia_NZ,FiberCrop,FiberCropAEZ14,AEZ14
+Middle East,FiberCrop,FiberCropAEZ14,AEZ14
+Africa,FiberCrop,FiberCropAEZ14,AEZ14
+Eastern Europe,FiberCrop,FiberCropAEZ14,AEZ14
+Korea,FiberCrop,FiberCropAEZ14,AEZ14
+Japan,FodderGrass,FodderGrassAEZ14,AEZ14
+Australia_NZ,FodderGrass,FodderGrassAEZ14,AEZ14
+Middle East,FodderGrass,FodderGrassAEZ14,AEZ14
+Africa,FodderGrass,FodderGrassAEZ14,AEZ14
+Eastern Europe,FodderGrass,FodderGrassAEZ14,AEZ14
+Korea,FodderGrass,FodderGrassAEZ14,AEZ14
+Japan,FodderHerb,FodderHerbAEZ14,AEZ14
+Australia_NZ,FodderHerb,FodderHerbAEZ14,AEZ14
+Middle East,FodderHerb,FodderHerbAEZ14,AEZ14
+Africa,FodderHerb,FodderHerbAEZ14,AEZ14
+Eastern Europe,FodderHerb,FodderHerbAEZ14,AEZ14
+Korea,FodderHerb,FodderHerbAEZ14,AEZ14
+Japan,Forest,ForestAEZ14,AEZ14
+Australia_NZ,Forest,ForestAEZ14,AEZ14
+Middle East,Forest,ForestAEZ14,AEZ14
+Africa,Forest,ForestAEZ14,AEZ14
+Eastern Europe,Forest,ForestAEZ14,AEZ14
+Korea,Forest,ForestAEZ14,AEZ14
+Japan,MiscCrop,MiscCropAEZ14,AEZ14
+Australia_NZ,MiscCrop,MiscCropAEZ14,AEZ14
+Middle East,MiscCrop,MiscCropAEZ14,AEZ14
+Africa,MiscCrop,MiscCropAEZ14,AEZ14
+Eastern Europe,MiscCrop,MiscCropAEZ14,AEZ14
+Korea,MiscCrop,MiscCropAEZ14,AEZ14
+Japan,OilCrop,OilCropAEZ14,AEZ14
+Australia_NZ,OilCrop,OilCropAEZ14,AEZ14
+Middle East,OilCrop,OilCropAEZ14,AEZ14
+Africa,OilCrop,OilCropAEZ14,AEZ14
+Eastern Europe,OilCrop,OilCropAEZ14,AEZ14
+Korea,OilCrop,OilCropAEZ14,AEZ14
+Japan,OtherGrain,OtherGrainAEZ14,AEZ14
+Australia_NZ,OtherGrain,OtherGrainAEZ14,AEZ14
+Middle East,OtherGrain,OtherGrainAEZ14,AEZ14
+Africa,OtherGrain,OtherGrainAEZ14,AEZ14
+Eastern Europe,OtherGrain,OtherGrainAEZ14,AEZ14
+Korea,OtherGrain,OtherGrainAEZ14,AEZ14
+Japan,PalmFruit,PalmFruitAEZ14,AEZ14
+Australia_NZ,PalmFruit,PalmFruitAEZ14,AEZ14
+Middle East,PalmFruit,PalmFruitAEZ14,AEZ14
+Africa,PalmFruit,PalmFruitAEZ14,AEZ14
+Eastern Europe,PalmFruit,PalmFruitAEZ14,AEZ14
+Korea,PalmFruit,PalmFruitAEZ14,AEZ14
+Japan,Pasture,PastureAEZ14,AEZ14
+Australia_NZ,Pasture,PastureAEZ14,AEZ14
+Middle East,Pasture,PastureAEZ14,AEZ14
+Africa,Pasture,PastureAEZ14,AEZ14
+Eastern Europe,Pasture,PastureAEZ14,AEZ14
+Korea,Pasture,PastureAEZ14,AEZ14
+Japan,Rice,RiceAEZ14,AEZ14
+Australia_NZ,Rice,RiceAEZ14,AEZ14
+Middle East,Rice,RiceAEZ14,AEZ14
+Africa,Rice,RiceAEZ14,AEZ14
+Eastern Europe,Rice,RiceAEZ14,AEZ14
+Korea,Rice,RiceAEZ14,AEZ14
+Japan,Root_Tuber,Root_TuberAEZ14,AEZ14
+Australia_NZ,Root_Tuber,Root_TuberAEZ14,AEZ14
+Middle East,Root_Tuber,Root_TuberAEZ14,AEZ14
+Africa,Root_Tuber,Root_TuberAEZ14,AEZ14
+Eastern Europe,Root_Tuber,Root_TuberAEZ14,AEZ14
+Korea,Root_Tuber,Root_TuberAEZ14,AEZ14
+Japan,SugarCrop,SugarCropAEZ14,AEZ14
+Australia_NZ,SugarCrop,SugarCropAEZ14,AEZ14
+Middle East,SugarCrop,SugarCropAEZ14,AEZ14
+Africa,SugarCrop,SugarCropAEZ14,AEZ14
+Eastern Europe,SugarCrop,SugarCropAEZ14,AEZ14
+Korea,SugarCrop,SugarCropAEZ14,AEZ14
+Japan,Wheat,WheatAEZ14,AEZ14
+Australia_NZ,Wheat,WheatAEZ14,AEZ14
+Middle East,Wheat,WheatAEZ14,AEZ14
+Africa,Wheat,WheatAEZ14,AEZ14
+Eastern Europe,Wheat,WheatAEZ14,AEZ14
+Korea,Wheat,WheatAEZ14,AEZ14
+Middle East,biomass,biomassAEZ15,AEZ15
+Africa,biomass,biomassAEZ15,AEZ15
+Korea,biomass,biomassAEZ15,AEZ15
+Middle East,Corn,CornAEZ15,AEZ15
+Africa,Corn,CornAEZ15,AEZ15
+Korea,Corn,CornAEZ15,AEZ15
+Middle East,FiberCrop,FiberCropAEZ15,AEZ15
+Africa,FiberCrop,FiberCropAEZ15,AEZ15
+Korea,FiberCrop,FiberCropAEZ15,AEZ15
+Middle East,FodderGrass,FodderGrassAEZ15,AEZ15
+Africa,FodderGrass,FodderGrassAEZ15,AEZ15
+Korea,FodderGrass,FodderGrassAEZ15,AEZ15
+Middle East,FodderHerb,FodderHerbAEZ15,AEZ15
+Africa,FodderHerb,FodderHerbAEZ15,AEZ15
+Korea,FodderHerb,FodderHerbAEZ15,AEZ15
+Middle East,Forest,ForestAEZ15,AEZ15
+Africa,Forest,ForestAEZ15,AEZ15
+Korea,Forest,ForestAEZ15,AEZ15
+Middle East,MiscCrop,MiscCropAEZ15,AEZ15
+Africa,MiscCrop,MiscCropAEZ15,AEZ15
+Korea,MiscCrop,MiscCropAEZ15,AEZ15
+Middle East,OilCrop,OilCropAEZ15,AEZ15
+Africa,OilCrop,OilCropAEZ15,AEZ15
+Korea,OilCrop,OilCropAEZ15,AEZ15
+Middle East,OtherGrain,OtherGrainAEZ15,AEZ15
+Africa,OtherGrain,OtherGrainAEZ15,AEZ15
+Korea,OtherGrain,OtherGrainAEZ15,AEZ15
+Middle East,PalmFruit,PalmFruitAEZ15,AEZ15
+Africa,PalmFruit,PalmFruitAEZ15,AEZ15
+Korea,PalmFruit,PalmFruitAEZ15,AEZ15
+Middle East,Pasture,PastureAEZ15,AEZ15
+Africa,Pasture,PastureAEZ15,AEZ15
+Korea,Pasture,PastureAEZ15,AEZ15
+Middle East,Rice,RiceAEZ15,AEZ15
+Africa,Rice,RiceAEZ15,AEZ15
+Korea,Rice,RiceAEZ15,AEZ15
+Middle East,Root_Tuber,Root_TuberAEZ15,AEZ15
+Africa,Root_Tuber,Root_TuberAEZ15,AEZ15
+Korea,Root_Tuber,Root_TuberAEZ15,AEZ15
+Middle East,SugarCrop,SugarCropAEZ15,AEZ15
+Africa,SugarCrop,SugarCropAEZ15,AEZ15
+Korea,SugarCrop,SugarCropAEZ15,AEZ15
+Middle East,Wheat,WheatAEZ15,AEZ15
+Africa,Wheat,WheatAEZ15,AEZ15
+Korea,Wheat,WheatAEZ15,AEZ15
+Japan,biomass,biomassAEZ16,AEZ16
+Middle East,biomass,biomassAEZ16,AEZ16
+Africa,biomass,biomassAEZ16,AEZ16
+Korea,biomass,biomassAEZ16,AEZ16
+Japan,Corn,CornAEZ16,AEZ16
+Middle East,Corn,CornAEZ16,AEZ16
+Africa,Corn,CornAEZ16,AEZ16
+Korea,Corn,CornAEZ16,AEZ16
+Japan,FiberCrop,FiberCropAEZ16,AEZ16
+Middle East,FiberCrop,FiberCropAEZ16,AEZ16
+Africa,FiberCrop,FiberCropAEZ16,AEZ16
+Korea,FiberCrop,FiberCropAEZ16,AEZ16
+Japan,FodderGrass,FodderGrassAEZ16,AEZ16
+Middle East,FodderGrass,FodderGrassAEZ16,AEZ16
+Africa,FodderGrass,FodderGrassAEZ16,AEZ16
+Korea,FodderGrass,FodderGrassAEZ16,AEZ16
+Japan,FodderHerb,FodderHerbAEZ16,AEZ16
+Middle East,FodderHerb,FodderHerbAEZ16,AEZ16
+Africa,FodderHerb,FodderHerbAEZ16,AEZ16
+Korea,FodderHerb,FodderHerbAEZ16,AEZ16
+Japan,Forest,ForestAEZ16,AEZ16
+Middle East,Forest,ForestAEZ16,AEZ16
+Africa,Forest,ForestAEZ16,AEZ16
+Korea,Forest,ForestAEZ16,AEZ16
+Japan,MiscCrop,MiscCropAEZ16,AEZ16
+Middle East,MiscCrop,MiscCropAEZ16,AEZ16
+Africa,MiscCrop,MiscCropAEZ16,AEZ16
+Korea,MiscCrop,MiscCropAEZ16,AEZ16
+Japan,OilCrop,OilCropAEZ16,AEZ16
+Middle East,OilCrop,OilCropAEZ16,AEZ16
+Africa,OilCrop,OilCropAEZ16,AEZ16
+Korea,OilCrop,OilCropAEZ16,AEZ16
+Japan,OtherGrain,OtherGrainAEZ16,AEZ16
+Middle East,OtherGrain,OtherGrainAEZ16,AEZ16
+Africa,OtherGrain,OtherGrainAEZ16,AEZ16
+Korea,OtherGrain,OtherGrainAEZ16,AEZ16
+Japan,PalmFruit,PalmFruitAEZ16,AEZ16
+Middle East,PalmFruit,PalmFruitAEZ16,AEZ16
+Africa,PalmFruit,PalmFruitAEZ16,AEZ16
+Korea,PalmFruit,PalmFruitAEZ16,AEZ16
+Japan,Pasture,PastureAEZ16,AEZ16
+Middle East,Pasture,PastureAEZ16,AEZ16
+Africa,Pasture,PastureAEZ16,AEZ16
+Korea,Pasture,PastureAEZ16,AEZ16
+Japan,Rice,RiceAEZ16,AEZ16
+Middle East,Rice,RiceAEZ16,AEZ16
+Africa,Rice,RiceAEZ16,AEZ16
+Korea,Rice,RiceAEZ16,AEZ16
+Japan,Root_Tuber,Root_TuberAEZ16,AEZ16
+Middle East,Root_Tuber,Root_TuberAEZ16,AEZ16
+Africa,Root_Tuber,Root_TuberAEZ16,AEZ16
+Korea,Root_Tuber,Root_TuberAEZ16,AEZ16
+Japan,SugarCrop,SugarCropAEZ16,AEZ16
+Middle East,SugarCrop,SugarCropAEZ16,AEZ16
+Africa,SugarCrop,SugarCropAEZ16,AEZ16
+Korea,SugarCrop,SugarCropAEZ16,AEZ16
+Japan,Wheat,WheatAEZ16,AEZ16
+Middle East,Wheat,WheatAEZ16,AEZ16
+Africa,Wheat,WheatAEZ16,AEZ16
+Korea,Wheat,WheatAEZ16,AEZ16
+USA,biomass,biomassAEZ17,AEZ17
+Canada,biomass,biomassAEZ17,AEZ17
+Western Europe,biomass,biomassAEZ17,AEZ17
+Japan,biomass,biomassAEZ17,AEZ17
+Former Soviet Union,biomass,biomassAEZ17,AEZ17
+Middle East,biomass,biomassAEZ17,AEZ17
+Africa,biomass,biomassAEZ17,AEZ17
+Southeast Asia,biomass,biomassAEZ17,AEZ17
+Eastern Europe,biomass,biomassAEZ17,AEZ17
+Korea,biomass,biomassAEZ17,AEZ17
+India,biomass,biomassAEZ17,AEZ17
+USA,Corn,CornAEZ17,AEZ17
+Canada,Corn,CornAEZ17,AEZ17
+Western Europe,Corn,CornAEZ17,AEZ17
+Japan,Corn,CornAEZ17,AEZ17
+Former Soviet Union,Corn,CornAEZ17,AEZ17
+Middle East,Corn,CornAEZ17,AEZ17
+Africa,Corn,CornAEZ17,AEZ17
+Southeast Asia,Corn,CornAEZ17,AEZ17
+Eastern Europe,Corn,CornAEZ17,AEZ17
+Korea,Corn,CornAEZ17,AEZ17
+India,Corn,CornAEZ17,AEZ17
+USA,FiberCrop,FiberCropAEZ17,AEZ17
+Canada,FiberCrop,FiberCropAEZ17,AEZ17
+Western Europe,FiberCrop,FiberCropAEZ17,AEZ17
+Japan,FiberCrop,FiberCropAEZ17,AEZ17
+Former Soviet Union,FiberCrop,FiberCropAEZ17,AEZ17
+Middle East,FiberCrop,FiberCropAEZ17,AEZ17
+Africa,FiberCrop,FiberCropAEZ17,AEZ17
+Southeast Asia,FiberCrop,FiberCropAEZ17,AEZ17
+Eastern Europe,FiberCrop,FiberCropAEZ17,AEZ17
+Korea,FiberCrop,FiberCropAEZ17,AEZ17
+India,FiberCrop,FiberCropAEZ17,AEZ17
+USA,FodderGrass,FodderGrassAEZ17,AEZ17
+Canada,FodderGrass,FodderGrassAEZ17,AEZ17
+Western Europe,FodderGrass,FodderGrassAEZ17,AEZ17
+Japan,FodderGrass,FodderGrassAEZ17,AEZ17
+Former Soviet Union,FodderGrass,FodderGrassAEZ17,AEZ17
+Middle East,FodderGrass,FodderGrassAEZ17,AEZ17
+Africa,FodderGrass,FodderGrassAEZ17,AEZ17
+Southeast Asia,FodderGrass,FodderGrassAEZ17,AEZ17
+Eastern Europe,FodderGrass,FodderGrassAEZ17,AEZ17
+Korea,FodderGrass,FodderGrassAEZ17,AEZ17
+India,FodderGrass,FodderGrassAEZ17,AEZ17
+USA,FodderHerb,FodderHerbAEZ17,AEZ17
+Canada,FodderHerb,FodderHerbAEZ17,AEZ17
+Western Europe,FodderHerb,FodderHerbAEZ17,AEZ17
+Japan,FodderHerb,FodderHerbAEZ17,AEZ17
+Former Soviet Union,FodderHerb,FodderHerbAEZ17,AEZ17
+Middle East,FodderHerb,FodderHerbAEZ17,AEZ17
+Africa,FodderHerb,FodderHerbAEZ17,AEZ17
+Southeast Asia,FodderHerb,FodderHerbAEZ17,AEZ17
+Eastern Europe,FodderHerb,FodderHerbAEZ17,AEZ17
+Korea,FodderHerb,FodderHerbAEZ17,AEZ17
+India,FodderHerb,FodderHerbAEZ17,AEZ17
+USA,Forest,ForestAEZ17,AEZ17
+Canada,Forest,ForestAEZ17,AEZ17
+Western Europe,Forest,ForestAEZ17,AEZ17
+Japan,Forest,ForestAEZ17,AEZ17
+Former Soviet Union,Forest,ForestAEZ17,AEZ17
+Middle East,Forest,ForestAEZ17,AEZ17
+Africa,Forest,ForestAEZ17,AEZ17
+Southeast Asia,Forest,ForestAEZ17,AEZ17
+Eastern Europe,Forest,ForestAEZ17,AEZ17
+Korea,Forest,ForestAEZ17,AEZ17
+India,Forest,ForestAEZ17,AEZ17
+USA,MiscCrop,MiscCropAEZ17,AEZ17
+Canada,MiscCrop,MiscCropAEZ17,AEZ17
+Western Europe,MiscCrop,MiscCropAEZ17,AEZ17
+Japan,MiscCrop,MiscCropAEZ17,AEZ17
+Former Soviet Union,MiscCrop,MiscCropAEZ17,AEZ17
+Middle East,MiscCrop,MiscCropAEZ17,AEZ17
+Africa,MiscCrop,MiscCropAEZ17,AEZ17
+Southeast Asia,MiscCrop,MiscCropAEZ17,AEZ17
+Eastern Europe,MiscCrop,MiscCropAEZ17,AEZ17
+Korea,MiscCrop,MiscCropAEZ17,AEZ17
+India,MiscCrop,MiscCropAEZ17,AEZ17
+USA,OilCrop,OilCropAEZ17,AEZ17
+Canada,OilCrop,OilCropAEZ17,AEZ17
+Western Europe,OilCrop,OilCropAEZ17,AEZ17
+Japan,OilCrop,OilCropAEZ17,AEZ17
+Former Soviet Union,OilCrop,OilCropAEZ17,AEZ17
+Middle East,OilCrop,OilCropAEZ17,AEZ17
+Africa,OilCrop,OilCropAEZ17,AEZ17
+Southeast Asia,OilCrop,OilCropAEZ17,AEZ17
+Eastern Europe,OilCrop,OilCropAEZ17,AEZ17
+Korea,OilCrop,OilCropAEZ17,AEZ17
+India,OilCrop,OilCropAEZ17,AEZ17
+USA,OtherGrain,OtherGrainAEZ17,AEZ17
+Canada,OtherGrain,OtherGrainAEZ17,AEZ17
+Western Europe,OtherGrain,OtherGrainAEZ17,AEZ17
+Japan,OtherGrain,OtherGrainAEZ17,AEZ17
+Former Soviet Union,OtherGrain,OtherGrainAEZ17,AEZ17
+Middle East,OtherGrain,OtherGrainAEZ17,AEZ17
+Africa,OtherGrain,OtherGrainAEZ17,AEZ17
+Southeast Asia,OtherGrain,OtherGrainAEZ17,AEZ17
+Eastern Europe,OtherGrain,OtherGrainAEZ17,AEZ17
+Korea,OtherGrain,OtherGrainAEZ17,AEZ17
+India,OtherGrain,OtherGrainAEZ17,AEZ17
+USA,PalmFruit,PalmFruitAEZ17,AEZ17
+Canada,PalmFruit,PalmFruitAEZ17,AEZ17
+Western Europe,PalmFruit,PalmFruitAEZ17,AEZ17
+Japan,PalmFruit,PalmFruitAEZ17,AEZ17
+Former Soviet Union,PalmFruit,PalmFruitAEZ17,AEZ17
+Middle East,PalmFruit,PalmFruitAEZ17,AEZ17
+Africa,PalmFruit,PalmFruitAEZ17,AEZ17
+Southeast Asia,PalmFruit,PalmFruitAEZ17,AEZ17
+Eastern Europe,PalmFruit,PalmFruitAEZ17,AEZ17
+Korea,PalmFruit,PalmFruitAEZ17,AEZ17
+India,PalmFruit,PalmFruitAEZ17,AEZ17
+USA,Pasture,PastureAEZ17,AEZ17
+Canada,Pasture,PastureAEZ17,AEZ17
+Western Europe,Pasture,PastureAEZ17,AEZ17
+Japan,Pasture,PastureAEZ17,AEZ17
+Former Soviet Union,Pasture,PastureAEZ17,AEZ17
+Middle East,Pasture,PastureAEZ17,AEZ17
+Africa,Pasture,PastureAEZ17,AEZ17
+Southeast Asia,Pasture,PastureAEZ17,AEZ17
+Eastern Europe,Pasture,PastureAEZ17,AEZ17
+Korea,Pasture,PastureAEZ17,AEZ17
+India,Pasture,PastureAEZ17,AEZ17
+USA,Rice,RiceAEZ17,AEZ17
+Canada,Rice,RiceAEZ17,AEZ17
+Western Europe,Rice,RiceAEZ17,AEZ17
+Japan,Rice,RiceAEZ17,AEZ17
+Former Soviet Union,Rice,RiceAEZ17,AEZ17
+Middle East,Rice,RiceAEZ17,AEZ17
+Africa,Rice,RiceAEZ17,AEZ17
+Southeast Asia,Rice,RiceAEZ17,AEZ17
+Eastern Europe,Rice,RiceAEZ17,AEZ17
+Korea,Rice,RiceAEZ17,AEZ17
+India,Rice,RiceAEZ17,AEZ17
+USA,Root_Tuber,Root_TuberAEZ17,AEZ17
+Canada,Root_Tuber,Root_TuberAEZ17,AEZ17
+Western Europe,Root_Tuber,Root_TuberAEZ17,AEZ17
+Japan,Root_Tuber,Root_TuberAEZ17,AEZ17
+Former Soviet Union,Root_Tuber,Root_TuberAEZ17,AEZ17
+Middle East,Root_Tuber,Root_TuberAEZ17,AEZ17
+Africa,Root_Tuber,Root_TuberAEZ17,AEZ17
+Southeast Asia,Root_Tuber,Root_TuberAEZ17,AEZ17
+Eastern Europe,Root_Tuber,Root_TuberAEZ17,AEZ17
+Korea,Root_Tuber,Root_TuberAEZ17,AEZ17
+India,Root_Tuber,Root_TuberAEZ17,AEZ17
+USA,SugarCrop,SugarCropAEZ17,AEZ17
+Canada,SugarCrop,SugarCropAEZ17,AEZ17
+Western Europe,SugarCrop,SugarCropAEZ17,AEZ17
+Japan,SugarCrop,SugarCropAEZ17,AEZ17
+Former Soviet Union,SugarCrop,SugarCropAEZ17,AEZ17
+Middle East,SugarCrop,SugarCropAEZ17,AEZ17
+Africa,SugarCrop,SugarCropAEZ17,AEZ17
+Southeast Asia,SugarCrop,SugarCropAEZ17,AEZ17
+Eastern Europe,SugarCrop,SugarCropAEZ17,AEZ17
+Korea,SugarCrop,SugarCropAEZ17,AEZ17
+India,SugarCrop,SugarCropAEZ17,AEZ17
+USA,Wheat,WheatAEZ17,AEZ17
+Canada,Wheat,WheatAEZ17,AEZ17
+Western Europe,Wheat,WheatAEZ17,AEZ17
+Japan,Wheat,WheatAEZ17,AEZ17
+Former Soviet Union,Wheat,WheatAEZ17,AEZ17
+Middle East,Wheat,WheatAEZ17,AEZ17
+Africa,Wheat,WheatAEZ17,AEZ17
+Southeast Asia,Wheat,WheatAEZ17,AEZ17
+Eastern Europe,Wheat,WheatAEZ17,AEZ17
+Korea,Wheat,WheatAEZ17,AEZ17
+India,Wheat,WheatAEZ17,AEZ17
+USA,biomass,biomassAEZ18,AEZ18
+Canada,biomass,biomassAEZ18,AEZ18
+Western Europe,biomass,biomassAEZ18,AEZ18
+Japan,biomass,biomassAEZ18,AEZ18
+Australia_NZ,biomass,biomassAEZ18,AEZ18
+Former Soviet Union,biomass,biomassAEZ18,AEZ18
+China,biomass,biomassAEZ18,AEZ18
+Middle East,biomass,biomassAEZ18,AEZ18
+Africa,biomass,biomassAEZ18,AEZ18
+Southeast Asia,biomass,biomassAEZ18,AEZ18
+Eastern Europe,biomass,biomassAEZ18,AEZ18
+Korea,biomass,biomassAEZ18,AEZ18
+India,biomass,biomassAEZ18,AEZ18
+USA,Corn,CornAEZ18,AEZ18
+Canada,Corn,CornAEZ18,AEZ18
+Western Europe,Corn,CornAEZ18,AEZ18
+Japan,Corn,CornAEZ18,AEZ18
+Australia_NZ,Corn,CornAEZ18,AEZ18
+Former Soviet Union,Corn,CornAEZ18,AEZ18
+China,Corn,CornAEZ18,AEZ18
+Middle East,Corn,CornAEZ18,AEZ18
+Africa,Corn,CornAEZ18,AEZ18
+Southeast Asia,Corn,CornAEZ18,AEZ18
+Eastern Europe,Corn,CornAEZ18,AEZ18
+Korea,Corn,CornAEZ18,AEZ18
+India,Corn,CornAEZ18,AEZ18
+USA,FiberCrop,FiberCropAEZ18,AEZ18
+Canada,FiberCrop,FiberCropAEZ18,AEZ18
+Western Europe,FiberCrop,FiberCropAEZ18,AEZ18
+Japan,FiberCrop,FiberCropAEZ18,AEZ18
+Australia_NZ,FiberCrop,FiberCropAEZ18,AEZ18
+Former Soviet Union,FiberCrop,FiberCropAEZ18,AEZ18
+China,FiberCrop,FiberCropAEZ18,AEZ18
+Middle East,FiberCrop,FiberCropAEZ18,AEZ18
+Africa,FiberCrop,FiberCropAEZ18,AEZ18
+Southeast Asia,FiberCrop,FiberCropAEZ18,AEZ18
+Eastern Europe,FiberCrop,FiberCropAEZ18,AEZ18
+Korea,FiberCrop,FiberCropAEZ18,AEZ18
+India,FiberCrop,FiberCropAEZ18,AEZ18
+USA,FodderGrass,FodderGrassAEZ18,AEZ18
+Canada,FodderGrass,FodderGrassAEZ18,AEZ18
+Western Europe,FodderGrass,FodderGrassAEZ18,AEZ18
+Japan,FodderGrass,FodderGrassAEZ18,AEZ18
+Australia_NZ,FodderGrass,FodderGrassAEZ18,AEZ18
+Former Soviet Union,FodderGrass,FodderGrassAEZ18,AEZ18
+China,FodderGrass,FodderGrassAEZ18,AEZ18
+Middle East,FodderGrass,FodderGrassAEZ18,AEZ18
+Africa,FodderGrass,FodderGrassAEZ18,AEZ18
+Southeast Asia,FodderGrass,FodderGrassAEZ18,AEZ18
+Eastern Europe,FodderGrass,FodderGrassAEZ18,AEZ18
+Korea,FodderGrass,FodderGrassAEZ18,AEZ18
+India,FodderGrass,FodderGrassAEZ18,AEZ18
+USA,FodderHerb,FodderHerbAEZ18,AEZ18
+Canada,FodderHerb,FodderHerbAEZ18,AEZ18
+Western Europe,FodderHerb,FodderHerbAEZ18,AEZ18
+Japan,FodderHerb,FodderHerbAEZ18,AEZ18
+Australia_NZ,FodderHerb,FodderHerbAEZ18,AEZ18
+Former Soviet Union,FodderHerb,FodderHerbAEZ18,AEZ18
+China,FodderHerb,FodderHerbAEZ18,AEZ18
+Middle East,FodderHerb,FodderHerbAEZ18,AEZ18
+Africa,FodderHerb,FodderHerbAEZ18,AEZ18
+Southeast Asia,FodderHerb,FodderHerbAEZ18,AEZ18
+Eastern Europe,FodderHerb,FodderHerbAEZ18,AEZ18
+Korea,FodderHerb,FodderHerbAEZ18,AEZ18
+India,FodderHerb,FodderHerbAEZ18,AEZ18
+USA,Forest,ForestAEZ18,AEZ18
+Canada,Forest,ForestAEZ18,AEZ18
+Western Europe,Forest,ForestAEZ18,AEZ18
+Japan,Forest,ForestAEZ18,AEZ18
+Australia_NZ,Forest,ForestAEZ18,AEZ18
+Former Soviet Union,Forest,ForestAEZ18,AEZ18
+China,Forest,ForestAEZ18,AEZ18
+Middle East,Forest,ForestAEZ18,AEZ18
+Africa,Forest,ForestAEZ18,AEZ18
+Southeast Asia,Forest,ForestAEZ18,AEZ18
+Eastern Europe,Forest,ForestAEZ18,AEZ18
+Korea,Forest,ForestAEZ18,AEZ18
+India,Forest,ForestAEZ18,AEZ18
+USA,MiscCrop,MiscCropAEZ18,AEZ18
+Canada,MiscCrop,MiscCropAEZ18,AEZ18
+Western Europe,MiscCrop,MiscCropAEZ18,AEZ18
+Japan,MiscCrop,MiscCropAEZ18,AEZ18
+Australia_NZ,MiscCrop,MiscCropAEZ18,AEZ18
+Former Soviet Union,MiscCrop,MiscCropAEZ18,AEZ18
+China,MiscCrop,MiscCropAEZ18,AEZ18
+Middle East,MiscCrop,MiscCropAEZ18,AEZ18
+Africa,MiscCrop,MiscCropAEZ18,AEZ18
+Southeast Asia,MiscCrop,MiscCropAEZ18,AEZ18
+Eastern Europe,MiscCrop,MiscCropAEZ18,AEZ18
+Korea,MiscCrop,MiscCropAEZ18,AEZ18
+India,MiscCrop,MiscCropAEZ18,AEZ18
+USA,OilCrop,OilCropAEZ18,AEZ18
+Canada,OilCrop,OilCropAEZ18,AEZ18
+Western Europe,OilCrop,OilCropAEZ18,AEZ18
+Japan,OilCrop,OilCropAEZ18,AEZ18
+Australia_NZ,OilCrop,OilCropAEZ18,AEZ18
+Former Soviet Union,OilCrop,OilCropAEZ18,AEZ18
+China,OilCrop,OilCropAEZ18,AEZ18
+Middle East,OilCrop,OilCropAEZ18,AEZ18
+Africa,OilCrop,OilCropAEZ18,AEZ18
+Southeast Asia,OilCrop,OilCropAEZ18,AEZ18
+Eastern Europe,OilCrop,OilCropAEZ18,AEZ18
+Korea,OilCrop,OilCropAEZ18,AEZ18
+India,OilCrop,OilCropAEZ18,AEZ18
+USA,OtherGrain,OtherGrainAEZ18,AEZ18
+Canada,OtherGrain,OtherGrainAEZ18,AEZ18
+Western Europe,OtherGrain,OtherGrainAEZ18,AEZ18
+Japan,OtherGrain,OtherGrainAEZ18,AEZ18
+Australia_NZ,OtherGrain,OtherGrainAEZ18,AEZ18
+Former Soviet Union,OtherGrain,OtherGrainAEZ18,AEZ18
+China,OtherGrain,OtherGrainAEZ18,AEZ18
+Middle East,OtherGrain,OtherGrainAEZ18,AEZ18
+Africa,OtherGrain,OtherGrainAEZ18,AEZ18
+Southeast Asia,OtherGrain,OtherGrainAEZ18,AEZ18
+Eastern Europe,OtherGrain,OtherGrainAEZ18,AEZ18
+Korea,OtherGrain,OtherGrainAEZ18,AEZ18
+India,OtherGrain,OtherGrainAEZ18,AEZ18
+USA,PalmFruit,PalmFruitAEZ18,AEZ18
+Canada,PalmFruit,PalmFruitAEZ18,AEZ18
+Western Europe,PalmFruit,PalmFruitAEZ18,AEZ18
+Japan,PalmFruit,PalmFruitAEZ18,AEZ18
+Australia_NZ,PalmFruit,PalmFruitAEZ18,AEZ18
+Former Soviet Union,PalmFruit,PalmFruitAEZ18,AEZ18
+China,PalmFruit,PalmFruitAEZ18,AEZ18
+Middle East,PalmFruit,PalmFruitAEZ18,AEZ18
+Africa,PalmFruit,PalmFruitAEZ18,AEZ18
+Southeast Asia,PalmFruit,PalmFruitAEZ18,AEZ18
+Eastern Europe,PalmFruit,PalmFruitAEZ18,AEZ18
+Korea,PalmFruit,PalmFruitAEZ18,AEZ18
+India,PalmFruit,PalmFruitAEZ18,AEZ18
+USA,Pasture,PastureAEZ18,AEZ18
+Canada,Pasture,PastureAEZ18,AEZ18
+Western Europe,Pasture,PastureAEZ18,AEZ18
+Japan,Pasture,PastureAEZ18,AEZ18
+Australia_NZ,Pasture,PastureAEZ18,AEZ18
+Former Soviet Union,Pasture,PastureAEZ18,AEZ18
+China,Pasture,PastureAEZ18,AEZ18
+Middle East,Pasture,PastureAEZ18,AEZ18
+Africa,Pasture,PastureAEZ18,AEZ18
+Southeast Asia,Pasture,PastureAEZ18,AEZ18
+Eastern Europe,Pasture,PastureAEZ18,AEZ18
+Korea,Pasture,PastureAEZ18,AEZ18
+India,Pasture,PastureAEZ18,AEZ18
+USA,Rice,RiceAEZ18,AEZ18
+Canada,Rice,RiceAEZ18,AEZ18
+Western Europe,Rice,RiceAEZ18,AEZ18
+Japan,Rice,RiceAEZ18,AEZ18
+Australia_NZ,Rice,RiceAEZ18,AEZ18
+Former Soviet Union,Rice,RiceAEZ18,AEZ18
+China,Rice,RiceAEZ18,AEZ18
+Middle East,Rice,RiceAEZ18,AEZ18
+Africa,Rice,RiceAEZ18,AEZ18
+Southeast Asia,Rice,RiceAEZ18,AEZ18
+Eastern Europe,Rice,RiceAEZ18,AEZ18
+Korea,Rice,RiceAEZ18,AEZ18
+India,Rice,RiceAEZ18,AEZ18
+USA,Root_Tuber,Root_TuberAEZ18,AEZ18
+Canada,Root_Tuber,Root_TuberAEZ18,AEZ18
+Western Europe,Root_Tuber,Root_TuberAEZ18,AEZ18
+Japan,Root_Tuber,Root_TuberAEZ18,AEZ18
+Australia_NZ,Root_Tuber,Root_TuberAEZ18,AEZ18
+Former Soviet Union,Root_Tuber,Root_TuberAEZ18,AEZ18
+China,Root_Tuber,Root_TuberAEZ18,AEZ18
+Middle East,Root_Tuber,Root_TuberAEZ18,AEZ18
+Africa,Root_Tuber,Root_TuberAEZ18,AEZ18
+Southeast Asia,Root_Tuber,Root_TuberAEZ18,AEZ18
+Eastern Europe,Root_Tuber,Root_TuberAEZ18,AEZ18
+Korea,Root_Tuber,Root_TuberAEZ18,AEZ18
+India,Root_Tuber,Root_TuberAEZ18,AEZ18
+USA,SugarCrop,SugarCropAEZ18,AEZ18
+Canada,SugarCrop,SugarCropAEZ18,AEZ18
+Western Europe,SugarCrop,SugarCropAEZ18,AEZ18
+Japan,SugarCrop,SugarCropAEZ18,AEZ18
+Australia_NZ,SugarCrop,SugarCropAEZ18,AEZ18
+Former Soviet Union,SugarCrop,SugarCropAEZ18,AEZ18
+China,SugarCrop,SugarCropAEZ18,AEZ18
+Middle East,SugarCrop,SugarCropAEZ18,AEZ18
+Africa,SugarCrop,SugarCropAEZ18,AEZ18
+Southeast Asia,SugarCrop,SugarCropAEZ18,AEZ18
+Eastern Europe,SugarCrop,SugarCropAEZ18,AEZ18
+Korea,SugarCrop,SugarCropAEZ18,AEZ18
+India,SugarCrop,SugarCropAEZ18,AEZ18
+USA,Wheat,WheatAEZ18,AEZ18
+Canada,Wheat,WheatAEZ18,AEZ18
+Western Europe,Wheat,WheatAEZ18,AEZ18
+Japan,Wheat,WheatAEZ18,AEZ18
+Australia_NZ,Wheat,WheatAEZ18,AEZ18
+Former Soviet Union,Wheat,WheatAEZ18,AEZ18
+China,Wheat,WheatAEZ18,AEZ18
+Middle East,Wheat,WheatAEZ18,AEZ18
+Africa,Wheat,WheatAEZ18,AEZ18
+Southeast Asia,Wheat,WheatAEZ18,AEZ18
+Eastern Europe,Wheat,WheatAEZ18,AEZ18
+Korea,Wheat,WheatAEZ18,AEZ18
+India,Wheat,WheatAEZ18,AEZ18

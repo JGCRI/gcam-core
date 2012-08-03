@@ -1,0 +1,537 @@
+INPUT_TABLE
+Variable ID
+Subsector
+
+region,supplysector,subsector,logit.exponent,share.weight.year,share.weight,apply.to,from.year,to.year,interpolation.function
+Africa,FoodDemand_Crops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Africa,FoodDemand_Crops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Africa,FoodDemand_Crops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Africa,FoodDemand_Crops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Africa,FoodDemand_Crops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Africa,FoodDemand_Crops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Africa,FoodDemand_Crops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Africa,FoodDemand_Crops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Africa,FoodDemand_Crops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Africa,FoodDemand_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Africa,FoodDemand_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Africa,FoodDemand_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Africa,FoodDemand_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Africa,FoodDemand_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Africa,FoodDemand_Meat,OtherMeat_Fish,-6,1975,1,share-weight,2005,9999,fixed
+Africa,NonFoodDemand_Crops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Africa,NonFoodDemand_Crops,FiberCrop,-6,1975,1,share-weight,2005,9999,fixed
+Africa,NonFoodDemand_Crops,FodderHerb,-6,1975,1,share-weight,2005,9999,fixed
+Africa,NonFoodDemand_Crops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Africa,NonFoodDemand_Crops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Africa,NonFoodDemand_Crops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Africa,NonFoodDemand_Crops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Africa,NonFoodDemand_Crops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Africa,NonFoodDemand_Crops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Africa,NonFoodDemand_Crops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Africa,NonFoodDemand_Crops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Africa,NonFoodDemand_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Africa,NonFoodDemand_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Africa,NonFoodDemand_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Africa,NonFoodDemand_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Africa,NonFoodDemand_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Africa,NonFoodDemand_Meat,OtherMeat_Fish,-6,1975,1,share-weight,2005,9999,fixed
+Africa,NonFoodDemand_Forest,NonFoodDemand_Forest,-6,1975,1,share-weight,2005,9999,fixed
+Africa,Exports_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Africa,Exports_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Africa,Exports_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Africa,Exports_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Africa,Exports_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,FoodDemand_Crops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,FoodDemand_Crops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,FoodDemand_Crops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,FoodDemand_Crops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,FoodDemand_Crops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,FoodDemand_Crops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,FoodDemand_Crops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,FoodDemand_Crops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,FoodDemand_Crops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,FoodDemand_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,FoodDemand_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,FoodDemand_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,FoodDemand_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,FoodDemand_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,FoodDemand_Meat,OtherMeat_Fish,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,NonFoodDemand_Crops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,NonFoodDemand_Crops,FiberCrop,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,NonFoodDemand_Crops,FodderHerb,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,NonFoodDemand_Crops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,NonFoodDemand_Crops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,NonFoodDemand_Crops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,NonFoodDemand_Crops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,NonFoodDemand_Crops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,NonFoodDemand_Crops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,NonFoodDemand_Crops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,NonFoodDemand_Crops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,NonFoodDemand_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,NonFoodDemand_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,NonFoodDemand_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,NonFoodDemand_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,NonFoodDemand_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,NonFoodDemand_Meat,OtherMeat_Fish,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,NonFoodDemand_Forest,NonFoodDemand_Forest,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,Exports_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,Exports_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,Exports_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,Exports_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,Exports_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Canada,FoodDemand_Crops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Canada,FoodDemand_Crops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Canada,FoodDemand_Crops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Canada,FoodDemand_Crops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Canada,FoodDemand_Crops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Canada,FoodDemand_Crops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Canada,FoodDemand_Crops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Canada,FoodDemand_Crops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Canada,FoodDemand_Crops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Canada,FoodDemand_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Canada,FoodDemand_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Canada,FoodDemand_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Canada,FoodDemand_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Canada,FoodDemand_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Canada,FoodDemand_Meat,OtherMeat_Fish,-6,1975,1,share-weight,2005,9999,fixed
+Canada,NonFoodDemand_Crops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Canada,NonFoodDemand_Crops,FiberCrop,-6,1975,1,share-weight,2005,9999,fixed
+Canada,NonFoodDemand_Crops,FodderHerb,-6,1975,1,share-weight,2005,9999,fixed
+Canada,NonFoodDemand_Crops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Canada,NonFoodDemand_Crops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Canada,NonFoodDemand_Crops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Canada,NonFoodDemand_Crops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Canada,NonFoodDemand_Crops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Canada,NonFoodDemand_Crops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Canada,NonFoodDemand_Crops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Canada,NonFoodDemand_Crops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Canada,NonFoodDemand_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Canada,NonFoodDemand_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Canada,NonFoodDemand_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Canada,NonFoodDemand_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Canada,NonFoodDemand_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Canada,NonFoodDemand_Meat,OtherMeat_Fish,-6,1975,1,share-weight,2005,9999,fixed
+Canada,NonFoodDemand_Forest,NonFoodDemand_Forest,-6,1975,1,share-weight,2005,9999,fixed
+Canada,Exports_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Canada,Exports_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Canada,Exports_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Canada,Exports_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Canada,Exports_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+China,FoodDemand_Crops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+China,FoodDemand_Crops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+China,FoodDemand_Crops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+China,FoodDemand_Crops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+China,FoodDemand_Crops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+China,FoodDemand_Crops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+China,FoodDemand_Crops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+China,FoodDemand_Crops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+China,FoodDemand_Crops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+China,FoodDemand_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+China,FoodDemand_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+China,FoodDemand_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+China,FoodDemand_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+China,FoodDemand_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+China,FoodDemand_Meat,OtherMeat_Fish,-6,1975,1,share-weight,2005,9999,fixed
+China,NonFoodDemand_Crops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+China,NonFoodDemand_Crops,FiberCrop,-6,1975,1,share-weight,2005,9999,fixed
+China,NonFoodDemand_Crops,FodderHerb,-6,1975,1,share-weight,2005,9999,fixed
+China,NonFoodDemand_Crops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+China,NonFoodDemand_Crops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+China,NonFoodDemand_Crops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+China,NonFoodDemand_Crops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+China,NonFoodDemand_Crops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+China,NonFoodDemand_Crops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+China,NonFoodDemand_Crops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+China,NonFoodDemand_Crops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+China,NonFoodDemand_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+China,NonFoodDemand_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+China,NonFoodDemand_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+China,NonFoodDemand_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+China,NonFoodDemand_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+China,NonFoodDemand_Meat,OtherMeat_Fish,-6,1975,1,share-weight,2005,9999,fixed
+China,NonFoodDemand_Forest,NonFoodDemand_Forest,-6,1975,1,share-weight,2005,9999,fixed
+China,Exports_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+China,Exports_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+China,Exports_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+China,Exports_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+China,Exports_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,FoodDemand_Crops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,FoodDemand_Crops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,FoodDemand_Crops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,FoodDemand_Crops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,FoodDemand_Crops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,FoodDemand_Crops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,FoodDemand_Crops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,FoodDemand_Crops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,FoodDemand_Crops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,FoodDemand_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,FoodDemand_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,FoodDemand_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,FoodDemand_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,FoodDemand_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,FoodDemand_Meat,OtherMeat_Fish,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,NonFoodDemand_Crops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,NonFoodDemand_Crops,FiberCrop,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,NonFoodDemand_Crops,FodderHerb,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,NonFoodDemand_Crops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,NonFoodDemand_Crops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,NonFoodDemand_Crops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,NonFoodDemand_Crops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,NonFoodDemand_Crops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,NonFoodDemand_Crops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,NonFoodDemand_Crops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,NonFoodDemand_Crops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,NonFoodDemand_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,NonFoodDemand_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,NonFoodDemand_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,NonFoodDemand_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,NonFoodDemand_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,NonFoodDemand_Meat,OtherMeat_Fish,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,NonFoodDemand_Forest,NonFoodDemand_Forest,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,Exports_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,Exports_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,Exports_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,Exports_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,Exports_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,FoodDemand_Crops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,FoodDemand_Crops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,FoodDemand_Crops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,FoodDemand_Crops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,FoodDemand_Crops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,FoodDemand_Crops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,FoodDemand_Crops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,FoodDemand_Crops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,FoodDemand_Crops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,FoodDemand_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,FoodDemand_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,FoodDemand_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,FoodDemand_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,FoodDemand_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,FoodDemand_Meat,OtherMeat_Fish,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,NonFoodDemand_Crops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,NonFoodDemand_Crops,FiberCrop,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,NonFoodDemand_Crops,FodderHerb,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,NonFoodDemand_Crops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,NonFoodDemand_Crops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,NonFoodDemand_Crops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,NonFoodDemand_Crops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,NonFoodDemand_Crops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,NonFoodDemand_Crops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,NonFoodDemand_Crops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,NonFoodDemand_Crops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,NonFoodDemand_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,NonFoodDemand_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,NonFoodDemand_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,NonFoodDemand_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,NonFoodDemand_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,NonFoodDemand_Meat,OtherMeat_Fish,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,NonFoodDemand_Forest,NonFoodDemand_Forest,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,Exports_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,Exports_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,Exports_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,Exports_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,Exports_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+India,FoodDemand_Crops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+India,FoodDemand_Crops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+India,FoodDemand_Crops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+India,FoodDemand_Crops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+India,FoodDemand_Crops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+India,FoodDemand_Crops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+India,FoodDemand_Crops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+India,FoodDemand_Crops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+India,FoodDemand_Crops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+India,FoodDemand_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+India,FoodDemand_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+India,FoodDemand_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+India,FoodDemand_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+India,FoodDemand_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+India,FoodDemand_Meat,OtherMeat_Fish,-6,1975,1,share-weight,2005,9999,fixed
+India,NonFoodDemand_Crops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+India,NonFoodDemand_Crops,FiberCrop,-6,1975,1,share-weight,2005,9999,fixed
+India,NonFoodDemand_Crops,FodderHerb,-6,1975,1,share-weight,2005,9999,fixed
+India,NonFoodDemand_Crops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+India,NonFoodDemand_Crops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+India,NonFoodDemand_Crops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+India,NonFoodDemand_Crops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+India,NonFoodDemand_Crops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+India,NonFoodDemand_Crops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+India,NonFoodDemand_Crops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+India,NonFoodDemand_Crops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+India,NonFoodDemand_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+India,NonFoodDemand_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+India,NonFoodDemand_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+India,NonFoodDemand_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+India,NonFoodDemand_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+India,NonFoodDemand_Meat,OtherMeat_Fish,-6,1975,1,share-weight,2005,9999,fixed
+India,NonFoodDemand_Forest,NonFoodDemand_Forest,-6,1975,1,share-weight,2005,9999,fixed
+India,Exports_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+India,Exports_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+India,Exports_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+India,Exports_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+India,Exports_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Japan,FoodDemand_Crops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Japan,FoodDemand_Crops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Japan,FoodDemand_Crops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Japan,FoodDemand_Crops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Japan,FoodDemand_Crops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Japan,FoodDemand_Crops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Japan,FoodDemand_Crops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Japan,FoodDemand_Crops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Japan,FoodDemand_Crops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Japan,FoodDemand_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Japan,FoodDemand_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Japan,FoodDemand_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Japan,FoodDemand_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Japan,FoodDemand_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Japan,FoodDemand_Meat,OtherMeat_Fish,-6,1975,1,share-weight,2005,9999,fixed
+Japan,NonFoodDemand_Crops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Japan,NonFoodDemand_Crops,FiberCrop,-6,1975,1,share-weight,2005,9999,fixed
+Japan,NonFoodDemand_Crops,FodderHerb,-6,1975,1,share-weight,2005,9999,fixed
+Japan,NonFoodDemand_Crops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Japan,NonFoodDemand_Crops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Japan,NonFoodDemand_Crops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Japan,NonFoodDemand_Crops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Japan,NonFoodDemand_Crops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Japan,NonFoodDemand_Crops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Japan,NonFoodDemand_Crops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Japan,NonFoodDemand_Crops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Japan,NonFoodDemand_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Japan,NonFoodDemand_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Japan,NonFoodDemand_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Japan,NonFoodDemand_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Japan,NonFoodDemand_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Japan,NonFoodDemand_Meat,OtherMeat_Fish,-6,1975,1,share-weight,2005,9999,fixed
+Japan,NonFoodDemand_Forest,NonFoodDemand_Forest,-6,1975,1,share-weight,2005,9999,fixed
+Japan,Exports_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Japan,Exports_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Japan,Exports_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Japan,Exports_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Japan,Exports_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Korea,FoodDemand_Crops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Korea,FoodDemand_Crops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Korea,FoodDemand_Crops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Korea,FoodDemand_Crops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Korea,FoodDemand_Crops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Korea,FoodDemand_Crops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Korea,FoodDemand_Crops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Korea,FoodDemand_Crops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Korea,FoodDemand_Crops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Korea,FoodDemand_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Korea,FoodDemand_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Korea,FoodDemand_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Korea,FoodDemand_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Korea,FoodDemand_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Korea,FoodDemand_Meat,OtherMeat_Fish,-6,1975,1,share-weight,2005,9999,fixed
+Korea,NonFoodDemand_Crops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Korea,NonFoodDemand_Crops,FiberCrop,-6,1975,1,share-weight,2005,9999,fixed
+Korea,NonFoodDemand_Crops,FodderHerb,-6,1975,1,share-weight,2005,9999,fixed
+Korea,NonFoodDemand_Crops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Korea,NonFoodDemand_Crops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Korea,NonFoodDemand_Crops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Korea,NonFoodDemand_Crops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Korea,NonFoodDemand_Crops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Korea,NonFoodDemand_Crops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Korea,NonFoodDemand_Crops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Korea,NonFoodDemand_Crops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Korea,NonFoodDemand_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Korea,NonFoodDemand_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Korea,NonFoodDemand_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Korea,NonFoodDemand_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Korea,NonFoodDemand_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Korea,NonFoodDemand_Meat,OtherMeat_Fish,-6,1975,1,share-weight,2005,9999,fixed
+Korea,NonFoodDemand_Forest,NonFoodDemand_Forest,-6,1975,1,share-weight,2005,9999,fixed
+Korea,Exports_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Korea,Exports_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Korea,Exports_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Korea,Exports_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Korea,Exports_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,FoodDemand_Crops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,FoodDemand_Crops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,FoodDemand_Crops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,FoodDemand_Crops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,FoodDemand_Crops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,FoodDemand_Crops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,FoodDemand_Crops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,FoodDemand_Crops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,FoodDemand_Crops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,FoodDemand_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,FoodDemand_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,FoodDemand_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,FoodDemand_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,FoodDemand_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,FoodDemand_Meat,OtherMeat_Fish,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,NonFoodDemand_Crops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,NonFoodDemand_Crops,FiberCrop,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,NonFoodDemand_Crops,FodderHerb,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,NonFoodDemand_Crops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,NonFoodDemand_Crops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,NonFoodDemand_Crops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,NonFoodDemand_Crops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,NonFoodDemand_Crops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,NonFoodDemand_Crops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,NonFoodDemand_Crops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,NonFoodDemand_Crops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,NonFoodDemand_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,NonFoodDemand_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,NonFoodDemand_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,NonFoodDemand_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,NonFoodDemand_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,NonFoodDemand_Meat,OtherMeat_Fish,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,NonFoodDemand_Forest,NonFoodDemand_Forest,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,Exports_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,Exports_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,Exports_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,Exports_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,Exports_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,FoodDemand_Crops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,FoodDemand_Crops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,FoodDemand_Crops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,FoodDemand_Crops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,FoodDemand_Crops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,FoodDemand_Crops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,FoodDemand_Crops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,FoodDemand_Crops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,FoodDemand_Crops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,FoodDemand_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,FoodDemand_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,FoodDemand_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,FoodDemand_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,FoodDemand_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,FoodDemand_Meat,OtherMeat_Fish,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,NonFoodDemand_Crops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,NonFoodDemand_Crops,FiberCrop,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,NonFoodDemand_Crops,FodderHerb,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,NonFoodDemand_Crops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,NonFoodDemand_Crops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,NonFoodDemand_Crops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,NonFoodDemand_Crops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,NonFoodDemand_Crops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,NonFoodDemand_Crops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,NonFoodDemand_Crops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,NonFoodDemand_Crops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,NonFoodDemand_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,NonFoodDemand_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,NonFoodDemand_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,NonFoodDemand_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,NonFoodDemand_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,NonFoodDemand_Meat,OtherMeat_Fish,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,NonFoodDemand_Forest,NonFoodDemand_Forest,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,Exports_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,Exports_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,Exports_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,Exports_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,Exports_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,FoodDemand_Crops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,FoodDemand_Crops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,FoodDemand_Crops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,FoodDemand_Crops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,FoodDemand_Crops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,FoodDemand_Crops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,FoodDemand_Crops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,FoodDemand_Crops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,FoodDemand_Crops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,FoodDemand_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,FoodDemand_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,FoodDemand_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,FoodDemand_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,FoodDemand_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,FoodDemand_Meat,OtherMeat_Fish,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,NonFoodDemand_Crops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,NonFoodDemand_Crops,FiberCrop,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,NonFoodDemand_Crops,FodderHerb,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,NonFoodDemand_Crops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,NonFoodDemand_Crops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,NonFoodDemand_Crops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,NonFoodDemand_Crops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,NonFoodDemand_Crops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,NonFoodDemand_Crops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,NonFoodDemand_Crops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,NonFoodDemand_Crops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,NonFoodDemand_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,NonFoodDemand_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,NonFoodDemand_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,NonFoodDemand_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,NonFoodDemand_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,NonFoodDemand_Meat,OtherMeat_Fish,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,NonFoodDemand_Forest,NonFoodDemand_Forest,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,Exports_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,Exports_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,Exports_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,Exports_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,Exports_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+USA,FoodDemand_Crops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+USA,FoodDemand_Crops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+USA,FoodDemand_Crops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+USA,FoodDemand_Crops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+USA,FoodDemand_Crops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+USA,FoodDemand_Crops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+USA,FoodDemand_Crops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+USA,FoodDemand_Crops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+USA,FoodDemand_Crops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+USA,FoodDemand_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+USA,FoodDemand_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+USA,FoodDemand_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+USA,FoodDemand_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+USA,FoodDemand_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+USA,FoodDemand_Meat,OtherMeat_Fish,-6,1975,1,share-weight,2005,9999,fixed
+USA,NonFoodDemand_Crops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+USA,NonFoodDemand_Crops,FiberCrop,-6,1975,1,share-weight,2005,9999,fixed
+USA,NonFoodDemand_Crops,FodderHerb,-6,1975,1,share-weight,2005,9999,fixed
+USA,NonFoodDemand_Crops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+USA,NonFoodDemand_Crops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+USA,NonFoodDemand_Crops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+USA,NonFoodDemand_Crops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+USA,NonFoodDemand_Crops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+USA,NonFoodDemand_Crops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+USA,NonFoodDemand_Crops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+USA,NonFoodDemand_Crops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+USA,NonFoodDemand_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+USA,NonFoodDemand_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+USA,NonFoodDemand_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+USA,NonFoodDemand_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+USA,NonFoodDemand_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+USA,NonFoodDemand_Meat,OtherMeat_Fish,-6,1975,1,share-weight,2005,9999,fixed
+USA,NonFoodDemand_Forest,NonFoodDemand_Forest,-6,1975,1,share-weight,2005,9999,fixed
+USA,Exports_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+USA,Exports_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+USA,Exports_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+USA,Exports_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+USA,Exports_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,FoodDemand_Crops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,FoodDemand_Crops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,FoodDemand_Crops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,FoodDemand_Crops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,FoodDemand_Crops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,FoodDemand_Crops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,FoodDemand_Crops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,FoodDemand_Crops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,FoodDemand_Crops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,FoodDemand_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,FoodDemand_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,FoodDemand_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,FoodDemand_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,FoodDemand_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,FoodDemand_Meat,OtherMeat_Fish,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,NonFoodDemand_Crops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,NonFoodDemand_Crops,FiberCrop,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,NonFoodDemand_Crops,FodderHerb,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,NonFoodDemand_Crops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,NonFoodDemand_Crops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,NonFoodDemand_Crops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,NonFoodDemand_Crops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,NonFoodDemand_Crops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,NonFoodDemand_Crops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,NonFoodDemand_Crops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,NonFoodDemand_Crops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,NonFoodDemand_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,NonFoodDemand_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,NonFoodDemand_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,NonFoodDemand_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,NonFoodDemand_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,NonFoodDemand_Meat,OtherMeat_Fish,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,NonFoodDemand_Forest,NonFoodDemand_Forest,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,Exports_Meat,Beef,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,Exports_Meat,Dairy,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,Exports_Meat,Pork,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,Exports_Meat,Poultry,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,Exports_Meat,SheepGoat,-6,1975,1,share-weight,2005,9999,fixed

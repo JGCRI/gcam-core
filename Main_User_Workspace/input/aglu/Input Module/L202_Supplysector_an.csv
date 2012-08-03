@@ -1,0 +1,75 @@
+INPUT_TABLE
+Variable ID
+Supplysector
+
+region,supplysector,output.unit,input.unit,price.unit,price,logit.exponent
+Africa,Beef,Mt,Mt,1975$/kg,1.1635,-3
+Africa,Dairy,Mt,Mt,1975$/kg,0.1095,-3
+Africa,Pork,Mt,Mt,1975$/kg,0.4649,-3
+Africa,Poultry,Mt,Mt,1975$/kg,0.365,-3
+Africa,SheepGoat,Mt,Mt,1975$/kg,0.5936,-3
+Australia_NZ,Beef,Mt,Mt,1975$/kg,1.1635,-3
+Australia_NZ,Dairy,Mt,Mt,1975$/kg,0.1095,-3
+Australia_NZ,Pork,Mt,Mt,1975$/kg,0.4649,-3
+Australia_NZ,Poultry,Mt,Mt,1975$/kg,0.365,-3
+Australia_NZ,SheepGoat,Mt,Mt,1975$/kg,0.5936,-3
+Canada,Beef,Mt,Mt,1975$/kg,1.1635,-3
+Canada,Dairy,Mt,Mt,1975$/kg,0.1095,-3
+Canada,Pork,Mt,Mt,1975$/kg,0.4649,-3
+Canada,Poultry,Mt,Mt,1975$/kg,0.365,-3
+Canada,SheepGoat,Mt,Mt,1975$/kg,0.5936,-3
+China,Beef,Mt,Mt,1975$/kg,1.1635,-3
+China,Dairy,Mt,Mt,1975$/kg,0.1095,-3
+China,Pork,Mt,Mt,1975$/kg,0.4649,-3
+China,Poultry,Mt,Mt,1975$/kg,0.365,-3
+China,SheepGoat,Mt,Mt,1975$/kg,0.5936,-3
+Eastern Europe,Beef,Mt,Mt,1975$/kg,1.1635,-3
+Eastern Europe,Dairy,Mt,Mt,1975$/kg,0.1095,-3
+Eastern Europe,Pork,Mt,Mt,1975$/kg,0.4649,-3
+Eastern Europe,Poultry,Mt,Mt,1975$/kg,0.365,-3
+Eastern Europe,SheepGoat,Mt,Mt,1975$/kg,0.5936,-3
+Former Soviet Union,Beef,Mt,Mt,1975$/kg,1.1635,-3
+Former Soviet Union,Dairy,Mt,Mt,1975$/kg,0.1095,-3
+Former Soviet Union,Pork,Mt,Mt,1975$/kg,0.4649,-3
+Former Soviet Union,Poultry,Mt,Mt,1975$/kg,0.365,-3
+Former Soviet Union,SheepGoat,Mt,Mt,1975$/kg,0.5936,-3
+India,Beef,Mt,Mt,1975$/kg,1.1635,-3
+India,Dairy,Mt,Mt,1975$/kg,0.1095,-3
+India,Pork,Mt,Mt,1975$/kg,0.4649,-3
+India,Poultry,Mt,Mt,1975$/kg,0.365,-3
+India,SheepGoat,Mt,Mt,1975$/kg,0.5936,-3
+Japan,Beef,Mt,Mt,1975$/kg,1.1635,-3
+Japan,Dairy,Mt,Mt,1975$/kg,0.1095,-3
+Japan,Pork,Mt,Mt,1975$/kg,0.4649,-3
+Japan,Poultry,Mt,Mt,1975$/kg,0.365,-3
+Japan,SheepGoat,Mt,Mt,1975$/kg,0.5936,-3
+Korea,Beef,Mt,Mt,1975$/kg,1.1635,-3
+Korea,Dairy,Mt,Mt,1975$/kg,0.1095,-3
+Korea,Pork,Mt,Mt,1975$/kg,0.4649,-3
+Korea,Poultry,Mt,Mt,1975$/kg,0.365,-3
+Korea,SheepGoat,Mt,Mt,1975$/kg,0.5936,-3
+Latin America,Beef,Mt,Mt,1975$/kg,1.1635,-3
+Latin America,Dairy,Mt,Mt,1975$/kg,0.1095,-3
+Latin America,Pork,Mt,Mt,1975$/kg,0.4649,-3
+Latin America,Poultry,Mt,Mt,1975$/kg,0.365,-3
+Latin America,SheepGoat,Mt,Mt,1975$/kg,0.5936,-3
+Middle East,Beef,Mt,Mt,1975$/kg,1.1635,-3
+Middle East,Dairy,Mt,Mt,1975$/kg,0.1095,-3
+Middle East,Pork,Mt,Mt,1975$/kg,0.4649,-3
+Middle East,Poultry,Mt,Mt,1975$/kg,0.365,-3
+Middle East,SheepGoat,Mt,Mt,1975$/kg,0.5936,-3
+Southeast Asia,Beef,Mt,Mt,1975$/kg,1.1635,-3
+Southeast Asia,Dairy,Mt,Mt,1975$/kg,0.1095,-3
+Southeast Asia,Pork,Mt,Mt,1975$/kg,0.4649,-3
+Southeast Asia,Poultry,Mt,Mt,1975$/kg,0.365,-3
+Southeast Asia,SheepGoat,Mt,Mt,1975$/kg,0.5936,-3
+USA,Beef,Mt,Mt,1975$/kg,1.1635,-3
+USA,Dairy,Mt,Mt,1975$/kg,0.1095,-3
+USA,Pork,Mt,Mt,1975$/kg,0.4649,-3
+USA,Poultry,Mt,Mt,1975$/kg,0.365,-3
+USA,SheepGoat,Mt,Mt,1975$/kg,0.5936,-3
+Western Europe,Beef,Mt,Mt,1975$/kg,1.1635,-3
+Western Europe,Dairy,Mt,Mt,1975$/kg,0.1095,-3
+Western Europe,Pork,Mt,Mt,1975$/kg,0.4649,-3
+Western Europe,Poultry,Mt,Mt,1975$/kg,0.365,-3
+Western Europe,SheepGoat,Mt,Mt,1975$/kg,0.5936,-3

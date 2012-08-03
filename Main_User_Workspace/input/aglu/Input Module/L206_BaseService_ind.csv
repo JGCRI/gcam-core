@@ -1,0 +1,33 @@
+INPUT_TABLE
+Variable ID
+BaseService
+
+region,energy.final.demand,year,base.service
+Africa,industry,1990,2.88183
+Australia_NZ,industry,1990,1.31048
+Canada,industry,1990,2.794965
+China,industry,1990,12.54991
+Eastern Europe,industry,1990,5.21241
+Former Soviet Union,industry,1990,20.220098
+India,industry,1990,2.261228
+Japan,industry,1990,6.334875
+Korea,industry,1990,1.309213
+Latin America,industry,1990,7.015591
+Middle East,industry,1990,2.620329
+Southeast Asia,industry,1990,4.039409
+USA,industry,1990,18.613422
+Western Europe,industry,1990,15.750939
+Africa,industry,2005,5.717865
+Australia_NZ,industry,2005,1.63346
+Canada,industry,2005,3.515144
+China,industry,2005,25.235842
+Eastern Europe,industry,2005,3.237675
+Former Soviet Union,industry,2005,13.723162
+India,industry,2005,5.294238
+Japan,industry,2005,6.463424
+Korea,industry,2005,3.147462
+Latin America,industry,2005,9.42393
+Middle East,industry,2005,5.234787
+Southeast Asia,industry,2005,7.761112
+USA,industry,2005,19.419808
+Western Europe,industry,2005,17.804581

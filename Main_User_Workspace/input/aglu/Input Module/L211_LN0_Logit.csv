@@ -1,0 +1,19 @@
+INPUT_TABLE
+Variable ID
+LN0_Logit
+
+region,LandAllocatorRoot,logit.exponent
+USA,root,0
+Canada,root,0
+Western Europe,root,0
+Japan,root,0
+Australia_NZ,root,0
+Former Soviet Union,root,0
+China,root,0
+Middle East,root,0
+Africa,root,0
+Latin America,root,0
+Southeast Asia,root,0
+Eastern Europe,root,0
+Korea,root,0
+India,root,0

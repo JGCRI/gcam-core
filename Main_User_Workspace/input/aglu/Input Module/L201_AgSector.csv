@@ -1,0 +1,215 @@
+INPUT_TABLE
+Variable ID
+AgSector
+
+region,AgSupplySector,output.unit,input.unit,price.unit,price,calPrice,market,logit.exponent
+USA,biomass,EJ,thous km2,1975$/GJ,1,0.701,global,-3
+Canada,biomass,EJ,thous km2,1975$/GJ,1,0.701,global,-3
+Western Europe,biomass,EJ,thous km2,1975$/GJ,1,0.701,global,-3
+Japan,biomass,EJ,thous km2,1975$/GJ,1,0.701,global,-3
+Australia_NZ,biomass,EJ,thous km2,1975$/GJ,1,0.701,global,-3
+Former Soviet Union,biomass,EJ,thous km2,1975$/GJ,1,0.701,global,-3
+China,biomass,EJ,thous km2,1975$/GJ,1,0.701,global,-3
+Middle East,biomass,EJ,thous km2,1975$/GJ,1,0.701,global,-3
+Africa,biomass,EJ,thous km2,1975$/GJ,1,0.701,global,-3
+Latin America,biomass,EJ,thous km2,1975$/GJ,1,0.701,global,-3
+Southeast Asia,biomass,EJ,thous km2,1975$/GJ,1,0.701,global,-3
+Eastern Europe,biomass,EJ,thous km2,1975$/GJ,1,0.701,global,-3
+Korea,biomass,EJ,thous km2,1975$/GJ,1,0.701,global,-3
+India,biomass,EJ,thous km2,1975$/GJ,1,0.701,global,-3
+USA,Corn,Mt,thous km2,1975$/kg,1,0.0316,global,-3
+Canada,Corn,Mt,thous km2,1975$/kg,1,0.0316,global,-3
+Western Europe,Corn,Mt,thous km2,1975$/kg,1,0.0316,global,-3
+Japan,Corn,Mt,thous km2,1975$/kg,1,0.0316,global,-3
+Australia_NZ,Corn,Mt,thous km2,1975$/kg,1,0.0316,global,-3
+Former Soviet Union,Corn,Mt,thous km2,1975$/kg,1,0.0316,global,-3
+China,Corn,Mt,thous km2,1975$/kg,1,0.0316,global,-3
+Middle East,Corn,Mt,thous km2,1975$/kg,1,0.0316,global,-3
+Africa,Corn,Mt,thous km2,1975$/kg,1,0.0316,global,-3
+Latin America,Corn,Mt,thous km2,1975$/kg,1,0.0316,global,-3
+Southeast Asia,Corn,Mt,thous km2,1975$/kg,1,0.0316,global,-3
+Eastern Europe,Corn,Mt,thous km2,1975$/kg,1,0.0316,global,-3
+Korea,Corn,Mt,thous km2,1975$/kg,1,0.0316,global,-3
+India,Corn,Mt,thous km2,1975$/kg,1,0.0316,global,-3
+USA,FiberCrop,Mt,thous km2,1975$/kg,1,0.1364,global,-3
+Canada,FiberCrop,Mt,thous km2,1975$/kg,1,0.1364,global,-3
+Western Europe,FiberCrop,Mt,thous km2,1975$/kg,1,0.1364,global,-3
+Japan,FiberCrop,Mt,thous km2,1975$/kg,1,0.1364,global,-3
+Australia_NZ,FiberCrop,Mt,thous km2,1975$/kg,1,0.1364,global,-3
+Former Soviet Union,FiberCrop,Mt,thous km2,1975$/kg,1,0.1364,global,-3
+China,FiberCrop,Mt,thous km2,1975$/kg,1,0.1364,global,-3
+Middle East,FiberCrop,Mt,thous km2,1975$/kg,1,0.1364,global,-3
+Africa,FiberCrop,Mt,thous km2,1975$/kg,1,0.1364,global,-3
+Latin America,FiberCrop,Mt,thous km2,1975$/kg,1,0.1364,global,-3
+Southeast Asia,FiberCrop,Mt,thous km2,1975$/kg,1,0.1364,global,-3
+Eastern Europe,FiberCrop,Mt,thous km2,1975$/kg,1,0.1364,global,-3
+Korea,FiberCrop,Mt,thous km2,1975$/kg,1,0.1364,global,-3
+India,FiberCrop,Mt,thous km2,1975$/kg,1,0.1364,global,-3
+USA,FodderGrass,Mt,thous km2,1975$/kg,1,0.0258,USA,-3
+Canada,FodderGrass,Mt,thous km2,1975$/kg,1,0.0258,Canada,-3
+Western Europe,FodderGrass,Mt,thous km2,1975$/kg,1,0.0258,Western Europe,-3
+Japan,FodderGrass,Mt,thous km2,1975$/kg,1,0.0258,Japan,-3
+Australia_NZ,FodderGrass,Mt,thous km2,1975$/kg,1,0.0258,Australia_NZ,-3
+Former Soviet Union,FodderGrass,Mt,thous km2,1975$/kg,1,0.0258,Former Soviet Union,-3
+China,FodderGrass,Mt,thous km2,1975$/kg,1,0.0258,China,-3
+Middle East,FodderGrass,Mt,thous km2,1975$/kg,1,0.0258,Middle East,-3
+Africa,FodderGrass,Mt,thous km2,1975$/kg,1,0.0258,Africa,-3
+Latin America,FodderGrass,Mt,thous km2,1975$/kg,1,0.0258,Latin America,-3
+Southeast Asia,FodderGrass,Mt,thous km2,1975$/kg,1,0.0258,Southeast Asia,-3
+Eastern Europe,FodderGrass,Mt,thous km2,1975$/kg,1,0.0258,Eastern Europe,-3
+Korea,FodderGrass,Mt,thous km2,1975$/kg,1,0.0258,Korea,-3
+India,FodderGrass,Mt,thous km2,1975$/kg,1,0.0258,India,-3
+USA,FodderHerb,Mt,thous km2,1975$/kg,1,0.0369,global,-3
+Canada,FodderHerb,Mt,thous km2,1975$/kg,1,0.0369,global,-3
+Western Europe,FodderHerb,Mt,thous km2,1975$/kg,1,0.0369,global,-3
+Japan,FodderHerb,Mt,thous km2,1975$/kg,1,0.0369,global,-3
+Australia_NZ,FodderHerb,Mt,thous km2,1975$/kg,1,0.0369,global,-3
+Former Soviet Union,FodderHerb,Mt,thous km2,1975$/kg,1,0.0369,global,-3
+China,FodderHerb,Mt,thous km2,1975$/kg,1,0.0369,global,-3
+Middle East,FodderHerb,Mt,thous km2,1975$/kg,1,0.0369,global,-3
+Africa,FodderHerb,Mt,thous km2,1975$/kg,1,0.0369,global,-3
+Latin America,FodderHerb,Mt,thous km2,1975$/kg,1,0.0369,global,-3
+Southeast Asia,FodderHerb,Mt,thous km2,1975$/kg,1,0.0369,global,-3
+Eastern Europe,FodderHerb,Mt,thous km2,1975$/kg,1,0.0369,global,-3
+Korea,FodderHerb,Mt,thous km2,1975$/kg,1,0.0369,global,-3
+India,FodderHerb,Mt,thous km2,1975$/kg,1,0.0369,global,-3
+USA,Forest,billion m3,thous km2,1975$/m3,1,39.1875,global,-3
+Canada,Forest,billion m3,thous km2,1975$/m3,1,39.1875,global,-3
+Western Europe,Forest,billion m3,thous km2,1975$/m3,1,39.1875,global,-3
+Japan,Forest,billion m3,thous km2,1975$/m3,1,39.1875,global,-3
+Australia_NZ,Forest,billion m3,thous km2,1975$/m3,1,39.1875,global,-3
+Former Soviet Union,Forest,billion m3,thous km2,1975$/m3,1,39.1875,global,-3
+China,Forest,billion m3,thous km2,1975$/m3,1,39.1875,global,-3
+Middle East,Forest,billion m3,thous km2,1975$/m3,1,39.1875,global,-3
+Africa,Forest,billion m3,thous km2,1975$/m3,1,39.1875,global,-3
+Latin America,Forest,billion m3,thous km2,1975$/m3,1,39.1875,global,-3
+Southeast Asia,Forest,billion m3,thous km2,1975$/m3,1,39.1875,global,-3
+Eastern Europe,Forest,billion m3,thous km2,1975$/m3,1,39.1875,global,-3
+Korea,Forest,billion m3,thous km2,1975$/m3,1,39.1875,global,-3
+India,Forest,billion m3,thous km2,1975$/m3,1,39.1875,global,-3
+USA,MiscCrop,Mt,thous km2,1975$/kg,1,0.1893,global,-3
+Canada,MiscCrop,Mt,thous km2,1975$/kg,1,0.1893,global,-3
+Western Europe,MiscCrop,Mt,thous km2,1975$/kg,1,0.1893,global,-3
+Japan,MiscCrop,Mt,thous km2,1975$/kg,1,0.1893,global,-3
+Australia_NZ,MiscCrop,Mt,thous km2,1975$/kg,1,0.1893,global,-3
+Former Soviet Union,MiscCrop,Mt,thous km2,1975$/kg,1,0.1893,global,-3
+China,MiscCrop,Mt,thous km2,1975$/kg,1,0.1893,global,-3
+Middle East,MiscCrop,Mt,thous km2,1975$/kg,1,0.1893,global,-3
+Africa,MiscCrop,Mt,thous km2,1975$/kg,1,0.1893,global,-3
+Latin America,MiscCrop,Mt,thous km2,1975$/kg,1,0.1893,global,-3
+Southeast Asia,MiscCrop,Mt,thous km2,1975$/kg,1,0.1893,global,-3
+Eastern Europe,MiscCrop,Mt,thous km2,1975$/kg,1,0.1893,global,-3
+Korea,MiscCrop,Mt,thous km2,1975$/kg,1,0.1893,global,-3
+India,MiscCrop,Mt,thous km2,1975$/kg,1,0.1893,global,-3
+USA,OilCrop,Mt,thous km2,1975$/kg,1,0.076,global,-3
+Canada,OilCrop,Mt,thous km2,1975$/kg,1,0.076,global,-3
+Western Europe,OilCrop,Mt,thous km2,1975$/kg,1,0.076,global,-3
+Japan,OilCrop,Mt,thous km2,1975$/kg,1,0.076,global,-3
+Australia_NZ,OilCrop,Mt,thous km2,1975$/kg,1,0.076,global,-3
+Former Soviet Union,OilCrop,Mt,thous km2,1975$/kg,1,0.076,global,-3
+China,OilCrop,Mt,thous km2,1975$/kg,1,0.076,global,-3
+Middle East,OilCrop,Mt,thous km2,1975$/kg,1,0.076,global,-3
+Africa,OilCrop,Mt,thous km2,1975$/kg,1,0.076,global,-3
+Latin America,OilCrop,Mt,thous km2,1975$/kg,1,0.076,global,-3
+Southeast Asia,OilCrop,Mt,thous km2,1975$/kg,1,0.076,global,-3
+Eastern Europe,OilCrop,Mt,thous km2,1975$/kg,1,0.076,global,-3
+Korea,OilCrop,Mt,thous km2,1975$/kg,1,0.076,global,-3
+India,OilCrop,Mt,thous km2,1975$/kg,1,0.076,global,-3
+USA,OtherGrain,Mt,thous km2,1975$/kg,1,0.0335,global,-3
+Canada,OtherGrain,Mt,thous km2,1975$/kg,1,0.0335,global,-3
+Western Europe,OtherGrain,Mt,thous km2,1975$/kg,1,0.0335,global,-3
+Japan,OtherGrain,Mt,thous km2,1975$/kg,1,0.0335,global,-3
+Australia_NZ,OtherGrain,Mt,thous km2,1975$/kg,1,0.0335,global,-3
+Former Soviet Union,OtherGrain,Mt,thous km2,1975$/kg,1,0.0335,global,-3
+China,OtherGrain,Mt,thous km2,1975$/kg,1,0.0335,global,-3
+Middle East,OtherGrain,Mt,thous km2,1975$/kg,1,0.0335,global,-3
+Africa,OtherGrain,Mt,thous km2,1975$/kg,1,0.0335,global,-3
+Latin America,OtherGrain,Mt,thous km2,1975$/kg,1,0.0335,global,-3
+Southeast Asia,OtherGrain,Mt,thous km2,1975$/kg,1,0.0335,global,-3
+Eastern Europe,OtherGrain,Mt,thous km2,1975$/kg,1,0.0335,global,-3
+Korea,OtherGrain,Mt,thous km2,1975$/kg,1,0.0335,global,-3
+India,OtherGrain,Mt,thous km2,1975$/kg,1,0.0335,global,-3
+USA,PalmFruit,Mt,thous km2,1975$/kg,1,0.0209,global,-3
+Canada,PalmFruit,Mt,thous km2,1975$/kg,1,0.0209,global,-3
+Western Europe,PalmFruit,Mt,thous km2,1975$/kg,1,0.0209,global,-3
+Japan,PalmFruit,Mt,thous km2,1975$/kg,1,0.0209,global,-3
+Australia_NZ,PalmFruit,Mt,thous km2,1975$/kg,1,0.0209,global,-3
+Former Soviet Union,PalmFruit,Mt,thous km2,1975$/kg,1,0.0209,global,-3
+China,PalmFruit,Mt,thous km2,1975$/kg,1,0.0209,global,-3
+Middle East,PalmFruit,Mt,thous km2,1975$/kg,1,0.0209,global,-3
+Africa,PalmFruit,Mt,thous km2,1975$/kg,1,0.0209,global,-3
+Latin America,PalmFruit,Mt,thous km2,1975$/kg,1,0.0209,global,-3
+Southeast Asia,PalmFruit,Mt,thous km2,1975$/kg,1,0.0209,global,-3
+Eastern Europe,PalmFruit,Mt,thous km2,1975$/kg,1,0.0209,global,-3
+Korea,PalmFruit,Mt,thous km2,1975$/kg,1,0.0209,global,-3
+India,PalmFruit,Mt,thous km2,1975$/kg,1,0.0209,global,-3
+USA,Pasture,Mt,thous km2,1975$/kg,1,0.0258,USA,-3
+Canada,Pasture,Mt,thous km2,1975$/kg,1,0.0258,Canada,-3
+Western Europe,Pasture,Mt,thous km2,1975$/kg,1,0.0258,Western Europe,-3
+Japan,Pasture,Mt,thous km2,1975$/kg,1,0.0258,Japan,-3
+Australia_NZ,Pasture,Mt,thous km2,1975$/kg,1,0.0258,Australia_NZ,-3
+Former Soviet Union,Pasture,Mt,thous km2,1975$/kg,1,0.0258,Former Soviet Union,-3
+China,Pasture,Mt,thous km2,1975$/kg,1,0.0258,China,-3
+Middle East,Pasture,Mt,thous km2,1975$/kg,1,0.0258,Middle East,-3
+Africa,Pasture,Mt,thous km2,1975$/kg,1,0.0258,Africa,-3
+Latin America,Pasture,Mt,thous km2,1975$/kg,1,0.0258,Latin America,-3
+Southeast Asia,Pasture,Mt,thous km2,1975$/kg,1,0.0258,Southeast Asia,-3
+Eastern Europe,Pasture,Mt,thous km2,1975$/kg,1,0.0258,Eastern Europe,-3
+Korea,Pasture,Mt,thous km2,1975$/kg,1,0.0258,Korea,-3
+India,Pasture,Mt,thous km2,1975$/kg,1,0.0258,India,-3
+USA,Rice,Mt,thous km2,1975$/kg,1,0.049,global,-3
+Canada,Rice,Mt,thous km2,1975$/kg,1,0.049,global,-3
+Western Europe,Rice,Mt,thous km2,1975$/kg,1,0.049,global,-3
+Japan,Rice,Mt,thous km2,1975$/kg,1,0.049,global,-3
+Australia_NZ,Rice,Mt,thous km2,1975$/kg,1,0.049,global,-3
+Former Soviet Union,Rice,Mt,thous km2,1975$/kg,1,0.049,global,-3
+China,Rice,Mt,thous km2,1975$/kg,1,0.049,global,-3
+Middle East,Rice,Mt,thous km2,1975$/kg,1,0.049,global,-3
+Africa,Rice,Mt,thous km2,1975$/kg,1,0.049,global,-3
+Latin America,Rice,Mt,thous km2,1975$/kg,1,0.049,global,-3
+Southeast Asia,Rice,Mt,thous km2,1975$/kg,1,0.049,global,-3
+Eastern Europe,Rice,Mt,thous km2,1975$/kg,1,0.049,global,-3
+Korea,Rice,Mt,thous km2,1975$/kg,1,0.049,global,-3
+India,Rice,Mt,thous km2,1975$/kg,1,0.049,global,-3
+USA,Root_Tuber,Mt,thous km2,1975$/kg,1,0.0524,global,-3
+Canada,Root_Tuber,Mt,thous km2,1975$/kg,1,0.0524,global,-3
+Western Europe,Root_Tuber,Mt,thous km2,1975$/kg,1,0.0524,global,-3
+Japan,Root_Tuber,Mt,thous km2,1975$/kg,1,0.0524,global,-3
+Australia_NZ,Root_Tuber,Mt,thous km2,1975$/kg,1,0.0524,global,-3
+Former Soviet Union,Root_Tuber,Mt,thous km2,1975$/kg,1,0.0524,global,-3
+China,Root_Tuber,Mt,thous km2,1975$/kg,1,0.0524,global,-3
+Middle East,Root_Tuber,Mt,thous km2,1975$/kg,1,0.0524,global,-3
+Africa,Root_Tuber,Mt,thous km2,1975$/kg,1,0.0524,global,-3
+Latin America,Root_Tuber,Mt,thous km2,1975$/kg,1,0.0524,global,-3
+Southeast Asia,Root_Tuber,Mt,thous km2,1975$/kg,1,0.0524,global,-3
+Eastern Europe,Root_Tuber,Mt,thous km2,1975$/kg,1,0.0524,global,-3
+Korea,Root_Tuber,Mt,thous km2,1975$/kg,1,0.0524,global,-3
+India,Root_Tuber,Mt,thous km2,1975$/kg,1,0.0524,global,-3
+USA,SugarCrop,Mt,thous km2,1975$/kg,1,0.0132,global,-3
+Canada,SugarCrop,Mt,thous km2,1975$/kg,1,0.0132,global,-3
+Western Europe,SugarCrop,Mt,thous km2,1975$/kg,1,0.0132,global,-3
+Japan,SugarCrop,Mt,thous km2,1975$/kg,1,0.0132,global,-3
+Australia_NZ,SugarCrop,Mt,thous km2,1975$/kg,1,0.0132,global,-3
+Former Soviet Union,SugarCrop,Mt,thous km2,1975$/kg,1,0.0132,global,-3
+China,SugarCrop,Mt,thous km2,1975$/kg,1,0.0132,global,-3
+Middle East,SugarCrop,Mt,thous km2,1975$/kg,1,0.0132,global,-3
+Africa,SugarCrop,Mt,thous km2,1975$/kg,1,0.0132,global,-3
+Latin America,SugarCrop,Mt,thous km2,1975$/kg,1,0.0132,global,-3
+Southeast Asia,SugarCrop,Mt,thous km2,1975$/kg,1,0.0132,global,-3
+Eastern Europe,SugarCrop,Mt,thous km2,1975$/kg,1,0.0132,global,-3
+Korea,SugarCrop,Mt,thous km2,1975$/kg,1,0.0132,global,-3
+India,SugarCrop,Mt,thous km2,1975$/kg,1,0.0132,global,-3
+USA,Wheat,Mt,thous km2,1975$/kg,1,0.0425,global,-3
+Canada,Wheat,Mt,thous km2,1975$/kg,1,0.0425,global,-3
+Western Europe,Wheat,Mt,thous km2,1975$/kg,1,0.0425,global,-3
+Japan,Wheat,Mt,thous km2,1975$/kg,1,0.0425,global,-3
+Australia_NZ,Wheat,Mt,thous km2,1975$/kg,1,0.0425,global,-3
+Former Soviet Union,Wheat,Mt,thous km2,1975$/kg,1,0.0425,global,-3
+China,Wheat,Mt,thous km2,1975$/kg,1,0.0425,global,-3
+Middle East,Wheat,Mt,thous km2,1975$/kg,1,0.0425,global,-3
+Africa,Wheat,Mt,thous km2,1975$/kg,1,0.0425,global,-3
+Latin America,Wheat,Mt,thous km2,1975$/kg,1,0.0425,global,-3
+Southeast Asia,Wheat,Mt,thous km2,1975$/kg,1,0.0425,global,-3
+Eastern Europe,Wheat,Mt,thous km2,1975$/kg,1,0.0425,global,-3
+Korea,Wheat,Mt,thous km2,1975$/kg,1,0.0425,global,-3
+India,Wheat,Mt,thous km2,1975$/kg,1,0.0425,global,-3

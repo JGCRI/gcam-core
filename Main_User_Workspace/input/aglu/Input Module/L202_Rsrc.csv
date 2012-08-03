@@ -1,0 +1,47 @@
+INPUT_TABLE
+Variable ID
+Rsrc
+
+region,renewresource,output.unit,price.unit,market,price
+USA,OtherMeat_Fish,Mt,1975$/kg,global,1
+Canada,OtherMeat_Fish,Mt,1975$/kg,global,1
+Western Europe,OtherMeat_Fish,Mt,1975$/kg,global,1
+Japan,OtherMeat_Fish,Mt,1975$/kg,global,1
+Australia_NZ,OtherMeat_Fish,Mt,1975$/kg,global,1
+Former Soviet Union,OtherMeat_Fish,Mt,1975$/kg,global,1
+China,OtherMeat_Fish,Mt,1975$/kg,global,1
+Middle East,OtherMeat_Fish,Mt,1975$/kg,global,1
+Africa,OtherMeat_Fish,Mt,1975$/kg,global,1
+Latin America,OtherMeat_Fish,Mt,1975$/kg,global,1
+Southeast Asia,OtherMeat_Fish,Mt,1975$/kg,global,1
+Eastern Europe,OtherMeat_Fish,Mt,1975$/kg,global,1
+Korea,OtherMeat_Fish,Mt,1975$/kg,global,1
+India,OtherMeat_Fish,Mt,1975$/kg,global,1
+USA,Residue,Mt,1975$/kg,global,1
+Canada,Residue,Mt,1975$/kg,global,1
+Western Europe,Residue,Mt,1975$/kg,global,1
+Japan,Residue,Mt,1975$/kg,global,1
+Australia_NZ,Residue,Mt,1975$/kg,global,1
+Former Soviet Union,Residue,Mt,1975$/kg,global,1
+China,Residue,Mt,1975$/kg,global,1
+Middle East,Residue,Mt,1975$/kg,global,1
+Africa,Residue,Mt,1975$/kg,global,1
+Latin America,Residue,Mt,1975$/kg,global,1
+Southeast Asia,Residue,Mt,1975$/kg,global,1
+Eastern Europe,Residue,Mt,1975$/kg,global,1
+Korea,Residue,Mt,1975$/kg,global,1
+India,Residue,Mt,1975$/kg,global,1
+USA,Scavenging_Other_Rsrc,Mt,1975$/kg,global,1
+Canada,Scavenging_Other_Rsrc,Mt,1975$/kg,global,1
+Western Europe,Scavenging_Other_Rsrc,Mt,1975$/kg,global,1
+Japan,Scavenging_Other_Rsrc,Mt,1975$/kg,global,1
+Australia_NZ,Scavenging_Other_Rsrc,Mt,1975$/kg,global,1
+Former Soviet Union,Scavenging_Other_Rsrc,Mt,1975$/kg,global,1
+China,Scavenging_Other_Rsrc,Mt,1975$/kg,global,1
+Middle East,Scavenging_Other_Rsrc,Mt,1975$/kg,global,1
+Africa,Scavenging_Other_Rsrc,Mt,1975$/kg,global,1
+Latin America,Scavenging_Other_Rsrc,Mt,1975$/kg,global,1
+Southeast Asia,Scavenging_Other_Rsrc,Mt,1975$/kg,global,1
+Eastern Europe,Scavenging_Other_Rsrc,Mt,1975$/kg,global,1
+Korea,Scavenging_Other_Rsrc,Mt,1975$/kg,global,1
+India,Scavenging_Other_Rsrc,Mt,1975$/kg,global,1

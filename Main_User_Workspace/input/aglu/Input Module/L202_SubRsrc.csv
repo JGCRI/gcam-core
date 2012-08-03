@@ -1,0 +1,89 @@
+INPUT_TABLE
+Variable ID
+SubRsrc
+
+region,renewresource,sub.renewable.resource,year,cal.production
+USA,OtherMeat_Fish,OtherMeat_Fish,1990,12.844208
+Canada,OtherMeat_Fish,OtherMeat_Fish,1990,2.245763
+Western Europe,OtherMeat_Fish,OtherMeat_Fish,1990,19.22071
+Japan,OtherMeat_Fish,OtherMeat_Fish,1990,11.63124
+Australia_NZ,OtherMeat_Fish,OtherMeat_Fish,1990,2.260379
+Former Soviet Union,OtherMeat_Fish,OtherMeat_Fish,1990,13.881202
+China,OtherMeat_Fish,OtherMeat_Fish,1990,20.74147
+Middle East,OtherMeat_Fish,OtherMeat_Fish,1990,0.950824
+Africa,OtherMeat_Fish,OtherMeat_Fish,1990,7.54406
+Latin America,OtherMeat_Fish,OtherMeat_Fish,1990,21.379791
+Southeast Asia,OtherMeat_Fish,OtherMeat_Fish,1990,12.791289
+Eastern Europe,OtherMeat_Fish,OtherMeat_Fish,1990,3.137031
+Korea,OtherMeat_Fish,OtherMeat_Fish,1990,2.905736
+India,OtherMeat_Fish,OtherMeat_Fish,1990,4.547118
+USA,Residue,Residue,1990,0
+Canada,Residue,Residue,1990,0
+Western Europe,Residue,Residue,1990,0
+Japan,Residue,Residue,1990,0
+Australia_NZ,Residue,Residue,1990,0
+Former Soviet Union,Residue,Residue,1990,0
+China,Residue,Residue,1990,0
+Middle East,Residue,Residue,1990,0
+Africa,Residue,Residue,1990,0
+Latin America,Residue,Residue,1990,0
+Southeast Asia,Residue,Residue,1990,0
+Eastern Europe,Residue,Residue,1990,0
+Korea,Residue,Residue,1990,0
+India,Residue,Residue,1990,0
+USA,Scavenging_Other_Rsrc,Scavenging_Other,1990,0.401169
+Canada,Scavenging_Other_Rsrc,Scavenging_Other,1990,0.047247
+Western Europe,Scavenging_Other_Rsrc,Scavenging_Other,1990,4.670835
+Japan,Scavenging_Other_Rsrc,Scavenging_Other,1990,0.196437
+Australia_NZ,Scavenging_Other_Rsrc,Scavenging_Other,1990,4.124281
+Former Soviet Union,Scavenging_Other_Rsrc,Scavenging_Other,1990,7.075855
+China,Scavenging_Other_Rsrc,Scavenging_Other,1990,12.9766
+Middle East,Scavenging_Other_Rsrc,Scavenging_Other,1990,2.459446
+Africa,Scavenging_Other_Rsrc,Scavenging_Other,1990,21.584604
+Latin America,Scavenging_Other_Rsrc,Scavenging_Other,1990,41.253113
+Southeast Asia,Scavenging_Other_Rsrc,Scavenging_Other,1990,39.132705
+Eastern Europe,Scavenging_Other_Rsrc,Scavenging_Other,1990,5.544906
+Korea,Scavenging_Other_Rsrc,Scavenging_Other,1990,0.488441
+India,Scavenging_Other_Rsrc,Scavenging_Other,1990,202.091448
+USA,OtherMeat_Fish,OtherMeat_Fish,2005,13.428856
+Canada,OtherMeat_Fish,OtherMeat_Fish,2005,2.280788
+Western Europe,OtherMeat_Fish,OtherMeat_Fish,2005,20.04896
+Japan,OtherMeat_Fish,OtherMeat_Fish,2005,5.654856
+Australia_NZ,OtherMeat_Fish,OtherMeat_Fish,2005,2.972183
+Former Soviet Union,OtherMeat_Fish,OtherMeat_Fish,2005,6.324837
+China,OtherMeat_Fish,OtherMeat_Fish,2005,57.340857
+Middle East,OtherMeat_Fish,OtherMeat_Fish,2005,1.604275
+Africa,OtherMeat_Fish,OtherMeat_Fish,2005,11.011998
+Latin America,OtherMeat_Fish,OtherMeat_Fish,2005,24.553445
+Southeast Asia,OtherMeat_Fish,OtherMeat_Fish,2005,21.906772
+Eastern Europe,OtherMeat_Fish,OtherMeat_Fish,2005,1.807643
+Korea,OtherMeat_Fish,OtherMeat_Fish,2005,2.372859
+India,OtherMeat_Fish,OtherMeat_Fish,2005,7.368071
+USA,Residue,Residue,2005,0
+Canada,Residue,Residue,2005,0.814973
+Western Europe,Residue,Residue,2005,0
+Japan,Residue,Residue,2005,1.551311
+Australia_NZ,Residue,Residue,2005,0
+Former Soviet Union,Residue,Residue,2005,0
+China,Residue,Residue,2005,235.358882
+Middle East,Residue,Residue,2005,0
+Africa,Residue,Residue,2005,9.029832
+Latin America,Residue,Residue,2005,49.671713
+Southeast Asia,Residue,Residue,2005,57.065728
+Eastern Europe,Residue,Residue,2005,0
+Korea,Residue,Residue,2005,3.506311
+India,Residue,Residue,2005,57.894171
+USA,Scavenging_Other_Rsrc,Scavenging_Other,2005,0.226717
+Canada,Scavenging_Other_Rsrc,Scavenging_Other,2005,0.062405
+Western Europe,Scavenging_Other_Rsrc,Scavenging_Other,2005,4.636386
+Japan,Scavenging_Other_Rsrc,Scavenging_Other,2005,0.159032
+Australia_NZ,Scavenging_Other_Rsrc,Scavenging_Other,2005,4.193237
+Former Soviet Union,Scavenging_Other_Rsrc,Scavenging_Other,2005,3.742748
+China,Scavenging_Other_Rsrc,Scavenging_Other,2005,21.319969
+Middle East,Scavenging_Other_Rsrc,Scavenging_Other,2005,3.521393
+Africa,Scavenging_Other_Rsrc,Scavenging_Other,2005,29.690619
+Latin America,Scavenging_Other_Rsrc,Scavenging_Other,2005,54.853325
+Southeast Asia,Scavenging_Other_Rsrc,Scavenging_Other,2005,51.599267
+Eastern Europe,Scavenging_Other_Rsrc,Scavenging_Other,2005,0.538112
+Korea,Scavenging_Other_Rsrc,Scavenging_Other,2005,0.378487
+India,Scavenging_Other_Rsrc,Scavenging_Other,2005,225.760772

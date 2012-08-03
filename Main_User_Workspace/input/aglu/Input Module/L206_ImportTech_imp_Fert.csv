@@ -1,0 +1,19 @@
+INPUT_TABLE
+Variable ID
+ImportTech
+
+region,supplysector,subsector,technology,apply.to,from.year,to.year,interpolation.function,CO2,share.weight,renewable.input
+Africa,N fertilizer,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Australia_NZ,N fertilizer,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Canada,N fertilizer,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+China,N fertilizer,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Eastern Europe,N fertilizer,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Former Soviet Union,N fertilizer,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+India,N fertilizer,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Japan,N fertilizer,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Korea,N fertilizer,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Latin America,N fertilizer,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Middle East,N fertilizer,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Southeast Asia,N fertilizer,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+USA,N fertilizer,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Western Europe,N fertilizer,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable

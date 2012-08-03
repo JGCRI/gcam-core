@@ -1,0 +1,453 @@
+INPUT_TABLE
+Variable ID
+Tech
+
+region,supplysector,subsector,technology,apply.to,from.year,to.year,interpolation.function,CO2,share.weight,input.cost
+Africa,Beef,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.4593
+Africa,Beef,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.4593
+Africa,Beef,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.4593
+Africa,Beef,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.4593
+Africa,Beef,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.4593
+Africa,Beef,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.4593
+Africa,Beef,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.4593
+Africa,Beef,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.4593
+Africa,Dairy,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.0773
+Africa,Dairy,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.0773
+Africa,Dairy,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.0773
+Africa,Dairy,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.0773
+Africa,Dairy,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.0773
+Africa,Dairy,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.0773
+Africa,Dairy,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.0773
+Africa,Dairy,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.0773
+Africa,Pork,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.2141
+Africa,Pork,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.2141
+Africa,Pork,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.2141
+Africa,Pork,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.2141
+Africa,Poultry,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.2396
+Africa,Poultry,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.2396
+Africa,Poultry,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.2396
+Africa,Poultry,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.2396
+Africa,SheepGoat,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.05
+Africa,SheepGoat,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.05
+Africa,SheepGoat,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.05
+Africa,SheepGoat,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.05
+Africa,SheepGoat,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.05
+Africa,SheepGoat,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.05
+Africa,SheepGoat,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.05
+Africa,SheepGoat,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.05
+Australia_NZ,Beef,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.4593
+Australia_NZ,Beef,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.4593
+Australia_NZ,Beef,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.4593
+Australia_NZ,Beef,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.4593
+Australia_NZ,Beef,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.4593
+Australia_NZ,Beef,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.4593
+Australia_NZ,Beef,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.4593
+Australia_NZ,Beef,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.4593
+Australia_NZ,Dairy,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.0773
+Australia_NZ,Dairy,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.0773
+Australia_NZ,Dairy,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.0773
+Australia_NZ,Dairy,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.0773
+Australia_NZ,Dairy,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.0773
+Australia_NZ,Dairy,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.0773
+Australia_NZ,Dairy,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.0773
+Australia_NZ,Dairy,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.0773
+Australia_NZ,Pork,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.2141
+Australia_NZ,Pork,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.2141
+Australia_NZ,Pork,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.2141
+Australia_NZ,Pork,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.2141
+Australia_NZ,Poultry,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.2396
+Australia_NZ,Poultry,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.2396
+Australia_NZ,Poultry,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.2396
+Australia_NZ,Poultry,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.2396
+Australia_NZ,SheepGoat,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.05
+Australia_NZ,SheepGoat,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.05
+Australia_NZ,SheepGoat,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.05
+Australia_NZ,SheepGoat,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.05
+Australia_NZ,SheepGoat,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.05
+Australia_NZ,SheepGoat,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.05
+Australia_NZ,SheepGoat,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.05
+Australia_NZ,SheepGoat,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.05
+Canada,Beef,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.4593
+Canada,Beef,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.4593
+Canada,Beef,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.4593
+Canada,Beef,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.4593
+Canada,Beef,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.4593
+Canada,Beef,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.4593
+Canada,Beef,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.4593
+Canada,Beef,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.4593
+Canada,Dairy,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.0773
+Canada,Dairy,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.0773
+Canada,Dairy,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.0773
+Canada,Dairy,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.0773
+Canada,Dairy,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.0773
+Canada,Dairy,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.0773
+Canada,Dairy,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.0773
+Canada,Dairy,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.0773
+Canada,Pork,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.2141
+Canada,Pork,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.2141
+Canada,Pork,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.2141
+Canada,Pork,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.2141
+Canada,Poultry,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.2396
+Canada,Poultry,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.2396
+Canada,Poultry,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.2396
+Canada,Poultry,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.2396
+Canada,SheepGoat,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.05
+Canada,SheepGoat,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.05
+Canada,SheepGoat,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.05
+Canada,SheepGoat,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.05
+Canada,SheepGoat,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.05
+Canada,SheepGoat,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.05
+Canada,SheepGoat,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.05
+Canada,SheepGoat,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.05
+China,Beef,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.4593
+China,Beef,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.4593
+China,Beef,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.4593
+China,Beef,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.4593
+China,Beef,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.4593
+China,Beef,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.4593
+China,Beef,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.4593
+China,Beef,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.4593
+China,Dairy,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.0773
+China,Dairy,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.0773
+China,Dairy,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.0773
+China,Dairy,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.0773
+China,Dairy,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.0773
+China,Dairy,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.0773
+China,Dairy,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.0773
+China,Dairy,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.0773
+China,Pork,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.2141
+China,Pork,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.2141
+China,Pork,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.2141
+China,Pork,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.2141
+China,Poultry,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.2396
+China,Poultry,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.2396
+China,Poultry,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.2396
+China,Poultry,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.2396
+China,SheepGoat,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.05
+China,SheepGoat,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.05
+China,SheepGoat,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.05
+China,SheepGoat,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.05
+China,SheepGoat,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.05
+China,SheepGoat,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.05
+China,SheepGoat,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.05
+China,SheepGoat,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.05
+Eastern Europe,Beef,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.4593
+Eastern Europe,Beef,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.4593
+Eastern Europe,Beef,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.4593
+Eastern Europe,Beef,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.4593
+Eastern Europe,Beef,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.4593
+Eastern Europe,Beef,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.4593
+Eastern Europe,Beef,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.4593
+Eastern Europe,Beef,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.4593
+Eastern Europe,Dairy,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.0773
+Eastern Europe,Dairy,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.0773
+Eastern Europe,Dairy,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.0773
+Eastern Europe,Dairy,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.0773
+Eastern Europe,Dairy,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.0773
+Eastern Europe,Dairy,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.0773
+Eastern Europe,Dairy,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.0773
+Eastern Europe,Dairy,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.0773
+Eastern Europe,Pork,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.2141
+Eastern Europe,Pork,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.2141
+Eastern Europe,Pork,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.2141
+Eastern Europe,Pork,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.2141
+Eastern Europe,Poultry,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.2396
+Eastern Europe,Poultry,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.2396
+Eastern Europe,Poultry,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.2396
+Eastern Europe,Poultry,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.2396
+Eastern Europe,SheepGoat,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.05
+Eastern Europe,SheepGoat,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.05
+Eastern Europe,SheepGoat,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.05
+Eastern Europe,SheepGoat,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.05
+Eastern Europe,SheepGoat,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.05
+Eastern Europe,SheepGoat,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.05
+Eastern Europe,SheepGoat,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.05
+Eastern Europe,SheepGoat,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.05
+Former Soviet Union,Beef,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.4593
+Former Soviet Union,Beef,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.4593
+Former Soviet Union,Beef,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.4593
+Former Soviet Union,Beef,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.4593
+Former Soviet Union,Beef,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.4593
+Former Soviet Union,Beef,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.4593
+Former Soviet Union,Beef,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.4593
+Former Soviet Union,Beef,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.4593
+Former Soviet Union,Dairy,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.0773
+Former Soviet Union,Dairy,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.0773
+Former Soviet Union,Dairy,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.0773
+Former Soviet Union,Dairy,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.0773
+Former Soviet Union,Dairy,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.0773
+Former Soviet Union,Dairy,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.0773
+Former Soviet Union,Dairy,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.0773
+Former Soviet Union,Dairy,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.0773
+Former Soviet Union,Pork,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.2141
+Former Soviet Union,Pork,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.2141
+Former Soviet Union,Pork,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.2141
+Former Soviet Union,Pork,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.2141
+Former Soviet Union,Poultry,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.2396
+Former Soviet Union,Poultry,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.2396
+Former Soviet Union,Poultry,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.2396
+Former Soviet Union,Poultry,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.2396
+Former Soviet Union,SheepGoat,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.05
+Former Soviet Union,SheepGoat,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.05
+Former Soviet Union,SheepGoat,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.05
+Former Soviet Union,SheepGoat,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.05
+Former Soviet Union,SheepGoat,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.05
+Former Soviet Union,SheepGoat,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.05
+Former Soviet Union,SheepGoat,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.05
+Former Soviet Union,SheepGoat,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.05
+India,Beef,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.4593
+India,Beef,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.4593
+India,Beef,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.4593
+India,Beef,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.4593
+India,Beef,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.4593
+India,Beef,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.4593
+India,Beef,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.4593
+India,Beef,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.4593
+India,Dairy,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.0773
+India,Dairy,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.0773
+India,Dairy,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.0773
+India,Dairy,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.0773
+India,Dairy,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.0773
+India,Dairy,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.0773
+India,Dairy,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.0773
+India,Dairy,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.0773
+India,Pork,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.2141
+India,Pork,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.2141
+India,Pork,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.2141
+India,Pork,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.2141
+India,Poultry,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.2396
+India,Poultry,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.2396
+India,Poultry,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.2396
+India,Poultry,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.2396
+India,SheepGoat,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.05
+India,SheepGoat,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.05
+India,SheepGoat,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.05
+India,SheepGoat,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.05
+India,SheepGoat,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.05
+India,SheepGoat,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.05
+India,SheepGoat,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.05
+India,SheepGoat,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.05
+Japan,Beef,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.4593
+Japan,Beef,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.4593
+Japan,Beef,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.4593
+Japan,Beef,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.4593
+Japan,Beef,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.4593
+Japan,Beef,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.4593
+Japan,Beef,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.4593
+Japan,Beef,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.4593
+Japan,Dairy,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.0773
+Japan,Dairy,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.0773
+Japan,Dairy,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.0773
+Japan,Dairy,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.0773
+Japan,Dairy,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.0773
+Japan,Dairy,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.0773
+Japan,Dairy,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.0773
+Japan,Dairy,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.0773
+Japan,Pork,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.2141
+Japan,Pork,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.2141
+Japan,Pork,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.2141
+Japan,Pork,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.2141
+Japan,Poultry,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.2396
+Japan,Poultry,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.2396
+Japan,Poultry,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.2396
+Japan,Poultry,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.2396
+Japan,SheepGoat,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.05
+Japan,SheepGoat,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.05
+Japan,SheepGoat,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.05
+Japan,SheepGoat,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.05
+Japan,SheepGoat,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.05
+Japan,SheepGoat,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.05
+Japan,SheepGoat,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.05
+Japan,SheepGoat,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.05
+Korea,Beef,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.4593
+Korea,Beef,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.4593
+Korea,Beef,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.4593
+Korea,Beef,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.4593
+Korea,Beef,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.4593
+Korea,Beef,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.4593
+Korea,Beef,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.4593
+Korea,Beef,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.4593
+Korea,Dairy,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.0773
+Korea,Dairy,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.0773
+Korea,Dairy,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.0773
+Korea,Dairy,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.0773
+Korea,Dairy,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.0773
+Korea,Dairy,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.0773
+Korea,Dairy,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.0773
+Korea,Dairy,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.0773
+Korea,Pork,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.2141
+Korea,Pork,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.2141
+Korea,Pork,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.2141
+Korea,Pork,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.2141
+Korea,Poultry,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.2396
+Korea,Poultry,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.2396
+Korea,Poultry,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.2396
+Korea,Poultry,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.2396
+Korea,SheepGoat,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.05
+Korea,SheepGoat,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.05
+Korea,SheepGoat,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.05
+Korea,SheepGoat,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.05
+Korea,SheepGoat,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.05
+Korea,SheepGoat,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.05
+Korea,SheepGoat,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.05
+Korea,SheepGoat,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.05
+Latin America,Beef,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.4593
+Latin America,Beef,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.4593
+Latin America,Beef,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.4593
+Latin America,Beef,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.4593
+Latin America,Beef,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.4593
+Latin America,Beef,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.4593
+Latin America,Beef,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.4593
+Latin America,Beef,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.4593
+Latin America,Dairy,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.0773
+Latin America,Dairy,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.0773
+Latin America,Dairy,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.0773
+Latin America,Dairy,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.0773
+Latin America,Dairy,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.0773
+Latin America,Dairy,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.0773
+Latin America,Dairy,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.0773
+Latin America,Dairy,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.0773
+Latin America,Pork,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.2141
+Latin America,Pork,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.2141
+Latin America,Pork,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.2141
+Latin America,Pork,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.2141
+Latin America,Poultry,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.2396
+Latin America,Poultry,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.2396
+Latin America,Poultry,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.2396
+Latin America,Poultry,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.2396
+Latin America,SheepGoat,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.05
+Latin America,SheepGoat,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.05
+Latin America,SheepGoat,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.05
+Latin America,SheepGoat,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.05
+Latin America,SheepGoat,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.05
+Latin America,SheepGoat,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.05
+Latin America,SheepGoat,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.05
+Latin America,SheepGoat,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.05
+Middle East,Beef,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.4593
+Middle East,Beef,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.4593
+Middle East,Beef,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.4593
+Middle East,Beef,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.4593
+Middle East,Beef,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.4593
+Middle East,Beef,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.4593
+Middle East,Beef,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.4593
+Middle East,Beef,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.4593
+Middle East,Dairy,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.0773
+Middle East,Dairy,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.0773
+Middle East,Dairy,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.0773
+Middle East,Dairy,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.0773
+Middle East,Dairy,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.0773
+Middle East,Dairy,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.0773
+Middle East,Dairy,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.0773
+Middle East,Dairy,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.0773
+Middle East,Pork,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.2141
+Middle East,Pork,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.2141
+Middle East,Pork,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.2141
+Middle East,Pork,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.2141
+Middle East,Poultry,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.2396
+Middle East,Poultry,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.2396
+Middle East,Poultry,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.2396
+Middle East,Poultry,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.2396
+Middle East,SheepGoat,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.05
+Middle East,SheepGoat,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.05
+Middle East,SheepGoat,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.05
+Middle East,SheepGoat,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.05
+Middle East,SheepGoat,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.05
+Middle East,SheepGoat,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.05
+Middle East,SheepGoat,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.05
+Middle East,SheepGoat,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.05
+Southeast Asia,Beef,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.4593
+Southeast Asia,Beef,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.4593
+Southeast Asia,Beef,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.4593
+Southeast Asia,Beef,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.4593
+Southeast Asia,Beef,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.4593
+Southeast Asia,Beef,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.4593
+Southeast Asia,Beef,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.4593
+Southeast Asia,Beef,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.4593
+Southeast Asia,Dairy,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.0773
+Southeast Asia,Dairy,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.0773
+Southeast Asia,Dairy,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.0773
+Southeast Asia,Dairy,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.0773
+Southeast Asia,Dairy,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.0773
+Southeast Asia,Dairy,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.0773
+Southeast Asia,Dairy,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.0773
+Southeast Asia,Dairy,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.0773
+Southeast Asia,Pork,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.2141
+Southeast Asia,Pork,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.2141
+Southeast Asia,Pork,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.2141
+Southeast Asia,Pork,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.2141
+Southeast Asia,Poultry,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.2396
+Southeast Asia,Poultry,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.2396
+Southeast Asia,Poultry,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.2396
+Southeast Asia,Poultry,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.2396
+Southeast Asia,SheepGoat,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.05
+Southeast Asia,SheepGoat,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.05
+Southeast Asia,SheepGoat,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.05
+Southeast Asia,SheepGoat,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.05
+Southeast Asia,SheepGoat,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.05
+Southeast Asia,SheepGoat,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.05
+Southeast Asia,SheepGoat,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.05
+Southeast Asia,SheepGoat,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.05
+USA,Beef,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.4593
+USA,Beef,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.4593
+USA,Beef,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.4593
+USA,Beef,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.4593
+USA,Beef,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.4593
+USA,Beef,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.4593
+USA,Beef,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.4593
+USA,Beef,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.4593
+USA,Dairy,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.0773
+USA,Dairy,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.0773
+USA,Dairy,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.0773
+USA,Dairy,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.0773
+USA,Dairy,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.0773
+USA,Dairy,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.0773
+USA,Dairy,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.0773
+USA,Dairy,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.0773
+USA,Pork,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.2141
+USA,Pork,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.2141
+USA,Pork,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.2141
+USA,Pork,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.2141
+USA,Poultry,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.2396
+USA,Poultry,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.2396
+USA,Poultry,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.2396
+USA,Poultry,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.2396
+USA,SheepGoat,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.05
+USA,SheepGoat,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.05
+USA,SheepGoat,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.05
+USA,SheepGoat,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.05
+USA,SheepGoat,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.05
+USA,SheepGoat,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.05
+USA,SheepGoat,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.05
+USA,SheepGoat,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.05
+Western Europe,Beef,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.4593
+Western Europe,Beef,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.4593
+Western Europe,Beef,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.4593
+Western Europe,Beef,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.4593
+Western Europe,Beef,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.4593
+Western Europe,Beef,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.4593
+Western Europe,Beef,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.4593
+Western Europe,Beef,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.4593
+Western Europe,Dairy,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.0773
+Western Europe,Dairy,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.0773
+Western Europe,Dairy,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.0773
+Western Europe,Dairy,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.0773
+Western Europe,Dairy,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.0773
+Western Europe,Dairy,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.0773
+Western Europe,Dairy,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.0773
+Western Europe,Dairy,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.0773
+Western Europe,Pork,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.2141
+Western Europe,Pork,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.2141
+Western Europe,Pork,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.2141
+Western Europe,Pork,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.2141
+Western Europe,Poultry,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.2396
+Western Europe,Poultry,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.2396
+Western Europe,Poultry,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.2396
+Western Europe,Poultry,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.2396
+Western Europe,SheepGoat,Mixed,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.05
+Western Europe,SheepGoat,Mixed,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.05
+Western Europe,SheepGoat,Mixed,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.05
+Western Europe,SheepGoat,Mixed,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.05
+Western Europe,SheepGoat,Pastoral,FodderHerb_Residue,share-weight,2005,9999,fixed,CO2,1,0.05
+Western Europe,SheepGoat,Pastoral,Pasture_FodderGrass,share-weight,2005,9999,fixed,CO2,1,0.05
+Western Europe,SheepGoat,Pastoral,FeedCrops,share-weight,2005,9999,fixed,CO2,1,0.05
+Western Europe,SheepGoat,Pastoral,Scavenging_Other,share-weight,2005,9999,fixed,CO2,1,0.05

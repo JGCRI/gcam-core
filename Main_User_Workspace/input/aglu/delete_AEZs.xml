@@ -1,0 +1,2366 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+         <AgSupplySector name="biomass">
+            <AgSupplySubsector delete="1" name="biomassAEZ01"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ02"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ03"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ04"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ05"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ06"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ17"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Corn">
+            <AgSupplySubsector delete="1" name="CornAEZ01"/>
+            <AgSupplySubsector delete="1" name="CornAEZ02"/>
+            <AgSupplySubsector delete="1" name="CornAEZ03"/>
+            <AgSupplySubsector delete="1" name="CornAEZ04"/>
+            <AgSupplySubsector delete="1" name="CornAEZ05"/>
+            <AgSupplySubsector delete="1" name="CornAEZ06"/>
+            <AgSupplySubsector delete="1" name="CornAEZ17"/>
+            <AgSupplySubsector delete="1" name="CornAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FiberCrop">
+            <AgSupplySubsector delete="1" name="FiberCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ04"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FodderGrass">
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ01"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ02"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ03"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ04"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ05"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ06"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ17"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FodderHerb">
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ01"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ02"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ03"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ04"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ05"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ06"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ17"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Forest">
+            <AgSupplySubsector delete="1" name="ForestAEZ01"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ02"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ03"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ04"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ05"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ06"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ17"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="MiscCrop">
+            <AgSupplySubsector delete="1" name="MiscCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ04"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="OilCrop">
+            <AgSupplySubsector delete="1" name="OilCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ04"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="OtherGrain">
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ01"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ02"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ03"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ04"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ05"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ06"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ17"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="PalmFruit">
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ01"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ02"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ03"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ04"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ05"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ06"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ17"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Pasture">
+            <AgSupplySubsector delete="1" name="PastureAEZ01"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ02"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ03"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ04"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ05"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ06"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ17"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Rice">
+            <AgSupplySubsector delete="1" name="RiceAEZ01"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ02"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ03"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ04"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ05"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ06"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ17"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Root_Tuber">
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ01"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ02"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ03"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ04"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ05"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ06"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ17"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="SugarCrop">
+            <AgSupplySubsector delete="1" name="SugarCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ04"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Wheat">
+            <AgSupplySubsector delete="1" name="WheatAEZ01"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ02"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ03"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ04"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ05"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ06"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ17"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ18"/>
+         </AgSupplySector>
+         <LandAllocatorRoot name="root">
+            <LandNode delete="1" name="AgroForestLandAEZ01"/>
+            <LandNode delete="1" name="RockIceDesertAEZ01"/>
+            <LandNode delete="1" name="TundraAEZ01"/>
+            <LandNode delete="1" name="UrbanLandAEZ01"/>
+            <LandNode delete="1" name="AgroForestLandAEZ02"/>
+            <LandNode delete="1" name="RockIceDesertAEZ02"/>
+            <LandNode delete="1" name="TundraAEZ02"/>
+            <LandNode delete="1" name="UrbanLandAEZ02"/>
+            <LandNode delete="1" name="AgroForestLandAEZ03"/>
+            <LandNode delete="1" name="RockIceDesertAEZ03"/>
+            <LandNode delete="1" name="TundraAEZ03"/>
+            <LandNode delete="1" name="UrbanLandAEZ03"/>
+            <LandNode delete="1" name="AgroForestLandAEZ04"/>
+            <LandNode delete="1" name="RockIceDesertAEZ04"/>
+            <LandNode delete="1" name="TundraAEZ04"/>
+            <LandNode delete="1" name="UrbanLandAEZ04"/>
+            <LandNode delete="1" name="AgroForestLandAEZ05"/>
+            <LandNode delete="1" name="RockIceDesertAEZ05"/>
+            <LandNode delete="1" name="TundraAEZ05"/>
+            <LandNode delete="1" name="UrbanLandAEZ05"/>
+            <LandNode delete="1" name="AgroForestLandAEZ06"/>
+            <LandNode delete="1" name="RockIceDesertAEZ06"/>
+            <LandNode delete="1" name="TundraAEZ06"/>
+            <LandNode delete="1" name="UrbanLandAEZ06"/>
+            <LandNode delete="1" name="AgroForestLandAEZ17"/>
+            <LandNode delete="1" name="RockIceDesertAEZ17"/>
+            <LandNode delete="1" name="TundraAEZ17"/>
+            <LandNode delete="1" name="UrbanLandAEZ17"/>
+            <LandNode delete="1" name="AgroForestLandAEZ18"/>
+            <LandNode delete="1" name="RockIceDesertAEZ18"/>
+            <LandNode delete="1" name="TundraAEZ18"/>
+            <LandNode delete="1" name="UrbanLandAEZ18"/>
+         </LandAllocatorRoot>
+      </region>
+      <region name="Canada">
+         <AgSupplySector name="biomass">
+            <AgSupplySubsector delete="1" name="biomassAEZ01"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ02"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ03"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ04"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ05"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ06"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ12"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ17"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Corn">
+            <AgSupplySubsector delete="1" name="CornAEZ01"/>
+            <AgSupplySubsector delete="1" name="CornAEZ02"/>
+            <AgSupplySubsector delete="1" name="CornAEZ03"/>
+            <AgSupplySubsector delete="1" name="CornAEZ04"/>
+            <AgSupplySubsector delete="1" name="CornAEZ05"/>
+            <AgSupplySubsector delete="1" name="CornAEZ06"/>
+            <AgSupplySubsector delete="1" name="CornAEZ12"/>
+            <AgSupplySubsector delete="1" name="CornAEZ17"/>
+            <AgSupplySubsector delete="1" name="CornAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FiberCrop">
+            <AgSupplySubsector delete="1" name="FiberCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ04"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ12"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FodderGrass">
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ01"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ02"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ03"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ04"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ05"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ06"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ12"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ17"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FodderHerb">
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ01"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ02"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ03"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ04"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ05"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ06"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ12"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ17"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Forest">
+            <AgSupplySubsector delete="1" name="ForestAEZ01"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ02"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ03"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ04"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ05"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ06"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ12"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ17"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="MiscCrop">
+            <AgSupplySubsector delete="1" name="MiscCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ04"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ12"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="OilCrop">
+            <AgSupplySubsector delete="1" name="OilCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ04"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ12"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="OtherGrain">
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ01"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ02"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ03"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ04"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ05"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ06"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ12"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ17"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="PalmFruit">
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ01"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ02"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ03"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ04"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ05"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ06"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ12"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ17"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Pasture">
+            <AgSupplySubsector delete="1" name="PastureAEZ01"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ02"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ03"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ04"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ05"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ06"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ12"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ17"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Rice">
+            <AgSupplySubsector delete="1" name="RiceAEZ01"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ02"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ03"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ04"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ05"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ06"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ12"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ17"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Root_Tuber">
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ01"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ02"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ03"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ04"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ05"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ06"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ12"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ17"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="SugarCrop">
+            <AgSupplySubsector delete="1" name="SugarCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ04"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ12"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Wheat">
+            <AgSupplySubsector delete="1" name="WheatAEZ01"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ02"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ03"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ04"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ05"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ06"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ12"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ17"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ18"/>
+         </AgSupplySector>
+         <LandAllocatorRoot name="root">
+            <LandNode delete="1" name="AgroForestLandAEZ01"/>
+            <LandNode delete="1" name="RockIceDesertAEZ01"/>
+            <LandNode delete="1" name="TundraAEZ01"/>
+            <LandNode delete="1" name="UrbanLandAEZ01"/>
+            <LandNode delete="1" name="AgroForestLandAEZ02"/>
+            <LandNode delete="1" name="RockIceDesertAEZ02"/>
+            <LandNode delete="1" name="TundraAEZ02"/>
+            <LandNode delete="1" name="UrbanLandAEZ02"/>
+            <LandNode delete="1" name="AgroForestLandAEZ03"/>
+            <LandNode delete="1" name="RockIceDesertAEZ03"/>
+            <LandNode delete="1" name="TundraAEZ03"/>
+            <LandNode delete="1" name="UrbanLandAEZ03"/>
+            <LandNode delete="1" name="AgroForestLandAEZ04"/>
+            <LandNode delete="1" name="RockIceDesertAEZ04"/>
+            <LandNode delete="1" name="TundraAEZ04"/>
+            <LandNode delete="1" name="UrbanLandAEZ04"/>
+            <LandNode delete="1" name="AgroForestLandAEZ05"/>
+            <LandNode delete="1" name="RockIceDesertAEZ05"/>
+            <LandNode delete="1" name="TundraAEZ05"/>
+            <LandNode delete="1" name="UrbanLandAEZ05"/>
+            <LandNode delete="1" name="AgroForestLandAEZ06"/>
+            <LandNode delete="1" name="RockIceDesertAEZ06"/>
+            <LandNode delete="1" name="TundraAEZ06"/>
+            <LandNode delete="1" name="UrbanLandAEZ06"/>
+            <LandNode delete="1" name="AgroForestLandAEZ12"/>
+            <LandNode delete="1" name="RockIceDesertAEZ12"/>
+            <LandNode delete="1" name="TundraAEZ12"/>
+            <LandNode delete="1" name="UrbanLandAEZ12"/>
+            <LandNode delete="1" name="AgroForestLandAEZ17"/>
+            <LandNode delete="1" name="RockIceDesertAEZ17"/>
+            <LandNode delete="1" name="TundraAEZ17"/>
+            <LandNode delete="1" name="UrbanLandAEZ17"/>
+            <LandNode delete="1" name="AgroForestLandAEZ18"/>
+            <LandNode delete="1" name="RockIceDesertAEZ18"/>
+            <LandNode delete="1" name="TundraAEZ18"/>
+            <LandNode delete="1" name="UrbanLandAEZ18"/>
+         </LandAllocatorRoot>
+      </region>
+      <region name="Western Europe">
+         <AgSupplySector name="biomass">
+            <AgSupplySubsector delete="1" name="biomassAEZ01"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ02"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ03"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ05"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ06"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ17"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Corn">
+            <AgSupplySubsector delete="1" name="CornAEZ01"/>
+            <AgSupplySubsector delete="1" name="CornAEZ02"/>
+            <AgSupplySubsector delete="1" name="CornAEZ03"/>
+            <AgSupplySubsector delete="1" name="CornAEZ05"/>
+            <AgSupplySubsector delete="1" name="CornAEZ06"/>
+            <AgSupplySubsector delete="1" name="CornAEZ17"/>
+            <AgSupplySubsector delete="1" name="CornAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FiberCrop">
+            <AgSupplySubsector delete="1" name="FiberCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FodderGrass">
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ01"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ02"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ03"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ05"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ06"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ17"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FodderHerb">
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ01"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ02"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ03"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ05"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ06"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ17"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Forest">
+            <AgSupplySubsector delete="1" name="ForestAEZ01"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ02"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ03"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ05"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ06"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ17"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="MiscCrop">
+            <AgSupplySubsector delete="1" name="MiscCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="OilCrop">
+            <AgSupplySubsector delete="1" name="OilCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="OtherGrain">
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ01"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ02"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ03"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ05"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ06"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ17"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="PalmFruit">
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ01"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ02"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ03"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ05"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ06"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ17"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Pasture">
+            <AgSupplySubsector delete="1" name="PastureAEZ01"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ02"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ03"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ05"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ06"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ17"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Rice">
+            <AgSupplySubsector delete="1" name="RiceAEZ01"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ02"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ03"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ05"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ06"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ17"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Root_Tuber">
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ01"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ02"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ03"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ05"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ06"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ17"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="SugarCrop">
+            <AgSupplySubsector delete="1" name="SugarCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Wheat">
+            <AgSupplySubsector delete="1" name="WheatAEZ01"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ02"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ03"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ05"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ06"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ17"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ18"/>
+         </AgSupplySector>
+         <LandAllocatorRoot name="root">
+            <LandNode delete="1" name="AgroForestLandAEZ01"/>
+            <LandNode delete="1" name="RockIceDesertAEZ01"/>
+            <LandNode delete="1" name="TundraAEZ01"/>
+            <LandNode delete="1" name="UrbanLandAEZ01"/>
+            <LandNode delete="1" name="AgroForestLandAEZ02"/>
+            <LandNode delete="1" name="RockIceDesertAEZ02"/>
+            <LandNode delete="1" name="TundraAEZ02"/>
+            <LandNode delete="1" name="UrbanLandAEZ02"/>
+            <LandNode delete="1" name="AgroForestLandAEZ03"/>
+            <LandNode delete="1" name="RockIceDesertAEZ03"/>
+            <LandNode delete="1" name="TundraAEZ03"/>
+            <LandNode delete="1" name="UrbanLandAEZ03"/>
+            <LandNode delete="1" name="AgroForestLandAEZ05"/>
+            <LandNode delete="1" name="RockIceDesertAEZ05"/>
+            <LandNode delete="1" name="TundraAEZ05"/>
+            <LandNode delete="1" name="UrbanLandAEZ05"/>
+            <LandNode delete="1" name="AgroForestLandAEZ06"/>
+            <LandNode delete="1" name="RockIceDesertAEZ06"/>
+            <LandNode delete="1" name="TundraAEZ06"/>
+            <LandNode delete="1" name="UrbanLandAEZ06"/>
+            <LandNode delete="1" name="AgroForestLandAEZ17"/>
+            <LandNode delete="1" name="RockIceDesertAEZ17"/>
+            <LandNode delete="1" name="TundraAEZ17"/>
+            <LandNode delete="1" name="UrbanLandAEZ17"/>
+            <LandNode delete="1" name="AgroForestLandAEZ18"/>
+            <LandNode delete="1" name="RockIceDesertAEZ18"/>
+            <LandNode delete="1" name="TundraAEZ18"/>
+            <LandNode delete="1" name="UrbanLandAEZ18"/>
+         </LandAllocatorRoot>
+      </region>
+      <region name="Japan">
+         <AgSupplySector name="biomass">
+            <AgSupplySubsector delete="1" name="biomassAEZ01"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ02"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ03"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ04"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ05"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ06"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ07"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ08"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ13"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ14"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ16"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ17"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Corn">
+            <AgSupplySubsector delete="1" name="CornAEZ01"/>
+            <AgSupplySubsector delete="1" name="CornAEZ02"/>
+            <AgSupplySubsector delete="1" name="CornAEZ03"/>
+            <AgSupplySubsector delete="1" name="CornAEZ04"/>
+            <AgSupplySubsector delete="1" name="CornAEZ05"/>
+            <AgSupplySubsector delete="1" name="CornAEZ06"/>
+            <AgSupplySubsector delete="1" name="CornAEZ07"/>
+            <AgSupplySubsector delete="1" name="CornAEZ08"/>
+            <AgSupplySubsector delete="1" name="CornAEZ13"/>
+            <AgSupplySubsector delete="1" name="CornAEZ14"/>
+            <AgSupplySubsector delete="1" name="CornAEZ16"/>
+            <AgSupplySubsector delete="1" name="CornAEZ17"/>
+            <AgSupplySubsector delete="1" name="CornAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FiberCrop">
+            <AgSupplySubsector delete="1" name="FiberCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ04"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ07"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ08"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ13"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ14"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ16"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FodderGrass">
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ01"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ02"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ03"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ04"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ05"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ06"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ07"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ08"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ13"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ14"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ16"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ17"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FodderHerb">
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ01"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ02"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ03"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ04"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ05"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ06"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ07"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ08"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ13"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ14"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ16"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ17"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Forest">
+            <AgSupplySubsector delete="1" name="ForestAEZ01"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ02"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ03"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ04"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ05"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ06"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ07"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ08"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ13"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ14"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ16"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ17"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="MiscCrop">
+            <AgSupplySubsector delete="1" name="MiscCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ04"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ07"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ08"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ13"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ14"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ16"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="OilCrop">
+            <AgSupplySubsector delete="1" name="OilCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ04"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ07"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ08"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ13"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ14"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ16"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="OtherGrain">
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ01"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ02"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ03"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ04"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ05"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ06"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ07"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ08"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ13"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ14"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ16"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ17"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="PalmFruit">
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ01"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ02"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ03"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ04"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ05"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ06"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ07"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ08"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ13"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ14"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ16"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ17"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Pasture">
+            <AgSupplySubsector delete="1" name="PastureAEZ01"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ02"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ03"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ04"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ05"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ06"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ07"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ08"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ13"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ14"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ16"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ17"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Rice">
+            <AgSupplySubsector delete="1" name="RiceAEZ01"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ02"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ03"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ04"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ05"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ06"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ07"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ08"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ13"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ14"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ16"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ17"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Root_Tuber">
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ01"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ02"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ03"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ04"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ05"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ06"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ07"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ08"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ13"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ14"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ16"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ17"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="SugarCrop">
+            <AgSupplySubsector delete="1" name="SugarCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ04"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ07"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ08"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ13"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ14"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ16"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Wheat">
+            <AgSupplySubsector delete="1" name="WheatAEZ01"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ02"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ03"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ04"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ05"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ06"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ07"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ08"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ13"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ14"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ16"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ17"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ18"/>
+         </AgSupplySector>
+         <LandAllocatorRoot name="root">
+            <LandNode delete="1" name="AgroForestLandAEZ01"/>
+            <LandNode delete="1" name="RockIceDesertAEZ01"/>
+            <LandNode delete="1" name="TundraAEZ01"/>
+            <LandNode delete="1" name="UrbanLandAEZ01"/>
+            <LandNode delete="1" name="AgroForestLandAEZ02"/>
+            <LandNode delete="1" name="RockIceDesertAEZ02"/>
+            <LandNode delete="1" name="TundraAEZ02"/>
+            <LandNode delete="1" name="UrbanLandAEZ02"/>
+            <LandNode delete="1" name="AgroForestLandAEZ03"/>
+            <LandNode delete="1" name="RockIceDesertAEZ03"/>
+            <LandNode delete="1" name="TundraAEZ03"/>
+            <LandNode delete="1" name="UrbanLandAEZ03"/>
+            <LandNode delete="1" name="AgroForestLandAEZ04"/>
+            <LandNode delete="1" name="RockIceDesertAEZ04"/>
+            <LandNode delete="1" name="TundraAEZ04"/>
+            <LandNode delete="1" name="UrbanLandAEZ04"/>
+            <LandNode delete="1" name="AgroForestLandAEZ05"/>
+            <LandNode delete="1" name="RockIceDesertAEZ05"/>
+            <LandNode delete="1" name="TundraAEZ05"/>
+            <LandNode delete="1" name="UrbanLandAEZ05"/>
+            <LandNode delete="1" name="AgroForestLandAEZ06"/>
+            <LandNode delete="1" name="RockIceDesertAEZ06"/>
+            <LandNode delete="1" name="TundraAEZ06"/>
+            <LandNode delete="1" name="UrbanLandAEZ06"/>
+            <LandNode delete="1" name="AgroForestLandAEZ07"/>
+            <LandNode delete="1" name="RockIceDesertAEZ07"/>
+            <LandNode delete="1" name="TundraAEZ07"/>
+            <LandNode delete="1" name="UrbanLandAEZ07"/>
+            <LandNode delete="1" name="AgroForestLandAEZ08"/>
+            <LandNode delete="1" name="RockIceDesertAEZ08"/>
+            <LandNode delete="1" name="TundraAEZ08"/>
+            <LandNode delete="1" name="UrbanLandAEZ08"/>
+            <LandNode delete="1" name="AgroForestLandAEZ13"/>
+            <LandNode delete="1" name="RockIceDesertAEZ13"/>
+            <LandNode delete="1" name="TundraAEZ13"/>
+            <LandNode delete="1" name="UrbanLandAEZ13"/>
+            <LandNode delete="1" name="AgroForestLandAEZ14"/>
+            <LandNode delete="1" name="RockIceDesertAEZ14"/>
+            <LandNode delete="1" name="TundraAEZ14"/>
+            <LandNode delete="1" name="UrbanLandAEZ14"/>
+            <LandNode delete="1" name="AgroForestLandAEZ16"/>
+            <LandNode delete="1" name="RockIceDesertAEZ16"/>
+            <LandNode delete="1" name="TundraAEZ16"/>
+            <LandNode delete="1" name="UrbanLandAEZ16"/>
+            <LandNode delete="1" name="AgroForestLandAEZ17"/>
+            <LandNode delete="1" name="RockIceDesertAEZ17"/>
+            <LandNode delete="1" name="TundraAEZ17"/>
+            <LandNode delete="1" name="UrbanLandAEZ17"/>
+            <LandNode delete="1" name="AgroForestLandAEZ18"/>
+            <LandNode delete="1" name="RockIceDesertAEZ18"/>
+            <LandNode delete="1" name="TundraAEZ18"/>
+            <LandNode delete="1" name="UrbanLandAEZ18"/>
+         </LandAllocatorRoot>
+      </region>
+      <region name="Former Soviet Union">
+         <AgSupplySector name="biomass">
+            <AgSupplySubsector delete="1" name="biomassAEZ01"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ02"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ03"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ04"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ05"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ06"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ17"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Corn">
+            <AgSupplySubsector delete="1" name="CornAEZ01"/>
+            <AgSupplySubsector delete="1" name="CornAEZ02"/>
+            <AgSupplySubsector delete="1" name="CornAEZ03"/>
+            <AgSupplySubsector delete="1" name="CornAEZ04"/>
+            <AgSupplySubsector delete="1" name="CornAEZ05"/>
+            <AgSupplySubsector delete="1" name="CornAEZ06"/>
+            <AgSupplySubsector delete="1" name="CornAEZ17"/>
+            <AgSupplySubsector delete="1" name="CornAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FiberCrop">
+            <AgSupplySubsector delete="1" name="FiberCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ04"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FodderGrass">
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ01"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ02"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ03"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ04"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ05"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ06"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ17"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FodderHerb">
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ01"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ02"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ03"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ04"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ05"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ06"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ17"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Forest">
+            <AgSupplySubsector delete="1" name="ForestAEZ01"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ02"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ03"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ04"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ05"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ06"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ17"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="MiscCrop">
+            <AgSupplySubsector delete="1" name="MiscCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ04"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="OilCrop">
+            <AgSupplySubsector delete="1" name="OilCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ04"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="OtherGrain">
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ01"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ02"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ03"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ04"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ05"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ06"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ17"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="PalmFruit">
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ01"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ02"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ03"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ04"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ05"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ06"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ17"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Pasture">
+            <AgSupplySubsector delete="1" name="PastureAEZ01"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ02"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ03"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ04"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ05"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ06"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ17"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Rice">
+            <AgSupplySubsector delete="1" name="RiceAEZ01"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ02"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ03"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ04"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ05"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ06"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ17"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Root_Tuber">
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ01"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ02"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ03"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ04"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ05"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ06"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ17"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="SugarCrop">
+            <AgSupplySubsector delete="1" name="SugarCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ04"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Wheat">
+            <AgSupplySubsector delete="1" name="WheatAEZ01"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ02"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ03"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ04"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ05"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ06"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ17"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ18"/>
+         </AgSupplySector>
+         <LandAllocatorRoot name="root">
+            <LandNode delete="1" name="AgroForestLandAEZ01"/>
+            <LandNode delete="1" name="RockIceDesertAEZ01"/>
+            <LandNode delete="1" name="TundraAEZ01"/>
+            <LandNode delete="1" name="UrbanLandAEZ01"/>
+            <LandNode delete="1" name="AgroForestLandAEZ02"/>
+            <LandNode delete="1" name="RockIceDesertAEZ02"/>
+            <LandNode delete="1" name="TundraAEZ02"/>
+            <LandNode delete="1" name="UrbanLandAEZ02"/>
+            <LandNode delete="1" name="AgroForestLandAEZ03"/>
+            <LandNode delete="1" name="RockIceDesertAEZ03"/>
+            <LandNode delete="1" name="TundraAEZ03"/>
+            <LandNode delete="1" name="UrbanLandAEZ03"/>
+            <LandNode delete="1" name="AgroForestLandAEZ04"/>
+            <LandNode delete="1" name="RockIceDesertAEZ04"/>
+            <LandNode delete="1" name="TundraAEZ04"/>
+            <LandNode delete="1" name="UrbanLandAEZ04"/>
+            <LandNode delete="1" name="AgroForestLandAEZ05"/>
+            <LandNode delete="1" name="RockIceDesertAEZ05"/>
+            <LandNode delete="1" name="TundraAEZ05"/>
+            <LandNode delete="1" name="UrbanLandAEZ05"/>
+            <LandNode delete="1" name="AgroForestLandAEZ06"/>
+            <LandNode delete="1" name="RockIceDesertAEZ06"/>
+            <LandNode delete="1" name="TundraAEZ06"/>
+            <LandNode delete="1" name="UrbanLandAEZ06"/>
+            <LandNode delete="1" name="AgroForestLandAEZ17"/>
+            <LandNode delete="1" name="RockIceDesertAEZ17"/>
+            <LandNode delete="1" name="TundraAEZ17"/>
+            <LandNode delete="1" name="UrbanLandAEZ17"/>
+            <LandNode delete="1" name="AgroForestLandAEZ18"/>
+            <LandNode delete="1" name="RockIceDesertAEZ18"/>
+            <LandNode delete="1" name="TundraAEZ18"/>
+            <LandNode delete="1" name="UrbanLandAEZ18"/>
+         </LandAllocatorRoot>
+      </region>
+      <region name="China">
+         <AgSupplySector name="biomass">
+            <AgSupplySubsector delete="1" name="biomassAEZ01"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ02"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ03"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Corn">
+            <AgSupplySubsector delete="1" name="CornAEZ01"/>
+            <AgSupplySubsector delete="1" name="CornAEZ02"/>
+            <AgSupplySubsector delete="1" name="CornAEZ03"/>
+            <AgSupplySubsector delete="1" name="CornAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FiberCrop">
+            <AgSupplySubsector delete="1" name="FiberCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FodderGrass">
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ01"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ02"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ03"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FodderHerb">
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ01"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ02"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ03"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Forest">
+            <AgSupplySubsector delete="1" name="ForestAEZ01"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ02"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ03"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="MiscCrop">
+            <AgSupplySubsector delete="1" name="MiscCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="OilCrop">
+            <AgSupplySubsector delete="1" name="OilCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="OtherGrain">
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ01"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ02"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ03"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="PalmFruit">
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ01"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ02"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ03"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Pasture">
+            <AgSupplySubsector delete="1" name="PastureAEZ01"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ02"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ03"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Rice">
+            <AgSupplySubsector delete="1" name="RiceAEZ01"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ02"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ03"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Root_Tuber">
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ01"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ02"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ03"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="SugarCrop">
+            <AgSupplySubsector delete="1" name="SugarCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Wheat">
+            <AgSupplySubsector delete="1" name="WheatAEZ01"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ02"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ03"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ18"/>
+         </AgSupplySector>
+         <LandAllocatorRoot name="root">
+            <LandNode delete="1" name="AgroForestLandAEZ01"/>
+            <LandNode delete="1" name="RockIceDesertAEZ01"/>
+            <LandNode delete="1" name="TundraAEZ01"/>
+            <LandNode delete="1" name="UrbanLandAEZ01"/>
+            <LandNode delete="1" name="AgroForestLandAEZ02"/>
+            <LandNode delete="1" name="RockIceDesertAEZ02"/>
+            <LandNode delete="1" name="TundraAEZ02"/>
+            <LandNode delete="1" name="UrbanLandAEZ02"/>
+            <LandNode delete="1" name="AgroForestLandAEZ03"/>
+            <LandNode delete="1" name="RockIceDesertAEZ03"/>
+            <LandNode delete="1" name="TundraAEZ03"/>
+            <LandNode delete="1" name="UrbanLandAEZ03"/>
+            <LandNode delete="1" name="AgroForestLandAEZ18"/>
+            <LandNode delete="1" name="RockIceDesertAEZ18"/>
+            <LandNode delete="1" name="TundraAEZ18"/>
+            <LandNode delete="1" name="UrbanLandAEZ18"/>
+         </LandAllocatorRoot>
+      </region>
+      <region name="Eastern Europe">
+         <AgSupplySector name="biomass">
+            <AgSupplySubsector delete="1" name="biomassAEZ01"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ02"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ03"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ04"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ05"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ06"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ07"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ13"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ14"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ17"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Corn">
+            <AgSupplySubsector delete="1" name="CornAEZ01"/>
+            <AgSupplySubsector delete="1" name="CornAEZ02"/>
+            <AgSupplySubsector delete="1" name="CornAEZ03"/>
+            <AgSupplySubsector delete="1" name="CornAEZ04"/>
+            <AgSupplySubsector delete="1" name="CornAEZ05"/>
+            <AgSupplySubsector delete="1" name="CornAEZ06"/>
+            <AgSupplySubsector delete="1" name="CornAEZ07"/>
+            <AgSupplySubsector delete="1" name="CornAEZ13"/>
+            <AgSupplySubsector delete="1" name="CornAEZ14"/>
+            <AgSupplySubsector delete="1" name="CornAEZ17"/>
+            <AgSupplySubsector delete="1" name="CornAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FiberCrop">
+            <AgSupplySubsector delete="1" name="FiberCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ04"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ07"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ13"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ14"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FodderGrass">
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ01"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ02"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ03"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ04"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ05"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ06"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ07"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ13"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ14"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ17"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FodderHerb">
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ01"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ02"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ03"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ04"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ05"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ06"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ07"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ13"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ14"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ17"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Forest">
+            <AgSupplySubsector delete="1" name="ForestAEZ01"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ02"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ03"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ04"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ05"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ06"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ07"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ13"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ14"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ17"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="MiscCrop">
+            <AgSupplySubsector delete="1" name="MiscCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ04"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ07"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ13"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ14"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="OilCrop">
+            <AgSupplySubsector delete="1" name="OilCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ04"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ07"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ13"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ14"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="OtherGrain">
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ01"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ02"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ03"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ04"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ05"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ06"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ07"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ13"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ14"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ17"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="PalmFruit">
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ01"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ02"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ03"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ04"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ05"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ06"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ07"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ13"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ14"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ17"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Pasture">
+            <AgSupplySubsector delete="1" name="PastureAEZ01"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ02"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ03"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ04"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ05"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ06"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ07"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ13"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ14"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ17"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Rice">
+            <AgSupplySubsector delete="1" name="RiceAEZ01"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ02"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ03"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ04"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ05"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ06"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ07"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ13"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ14"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ17"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Root_Tuber">
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ01"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ02"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ03"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ04"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ05"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ06"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ07"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ13"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ14"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ17"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="SugarCrop">
+            <AgSupplySubsector delete="1" name="SugarCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ04"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ07"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ13"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ14"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Wheat">
+            <AgSupplySubsector delete="1" name="WheatAEZ01"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ02"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ03"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ04"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ05"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ06"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ07"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ13"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ14"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ17"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ18"/>
+         </AgSupplySector>
+         <LandAllocatorRoot name="root">
+            <LandNode delete="1" name="AgroForestLandAEZ01"/>
+            <LandNode delete="1" name="RockIceDesertAEZ01"/>
+            <LandNode delete="1" name="TundraAEZ01"/>
+            <LandNode delete="1" name="UrbanLandAEZ01"/>
+            <LandNode delete="1" name="AgroForestLandAEZ02"/>
+            <LandNode delete="1" name="RockIceDesertAEZ02"/>
+            <LandNode delete="1" name="TundraAEZ02"/>
+            <LandNode delete="1" name="UrbanLandAEZ02"/>
+            <LandNode delete="1" name="AgroForestLandAEZ03"/>
+            <LandNode delete="1" name="RockIceDesertAEZ03"/>
+            <LandNode delete="1" name="TundraAEZ03"/>
+            <LandNode delete="1" name="UrbanLandAEZ03"/>
+            <LandNode delete="1" name="AgroForestLandAEZ04"/>
+            <LandNode delete="1" name="RockIceDesertAEZ04"/>
+            <LandNode delete="1" name="TundraAEZ04"/>
+            <LandNode delete="1" name="UrbanLandAEZ04"/>
+            <LandNode delete="1" name="AgroForestLandAEZ05"/>
+            <LandNode delete="1" name="RockIceDesertAEZ05"/>
+            <LandNode delete="1" name="TundraAEZ05"/>
+            <LandNode delete="1" name="UrbanLandAEZ05"/>
+            <LandNode delete="1" name="AgroForestLandAEZ06"/>
+            <LandNode delete="1" name="RockIceDesertAEZ06"/>
+            <LandNode delete="1" name="TundraAEZ06"/>
+            <LandNode delete="1" name="UrbanLandAEZ06"/>
+            <LandNode delete="1" name="AgroForestLandAEZ07"/>
+            <LandNode delete="1" name="RockIceDesertAEZ07"/>
+            <LandNode delete="1" name="TundraAEZ07"/>
+            <LandNode delete="1" name="UrbanLandAEZ07"/>
+            <LandNode delete="1" name="AgroForestLandAEZ13"/>
+            <LandNode delete="1" name="RockIceDesertAEZ13"/>
+            <LandNode delete="1" name="TundraAEZ13"/>
+            <LandNode delete="1" name="UrbanLandAEZ13"/>
+            <LandNode delete="1" name="AgroForestLandAEZ14"/>
+            <LandNode delete="1" name="RockIceDesertAEZ14"/>
+            <LandNode delete="1" name="TundraAEZ14"/>
+            <LandNode delete="1" name="UrbanLandAEZ14"/>
+            <LandNode delete="1" name="AgroForestLandAEZ17"/>
+            <LandNode delete="1" name="RockIceDesertAEZ17"/>
+            <LandNode delete="1" name="TundraAEZ17"/>
+            <LandNode delete="1" name="UrbanLandAEZ17"/>
+            <LandNode delete="1" name="AgroForestLandAEZ18"/>
+            <LandNode delete="1" name="RockIceDesertAEZ18"/>
+            <LandNode delete="1" name="TundraAEZ18"/>
+            <LandNode delete="1" name="UrbanLandAEZ18"/>
+         </LandAllocatorRoot>
+      </region>
+      <region name="Korea">
+         <AgSupplySector name="biomass">
+            <AgSupplySubsector delete="1" name="biomassAEZ01"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ02"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ03"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ04"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ05"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ06"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ07"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ08"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ09"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ12"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ13"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ14"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ15"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ16"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ17"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Corn">
+            <AgSupplySubsector delete="1" name="CornAEZ01"/>
+            <AgSupplySubsector delete="1" name="CornAEZ02"/>
+            <AgSupplySubsector delete="1" name="CornAEZ03"/>
+            <AgSupplySubsector delete="1" name="CornAEZ04"/>
+            <AgSupplySubsector delete="1" name="CornAEZ05"/>
+            <AgSupplySubsector delete="1" name="CornAEZ06"/>
+            <AgSupplySubsector delete="1" name="CornAEZ07"/>
+            <AgSupplySubsector delete="1" name="CornAEZ08"/>
+            <AgSupplySubsector delete="1" name="CornAEZ09"/>
+            <AgSupplySubsector delete="1" name="CornAEZ12"/>
+            <AgSupplySubsector delete="1" name="CornAEZ13"/>
+            <AgSupplySubsector delete="1" name="CornAEZ14"/>
+            <AgSupplySubsector delete="1" name="CornAEZ15"/>
+            <AgSupplySubsector delete="1" name="CornAEZ16"/>
+            <AgSupplySubsector delete="1" name="CornAEZ17"/>
+            <AgSupplySubsector delete="1" name="CornAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FiberCrop">
+            <AgSupplySubsector delete="1" name="FiberCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ04"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ07"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ08"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ09"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ12"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ13"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ14"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ15"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ16"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FodderGrass">
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ01"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ02"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ03"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ04"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ05"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ06"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ07"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ08"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ09"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ12"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ13"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ14"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ15"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ16"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ17"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FodderHerb">
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ01"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ02"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ03"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ04"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ05"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ06"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ07"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ08"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ09"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ12"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ13"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ14"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ15"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ16"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ17"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Forest">
+            <AgSupplySubsector delete="1" name="ForestAEZ01"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ02"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ03"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ04"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ05"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ06"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ07"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ08"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ09"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ12"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ13"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ14"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ15"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ16"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ17"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="MiscCrop">
+            <AgSupplySubsector delete="1" name="MiscCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ04"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ07"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ08"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ09"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ12"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ13"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ14"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ15"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ16"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="OilCrop">
+            <AgSupplySubsector delete="1" name="OilCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ04"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ07"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ08"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ09"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ12"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ13"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ14"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ15"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ16"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="OtherGrain">
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ01"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ02"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ03"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ04"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ05"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ06"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ07"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ08"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ09"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ12"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ13"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ14"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ15"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ16"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ17"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="PalmFruit">
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ01"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ02"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ03"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ04"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ05"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ06"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ07"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ08"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ09"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ12"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ13"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ14"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ15"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ16"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ17"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Pasture">
+            <AgSupplySubsector delete="1" name="PastureAEZ01"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ02"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ03"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ04"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ05"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ06"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ07"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ08"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ09"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ12"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ13"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ14"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ15"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ16"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ17"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Rice">
+            <AgSupplySubsector delete="1" name="RiceAEZ01"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ02"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ03"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ04"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ05"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ06"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ07"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ08"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ09"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ12"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ13"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ14"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ15"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ16"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ17"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Root_Tuber">
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ01"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ02"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ03"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ04"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ05"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ06"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ07"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ08"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ09"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ12"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ13"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ14"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ15"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ16"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ17"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="SugarCrop">
+            <AgSupplySubsector delete="1" name="SugarCropAEZ01"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ03"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ04"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ07"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ08"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ09"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ12"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ13"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ14"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ15"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ16"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Wheat">
+            <AgSupplySubsector delete="1" name="WheatAEZ01"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ02"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ03"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ04"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ05"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ06"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ07"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ08"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ09"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ12"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ13"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ14"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ15"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ16"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ17"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ18"/>
+         </AgSupplySector>
+         <LandAllocatorRoot name="root">
+            <LandNode delete="1" name="AgroForestLandAEZ01"/>
+            <LandNode delete="1" name="RockIceDesertAEZ01"/>
+            <LandNode delete="1" name="TundraAEZ01"/>
+            <LandNode delete="1" name="UrbanLandAEZ01"/>
+            <LandNode delete="1" name="AgroForestLandAEZ02"/>
+            <LandNode delete="1" name="RockIceDesertAEZ02"/>
+            <LandNode delete="1" name="TundraAEZ02"/>
+            <LandNode delete="1" name="UrbanLandAEZ02"/>
+            <LandNode delete="1" name="AgroForestLandAEZ03"/>
+            <LandNode delete="1" name="RockIceDesertAEZ03"/>
+            <LandNode delete="1" name="TundraAEZ03"/>
+            <LandNode delete="1" name="UrbanLandAEZ03"/>
+            <LandNode delete="1" name="AgroForestLandAEZ04"/>
+            <LandNode delete="1" name="RockIceDesertAEZ04"/>
+            <LandNode delete="1" name="TundraAEZ04"/>
+            <LandNode delete="1" name="UrbanLandAEZ04"/>
+            <LandNode delete="1" name="AgroForestLandAEZ05"/>
+            <LandNode delete="1" name="RockIceDesertAEZ05"/>
+            <LandNode delete="1" name="TundraAEZ05"/>
+            <LandNode delete="1" name="UrbanLandAEZ05"/>
+            <LandNode delete="1" name="AgroForestLandAEZ06"/>
+            <LandNode delete="1" name="RockIceDesertAEZ06"/>
+            <LandNode delete="1" name="TundraAEZ06"/>
+            <LandNode delete="1" name="UrbanLandAEZ06"/>
+            <LandNode delete="1" name="AgroForestLandAEZ07"/>
+            <LandNode delete="1" name="RockIceDesertAEZ07"/>
+            <LandNode delete="1" name="TundraAEZ07"/>
+            <LandNode delete="1" name="UrbanLandAEZ07"/>
+            <LandNode delete="1" name="AgroForestLandAEZ08"/>
+            <LandNode delete="1" name="RockIceDesertAEZ08"/>
+            <LandNode delete="1" name="TundraAEZ08"/>
+            <LandNode delete="1" name="UrbanLandAEZ08"/>
+            <LandNode delete="1" name="AgroForestLandAEZ09"/>
+            <LandNode delete="1" name="RockIceDesertAEZ09"/>
+            <LandNode delete="1" name="TundraAEZ09"/>
+            <LandNode delete="1" name="UrbanLandAEZ09"/>
+            <LandNode delete="1" name="AgroForestLandAEZ12"/>
+            <LandNode delete="1" name="RockIceDesertAEZ12"/>
+            <LandNode delete="1" name="TundraAEZ12"/>
+            <LandNode delete="1" name="UrbanLandAEZ12"/>
+            <LandNode delete="1" name="AgroForestLandAEZ13"/>
+            <LandNode delete="1" name="RockIceDesertAEZ13"/>
+            <LandNode delete="1" name="TundraAEZ13"/>
+            <LandNode delete="1" name="UrbanLandAEZ13"/>
+            <LandNode delete="1" name="AgroForestLandAEZ14"/>
+            <LandNode delete="1" name="RockIceDesertAEZ14"/>
+            <LandNode delete="1" name="TundraAEZ14"/>
+            <LandNode delete="1" name="UrbanLandAEZ14"/>
+            <LandNode delete="1" name="AgroForestLandAEZ15"/>
+            <LandNode delete="1" name="RockIceDesertAEZ15"/>
+            <LandNode delete="1" name="TundraAEZ15"/>
+            <LandNode delete="1" name="UrbanLandAEZ15"/>
+            <LandNode delete="1" name="AgroForestLandAEZ16"/>
+            <LandNode delete="1" name="RockIceDesertAEZ16"/>
+            <LandNode delete="1" name="TundraAEZ16"/>
+            <LandNode delete="1" name="UrbanLandAEZ16"/>
+            <LandNode delete="1" name="AgroForestLandAEZ17"/>
+            <LandNode delete="1" name="RockIceDesertAEZ17"/>
+            <LandNode delete="1" name="TundraAEZ17"/>
+            <LandNode delete="1" name="UrbanLandAEZ17"/>
+            <LandNode delete="1" name="AgroForestLandAEZ18"/>
+            <LandNode delete="1" name="RockIceDesertAEZ18"/>
+            <LandNode delete="1" name="TundraAEZ18"/>
+            <LandNode delete="1" name="UrbanLandAEZ18"/>
+         </LandAllocatorRoot>
+      </region>
+      <region name="Southeast Asia">
+         <AgSupplySector name="biomass">
+            <AgSupplySubsector delete="1" name="biomassAEZ02"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ17"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Corn">
+            <AgSupplySubsector delete="1" name="CornAEZ02"/>
+            <AgSupplySubsector delete="1" name="CornAEZ17"/>
+            <AgSupplySubsector delete="1" name="CornAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FiberCrop">
+            <AgSupplySubsector delete="1" name="FiberCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FodderGrass">
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ02"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ17"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FodderHerb">
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ02"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ17"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Forest">
+            <AgSupplySubsector delete="1" name="ForestAEZ02"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ17"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="MiscCrop">
+            <AgSupplySubsector delete="1" name="MiscCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="OilCrop">
+            <AgSupplySubsector delete="1" name="OilCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="OtherGrain">
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ02"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ17"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="PalmFruit">
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ02"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ17"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Pasture">
+            <AgSupplySubsector delete="1" name="PastureAEZ02"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ17"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Rice">
+            <AgSupplySubsector delete="1" name="RiceAEZ02"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ17"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Root_Tuber">
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ02"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ17"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="SugarCrop">
+            <AgSupplySubsector delete="1" name="SugarCropAEZ02"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Wheat">
+            <AgSupplySubsector delete="1" name="WheatAEZ02"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ17"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ18"/>
+         </AgSupplySector>
+         <LandAllocatorRoot name="root">
+            <LandNode delete="1" name="AgroForestLandAEZ02"/>
+            <LandNode delete="1" name="RockIceDesertAEZ02"/>
+            <LandNode delete="1" name="TundraAEZ02"/>
+            <LandNode delete="1" name="UrbanLandAEZ02"/>
+            <LandNode delete="1" name="AgroForestLandAEZ17"/>
+            <LandNode delete="1" name="RockIceDesertAEZ17"/>
+            <LandNode delete="1" name="TundraAEZ17"/>
+            <LandNode delete="1" name="UrbanLandAEZ17"/>
+            <LandNode delete="1" name="AgroForestLandAEZ18"/>
+            <LandNode delete="1" name="RockIceDesertAEZ18"/>
+            <LandNode delete="1" name="TundraAEZ18"/>
+            <LandNode delete="1" name="UrbanLandAEZ18"/>
+         </LandAllocatorRoot>
+      </region>
+      <region name="Middle East">
+         <AgSupplySector name="biomass">
+            <AgSupplySubsector delete="1" name="biomassAEZ04"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ05"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ06"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ11"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ12"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ13"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ14"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ15"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ16"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ17"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Corn">
+            <AgSupplySubsector delete="1" name="CornAEZ04"/>
+            <AgSupplySubsector delete="1" name="CornAEZ05"/>
+            <AgSupplySubsector delete="1" name="CornAEZ06"/>
+            <AgSupplySubsector delete="1" name="CornAEZ11"/>
+            <AgSupplySubsector delete="1" name="CornAEZ12"/>
+            <AgSupplySubsector delete="1" name="CornAEZ13"/>
+            <AgSupplySubsector delete="1" name="CornAEZ14"/>
+            <AgSupplySubsector delete="1" name="CornAEZ15"/>
+            <AgSupplySubsector delete="1" name="CornAEZ16"/>
+            <AgSupplySubsector delete="1" name="CornAEZ17"/>
+            <AgSupplySubsector delete="1" name="CornAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FiberCrop">
+            <AgSupplySubsector delete="1" name="FiberCropAEZ04"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ11"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ12"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ13"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ14"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ15"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ16"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FodderGrass">
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ04"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ05"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ06"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ11"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ12"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ13"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ14"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ15"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ16"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ17"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FodderHerb">
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ04"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ05"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ06"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ11"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ12"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ13"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ14"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ15"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ16"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ17"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Forest">
+            <AgSupplySubsector delete="1" name="ForestAEZ04"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ05"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ06"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ11"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ12"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ13"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ14"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ15"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ16"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ17"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="MiscCrop">
+            <AgSupplySubsector delete="1" name="MiscCropAEZ04"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ11"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ12"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ13"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ14"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ15"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ16"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="OilCrop">
+            <AgSupplySubsector delete="1" name="OilCropAEZ04"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ11"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ12"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ13"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ14"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ15"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ16"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="OtherGrain">
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ04"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ05"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ06"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ11"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ12"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ13"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ14"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ15"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ16"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ17"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="PalmFruit">
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ04"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ05"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ06"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ11"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ12"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ13"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ14"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ15"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ16"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ17"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Pasture">
+            <AgSupplySubsector delete="1" name="PastureAEZ04"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ05"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ06"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ11"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ12"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ13"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ14"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ15"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ16"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ17"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Rice">
+            <AgSupplySubsector delete="1" name="RiceAEZ04"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ05"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ06"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ11"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ12"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ13"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ14"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ15"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ16"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ17"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Root_Tuber">
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ04"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ05"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ06"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ11"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ12"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ13"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ14"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ15"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ16"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ17"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="SugarCrop">
+            <AgSupplySubsector delete="1" name="SugarCropAEZ04"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ05"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ06"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ11"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ12"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ13"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ14"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ15"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ16"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Wheat">
+            <AgSupplySubsector delete="1" name="WheatAEZ04"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ05"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ06"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ11"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ12"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ13"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ14"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ15"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ16"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ17"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ18"/>
+         </AgSupplySector>
+         <LandAllocatorRoot name="root">
+            <LandNode delete="1" name="AgroForestLandAEZ04"/>
+            <LandNode delete="1" name="RockIceDesertAEZ04"/>
+            <LandNode delete="1" name="TundraAEZ04"/>
+            <LandNode delete="1" name="UrbanLandAEZ04"/>
+            <LandNode delete="1" name="AgroForestLandAEZ05"/>
+            <LandNode delete="1" name="RockIceDesertAEZ05"/>
+            <LandNode delete="1" name="TundraAEZ05"/>
+            <LandNode delete="1" name="UrbanLandAEZ05"/>
+            <LandNode delete="1" name="AgroForestLandAEZ06"/>
+            <LandNode delete="1" name="RockIceDesertAEZ06"/>
+            <LandNode delete="1" name="TundraAEZ06"/>
+            <LandNode delete="1" name="UrbanLandAEZ06"/>
+            <LandNode delete="1" name="AgroForestLandAEZ11"/>
+            <LandNode delete="1" name="RockIceDesertAEZ11"/>
+            <LandNode delete="1" name="TundraAEZ11"/>
+            <LandNode delete="1" name="UrbanLandAEZ11"/>
+            <LandNode delete="1" name="AgroForestLandAEZ12"/>
+            <LandNode delete="1" name="RockIceDesertAEZ12"/>
+            <LandNode delete="1" name="TundraAEZ12"/>
+            <LandNode delete="1" name="UrbanLandAEZ12"/>
+            <LandNode delete="1" name="AgroForestLandAEZ13"/>
+            <LandNode delete="1" name="RockIceDesertAEZ13"/>
+            <LandNode delete="1" name="TundraAEZ13"/>
+            <LandNode delete="1" name="UrbanLandAEZ13"/>
+            <LandNode delete="1" name="AgroForestLandAEZ14"/>
+            <LandNode delete="1" name="RockIceDesertAEZ14"/>
+            <LandNode delete="1" name="TundraAEZ14"/>
+            <LandNode delete="1" name="UrbanLandAEZ14"/>
+            <LandNode delete="1" name="AgroForestLandAEZ15"/>
+            <LandNode delete="1" name="RockIceDesertAEZ15"/>
+            <LandNode delete="1" name="TundraAEZ15"/>
+            <LandNode delete="1" name="UrbanLandAEZ15"/>
+            <LandNode delete="1" name="AgroForestLandAEZ16"/>
+            <LandNode delete="1" name="RockIceDesertAEZ16"/>
+            <LandNode delete="1" name="TundraAEZ16"/>
+            <LandNode delete="1" name="UrbanLandAEZ16"/>
+            <LandNode delete="1" name="AgroForestLandAEZ17"/>
+            <LandNode delete="1" name="RockIceDesertAEZ17"/>
+            <LandNode delete="1" name="TundraAEZ17"/>
+            <LandNode delete="1" name="UrbanLandAEZ17"/>
+            <LandNode delete="1" name="AgroForestLandAEZ18"/>
+            <LandNode delete="1" name="RockIceDesertAEZ18"/>
+            <LandNode delete="1" name="TundraAEZ18"/>
+            <LandNode delete="1" name="UrbanLandAEZ18"/>
+         </LandAllocatorRoot>
+      </region>
+      <region name="Australia_NZ">
+         <AgSupplySector name="biomass">
+            <AgSupplySubsector delete="1" name="biomassAEZ13"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ14"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Corn">
+            <AgSupplySubsector delete="1" name="CornAEZ13"/>
+            <AgSupplySubsector delete="1" name="CornAEZ14"/>
+            <AgSupplySubsector delete="1" name="CornAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FiberCrop">
+            <AgSupplySubsector delete="1" name="FiberCropAEZ13"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ14"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FodderGrass">
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ13"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ14"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FodderHerb">
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ13"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ14"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Forest">
+            <AgSupplySubsector delete="1" name="ForestAEZ13"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ14"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="MiscCrop">
+            <AgSupplySubsector delete="1" name="MiscCropAEZ13"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ14"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="OilCrop">
+            <AgSupplySubsector delete="1" name="OilCropAEZ13"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ14"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="OtherGrain">
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ13"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ14"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="PalmFruit">
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ13"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ14"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Pasture">
+            <AgSupplySubsector delete="1" name="PastureAEZ13"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ14"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Rice">
+            <AgSupplySubsector delete="1" name="RiceAEZ13"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ14"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Root_Tuber">
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ13"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ14"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="SugarCrop">
+            <AgSupplySubsector delete="1" name="SugarCropAEZ13"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ14"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Wheat">
+            <AgSupplySubsector delete="1" name="WheatAEZ13"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ14"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ18"/>
+         </AgSupplySector>
+         <LandAllocatorRoot name="root">
+            <LandNode delete="1" name="AgroForestLandAEZ13"/>
+            <LandNode delete="1" name="RockIceDesertAEZ13"/>
+            <LandNode delete="1" name="TundraAEZ13"/>
+            <LandNode delete="1" name="UrbanLandAEZ13"/>
+            <LandNode delete="1" name="AgroForestLandAEZ14"/>
+            <LandNode delete="1" name="RockIceDesertAEZ14"/>
+            <LandNode delete="1" name="TundraAEZ14"/>
+            <LandNode delete="1" name="UrbanLandAEZ14"/>
+            <LandNode delete="1" name="AgroForestLandAEZ18"/>
+            <LandNode delete="1" name="RockIceDesertAEZ18"/>
+            <LandNode delete="1" name="TundraAEZ18"/>
+            <LandNode delete="1" name="UrbanLandAEZ18"/>
+         </LandAllocatorRoot>
+      </region>
+      <region name="Africa">
+         <AgSupplySector name="biomass">
+            <AgSupplySubsector delete="1" name="biomassAEZ13"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ14"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ15"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ16"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ17"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Corn">
+            <AgSupplySubsector delete="1" name="CornAEZ13"/>
+            <AgSupplySubsector delete="1" name="CornAEZ14"/>
+            <AgSupplySubsector delete="1" name="CornAEZ15"/>
+            <AgSupplySubsector delete="1" name="CornAEZ16"/>
+            <AgSupplySubsector delete="1" name="CornAEZ17"/>
+            <AgSupplySubsector delete="1" name="CornAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FiberCrop">
+            <AgSupplySubsector delete="1" name="FiberCropAEZ13"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ14"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ15"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ16"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FodderGrass">
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ13"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ14"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ15"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ16"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ17"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FodderHerb">
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ13"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ14"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ15"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ16"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ17"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Forest">
+            <AgSupplySubsector delete="1" name="ForestAEZ13"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ14"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ15"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ16"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ17"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="MiscCrop">
+            <AgSupplySubsector delete="1" name="MiscCropAEZ13"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ14"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ15"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ16"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="OilCrop">
+            <AgSupplySubsector delete="1" name="OilCropAEZ13"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ14"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ15"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ16"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="OtherGrain">
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ13"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ14"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ15"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ16"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ17"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="PalmFruit">
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ13"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ14"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ15"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ16"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ17"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Pasture">
+            <AgSupplySubsector delete="1" name="PastureAEZ13"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ14"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ15"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ16"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ17"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Rice">
+            <AgSupplySubsector delete="1" name="RiceAEZ13"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ14"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ15"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ16"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ17"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Root_Tuber">
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ13"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ14"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ15"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ16"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ17"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="SugarCrop">
+            <AgSupplySubsector delete="1" name="SugarCropAEZ13"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ14"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ15"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ16"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Wheat">
+            <AgSupplySubsector delete="1" name="WheatAEZ13"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ14"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ15"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ16"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ17"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ18"/>
+         </AgSupplySector>
+         <LandAllocatorRoot name="root">
+            <LandNode delete="1" name="AgroForestLandAEZ13"/>
+            <LandNode delete="1" name="RockIceDesertAEZ13"/>
+            <LandNode delete="1" name="TundraAEZ13"/>
+            <LandNode delete="1" name="UrbanLandAEZ13"/>
+            <LandNode delete="1" name="AgroForestLandAEZ14"/>
+            <LandNode delete="1" name="RockIceDesertAEZ14"/>
+            <LandNode delete="1" name="TundraAEZ14"/>
+            <LandNode delete="1" name="UrbanLandAEZ14"/>
+            <LandNode delete="1" name="AgroForestLandAEZ15"/>
+            <LandNode delete="1" name="RockIceDesertAEZ15"/>
+            <LandNode delete="1" name="TundraAEZ15"/>
+            <LandNode delete="1" name="UrbanLandAEZ15"/>
+            <LandNode delete="1" name="AgroForestLandAEZ16"/>
+            <LandNode delete="1" name="RockIceDesertAEZ16"/>
+            <LandNode delete="1" name="TundraAEZ16"/>
+            <LandNode delete="1" name="UrbanLandAEZ16"/>
+            <LandNode delete="1" name="AgroForestLandAEZ17"/>
+            <LandNode delete="1" name="RockIceDesertAEZ17"/>
+            <LandNode delete="1" name="TundraAEZ17"/>
+            <LandNode delete="1" name="UrbanLandAEZ17"/>
+            <LandNode delete="1" name="AgroForestLandAEZ18"/>
+            <LandNode delete="1" name="RockIceDesertAEZ18"/>
+            <LandNode delete="1" name="TundraAEZ18"/>
+            <LandNode delete="1" name="UrbanLandAEZ18"/>
+         </LandAllocatorRoot>
+      </region>
+      <region name="India">
+         <AgSupplySector name="biomass">
+            <AgSupplySubsector delete="1" name="biomassAEZ17"/>
+            <AgSupplySubsector delete="1" name="biomassAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Corn">
+            <AgSupplySubsector delete="1" name="CornAEZ17"/>
+            <AgSupplySubsector delete="1" name="CornAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FiberCrop">
+            <AgSupplySubsector delete="1" name="FiberCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="FiberCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FodderGrass">
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ17"/>
+            <AgSupplySubsector delete="1" name="FodderGrassAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="FodderHerb">
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ17"/>
+            <AgSupplySubsector delete="1" name="FodderHerbAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Forest">
+            <AgSupplySubsector delete="1" name="ForestAEZ17"/>
+            <AgSupplySubsector delete="1" name="ForestAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="MiscCrop">
+            <AgSupplySubsector delete="1" name="MiscCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="MiscCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="OilCrop">
+            <AgSupplySubsector delete="1" name="OilCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="OilCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="OtherGrain">
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ17"/>
+            <AgSupplySubsector delete="1" name="OtherGrainAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="PalmFruit">
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ17"/>
+            <AgSupplySubsector delete="1" name="PalmFruitAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Pasture">
+            <AgSupplySubsector delete="1" name="PastureAEZ17"/>
+            <AgSupplySubsector delete="1" name="PastureAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Rice">
+            <AgSupplySubsector delete="1" name="RiceAEZ17"/>
+            <AgSupplySubsector delete="1" name="RiceAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Root_Tuber">
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ17"/>
+            <AgSupplySubsector delete="1" name="Root_TuberAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="SugarCrop">
+            <AgSupplySubsector delete="1" name="SugarCropAEZ17"/>
+            <AgSupplySubsector delete="1" name="SugarCropAEZ18"/>
+         </AgSupplySector>
+         <AgSupplySector name="Wheat">
+            <AgSupplySubsector delete="1" name="WheatAEZ17"/>
+            <AgSupplySubsector delete="1" name="WheatAEZ18"/>
+         </AgSupplySector>
+         <LandAllocatorRoot name="root">
+            <LandNode delete="1" name="AgroForestLandAEZ17"/>
+            <LandNode delete="1" name="RockIceDesertAEZ17"/>
+            <LandNode delete="1" name="TundraAEZ17"/>
+            <LandNode delete="1" name="UrbanLandAEZ17"/>
+            <LandNode delete="1" name="AgroForestLandAEZ18"/>
+            <LandNode delete="1" name="RockIceDesertAEZ18"/>
+            <LandNode delete="1" name="TundraAEZ18"/>
+            <LandNode delete="1" name="UrbanLandAEZ18"/>
+         </LandAllocatorRoot>
+      </region>
+   </world>
+</scenario>

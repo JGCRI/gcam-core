@@ -1,0 +1,201 @@
+INPUT_TABLE
+Variable ID
+Subsector
+
+region,supplysector,subsector,logit.exponent,share.weight.year,share.weight,apply.to,from.year,to.year,interpolation.function
+Africa,FodderHerb_Residue,FodderHerb,-6,1975,1,share-weight,2005,9999,fixed
+Africa,FodderHerb_Residue,Residue,-6,1975,1,share-weight,2005,9999,fixed
+Africa,Pasture_FodderGrass,Pasture,-6,1975,1,share-weight,2005,9999,fixed
+Africa,Pasture_FodderGrass,FodderGrass,-6,1975,1,share-weight,2005,9999,fixed
+Africa,FeedCrops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Africa,FeedCrops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Africa,FeedCrops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Africa,FeedCrops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Africa,FeedCrops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Africa,FeedCrops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Africa,FeedCrops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Africa,FeedCrops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Africa,FeedCrops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Africa,Scavenging_Other,Scavenging_Other,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,FodderHerb_Residue,FodderHerb,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,FodderHerb_Residue,Residue,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,Pasture_FodderGrass,Pasture,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,Pasture_FodderGrass,FodderGrass,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,FeedCrops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,FeedCrops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,FeedCrops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,FeedCrops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,FeedCrops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,FeedCrops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,FeedCrops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,FeedCrops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,FeedCrops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,Scavenging_Other,Scavenging_Other,-6,1975,1,share-weight,2005,9999,fixed
+Canada,FodderHerb_Residue,FodderHerb,-6,1975,1,share-weight,2005,9999,fixed
+Canada,FodderHerb_Residue,Residue,-6,1975,1,share-weight,2005,9999,fixed
+Canada,Pasture_FodderGrass,Pasture,-6,1975,1,share-weight,2005,9999,fixed
+Canada,Pasture_FodderGrass,FodderGrass,-6,1975,1,share-weight,2005,9999,fixed
+Canada,FeedCrops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Canada,FeedCrops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Canada,FeedCrops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Canada,FeedCrops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Canada,FeedCrops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Canada,FeedCrops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Canada,FeedCrops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Canada,FeedCrops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Canada,FeedCrops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Canada,Scavenging_Other,Scavenging_Other,-6,1975,1,share-weight,2005,9999,fixed
+China,FodderHerb_Residue,FodderHerb,-6,1975,1,share-weight,2005,9999,fixed
+China,FodderHerb_Residue,Residue,-6,1975,1,share-weight,2005,9999,fixed
+China,Pasture_FodderGrass,Pasture,-6,1975,1,share-weight,2005,9999,fixed
+China,Pasture_FodderGrass,FodderGrass,-6,1975,1,share-weight,2005,9999,fixed
+China,FeedCrops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+China,FeedCrops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+China,FeedCrops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+China,FeedCrops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+China,FeedCrops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+China,FeedCrops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+China,FeedCrops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+China,FeedCrops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+China,FeedCrops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+China,Scavenging_Other,Scavenging_Other,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,FodderHerb_Residue,FodderHerb,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,FodderHerb_Residue,Residue,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,Pasture_FodderGrass,Pasture,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,Pasture_FodderGrass,FodderGrass,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,FeedCrops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,FeedCrops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,FeedCrops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,FeedCrops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,FeedCrops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,FeedCrops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,FeedCrops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,FeedCrops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,FeedCrops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,Scavenging_Other,Scavenging_Other,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,FodderHerb_Residue,FodderHerb,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,FodderHerb_Residue,Residue,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,Pasture_FodderGrass,Pasture,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,Pasture_FodderGrass,FodderGrass,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,FeedCrops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,FeedCrops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,FeedCrops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,FeedCrops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,FeedCrops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,FeedCrops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,FeedCrops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,FeedCrops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,FeedCrops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,Scavenging_Other,Scavenging_Other,-6,1975,1,share-weight,2005,9999,fixed
+India,FodderHerb_Residue,FodderHerb,-6,1975,1,share-weight,2005,9999,fixed
+India,FodderHerb_Residue,Residue,-6,1975,1,share-weight,2005,9999,fixed
+India,Pasture_FodderGrass,Pasture,-6,1975,1,share-weight,2005,9999,fixed
+India,Pasture_FodderGrass,FodderGrass,-6,1975,1,share-weight,2005,9999,fixed
+India,FeedCrops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+India,FeedCrops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+India,FeedCrops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+India,FeedCrops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+India,FeedCrops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+India,FeedCrops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+India,FeedCrops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+India,FeedCrops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+India,FeedCrops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+India,Scavenging_Other,Scavenging_Other,-6,1975,1,share-weight,2005,9999,fixed
+Japan,FodderHerb_Residue,FodderHerb,-6,1975,1,share-weight,2005,9999,fixed
+Japan,FodderHerb_Residue,Residue,-6,1975,1,share-weight,2005,9999,fixed
+Japan,Pasture_FodderGrass,Pasture,-6,1975,1,share-weight,2005,9999,fixed
+Japan,Pasture_FodderGrass,FodderGrass,-6,1975,1,share-weight,2005,9999,fixed
+Japan,FeedCrops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Japan,FeedCrops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Japan,FeedCrops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Japan,FeedCrops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Japan,FeedCrops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Japan,FeedCrops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Japan,FeedCrops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Japan,FeedCrops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Japan,FeedCrops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Japan,Scavenging_Other,Scavenging_Other,-6,1975,1,share-weight,2005,9999,fixed
+Korea,FodderHerb_Residue,FodderHerb,-6,1975,1,share-weight,2005,9999,fixed
+Korea,FodderHerb_Residue,Residue,-6,1975,1,share-weight,2005,9999,fixed
+Korea,Pasture_FodderGrass,Pasture,-6,1975,1,share-weight,2005,9999,fixed
+Korea,Pasture_FodderGrass,FodderGrass,-6,1975,1,share-weight,2005,9999,fixed
+Korea,FeedCrops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Korea,FeedCrops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Korea,FeedCrops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Korea,FeedCrops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Korea,FeedCrops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Korea,FeedCrops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Korea,FeedCrops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Korea,FeedCrops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Korea,FeedCrops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Korea,Scavenging_Other,Scavenging_Other,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,FodderHerb_Residue,FodderHerb,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,FodderHerb_Residue,Residue,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,Pasture_FodderGrass,Pasture,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,Pasture_FodderGrass,FodderGrass,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,FeedCrops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,FeedCrops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,FeedCrops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,FeedCrops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,FeedCrops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,FeedCrops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,FeedCrops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,FeedCrops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,FeedCrops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Latin America,Scavenging_Other,Scavenging_Other,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,FodderHerb_Residue,FodderHerb,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,FodderHerb_Residue,Residue,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,Pasture_FodderGrass,Pasture,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,Pasture_FodderGrass,FodderGrass,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,FeedCrops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,FeedCrops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,FeedCrops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,FeedCrops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,FeedCrops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,FeedCrops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,FeedCrops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,FeedCrops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,FeedCrops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Middle East,Scavenging_Other,Scavenging_Other,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,FodderHerb_Residue,FodderHerb,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,FodderHerb_Residue,Residue,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,Pasture_FodderGrass,Pasture,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,Pasture_FodderGrass,FodderGrass,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,FeedCrops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,FeedCrops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,FeedCrops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,FeedCrops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,FeedCrops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,FeedCrops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,FeedCrops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,FeedCrops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,FeedCrops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,Scavenging_Other,Scavenging_Other,-6,1975,1,share-weight,2005,9999,fixed
+USA,FodderHerb_Residue,FodderHerb,-6,1975,1,share-weight,2005,9999,fixed
+USA,FodderHerb_Residue,Residue,-6,1975,1,share-weight,2005,9999,fixed
+USA,Pasture_FodderGrass,Pasture,-6,1975,1,share-weight,2005,9999,fixed
+USA,Pasture_FodderGrass,FodderGrass,-6,1975,1,share-weight,2005,9999,fixed
+USA,FeedCrops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+USA,FeedCrops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+USA,FeedCrops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+USA,FeedCrops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+USA,FeedCrops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+USA,FeedCrops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+USA,FeedCrops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+USA,FeedCrops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+USA,FeedCrops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+USA,Scavenging_Other,Scavenging_Other,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,FodderHerb_Residue,FodderHerb,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,FodderHerb_Residue,Residue,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,Pasture_FodderGrass,Pasture,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,Pasture_FodderGrass,FodderGrass,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,FeedCrops,Corn,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,FeedCrops,MiscCrop,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,FeedCrops,OilCrop,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,FeedCrops,OtherGrain,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,FeedCrops,PalmFruit,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,FeedCrops,Rice,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,FeedCrops,Root_Tuber,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,FeedCrops,SugarCrop,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,FeedCrops,Wheat,-6,1975,1,share-weight,2005,9999,fixed
+Western Europe,Scavenging_Other,Scavenging_Other,-6,1975,1,share-weight,2005,9999,fixed

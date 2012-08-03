@@ -1,0 +1,61 @@
+INPUT_TABLE
+Variable ID
+CalInput
+
+region,supplysector,subsector,technology,year,minicam.energy.input,calibrated.value
+Africa,industry,industry,industry,1990,industrial energy use,2.47094
+Australia_NZ,industry,industry,industry,1990,industrial energy use,1.120472
+Canada,industry,industry,industry,1990,industrial energy use,2.242025
+China,industry,industry,industry,1990,industrial energy use,11.134475
+Eastern Europe,industry,industry,industry,1990,industrial energy use,4.775911
+Former Soviet Union,industry,industry,industry,1990,industrial energy use,18.695205
+India,industry,industry,industry,1990,industrial energy use,1.966363
+Japan,industry,industry,industry,1990,industrial energy use,4.857082
+Korea,industry,industry,industry,1990,industrial energy use,1.03135
+Latin America,industry,industry,industry,1990,industrial energy use,6.029239
+Middle East,industry,industry,industry,1990,industrial energy use,1.853375
+Southeast Asia,industry,industry,industry,1990,industrial energy use,3.314243
+USA,industry,industry,industry,1990,industrial energy use,14.096786
+Western Europe,industry,industry,industry,1990,industrial energy use,12.22882
+Africa,industry,industry,industry,1990,industrial feedstocks,0.41089
+Australia_NZ,industry,industry,industry,1990,industrial feedstocks,0.190008
+Canada,industry,industry,industry,1990,industrial feedstocks,0.55294
+China,industry,industry,industry,1990,industrial feedstocks,1.415435
+Eastern Europe,industry,industry,industry,1990,industrial feedstocks,0.436499
+Former Soviet Union,industry,industry,industry,1990,industrial feedstocks,1.524893
+India,industry,industry,industry,1990,industrial feedstocks,0.294865
+Japan,industry,industry,industry,1990,industrial feedstocks,1.477793
+Korea,industry,industry,industry,1990,industrial feedstocks,0.277863
+Latin America,industry,industry,industry,1990,industrial feedstocks,0.986352
+Middle East,industry,industry,industry,1990,industrial feedstocks,0.766954
+Southeast Asia,industry,industry,industry,1990,industrial feedstocks,0.725166
+USA,industry,industry,industry,1990,industrial feedstocks,4.516636
+Western Europe,industry,industry,industry,1990,industrial feedstocks,3.522119
+Africa,industry,industry,industry,2005,industrial energy use,5.191662
+Australia_NZ,industry,industry,industry,2005,industrial energy use,1.426081
+Canada,industry,industry,industry,2005,industrial energy use,2.605821
+China,industry,industry,industry,2005,industrial energy use,22.142373
+Eastern Europe,industry,industry,industry,2005,industrial energy use,2.655875
+Former Soviet Union,industry,industry,industry,2005,industrial energy use,11.912513
+India,industry,industry,industry,2005,industrial energy use,4.225202
+Japan,industry,industry,industry,2005,industrial energy use,4.744984
+Korea,industry,industry,industry,2005,industrial energy use,1.748166
+Latin America,industry,industry,industry,2005,industrial energy use,7.930376
+Middle East,industry,industry,industry,2005,industrial energy use,3.441221
+Southeast Asia,industry,industry,industry,2005,industrial energy use,5.932001
+USA,industry,industry,industry,2005,industrial energy use,12.966524
+Western Europe,industry,industry,industry,2005,industrial energy use,13.65023
+Africa,industry,industry,industry,2005,industrial feedstocks,0.526203
+Australia_NZ,industry,industry,industry,2005,industrial feedstocks,0.207379
+Canada,industry,industry,industry,2005,industrial feedstocks,0.909323
+China,industry,industry,industry,2005,industrial feedstocks,3.093469
+Eastern Europe,industry,industry,industry,2005,industrial feedstocks,0.5818
+Former Soviet Union,industry,industry,industry,2005,industrial feedstocks,1.810649
+India,industry,industry,industry,2005,industrial feedstocks,1.069036
+Japan,industry,industry,industry,2005,industrial feedstocks,1.71844
+Korea,industry,industry,industry,2005,industrial feedstocks,1.399296
+Latin America,industry,industry,industry,2005,industrial feedstocks,1.493554
+Middle East,industry,industry,industry,2005,industrial feedstocks,1.793566
+Southeast Asia,industry,industry,industry,2005,industrial feedstocks,1.829111
+USA,industry,industry,industry,2005,industrial feedstocks,6.453284
+Western Europe,industry,industry,industry,2005,industrial feedstocks,4.154351

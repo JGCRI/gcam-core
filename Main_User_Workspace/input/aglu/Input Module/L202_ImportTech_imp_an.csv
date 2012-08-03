@@ -1,0 +1,75 @@
+INPUT_TABLE
+Variable ID
+ImportTech
+
+region,supplysector,subsector,technology,apply.to,from.year,to.year,interpolation.function,CO2,share.weight,renewable.input
+Africa,Beef,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Africa,Dairy,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Africa,Pork,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Africa,Poultry,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Africa,SheepGoat,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Australia_NZ,Beef,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Australia_NZ,Dairy,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Australia_NZ,Pork,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Australia_NZ,Poultry,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Australia_NZ,SheepGoat,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Canada,Beef,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Canada,Dairy,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Canada,Pork,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Canada,Poultry,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Canada,SheepGoat,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+China,Beef,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+China,Dairy,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+China,Pork,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+China,Poultry,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+China,SheepGoat,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Eastern Europe,Beef,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Eastern Europe,Dairy,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Eastern Europe,Pork,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Eastern Europe,Poultry,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Eastern Europe,SheepGoat,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Former Soviet Union,Beef,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Former Soviet Union,Dairy,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Former Soviet Union,Pork,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Former Soviet Union,Poultry,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Former Soviet Union,SheepGoat,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+India,Beef,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+India,Dairy,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+India,Pork,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+India,Poultry,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+India,SheepGoat,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Japan,Beef,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Japan,Dairy,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Japan,Pork,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Japan,Poultry,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Japan,SheepGoat,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Korea,Beef,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Korea,Dairy,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Korea,Pork,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Korea,Poultry,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Korea,SheepGoat,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Latin America,Beef,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Latin America,Dairy,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Latin America,Pork,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Latin America,Poultry,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Latin America,SheepGoat,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Middle East,Beef,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Middle East,Dairy,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Middle East,Pork,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Middle East,Poultry,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Middle East,SheepGoat,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Southeast Asia,Beef,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Southeast Asia,Dairy,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Southeast Asia,Pork,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Southeast Asia,Poultry,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Southeast Asia,SheepGoat,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+USA,Beef,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+USA,Dairy,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+USA,Pork,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+USA,Poultry,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+USA,SheepGoat,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Western Europe,Beef,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Western Europe,Dairy,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Western Europe,Pork,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Western Europe,Poultry,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable
+Western Europe,SheepGoat,Imports,Imports,share-weight,2005,9999,fixed,CO2,1,renewable

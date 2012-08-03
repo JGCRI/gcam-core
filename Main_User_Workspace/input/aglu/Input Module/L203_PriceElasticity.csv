@@ -1,0 +1,509 @@
+INPUT_TABLE
+Variable ID
+PriceElasticity
+
+region,energy.final.demand,year,price.elasticity
+Africa,FoodDemand_Crops,2020,0
+Africa,FoodDemand_Meat,2020,-0.25
+Africa,NonFoodDemand_Crops,2020,0
+Africa,NonFoodDemand_Meat,2020,0
+Africa,NonFoodDemand_Forest,2020,0
+Africa,Exports_Meat,2020,0
+Australia_NZ,FoodDemand_Crops,2020,0
+Australia_NZ,FoodDemand_Meat,2020,-0.25
+Australia_NZ,NonFoodDemand_Crops,2020,0
+Australia_NZ,NonFoodDemand_Meat,2020,0
+Australia_NZ,NonFoodDemand_Forest,2020,0
+Australia_NZ,Exports_Meat,2020,0
+Canada,FoodDemand_Crops,2020,0
+Canada,FoodDemand_Meat,2020,-0.25
+Canada,NonFoodDemand_Crops,2020,0
+Canada,NonFoodDemand_Meat,2020,0
+Canada,NonFoodDemand_Forest,2020,0
+Canada,Exports_Meat,2020,0
+China,FoodDemand_Crops,2020,0
+China,FoodDemand_Meat,2020,-0.25
+China,NonFoodDemand_Crops,2020,0
+China,NonFoodDemand_Meat,2020,0
+China,NonFoodDemand_Forest,2020,0
+China,Exports_Meat,2020,0
+Eastern Europe,FoodDemand_Crops,2020,0
+Eastern Europe,FoodDemand_Meat,2020,-0.25
+Eastern Europe,NonFoodDemand_Crops,2020,0
+Eastern Europe,NonFoodDemand_Meat,2020,0
+Eastern Europe,NonFoodDemand_Forest,2020,0
+Eastern Europe,Exports_Meat,2020,0
+Former Soviet Union,FoodDemand_Crops,2020,0
+Former Soviet Union,FoodDemand_Meat,2020,-0.25
+Former Soviet Union,NonFoodDemand_Crops,2020,0
+Former Soviet Union,NonFoodDemand_Meat,2020,0
+Former Soviet Union,NonFoodDemand_Forest,2020,0
+Former Soviet Union,Exports_Meat,2020,0
+India,FoodDemand_Crops,2020,0
+India,FoodDemand_Meat,2020,-0.25
+India,NonFoodDemand_Crops,2020,0
+India,NonFoodDemand_Meat,2020,0
+India,NonFoodDemand_Forest,2020,0
+India,Exports_Meat,2020,0
+Japan,FoodDemand_Crops,2020,0
+Japan,FoodDemand_Meat,2020,-0.25
+Japan,NonFoodDemand_Crops,2020,0
+Japan,NonFoodDemand_Meat,2020,0
+Japan,NonFoodDemand_Forest,2020,0
+Japan,Exports_Meat,2020,0
+Korea,FoodDemand_Crops,2020,0
+Korea,FoodDemand_Meat,2020,-0.25
+Korea,NonFoodDemand_Crops,2020,0
+Korea,NonFoodDemand_Meat,2020,0
+Korea,NonFoodDemand_Forest,2020,0
+Korea,Exports_Meat,2020,0
+Latin America,FoodDemand_Crops,2020,0
+Latin America,FoodDemand_Meat,2020,-0.25
+Latin America,NonFoodDemand_Crops,2020,0
+Latin America,NonFoodDemand_Meat,2020,0
+Latin America,NonFoodDemand_Forest,2020,0
+Latin America,Exports_Meat,2020,0
+Middle East,FoodDemand_Crops,2020,0
+Middle East,FoodDemand_Meat,2020,-0.25
+Middle East,NonFoodDemand_Crops,2020,0
+Middle East,NonFoodDemand_Meat,2020,0
+Middle East,NonFoodDemand_Forest,2020,0
+Middle East,Exports_Meat,2020,0
+Southeast Asia,FoodDemand_Crops,2020,0
+Southeast Asia,FoodDemand_Meat,2020,-0.25
+Southeast Asia,NonFoodDemand_Crops,2020,0
+Southeast Asia,NonFoodDemand_Meat,2020,0
+Southeast Asia,NonFoodDemand_Forest,2020,0
+Southeast Asia,Exports_Meat,2020,0
+USA,FoodDemand_Crops,2020,0
+USA,FoodDemand_Meat,2020,-0.09
+USA,NonFoodDemand_Crops,2020,0
+USA,NonFoodDemand_Meat,2020,0
+USA,NonFoodDemand_Forest,2020,0
+USA,Exports_Meat,2020,0
+Western Europe,FoodDemand_Crops,2020,0
+Western Europe,FoodDemand_Meat,2020,-0.25
+Western Europe,NonFoodDemand_Crops,2020,0
+Western Europe,NonFoodDemand_Meat,2020,0
+Western Europe,NonFoodDemand_Forest,2020,0
+Western Europe,Exports_Meat,2020,0
+Africa,FoodDemand_Crops,2035,0
+Africa,FoodDemand_Meat,2035,-0.25
+Africa,NonFoodDemand_Crops,2035,0
+Africa,NonFoodDemand_Meat,2035,0
+Africa,NonFoodDemand_Forest,2035,0
+Africa,Exports_Meat,2035,0
+Australia_NZ,FoodDemand_Crops,2035,0
+Australia_NZ,FoodDemand_Meat,2035,-0.25
+Australia_NZ,NonFoodDemand_Crops,2035,0
+Australia_NZ,NonFoodDemand_Meat,2035,0
+Australia_NZ,NonFoodDemand_Forest,2035,0
+Australia_NZ,Exports_Meat,2035,0
+Canada,FoodDemand_Crops,2035,0
+Canada,FoodDemand_Meat,2035,-0.25
+Canada,NonFoodDemand_Crops,2035,0
+Canada,NonFoodDemand_Meat,2035,0
+Canada,NonFoodDemand_Forest,2035,0
+Canada,Exports_Meat,2035,0
+China,FoodDemand_Crops,2035,0
+China,FoodDemand_Meat,2035,-0.25
+China,NonFoodDemand_Crops,2035,0
+China,NonFoodDemand_Meat,2035,0
+China,NonFoodDemand_Forest,2035,0
+China,Exports_Meat,2035,0
+Eastern Europe,FoodDemand_Crops,2035,0
+Eastern Europe,FoodDemand_Meat,2035,-0.25
+Eastern Europe,NonFoodDemand_Crops,2035,0
+Eastern Europe,NonFoodDemand_Meat,2035,0
+Eastern Europe,NonFoodDemand_Forest,2035,0
+Eastern Europe,Exports_Meat,2035,0
+Former Soviet Union,FoodDemand_Crops,2035,0
+Former Soviet Union,FoodDemand_Meat,2035,-0.25
+Former Soviet Union,NonFoodDemand_Crops,2035,0
+Former Soviet Union,NonFoodDemand_Meat,2035,0
+Former Soviet Union,NonFoodDemand_Forest,2035,0
+Former Soviet Union,Exports_Meat,2035,0
+India,FoodDemand_Crops,2035,0
+India,FoodDemand_Meat,2035,-0.25
+India,NonFoodDemand_Crops,2035,0
+India,NonFoodDemand_Meat,2035,0
+India,NonFoodDemand_Forest,2035,0
+India,Exports_Meat,2035,0
+Japan,FoodDemand_Crops,2035,0
+Japan,FoodDemand_Meat,2035,-0.25
+Japan,NonFoodDemand_Crops,2035,0
+Japan,NonFoodDemand_Meat,2035,0
+Japan,NonFoodDemand_Forest,2035,0
+Japan,Exports_Meat,2035,0
+Korea,FoodDemand_Crops,2035,0
+Korea,FoodDemand_Meat,2035,-0.25
+Korea,NonFoodDemand_Crops,2035,0
+Korea,NonFoodDemand_Meat,2035,0
+Korea,NonFoodDemand_Forest,2035,0
+Korea,Exports_Meat,2035,0
+Latin America,FoodDemand_Crops,2035,0
+Latin America,FoodDemand_Meat,2035,-0.25
+Latin America,NonFoodDemand_Crops,2035,0
+Latin America,NonFoodDemand_Meat,2035,0
+Latin America,NonFoodDemand_Forest,2035,0
+Latin America,Exports_Meat,2035,0
+Middle East,FoodDemand_Crops,2035,0
+Middle East,FoodDemand_Meat,2035,-0.25
+Middle East,NonFoodDemand_Crops,2035,0
+Middle East,NonFoodDemand_Meat,2035,0
+Middle East,NonFoodDemand_Forest,2035,0
+Middle East,Exports_Meat,2035,0
+Southeast Asia,FoodDemand_Crops,2035,0
+Southeast Asia,FoodDemand_Meat,2035,-0.25
+Southeast Asia,NonFoodDemand_Crops,2035,0
+Southeast Asia,NonFoodDemand_Meat,2035,0
+Southeast Asia,NonFoodDemand_Forest,2035,0
+Southeast Asia,Exports_Meat,2035,0
+USA,FoodDemand_Crops,2035,0
+USA,FoodDemand_Meat,2035,-0.09
+USA,NonFoodDemand_Crops,2035,0
+USA,NonFoodDemand_Meat,2035,0
+USA,NonFoodDemand_Forest,2035,0
+USA,Exports_Meat,2035,0
+Western Europe,FoodDemand_Crops,2035,0
+Western Europe,FoodDemand_Meat,2035,-0.25
+Western Europe,NonFoodDemand_Crops,2035,0
+Western Europe,NonFoodDemand_Meat,2035,0
+Western Europe,NonFoodDemand_Forest,2035,0
+Western Europe,Exports_Meat,2035,0
+Africa,FoodDemand_Crops,2050,0
+Africa,FoodDemand_Meat,2050,-0.25
+Africa,NonFoodDemand_Crops,2050,0
+Africa,NonFoodDemand_Meat,2050,0
+Africa,NonFoodDemand_Forest,2050,0
+Africa,Exports_Meat,2050,0
+Australia_NZ,FoodDemand_Crops,2050,0
+Australia_NZ,FoodDemand_Meat,2050,-0.25
+Australia_NZ,NonFoodDemand_Crops,2050,0
+Australia_NZ,NonFoodDemand_Meat,2050,0
+Australia_NZ,NonFoodDemand_Forest,2050,0
+Australia_NZ,Exports_Meat,2050,0
+Canada,FoodDemand_Crops,2050,0
+Canada,FoodDemand_Meat,2050,-0.25
+Canada,NonFoodDemand_Crops,2050,0
+Canada,NonFoodDemand_Meat,2050,0
+Canada,NonFoodDemand_Forest,2050,0
+Canada,Exports_Meat,2050,0
+China,FoodDemand_Crops,2050,0
+China,FoodDemand_Meat,2050,-0.25
+China,NonFoodDemand_Crops,2050,0
+China,NonFoodDemand_Meat,2050,0
+China,NonFoodDemand_Forest,2050,0
+China,Exports_Meat,2050,0
+Eastern Europe,FoodDemand_Crops,2050,0
+Eastern Europe,FoodDemand_Meat,2050,-0.25
+Eastern Europe,NonFoodDemand_Crops,2050,0
+Eastern Europe,NonFoodDemand_Meat,2050,0
+Eastern Europe,NonFoodDemand_Forest,2050,0
+Eastern Europe,Exports_Meat,2050,0
+Former Soviet Union,FoodDemand_Crops,2050,0
+Former Soviet Union,FoodDemand_Meat,2050,-0.25
+Former Soviet Union,NonFoodDemand_Crops,2050,0
+Former Soviet Union,NonFoodDemand_Meat,2050,0
+Former Soviet Union,NonFoodDemand_Forest,2050,0
+Former Soviet Union,Exports_Meat,2050,0
+India,FoodDemand_Crops,2050,0
+India,FoodDemand_Meat,2050,-0.25
+India,NonFoodDemand_Crops,2050,0
+India,NonFoodDemand_Meat,2050,0
+India,NonFoodDemand_Forest,2050,0
+India,Exports_Meat,2050,0
+Japan,FoodDemand_Crops,2050,0
+Japan,FoodDemand_Meat,2050,-0.25
+Japan,NonFoodDemand_Crops,2050,0
+Japan,NonFoodDemand_Meat,2050,0
+Japan,NonFoodDemand_Forest,2050,0
+Japan,Exports_Meat,2050,0
+Korea,FoodDemand_Crops,2050,0
+Korea,FoodDemand_Meat,2050,-0.25
+Korea,NonFoodDemand_Crops,2050,0
+Korea,NonFoodDemand_Meat,2050,0
+Korea,NonFoodDemand_Forest,2050,0
+Korea,Exports_Meat,2050,0
+Latin America,FoodDemand_Crops,2050,0
+Latin America,FoodDemand_Meat,2050,-0.25
+Latin America,NonFoodDemand_Crops,2050,0
+Latin America,NonFoodDemand_Meat,2050,0
+Latin America,NonFoodDemand_Forest,2050,0
+Latin America,Exports_Meat,2050,0
+Middle East,FoodDemand_Crops,2050,0
+Middle East,FoodDemand_Meat,2050,-0.25
+Middle East,NonFoodDemand_Crops,2050,0
+Middle East,NonFoodDemand_Meat,2050,0
+Middle East,NonFoodDemand_Forest,2050,0
+Middle East,Exports_Meat,2050,0
+Southeast Asia,FoodDemand_Crops,2050,0
+Southeast Asia,FoodDemand_Meat,2050,-0.25
+Southeast Asia,NonFoodDemand_Crops,2050,0
+Southeast Asia,NonFoodDemand_Meat,2050,0
+Southeast Asia,NonFoodDemand_Forest,2050,0
+Southeast Asia,Exports_Meat,2050,0
+USA,FoodDemand_Crops,2050,0
+USA,FoodDemand_Meat,2050,-0.09
+USA,NonFoodDemand_Crops,2050,0
+USA,NonFoodDemand_Meat,2050,0
+USA,NonFoodDemand_Forest,2050,0
+USA,Exports_Meat,2050,0
+Western Europe,FoodDemand_Crops,2050,0
+Western Europe,FoodDemand_Meat,2050,-0.25
+Western Europe,NonFoodDemand_Crops,2050,0
+Western Europe,NonFoodDemand_Meat,2050,0
+Western Europe,NonFoodDemand_Forest,2050,0
+Western Europe,Exports_Meat,2050,0
+Africa,FoodDemand_Crops,2065,0
+Africa,FoodDemand_Meat,2065,-0.25
+Africa,NonFoodDemand_Crops,2065,0
+Africa,NonFoodDemand_Meat,2065,0
+Africa,NonFoodDemand_Forest,2065,0
+Africa,Exports_Meat,2065,0
+Australia_NZ,FoodDemand_Crops,2065,0
+Australia_NZ,FoodDemand_Meat,2065,-0.25
+Australia_NZ,NonFoodDemand_Crops,2065,0
+Australia_NZ,NonFoodDemand_Meat,2065,0
+Australia_NZ,NonFoodDemand_Forest,2065,0
+Australia_NZ,Exports_Meat,2065,0
+Canada,FoodDemand_Crops,2065,0
+Canada,FoodDemand_Meat,2065,-0.25
+Canada,NonFoodDemand_Crops,2065,0
+Canada,NonFoodDemand_Meat,2065,0
+Canada,NonFoodDemand_Forest,2065,0
+Canada,Exports_Meat,2065,0
+China,FoodDemand_Crops,2065,0
+China,FoodDemand_Meat,2065,-0.25
+China,NonFoodDemand_Crops,2065,0
+China,NonFoodDemand_Meat,2065,0
+China,NonFoodDemand_Forest,2065,0
+China,Exports_Meat,2065,0
+Eastern Europe,FoodDemand_Crops,2065,0
+Eastern Europe,FoodDemand_Meat,2065,-0.25
+Eastern Europe,NonFoodDemand_Crops,2065,0
+Eastern Europe,NonFoodDemand_Meat,2065,0
+Eastern Europe,NonFoodDemand_Forest,2065,0
+Eastern Europe,Exports_Meat,2065,0
+Former Soviet Union,FoodDemand_Crops,2065,0
+Former Soviet Union,FoodDemand_Meat,2065,-0.25
+Former Soviet Union,NonFoodDemand_Crops,2065,0
+Former Soviet Union,NonFoodDemand_Meat,2065,0
+Former Soviet Union,NonFoodDemand_Forest,2065,0
+Former Soviet Union,Exports_Meat,2065,0
+India,FoodDemand_Crops,2065,0
+India,FoodDemand_Meat,2065,-0.25
+India,NonFoodDemand_Crops,2065,0
+India,NonFoodDemand_Meat,2065,0
+India,NonFoodDemand_Forest,2065,0
+India,Exports_Meat,2065,0
+Japan,FoodDemand_Crops,2065,0
+Japan,FoodDemand_Meat,2065,-0.25
+Japan,NonFoodDemand_Crops,2065,0
+Japan,NonFoodDemand_Meat,2065,0
+Japan,NonFoodDemand_Forest,2065,0
+Japan,Exports_Meat,2065,0
+Korea,FoodDemand_Crops,2065,0
+Korea,FoodDemand_Meat,2065,-0.25
+Korea,NonFoodDemand_Crops,2065,0
+Korea,NonFoodDemand_Meat,2065,0
+Korea,NonFoodDemand_Forest,2065,0
+Korea,Exports_Meat,2065,0
+Latin America,FoodDemand_Crops,2065,0
+Latin America,FoodDemand_Meat,2065,-0.25
+Latin America,NonFoodDemand_Crops,2065,0
+Latin America,NonFoodDemand_Meat,2065,0
+Latin America,NonFoodDemand_Forest,2065,0
+Latin America,Exports_Meat,2065,0
+Middle East,FoodDemand_Crops,2065,0
+Middle East,FoodDemand_Meat,2065,-0.25
+Middle East,NonFoodDemand_Crops,2065,0
+Middle East,NonFoodDemand_Meat,2065,0
+Middle East,NonFoodDemand_Forest,2065,0
+Middle East,Exports_Meat,2065,0
+Southeast Asia,FoodDemand_Crops,2065,0
+Southeast Asia,FoodDemand_Meat,2065,-0.25
+Southeast Asia,NonFoodDemand_Crops,2065,0
+Southeast Asia,NonFoodDemand_Meat,2065,0
+Southeast Asia,NonFoodDemand_Forest,2065,0
+Southeast Asia,Exports_Meat,2065,0
+USA,FoodDemand_Crops,2065,0
+USA,FoodDemand_Meat,2065,-0.09
+USA,NonFoodDemand_Crops,2065,0
+USA,NonFoodDemand_Meat,2065,0
+USA,NonFoodDemand_Forest,2065,0
+USA,Exports_Meat,2065,0
+Western Europe,FoodDemand_Crops,2065,0
+Western Europe,FoodDemand_Meat,2065,-0.25
+Western Europe,NonFoodDemand_Crops,2065,0
+Western Europe,NonFoodDemand_Meat,2065,0
+Western Europe,NonFoodDemand_Forest,2065,0
+Western Europe,Exports_Meat,2065,0
+Africa,FoodDemand_Crops,2080,0
+Africa,FoodDemand_Meat,2080,-0.25
+Africa,NonFoodDemand_Crops,2080,0
+Africa,NonFoodDemand_Meat,2080,0
+Africa,NonFoodDemand_Forest,2080,0
+Africa,Exports_Meat,2080,0
+Australia_NZ,FoodDemand_Crops,2080,0
+Australia_NZ,FoodDemand_Meat,2080,-0.25
+Australia_NZ,NonFoodDemand_Crops,2080,0
+Australia_NZ,NonFoodDemand_Meat,2080,0
+Australia_NZ,NonFoodDemand_Forest,2080,0
+Australia_NZ,Exports_Meat,2080,0
+Canada,FoodDemand_Crops,2080,0
+Canada,FoodDemand_Meat,2080,-0.25
+Canada,NonFoodDemand_Crops,2080,0
+Canada,NonFoodDemand_Meat,2080,0
+Canada,NonFoodDemand_Forest,2080,0
+Canada,Exports_Meat,2080,0
+China,FoodDemand_Crops,2080,0
+China,FoodDemand_Meat,2080,-0.25
+China,NonFoodDemand_Crops,2080,0
+China,NonFoodDemand_Meat,2080,0
+China,NonFoodDemand_Forest,2080,0
+China,Exports_Meat,2080,0
+Eastern Europe,FoodDemand_Crops,2080,0
+Eastern Europe,FoodDemand_Meat,2080,-0.25
+Eastern Europe,NonFoodDemand_Crops,2080,0
+Eastern Europe,NonFoodDemand_Meat,2080,0
+Eastern Europe,NonFoodDemand_Forest,2080,0
+Eastern Europe,Exports_Meat,2080,0
+Former Soviet Union,FoodDemand_Crops,2080,0
+Former Soviet Union,FoodDemand_Meat,2080,-0.25
+Former Soviet Union,NonFoodDemand_Crops,2080,0
+Former Soviet Union,NonFoodDemand_Meat,2080,0
+Former Soviet Union,NonFoodDemand_Forest,2080,0
+Former Soviet Union,Exports_Meat,2080,0
+India,FoodDemand_Crops,2080,0
+India,FoodDemand_Meat,2080,-0.25
+India,NonFoodDemand_Crops,2080,0
+India,NonFoodDemand_Meat,2080,0
+India,NonFoodDemand_Forest,2080,0
+India,Exports_Meat,2080,0
+Japan,FoodDemand_Crops,2080,0
+Japan,FoodDemand_Meat,2080,-0.25
+Japan,NonFoodDemand_Crops,2080,0
+Japan,NonFoodDemand_Meat,2080,0
+Japan,NonFoodDemand_Forest,2080,0
+Japan,Exports_Meat,2080,0
+Korea,FoodDemand_Crops,2080,0
+Korea,FoodDemand_Meat,2080,-0.25
+Korea,NonFoodDemand_Crops,2080,0
+Korea,NonFoodDemand_Meat,2080,0
+Korea,NonFoodDemand_Forest,2080,0
+Korea,Exports_Meat,2080,0
+Latin America,FoodDemand_Crops,2080,0
+Latin America,FoodDemand_Meat,2080,-0.25
+Latin America,NonFoodDemand_Crops,2080,0
+Latin America,NonFoodDemand_Meat,2080,0
+Latin America,NonFoodDemand_Forest,2080,0
+Latin America,Exports_Meat,2080,0
+Middle East,FoodDemand_Crops,2080,0
+Middle East,FoodDemand_Meat,2080,-0.25
+Middle East,NonFoodDemand_Crops,2080,0
+Middle East,NonFoodDemand_Meat,2080,0
+Middle East,NonFoodDemand_Forest,2080,0
+Middle East,Exports_Meat,2080,0
+Southeast Asia,FoodDemand_Crops,2080,0
+Southeast Asia,FoodDemand_Meat,2080,-0.25
+Southeast Asia,NonFoodDemand_Crops,2080,0
+Southeast Asia,NonFoodDemand_Meat,2080,0
+Southeast Asia,NonFoodDemand_Forest,2080,0
+Southeast Asia,Exports_Meat,2080,0
+USA,FoodDemand_Crops,2080,0
+USA,FoodDemand_Meat,2080,-0.09
+USA,NonFoodDemand_Crops,2080,0
+USA,NonFoodDemand_Meat,2080,0
+USA,NonFoodDemand_Forest,2080,0
+USA,Exports_Meat,2080,0
+Western Europe,FoodDemand_Crops,2080,0
+Western Europe,FoodDemand_Meat,2080,-0.25
+Western Europe,NonFoodDemand_Crops,2080,0
+Western Europe,NonFoodDemand_Meat,2080,0
+Western Europe,NonFoodDemand_Forest,2080,0
+Western Europe,Exports_Meat,2080,0
+Africa,FoodDemand_Crops,2095,0
+Africa,FoodDemand_Meat,2095,-0.25
+Africa,NonFoodDemand_Crops,2095,0
+Africa,NonFoodDemand_Meat,2095,0
+Africa,NonFoodDemand_Forest,2095,0
+Africa,Exports_Meat,2095,0
+Australia_NZ,FoodDemand_Crops,2095,0
+Australia_NZ,FoodDemand_Meat,2095,-0.25
+Australia_NZ,NonFoodDemand_Crops,2095,0
+Australia_NZ,NonFoodDemand_Meat,2095,0
+Australia_NZ,NonFoodDemand_Forest,2095,0
+Australia_NZ,Exports_Meat,2095,0
+Canada,FoodDemand_Crops,2095,0
+Canada,FoodDemand_Meat,2095,-0.25
+Canada,NonFoodDemand_Crops,2095,0
+Canada,NonFoodDemand_Meat,2095,0
+Canada,NonFoodDemand_Forest,2095,0
+Canada,Exports_Meat,2095,0
+China,FoodDemand_Crops,2095,0
+China,FoodDemand_Meat,2095,-0.25
+China,NonFoodDemand_Crops,2095,0
+China,NonFoodDemand_Meat,2095,0
+China,NonFoodDemand_Forest,2095,0
+China,Exports_Meat,2095,0
+Eastern Europe,FoodDemand_Crops,2095,0
+Eastern Europe,FoodDemand_Meat,2095,-0.25
+Eastern Europe,NonFoodDemand_Crops,2095,0
+Eastern Europe,NonFoodDemand_Meat,2095,0
+Eastern Europe,NonFoodDemand_Forest,2095,0
+Eastern Europe,Exports_Meat,2095,0
+Former Soviet Union,FoodDemand_Crops,2095,0
+Former Soviet Union,FoodDemand_Meat,2095,-0.25
+Former Soviet Union,NonFoodDemand_Crops,2095,0
+Former Soviet Union,NonFoodDemand_Meat,2095,0
+Former Soviet Union,NonFoodDemand_Forest,2095,0
+Former Soviet Union,Exports_Meat,2095,0
+India,FoodDemand_Crops,2095,0
+India,FoodDemand_Meat,2095,-0.25
+India,NonFoodDemand_Crops,2095,0
+India,NonFoodDemand_Meat,2095,0
+India,NonFoodDemand_Forest,2095,0
+India,Exports_Meat,2095,0
+Japan,FoodDemand_Crops,2095,0
+Japan,FoodDemand_Meat,2095,-0.25
+Japan,NonFoodDemand_Crops,2095,0
+Japan,NonFoodDemand_Meat,2095,0
+Japan,NonFoodDemand_Forest,2095,0
+Japan,Exports_Meat,2095,0
+Korea,FoodDemand_Crops,2095,0
+Korea,FoodDemand_Meat,2095,-0.25
+Korea,NonFoodDemand_Crops,2095,0
+Korea,NonFoodDemand_Meat,2095,0
+Korea,NonFoodDemand_Forest,2095,0
+Korea,Exports_Meat,2095,0
+Latin America,FoodDemand_Crops,2095,0
+Latin America,FoodDemand_Meat,2095,-0.25
+Latin America,NonFoodDemand_Crops,2095,0
+Latin America,NonFoodDemand_Meat,2095,0
+Latin America,NonFoodDemand_Forest,2095,0
+Latin America,Exports_Meat,2095,0
+Middle East,FoodDemand_Crops,2095,0
+Middle East,FoodDemand_Meat,2095,-0.25
+Middle East,NonFoodDemand_Crops,2095,0
+Middle East,NonFoodDemand_Meat,2095,0
+Middle East,NonFoodDemand_Forest,2095,0
+Middle East,Exports_Meat,2095,0
+Southeast Asia,FoodDemand_Crops,2095,0
+Southeast Asia,FoodDemand_Meat,2095,-0.25
+Southeast Asia,NonFoodDemand_Crops,2095,0
+Southeast Asia,NonFoodDemand_Meat,2095,0
+Southeast Asia,NonFoodDemand_Forest,2095,0
+Southeast Asia,Exports_Meat,2095,0
+USA,FoodDemand_Crops,2095,0
+USA,FoodDemand_Meat,2095,-0.09
+USA,NonFoodDemand_Crops,2095,0
+USA,NonFoodDemand_Meat,2095,0
+USA,NonFoodDemand_Forest,2095,0
+USA,Exports_Meat,2095,0
+Western Europe,FoodDemand_Crops,2095,0
+Western Europe,FoodDemand_Meat,2095,-0.25
+Western Europe,NonFoodDemand_Crops,2095,0
+Western Europe,NonFoodDemand_Meat,2095,0
+Western Europe,NonFoodDemand_Forest,2095,0
+Western Europe,Exports_Meat,2095,0

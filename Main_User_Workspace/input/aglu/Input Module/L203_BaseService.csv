@@ -1,0 +1,257 @@
+INPUT_TABLE
+Variable ID
+BaseService
+
+region,energy.final.demand,year,base.service
+Africa,FoodDemand_Crops,1975,1
+Africa,FoodDemand_Meat,1975,1
+Africa,NonFoodDemand_Crops,1975,1
+Africa,NonFoodDemand_Meat,1975,1
+Africa,NonFoodDemand_Forest,1975,1
+Africa,Exports_Meat,1975,1
+Australia_NZ,FoodDemand_Crops,1975,1
+Australia_NZ,FoodDemand_Meat,1975,1
+Australia_NZ,NonFoodDemand_Crops,1975,1
+Australia_NZ,NonFoodDemand_Meat,1975,1
+Australia_NZ,NonFoodDemand_Forest,1975,1
+Australia_NZ,Exports_Meat,1975,1
+Canada,FoodDemand_Crops,1975,1
+Canada,FoodDemand_Meat,1975,1
+Canada,NonFoodDemand_Crops,1975,1
+Canada,NonFoodDemand_Meat,1975,1
+Canada,NonFoodDemand_Forest,1975,1
+Canada,Exports_Meat,1975,1
+China,FoodDemand_Crops,1975,1
+China,FoodDemand_Meat,1975,1
+China,NonFoodDemand_Crops,1975,1
+China,NonFoodDemand_Meat,1975,1
+China,NonFoodDemand_Forest,1975,1
+China,Exports_Meat,1975,1
+Eastern Europe,FoodDemand_Crops,1975,1
+Eastern Europe,FoodDemand_Meat,1975,1
+Eastern Europe,NonFoodDemand_Crops,1975,1
+Eastern Europe,NonFoodDemand_Meat,1975,1
+Eastern Europe,NonFoodDemand_Forest,1975,1
+Eastern Europe,Exports_Meat,1975,1
+Former Soviet Union,FoodDemand_Crops,1975,1
+Former Soviet Union,FoodDemand_Meat,1975,1
+Former Soviet Union,NonFoodDemand_Crops,1975,1
+Former Soviet Union,NonFoodDemand_Meat,1975,1
+Former Soviet Union,NonFoodDemand_Forest,1975,1
+Former Soviet Union,Exports_Meat,1975,1
+India,FoodDemand_Crops,1975,1
+India,FoodDemand_Meat,1975,1
+India,NonFoodDemand_Crops,1975,1
+India,NonFoodDemand_Meat,1975,1
+India,NonFoodDemand_Forest,1975,1
+India,Exports_Meat,1975,1
+Japan,FoodDemand_Crops,1975,1
+Japan,FoodDemand_Meat,1975,1
+Japan,NonFoodDemand_Crops,1975,1
+Japan,NonFoodDemand_Meat,1975,1
+Japan,NonFoodDemand_Forest,1975,1
+Japan,Exports_Meat,1975,1
+Korea,FoodDemand_Crops,1975,1
+Korea,FoodDemand_Meat,1975,1
+Korea,NonFoodDemand_Crops,1975,1
+Korea,NonFoodDemand_Meat,1975,1
+Korea,NonFoodDemand_Forest,1975,1
+Korea,Exports_Meat,1975,1
+Latin America,FoodDemand_Crops,1975,1
+Latin America,FoodDemand_Meat,1975,1
+Latin America,NonFoodDemand_Crops,1975,1
+Latin America,NonFoodDemand_Meat,1975,1
+Latin America,NonFoodDemand_Forest,1975,1
+Latin America,Exports_Meat,1975,1
+Middle East,FoodDemand_Crops,1975,1
+Middle East,FoodDemand_Meat,1975,1
+Middle East,NonFoodDemand_Crops,1975,1
+Middle East,NonFoodDemand_Meat,1975,1
+Middle East,NonFoodDemand_Forest,1975,1
+Middle East,Exports_Meat,1975,1
+Southeast Asia,FoodDemand_Crops,1975,1
+Southeast Asia,FoodDemand_Meat,1975,1
+Southeast Asia,NonFoodDemand_Crops,1975,1
+Southeast Asia,NonFoodDemand_Meat,1975,1
+Southeast Asia,NonFoodDemand_Forest,1975,1
+Southeast Asia,Exports_Meat,1975,1
+USA,FoodDemand_Crops,1975,1
+USA,FoodDemand_Meat,1975,1
+USA,NonFoodDemand_Crops,1975,1
+USA,NonFoodDemand_Meat,1975,1
+USA,NonFoodDemand_Forest,1975,1
+USA,Exports_Meat,1975,1
+Western Europe,FoodDemand_Crops,1975,1
+Western Europe,FoodDemand_Meat,1975,1
+Western Europe,NonFoodDemand_Crops,1975,1
+Western Europe,NonFoodDemand_Meat,1975,1
+Western Europe,NonFoodDemand_Forest,1975,1
+Western Europe,Exports_Meat,1975,1
+Africa,FoodDemand_Crops,1990,519.564607
+Africa,FoodDemand_Meat,1990,39.174359
+Africa,NonFoodDemand_Crops,1990,154.639287
+Africa,NonFoodDemand_Meat,1990,5.556869
+Africa,NonFoodDemand_Forest,1990,0.493908
+Africa,Exports_Meat,1990,0
+Australia_NZ,FoodDemand_Crops,1990,15.196155
+Australia_NZ,FoodDemand_Meat,1990,9.747716
+Australia_NZ,NonFoodDemand_Crops,1990,25.867077
+Australia_NZ,NonFoodDemand_Meat,1990,4.540149
+Australia_NZ,NonFoodDemand_Forest,1990,0.030235
+Australia_NZ,Exports_Meat,1990,9.680362
+Canada,FoodDemand_Crops,1990,21.836616
+Canada,FoodDemand_Meat,1990,12.888799
+Canada,NonFoodDemand_Crops,1990,9.276305
+Canada,NonFoodDemand_Meat,1990,3.443522
+Canada,NonFoodDemand_Forest,1990,0.175672
+Canada,Exports_Meat,1990,0.747157
+China,FoodDemand_Crops,1990,1041.67538
+China,FoodDemand_Meat,1990,131.935312
+China,NonFoodDemand_Crops,1990,268.256209
+China,NonFoodDemand_Meat,1990,9.277643
+China,NonFoodDemand_Forest,1990,0.435723
+China,Exports_Meat,1990,0.331051
+Eastern Europe,FoodDemand_Crops,1990,92.048308
+Eastern Europe,FoodDemand_Meat,1990,47.996534
+Eastern Europe,NonFoodDemand_Crops,1990,127.5839
+Eastern Europe,NonFoodDemand_Meat,1990,22.821026
+Eastern Europe,NonFoodDemand_Forest,1990,0.072874
+Eastern Europe,Exports_Meat,1990,3.207781
+Former Soviet Union,FoodDemand_Crops,1990,264.721938
+Former Soviet Union,FoodDemand_Meat,1990,104.313145
+Former Soviet Union,NonFoodDemand_Crops,1990,292.16055
+Former Soviet Union,NonFoodDemand_Meat,1990,70.319358
+Former Soviet Union,NonFoodDemand_Forest,1990,0.338801
+Former Soviet Union,Exports_Meat,1990,0
+India,FoodDemand_Crops,1990,718.452918
+India,FoodDemand_Meat,1990,41.369572
+India,NonFoodDemand_Crops,1990,245.242736
+India,NonFoodDemand_Meat,1990,8.295196
+India,NonFoodDemand_Forest,1990,0.301822
+India,Exports_Meat,1990,0.071652
+Japan,FoodDemand_Crops,1990,100.421364
+Japan,FoodDemand_Meat,1990,26.888781
+Japan,NonFoodDemand_Crops,1990,20.310812
+Japan,NonFoodDemand_Meat,1990,7.010578
+Japan,NonFoodDemand_Forest,1990,0.056442
+Japan,Exports_Meat,1990,0
+Korea,FoodDemand_Crops,1990,40.672223
+Korea,FoodDemand_Meat,1990,5.402592
+Korea,NonFoodDemand_Crops,1990,7.829
+Korea,NonFoodDemand_Meat,1990,2.125683
+Korea,NonFoodDemand_Forest,1990,0.012319
+Korea,Exports_Meat,1990,0
+Latin America,FoodDemand_Crops,1990,374.013369
+Latin America,FoodDemand_Meat,1990,74.913678
+Latin America,NonFoodDemand_Crops,1990,514.367714
+Latin America,NonFoodDemand_Meat,1990,15.720327
+Latin America,NonFoodDemand_Forest,1990,0.356372
+Latin America,Exports_Meat,1990,0.796976
+Middle East,FoodDemand_Crops,1990,109.650288
+Middle East,FoodDemand_Meat,1990,14.141511
+Middle East,NonFoodDemand_Crops,1990,29.314346
+Middle East,NonFoodDemand_Meat,1990,3.836431
+Middle East,NonFoodDemand_Forest,1990,0.002346
+Middle East,Exports_Meat,1990,0
+Southeast Asia,FoodDemand_Crops,1990,526.510088
+Southeast Asia,FoodDemand_Meat,1990,39.20917
+Southeast Asia,NonFoodDemand_Crops,1990,218.742241
+Southeast Asia,NonFoodDemand_Meat,1990,6.508184
+Southeast Asia,NonFoodDemand_Forest,1990,0.352681
+Southeast Asia,Exports_Meat,1990,0.135218
+USA,FoodDemand_Crops,1990,218.480689
+USA,FoodDemand_Meat,1990,119.19992
+USA,NonFoodDemand_Crops,1990,132.027912
+USA,NonFoodDemand_Meat,1990,18.342195
+USA,NonFoodDemand_Forest,1990,0.475412
+USA,Exports_Meat,1990,0.609445
+Western Europe,FoodDemand_Crops,1990,389.405615
+Western Europe,FoodDemand_Meat,1990,200.267203
+Western Europe,NonFoodDemand_Crops,1990,307.982354
+Western Europe,NonFoodDemand_Meat,1990,79.771213
+Western Europe,NonFoodDemand_Forest,1990,0.319804
+Western Europe,Exports_Meat,1990,14.90537
+Africa,FoodDemand_Crops,2005,790.394065
+Africa,FoodDemand_Meat,2005,58.699458
+Africa,NonFoodDemand_Crops,2005,236.382845
+Africa,NonFoodDemand_Meat,2005,7.992571
+Africa,NonFoodDemand_Forest,2005,0.637974
+Africa,Exports_Meat,2005,0
+Australia_NZ,FoodDemand_Crops,2005,19.030316
+Australia_NZ,FoodDemand_Meat,2005,11.248394
+Australia_NZ,NonFoodDemand_Crops,2005,42.876533
+Australia_NZ,NonFoodDemand_Meat,2005,9.455719
+Australia_NZ,NonFoodDemand_Forest,2005,0.04478
+Australia_NZ,Exports_Meat,2005,18.89018
+Canada,FoodDemand_Crops,2005,31.450778
+Canada,FoodDemand_Meat,2005,15.091496
+Canada,NonFoodDemand_Crops,2005,8.917728
+Canada,NonFoodDemand_Meat,2005,5.325447
+Canada,NonFoodDemand_Forest,2005,0.188162
+Canada,Exports_Meat,2005,1.102672
+China,FoodDemand_Crops,2005,1249.584803
+China,FoodDemand_Meat,2005,292.975496
+China,NonFoodDemand_Crops,2005,394.616261
+China,NonFoodDemand_Meat,2005,22.896673
+China,NonFoodDemand_Forest,2005,0.37938
+China,Exports_Meat,2005,0.065007
+Eastern Europe,FoodDemand_Crops,2005,105.14897
+Eastern Europe,FoodDemand_Meat,2005,47.237145
+Eastern Europe,NonFoodDemand_Crops,2005,57.237054
+Eastern Europe,NonFoodDemand_Meat,2005,13.16292
+Eastern Europe,NonFoodDemand_Forest,2005,0.093869
+Eastern Europe,Exports_Meat,2005,2.607561
+Former Soviet Union,FoodDemand_Crops,2005,261.301677
+Former Soviet Union,FoodDemand_Meat,2005,71.932208
+Former Soviet Union,NonFoodDemand_Crops,2005,128.620462
+Former Soviet Union,NonFoodDemand_Meat,2005,29.2355
+Former Soviet Union,NonFoodDemand_Forest,2005,0.183693
+Former Soviet Union,Exports_Meat,2005,2.119883
+India,FoodDemand_Crops,2005,925.306135
+India,FoodDemand_Meat,2005,75.026084
+India,NonFoodDemand_Crops,2005,308.465084
+India,NonFoodDemand_Meat,2005,21.563046
+India,NonFoodDemand_Forest,2005,0.330259
+India,Exports_Meat,2005,1.099595
+Japan,FoodDemand_Crops,2005,99.213286
+Japan,FoodDemand_Meat,2005,28.858726
+Japan,NonFoodDemand_Crops,2005,18.01509
+Japan,NonFoodDemand_Meat,2005,4.232341
+Japan,NonFoodDemand_Forest,2005,0.027564
+Japan,Exports_Meat,2005,0
+Korea,FoodDemand_Crops,2005,42.84875
+Korea,FoodDemand_Meat,2005,10.089203
+Korea,NonFoodDemand_Crops,2005,9.707737
+Korea,NonFoodDemand_Meat,2005,2.976367
+Korea,NonFoodDemand_Forest,2005,0.011132
+Korea,Exports_Meat,2005,0
+Latin America,FoodDemand_Crops,2005,491.877813
+Latin America,FoodDemand_Meat,2005,114.988666
+Latin America,NonFoodDemand_Crops,2005,631.928331
+Latin America,NonFoodDemand_Meat,2005,24.27558
+Latin America,NonFoodDemand_Forest,2005,0.457741
+Latin America,Exports_Meat,2005,4.240848
+Middle East,FoodDemand_Crops,2005,160.080276
+Middle East,FoodDemand_Meat,2005,23.558095
+Middle East,NonFoodDemand_Crops,2005,41.265849
+Middle East,NonFoodDemand_Meat,2005,6.786728
+Middle East,NonFoodDemand_Forest,2005,0.002304
+Middle East,Exports_Meat,2005,0
+Southeast Asia,FoodDemand_Crops,2005,720.397921
+Southeast Asia,FoodDemand_Meat,2005,70.547528
+Southeast Asia,NonFoodDemand_Crops,2005,401.181832
+Southeast Asia,NonFoodDemand_Meat,2005,11.787379
+Southeast Asia,NonFoodDemand_Forest,2005,0.315543
+Southeast Asia,Exports_Meat,2005,0.268804
+USA,FoodDemand_Crops,2005,281.561082
+USA,FoodDemand_Meat,2005,147.860112
+USA,NonFoodDemand_Crops,2005,134.675708
+USA,NonFoodDemand_Meat,2005,26.098509
+USA,NonFoodDemand_Forest,2005,0.444281
+USA,Exports_Meat,2005,5.077701
+Western Europe,FoodDemand_Crops,2005,444.334334
+Western Europe,FoodDemand_Meat,2005,218.945859
+Western Europe,NonFoodDemand_Crops,2005,232.812958
+Western Europe,NonFoodDemand_Meat,2005,78.220678
+Western Europe,NonFoodDemand_Forest,2005,0.390162
+Western Europe,Exports_Meat,2005,9.756745

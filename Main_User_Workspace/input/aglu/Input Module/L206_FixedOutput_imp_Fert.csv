@@ -1,0 +1,117 @@
+INPUT_TABLE
+Variable ID
+FixedOutput
+
+region,supplysector,subsector,technology,year,fixedOutput
+Africa,N fertilizer,Imports,Imports,1990,0
+Australia_NZ,N fertilizer,Imports,Imports,1990,0.227918
+Canada,N fertilizer,Imports,Imports,1990,0
+China,N fertilizer,Imports,Imports,1990,6.089807
+Eastern Europe,N fertilizer,Imports,Imports,1990,0
+Former Soviet Union,N fertilizer,Imports,Imports,1990,0
+India,N fertilizer,Imports,Imports,1990,1.132154
+Japan,N fertilizer,Imports,Imports,1990,0
+Korea,N fertilizer,Imports,Imports,1990,0
+Latin America,N fertilizer,Imports,Imports,1990,0.718506
+Middle East,N fertilizer,Imports,Imports,1990,0
+Southeast Asia,N fertilizer,Imports,Imports,1990,0.717222
+USA,N fertilizer,Imports,Imports,1990,0
+Western Europe,N fertilizer,Imports,Imports,1990,0.840765
+Africa,N fertilizer,Imports,Imports,2005,0
+Australia_NZ,N fertilizer,Imports,Imports,2005,0.762491
+Canada,N fertilizer,Imports,Imports,2005,0
+China,N fertilizer,Imports,Imports,2005,0.94182
+Eastern Europe,N fertilizer,Imports,Imports,2005,0
+Former Soviet Union,N fertilizer,Imports,Imports,2005,0
+India,N fertilizer,Imports,Imports,2005,2.25406
+Japan,N fertilizer,Imports,Imports,2005,0
+Korea,N fertilizer,Imports,Imports,2005,0.01788
+Latin America,N fertilizer,Imports,Imports,2005,3.068247
+Middle East,N fertilizer,Imports,Imports,2005,0
+Southeast Asia,N fertilizer,Imports,Imports,2005,2.154497
+USA,N fertilizer,Imports,Imports,2005,3.194071
+Western Europe,N fertilizer,Imports,Imports,2005,2.237792
+Africa,N fertilizer,Imports,Imports,2020,0
+Australia_NZ,N fertilizer,Imports,Imports,2020,0.762491
+Canada,N fertilizer,Imports,Imports,2020,0
+China,N fertilizer,Imports,Imports,2020,0.94182
+Eastern Europe,N fertilizer,Imports,Imports,2020,0
+Former Soviet Union,N fertilizer,Imports,Imports,2020,0
+India,N fertilizer,Imports,Imports,2020,2.25406
+Japan,N fertilizer,Imports,Imports,2020,0
+Korea,N fertilizer,Imports,Imports,2020,0.01788
+Latin America,N fertilizer,Imports,Imports,2020,3.068247
+Middle East,N fertilizer,Imports,Imports,2020,0
+Southeast Asia,N fertilizer,Imports,Imports,2020,2.154497
+USA,N fertilizer,Imports,Imports,2020,3.194071
+Western Europe,N fertilizer,Imports,Imports,2020,2.237792
+Africa,N fertilizer,Imports,Imports,2035,0
+Australia_NZ,N fertilizer,Imports,Imports,2035,0.762491
+Canada,N fertilizer,Imports,Imports,2035,0
+China,N fertilizer,Imports,Imports,2035,0.94182
+Eastern Europe,N fertilizer,Imports,Imports,2035,0
+Former Soviet Union,N fertilizer,Imports,Imports,2035,0
+India,N fertilizer,Imports,Imports,2035,2.25406
+Japan,N fertilizer,Imports,Imports,2035,0
+Korea,N fertilizer,Imports,Imports,2035,0.01788
+Latin America,N fertilizer,Imports,Imports,2035,3.068247
+Middle East,N fertilizer,Imports,Imports,2035,0
+Southeast Asia,N fertilizer,Imports,Imports,2035,2.154497
+USA,N fertilizer,Imports,Imports,2035,3.194071
+Western Europe,N fertilizer,Imports,Imports,2035,2.237792
+Africa,N fertilizer,Imports,Imports,2050,0
+Australia_NZ,N fertilizer,Imports,Imports,2050,0.762491
+Canada,N fertilizer,Imports,Imports,2050,0
+China,N fertilizer,Imports,Imports,2050,0.94182
+Eastern Europe,N fertilizer,Imports,Imports,2050,0
+Former Soviet Union,N fertilizer,Imports,Imports,2050,0
+India,N fertilizer,Imports,Imports,2050,2.25406
+Japan,N fertilizer,Imports,Imports,2050,0
+Korea,N fertilizer,Imports,Imports,2050,0.01788
+Latin America,N fertilizer,Imports,Imports,2050,3.068247
+Middle East,N fertilizer,Imports,Imports,2050,0
+Southeast Asia,N fertilizer,Imports,Imports,2050,2.154497
+USA,N fertilizer,Imports,Imports,2050,3.194071
+Western Europe,N fertilizer,Imports,Imports,2050,2.237792
+Africa,N fertilizer,Imports,Imports,2065,0
+Australia_NZ,N fertilizer,Imports,Imports,2065,0.762491
+Canada,N fertilizer,Imports,Imports,2065,0
+China,N fertilizer,Imports,Imports,2065,0.94182
+Eastern Europe,N fertilizer,Imports,Imports,2065,0
+Former Soviet Union,N fertilizer,Imports,Imports,2065,0
+India,N fertilizer,Imports,Imports,2065,2.25406
+Japan,N fertilizer,Imports,Imports,2065,0
+Korea,N fertilizer,Imports,Imports,2065,0.01788
+Latin America,N fertilizer,Imports,Imports,2065,3.068247
+Middle East,N fertilizer,Imports,Imports,2065,0
+Southeast Asia,N fertilizer,Imports,Imports,2065,2.154497
+USA,N fertilizer,Imports,Imports,2065,3.194071
+Western Europe,N fertilizer,Imports,Imports,2065,2.237792
+Africa,N fertilizer,Imports,Imports,2080,0
+Australia_NZ,N fertilizer,Imports,Imports,2080,0.762491
+Canada,N fertilizer,Imports,Imports,2080,0
+China,N fertilizer,Imports,Imports,2080,0.94182
+Eastern Europe,N fertilizer,Imports,Imports,2080,0
+Former Soviet Union,N fertilizer,Imports,Imports,2080,0
+India,N fertilizer,Imports,Imports,2080,2.25406
+Japan,N fertilizer,Imports,Imports,2080,0
+Korea,N fertilizer,Imports,Imports,2080,0.01788
+Latin America,N fertilizer,Imports,Imports,2080,3.068247
+Middle East,N fertilizer,Imports,Imports,2080,0
+Southeast Asia,N fertilizer,Imports,Imports,2080,2.154497
+USA,N fertilizer,Imports,Imports,2080,3.194071
+Western Europe,N fertilizer,Imports,Imports,2080,2.237792
+Africa,N fertilizer,Imports,Imports,2095,0
+Australia_NZ,N fertilizer,Imports,Imports,2095,0.762491
+Canada,N fertilizer,Imports,Imports,2095,0
+China,N fertilizer,Imports,Imports,2095,0.94182
+Eastern Europe,N fertilizer,Imports,Imports,2095,0
+Former Soviet Union,N fertilizer,Imports,Imports,2095,0
+India,N fertilizer,Imports,Imports,2095,2.25406
+Japan,N fertilizer,Imports,Imports,2095,0
+Korea,N fertilizer,Imports,Imports,2095,0.01788
+Latin America,N fertilizer,Imports,Imports,2095,3.068247
+Middle East,N fertilizer,Imports,Imports,2095,0
+Southeast Asia,N fertilizer,Imports,Imports,2095,2.154497
+USA,N fertilizer,Imports,Imports,2095,3.194071
+Western Europe,N fertilizer,Imports,Imports,2095,2.237792

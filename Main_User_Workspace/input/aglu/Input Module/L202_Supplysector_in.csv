@@ -1,0 +1,61 @@
+INPUT_TABLE
+Variable ID
+Supplysector
+
+region,supplysector,output.unit,input.unit,price.unit,price,logit.exponent
+Africa,FodderHerb_Residue,Mt,Mt,1975$/kg,1,-1.5
+Africa,Pasture_FodderGrass,Mt,Mt,1975$/kg,1,-1.5
+Africa,FeedCrops,Mt,Mt,1975$/kg,1,-1.5
+Africa,Scavenging_Other,Mt,Mt,1975$/kg,1,-1.5
+Australia_NZ,FodderHerb_Residue,Mt,Mt,1975$/kg,1,-1.5
+Australia_NZ,Pasture_FodderGrass,Mt,Mt,1975$/kg,1,-1.5
+Australia_NZ,FeedCrops,Mt,Mt,1975$/kg,1,-1.5
+Australia_NZ,Scavenging_Other,Mt,Mt,1975$/kg,1,-1.5
+Canada,FodderHerb_Residue,Mt,Mt,1975$/kg,1,-1.5
+Canada,Pasture_FodderGrass,Mt,Mt,1975$/kg,1,-1.5
+Canada,FeedCrops,Mt,Mt,1975$/kg,1,-1.5
+Canada,Scavenging_Other,Mt,Mt,1975$/kg,1,-1.5
+China,FodderHerb_Residue,Mt,Mt,1975$/kg,1,-1.5
+China,Pasture_FodderGrass,Mt,Mt,1975$/kg,1,-1.5
+China,FeedCrops,Mt,Mt,1975$/kg,1,-1.5
+China,Scavenging_Other,Mt,Mt,1975$/kg,1,-1.5
+Eastern Europe,FodderHerb_Residue,Mt,Mt,1975$/kg,1,-1.5
+Eastern Europe,Pasture_FodderGrass,Mt,Mt,1975$/kg,1,-1.5
+Eastern Europe,FeedCrops,Mt,Mt,1975$/kg,1,-1.5
+Eastern Europe,Scavenging_Other,Mt,Mt,1975$/kg,1,-1.5
+Former Soviet Union,FodderHerb_Residue,Mt,Mt,1975$/kg,1,-1.5
+Former Soviet Union,Pasture_FodderGrass,Mt,Mt,1975$/kg,1,-1.5
+Former Soviet Union,FeedCrops,Mt,Mt,1975$/kg,1,-1.5
+Former Soviet Union,Scavenging_Other,Mt,Mt,1975$/kg,1,-1.5
+India,FodderHerb_Residue,Mt,Mt,1975$/kg,1,-1.5
+India,Pasture_FodderGrass,Mt,Mt,1975$/kg,1,-1.5
+India,FeedCrops,Mt,Mt,1975$/kg,1,-1.5
+India,Scavenging_Other,Mt,Mt,1975$/kg,1,-1.5
+Japan,FodderHerb_Residue,Mt,Mt,1975$/kg,1,-1.5
+Japan,Pasture_FodderGrass,Mt,Mt,1975$/kg,1,-1.5
+Japan,FeedCrops,Mt,Mt,1975$/kg,1,-1.5
+Japan,Scavenging_Other,Mt,Mt,1975$/kg,1,-1.5
+Korea,FodderHerb_Residue,Mt,Mt,1975$/kg,1,-1.5
+Korea,Pasture_FodderGrass,Mt,Mt,1975$/kg,1,-1.5
+Korea,FeedCrops,Mt,Mt,1975$/kg,1,-1.5
+Korea,Scavenging_Other,Mt,Mt,1975$/kg,1,-1.5
+Latin America,FodderHerb_Residue,Mt,Mt,1975$/kg,1,-1.5
+Latin America,Pasture_FodderGrass,Mt,Mt,1975$/kg,1,-1.5
+Latin America,FeedCrops,Mt,Mt,1975$/kg,1,-1.5
+Latin America,Scavenging_Other,Mt,Mt,1975$/kg,1,-1.5
+Middle East,FodderHerb_Residue,Mt,Mt,1975$/kg,1,-1.5
+Middle East,Pasture_FodderGrass,Mt,Mt,1975$/kg,1,-1.5
+Middle East,FeedCrops,Mt,Mt,1975$/kg,1,-1.5
+Middle East,Scavenging_Other,Mt,Mt,1975$/kg,1,-1.5
+Southeast Asia,FodderHerb_Residue,Mt,Mt,1975$/kg,1,-1.5
+Southeast Asia,Pasture_FodderGrass,Mt,Mt,1975$/kg,1,-1.5
+Southeast Asia,FeedCrops,Mt,Mt,1975$/kg,1,-1.5
+Southeast Asia,Scavenging_Other,Mt,Mt,1975$/kg,1,-1.5
+USA,FodderHerb_Residue,Mt,Mt,1975$/kg,1,-1.5
+USA,Pasture_FodderGrass,Mt,Mt,1975$/kg,1,-1.5
+USA,FeedCrops,Mt,Mt,1975$/kg,1,-1.5
+USA,Scavenging_Other,Mt,Mt,1975$/kg,1,-1.5
+Western Europe,FodderHerb_Residue,Mt,Mt,1975$/kg,1,-1.5
+Western Europe,Pasture_FodderGrass,Mt,Mt,1975$/kg,1,-1.5
+Western Europe,FeedCrops,Mt,Mt,1975$/kg,1,-1.5
+Western Europe,Scavenging_Other,Mt,Mt,1975$/kg,1,-1.5

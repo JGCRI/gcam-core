@@ -1,8 +1,0 @@
-source("Rcode\\21_LC_GIS_R_LT_Y_AEZ.r")
-source("Rcode\\22_LC_CropLand.r")
-source("Rcode\\23_LC_MgdPstr_MgdFrst.r")
-source("Rcode\\24_LC_Unmanaged.r")
-source("Rcode\\25_LC_Urb_Tnd_RckIceDsrt.r")
-source("Rcode\\26_LC_adj.r")
-source("Rcode\\27_LCnatveg_Prot_Past_Crop.r")
-source("Rcode\\30_LV_R_AEZ.r")

@@ -1,0 +1,509 @@
+INPUT_TABLE
+Variable ID
+AgProduction
+
+region,AgSupplySector,AgSupplySubsector,AgProductionTechnology,year,calOutputValue,share.weight.year,subs.share.weight,tech.share.weight
+USA,Forest,ForestAEZ01,ForestAEZ01,1990,0,1990,0,0
+Canada,Forest,ForestAEZ01,ForestAEZ01,1990,0,1990,0,0
+Western Europe,Forest,ForestAEZ01,ForestAEZ01,1990,0,1990,0,0
+Japan,Forest,ForestAEZ01,ForestAEZ01,1990,0,1990,0,0
+Australia_NZ,Forest,ForestAEZ01,ForestAEZ01,1990,8e-06,1990,1,1
+Former Soviet Union,Forest,ForestAEZ01,ForestAEZ01,1990,0,1990,0,0
+China,Forest,ForestAEZ01,ForestAEZ01,1990,0,1990,0,0
+Middle East,Forest,ForestAEZ01,ForestAEZ01,1990,0,1990,0,0
+Africa,Forest,ForestAEZ01,ForestAEZ01,1990,0.000293,1990,1,1
+Latin America,Forest,ForestAEZ01,ForestAEZ01,1990,0.000686,1990,1,1
+Southeast Asia,Forest,ForestAEZ01,ForestAEZ01,1990,0,1990,0,0
+Eastern Europe,Forest,ForestAEZ01,ForestAEZ01,1990,0,1990,0,0
+Korea,Forest,ForestAEZ01,ForestAEZ01,1990,0,1990,0,0
+India,Forest,ForestAEZ01,ForestAEZ01,1990,0,1990,0,0
+USA,Forest,ForestAEZ02,ForestAEZ02,1990,0,1990,0,0
+Canada,Forest,ForestAEZ02,ForestAEZ02,1990,0,1990,0,0
+Western Europe,Forest,ForestAEZ02,ForestAEZ02,1990,0,1990,0,0
+Japan,Forest,ForestAEZ02,ForestAEZ02,1990,0,1990,0,0
+Australia_NZ,Forest,ForestAEZ02,ForestAEZ02,1990,0,1990,0,0
+Former Soviet Union,Forest,ForestAEZ02,ForestAEZ02,1990,0,1990,0,0
+China,Forest,ForestAEZ02,ForestAEZ02,1990,0,1990,0,0
+Middle East,Forest,ForestAEZ02,ForestAEZ02,1990,0,1990,0,0
+Africa,Forest,ForestAEZ02,ForestAEZ02,1990,0.001401,1990,1,1
+Latin America,Forest,ForestAEZ02,ForestAEZ02,1990,0.001059,1990,1,1
+Southeast Asia,Forest,ForestAEZ02,ForestAEZ02,1990,0,1990,0,0
+Eastern Europe,Forest,ForestAEZ02,ForestAEZ02,1990,0,1990,0,0
+Korea,Forest,ForestAEZ02,ForestAEZ02,1990,0,1990,0,0
+India,Forest,ForestAEZ02,ForestAEZ02,1990,0.016187,1990,1,1
+USA,Forest,ForestAEZ03,ForestAEZ03,1990,0,1990,0,0
+Canada,Forest,ForestAEZ03,ForestAEZ03,1990,0,1990,0,0
+Western Europe,Forest,ForestAEZ03,ForestAEZ03,1990,0,1990,0,0
+Japan,Forest,ForestAEZ03,ForestAEZ03,1990,0,1990,0,0
+Australia_NZ,Forest,ForestAEZ03,ForestAEZ03,1990,0.00014,1990,1,1
+Former Soviet Union,Forest,ForestAEZ03,ForestAEZ03,1990,0,1990,0,0
+China,Forest,ForestAEZ03,ForestAEZ03,1990,0,1990,0,0
+Middle East,Forest,ForestAEZ03,ForestAEZ03,1990,0,1990,0,0
+Africa,Forest,ForestAEZ03,ForestAEZ03,1990,0.011784,1990,1,1
+Latin America,Forest,ForestAEZ03,ForestAEZ03,1990,0.003734,1990,1,1
+Southeast Asia,Forest,ForestAEZ03,ForestAEZ03,1990,0.000346,1990,1,1
+Eastern Europe,Forest,ForestAEZ03,ForestAEZ03,1990,0,1990,0,0
+Korea,Forest,ForestAEZ03,ForestAEZ03,1990,0,1990,0,0
+India,Forest,ForestAEZ03,ForestAEZ03,1990,0.115876,1990,1,1
+USA,Forest,ForestAEZ04,ForestAEZ04,1990,0,1990,0,0
+Canada,Forest,ForestAEZ04,ForestAEZ04,1990,0,1990,0,0
+Western Europe,Forest,ForestAEZ04,ForestAEZ04,1990,0,1990,0,0
+Japan,Forest,ForestAEZ04,ForestAEZ04,1990,0,1990,0,0
+Australia_NZ,Forest,ForestAEZ04,ForestAEZ04,1990,0.001134,1990,1,1
+Former Soviet Union,Forest,ForestAEZ04,ForestAEZ04,1990,0,1990,0,0
+China,Forest,ForestAEZ04,ForestAEZ04,1990,0.008565,1990,1,1
+Middle East,Forest,ForestAEZ04,ForestAEZ04,1990,0,1990,0,0
+Africa,Forest,ForestAEZ04,ForestAEZ04,1990,0.101145,1990,1,1
+Latin America,Forest,ForestAEZ04,ForestAEZ04,1990,0.013846,1990,1,1
+Southeast Asia,Forest,ForestAEZ04,ForestAEZ04,1990,0.028712,1990,1,1
+Eastern Europe,Forest,ForestAEZ04,ForestAEZ04,1990,0,1990,0,0
+Korea,Forest,ForestAEZ04,ForestAEZ04,1990,0,1990,0,0
+India,Forest,ForestAEZ04,ForestAEZ04,1990,0.062875,1990,1,1
+USA,Forest,ForestAEZ05,ForestAEZ05,1990,0,1990,0,0
+Canada,Forest,ForestAEZ05,ForestAEZ05,1990,0,1990,0,0
+Western Europe,Forest,ForestAEZ05,ForestAEZ05,1990,0,1990,0,0
+Japan,Forest,ForestAEZ05,ForestAEZ05,1990,0,1990,0,0
+Australia_NZ,Forest,ForestAEZ05,ForestAEZ05,1990,0.001089,1990,1,1
+Former Soviet Union,Forest,ForestAEZ05,ForestAEZ05,1990,0,1990,0,0
+China,Forest,ForestAEZ05,ForestAEZ05,1990,0.054248,1990,1,1
+Middle East,Forest,ForestAEZ05,ForestAEZ05,1990,0,1990,0,0
+Africa,Forest,ForestAEZ05,ForestAEZ05,1990,0.11697,1990,1,1
+Latin America,Forest,ForestAEZ05,ForestAEZ05,1990,0.072065,1990,1,1
+Southeast Asia,Forest,ForestAEZ05,ForestAEZ05,1990,0.061938,1990,1,1
+Eastern Europe,Forest,ForestAEZ05,ForestAEZ05,1990,0,1990,0,0
+Korea,Forest,ForestAEZ05,ForestAEZ05,1990,0,1990,0,0
+India,Forest,ForestAEZ05,ForestAEZ05,1990,0.027621,1990,1,1
+USA,Forest,ForestAEZ06,ForestAEZ06,1990,0,1990,0,0
+Canada,Forest,ForestAEZ06,ForestAEZ06,1990,0,1990,0,0
+Western Europe,Forest,ForestAEZ06,ForestAEZ06,1990,0,1990,0,0
+Japan,Forest,ForestAEZ06,ForestAEZ06,1990,0,1990,0,0
+Australia_NZ,Forest,ForestAEZ06,ForestAEZ06,1990,0.000565,1990,1,1
+Former Soviet Union,Forest,ForestAEZ06,ForestAEZ06,1990,0,1990,0,0
+China,Forest,ForestAEZ06,ForestAEZ06,1990,0.029492,1990,1,1
+Middle East,Forest,ForestAEZ06,ForestAEZ06,1990,0,1990,0,0
+Africa,Forest,ForestAEZ06,ForestAEZ06,1990,0.244722,1990,1,1
+Latin America,Forest,ForestAEZ06,ForestAEZ06,1990,0.23891,1990,1,1
+Southeast Asia,Forest,ForestAEZ06,ForestAEZ06,1990,0.245589,1990,1,1
+Eastern Europe,Forest,ForestAEZ06,ForestAEZ06,1990,0,1990,0,0
+Korea,Forest,ForestAEZ06,ForestAEZ06,1990,0,1990,0,0
+India,Forest,ForestAEZ06,ForestAEZ06,1990,0.021227,1990,1,1
+USA,Forest,ForestAEZ07,ForestAEZ07,1990,0.028606,1990,1,1
+Canada,Forest,ForestAEZ07,ForestAEZ07,1990,3.2e-05,1990,1,1
+Western Europe,Forest,ForestAEZ07,ForestAEZ07,1990,0,1990,0,0
+Japan,Forest,ForestAEZ07,ForestAEZ07,1990,0,1990,0,0
+Australia_NZ,Forest,ForestAEZ07,ForestAEZ07,1990,0.000152,1990,1,1
+Former Soviet Union,Forest,ForestAEZ07,ForestAEZ07,1990,4.3e-05,1990,1,1
+China,Forest,ForestAEZ07,ForestAEZ07,1990,0.000267,1990,1,1
+Middle East,Forest,ForestAEZ07,ForestAEZ07,1990,0.000457,1990,1,1
+Africa,Forest,ForestAEZ07,ForestAEZ07,1990,0.000116,1990,1,1
+Latin America,Forest,ForestAEZ07,ForestAEZ07,1990,0.001622,1990,1,1
+Southeast Asia,Forest,ForestAEZ07,ForestAEZ07,1990,0,1990,0,0
+Eastern Europe,Forest,ForestAEZ07,ForestAEZ07,1990,0,1990,0,0
+Korea,Forest,ForestAEZ07,ForestAEZ07,1990,0,1990,0,0
+India,Forest,ForestAEZ07,ForestAEZ07,1990,0,1990,0,0
+USA,Forest,ForestAEZ08,ForestAEZ08,1990,0.041125,1990,1,1
+Canada,Forest,ForestAEZ08,ForestAEZ08,1990,0.000215,1990,1,1
+Western Europe,Forest,ForestAEZ08,ForestAEZ08,1990,0.006262,1990,1,1
+Japan,Forest,ForestAEZ08,ForestAEZ08,1990,0,1990,0,0
+Australia_NZ,Forest,ForestAEZ08,ForestAEZ08,1990,0.000127,1990,1,1
+Former Soviet Union,Forest,ForestAEZ08,ForestAEZ08,1990,0.00178,1990,1,1
+China,Forest,ForestAEZ08,ForestAEZ08,1990,0.018918,1990,1,1
+Middle East,Forest,ForestAEZ08,ForestAEZ08,1990,0.000978,1990,1,1
+Africa,Forest,ForestAEZ08,ForestAEZ08,1990,0.001629,1990,1,1
+Latin America,Forest,ForestAEZ08,ForestAEZ08,1990,0.003406,1990,1,1
+Southeast Asia,Forest,ForestAEZ08,ForestAEZ08,1990,2.3e-05,1990,1,1
+Eastern Europe,Forest,ForestAEZ08,ForestAEZ08,1990,7.6e-05,1990,1,1
+Korea,Forest,ForestAEZ08,ForestAEZ08,1990,0,1990,0,0
+India,Forest,ForestAEZ08,ForestAEZ08,1990,0.010839,1990,1,1
+USA,Forest,ForestAEZ09,ForestAEZ09,1990,0.021279,1990,1,1
+Canada,Forest,ForestAEZ09,ForestAEZ09,1990,0.021381,1990,1,1
+Western Europe,Forest,ForestAEZ09,ForestAEZ09,1990,0.034765,1990,1,1
+Japan,Forest,ForestAEZ09,ForestAEZ09,1990,0.00067,1990,1,1
+Australia_NZ,Forest,ForestAEZ09,ForestAEZ09,1990,0.000444,1990,1,1
+Former Soviet Union,Forest,ForestAEZ09,ForestAEZ09,1990,0.027645,1990,1,1
+China,Forest,ForestAEZ09,ForestAEZ09,1990,0.038682,1990,1,1
+Middle East,Forest,ForestAEZ09,ForestAEZ09,1990,0.000511,1990,1,1
+Africa,Forest,ForestAEZ09,ForestAEZ09,1990,0.00632,1990,1,1
+Latin America,Forest,ForestAEZ09,ForestAEZ09,1990,0.006264,1990,1,1
+Southeast Asia,Forest,ForestAEZ09,ForestAEZ09,1990,8e-06,1990,1,1
+Eastern Europe,Forest,ForestAEZ09,ForestAEZ09,1990,0.005215,1990,1,1
+Korea,Forest,ForestAEZ09,ForestAEZ09,1990,0,1990,0,0
+India,Forest,ForestAEZ09,ForestAEZ09,1990,0.013271,1990,1,1
+USA,Forest,ForestAEZ10,ForestAEZ10,1990,0.091457,1990,1,1
+Canada,Forest,ForestAEZ10,ForestAEZ10,1990,0.010576,1990,1,1
+Western Europe,Forest,ForestAEZ10,ForestAEZ10,1990,0.100571,1990,1,1
+Japan,Forest,ForestAEZ10,ForestAEZ10,1990,0.015382,1990,1,1
+Australia_NZ,Forest,ForestAEZ10,ForestAEZ10,1990,0.001499,1990,1,1
+Former Soviet Union,Forest,ForestAEZ10,ForestAEZ10,1990,0.032909,1990,1,1
+China,Forest,ForestAEZ10,ForestAEZ10,1990,0.045117,1990,1,1
+Middle East,Forest,ForestAEZ10,ForestAEZ10,1990,9e-06,1990,1,1
+Africa,Forest,ForestAEZ10,ForestAEZ10,1990,0.011052,1990,1,1
+Latin America,Forest,ForestAEZ10,ForestAEZ10,1990,0.004274,1990,1,1
+Southeast Asia,Forest,ForestAEZ10,ForestAEZ10,1990,0.001306,1990,1,1
+Eastern Europe,Forest,ForestAEZ10,ForestAEZ10,1990,0.060695,1990,1,1
+Korea,Forest,ForestAEZ10,ForestAEZ10,1990,0.00228,1990,1,1
+India,Forest,ForestAEZ10,ForestAEZ10,1990,0.00529,1990,1,1
+USA,Forest,ForestAEZ11,ForestAEZ11,1990,0.070548,1990,1,1
+Canada,Forest,ForestAEZ11,ForestAEZ11,1990,0.000239,1990,1,1
+Western Europe,Forest,ForestAEZ11,ForestAEZ11,1990,0.045783,1990,1,1
+Japan,Forest,ForestAEZ11,ForestAEZ11,1990,0.009633,1990,1,1
+Australia_NZ,Forest,ForestAEZ11,ForestAEZ11,1990,0.011632,1990,1,1
+Former Soviet Union,Forest,ForestAEZ11,ForestAEZ11,1990,0.000689,1990,1,1
+China,Forest,ForestAEZ11,ForestAEZ11,1990,0.058627,1990,1,1
+Middle East,Forest,ForestAEZ11,ForestAEZ11,1990,0,1990,0,0
+Africa,Forest,ForestAEZ11,ForestAEZ11,1990,0.001458,1990,1,1
+Latin America,Forest,ForestAEZ11,ForestAEZ11,1990,0.001543,1990,1,1
+Southeast Asia,Forest,ForestAEZ11,ForestAEZ11,1990,0.023099,1990,1,1
+Eastern Europe,Forest,ForestAEZ11,ForestAEZ11,1990,0.007024,1990,1,1
+Korea,Forest,ForestAEZ11,ForestAEZ11,1990,0.001631,1990,1,1
+India,Forest,ForestAEZ11,ForestAEZ11,1990,0.006502,1990,1,1
+USA,Forest,ForestAEZ12,ForestAEZ12,1990,0.109838,1990,1,1
+Canada,Forest,ForestAEZ12,ForestAEZ12,1990,0,1990,0,0
+Western Europe,Forest,ForestAEZ12,ForestAEZ12,1990,0.007861,1990,1,1
+Japan,Forest,ForestAEZ12,ForestAEZ12,1990,0.003259,1990,1,1
+Australia_NZ,Forest,ForestAEZ12,ForestAEZ12,1990,0.01528,1990,1,1
+Former Soviet Union,Forest,ForestAEZ12,ForestAEZ12,1990,0.000174,1990,1,1
+China,Forest,ForestAEZ12,ForestAEZ12,1990,0.152926,1990,1,1
+Middle East,Forest,ForestAEZ12,ForestAEZ12,1990,0,1990,0,0
+Africa,Forest,ForestAEZ12,ForestAEZ12,1990,0.00041,1990,1,1
+Latin America,Forest,ForestAEZ12,ForestAEZ12,1990,0.009434,1990,1,1
+Southeast Asia,Forest,ForestAEZ12,ForestAEZ12,1990,0.01089,1990,1,1
+Eastern Europe,Forest,ForestAEZ12,ForestAEZ12,1990,6.2e-05,1990,1,1
+Korea,Forest,ForestAEZ12,ForestAEZ12,1990,0,1990,0,0
+India,Forest,ForestAEZ12,ForestAEZ12,1990,0.020292,1990,1,1
+USA,Forest,ForestAEZ13,ForestAEZ13,1990,0.019908,1990,1,1
+Canada,Forest,ForestAEZ13,ForestAEZ13,1990,0.001494,1990,1,1
+Western Europe,Forest,ForestAEZ13,ForestAEZ13,1990,0.000108,1990,1,1
+Japan,Forest,ForestAEZ13,ForestAEZ13,1990,0,1990,0,0
+Australia_NZ,Forest,ForestAEZ13,ForestAEZ13,1990,0,1990,0,0
+Former Soviet Union,Forest,ForestAEZ13,ForestAEZ13,1990,0.003555,1990,1,1
+China,Forest,ForestAEZ13,ForestAEZ13,1990,0.00034,1990,1,1
+Middle East,Forest,ForestAEZ13,ForestAEZ13,1990,0,1990,0,0
+Africa,Forest,ForestAEZ13,ForestAEZ13,1990,0,1990,0,0
+Latin America,Forest,ForestAEZ13,ForestAEZ13,1990,0.000192,1990,1,1
+Southeast Asia,Forest,ForestAEZ13,ForestAEZ13,1990,2e-06,1990,1,1
+Eastern Europe,Forest,ForestAEZ13,ForestAEZ13,1990,0,1990,0,0
+Korea,Forest,ForestAEZ13,ForestAEZ13,1990,0,1990,0,0
+India,Forest,ForestAEZ13,ForestAEZ13,1990,3.3e-05,1990,1,1
+USA,Forest,ForestAEZ14,ForestAEZ14,1990,0.05964,1990,1,1
+Canada,Forest,ForestAEZ14,ForestAEZ14,1990,0.048801,1990,1,1
+Western Europe,Forest,ForestAEZ14,ForestAEZ14,1990,0.018099,1990,1,1
+Japan,Forest,ForestAEZ14,ForestAEZ14,1990,0,1990,0,0
+Australia_NZ,Forest,ForestAEZ14,ForestAEZ14,1990,0,1990,0,0
+Former Soviet Union,Forest,ForestAEZ14,ForestAEZ14,1990,0.126731,1990,1,1
+China,Forest,ForestAEZ14,ForestAEZ14,1990,0.001799,1990,1,1
+Middle East,Forest,ForestAEZ14,ForestAEZ14,1990,0,1990,0,0
+Africa,Forest,ForestAEZ14,ForestAEZ14,1990,0,1990,0,0
+Latin America,Forest,ForestAEZ14,ForestAEZ14,1990,0.000936,1990,1,1
+Southeast Asia,Forest,ForestAEZ14,ForestAEZ14,1990,6.2e-05,1990,1,1
+Eastern Europe,Forest,ForestAEZ14,ForestAEZ14,1990,0,1990,0,0
+Korea,Forest,ForestAEZ14,ForestAEZ14,1990,0,1990,0,0
+India,Forest,ForestAEZ14,ForestAEZ14,1990,1.2e-05,1990,1,1
+USA,Forest,ForestAEZ15,ForestAEZ15,1990,0.049549,1990,1,1
+Canada,Forest,ForestAEZ15,ForestAEZ15,1990,0.089751,1990,1,1
+Western Europe,Forest,ForestAEZ15,ForestAEZ15,1990,0.084061,1990,1,1
+Japan,Forest,ForestAEZ15,ForestAEZ15,1990,0.000309,1990,1,1
+Australia_NZ,Forest,ForestAEZ15,ForestAEZ15,1990,0.000106,1990,1,1
+Former Soviet Union,Forest,ForestAEZ15,ForestAEZ15,1990,0.158554,1990,1,1
+China,Forest,ForestAEZ15,ForestAEZ15,1990,0.014271,1990,1,1
+Middle East,Forest,ForestAEZ15,ForestAEZ15,1990,0,1990,0,0
+Africa,Forest,ForestAEZ15,ForestAEZ15,1990,0,1990,0,0
+Latin America,Forest,ForestAEZ15,ForestAEZ15,1990,0.000318,1990,1,1
+Southeast Asia,Forest,ForestAEZ15,ForestAEZ15,1990,0.000289,1990,1,1
+Eastern Europe,Forest,ForestAEZ15,ForestAEZ15,1990,0.000865,1990,1,1
+Korea,Forest,ForestAEZ15,ForestAEZ15,1990,0,1990,0,0
+India,Forest,ForestAEZ15,ForestAEZ15,1990,0.000464,1990,1,1
+USA,Forest,ForestAEZ16,ForestAEZ16,1990,0.00358,1990,1,1
+Canada,Forest,ForestAEZ16,ForestAEZ16,1990,0.001724,1990,1,1
+Western Europe,Forest,ForestAEZ16,ForestAEZ16,1990,0.00527,1990,1,1
+Japan,Forest,ForestAEZ16,ForestAEZ16,1990,0,1990,0,0
+Australia_NZ,Forest,ForestAEZ16,ForestAEZ16,1990,0.000296,1990,1,1
+Former Soviet Union,Forest,ForestAEZ16,ForestAEZ16,1990,0.000573,1990,1,1
+China,Forest,ForestAEZ16,ForestAEZ16,1990,0.003071,1990,1,1
+Middle East,Forest,ForestAEZ16,ForestAEZ16,1990,0,1990,0,0
+Africa,Forest,ForestAEZ16,ForestAEZ16,1990,0,1990,0,0
+Latin America,Forest,ForestAEZ16,ForestAEZ16,1990,0.000439,1990,1,1
+Southeast Asia,Forest,ForestAEZ16,ForestAEZ16,1990,0.000753,1990,1,1
+Eastern Europe,Forest,ForestAEZ16,ForestAEZ16,1990,0.000911,1990,1,1
+Korea,Forest,ForestAEZ16,ForestAEZ16,1990,0,1990,0,0
+India,Forest,ForestAEZ16,ForestAEZ16,1990,0.000305,1990,1,1
+USA,Forest,ForestAEZ17,ForestAEZ17,1990,0,1990,0,0
+Canada,Forest,ForestAEZ17,ForestAEZ17,1990,0,1990,0,0
+Western Europe,Forest,ForestAEZ17,ForestAEZ17,1990,0,1990,0,0
+Japan,Forest,ForestAEZ17,ForestAEZ17,1990,0,1990,0,0
+Australia_NZ,Forest,ForestAEZ17,ForestAEZ17,1990,0.000246,1990,1,1
+Former Soviet Union,Forest,ForestAEZ17,ForestAEZ17,1990,0,1990,0,0
+China,Forest,ForestAEZ17,ForestAEZ17,1990,2e-04,1990,1,1
+Middle East,Forest,ForestAEZ17,ForestAEZ17,1990,0,1990,0,0
+Africa,Forest,ForestAEZ17,ForestAEZ17,1990,0,1990,0,0
+Latin America,Forest,ForestAEZ17,ForestAEZ17,1990,0.00013,1990,1,1
+Southeast Asia,Forest,ForestAEZ17,ForestAEZ17,1990,0,1990,0,0
+Eastern Europe,Forest,ForestAEZ17,ForestAEZ17,1990,0,1990,0,0
+Korea,Forest,ForestAEZ17,ForestAEZ17,1990,0,1990,0,0
+India,Forest,ForestAEZ17,ForestAEZ17,1990,0,1990,0,0
+USA,Forest,ForestAEZ18,ForestAEZ18,1990,0,1990,0,0
+Canada,Forest,ForestAEZ18,ForestAEZ18,1990,0,1990,0,0
+Western Europe,Forest,ForestAEZ18,ForestAEZ18,1990,0,1990,0,0
+Japan,Forest,ForestAEZ18,ForestAEZ18,1990,0,1990,0,0
+Australia_NZ,Forest,ForestAEZ18,ForestAEZ18,1990,0,1990,0,0
+Former Soviet Union,Forest,ForestAEZ18,ForestAEZ18,1990,0,1990,0,0
+China,Forest,ForestAEZ18,ForestAEZ18,1990,0,1990,0,0
+Middle East,Forest,ForestAEZ18,ForestAEZ18,1990,0,1990,0,0
+Africa,Forest,ForestAEZ18,ForestAEZ18,1990,0,1990,0,0
+Latin America,Forest,ForestAEZ18,ForestAEZ18,1990,5.3e-05,1990,1,1
+Southeast Asia,Forest,ForestAEZ18,ForestAEZ18,1990,0,1990,0,0
+Eastern Europe,Forest,ForestAEZ18,ForestAEZ18,1990,0,1990,0,0
+Korea,Forest,ForestAEZ18,ForestAEZ18,1990,0,1990,0,0
+India,Forest,ForestAEZ18,ForestAEZ18,1990,0,1990,0,0
+USA,Forest,ForestAEZ01,ForestAEZ01,2005,0,2005,0,0
+Canada,Forest,ForestAEZ01,ForestAEZ01,2005,0,2005,0,0
+Western Europe,Forest,ForestAEZ01,ForestAEZ01,2005,0,2005,0,0
+Japan,Forest,ForestAEZ01,ForestAEZ01,2005,0,2005,0,0
+Australia_NZ,Forest,ForestAEZ01,ForestAEZ01,2005,1.5e-05,2005,1,1
+Former Soviet Union,Forest,ForestAEZ01,ForestAEZ01,2005,0,2005,0,0
+China,Forest,ForestAEZ01,ForestAEZ01,2005,0,2005,0,0
+Middle East,Forest,ForestAEZ01,ForestAEZ01,2005,0,2005,0,0
+Africa,Forest,ForestAEZ01,ForestAEZ01,2005,0.000107,2005,1,1
+Latin America,Forest,ForestAEZ01,ForestAEZ01,2005,0.000829,2005,1,1
+Southeast Asia,Forest,ForestAEZ01,ForestAEZ01,2005,0,2005,0,0
+Eastern Europe,Forest,ForestAEZ01,ForestAEZ01,2005,0,2005,0,0
+Korea,Forest,ForestAEZ01,ForestAEZ01,2005,0,2005,0,0
+India,Forest,ForestAEZ01,ForestAEZ01,2005,0,2005,0,0
+USA,Forest,ForestAEZ02,ForestAEZ02,2005,0,2005,0,0
+Canada,Forest,ForestAEZ02,ForestAEZ02,2005,0,2005,0,0
+Western Europe,Forest,ForestAEZ02,ForestAEZ02,2005,0,2005,0,0
+Japan,Forest,ForestAEZ02,ForestAEZ02,2005,0,2005,0,0
+Australia_NZ,Forest,ForestAEZ02,ForestAEZ02,2005,0,2005,0,0
+Former Soviet Union,Forest,ForestAEZ02,ForestAEZ02,2005,0,2005,0,0
+China,Forest,ForestAEZ02,ForestAEZ02,2005,0,2005,0,0
+Middle East,Forest,ForestAEZ02,ForestAEZ02,2005,0,2005,0,0
+Africa,Forest,ForestAEZ02,ForestAEZ02,2005,0.001776,2005,1,1
+Latin America,Forest,ForestAEZ02,ForestAEZ02,2005,0.001388,2005,1,1
+Southeast Asia,Forest,ForestAEZ02,ForestAEZ02,2005,0,2005,0,0
+Eastern Europe,Forest,ForestAEZ02,ForestAEZ02,2005,0,2005,0,0
+Korea,Forest,ForestAEZ02,ForestAEZ02,2005,0,2005,0,0
+India,Forest,ForestAEZ02,ForestAEZ02,2005,0.01982,2005,1,1
+USA,Forest,ForestAEZ03,ForestAEZ03,2005,0,2005,0,0
+Canada,Forest,ForestAEZ03,ForestAEZ03,2005,0,2005,0,0
+Western Europe,Forest,ForestAEZ03,ForestAEZ03,2005,0,2005,0,0
+Japan,Forest,ForestAEZ03,ForestAEZ03,2005,0,2005,0,0
+Australia_NZ,Forest,ForestAEZ03,ForestAEZ03,2005,0.000226,2005,1,1
+Former Soviet Union,Forest,ForestAEZ03,ForestAEZ03,2005,0,2005,0,0
+China,Forest,ForestAEZ03,ForestAEZ03,2005,0,2005,0,0
+Middle East,Forest,ForestAEZ03,ForestAEZ03,2005,0,2005,0,0
+Africa,Forest,ForestAEZ03,ForestAEZ03,2005,0.014611,2005,1,1
+Latin America,Forest,ForestAEZ03,ForestAEZ03,2005,0.004441,2005,1,1
+Southeast Asia,Forest,ForestAEZ03,ForestAEZ03,2005,0.000381,2005,1,1
+Eastern Europe,Forest,ForestAEZ03,ForestAEZ03,2005,0,2005,0,0
+Korea,Forest,ForestAEZ03,ForestAEZ03,2005,0,2005,0,0
+India,Forest,ForestAEZ03,ForestAEZ03,2005,0.1372,2005,1,1
+USA,Forest,ForestAEZ04,ForestAEZ04,2005,0,2005,0,0
+Canada,Forest,ForestAEZ04,ForestAEZ04,2005,0,2005,0,0
+Western Europe,Forest,ForestAEZ04,ForestAEZ04,2005,0,2005,0,0
+Japan,Forest,ForestAEZ04,ForestAEZ04,2005,0,2005,0,0
+Australia_NZ,Forest,ForestAEZ04,ForestAEZ04,2005,0.001957,2005,1,1
+Former Soviet Union,Forest,ForestAEZ04,ForestAEZ04,2005,0,2005,0,0
+China,Forest,ForestAEZ04,ForestAEZ04,2005,0.006774,2005,1,1
+Middle East,Forest,ForestAEZ04,ForestAEZ04,2005,0,2005,0,0
+Africa,Forest,ForestAEZ04,ForestAEZ04,2005,0.133883,2005,1,1
+Latin America,Forest,ForestAEZ04,ForestAEZ04,2005,0.017039,2005,1,1
+Southeast Asia,Forest,ForestAEZ04,ForestAEZ04,2005,0.028981,2005,1,1
+Eastern Europe,Forest,ForestAEZ04,ForestAEZ04,2005,0,2005,0,0
+Korea,Forest,ForestAEZ04,ForestAEZ04,2005,0,2005,0,0
+India,Forest,ForestAEZ04,ForestAEZ04,2005,0.048853,2005,1,1
+USA,Forest,ForestAEZ05,ForestAEZ05,2005,0,2005,0,0
+Canada,Forest,ForestAEZ05,ForestAEZ05,2005,0,2005,0,0
+Western Europe,Forest,ForestAEZ05,ForestAEZ05,2005,0,2005,0,0
+Japan,Forest,ForestAEZ05,ForestAEZ05,2005,0,2005,0,0
+Australia_NZ,Forest,ForestAEZ05,ForestAEZ05,2005,0.001716,2005,1,1
+Former Soviet Union,Forest,ForestAEZ05,ForestAEZ05,2005,0,2005,0,0
+China,Forest,ForestAEZ05,ForestAEZ05,2005,0.043957,2005,1,1
+Middle East,Forest,ForestAEZ05,ForestAEZ05,2005,0,2005,0,0
+Africa,Forest,ForestAEZ05,ForestAEZ05,2005,0.153011,2005,1,1
+Latin America,Forest,ForestAEZ05,ForestAEZ05,2005,0.091635,2005,1,1
+Southeast Asia,Forest,ForestAEZ05,ForestAEZ05,2005,0.055335,2005,1,1
+Eastern Europe,Forest,ForestAEZ05,ForestAEZ05,2005,0,2005,0,0
+Korea,Forest,ForestAEZ05,ForestAEZ05,2005,0,2005,0,0
+India,Forest,ForestAEZ05,ForestAEZ05,2005,0.03266,2005,1,1
+USA,Forest,ForestAEZ06,ForestAEZ06,2005,0,2005,0,0
+Canada,Forest,ForestAEZ06,ForestAEZ06,2005,0,2005,0,0
+Western Europe,Forest,ForestAEZ06,ForestAEZ06,2005,0,2005,0,0
+Japan,Forest,ForestAEZ06,ForestAEZ06,2005,0,2005,0,0
+Australia_NZ,Forest,ForestAEZ06,ForestAEZ06,2005,0.000932,2005,1,1
+Former Soviet Union,Forest,ForestAEZ06,ForestAEZ06,2005,0,2005,0,0
+China,Forest,ForestAEZ06,ForestAEZ06,2005,0.025656,2005,1,1
+Middle East,Forest,ForestAEZ06,ForestAEZ06,2005,0,2005,0,0
+Africa,Forest,ForestAEZ06,ForestAEZ06,2005,0.312164,2005,1,1
+Latin America,Forest,ForestAEZ06,ForestAEZ06,2005,0.31023,2005,1,1
+Southeast Asia,Forest,ForestAEZ06,ForestAEZ06,2005,0.209755,2005,1,1
+Eastern Europe,Forest,ForestAEZ06,ForestAEZ06,2005,0,2005,0,0
+Korea,Forest,ForestAEZ06,ForestAEZ06,2005,0,2005,0,0
+India,Forest,ForestAEZ06,ForestAEZ06,2005,0.020252,2005,1,1
+USA,Forest,ForestAEZ07,ForestAEZ07,2005,0.023148,2005,1,1
+Canada,Forest,ForestAEZ07,ForestAEZ07,2005,1.3e-05,2005,1,1
+Western Europe,Forest,ForestAEZ07,ForestAEZ07,2005,0,2005,0,0
+Japan,Forest,ForestAEZ07,ForestAEZ07,2005,0,2005,0,0
+Australia_NZ,Forest,ForestAEZ07,ForestAEZ07,2005,0.000183,2005,1,1
+Former Soviet Union,Forest,ForestAEZ07,ForestAEZ07,2005,2.2e-05,2005,1,1
+China,Forest,ForestAEZ07,ForestAEZ07,2005,0.000139,2005,1,1
+Middle East,Forest,ForestAEZ07,ForestAEZ07,2005,0.000487,2005,1,1
+Africa,Forest,ForestAEZ07,ForestAEZ07,2005,0.000148,2005,1,1
+Latin America,Forest,ForestAEZ07,ForestAEZ07,2005,0.002051,2005,1,1
+Southeast Asia,Forest,ForestAEZ07,ForestAEZ07,2005,0,2005,0,0
+Eastern Europe,Forest,ForestAEZ07,ForestAEZ07,2005,0,2005,0,0
+Korea,Forest,ForestAEZ07,ForestAEZ07,2005,0,2005,0,0
+India,Forest,ForestAEZ07,ForestAEZ07,2005,0,2005,0,0
+USA,Forest,ForestAEZ08,ForestAEZ08,2005,0.033502,2005,1,1
+Canada,Forest,ForestAEZ08,ForestAEZ08,2005,0.000201,2005,1,1
+Western Europe,Forest,ForestAEZ08,ForestAEZ08,2005,0.006766,2005,1,1
+Japan,Forest,ForestAEZ08,ForestAEZ08,2005,0,2005,0,0
+Australia_NZ,Forest,ForestAEZ08,ForestAEZ08,2005,0.000124,2005,1,1
+Former Soviet Union,Forest,ForestAEZ08,ForestAEZ08,2005,0.001139,2005,1,1
+China,Forest,ForestAEZ08,ForestAEZ08,2005,0.01437,2005,1,1
+Middle East,Forest,ForestAEZ08,ForestAEZ08,2005,0.000976,2005,1,1
+Africa,Forest,ForestAEZ08,ForestAEZ08,2005,0.002071,2005,1,1
+Latin America,Forest,ForestAEZ08,ForestAEZ08,2005,0.004145,2005,1,1
+Southeast Asia,Forest,ForestAEZ08,ForestAEZ08,2005,1.1e-05,2005,1,1
+Eastern Europe,Forest,ForestAEZ08,ForestAEZ08,2005,8.5e-05,2005,1,1
+Korea,Forest,ForestAEZ08,ForestAEZ08,2005,0,2005,0,0
+India,Forest,ForestAEZ08,ForestAEZ08,2005,0.013456,2005,1,1
+USA,Forest,ForestAEZ09,ForestAEZ09,2005,0.017597,2005,1,1
+Canada,Forest,ForestAEZ09,ForestAEZ09,2005,0.023044,2005,1,1
+Western Europe,Forest,ForestAEZ09,ForestAEZ09,2005,0.037042,2005,1,1
+Japan,Forest,ForestAEZ09,ForestAEZ09,2005,0.000316,2005,1,1
+Australia_NZ,Forest,ForestAEZ09,ForestAEZ09,2005,0.000801,2005,1,1
+Former Soviet Union,Forest,ForestAEZ09,ForestAEZ09,2005,0.019744,2005,1,1
+China,Forest,ForestAEZ09,ForestAEZ09,2005,0.029909,2005,1,1
+Middle East,Forest,ForestAEZ09,ForestAEZ09,2005,0.000295,2005,1,1
+Africa,Forest,ForestAEZ09,ForestAEZ09,2005,0.007515,2005,1,1
+Latin America,Forest,ForestAEZ09,ForestAEZ09,2005,0.007925,2005,1,1
+Southeast Asia,Forest,ForestAEZ09,ForestAEZ09,2005,1.2e-05,2005,1,1
+Eastern Europe,Forest,ForestAEZ09,ForestAEZ09,2005,0.00746,2005,1,1
+Korea,Forest,ForestAEZ09,ForestAEZ09,2005,0,2005,0,0
+India,Forest,ForestAEZ09,ForestAEZ09,2005,0.02829,2005,1,1
+USA,Forest,ForestAEZ10,ForestAEZ10,2005,0.091272,2005,1,1
+Canada,Forest,ForestAEZ10,ForestAEZ10,2005,0.01332,2005,1,1
+Western Europe,Forest,ForestAEZ10,ForestAEZ10,2005,0.114404,2005,1,1
+Japan,Forest,ForestAEZ10,ForestAEZ10,2005,0.008359,2005,1,1
+Australia_NZ,Forest,ForestAEZ10,ForestAEZ10,2005,0.002704,2005,1,1
+Former Soviet Union,Forest,ForestAEZ10,ForestAEZ10,2005,0.025979,2005,1,1
+China,Forest,ForestAEZ10,ForestAEZ10,2005,0.036239,2005,1,1
+Middle East,Forest,ForestAEZ10,ForestAEZ10,2005,0,2005,0,0
+Africa,Forest,ForestAEZ10,ForestAEZ10,2005,0.014495,2005,1,1
+Latin America,Forest,ForestAEZ10,ForestAEZ10,2005,0.005427,2005,1,1
+Southeast Asia,Forest,ForestAEZ10,ForestAEZ10,2005,0.00113,2005,1,1
+Eastern Europe,Forest,ForestAEZ10,ForestAEZ10,2005,0.078228,2005,1,1
+Korea,Forest,ForestAEZ10,ForestAEZ10,2005,0.002673,2005,1,1
+India,Forest,ForestAEZ10,ForestAEZ10,2005,0.002259,2005,1,1
+USA,Forest,ForestAEZ11,ForestAEZ11,2005,0.068726,2005,1,1
+Canada,Forest,ForestAEZ11,ForestAEZ11,2005,0.000262,2005,1,1
+Western Europe,Forest,ForestAEZ11,ForestAEZ11,2005,0.058795,2005,1,1
+Japan,Forest,ForestAEZ11,ForestAEZ11,2005,0.005556,2005,1,1
+Australia_NZ,Forest,ForestAEZ11,ForestAEZ11,2005,0.017762,2005,1,1
+Former Soviet Union,Forest,ForestAEZ11,ForestAEZ11,2005,0.000477,2005,1,1
+China,Forest,ForestAEZ11,ForestAEZ11,2005,0.052375,2005,1,1
+Middle East,Forest,ForestAEZ11,ForestAEZ11,2005,0,2005,0,0
+Africa,Forest,ForestAEZ11,ForestAEZ11,2005,0.001715,2005,1,1
+Latin America,Forest,ForestAEZ11,ForestAEZ11,2005,0.001954,2005,1,1
+Southeast Asia,Forest,ForestAEZ11,ForestAEZ11,2005,0.019859,2005,1,1
+Eastern Europe,Forest,ForestAEZ11,ForestAEZ11,2005,0.010862,2005,1,1
+Korea,Forest,ForestAEZ11,ForestAEZ11,2005,0.00207,2005,1,1
+India,Forest,ForestAEZ11,ForestAEZ11,2005,0.004314,2005,1,1
+USA,Forest,ForestAEZ12,ForestAEZ12,2005,0.108419,2005,1,1
+Canada,Forest,ForestAEZ12,ForestAEZ12,2005,0,2005,0,0
+Western Europe,Forest,ForestAEZ12,ForestAEZ12,2005,0.012844,2005,1,1
+Japan,Forest,ForestAEZ12,ForestAEZ12,2005,0.001964,2005,1,1
+Australia_NZ,Forest,ForestAEZ12,ForestAEZ12,2005,0.024355,2005,1,1
+Former Soviet Union,Forest,ForestAEZ12,ForestAEZ12,2005,0.000147,2005,1,1
+China,Forest,ForestAEZ12,ForestAEZ12,2005,0.121232,2005,1,1
+Middle East,Forest,ForestAEZ12,ForestAEZ12,2005,0,2005,0,0
+Africa,Forest,ForestAEZ12,ForestAEZ12,2005,0.000558,2005,1,1
+Latin America,Forest,ForestAEZ12,ForestAEZ12,2005,0.010839,2005,1,1
+Southeast Asia,Forest,ForestAEZ12,ForestAEZ12,2005,0.009016,2005,1,1
+Eastern Europe,Forest,ForestAEZ12,ForestAEZ12,2005,0.00012,2005,1,1
+Korea,Forest,ForestAEZ12,ForestAEZ12,2005,0,2005,0,0
+India,Forest,ForestAEZ12,ForestAEZ12,2005,0.019529,2005,1,1
+USA,Forest,ForestAEZ13,ForestAEZ13,2005,0.016221,2005,1,1
+Canada,Forest,ForestAEZ13,ForestAEZ13,2005,0.001576,2005,1,1
+Western Europe,Forest,ForestAEZ13,ForestAEZ13,2005,0.000156,2005,1,1
+Japan,Forest,ForestAEZ13,ForestAEZ13,2005,0,2005,0,0
+Australia_NZ,Forest,ForestAEZ13,ForestAEZ13,2005,0,2005,0,0
+Former Soviet Union,Forest,ForestAEZ13,ForestAEZ13,2005,0.002319,2005,1,1
+China,Forest,ForestAEZ13,ForestAEZ13,2005,0.00017,2005,1,1
+Middle East,Forest,ForestAEZ13,ForestAEZ13,2005,0,2005,0,0
+Africa,Forest,ForestAEZ13,ForestAEZ13,2005,0,2005,0,0
+Latin America,Forest,ForestAEZ13,ForestAEZ13,2005,0.00025,2005,1,1
+Southeast Asia,Forest,ForestAEZ13,ForestAEZ13,2005,2e-06,2005,1,1
+Eastern Europe,Forest,ForestAEZ13,ForestAEZ13,2005,0,2005,0,0
+Korea,Forest,ForestAEZ13,ForestAEZ13,2005,0,2005,0,0
+India,Forest,ForestAEZ13,ForestAEZ13,2005,3.3e-05,2005,1,1
+USA,Forest,ForestAEZ14,ForestAEZ14,2005,0.049148,2005,1,1
+Canada,Forest,ForestAEZ14,ForestAEZ14,2005,0.051757,2005,1,1
+Western Europe,Forest,ForestAEZ14,ForestAEZ14,2005,0.020856,2005,1,1
+Japan,Forest,ForestAEZ14,ForestAEZ14,2005,0,2005,0,0
+Australia_NZ,Forest,ForestAEZ14,ForestAEZ14,2005,0,2005,0,0
+Former Soviet Union,Forest,ForestAEZ14,ForestAEZ14,2005,0.083255,2005,1,1
+China,Forest,ForestAEZ14,ForestAEZ14,2005,0.001494,2005,1,1
+Middle East,Forest,ForestAEZ14,ForestAEZ14,2005,0,2005,0,0
+Africa,Forest,ForestAEZ14,ForestAEZ14,2005,0,2005,0,0
+Latin America,Forest,ForestAEZ14,ForestAEZ14,2005,0.001225,2005,1,1
+Southeast Asia,Forest,ForestAEZ14,ForestAEZ14,2005,4.5e-05,2005,1,1
+Eastern Europe,Forest,ForestAEZ14,ForestAEZ14,2005,0,2005,0,0
+Korea,Forest,ForestAEZ14,ForestAEZ14,2005,0,2005,0,0
+India,Forest,ForestAEZ14,ForestAEZ14,2005,6e-06,2005,1,1
+USA,Forest,ForestAEZ15,ForestAEZ15,2005,0.04095,2005,1,1
+Canada,Forest,ForestAEZ15,ForestAEZ15,2005,0.095077,2005,1,1
+Western Europe,Forest,ForestAEZ15,ForestAEZ15,2005,0.097616,2005,1,1
+Japan,Forest,ForestAEZ15,ForestAEZ15,2005,0.000156,2005,1,1
+Australia_NZ,Forest,ForestAEZ15,ForestAEZ15,2005,0.000164,2005,1,1
+Former Soviet Union,Forest,ForestAEZ15,ForestAEZ15,2005,0.104042,2005,1,1
+China,Forest,ForestAEZ15,ForestAEZ15,2005,0.012353,2005,1,1
+Middle East,Forest,ForestAEZ15,ForestAEZ15,2005,0,2005,0,0
+Africa,Forest,ForestAEZ15,ForestAEZ15,2005,0,2005,0,0
+Latin America,Forest,ForestAEZ15,ForestAEZ15,2005,0.00041,2005,1,1
+Southeast Asia,Forest,ForestAEZ15,ForestAEZ15,2005,0.000219,2005,1,1
+Eastern Europe,Forest,ForestAEZ15,ForestAEZ15,2005,0.000981,2005,1,1
+Korea,Forest,ForestAEZ15,ForestAEZ15,2005,0,2005,0,0
+India,Forest,ForestAEZ15,ForestAEZ15,2005,0.000311,2005,1,1
+USA,Forest,ForestAEZ16,ForestAEZ16,2005,0.002971,2005,1,1
+Canada,Forest,ForestAEZ16,ForestAEZ16,2005,0.001862,2005,1,1
+Western Europe,Forest,ForestAEZ16,ForestAEZ16,2005,0.005979,2005,1,1
+Japan,Forest,ForestAEZ16,ForestAEZ16,2005,0,2005,0,0
+Australia_NZ,Forest,ForestAEZ16,ForestAEZ16,2005,0.000452,2005,1,1
+Former Soviet Union,Forest,ForestAEZ16,ForestAEZ16,2005,0.000365,2005,1,1
+China,Forest,ForestAEZ16,ForestAEZ16,2005,0.002421,2005,1,1
+Middle East,Forest,ForestAEZ16,ForestAEZ16,2005,0,2005,0,0
+Africa,Forest,ForestAEZ16,ForestAEZ16,2005,0,2005,0,0
+Latin America,Forest,ForestAEZ16,ForestAEZ16,2005,0.000569,2005,1,1
+Southeast Asia,Forest,ForestAEZ16,ForestAEZ16,2005,0.00063,2005,1,1
+Eastern Europe,Forest,ForestAEZ16,ForestAEZ16,2005,0.001014,2005,1,1
+Korea,Forest,ForestAEZ16,ForestAEZ16,2005,0,2005,0,0
+India,Forest,ForestAEZ16,ForestAEZ16,2005,0.00022,2005,1,1
+USA,Forest,ForestAEZ17,ForestAEZ17,2005,0,2005,0,0
+Canada,Forest,ForestAEZ17,ForestAEZ17,2005,0,2005,0,0
+Western Europe,Forest,ForestAEZ17,ForestAEZ17,2005,0,2005,0,0
+Japan,Forest,ForestAEZ17,ForestAEZ17,2005,0,2005,0,0
+Australia_NZ,Forest,ForestAEZ17,ForestAEZ17,2005,0.000358,2005,1,1
+Former Soviet Union,Forest,ForestAEZ17,ForestAEZ17,2005,0,2005,0,0
+China,Forest,ForestAEZ17,ForestAEZ17,2005,0.00016,2005,1,1
+Middle East,Forest,ForestAEZ17,ForestAEZ17,2005,0,2005,0,0
+Africa,Forest,ForestAEZ17,ForestAEZ17,2005,0,2005,0,0
+Latin America,Forest,ForestAEZ17,ForestAEZ17,2005,0.00017,2005,1,1
+Southeast Asia,Forest,ForestAEZ17,ForestAEZ17,2005,0,2005,0,0
+Eastern Europe,Forest,ForestAEZ17,ForestAEZ17,2005,0,2005,0,0
+Korea,Forest,ForestAEZ17,ForestAEZ17,2005,0,2005,0,0
+India,Forest,ForestAEZ17,ForestAEZ17,2005,0,2005,0,0
+USA,Forest,ForestAEZ18,ForestAEZ18,2005,0,2005,0,0
+Canada,Forest,ForestAEZ18,ForestAEZ18,2005,0,2005,0,0
+Western Europe,Forest,ForestAEZ18,ForestAEZ18,2005,0,2005,0,0
+Japan,Forest,ForestAEZ18,ForestAEZ18,2005,0,2005,0,0
+Australia_NZ,Forest,ForestAEZ18,ForestAEZ18,2005,0,2005,0,0
+Former Soviet Union,Forest,ForestAEZ18,ForestAEZ18,2005,0,2005,0,0
+China,Forest,ForestAEZ18,ForestAEZ18,2005,0,2005,0,0
+Middle East,Forest,ForestAEZ18,ForestAEZ18,2005,0,2005,0,0
+Africa,Forest,ForestAEZ18,ForestAEZ18,2005,0,2005,0,0
+Latin America,Forest,ForestAEZ18,ForestAEZ18,2005,6.9e-05,2005,1,1
+Southeast Asia,Forest,ForestAEZ18,ForestAEZ18,2005,0,2005,0,0
+Eastern Europe,Forest,ForestAEZ18,ForestAEZ18,2005,0,2005,0,0
+Korea,Forest,ForestAEZ18,ForestAEZ18,2005,0,2005,0,0
+India,Forest,ForestAEZ18,ForestAEZ18,2005,0,2005,0,0

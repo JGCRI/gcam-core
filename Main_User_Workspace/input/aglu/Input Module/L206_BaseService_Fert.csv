@@ -1,0 +1,47 @@
+INPUT_TABLE
+Variable ID
+BaseService
+
+region,energy.final.demand,year,base.service
+USA,Exports_fertilizer,1975,1
+Canada,Exports_fertilizer,1975,1
+Western Europe,Exports_fertilizer,1975,1
+Japan,Exports_fertilizer,1975,1
+Australia_NZ,Exports_fertilizer,1975,1
+Former Soviet Union,Exports_fertilizer,1975,1
+China,Exports_fertilizer,1975,1
+Middle East,Exports_fertilizer,1975,1
+Africa,Exports_fertilizer,1975,1
+Latin America,Exports_fertilizer,1975,1
+Southeast Asia,Exports_fertilizer,1975,1
+Eastern Europe,Exports_fertilizer,1975,1
+Korea,Exports_fertilizer,1975,1
+India,Exports_fertilizer,1975,1
+USA,Exports_fertilizer,1990,2.140441
+Canada,Exports_fertilizer,1990,1.462104
+Western Europe,Exports_fertilizer,1990,0
+Japan,Exports_fertilizer,1990,0.2681
+Australia_NZ,Exports_fertilizer,1990,0
+Former Soviet Union,Exports_fertilizer,1990,3.501728
+China,Exports_fertilizer,1990,0
+Middle East,Exports_fertilizer,1990,0.769279
+Africa,Exports_fertilizer,1990,0.063943
+Latin America,Exports_fertilizer,1990,0
+Southeast Asia,Exports_fertilizer,1990,0
+Eastern Europe,Exports_fertilizer,1990,1.428622
+Korea,Exports_fertilizer,1990,0.092153
+India,Exports_fertilizer,1990,0
+USA,Exports_fertilizer,2005,0
+Canada,Exports_fertilizer,2005,1.302292
+Western Europe,Exports_fertilizer,2005,0
+Japan,Exports_fertilizer,2005,0.209884
+Australia_NZ,Exports_fertilizer,2005,0
+Former Soviet Union,Exports_fertilizer,2005,8.532884
+China,Exports_fertilizer,2005,0
+Middle East,Exports_fertilizer,2005,3.189449
+Africa,Exports_fertilizer,2005,0.134508
+Latin America,Exports_fertilizer,2005,0
+Southeast Asia,Exports_fertilizer,2005,0
+Eastern Europe,Exports_fertilizer,2005,1.261841
+Korea,Exports_fertilizer,2005,0
+India,Exports_fertilizer,2005,0

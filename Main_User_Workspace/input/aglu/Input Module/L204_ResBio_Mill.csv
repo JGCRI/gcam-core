@@ -1,0 +1,117 @@
+INPUT_TABLE
+Variable ID
+ResBio
+
+region,supplysector,subsector,technology,year,residue.biomass.production,mass.conversion,harvest.index,eros.ctrl,mass.to.energy,water.content
+USA,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,biomass,500,0.8,0,0.0189,0.065
+Canada,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,biomass,500,0.8,0,0.0189,0.065
+Western Europe,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,biomass,500,0.8,0,0.0189,0.065
+Japan,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,biomass,500,0.8,0,0.0189,0.065
+Australia_NZ,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,biomass,500,0.8,0,0.0189,0.065
+Former Soviet Union,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,biomass,500,0.8,0,0.0189,0.065
+China,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,biomass,500,0.8,0,0.0189,0.065
+Middle East,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,biomass,500,0.8,0,0.0189,0.065
+Africa,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,biomass,500,0.8,0,0.0189,0.065
+Latin America,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,biomass,500,0.8,0,0.0189,0.065
+Southeast Asia,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,biomass,500,0.8,0,0.0189,0.065
+Eastern Europe,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,biomass,500,0.8,0,0.0189,0.065
+Korea,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,biomass,500,0.8,0,0.0189,0.065
+India,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,1990,biomass,500,0.8,0,0.0189,0.065
+USA,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,biomass,500,0.8,0,0.0189,0.065
+Canada,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,biomass,500,0.8,0,0.0189,0.065
+Western Europe,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,biomass,500,0.8,0,0.0189,0.065
+Japan,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,biomass,500,0.8,0,0.0189,0.065
+Australia_NZ,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,biomass,500,0.8,0,0.0189,0.065
+Former Soviet Union,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,biomass,500,0.8,0,0.0189,0.065
+China,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,biomass,500,0.8,0,0.0189,0.065
+Middle East,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,biomass,500,0.8,0,0.0189,0.065
+Africa,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,biomass,500,0.8,0,0.0189,0.065
+Latin America,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,biomass,500,0.8,0,0.0189,0.065
+Southeast Asia,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,biomass,500,0.8,0,0.0189,0.065
+Eastern Europe,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,biomass,500,0.8,0,0.0189,0.065
+Korea,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,biomass,500,0.8,0,0.0189,0.065
+India,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2005,biomass,500,0.8,0,0.0189,0.065
+USA,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2020,biomass,500,0.8,0,0.0189,0.065
+Canada,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2020,biomass,500,0.8,0,0.0189,0.065
+Western Europe,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2020,biomass,500,0.8,0,0.0189,0.065
+Japan,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2020,biomass,500,0.8,0,0.0189,0.065
+Australia_NZ,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2020,biomass,500,0.8,0,0.0189,0.065
+Former Soviet Union,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2020,biomass,500,0.8,0,0.0189,0.065
+China,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2020,biomass,500,0.8,0,0.0189,0.065
+Middle East,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2020,biomass,500,0.8,0,0.0189,0.065
+Africa,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2020,biomass,500,0.8,0,0.0189,0.065
+Latin America,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2020,biomass,500,0.8,0,0.0189,0.065
+Southeast Asia,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2020,biomass,500,0.8,0,0.0189,0.065
+Eastern Europe,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2020,biomass,500,0.8,0,0.0189,0.065
+Korea,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2020,biomass,500,0.8,0,0.0189,0.065
+India,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2020,biomass,500,0.8,0,0.0189,0.065
+USA,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2035,biomass,500,0.8,0,0.0189,0.065
+Canada,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2035,biomass,500,0.8,0,0.0189,0.065
+Western Europe,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2035,biomass,500,0.8,0,0.0189,0.065
+Japan,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2035,biomass,500,0.8,0,0.0189,0.065
+Australia_NZ,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2035,biomass,500,0.8,0,0.0189,0.065
+Former Soviet Union,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2035,biomass,500,0.8,0,0.0189,0.065
+China,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2035,biomass,500,0.8,0,0.0189,0.065
+Middle East,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2035,biomass,500,0.8,0,0.0189,0.065
+Africa,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2035,biomass,500,0.8,0,0.0189,0.065
+Latin America,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2035,biomass,500,0.8,0,0.0189,0.065
+Southeast Asia,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2035,biomass,500,0.8,0,0.0189,0.065
+Eastern Europe,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2035,biomass,500,0.8,0,0.0189,0.065
+Korea,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2035,biomass,500,0.8,0,0.0189,0.065
+India,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2035,biomass,500,0.8,0,0.0189,0.065
+USA,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2050,biomass,500,0.8,0,0.0189,0.065
+Canada,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2050,biomass,500,0.8,0,0.0189,0.065
+Western Europe,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2050,biomass,500,0.8,0,0.0189,0.065
+Japan,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2050,biomass,500,0.8,0,0.0189,0.065
+Australia_NZ,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2050,biomass,500,0.8,0,0.0189,0.065
+Former Soviet Union,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2050,biomass,500,0.8,0,0.0189,0.065
+China,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2050,biomass,500,0.8,0,0.0189,0.065
+Middle East,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2050,biomass,500,0.8,0,0.0189,0.065
+Africa,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2050,biomass,500,0.8,0,0.0189,0.065
+Latin America,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2050,biomass,500,0.8,0,0.0189,0.065
+Southeast Asia,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2050,biomass,500,0.8,0,0.0189,0.065
+Eastern Europe,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2050,biomass,500,0.8,0,0.0189,0.065
+Korea,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2050,biomass,500,0.8,0,0.0189,0.065
+India,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2050,biomass,500,0.8,0,0.0189,0.065
+USA,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2065,biomass,500,0.8,0,0.0189,0.065
+Canada,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2065,biomass,500,0.8,0,0.0189,0.065
+Western Europe,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2065,biomass,500,0.8,0,0.0189,0.065
+Japan,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2065,biomass,500,0.8,0,0.0189,0.065
+Australia_NZ,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2065,biomass,500,0.8,0,0.0189,0.065
+Former Soviet Union,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2065,biomass,500,0.8,0,0.0189,0.065
+China,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2065,biomass,500,0.8,0,0.0189,0.065
+Middle East,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2065,biomass,500,0.8,0,0.0189,0.065
+Africa,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2065,biomass,500,0.8,0,0.0189,0.065
+Latin America,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2065,biomass,500,0.8,0,0.0189,0.065
+Southeast Asia,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2065,biomass,500,0.8,0,0.0189,0.065
+Eastern Europe,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2065,biomass,500,0.8,0,0.0189,0.065
+Korea,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2065,biomass,500,0.8,0,0.0189,0.065
+India,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2065,biomass,500,0.8,0,0.0189,0.065
+USA,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2080,biomass,500,0.8,0,0.0189,0.065
+Canada,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2080,biomass,500,0.8,0,0.0189,0.065
+Western Europe,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2080,biomass,500,0.8,0,0.0189,0.065
+Japan,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2080,biomass,500,0.8,0,0.0189,0.065
+Australia_NZ,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2080,biomass,500,0.8,0,0.0189,0.065
+Former Soviet Union,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2080,biomass,500,0.8,0,0.0189,0.065
+China,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2080,biomass,500,0.8,0,0.0189,0.065
+Middle East,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2080,biomass,500,0.8,0,0.0189,0.065
+Africa,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2080,biomass,500,0.8,0,0.0189,0.065
+Latin America,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2080,biomass,500,0.8,0,0.0189,0.065
+Southeast Asia,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2080,biomass,500,0.8,0,0.0189,0.065
+Eastern Europe,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2080,biomass,500,0.8,0,0.0189,0.065
+Korea,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2080,biomass,500,0.8,0,0.0189,0.065
+India,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2080,biomass,500,0.8,0,0.0189,0.065
+USA,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2095,biomass,500,0.8,0,0.0189,0.065
+Canada,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2095,biomass,500,0.8,0,0.0189,0.065
+Western Europe,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2095,biomass,500,0.8,0,0.0189,0.065
+Japan,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2095,biomass,500,0.8,0,0.0189,0.065
+Australia_NZ,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2095,biomass,500,0.8,0,0.0189,0.065
+Former Soviet Union,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2095,biomass,500,0.8,0,0.0189,0.065
+China,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2095,biomass,500,0.8,0,0.0189,0.065
+Middle East,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2095,biomass,500,0.8,0,0.0189,0.065
+Africa,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2095,biomass,500,0.8,0,0.0189,0.065
+Latin America,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2095,biomass,500,0.8,0,0.0189,0.065
+Southeast Asia,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2095,biomass,500,0.8,0,0.0189,0.065
+Eastern Europe,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2095,biomass,500,0.8,0,0.0189,0.065
+Korea,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2095,biomass,500,0.8,0,0.0189,0.065
+India,NonFoodDemand_Forest,NonFoodDemand_Forest,NonFoodDemand_Forest,2095,biomass,500,0.8,0,0.0189,0.065

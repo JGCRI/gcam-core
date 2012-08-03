@@ -1,0 +1,61 @@
+INPUT_TABLE
+Variable ID
+Subsector
+
+region,supplysector,subsector,logit.exponent,share.weight.year,share.weight,apply.to,from.year,to.year,interpolation.function
+Africa,N fertilizer,coal,-12,2020,1,share-weight,2005,9999,fixed
+Africa,N fertilizer,gas,-12,2020,1,share-weight,2005,9999,fixed
+Africa,N fertilizer,refined liquids,-12,2020,0,share-weight,2005,2035,linear
+Africa,Exports_fertilizer,N fertilizer,-12,2020,0,share-weight,2005,9999,fixed
+Australia_NZ,N fertilizer,coal,-12,2020,1,share-weight,2005,9999,fixed
+Australia_NZ,N fertilizer,gas,-12,2020,1,share-weight,2005,9999,fixed
+Australia_NZ,N fertilizer,refined liquids,-12,2020,0,share-weight,2005,2035,linear
+Australia_NZ,Exports_fertilizer,N fertilizer,-12,2020,0,share-weight,2005,9999,fixed
+Canada,N fertilizer,coal,-12,2020,1,share-weight,2005,9999,fixed
+Canada,N fertilizer,gas,-12,2020,1,share-weight,2005,9999,fixed
+Canada,N fertilizer,refined liquids,-12,2020,0,share-weight,2005,2035,linear
+Canada,Exports_fertilizer,N fertilizer,-12,2020,0,share-weight,2005,9999,fixed
+China,N fertilizer,coal,-12,2020,1,share-weight,2005,9999,fixed
+China,N fertilizer,gas,-12,2020,1,share-weight,2005,9999,fixed
+China,N fertilizer,refined liquids,-12,2020,0,share-weight,2005,2035,linear
+China,Exports_fertilizer,N fertilizer,-12,2020,0,share-weight,2005,9999,fixed
+Eastern Europe,N fertilizer,coal,-12,2020,1,share-weight,2005,9999,fixed
+Eastern Europe,N fertilizer,gas,-12,2020,1,share-weight,2005,9999,fixed
+Eastern Europe,N fertilizer,refined liquids,-12,2020,0,share-weight,2005,2035,linear
+Eastern Europe,Exports_fertilizer,N fertilizer,-12,2020,0,share-weight,2005,9999,fixed
+Former Soviet Union,N fertilizer,coal,-12,2020,1,share-weight,2005,9999,fixed
+Former Soviet Union,N fertilizer,gas,-12,2020,1,share-weight,2005,9999,fixed
+Former Soviet Union,N fertilizer,refined liquids,-12,2020,0,share-weight,2005,2035,linear
+Former Soviet Union,Exports_fertilizer,N fertilizer,-12,2020,0,share-weight,2005,9999,fixed
+India,N fertilizer,coal,-12,2020,1,share-weight,2005,9999,fixed
+India,N fertilizer,gas,-12,2020,1,share-weight,2005,9999,fixed
+India,N fertilizer,refined liquids,-12,2020,0,share-weight,2005,2035,linear
+India,Exports_fertilizer,N fertilizer,-12,2020,0,share-weight,2005,9999,fixed
+Japan,N fertilizer,coal,-12,2020,1,share-weight,2005,9999,fixed
+Japan,N fertilizer,gas,-12,2020,1,share-weight,2005,9999,fixed
+Japan,N fertilizer,refined liquids,-12,2020,0,share-weight,2005,2035,linear
+Japan,Exports_fertilizer,N fertilizer,-12,2020,0,share-weight,2005,9999,fixed
+Korea,N fertilizer,coal,-12,2020,1,share-weight,2005,9999,fixed
+Korea,N fertilizer,gas,-12,2020,1,share-weight,2005,9999,fixed
+Korea,N fertilizer,refined liquids,-12,2020,0,share-weight,2005,2035,linear
+Korea,Exports_fertilizer,N fertilizer,-12,2020,0,share-weight,2005,9999,fixed
+Latin America,N fertilizer,coal,-12,2020,1,share-weight,2005,9999,fixed
+Latin America,N fertilizer,gas,-12,2020,1,share-weight,2005,9999,fixed
+Latin America,N fertilizer,refined liquids,-12,2020,0,share-weight,2005,2035,linear
+Latin America,Exports_fertilizer,N fertilizer,-12,2020,0,share-weight,2005,9999,fixed
+Middle East,N fertilizer,coal,-12,2020,1,share-weight,2005,9999,fixed
+Middle East,N fertilizer,gas,-12,2020,1,share-weight,2005,9999,fixed
+Middle East,N fertilizer,refined liquids,-12,2020,0,share-weight,2005,2035,linear
+Middle East,Exports_fertilizer,N fertilizer,-12,2020,0,share-weight,2005,9999,fixed
+Southeast Asia,N fertilizer,coal,-12,2020,1,share-weight,2005,9999,fixed
+Southeast Asia,N fertilizer,gas,-12,2020,1,share-weight,2005,9999,fixed
+Southeast Asia,N fertilizer,refined liquids,-12,2020,0,share-weight,2005,2035,linear
+Southeast Asia,Exports_fertilizer,N fertilizer,-12,2020,0,share-weight,2005,9999,fixed
+USA,N fertilizer,coal,-12,2020,1,share-weight,2005,9999,fixed
+USA,N fertilizer,gas,-12,2020,1,share-weight,2005,9999,fixed
+USA,N fertilizer,refined liquids,-12,2020,0,share-weight,2005,2035,linear
+USA,Exports_fertilizer,N fertilizer,-12,2020,0,share-weight,2005,9999,fixed
+Western Europe,N fertilizer,coal,-12,2020,1,share-weight,2005,9999,fixed
+Western Europe,N fertilizer,gas,-12,2020,1,share-weight,2005,9999,fixed
+Western Europe,N fertilizer,refined liquids,-12,2020,0,share-weight,2005,2035,linear
+Western Europe,Exports_fertilizer,N fertilizer,-12,2020,0,share-weight,2005,9999,fixed

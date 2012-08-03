@@ -1,0 +1,761 @@
+INPUT_TABLE
+Variable ID
+TechCoef
+
+region,supplysector,subsector,technology,year,minicam.energy.input,coefficient
+Africa,N fertilizer,coal,coal,1975,delivered coal,1
+Africa,N fertilizer,coal,coal CCS,1975,delivered coal,1
+Africa,N fertilizer,gas,gas,1975,wholesale gas,1
+Africa,N fertilizer,gas,gas CCS,1975,wholesale gas,1
+Africa,N fertilizer,refined liquids,refined liquids,1975,refined liquids industrial,1
+Africa,Exports_fertilizer,N fertilizer,N fertilizer,1975,N fertilizer,1
+Australia_NZ,N fertilizer,coal,coal,1975,delivered coal,1
+Australia_NZ,N fertilizer,coal,coal CCS,1975,delivered coal,1
+Australia_NZ,N fertilizer,gas,gas,1975,wholesale gas,1
+Australia_NZ,N fertilizer,gas,gas CCS,1975,wholesale gas,1
+Australia_NZ,N fertilizer,refined liquids,refined liquids,1975,refined liquids industrial,1
+Australia_NZ,Exports_fertilizer,N fertilizer,N fertilizer,1975,N fertilizer,1
+Canada,N fertilizer,coal,coal,1975,delivered coal,1
+Canada,N fertilizer,coal,coal CCS,1975,delivered coal,1
+Canada,N fertilizer,gas,gas,1975,wholesale gas,1
+Canada,N fertilizer,gas,gas CCS,1975,wholesale gas,1
+Canada,N fertilizer,refined liquids,refined liquids,1975,refined liquids industrial,1
+Canada,Exports_fertilizer,N fertilizer,N fertilizer,1975,N fertilizer,1
+China,N fertilizer,coal,coal,1975,delivered coal,1
+China,N fertilizer,coal,coal CCS,1975,delivered coal,1
+China,N fertilizer,gas,gas,1975,wholesale gas,1
+China,N fertilizer,gas,gas CCS,1975,wholesale gas,1
+China,N fertilizer,refined liquids,refined liquids,1975,refined liquids industrial,1
+China,Exports_fertilizer,N fertilizer,N fertilizer,1975,N fertilizer,1
+Eastern Europe,N fertilizer,coal,coal,1975,delivered coal,1
+Eastern Europe,N fertilizer,coal,coal CCS,1975,delivered coal,1
+Eastern Europe,N fertilizer,gas,gas,1975,wholesale gas,1
+Eastern Europe,N fertilizer,gas,gas CCS,1975,wholesale gas,1
+Eastern Europe,N fertilizer,refined liquids,refined liquids,1975,refined liquids industrial,1
+Eastern Europe,Exports_fertilizer,N fertilizer,N fertilizer,1975,N fertilizer,1
+Former Soviet Union,N fertilizer,coal,coal,1975,delivered coal,1
+Former Soviet Union,N fertilizer,coal,coal CCS,1975,delivered coal,1
+Former Soviet Union,N fertilizer,gas,gas,1975,wholesale gas,1
+Former Soviet Union,N fertilizer,gas,gas CCS,1975,wholesale gas,1
+Former Soviet Union,N fertilizer,refined liquids,refined liquids,1975,refined liquids industrial,1
+Former Soviet Union,Exports_fertilizer,N fertilizer,N fertilizer,1975,N fertilizer,1
+India,N fertilizer,coal,coal,1975,delivered coal,1
+India,N fertilizer,coal,coal CCS,1975,delivered coal,1
+India,N fertilizer,gas,gas,1975,wholesale gas,1
+India,N fertilizer,gas,gas CCS,1975,wholesale gas,1
+India,N fertilizer,refined liquids,refined liquids,1975,refined liquids industrial,1
+India,Exports_fertilizer,N fertilizer,N fertilizer,1975,N fertilizer,1
+Japan,N fertilizer,coal,coal,1975,delivered coal,1
+Japan,N fertilizer,coal,coal CCS,1975,delivered coal,1
+Japan,N fertilizer,gas,gas,1975,wholesale gas,1
+Japan,N fertilizer,gas,gas CCS,1975,wholesale gas,1
+Japan,N fertilizer,refined liquids,refined liquids,1975,refined liquids industrial,1
+Japan,Exports_fertilizer,N fertilizer,N fertilizer,1975,N fertilizer,1
+Korea,N fertilizer,coal,coal,1975,delivered coal,1
+Korea,N fertilizer,coal,coal CCS,1975,delivered coal,1
+Korea,N fertilizer,gas,gas,1975,wholesale gas,1
+Korea,N fertilizer,gas,gas CCS,1975,wholesale gas,1
+Korea,N fertilizer,refined liquids,refined liquids,1975,refined liquids industrial,1
+Korea,Exports_fertilizer,N fertilizer,N fertilizer,1975,N fertilizer,1
+Latin America,N fertilizer,coal,coal,1975,delivered coal,1
+Latin America,N fertilizer,coal,coal CCS,1975,delivered coal,1
+Latin America,N fertilizer,gas,gas,1975,wholesale gas,1
+Latin America,N fertilizer,gas,gas CCS,1975,wholesale gas,1
+Latin America,N fertilizer,refined liquids,refined liquids,1975,refined liquids industrial,1
+Latin America,Exports_fertilizer,N fertilizer,N fertilizer,1975,N fertilizer,1
+Middle East,N fertilizer,coal,coal,1975,delivered coal,1
+Middle East,N fertilizer,coal,coal CCS,1975,delivered coal,1
+Middle East,N fertilizer,gas,gas,1975,wholesale gas,1
+Middle East,N fertilizer,gas,gas CCS,1975,wholesale gas,1
+Middle East,N fertilizer,refined liquids,refined liquids,1975,refined liquids industrial,1
+Middle East,Exports_fertilizer,N fertilizer,N fertilizer,1975,N fertilizer,1
+Southeast Asia,N fertilizer,coal,coal,1975,delivered coal,1
+Southeast Asia,N fertilizer,coal,coal CCS,1975,delivered coal,1
+Southeast Asia,N fertilizer,gas,gas,1975,wholesale gas,1
+Southeast Asia,N fertilizer,gas,gas CCS,1975,wholesale gas,1
+Southeast Asia,N fertilizer,refined liquids,refined liquids,1975,refined liquids industrial,1
+Southeast Asia,Exports_fertilizer,N fertilizer,N fertilizer,1975,N fertilizer,1
+USA,N fertilizer,coal,coal,1975,delivered coal,1
+USA,N fertilizer,coal,coal CCS,1975,delivered coal,1
+USA,N fertilizer,gas,gas,1975,wholesale gas,1
+USA,N fertilizer,gas,gas CCS,1975,wholesale gas,1
+USA,N fertilizer,refined liquids,refined liquids,1975,refined liquids industrial,1
+USA,Exports_fertilizer,N fertilizer,N fertilizer,1975,N fertilizer,1
+Western Europe,N fertilizer,coal,coal,1975,delivered coal,1
+Western Europe,N fertilizer,coal,coal CCS,1975,delivered coal,1
+Western Europe,N fertilizer,gas,gas,1975,wholesale gas,1
+Western Europe,N fertilizer,gas,gas CCS,1975,wholesale gas,1
+Western Europe,N fertilizer,refined liquids,refined liquids,1975,refined liquids industrial,1
+Western Europe,Exports_fertilizer,N fertilizer,N fertilizer,1975,N fertilizer,1
+Africa,N fertilizer,coal,coal,1990,delivered coal,0.06557
+Africa,N fertilizer,coal,coal CCS,1990,delivered coal,0.04422
+Africa,N fertilizer,gas,gas,1990,wholesale gas,0.04371
+Africa,N fertilizer,gas,gas CCS,1990,wholesale gas,0.04874
+Africa,N fertilizer,refined liquids,refined liquids,1990,refined liquids industrial,0.05464
+Africa,Exports_fertilizer,N fertilizer,N fertilizer,1990,N fertilizer,1
+Australia_NZ,N fertilizer,coal,coal,1990,delivered coal,0.06557
+Australia_NZ,N fertilizer,coal,coal CCS,1990,delivered coal,0.04422
+Australia_NZ,N fertilizer,gas,gas,1990,wholesale gas,0.04371
+Australia_NZ,N fertilizer,gas,gas CCS,1990,wholesale gas,0.04874
+Australia_NZ,N fertilizer,refined liquids,refined liquids,1990,refined liquids industrial,0.05464
+Australia_NZ,Exports_fertilizer,N fertilizer,N fertilizer,1990,N fertilizer,1
+Canada,N fertilizer,coal,coal,1990,delivered coal,0.06557
+Canada,N fertilizer,coal,coal CCS,1990,delivered coal,0.04422
+Canada,N fertilizer,gas,gas,1990,wholesale gas,0.04602
+Canada,N fertilizer,gas,gas CCS,1990,wholesale gas,0.04874
+Canada,N fertilizer,refined liquids,refined liquids,1990,refined liquids industrial,0.05464
+Canada,Exports_fertilizer,N fertilizer,N fertilizer,1990,N fertilizer,1
+China,N fertilizer,coal,coal,1990,delivered coal,0.06557
+China,N fertilizer,coal,coal CCS,1990,delivered coal,0.04422
+China,N fertilizer,gas,gas,1990,wholesale gas,0.04129
+China,N fertilizer,gas,gas CCS,1990,wholesale gas,0.04874
+China,N fertilizer,refined liquids,refined liquids,1990,refined liquids industrial,0.051
+China,Exports_fertilizer,N fertilizer,N fertilizer,1990,N fertilizer,1
+Eastern Europe,N fertilizer,coal,coal,1990,delivered coal,0.06557
+Eastern Europe,N fertilizer,coal,coal CCS,1990,delivered coal,0.04422
+Eastern Europe,N fertilizer,gas,gas,1990,wholesale gas,0.05294
+Eastern Europe,N fertilizer,gas,gas CCS,1990,wholesale gas,0.04874
+Eastern Europe,N fertilizer,refined liquids,refined liquids,1990,refined liquids industrial,0.05294
+Eastern Europe,Exports_fertilizer,N fertilizer,N fertilizer,1990,N fertilizer,1
+Former Soviet Union,N fertilizer,coal,coal,1990,delivered coal,0.06557
+Former Soviet Union,N fertilizer,coal,coal CCS,1990,delivered coal,0.04422
+Former Soviet Union,N fertilizer,gas,gas,1990,wholesale gas,0.04845
+Former Soviet Union,N fertilizer,gas,gas CCS,1990,wholesale gas,0.04874
+Former Soviet Union,N fertilizer,refined liquids,refined liquids,1990,refined liquids industrial,0.05464
+Former Soviet Union,Exports_fertilizer,N fertilizer,N fertilizer,1990,N fertilizer,1
+India,N fertilizer,coal,coal,1990,delivered coal,0.06557
+India,N fertilizer,coal,coal CCS,1990,delivered coal,0.04422
+India,N fertilizer,gas,gas,1990,wholesale gas,0.04432
+India,N fertilizer,gas,gas CCS,1990,wholesale gas,0.04874
+India,N fertilizer,refined liquids,refined liquids,1990,refined liquids industrial,0.06071
+India,Exports_fertilizer,N fertilizer,N fertilizer,1990,N fertilizer,1
+Japan,N fertilizer,coal,coal,1990,delivered coal,0.06557
+Japan,N fertilizer,coal,coal CCS,1990,delivered coal,0.04422
+Japan,N fertilizer,gas,gas,1990,wholesale gas,0.04493
+Japan,N fertilizer,gas,gas CCS,1990,wholesale gas,0.04874
+Japan,N fertilizer,refined liquids,refined liquids,1990,refined liquids industrial,0.05464
+Japan,Exports_fertilizer,N fertilizer,N fertilizer,1990,N fertilizer,1
+Korea,N fertilizer,coal,coal,1990,delivered coal,0.06557
+Korea,N fertilizer,coal,coal CCS,1990,delivered coal,0.04422
+Korea,N fertilizer,gas,gas,1990,wholesale gas,0.04493
+Korea,N fertilizer,gas,gas CCS,1990,wholesale gas,0.04874
+Korea,N fertilizer,refined liquids,refined liquids,1990,refined liquids industrial,0.05464
+Korea,Exports_fertilizer,N fertilizer,N fertilizer,1990,N fertilizer,1
+Latin America,N fertilizer,coal,coal,1990,delivered coal,0.06557
+Latin America,N fertilizer,coal,coal CCS,1990,delivered coal,0.04422
+Latin America,N fertilizer,gas,gas,1990,wholesale gas,0.04371
+Latin America,N fertilizer,gas,gas CCS,1990,wholesale gas,0.04874
+Latin America,N fertilizer,refined liquids,refined liquids,1990,refined liquids industrial,0.05464
+Latin America,Exports_fertilizer,N fertilizer,N fertilizer,1990,N fertilizer,1
+Middle East,N fertilizer,coal,coal,1990,delivered coal,0.06557
+Middle East,N fertilizer,coal,coal CCS,1990,delivered coal,0.04422
+Middle East,N fertilizer,gas,gas,1990,wholesale gas,0.04371
+Middle East,N fertilizer,gas,gas CCS,1990,wholesale gas,0.04874
+Middle East,N fertilizer,refined liquids,refined liquids,1990,refined liquids industrial,0.05464
+Middle East,Exports_fertilizer,N fertilizer,N fertilizer,1990,N fertilizer,1
+Southeast Asia,N fertilizer,coal,coal,1990,delivered coal,0.06557
+Southeast Asia,N fertilizer,coal,coal CCS,1990,delivered coal,0.04422
+Southeast Asia,N fertilizer,gas,gas,1990,wholesale gas,0.04493
+Southeast Asia,N fertilizer,gas,gas CCS,1990,wholesale gas,0.04874
+Southeast Asia,N fertilizer,refined liquids,refined liquids,1990,refined liquids industrial,0.05464
+Southeast Asia,Exports_fertilizer,N fertilizer,N fertilizer,1990,N fertilizer,1
+USA,N fertilizer,coal,coal,1990,delivered coal,0.06557
+USA,N fertilizer,coal,coal CCS,1990,delivered coal,0.04422
+USA,N fertilizer,gas,gas,1990,wholesale gas,0.04602
+USA,N fertilizer,gas,gas CCS,1990,wholesale gas,0.04874
+USA,N fertilizer,refined liquids,refined liquids,1990,refined liquids industrial,0.05464
+USA,Exports_fertilizer,N fertilizer,N fertilizer,1990,N fertilizer,1
+Western Europe,N fertilizer,coal,coal,1990,delivered coal,0.06557
+Western Europe,N fertilizer,coal,coal CCS,1990,delivered coal,0.04422
+Western Europe,N fertilizer,gas,gas,1990,wholesale gas,0.0425
+Western Europe,N fertilizer,gas,gas CCS,1990,wholesale gas,0.04874
+Western Europe,N fertilizer,refined liquids,refined liquids,1990,refined liquids industrial,0.04371
+Western Europe,Exports_fertilizer,N fertilizer,N fertilizer,1990,N fertilizer,1
+Africa,N fertilizer,coal,coal,2005,delivered coal,0.06557
+Africa,N fertilizer,coal,coal CCS,2005,delivered coal,0.04422
+Africa,N fertilizer,gas,gas,2005,wholesale gas,0.04371
+Africa,N fertilizer,gas,gas CCS,2005,wholesale gas,0.04874
+Africa,N fertilizer,refined liquids,refined liquids,2005,refined liquids industrial,0.05464
+Africa,Exports_fertilizer,N fertilizer,N fertilizer,2005,N fertilizer,1
+Australia_NZ,N fertilizer,coal,coal,2005,delivered coal,0.06557
+Australia_NZ,N fertilizer,coal,coal CCS,2005,delivered coal,0.04422
+Australia_NZ,N fertilizer,gas,gas,2005,wholesale gas,0.04371
+Australia_NZ,N fertilizer,gas,gas CCS,2005,wholesale gas,0.04874
+Australia_NZ,N fertilizer,refined liquids,refined liquids,2005,refined liquids industrial,0.05464
+Australia_NZ,Exports_fertilizer,N fertilizer,N fertilizer,2005,N fertilizer,1
+Canada,N fertilizer,coal,coal,2005,delivered coal,0.06557
+Canada,N fertilizer,coal,coal CCS,2005,delivered coal,0.04422
+Canada,N fertilizer,gas,gas,2005,wholesale gas,0.04602
+Canada,N fertilizer,gas,gas CCS,2005,wholesale gas,0.04874
+Canada,N fertilizer,refined liquids,refined liquids,2005,refined liquids industrial,0.05464
+Canada,Exports_fertilizer,N fertilizer,N fertilizer,2005,N fertilizer,1
+China,N fertilizer,coal,coal,2005,delivered coal,0.06557
+China,N fertilizer,coal,coal CCS,2005,delivered coal,0.04422
+China,N fertilizer,gas,gas,2005,wholesale gas,0.04129
+China,N fertilizer,gas,gas CCS,2005,wholesale gas,0.04874
+China,N fertilizer,refined liquids,refined liquids,2005,refined liquids industrial,0.051
+China,Exports_fertilizer,N fertilizer,N fertilizer,2005,N fertilizer,1
+Eastern Europe,N fertilizer,coal,coal,2005,delivered coal,0.06557
+Eastern Europe,N fertilizer,coal,coal CCS,2005,delivered coal,0.04422
+Eastern Europe,N fertilizer,gas,gas,2005,wholesale gas,0.05294
+Eastern Europe,N fertilizer,gas,gas CCS,2005,wholesale gas,0.04874
+Eastern Europe,N fertilizer,refined liquids,refined liquids,2005,refined liquids industrial,0.05294
+Eastern Europe,Exports_fertilizer,N fertilizer,N fertilizer,2005,N fertilizer,1
+Former Soviet Union,N fertilizer,coal,coal,2005,delivered coal,0.06557
+Former Soviet Union,N fertilizer,coal,coal CCS,2005,delivered coal,0.04422
+Former Soviet Union,N fertilizer,gas,gas,2005,wholesale gas,0.04845
+Former Soviet Union,N fertilizer,gas,gas CCS,2005,wholesale gas,0.04874
+Former Soviet Union,N fertilizer,refined liquids,refined liquids,2005,refined liquids industrial,0.05464
+Former Soviet Union,Exports_fertilizer,N fertilizer,N fertilizer,2005,N fertilizer,1
+India,N fertilizer,coal,coal,2005,delivered coal,0.06557
+India,N fertilizer,coal,coal CCS,2005,delivered coal,0.04422
+India,N fertilizer,gas,gas,2005,wholesale gas,0.04432
+India,N fertilizer,gas,gas CCS,2005,wholesale gas,0.04874
+India,N fertilizer,refined liquids,refined liquids,2005,refined liquids industrial,0.06071
+India,Exports_fertilizer,N fertilizer,N fertilizer,2005,N fertilizer,1
+Japan,N fertilizer,coal,coal,2005,delivered coal,0.06557
+Japan,N fertilizer,coal,coal CCS,2005,delivered coal,0.04422
+Japan,N fertilizer,gas,gas,2005,wholesale gas,0.04493
+Japan,N fertilizer,gas,gas CCS,2005,wholesale gas,0.04874
+Japan,N fertilizer,refined liquids,refined liquids,2005,refined liquids industrial,0.05464
+Japan,Exports_fertilizer,N fertilizer,N fertilizer,2005,N fertilizer,1
+Korea,N fertilizer,coal,coal,2005,delivered coal,0.06557
+Korea,N fertilizer,coal,coal CCS,2005,delivered coal,0.04422
+Korea,N fertilizer,gas,gas,2005,wholesale gas,0.04493
+Korea,N fertilizer,gas,gas CCS,2005,wholesale gas,0.04874
+Korea,N fertilizer,refined liquids,refined liquids,2005,refined liquids industrial,0.05464
+Korea,Exports_fertilizer,N fertilizer,N fertilizer,2005,N fertilizer,1
+Latin America,N fertilizer,coal,coal,2005,delivered coal,0.06557
+Latin America,N fertilizer,coal,coal CCS,2005,delivered coal,0.04422
+Latin America,N fertilizer,gas,gas,2005,wholesale gas,0.04371
+Latin America,N fertilizer,gas,gas CCS,2005,wholesale gas,0.04874
+Latin America,N fertilizer,refined liquids,refined liquids,2005,refined liquids industrial,0.05464
+Latin America,Exports_fertilizer,N fertilizer,N fertilizer,2005,N fertilizer,1
+Middle East,N fertilizer,coal,coal,2005,delivered coal,0.06557
+Middle East,N fertilizer,coal,coal CCS,2005,delivered coal,0.04422
+Middle East,N fertilizer,gas,gas,2005,wholesale gas,0.04371
+Middle East,N fertilizer,gas,gas CCS,2005,wholesale gas,0.04874
+Middle East,N fertilizer,refined liquids,refined liquids,2005,refined liquids industrial,0.05464
+Middle East,Exports_fertilizer,N fertilizer,N fertilizer,2005,N fertilizer,1
+Southeast Asia,N fertilizer,coal,coal,2005,delivered coal,0.06557
+Southeast Asia,N fertilizer,coal,coal CCS,2005,delivered coal,0.04422
+Southeast Asia,N fertilizer,gas,gas,2005,wholesale gas,0.04493
+Southeast Asia,N fertilizer,gas,gas CCS,2005,wholesale gas,0.04874
+Southeast Asia,N fertilizer,refined liquids,refined liquids,2005,refined liquids industrial,0.05464
+Southeast Asia,Exports_fertilizer,N fertilizer,N fertilizer,2005,N fertilizer,1
+USA,N fertilizer,coal,coal,2005,delivered coal,0.06557
+USA,N fertilizer,coal,coal CCS,2005,delivered coal,0.04422
+USA,N fertilizer,gas,gas,2005,wholesale gas,0.04602
+USA,N fertilizer,gas,gas CCS,2005,wholesale gas,0.04874
+USA,N fertilizer,refined liquids,refined liquids,2005,refined liquids industrial,0.05464
+USA,Exports_fertilizer,N fertilizer,N fertilizer,2005,N fertilizer,1
+Western Europe,N fertilizer,coal,coal,2005,delivered coal,0.06557
+Western Europe,N fertilizer,coal,coal CCS,2005,delivered coal,0.04422
+Western Europe,N fertilizer,gas,gas,2005,wholesale gas,0.0425
+Western Europe,N fertilizer,gas,gas CCS,2005,wholesale gas,0.04874
+Western Europe,N fertilizer,refined liquids,refined liquids,2005,refined liquids industrial,0.04371
+Western Europe,Exports_fertilizer,N fertilizer,N fertilizer,2005,N fertilizer,1
+Africa,N fertilizer,coal,coal,2020,delivered coal,0.06082
+Africa,N fertilizer,coal,coal CCS,2020,delivered coal,0.04102
+Africa,N fertilizer,gas,gas,2020,wholesale gas,0.04055
+Africa,N fertilizer,gas,gas CCS,2020,wholesale gas,0.04521
+Africa,N fertilizer,refined liquids,refined liquids,2020,refined liquids industrial,0.05069
+Africa,Exports_fertilizer,N fertilizer,N fertilizer,2020,N fertilizer,1
+Australia_NZ,N fertilizer,coal,coal,2020,delivered coal,0.06082
+Australia_NZ,N fertilizer,coal,coal CCS,2020,delivered coal,0.04102
+Australia_NZ,N fertilizer,gas,gas,2020,wholesale gas,0.04055
+Australia_NZ,N fertilizer,gas,gas CCS,2020,wholesale gas,0.04521
+Australia_NZ,N fertilizer,refined liquids,refined liquids,2020,refined liquids industrial,0.05069
+Australia_NZ,Exports_fertilizer,N fertilizer,N fertilizer,2020,N fertilizer,1
+Canada,N fertilizer,coal,coal,2020,delivered coal,0.06082
+Canada,N fertilizer,coal,coal CCS,2020,delivered coal,0.04102
+Canada,N fertilizer,gas,gas,2020,wholesale gas,0.04269
+Canada,N fertilizer,gas,gas CCS,2020,wholesale gas,0.04521
+Canada,N fertilizer,refined liquids,refined liquids,2020,refined liquids industrial,0.05069
+Canada,Exports_fertilizer,N fertilizer,N fertilizer,2020,N fertilizer,1
+China,N fertilizer,coal,coal,2020,delivered coal,0.06082
+China,N fertilizer,coal,coal CCS,2020,delivered coal,0.04102
+China,N fertilizer,gas,gas,2020,wholesale gas,0.0383
+China,N fertilizer,gas,gas CCS,2020,wholesale gas,0.04521
+China,N fertilizer,refined liquids,refined liquids,2020,refined liquids industrial,0.04731
+China,Exports_fertilizer,N fertilizer,N fertilizer,2020,N fertilizer,1
+Eastern Europe,N fertilizer,coal,coal,2020,delivered coal,0.06082
+Eastern Europe,N fertilizer,coal,coal CCS,2020,delivered coal,0.04102
+Eastern Europe,N fertilizer,gas,gas,2020,wholesale gas,0.04911
+Eastern Europe,N fertilizer,gas,gas CCS,2020,wholesale gas,0.04521
+Eastern Europe,N fertilizer,refined liquids,refined liquids,2020,refined liquids industrial,0.04911
+Eastern Europe,Exports_fertilizer,N fertilizer,N fertilizer,2020,N fertilizer,1
+Former Soviet Union,N fertilizer,coal,coal,2020,delivered coal,0.06082
+Former Soviet Union,N fertilizer,coal,coal CCS,2020,delivered coal,0.04102
+Former Soviet Union,N fertilizer,gas,gas,2020,wholesale gas,0.04494
+Former Soviet Union,N fertilizer,gas,gas CCS,2020,wholesale gas,0.04521
+Former Soviet Union,N fertilizer,refined liquids,refined liquids,2020,refined liquids industrial,0.05069
+Former Soviet Union,Exports_fertilizer,N fertilizer,N fertilizer,2020,N fertilizer,1
+India,N fertilizer,coal,coal,2020,delivered coal,0.06082
+India,N fertilizer,coal,coal CCS,2020,delivered coal,0.04102
+India,N fertilizer,gas,gas,2020,wholesale gas,0.04111
+India,N fertilizer,gas,gas CCS,2020,wholesale gas,0.04521
+India,N fertilizer,refined liquids,refined liquids,2020,refined liquids industrial,0.05632
+India,Exports_fertilizer,N fertilizer,N fertilizer,2020,N fertilizer,1
+Japan,N fertilizer,coal,coal,2020,delivered coal,0.06082
+Japan,N fertilizer,coal,coal CCS,2020,delivered coal,0.04102
+Japan,N fertilizer,gas,gas,2020,wholesale gas,0.04167
+Japan,N fertilizer,gas,gas CCS,2020,wholesale gas,0.04521
+Japan,N fertilizer,refined liquids,refined liquids,2020,refined liquids industrial,0.05069
+Japan,Exports_fertilizer,N fertilizer,N fertilizer,2020,N fertilizer,1
+Korea,N fertilizer,coal,coal,2020,delivered coal,0.06082
+Korea,N fertilizer,coal,coal CCS,2020,delivered coal,0.04102
+Korea,N fertilizer,gas,gas,2020,wholesale gas,0.04167
+Korea,N fertilizer,gas,gas CCS,2020,wholesale gas,0.04521
+Korea,N fertilizer,refined liquids,refined liquids,2020,refined liquids industrial,0.05069
+Korea,Exports_fertilizer,N fertilizer,N fertilizer,2020,N fertilizer,1
+Latin America,N fertilizer,coal,coal,2020,delivered coal,0.06082
+Latin America,N fertilizer,coal,coal CCS,2020,delivered coal,0.04102
+Latin America,N fertilizer,gas,gas,2020,wholesale gas,0.04055
+Latin America,N fertilizer,gas,gas CCS,2020,wholesale gas,0.04521
+Latin America,N fertilizer,refined liquids,refined liquids,2020,refined liquids industrial,0.05069
+Latin America,Exports_fertilizer,N fertilizer,N fertilizer,2020,N fertilizer,1
+Middle East,N fertilizer,coal,coal,2020,delivered coal,0.06082
+Middle East,N fertilizer,coal,coal CCS,2020,delivered coal,0.04102
+Middle East,N fertilizer,gas,gas,2020,wholesale gas,0.04055
+Middle East,N fertilizer,gas,gas CCS,2020,wholesale gas,0.04521
+Middle East,N fertilizer,refined liquids,refined liquids,2020,refined liquids industrial,0.05069
+Middle East,Exports_fertilizer,N fertilizer,N fertilizer,2020,N fertilizer,1
+Southeast Asia,N fertilizer,coal,coal,2020,delivered coal,0.06082
+Southeast Asia,N fertilizer,coal,coal CCS,2020,delivered coal,0.04102
+Southeast Asia,N fertilizer,gas,gas,2020,wholesale gas,0.04167
+Southeast Asia,N fertilizer,gas,gas CCS,2020,wholesale gas,0.04521
+Southeast Asia,N fertilizer,refined liquids,refined liquids,2020,refined liquids industrial,0.05069
+Southeast Asia,Exports_fertilizer,N fertilizer,N fertilizer,2020,N fertilizer,1
+USA,N fertilizer,coal,coal,2020,delivered coal,0.06082
+USA,N fertilizer,coal,coal CCS,2020,delivered coal,0.04102
+USA,N fertilizer,gas,gas,2020,wholesale gas,0.04269
+USA,N fertilizer,gas,gas CCS,2020,wholesale gas,0.04521
+USA,N fertilizer,refined liquids,refined liquids,2020,refined liquids industrial,0.05069
+USA,Exports_fertilizer,N fertilizer,N fertilizer,2020,N fertilizer,1
+Western Europe,N fertilizer,coal,coal,2020,delivered coal,0.06082
+Western Europe,N fertilizer,coal,coal CCS,2020,delivered coal,0.04102
+Western Europe,N fertilizer,gas,gas,2020,wholesale gas,0.03942
+Western Europe,N fertilizer,gas,gas CCS,2020,wholesale gas,0.04521
+Western Europe,N fertilizer,refined liquids,refined liquids,2020,refined liquids industrial,0.04055
+Western Europe,Exports_fertilizer,N fertilizer,N fertilizer,2020,N fertilizer,1
+Africa,N fertilizer,coal,coal,2035,delivered coal,0.05642
+Africa,N fertilizer,coal,coal CCS,2035,delivered coal,0.03805
+Africa,N fertilizer,gas,gas,2035,wholesale gas,0.03761
+Africa,N fertilizer,gas,gas CCS,2035,wholesale gas,0.04194
+Africa,N fertilizer,refined liquids,refined liquids,2035,refined liquids industrial,0.04701
+Africa,Exports_fertilizer,N fertilizer,N fertilizer,2035,N fertilizer,1
+Australia_NZ,N fertilizer,coal,coal,2035,delivered coal,0.05642
+Australia_NZ,N fertilizer,coal,coal CCS,2035,delivered coal,0.03805
+Australia_NZ,N fertilizer,gas,gas,2035,wholesale gas,0.03761
+Australia_NZ,N fertilizer,gas,gas CCS,2035,wholesale gas,0.04194
+Australia_NZ,N fertilizer,refined liquids,refined liquids,2035,refined liquids industrial,0.04701
+Australia_NZ,Exports_fertilizer,N fertilizer,N fertilizer,2035,N fertilizer,1
+Canada,N fertilizer,coal,coal,2035,delivered coal,0.05642
+Canada,N fertilizer,coal,coal CCS,2035,delivered coal,0.03805
+Canada,N fertilizer,gas,gas,2035,wholesale gas,0.0396
+Canada,N fertilizer,gas,gas CCS,2035,wholesale gas,0.04194
+Canada,N fertilizer,refined liquids,refined liquids,2035,refined liquids industrial,0.04701
+Canada,Exports_fertilizer,N fertilizer,N fertilizer,2035,N fertilizer,1
+China,N fertilizer,coal,coal,2035,delivered coal,0.05642
+China,N fertilizer,coal,coal CCS,2035,delivered coal,0.03805
+China,N fertilizer,gas,gas,2035,wholesale gas,0.03552
+China,N fertilizer,gas,gas CCS,2035,wholesale gas,0.04194
+China,N fertilizer,refined liquids,refined liquids,2035,refined liquids industrial,0.04388
+China,Exports_fertilizer,N fertilizer,N fertilizer,2035,N fertilizer,1
+Eastern Europe,N fertilizer,coal,coal,2035,delivered coal,0.05642
+Eastern Europe,N fertilizer,coal,coal CCS,2035,delivered coal,0.03805
+Eastern Europe,N fertilizer,gas,gas,2035,wholesale gas,0.04555
+Eastern Europe,N fertilizer,gas,gas CCS,2035,wholesale gas,0.04194
+Eastern Europe,N fertilizer,refined liquids,refined liquids,2035,refined liquids industrial,0.04555
+Eastern Europe,Exports_fertilizer,N fertilizer,N fertilizer,2035,N fertilizer,1
+Former Soviet Union,N fertilizer,coal,coal,2035,delivered coal,0.05642
+Former Soviet Union,N fertilizer,coal,coal CCS,2035,delivered coal,0.03805
+Former Soviet Union,N fertilizer,gas,gas,2035,wholesale gas,0.04169
+Former Soviet Union,N fertilizer,gas,gas CCS,2035,wholesale gas,0.04194
+Former Soviet Union,N fertilizer,refined liquids,refined liquids,2035,refined liquids industrial,0.04701
+Former Soviet Union,Exports_fertilizer,N fertilizer,N fertilizer,2035,N fertilizer,1
+India,N fertilizer,coal,coal,2035,delivered coal,0.05642
+India,N fertilizer,coal,coal CCS,2035,delivered coal,0.03805
+India,N fertilizer,gas,gas,2035,wholesale gas,0.03813
+India,N fertilizer,gas,gas CCS,2035,wholesale gas,0.04194
+India,N fertilizer,refined liquids,refined liquids,2035,refined liquids industrial,0.05224
+India,Exports_fertilizer,N fertilizer,N fertilizer,2035,N fertilizer,1
+Japan,N fertilizer,coal,coal,2035,delivered coal,0.05642
+Japan,N fertilizer,coal,coal CCS,2035,delivered coal,0.03805
+Japan,N fertilizer,gas,gas,2035,wholesale gas,0.03866
+Japan,N fertilizer,gas,gas CCS,2035,wholesale gas,0.04194
+Japan,N fertilizer,refined liquids,refined liquids,2035,refined liquids industrial,0.04701
+Japan,Exports_fertilizer,N fertilizer,N fertilizer,2035,N fertilizer,1
+Korea,N fertilizer,coal,coal,2035,delivered coal,0.05642
+Korea,N fertilizer,coal,coal CCS,2035,delivered coal,0.03805
+Korea,N fertilizer,gas,gas,2035,wholesale gas,0.03866
+Korea,N fertilizer,gas,gas CCS,2035,wholesale gas,0.04194
+Korea,N fertilizer,refined liquids,refined liquids,2035,refined liquids industrial,0.04701
+Korea,Exports_fertilizer,N fertilizer,N fertilizer,2035,N fertilizer,1
+Latin America,N fertilizer,coal,coal,2035,delivered coal,0.05642
+Latin America,N fertilizer,coal,coal CCS,2035,delivered coal,0.03805
+Latin America,N fertilizer,gas,gas,2035,wholesale gas,0.03761
+Latin America,N fertilizer,gas,gas CCS,2035,wholesale gas,0.04194
+Latin America,N fertilizer,refined liquids,refined liquids,2035,refined liquids industrial,0.04701
+Latin America,Exports_fertilizer,N fertilizer,N fertilizer,2035,N fertilizer,1
+Middle East,N fertilizer,coal,coal,2035,delivered coal,0.05642
+Middle East,N fertilizer,coal,coal CCS,2035,delivered coal,0.03805
+Middle East,N fertilizer,gas,gas,2035,wholesale gas,0.03761
+Middle East,N fertilizer,gas,gas CCS,2035,wholesale gas,0.04194
+Middle East,N fertilizer,refined liquids,refined liquids,2035,refined liquids industrial,0.04701
+Middle East,Exports_fertilizer,N fertilizer,N fertilizer,2035,N fertilizer,1
+Southeast Asia,N fertilizer,coal,coal,2035,delivered coal,0.05642
+Southeast Asia,N fertilizer,coal,coal CCS,2035,delivered coal,0.03805
+Southeast Asia,N fertilizer,gas,gas,2035,wholesale gas,0.03866
+Southeast Asia,N fertilizer,gas,gas CCS,2035,wholesale gas,0.04194
+Southeast Asia,N fertilizer,refined liquids,refined liquids,2035,refined liquids industrial,0.04701
+Southeast Asia,Exports_fertilizer,N fertilizer,N fertilizer,2035,N fertilizer,1
+USA,N fertilizer,coal,coal,2035,delivered coal,0.05642
+USA,N fertilizer,coal,coal CCS,2035,delivered coal,0.03805
+USA,N fertilizer,gas,gas,2035,wholesale gas,0.0396
+USA,N fertilizer,gas,gas CCS,2035,wholesale gas,0.04194
+USA,N fertilizer,refined liquids,refined liquids,2035,refined liquids industrial,0.04701
+USA,Exports_fertilizer,N fertilizer,N fertilizer,2035,N fertilizer,1
+Western Europe,N fertilizer,coal,coal,2035,delivered coal,0.05642
+Western Europe,N fertilizer,coal,coal CCS,2035,delivered coal,0.03805
+Western Europe,N fertilizer,gas,gas,2035,wholesale gas,0.03657
+Western Europe,N fertilizer,gas,gas CCS,2035,wholesale gas,0.04194
+Western Europe,N fertilizer,refined liquids,refined liquids,2035,refined liquids industrial,0.03761
+Western Europe,Exports_fertilizer,N fertilizer,N fertilizer,2035,N fertilizer,1
+Africa,N fertilizer,coal,coal,2050,delivered coal,0.05233
+Africa,N fertilizer,coal,coal CCS,2050,delivered coal,0.03529
+Africa,N fertilizer,gas,gas,2050,wholesale gas,0.03489
+Africa,N fertilizer,gas,gas CCS,2050,wholesale gas,0.0389
+Africa,N fertilizer,refined liquids,refined liquids,2050,refined liquids industrial,0.04361
+Africa,Exports_fertilizer,N fertilizer,N fertilizer,2050,N fertilizer,1
+Australia_NZ,N fertilizer,coal,coal,2050,delivered coal,0.05233
+Australia_NZ,N fertilizer,coal,coal CCS,2050,delivered coal,0.03529
+Australia_NZ,N fertilizer,gas,gas,2050,wholesale gas,0.03489
+Australia_NZ,N fertilizer,gas,gas CCS,2050,wholesale gas,0.0389
+Australia_NZ,N fertilizer,refined liquids,refined liquids,2050,refined liquids industrial,0.04361
+Australia_NZ,Exports_fertilizer,N fertilizer,N fertilizer,2050,N fertilizer,1
+Canada,N fertilizer,coal,coal,2050,delivered coal,0.05233
+Canada,N fertilizer,coal,coal CCS,2050,delivered coal,0.03529
+Canada,N fertilizer,gas,gas,2050,wholesale gas,0.03673
+Canada,N fertilizer,gas,gas CCS,2050,wholesale gas,0.0389
+Canada,N fertilizer,refined liquids,refined liquids,2050,refined liquids industrial,0.04361
+Canada,Exports_fertilizer,N fertilizer,N fertilizer,2050,N fertilizer,1
+China,N fertilizer,coal,coal,2050,delivered coal,0.05233
+China,N fertilizer,coal,coal CCS,2050,delivered coal,0.03529
+China,N fertilizer,gas,gas,2050,wholesale gas,0.03295
+China,N fertilizer,gas,gas CCS,2050,wholesale gas,0.0389
+China,N fertilizer,refined liquids,refined liquids,2050,refined liquids industrial,0.0407
+China,Exports_fertilizer,N fertilizer,N fertilizer,2050,N fertilizer,1
+Eastern Europe,N fertilizer,coal,coal,2050,delivered coal,0.05233
+Eastern Europe,N fertilizer,coal,coal CCS,2050,delivered coal,0.03529
+Eastern Europe,N fertilizer,gas,gas,2050,wholesale gas,0.04225
+Eastern Europe,N fertilizer,gas,gas CCS,2050,wholesale gas,0.0389
+Eastern Europe,N fertilizer,refined liquids,refined liquids,2050,refined liquids industrial,0.04225
+Eastern Europe,Exports_fertilizer,N fertilizer,N fertilizer,2050,N fertilizer,1
+Former Soviet Union,N fertilizer,coal,coal,2050,delivered coal,0.05233
+Former Soviet Union,N fertilizer,coal,coal CCS,2050,delivered coal,0.03529
+Former Soviet Union,N fertilizer,gas,gas,2050,wholesale gas,0.03867
+Former Soviet Union,N fertilizer,gas,gas CCS,2050,wholesale gas,0.0389
+Former Soviet Union,N fertilizer,refined liquids,refined liquids,2050,refined liquids industrial,0.04361
+Former Soviet Union,Exports_fertilizer,N fertilizer,N fertilizer,2050,N fertilizer,1
+India,N fertilizer,coal,coal,2050,delivered coal,0.05233
+India,N fertilizer,coal,coal CCS,2050,delivered coal,0.03529
+India,N fertilizer,gas,gas,2050,wholesale gas,0.03537
+India,N fertilizer,gas,gas CCS,2050,wholesale gas,0.0389
+India,N fertilizer,refined liquids,refined liquids,2050,refined liquids industrial,0.04845
+India,Exports_fertilizer,N fertilizer,N fertilizer,2050,N fertilizer,1
+Japan,N fertilizer,coal,coal,2050,delivered coal,0.05233
+Japan,N fertilizer,coal,coal CCS,2050,delivered coal,0.03529
+Japan,N fertilizer,gas,gas,2050,wholesale gas,0.03586
+Japan,N fertilizer,gas,gas CCS,2050,wholesale gas,0.0389
+Japan,N fertilizer,refined liquids,refined liquids,2050,refined liquids industrial,0.04361
+Japan,Exports_fertilizer,N fertilizer,N fertilizer,2050,N fertilizer,1
+Korea,N fertilizer,coal,coal,2050,delivered coal,0.05233
+Korea,N fertilizer,coal,coal CCS,2050,delivered coal,0.03529
+Korea,N fertilizer,gas,gas,2050,wholesale gas,0.03586
+Korea,N fertilizer,gas,gas CCS,2050,wholesale gas,0.0389
+Korea,N fertilizer,refined liquids,refined liquids,2050,refined liquids industrial,0.04361
+Korea,Exports_fertilizer,N fertilizer,N fertilizer,2050,N fertilizer,1
+Latin America,N fertilizer,coal,coal,2050,delivered coal,0.05233
+Latin America,N fertilizer,coal,coal CCS,2050,delivered coal,0.03529
+Latin America,N fertilizer,gas,gas,2050,wholesale gas,0.03489
+Latin America,N fertilizer,gas,gas CCS,2050,wholesale gas,0.0389
+Latin America,N fertilizer,refined liquids,refined liquids,2050,refined liquids industrial,0.04361
+Latin America,Exports_fertilizer,N fertilizer,N fertilizer,2050,N fertilizer,1
+Middle East,N fertilizer,coal,coal,2050,delivered coal,0.05233
+Middle East,N fertilizer,coal,coal CCS,2050,delivered coal,0.03529
+Middle East,N fertilizer,gas,gas,2050,wholesale gas,0.03489
+Middle East,N fertilizer,gas,gas CCS,2050,wholesale gas,0.0389
+Middle East,N fertilizer,refined liquids,refined liquids,2050,refined liquids industrial,0.04361
+Middle East,Exports_fertilizer,N fertilizer,N fertilizer,2050,N fertilizer,1
+Southeast Asia,N fertilizer,coal,coal,2050,delivered coal,0.05233
+Southeast Asia,N fertilizer,coal,coal CCS,2050,delivered coal,0.03529
+Southeast Asia,N fertilizer,gas,gas,2050,wholesale gas,0.03586
+Southeast Asia,N fertilizer,gas,gas CCS,2050,wholesale gas,0.0389
+Southeast Asia,N fertilizer,refined liquids,refined liquids,2050,refined liquids industrial,0.04361
+Southeast Asia,Exports_fertilizer,N fertilizer,N fertilizer,2050,N fertilizer,1
+USA,N fertilizer,coal,coal,2050,delivered coal,0.05233
+USA,N fertilizer,coal,coal CCS,2050,delivered coal,0.03529
+USA,N fertilizer,gas,gas,2050,wholesale gas,0.03673
+USA,N fertilizer,gas,gas CCS,2050,wholesale gas,0.0389
+USA,N fertilizer,refined liquids,refined liquids,2050,refined liquids industrial,0.04361
+USA,Exports_fertilizer,N fertilizer,N fertilizer,2050,N fertilizer,1
+Western Europe,N fertilizer,coal,coal,2050,delivered coal,0.05233
+Western Europe,N fertilizer,coal,coal CCS,2050,delivered coal,0.03529
+Western Europe,N fertilizer,gas,gas,2050,wholesale gas,0.03392
+Western Europe,N fertilizer,gas,gas CCS,2050,wholesale gas,0.0389
+Western Europe,N fertilizer,refined liquids,refined liquids,2050,refined liquids industrial,0.03489
+Western Europe,Exports_fertilizer,N fertilizer,N fertilizer,2050,N fertilizer,1
+Africa,N fertilizer,coal,coal,2065,delivered coal,0.0504
+Africa,N fertilizer,coal,coal CCS,2065,delivered coal,0.03399
+Africa,N fertilizer,gas,gas,2065,wholesale gas,0.0336
+Africa,N fertilizer,gas,gas CCS,2065,wholesale gas,0.03747
+Africa,N fertilizer,refined liquids,refined liquids,2065,refined liquids industrial,0.042
+Africa,Exports_fertilizer,N fertilizer,N fertilizer,2065,N fertilizer,1
+Australia_NZ,N fertilizer,coal,coal,2065,delivered coal,0.0504
+Australia_NZ,N fertilizer,coal,coal CCS,2065,delivered coal,0.03399
+Australia_NZ,N fertilizer,gas,gas,2065,wholesale gas,0.0336
+Australia_NZ,N fertilizer,gas,gas CCS,2065,wholesale gas,0.03747
+Australia_NZ,N fertilizer,refined liquids,refined liquids,2065,refined liquids industrial,0.042
+Australia_NZ,Exports_fertilizer,N fertilizer,N fertilizer,2065,N fertilizer,1
+Canada,N fertilizer,coal,coal,2065,delivered coal,0.0504
+Canada,N fertilizer,coal,coal CCS,2065,delivered coal,0.03399
+Canada,N fertilizer,gas,gas,2065,wholesale gas,0.03537
+Canada,N fertilizer,gas,gas CCS,2065,wholesale gas,0.03747
+Canada,N fertilizer,refined liquids,refined liquids,2065,refined liquids industrial,0.042
+Canada,Exports_fertilizer,N fertilizer,N fertilizer,2065,N fertilizer,1
+China,N fertilizer,coal,coal,2065,delivered coal,0.0504
+China,N fertilizer,coal,coal CCS,2065,delivered coal,0.03399
+China,N fertilizer,gas,gas,2065,wholesale gas,0.03173
+China,N fertilizer,gas,gas CCS,2065,wholesale gas,0.03747
+China,N fertilizer,refined liquids,refined liquids,2065,refined liquids industrial,0.0392
+China,Exports_fertilizer,N fertilizer,N fertilizer,2065,N fertilizer,1
+Eastern Europe,N fertilizer,coal,coal,2065,delivered coal,0.0504
+Eastern Europe,N fertilizer,coal,coal CCS,2065,delivered coal,0.03399
+Eastern Europe,N fertilizer,gas,gas,2065,wholesale gas,0.04069
+Eastern Europe,N fertilizer,gas,gas CCS,2065,wholesale gas,0.03747
+Eastern Europe,N fertilizer,refined liquids,refined liquids,2065,refined liquids industrial,0.04069
+Eastern Europe,Exports_fertilizer,N fertilizer,N fertilizer,2065,N fertilizer,1
+Former Soviet Union,N fertilizer,coal,coal,2065,delivered coal,0.0504
+Former Soviet Union,N fertilizer,coal,coal CCS,2065,delivered coal,0.03399
+Former Soviet Union,N fertilizer,gas,gas,2065,wholesale gas,0.03724
+Former Soviet Union,N fertilizer,gas,gas CCS,2065,wholesale gas,0.03747
+Former Soviet Union,N fertilizer,refined liquids,refined liquids,2065,refined liquids industrial,0.042
+Former Soviet Union,Exports_fertilizer,N fertilizer,N fertilizer,2065,N fertilizer,1
+India,N fertilizer,coal,coal,2065,delivered coal,0.0504
+India,N fertilizer,coal,coal CCS,2065,delivered coal,0.03399
+India,N fertilizer,gas,gas,2065,wholesale gas,0.03407
+India,N fertilizer,gas,gas CCS,2065,wholesale gas,0.03747
+India,N fertilizer,refined liquids,refined liquids,2065,refined liquids industrial,0.04667
+India,Exports_fertilizer,N fertilizer,N fertilizer,2065,N fertilizer,1
+Japan,N fertilizer,coal,coal,2065,delivered coal,0.0504
+Japan,N fertilizer,coal,coal CCS,2065,delivered coal,0.03399
+Japan,N fertilizer,gas,gas,2065,wholesale gas,0.03453
+Japan,N fertilizer,gas,gas CCS,2065,wholesale gas,0.03747
+Japan,N fertilizer,refined liquids,refined liquids,2065,refined liquids industrial,0.042
+Japan,Exports_fertilizer,N fertilizer,N fertilizer,2065,N fertilizer,1
+Korea,N fertilizer,coal,coal,2065,delivered coal,0.0504
+Korea,N fertilizer,coal,coal CCS,2065,delivered coal,0.03399
+Korea,N fertilizer,gas,gas,2065,wholesale gas,0.03453
+Korea,N fertilizer,gas,gas CCS,2065,wholesale gas,0.03747
+Korea,N fertilizer,refined liquids,refined liquids,2065,refined liquids industrial,0.042
+Korea,Exports_fertilizer,N fertilizer,N fertilizer,2065,N fertilizer,1
+Latin America,N fertilizer,coal,coal,2065,delivered coal,0.0504
+Latin America,N fertilizer,coal,coal CCS,2065,delivered coal,0.03399
+Latin America,N fertilizer,gas,gas,2065,wholesale gas,0.0336
+Latin America,N fertilizer,gas,gas CCS,2065,wholesale gas,0.03747
+Latin America,N fertilizer,refined liquids,refined liquids,2065,refined liquids industrial,0.042
+Latin America,Exports_fertilizer,N fertilizer,N fertilizer,2065,N fertilizer,1
+Middle East,N fertilizer,coal,coal,2065,delivered coal,0.0504
+Middle East,N fertilizer,coal,coal CCS,2065,delivered coal,0.03399
+Middle East,N fertilizer,gas,gas,2065,wholesale gas,0.0336
+Middle East,N fertilizer,gas,gas CCS,2065,wholesale gas,0.03747
+Middle East,N fertilizer,refined liquids,refined liquids,2065,refined liquids industrial,0.042
+Middle East,Exports_fertilizer,N fertilizer,N fertilizer,2065,N fertilizer,1
+Southeast Asia,N fertilizer,coal,coal,2065,delivered coal,0.0504
+Southeast Asia,N fertilizer,coal,coal CCS,2065,delivered coal,0.03399
+Southeast Asia,N fertilizer,gas,gas,2065,wholesale gas,0.03453
+Southeast Asia,N fertilizer,gas,gas CCS,2065,wholesale gas,0.03747
+Southeast Asia,N fertilizer,refined liquids,refined liquids,2065,refined liquids industrial,0.042
+Southeast Asia,Exports_fertilizer,N fertilizer,N fertilizer,2065,N fertilizer,1
+USA,N fertilizer,coal,coal,2065,delivered coal,0.0504
+USA,N fertilizer,coal,coal CCS,2065,delivered coal,0.03399
+USA,N fertilizer,gas,gas,2065,wholesale gas,0.03537
+USA,N fertilizer,gas,gas CCS,2065,wholesale gas,0.03747
+USA,N fertilizer,refined liquids,refined liquids,2065,refined liquids industrial,0.042
+USA,Exports_fertilizer,N fertilizer,N fertilizer,2065,N fertilizer,1
+Western Europe,N fertilizer,coal,coal,2065,delivered coal,0.0504
+Western Europe,N fertilizer,coal,coal CCS,2065,delivered coal,0.03399
+Western Europe,N fertilizer,gas,gas,2065,wholesale gas,0.03267
+Western Europe,N fertilizer,gas,gas CCS,2065,wholesale gas,0.03747
+Western Europe,N fertilizer,refined liquids,refined liquids,2065,refined liquids industrial,0.0336
+Western Europe,Exports_fertilizer,N fertilizer,N fertilizer,2065,N fertilizer,1
+Africa,N fertilizer,coal,coal,2080,delivered coal,0.04854
+Africa,N fertilizer,coal,coal CCS,2080,delivered coal,0.03274
+Africa,N fertilizer,gas,gas,2080,wholesale gas,0.03236
+Africa,N fertilizer,gas,gas CCS,2080,wholesale gas,0.03608
+Africa,N fertilizer,refined liquids,refined liquids,2080,refined liquids industrial,0.04045
+Africa,Exports_fertilizer,N fertilizer,N fertilizer,2080,N fertilizer,1
+Australia_NZ,N fertilizer,coal,coal,2080,delivered coal,0.04854
+Australia_NZ,N fertilizer,coal,coal CCS,2080,delivered coal,0.03274
+Australia_NZ,N fertilizer,gas,gas,2080,wholesale gas,0.03236
+Australia_NZ,N fertilizer,gas,gas CCS,2080,wholesale gas,0.03608
+Australia_NZ,N fertilizer,refined liquids,refined liquids,2080,refined liquids industrial,0.04045
+Australia_NZ,Exports_fertilizer,N fertilizer,N fertilizer,2080,N fertilizer,1
+Canada,N fertilizer,coal,coal,2080,delivered coal,0.04854
+Canada,N fertilizer,coal,coal CCS,2080,delivered coal,0.03274
+Canada,N fertilizer,gas,gas,2080,wholesale gas,0.03407
+Canada,N fertilizer,gas,gas CCS,2080,wholesale gas,0.03608
+Canada,N fertilizer,refined liquids,refined liquids,2080,refined liquids industrial,0.04045
+Canada,Exports_fertilizer,N fertilizer,N fertilizer,2080,N fertilizer,1
+China,N fertilizer,coal,coal,2080,delivered coal,0.04854
+China,N fertilizer,coal,coal CCS,2080,delivered coal,0.03274
+China,N fertilizer,gas,gas,2080,wholesale gas,0.03057
+China,N fertilizer,gas,gas CCS,2080,wholesale gas,0.03608
+China,N fertilizer,refined liquids,refined liquids,2080,refined liquids industrial,0.03776
+China,Exports_fertilizer,N fertilizer,N fertilizer,2080,N fertilizer,1
+Eastern Europe,N fertilizer,coal,coal,2080,delivered coal,0.04854
+Eastern Europe,N fertilizer,coal,coal CCS,2080,delivered coal,0.03274
+Eastern Europe,N fertilizer,gas,gas,2080,wholesale gas,0.0392
+Eastern Europe,N fertilizer,gas,gas CCS,2080,wholesale gas,0.03608
+Eastern Europe,N fertilizer,refined liquids,refined liquids,2080,refined liquids industrial,0.0392
+Eastern Europe,Exports_fertilizer,N fertilizer,N fertilizer,2080,N fertilizer,1
+Former Soviet Union,N fertilizer,coal,coal,2080,delivered coal,0.04854
+Former Soviet Union,N fertilizer,coal,coal CCS,2080,delivered coal,0.03274
+Former Soviet Union,N fertilizer,gas,gas,2080,wholesale gas,0.03587
+Former Soviet Union,N fertilizer,gas,gas CCS,2080,wholesale gas,0.03608
+Former Soviet Union,N fertilizer,refined liquids,refined liquids,2080,refined liquids industrial,0.04045
+Former Soviet Union,Exports_fertilizer,N fertilizer,N fertilizer,2080,N fertilizer,1
+India,N fertilizer,coal,coal,2080,delivered coal,0.04854
+India,N fertilizer,coal,coal CCS,2080,delivered coal,0.03274
+India,N fertilizer,gas,gas,2080,wholesale gas,0.03281
+India,N fertilizer,gas,gas CCS,2080,wholesale gas,0.03608
+India,N fertilizer,refined liquids,refined liquids,2080,refined liquids industrial,0.04495
+India,Exports_fertilizer,N fertilizer,N fertilizer,2080,N fertilizer,1
+Japan,N fertilizer,coal,coal,2080,delivered coal,0.04854
+Japan,N fertilizer,coal,coal CCS,2080,delivered coal,0.03274
+Japan,N fertilizer,gas,gas,2080,wholesale gas,0.03326
+Japan,N fertilizer,gas,gas CCS,2080,wholesale gas,0.03608
+Japan,N fertilizer,refined liquids,refined liquids,2080,refined liquids industrial,0.04045
+Japan,Exports_fertilizer,N fertilizer,N fertilizer,2080,N fertilizer,1
+Korea,N fertilizer,coal,coal,2080,delivered coal,0.04854
+Korea,N fertilizer,coal,coal CCS,2080,delivered coal,0.03274
+Korea,N fertilizer,gas,gas,2080,wholesale gas,0.03326
+Korea,N fertilizer,gas,gas CCS,2080,wholesale gas,0.03608
+Korea,N fertilizer,refined liquids,refined liquids,2080,refined liquids industrial,0.04045
+Korea,Exports_fertilizer,N fertilizer,N fertilizer,2080,N fertilizer,1
+Latin America,N fertilizer,coal,coal,2080,delivered coal,0.04854
+Latin America,N fertilizer,coal,coal CCS,2080,delivered coal,0.03274
+Latin America,N fertilizer,gas,gas,2080,wholesale gas,0.03236
+Latin America,N fertilizer,gas,gas CCS,2080,wholesale gas,0.03608
+Latin America,N fertilizer,refined liquids,refined liquids,2080,refined liquids industrial,0.04045
+Latin America,Exports_fertilizer,N fertilizer,N fertilizer,2080,N fertilizer,1
+Middle East,N fertilizer,coal,coal,2080,delivered coal,0.04854
+Middle East,N fertilizer,coal,coal CCS,2080,delivered coal,0.03274
+Middle East,N fertilizer,gas,gas,2080,wholesale gas,0.03236
+Middle East,N fertilizer,gas,gas CCS,2080,wholesale gas,0.03608
+Middle East,N fertilizer,refined liquids,refined liquids,2080,refined liquids industrial,0.04045
+Middle East,Exports_fertilizer,N fertilizer,N fertilizer,2080,N fertilizer,1
+Southeast Asia,N fertilizer,coal,coal,2080,delivered coal,0.04854
+Southeast Asia,N fertilizer,coal,coal CCS,2080,delivered coal,0.03274
+Southeast Asia,N fertilizer,gas,gas,2080,wholesale gas,0.03326
+Southeast Asia,N fertilizer,gas,gas CCS,2080,wholesale gas,0.03608
+Southeast Asia,N fertilizer,refined liquids,refined liquids,2080,refined liquids industrial,0.04045
+Southeast Asia,Exports_fertilizer,N fertilizer,N fertilizer,2080,N fertilizer,1
+USA,N fertilizer,coal,coal,2080,delivered coal,0.04854
+USA,N fertilizer,coal,coal CCS,2080,delivered coal,0.03274
+USA,N fertilizer,gas,gas,2080,wholesale gas,0.03407
+USA,N fertilizer,gas,gas CCS,2080,wholesale gas,0.03608
+USA,N fertilizer,refined liquids,refined liquids,2080,refined liquids industrial,0.04045
+USA,Exports_fertilizer,N fertilizer,N fertilizer,2080,N fertilizer,1
+Western Europe,N fertilizer,coal,coal,2080,delivered coal,0.04854
+Western Europe,N fertilizer,coal,coal CCS,2080,delivered coal,0.03274
+Western Europe,N fertilizer,gas,gas,2080,wholesale gas,0.03146
+Western Europe,N fertilizer,gas,gas CCS,2080,wholesale gas,0.03608
+Western Europe,N fertilizer,refined liquids,refined liquids,2080,refined liquids industrial,0.03236
+Western Europe,Exports_fertilizer,N fertilizer,N fertilizer,2080,N fertilizer,1
+Africa,N fertilizer,coal,coal,2095,delivered coal,0.04676
+Africa,N fertilizer,coal,coal CCS,2095,delivered coal,0.03153
+Africa,N fertilizer,gas,gas,2095,wholesale gas,0.03117
+Africa,N fertilizer,gas,gas CCS,2095,wholesale gas,0.03475
+Africa,N fertilizer,refined liquids,refined liquids,2095,refined liquids industrial,0.03896
+Africa,Exports_fertilizer,N fertilizer,N fertilizer,2095,N fertilizer,1
+Australia_NZ,N fertilizer,coal,coal,2095,delivered coal,0.04676
+Australia_NZ,N fertilizer,coal,coal CCS,2095,delivered coal,0.03153
+Australia_NZ,N fertilizer,gas,gas,2095,wholesale gas,0.03117
+Australia_NZ,N fertilizer,gas,gas CCS,2095,wholesale gas,0.03475
+Australia_NZ,N fertilizer,refined liquids,refined liquids,2095,refined liquids industrial,0.03896
+Australia_NZ,Exports_fertilizer,N fertilizer,N fertilizer,2095,N fertilizer,1
+Canada,N fertilizer,coal,coal,2095,delivered coal,0.04676
+Canada,N fertilizer,coal,coal CCS,2095,delivered coal,0.03153
+Canada,N fertilizer,gas,gas,2095,wholesale gas,0.03282
+Canada,N fertilizer,gas,gas CCS,2095,wholesale gas,0.03475
+Canada,N fertilizer,refined liquids,refined liquids,2095,refined liquids industrial,0.03896
+Canada,Exports_fertilizer,N fertilizer,N fertilizer,2095,N fertilizer,1
+China,N fertilizer,coal,coal,2095,delivered coal,0.04676
+China,N fertilizer,coal,coal CCS,2095,delivered coal,0.03153
+China,N fertilizer,gas,gas,2095,wholesale gas,0.02944
+China,N fertilizer,gas,gas CCS,2095,wholesale gas,0.03475
+China,N fertilizer,refined liquids,refined liquids,2095,refined liquids industrial,0.03637
+China,Exports_fertilizer,N fertilizer,N fertilizer,2095,N fertilizer,1
+Eastern Europe,N fertilizer,coal,coal,2095,delivered coal,0.04676
+Eastern Europe,N fertilizer,coal,coal CCS,2095,delivered coal,0.03153
+Eastern Europe,N fertilizer,gas,gas,2095,wholesale gas,0.03775
+Eastern Europe,N fertilizer,gas,gas CCS,2095,wholesale gas,0.03475
+Eastern Europe,N fertilizer,refined liquids,refined liquids,2095,refined liquids industrial,0.03775
+Eastern Europe,Exports_fertilizer,N fertilizer,N fertilizer,2095,N fertilizer,1
+Former Soviet Union,N fertilizer,coal,coal,2095,delivered coal,0.04676
+Former Soviet Union,N fertilizer,coal,coal CCS,2095,delivered coal,0.03153
+Former Soviet Union,N fertilizer,gas,gas,2095,wholesale gas,0.03455
+Former Soviet Union,N fertilizer,gas,gas CCS,2095,wholesale gas,0.03475
+Former Soviet Union,N fertilizer,refined liquids,refined liquids,2095,refined liquids industrial,0.03896
+Former Soviet Union,Exports_fertilizer,N fertilizer,N fertilizer,2095,N fertilizer,1
+India,N fertilizer,coal,coal,2095,delivered coal,0.04676
+India,N fertilizer,coal,coal CCS,2095,delivered coal,0.03153
+India,N fertilizer,gas,gas,2095,wholesale gas,0.0316
+India,N fertilizer,gas,gas CCS,2095,wholesale gas,0.03475
+India,N fertilizer,refined liquids,refined liquids,2095,refined liquids industrial,0.04329
+India,Exports_fertilizer,N fertilizer,N fertilizer,2095,N fertilizer,1
+Japan,N fertilizer,coal,coal,2095,delivered coal,0.04676
+Japan,N fertilizer,coal,coal CCS,2095,delivered coal,0.03153
+Japan,N fertilizer,gas,gas,2095,wholesale gas,0.03204
+Japan,N fertilizer,gas,gas CCS,2095,wholesale gas,0.03475
+Japan,N fertilizer,refined liquids,refined liquids,2095,refined liquids industrial,0.03896
+Japan,Exports_fertilizer,N fertilizer,N fertilizer,2095,N fertilizer,1
+Korea,N fertilizer,coal,coal,2095,delivered coal,0.04676
+Korea,N fertilizer,coal,coal CCS,2095,delivered coal,0.03153
+Korea,N fertilizer,gas,gas,2095,wholesale gas,0.03204
+Korea,N fertilizer,gas,gas CCS,2095,wholesale gas,0.03475
+Korea,N fertilizer,refined liquids,refined liquids,2095,refined liquids industrial,0.03896
+Korea,Exports_fertilizer,N fertilizer,N fertilizer,2095,N fertilizer,1
+Latin America,N fertilizer,coal,coal,2095,delivered coal,0.04676
+Latin America,N fertilizer,coal,coal CCS,2095,delivered coal,0.03153
+Latin America,N fertilizer,gas,gas,2095,wholesale gas,0.03117
+Latin America,N fertilizer,gas,gas CCS,2095,wholesale gas,0.03475
+Latin America,N fertilizer,refined liquids,refined liquids,2095,refined liquids industrial,0.03896
+Latin America,Exports_fertilizer,N fertilizer,N fertilizer,2095,N fertilizer,1
+Middle East,N fertilizer,coal,coal,2095,delivered coal,0.04676
+Middle East,N fertilizer,coal,coal CCS,2095,delivered coal,0.03153
+Middle East,N fertilizer,gas,gas,2095,wholesale gas,0.03117
+Middle East,N fertilizer,gas,gas CCS,2095,wholesale gas,0.03475
+Middle East,N fertilizer,refined liquids,refined liquids,2095,refined liquids industrial,0.03896
+Middle East,Exports_fertilizer,N fertilizer,N fertilizer,2095,N fertilizer,1
+Southeast Asia,N fertilizer,coal,coal,2095,delivered coal,0.04676
+Southeast Asia,N fertilizer,coal,coal CCS,2095,delivered coal,0.03153
+Southeast Asia,N fertilizer,gas,gas,2095,wholesale gas,0.03204
+Southeast Asia,N fertilizer,gas,gas CCS,2095,wholesale gas,0.03475
+Southeast Asia,N fertilizer,refined liquids,refined liquids,2095,refined liquids industrial,0.03896
+Southeast Asia,Exports_fertilizer,N fertilizer,N fertilizer,2095,N fertilizer,1
+USA,N fertilizer,coal,coal,2095,delivered coal,0.04676
+USA,N fertilizer,coal,coal CCS,2095,delivered coal,0.03153
+USA,N fertilizer,gas,gas,2095,wholesale gas,0.03282
+USA,N fertilizer,gas,gas CCS,2095,wholesale gas,0.03475
+USA,N fertilizer,refined liquids,refined liquids,2095,refined liquids industrial,0.03896
+USA,Exports_fertilizer,N fertilizer,N fertilizer,2095,N fertilizer,1
+Western Europe,N fertilizer,coal,coal,2095,delivered coal,0.04676
+Western Europe,N fertilizer,coal,coal CCS,2095,delivered coal,0.03153
+Western Europe,N fertilizer,gas,gas,2095,wholesale gas,0.0303
+Western Europe,N fertilizer,gas,gas CCS,2095,wholesale gas,0.03475
+Western Europe,N fertilizer,refined liquids,refined liquids,2095,refined liquids industrial,0.03117
+Western Europe,Exports_fertilizer,N fertilizer,N fertilizer,2095,N fertilizer,1

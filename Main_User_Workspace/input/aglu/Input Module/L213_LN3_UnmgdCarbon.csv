@@ -1,0 +1,1013 @@
+INPUT_TABLE
+Variable ID
+LN3_UnmgdCarbon
+
+region,LandAllocatorRoot,LandNode1,LandNode2,LandNode3,UnmanagedLandLeaf3,hist.veg.carbon.density,hist.soil.carbon.density,veg.carbon.density,soil.carbon.density,mature.age,min.veg.carbon.density,min.soil.carbon.density,Land_Type,AEZ,Cdensity_LT
+USA,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,GrassShrubLandAEZ01,GrasslandAEZ01,0,0,0,0,0,0,0,Grassland,AEZ01,Grassland
+Canada,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,GrassShrubLandAEZ01,GrasslandAEZ01,0,0,0,0,0,0,0,Grassland,AEZ01,Grassland
+Western Europe,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,GrassShrubLandAEZ01,GrasslandAEZ01,0,0,0,0,0,0,0,Grassland,AEZ01,Grassland
+Japan,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,GrassShrubLandAEZ01,GrasslandAEZ01,0,0,0,0,0,0,0,Grassland,AEZ01,Grassland
+Australia_NZ,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,GrassShrubLandAEZ01,GrasslandAEZ01,1.1,7.2,1.1,7.2,17,0,0,Grassland,AEZ01,Grassland
+Former Soviet Union,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,GrassShrubLandAEZ01,GrasslandAEZ01,0,0,0,0,0,0,0,Grassland,AEZ01,Grassland
+China,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,GrassShrubLandAEZ01,GrasslandAEZ01,0,0,0,0,0,0,0,Grassland,AEZ01,Grassland
+Middle East,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,GrassShrubLandAEZ01,GrasslandAEZ01,0.5,6.2,0.5,6.2,11,0,0,Grassland,AEZ01,Grassland
+Africa,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,GrassShrubLandAEZ01,GrasslandAEZ01,1.1,7.1,1.1,7.1,16,0,0,Grassland,AEZ01,Grassland
+Latin America,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,GrassShrubLandAEZ01,GrasslandAEZ01,0.5,6.2,0.5,6.2,11,0,0,Grassland,AEZ01,Grassland
+Southeast Asia,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,GrassShrubLandAEZ01,GrasslandAEZ01,0,0,0,0,0,0,0,Grassland,AEZ01,Grassland
+Eastern Europe,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,GrassShrubLandAEZ01,GrasslandAEZ01,0,0,0,0,0,0,0,Grassland,AEZ01,Grassland
+Korea,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,GrassShrubLandAEZ01,GrasslandAEZ01,0,0,0,0,0,0,0,Grassland,AEZ01,Grassland
+India,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,GrassShrubLandAEZ01,GrasslandAEZ01,0,0,0,0,0,0,0,Grassland,AEZ01,Grassland
+USA,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,CropLandAEZ01,OtherArableLandAEZ01,0.3,3,0.3,3,1,0,0,OtherArableLand,AEZ01,Cropland
+Canada,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,CropLandAEZ01,OtherArableLandAEZ01,0.3,3,0.3,3,1,0,0,OtherArableLand,AEZ01,Cropland
+Western Europe,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,CropLandAEZ01,OtherArableLandAEZ01,0.3,3,0.3,3,1,0,0,OtherArableLand,AEZ01,Cropland
+Japan,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,CropLandAEZ01,OtherArableLandAEZ01,0.3,3,0.3,3,1,0,0,OtherArableLand,AEZ01,Cropland
+Australia_NZ,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,CropLandAEZ01,OtherArableLandAEZ01,0.3,3,0.3,3,1,0,0,OtherArableLand,AEZ01,Cropland
+Former Soviet Union,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,CropLandAEZ01,OtherArableLandAEZ01,0.3,3,0.3,3,1,0,0,OtherArableLand,AEZ01,Cropland
+China,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,CropLandAEZ01,OtherArableLandAEZ01,0.3,3,0.3,3,1,0,0,OtherArableLand,AEZ01,Cropland
+Middle East,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,CropLandAEZ01,OtherArableLandAEZ01,0.3,3,0.3,3,1,0,0,OtherArableLand,AEZ01,Cropland
+Africa,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,CropLandAEZ01,OtherArableLandAEZ01,0.3,3,0.3,3,1,0,0,OtherArableLand,AEZ01,Cropland
+Latin America,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,CropLandAEZ01,OtherArableLandAEZ01,0.3,3,0.3,3,1,0,0,OtherArableLand,AEZ01,Cropland
+Southeast Asia,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,CropLandAEZ01,OtherArableLandAEZ01,0.3,3,0.3,3,1,0,0,OtherArableLand,AEZ01,Cropland
+Eastern Europe,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,CropLandAEZ01,OtherArableLandAEZ01,0.3,3,0.3,3,1,0,0,OtherArableLand,AEZ01,Cropland
+Korea,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,CropLandAEZ01,OtherArableLandAEZ01,0.3,3,0.3,3,1,0,0,OtherArableLand,AEZ01,Cropland
+India,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,CropLandAEZ01,OtherArableLandAEZ01,0.3,3,0.3,3,1,0,0,OtherArableLand,AEZ01,Cropland
+USA,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,GrassShrubLandAEZ01,ShrublandAEZ01,0,0,0,0,0,0,0,Shrubland,AEZ01,Shrubland
+Canada,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,GrassShrubLandAEZ01,ShrublandAEZ01,0,0,0,0,0,0,0,Shrubland,AEZ01,Shrubland
+Western Europe,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,GrassShrubLandAEZ01,ShrublandAEZ01,0,0,0,0,0,0,0,Shrubland,AEZ01,Shrubland
+Japan,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,GrassShrubLandAEZ01,ShrublandAEZ01,0,0,0,0,0,0,0,Shrubland,AEZ01,Shrubland
+Australia_NZ,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,GrassShrubLandAEZ01,ShrublandAEZ01,3.6,6.9,3.6,6.9,40,0,0,Shrubland,AEZ01,Shrubland
+Former Soviet Union,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,GrassShrubLandAEZ01,ShrublandAEZ01,0,0,0,0,0,0,0,Shrubland,AEZ01,Shrubland
+China,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,GrassShrubLandAEZ01,ShrublandAEZ01,0,0,0,0,0,0,0,Shrubland,AEZ01,Shrubland
+Middle East,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,GrassShrubLandAEZ01,ShrublandAEZ01,2.7,6.9,2.7,6.9,50,0,0,Shrubland,AEZ01,Shrubland
+Africa,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,GrassShrubLandAEZ01,ShrublandAEZ01,3.6,6.9,3.6,6.9,40,0,0,Shrubland,AEZ01,Shrubland
+Latin America,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,GrassShrubLandAEZ01,ShrublandAEZ01,3.6,6.9,3.6,6.9,40,0,0,Shrubland,AEZ01,Shrubland
+Southeast Asia,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,GrassShrubLandAEZ01,ShrublandAEZ01,3.4,6.9,3.4,6.9,42,0,0,Shrubland,AEZ01,Shrubland
+Eastern Europe,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,GrassShrubLandAEZ01,ShrublandAEZ01,0,0,0,0,0,0,0,Shrubland,AEZ01,Shrubland
+Korea,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,GrassShrubLandAEZ01,ShrublandAEZ01,0,0,0,0,0,0,0,Shrubland,AEZ01,Shrubland
+India,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,GrassShrubLandAEZ01,ShrublandAEZ01,2.7,6.9,2.7,6.9,50,0,0,Shrubland,AEZ01,Shrubland
+USA,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,AllForestLandAEZ01,UnmanagedForestAEZ01,0,0,0,0,0,0,0,UnmanagedForest,AEZ01,Forest
+Canada,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,AllForestLandAEZ01,UnmanagedForestAEZ01,0,0,0,0,0,0,0,UnmanagedForest,AEZ01,Forest
+Western Europe,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,AllForestLandAEZ01,UnmanagedForestAEZ01,0,0,0,0,0,0,0,UnmanagedForest,AEZ01,Forest
+Japan,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,AllForestLandAEZ01,UnmanagedForestAEZ01,0,0,0,0,0,0,0,UnmanagedForest,AEZ01,Forest
+Australia_NZ,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,AllForestLandAEZ01,UnmanagedForestAEZ01,20,9.8,20,9.8,40,0,0,UnmanagedForest,AEZ01,Forest
+Former Soviet Union,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,AllForestLandAEZ01,UnmanagedForestAEZ01,0,0,0,0,0,0,0,UnmanagedForest,AEZ01,Forest
+China,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,AllForestLandAEZ01,UnmanagedForestAEZ01,0,0,0,0,0,0,0,UnmanagedForest,AEZ01,Forest
+Middle East,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,AllForestLandAEZ01,UnmanagedForestAEZ01,0,0,0,0,0,0,0,UnmanagedForest,AEZ01,Forest
+Africa,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,AllForestLandAEZ01,UnmanagedForestAEZ01,14.8,9.8,14.8,9.8,36,0,0,UnmanagedForest,AEZ01,Forest
+Latin America,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,AllForestLandAEZ01,UnmanagedForestAEZ01,15.3,9.8,15.3,9.8,36,0,0,UnmanagedForest,AEZ01,Forest
+Southeast Asia,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,AllForestLandAEZ01,UnmanagedForestAEZ01,0,0,0,0,0,0,0,UnmanagedForest,AEZ01,Forest
+Eastern Europe,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,AllForestLandAEZ01,UnmanagedForestAEZ01,0,0,0,0,0,0,0,UnmanagedForest,AEZ01,Forest
+Korea,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,AllForestLandAEZ01,UnmanagedForestAEZ01,0,0,0,0,0,0,0,UnmanagedForest,AEZ01,Forest
+India,root,AgroForestLandAEZ01,AgroForest_NonPastureAEZ01,AllForestLandAEZ01,UnmanagedForestAEZ01,0,0,0,0,0,0,0,UnmanagedForest,AEZ01,Forest
+USA,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,GrassShrubLandAEZ02,GrasslandAEZ02,0,0,0,0,0,0,0,Grassland,AEZ02,Grassland
+Canada,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,GrassShrubLandAEZ02,GrasslandAEZ02,0,0,0,0,0,0,0,Grassland,AEZ02,Grassland
+Western Europe,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,GrassShrubLandAEZ02,GrasslandAEZ02,0,0,0,0,0,0,0,Grassland,AEZ02,Grassland
+Japan,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,GrassShrubLandAEZ02,GrasslandAEZ02,0,0,0,0,0,0,0,Grassland,AEZ02,Grassland
+Australia_NZ,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,GrassShrubLandAEZ02,GrasslandAEZ02,2.2,9.2,2.2,9.2,26,0,0,Grassland,AEZ02,Grassland
+Former Soviet Union,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,GrassShrubLandAEZ02,GrasslandAEZ02,0,0,0,0,0,0,0,Grassland,AEZ02,Grassland
+China,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,GrassShrubLandAEZ02,GrasslandAEZ02,0,0,0,0,0,0,0,Grassland,AEZ02,Grassland
+Middle East,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,GrassShrubLandAEZ02,GrasslandAEZ02,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ02,Grassland
+Africa,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,GrassShrubLandAEZ02,GrasslandAEZ02,2,9,2,9,24,0,0,Grassland,AEZ02,Grassland
+Latin America,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,GrassShrubLandAEZ02,GrasslandAEZ02,2,8.9,2,8.9,23,0,0,Grassland,AEZ02,Grassland
+Southeast Asia,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,GrassShrubLandAEZ02,GrasslandAEZ02,0,0,0,0,0,0,0,Grassland,AEZ02,Grassland
+Eastern Europe,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,GrassShrubLandAEZ02,GrasslandAEZ02,0,0,0,0,0,0,0,Grassland,AEZ02,Grassland
+Korea,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,GrassShrubLandAEZ02,GrasslandAEZ02,0,0,0,0,0,0,0,Grassland,AEZ02,Grassland
+India,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,GrassShrubLandAEZ02,GrasslandAEZ02,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ02,Grassland
+USA,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,CropLandAEZ02,OtherArableLandAEZ02,0.3,4,0.3,4,1,0,0,OtherArableLand,AEZ02,Cropland
+Canada,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,CropLandAEZ02,OtherArableLandAEZ02,0.3,4,0.3,4,1,0,0,OtherArableLand,AEZ02,Cropland
+Western Europe,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,CropLandAEZ02,OtherArableLandAEZ02,0.3,4,0.3,4,1,0,0,OtherArableLand,AEZ02,Cropland
+Japan,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,CropLandAEZ02,OtherArableLandAEZ02,0.3,4,0.3,4,1,0,0,OtherArableLand,AEZ02,Cropland
+Australia_NZ,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,CropLandAEZ02,OtherArableLandAEZ02,0.3,4,0.3,4,1,0,0,OtherArableLand,AEZ02,Cropland
+Former Soviet Union,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,CropLandAEZ02,OtherArableLandAEZ02,0.3,4,0.3,4,1,0,0,OtherArableLand,AEZ02,Cropland
+China,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,CropLandAEZ02,OtherArableLandAEZ02,0.3,4,0.3,4,1,0,0,OtherArableLand,AEZ02,Cropland
+Middle East,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,CropLandAEZ02,OtherArableLandAEZ02,0.3,4,0.3,4,1,0,0,OtherArableLand,AEZ02,Cropland
+Africa,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,CropLandAEZ02,OtherArableLandAEZ02,0.3,4,0.3,4,1,0,0,OtherArableLand,AEZ02,Cropland
+Latin America,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,CropLandAEZ02,OtherArableLandAEZ02,0.3,4,0.3,4,1,0,0,OtherArableLand,AEZ02,Cropland
+Southeast Asia,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,CropLandAEZ02,OtherArableLandAEZ02,0.3,4,0.3,4,1,0,0,OtherArableLand,AEZ02,Cropland
+Eastern Europe,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,CropLandAEZ02,OtherArableLandAEZ02,0.3,4,0.3,4,1,0,0,OtherArableLand,AEZ02,Cropland
+Korea,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,CropLandAEZ02,OtherArableLandAEZ02,0.3,4,0.3,4,1,0,0,OtherArableLand,AEZ02,Cropland
+India,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,CropLandAEZ02,OtherArableLandAEZ02,0.3,4,0.3,4,1,0,0,OtherArableLand,AEZ02,Cropland
+USA,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,GrassShrubLandAEZ02,ShrublandAEZ02,0,0,0,0,0,0,0,Shrubland,AEZ02,Shrubland
+Canada,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,GrassShrubLandAEZ02,ShrublandAEZ02,0,0,0,0,0,0,0,Shrubland,AEZ02,Shrubland
+Western Europe,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,GrassShrubLandAEZ02,ShrublandAEZ02,0,0,0,0,0,0,0,Shrubland,AEZ02,Shrubland
+Japan,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,GrassShrubLandAEZ02,ShrublandAEZ02,0,0,0,0,0,0,0,Shrubland,AEZ02,Shrubland
+Australia_NZ,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,GrassShrubLandAEZ02,ShrublandAEZ02,2.9,6.9,2.9,6.9,48,0,0,Shrubland,AEZ02,Shrubland
+Former Soviet Union,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,GrassShrubLandAEZ02,ShrublandAEZ02,0,0,0,0,0,0,0,Shrubland,AEZ02,Shrubland
+China,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,GrassShrubLandAEZ02,ShrublandAEZ02,0,0,0,0,0,0,0,Shrubland,AEZ02,Shrubland
+Middle East,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,GrassShrubLandAEZ02,ShrublandAEZ02,2.7,6.9,2.7,6.9,50,0,0,Shrubland,AEZ02,Shrubland
+Africa,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,GrassShrubLandAEZ02,ShrublandAEZ02,4.8,6.9,4.8,6.9,26,0,0,Shrubland,AEZ02,Shrubland
+Latin America,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,GrassShrubLandAEZ02,ShrublandAEZ02,5.4,6.9,5.4,6.9,19,0,0,Shrubland,AEZ02,Shrubland
+Southeast Asia,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,GrassShrubLandAEZ02,ShrublandAEZ02,0,0,0,0,0,0,0,Shrubland,AEZ02,Shrubland
+Eastern Europe,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,GrassShrubLandAEZ02,ShrublandAEZ02,0,0,0,0,0,0,0,Shrubland,AEZ02,Shrubland
+Korea,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,GrassShrubLandAEZ02,ShrublandAEZ02,0,0,0,0,0,0,0,Shrubland,AEZ02,Shrubland
+India,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,GrassShrubLandAEZ02,ShrublandAEZ02,3.4,6.9,3.4,6.9,42,0,0,Shrubland,AEZ02,Shrubland
+USA,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,AllForestLandAEZ02,UnmanagedForestAEZ02,0,0,0,0,0,0,0,UnmanagedForest,AEZ02,Forest
+Canada,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,AllForestLandAEZ02,UnmanagedForestAEZ02,0,0,0,0,0,0,0,UnmanagedForest,AEZ02,Forest
+Western Europe,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,AllForestLandAEZ02,UnmanagedForestAEZ02,0,0,0,0,0,0,0,UnmanagedForest,AEZ02,Forest
+Japan,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,AllForestLandAEZ02,UnmanagedForestAEZ02,0,0,0,0,0,0,0,UnmanagedForest,AEZ02,Forest
+Australia_NZ,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,AllForestLandAEZ02,UnmanagedForestAEZ02,0,0,0,0,0,0,0,UnmanagedForest,AEZ02,Forest
+Former Soviet Union,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,AllForestLandAEZ02,UnmanagedForestAEZ02,0,0,0,0,0,0,0,UnmanagedForest,AEZ02,Forest
+China,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,AllForestLandAEZ02,UnmanagedForestAEZ02,0,0,0,0,0,0,0,UnmanagedForest,AEZ02,Forest
+Middle East,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,AllForestLandAEZ02,UnmanagedForestAEZ02,0,0,0,0,0,0,0,UnmanagedForest,AEZ02,Forest
+Africa,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,AllForestLandAEZ02,UnmanagedForestAEZ02,16.8,9.8,16.8,9.8,38,0,0,UnmanagedForest,AEZ02,Forest
+Latin America,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,AllForestLandAEZ02,UnmanagedForestAEZ02,16,9.9,16,9.9,38,0,0,UnmanagedForest,AEZ02,Forest
+Southeast Asia,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,AllForestLandAEZ02,UnmanagedForestAEZ02,0,0,0,0,0,0,0,UnmanagedForest,AEZ02,Forest
+Eastern Europe,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,AllForestLandAEZ02,UnmanagedForestAEZ02,0,0,0,0,0,0,0,UnmanagedForest,AEZ02,Forest
+Korea,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,AllForestLandAEZ02,UnmanagedForestAEZ02,0,0,0,0,0,0,0,UnmanagedForest,AEZ02,Forest
+India,root,AgroForestLandAEZ02,AgroForest_NonPastureAEZ02,AllForestLandAEZ02,UnmanagedForestAEZ02,14.3,9.8,14.3,9.8,35,0,0,UnmanagedForest,AEZ02,Forest
+USA,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,GrassShrubLandAEZ03,GrasslandAEZ03,0,0,0,0,0,0,0,Grassland,AEZ03,Grassland
+Canada,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,GrassShrubLandAEZ03,GrasslandAEZ03,0,0,0,0,0,0,0,Grassland,AEZ03,Grassland
+Western Europe,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,GrassShrubLandAEZ03,GrasslandAEZ03,0,0,0,0,0,0,0,Grassland,AEZ03,Grassland
+Japan,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,GrassShrubLandAEZ03,GrasslandAEZ03,0,0,0,0,0,0,0,Grassland,AEZ03,Grassland
+Australia_NZ,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,GrassShrubLandAEZ03,GrasslandAEZ03,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ03,Grassland
+Former Soviet Union,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,GrassShrubLandAEZ03,GrasslandAEZ03,0,0,0,0,0,0,0,Grassland,AEZ03,Grassland
+China,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,GrassShrubLandAEZ03,GrasslandAEZ03,0,0,0,0,0,0,0,Grassland,AEZ03,Grassland
+Middle East,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,GrassShrubLandAEZ03,GrasslandAEZ03,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ03,Grassland
+Africa,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,GrassShrubLandAEZ03,GrasslandAEZ03,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ03,Grassland
+Latin America,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,GrassShrubLandAEZ03,GrasslandAEZ03,2.2,9.4,2.2,9.4,25,0,0,Grassland,AEZ03,Grassland
+Southeast Asia,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,GrassShrubLandAEZ03,GrasslandAEZ03,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ03,Grassland
+Eastern Europe,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,GrassShrubLandAEZ03,GrasslandAEZ03,0,0,0,0,0,0,0,Grassland,AEZ03,Grassland
+Korea,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,GrassShrubLandAEZ03,GrasslandAEZ03,0,0,0,0,0,0,0,Grassland,AEZ03,Grassland
+India,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,GrassShrubLandAEZ03,GrasslandAEZ03,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ03,Grassland
+USA,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,CropLandAEZ03,OtherArableLandAEZ03,0.3,5,0.3,5,1,0,0,OtherArableLand,AEZ03,Cropland
+Canada,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,CropLandAEZ03,OtherArableLandAEZ03,0.3,5,0.3,5,1,0,0,OtherArableLand,AEZ03,Cropland
+Western Europe,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,CropLandAEZ03,OtherArableLandAEZ03,0.3,5,0.3,5,1,0,0,OtherArableLand,AEZ03,Cropland
+Japan,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,CropLandAEZ03,OtherArableLandAEZ03,0.3,5,0.3,5,1,0,0,OtherArableLand,AEZ03,Cropland
+Australia_NZ,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,CropLandAEZ03,OtherArableLandAEZ03,0.3,5,0.3,5,1,0,0,OtherArableLand,AEZ03,Cropland
+Former Soviet Union,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,CropLandAEZ03,OtherArableLandAEZ03,0.3,5,0.3,5,1,0,0,OtherArableLand,AEZ03,Cropland
+China,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,CropLandAEZ03,OtherArableLandAEZ03,0.3,5,0.3,5,1,0,0,OtherArableLand,AEZ03,Cropland
+Middle East,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,CropLandAEZ03,OtherArableLandAEZ03,0.3,5,0.3,5,1,0,0,OtherArableLand,AEZ03,Cropland
+Africa,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,CropLandAEZ03,OtherArableLandAEZ03,0.3,5,0.3,5,1,0,0,OtherArableLand,AEZ03,Cropland
+Latin America,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,CropLandAEZ03,OtherArableLandAEZ03,0.3,5,0.3,5,1,0,0,OtherArableLand,AEZ03,Cropland
+Southeast Asia,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,CropLandAEZ03,OtherArableLandAEZ03,0.3,5,0.3,5,1,0,0,OtherArableLand,AEZ03,Cropland
+Eastern Europe,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,CropLandAEZ03,OtherArableLandAEZ03,0.3,5,0.3,5,1,0,0,OtherArableLand,AEZ03,Cropland
+Korea,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,CropLandAEZ03,OtherArableLandAEZ03,0.3,5,0.3,5,1,0,0,OtherArableLand,AEZ03,Cropland
+India,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,CropLandAEZ03,OtherArableLandAEZ03,0.3,5,0.3,5,1,0,0,OtherArableLand,AEZ03,Cropland
+USA,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,GrassShrubLandAEZ03,ShrublandAEZ03,0,0,0,0,0,0,0,Shrubland,AEZ03,Shrubland
+Canada,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,GrassShrubLandAEZ03,ShrublandAEZ03,0,0,0,0,0,0,0,Shrubland,AEZ03,Shrubland
+Western Europe,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,GrassShrubLandAEZ03,ShrublandAEZ03,0,0,0,0,0,0,0,Shrubland,AEZ03,Shrubland
+Japan,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,GrassShrubLandAEZ03,ShrublandAEZ03,0,0,0,0,0,0,0,Shrubland,AEZ03,Shrubland
+Australia_NZ,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,GrassShrubLandAEZ03,ShrublandAEZ03,4.4,6.9,4.4,6.9,31,0,0,Shrubland,AEZ03,Shrubland
+Former Soviet Union,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,GrassShrubLandAEZ03,ShrublandAEZ03,0,0,0,0,0,0,0,Shrubland,AEZ03,Shrubland
+China,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,GrassShrubLandAEZ03,ShrublandAEZ03,0,0,0,0,0,0,0,Shrubland,AEZ03,Shrubland
+Middle East,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,GrassShrubLandAEZ03,ShrublandAEZ03,3.7,6.9,3.7,6.9,39,0,0,Shrubland,AEZ03,Shrubland
+Africa,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,GrassShrubLandAEZ03,ShrublandAEZ03,4.9,6.9,4.9,6.9,25,0,0,Shrubland,AEZ03,Shrubland
+Latin America,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,GrassShrubLandAEZ03,ShrublandAEZ03,5.5,6.9,5.5,6.9,18,0,0,Shrubland,AEZ03,Shrubland
+Southeast Asia,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,GrassShrubLandAEZ03,ShrublandAEZ03,5.5,6.9,5.5,6.9,18,0,0,Shrubland,AEZ03,Shrubland
+Eastern Europe,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,GrassShrubLandAEZ03,ShrublandAEZ03,0,0,0,0,0,0,0,Shrubland,AEZ03,Shrubland
+Korea,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,GrassShrubLandAEZ03,ShrublandAEZ03,0,0,0,0,0,0,0,Shrubland,AEZ03,Shrubland
+India,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,GrassShrubLandAEZ03,ShrublandAEZ03,4.6,6.9,4.6,6.9,28,0,0,Shrubland,AEZ03,Shrubland
+USA,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,AllForestLandAEZ03,UnmanagedForestAEZ03,0,0,0,0,0,0,0,UnmanagedForest,AEZ03,Forest
+Canada,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,AllForestLandAEZ03,UnmanagedForestAEZ03,0,0,0,0,0,0,0,UnmanagedForest,AEZ03,Forest
+Western Europe,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,AllForestLandAEZ03,UnmanagedForestAEZ03,0,0,0,0,0,0,0,UnmanagedForest,AEZ03,Forest
+Japan,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,AllForestLandAEZ03,UnmanagedForestAEZ03,0,0,0,0,0,0,0,UnmanagedForest,AEZ03,Forest
+Australia_NZ,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,AllForestLandAEZ03,UnmanagedForestAEZ03,20,9.8,20,9.8,40,0,0,UnmanagedForest,AEZ03,Forest
+Former Soviet Union,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,AllForestLandAEZ03,UnmanagedForestAEZ03,0,0,0,0,0,0,0,UnmanagedForest,AEZ03,Forest
+China,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,AllForestLandAEZ03,UnmanagedForestAEZ03,0,0,0,0,0,0,0,UnmanagedForest,AEZ03,Forest
+Middle East,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,AllForestLandAEZ03,UnmanagedForestAEZ03,0,0,0,0,0,0,0,UnmanagedForest,AEZ03,Forest
+Africa,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,AllForestLandAEZ03,UnmanagedForestAEZ03,14.7,9.8,14.7,9.8,36,0,0,UnmanagedForest,AEZ03,Forest
+Latin America,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,AllForestLandAEZ03,UnmanagedForestAEZ03,15.7,10,15.7,10,39,0,0,UnmanagedForest,AEZ03,Forest
+Southeast Asia,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,AllForestLandAEZ03,UnmanagedForestAEZ03,17.1,10,17.1,10,41,0,0,UnmanagedForest,AEZ03,Forest
+Eastern Europe,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,AllForestLandAEZ03,UnmanagedForestAEZ03,0,0,0,0,0,0,0,UnmanagedForest,AEZ03,Forest
+Korea,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,AllForestLandAEZ03,UnmanagedForestAEZ03,0,0,0,0,0,0,0,UnmanagedForest,AEZ03,Forest
+India,root,AgroForestLandAEZ03,AgroForest_NonPastureAEZ03,AllForestLandAEZ03,UnmanagedForestAEZ03,14.2,9.8,14.2,9.8,35,0,0,UnmanagedForest,AEZ03,Forest
+USA,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,GrassShrubLandAEZ04,GrasslandAEZ04,0,0,0,0,0,0,0,Grassland,AEZ04,Grassland
+Canada,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,GrassShrubLandAEZ04,GrasslandAEZ04,0,0,0,0,0,0,0,Grassland,AEZ04,Grassland
+Western Europe,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,GrassShrubLandAEZ04,GrasslandAEZ04,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ04,Grassland
+Japan,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,GrassShrubLandAEZ04,GrasslandAEZ04,0,0,0,0,0,0,0,Grassland,AEZ04,Grassland
+Australia_NZ,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,GrassShrubLandAEZ04,GrasslandAEZ04,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ04,Grassland
+Former Soviet Union,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,GrassShrubLandAEZ04,GrasslandAEZ04,0,0,0,0,0,0,0,Grassland,AEZ04,Grassland
+China,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,GrassShrubLandAEZ04,GrasslandAEZ04,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ04,Grassland
+Middle East,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,GrassShrubLandAEZ04,GrasslandAEZ04,0,0,0,0,0,0,0,Grassland,AEZ04,Grassland
+Africa,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,GrassShrubLandAEZ04,GrasslandAEZ04,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ04,Grassland
+Latin America,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,GrassShrubLandAEZ04,GrasslandAEZ04,2.4,9.6,2.4,9.6,28,0,0,Grassland,AEZ04,Grassland
+Southeast Asia,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,GrassShrubLandAEZ04,GrasslandAEZ04,2.4,9.5,2.4,9.5,28,0,0,Grassland,AEZ04,Grassland
+Eastern Europe,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,GrassShrubLandAEZ04,GrasslandAEZ04,0,0,0,0,0,0,0,Grassland,AEZ04,Grassland
+Korea,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,GrassShrubLandAEZ04,GrasslandAEZ04,0,0,0,0,0,0,0,Grassland,AEZ04,Grassland
+India,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,GrassShrubLandAEZ04,GrasslandAEZ04,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ04,Grassland
+USA,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,CropLandAEZ04,OtherArableLandAEZ04,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ04,Cropland
+Canada,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,CropLandAEZ04,OtherArableLandAEZ04,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ04,Cropland
+Western Europe,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,CropLandAEZ04,OtherArableLandAEZ04,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ04,Cropland
+Japan,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,CropLandAEZ04,OtherArableLandAEZ04,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ04,Cropland
+Australia_NZ,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,CropLandAEZ04,OtherArableLandAEZ04,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ04,Cropland
+Former Soviet Union,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,CropLandAEZ04,OtherArableLandAEZ04,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ04,Cropland
+China,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,CropLandAEZ04,OtherArableLandAEZ04,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ04,Cropland
+Middle East,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,CropLandAEZ04,OtherArableLandAEZ04,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ04,Cropland
+Africa,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,CropLandAEZ04,OtherArableLandAEZ04,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ04,Cropland
+Latin America,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,CropLandAEZ04,OtherArableLandAEZ04,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ04,Cropland
+Southeast Asia,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,CropLandAEZ04,OtherArableLandAEZ04,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ04,Cropland
+Eastern Europe,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,CropLandAEZ04,OtherArableLandAEZ04,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ04,Cropland
+Korea,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,CropLandAEZ04,OtherArableLandAEZ04,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ04,Cropland
+India,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,CropLandAEZ04,OtherArableLandAEZ04,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ04,Cropland
+USA,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,GrassShrubLandAEZ04,ShrublandAEZ04,0,0,0,0,0,0,0,Shrubland,AEZ04,Shrubland
+Canada,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,GrassShrubLandAEZ04,ShrublandAEZ04,0,0,0,0,0,0,0,Shrubland,AEZ04,Shrubland
+Western Europe,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,GrassShrubLandAEZ04,ShrublandAEZ04,5.5,6.9,5.5,6.9,18,0,0,Shrubland,AEZ04,Shrubland
+Japan,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,GrassShrubLandAEZ04,ShrublandAEZ04,0,0,0,0,0,0,0,Shrubland,AEZ04,Shrubland
+Australia_NZ,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,GrassShrubLandAEZ04,ShrublandAEZ04,5.5,6.9,5.5,6.9,18,0,0,Shrubland,AEZ04,Shrubland
+Former Soviet Union,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,GrassShrubLandAEZ04,ShrublandAEZ04,0,0,0,0,0,0,0,Shrubland,AEZ04,Shrubland
+China,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,GrassShrubLandAEZ04,ShrublandAEZ04,5.2,6.9,5.2,6.9,22,0,0,Shrubland,AEZ04,Shrubland
+Middle East,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,GrassShrubLandAEZ04,ShrublandAEZ04,0,0,0,0,0,0,0,Shrubland,AEZ04,Shrubland
+Africa,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,GrassShrubLandAEZ04,ShrublandAEZ04,4.3,6.9,4.3,6.9,32,0,0,Shrubland,AEZ04,Shrubland
+Latin America,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,GrassShrubLandAEZ04,ShrublandAEZ04,5.5,6.9,5.5,6.9,18,0,0,Shrubland,AEZ04,Shrubland
+Southeast Asia,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,GrassShrubLandAEZ04,ShrublandAEZ04,5,6.9,5,6.9,24,0,0,Shrubland,AEZ04,Shrubland
+Eastern Europe,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,GrassShrubLandAEZ04,ShrublandAEZ04,0,0,0,0,0,0,0,Shrubland,AEZ04,Shrubland
+Korea,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,GrassShrubLandAEZ04,ShrublandAEZ04,0,0,0,0,0,0,0,Shrubland,AEZ04,Shrubland
+India,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,GrassShrubLandAEZ04,ShrublandAEZ04,4.8,6.9,4.8,6.9,26,0,0,Shrubland,AEZ04,Shrubland
+USA,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,AllForestLandAEZ04,UnmanagedForestAEZ04,0,0,0,0,0,0,0,UnmanagedForest,AEZ04,Forest
+Canada,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,AllForestLandAEZ04,UnmanagedForestAEZ04,0,0,0,0,0,0,0,UnmanagedForest,AEZ04,Forest
+Western Europe,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,AllForestLandAEZ04,UnmanagedForestAEZ04,0,0,0,0,0,0,0,UnmanagedForest,AEZ04,Forest
+Japan,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,AllForestLandAEZ04,UnmanagedForestAEZ04,0,0,0,0,0,0,0,UnmanagedForest,AEZ04,Forest
+Australia_NZ,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,AllForestLandAEZ04,UnmanagedForestAEZ04,15.9,10.3,15.9,10.3,44,0,0,UnmanagedForest,AEZ04,Forest
+Former Soviet Union,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,AllForestLandAEZ04,UnmanagedForestAEZ04,0,0,0,0,0,0,0,UnmanagedForest,AEZ04,Forest
+China,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,AllForestLandAEZ04,UnmanagedForestAEZ04,14.7,10.2,14.7,10.2,41,0,0,UnmanagedForest,AEZ04,Forest
+Middle East,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,AllForestLandAEZ04,UnmanagedForestAEZ04,0,0,0,0,0,0,0,UnmanagedForest,AEZ04,Forest
+Africa,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,AllForestLandAEZ04,UnmanagedForestAEZ04,16.1,9.8,16.1,9.8,37,0,0,UnmanagedForest,AEZ04,Forest
+Latin America,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,AllForestLandAEZ04,UnmanagedForestAEZ04,17.2,10,17.2,10,40,0,0,UnmanagedForest,AEZ04,Forest
+Southeast Asia,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,AllForestLandAEZ04,UnmanagedForestAEZ04,16.7,9.9,16.7,9.9,38,0,0,UnmanagedForest,AEZ04,Forest
+Eastern Europe,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,AllForestLandAEZ04,UnmanagedForestAEZ04,0,0,0,0,0,0,0,UnmanagedForest,AEZ04,Forest
+Korea,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,AllForestLandAEZ04,UnmanagedForestAEZ04,0,0,0,0,0,0,0,UnmanagedForest,AEZ04,Forest
+India,root,AgroForestLandAEZ04,AgroForest_NonPastureAEZ04,AllForestLandAEZ04,UnmanagedForestAEZ04,15.7,9.8,15.7,9.8,37,0,0,UnmanagedForest,AEZ04,Forest
+USA,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,GrassShrubLandAEZ05,GrasslandAEZ05,0,0,0,0,0,0,0,Grassland,AEZ05,Grassland
+Canada,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,GrassShrubLandAEZ05,GrasslandAEZ05,0,0,0,0,0,0,0,Grassland,AEZ05,Grassland
+Western Europe,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,GrassShrubLandAEZ05,GrasslandAEZ05,0,0,0,0,0,0,0,Grassland,AEZ05,Grassland
+Japan,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,GrassShrubLandAEZ05,GrasslandAEZ05,0,0,0,0,0,0,0,Grassland,AEZ05,Grassland
+Australia_NZ,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,GrassShrubLandAEZ05,GrasslandAEZ05,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ05,Grassland
+Former Soviet Union,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,GrassShrubLandAEZ05,GrasslandAEZ05,0,0,0,0,0,0,0,Grassland,AEZ05,Grassland
+China,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,GrassShrubLandAEZ05,GrasslandAEZ05,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ05,Grassland
+Middle East,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,GrassShrubLandAEZ05,GrasslandAEZ05,0,0,0,0,0,0,0,Grassland,AEZ05,Grassland
+Africa,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,GrassShrubLandAEZ05,GrasslandAEZ05,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ05,Grassland
+Latin America,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,GrassShrubLandAEZ05,GrasslandAEZ05,2.3,9.7,2.3,9.7,27,0,0,Grassland,AEZ05,Grassland
+Southeast Asia,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,GrassShrubLandAEZ05,GrasslandAEZ05,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ05,Grassland
+Eastern Europe,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,GrassShrubLandAEZ05,GrasslandAEZ05,0,0,0,0,0,0,0,Grassland,AEZ05,Grassland
+Korea,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,GrassShrubLandAEZ05,GrasslandAEZ05,0,0,0,0,0,0,0,Grassland,AEZ05,Grassland
+India,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,GrassShrubLandAEZ05,GrasslandAEZ05,2.2,9.9,2.2,9.9,26,0,0,Grassland,AEZ05,Grassland
+USA,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,CropLandAEZ05,OtherArableLandAEZ05,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ05,Cropland
+Canada,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,CropLandAEZ05,OtherArableLandAEZ05,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ05,Cropland
+Western Europe,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,CropLandAEZ05,OtherArableLandAEZ05,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ05,Cropland
+Japan,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,CropLandAEZ05,OtherArableLandAEZ05,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ05,Cropland
+Australia_NZ,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,CropLandAEZ05,OtherArableLandAEZ05,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ05,Cropland
+Former Soviet Union,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,CropLandAEZ05,OtherArableLandAEZ05,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ05,Cropland
+China,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,CropLandAEZ05,OtherArableLandAEZ05,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ05,Cropland
+Middle East,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,CropLandAEZ05,OtherArableLandAEZ05,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ05,Cropland
+Africa,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,CropLandAEZ05,OtherArableLandAEZ05,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ05,Cropland
+Latin America,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,CropLandAEZ05,OtherArableLandAEZ05,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ05,Cropland
+Southeast Asia,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,CropLandAEZ05,OtherArableLandAEZ05,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ05,Cropland
+Eastern Europe,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,CropLandAEZ05,OtherArableLandAEZ05,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ05,Cropland
+Korea,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,CropLandAEZ05,OtherArableLandAEZ05,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ05,Cropland
+India,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,CropLandAEZ05,OtherArableLandAEZ05,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ05,Cropland
+USA,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,GrassShrubLandAEZ05,ShrublandAEZ05,0,0,0,0,0,0,0,Shrubland,AEZ05,Shrubland
+Canada,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,GrassShrubLandAEZ05,ShrublandAEZ05,0,0,0,0,0,0,0,Shrubland,AEZ05,Shrubland
+Western Europe,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,GrassShrubLandAEZ05,ShrublandAEZ05,0,0,0,0,0,0,0,Shrubland,AEZ05,Shrubland
+Japan,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,GrassShrubLandAEZ05,ShrublandAEZ05,0,0,0,0,0,0,0,Shrubland,AEZ05,Shrubland
+Australia_NZ,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,GrassShrubLandAEZ05,ShrublandAEZ05,5.5,6.9,5.5,6.9,18,0,0,Shrubland,AEZ05,Shrubland
+Former Soviet Union,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,GrassShrubLandAEZ05,ShrublandAEZ05,0,0,0,0,0,0,0,Shrubland,AEZ05,Shrubland
+China,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,GrassShrubLandAEZ05,ShrublandAEZ05,5.4,6.9,5.4,6.9,19,0,0,Shrubland,AEZ05,Shrubland
+Middle East,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,GrassShrubLandAEZ05,ShrublandAEZ05,0,0,0,0,0,0,0,Shrubland,AEZ05,Shrubland
+Africa,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,GrassShrubLandAEZ05,ShrublandAEZ05,4,6.9,4,6.9,36,0,0,Shrubland,AEZ05,Shrubland
+Latin America,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,GrassShrubLandAEZ05,ShrublandAEZ05,5.4,6.9,5.4,6.9,19,0,0,Shrubland,AEZ05,Shrubland
+Southeast Asia,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,GrassShrubLandAEZ05,ShrublandAEZ05,5.3,6.9,5.3,6.9,20,0,0,Shrubland,AEZ05,Shrubland
+Eastern Europe,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,GrassShrubLandAEZ05,ShrublandAEZ05,0,0,0,0,0,0,0,Shrubland,AEZ05,Shrubland
+Korea,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,GrassShrubLandAEZ05,ShrublandAEZ05,0,0,0,0,0,0,0,Shrubland,AEZ05,Shrubland
+India,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,GrassShrubLandAEZ05,ShrublandAEZ05,2.7,6.9,2.7,6.9,50,0,0,Shrubland,AEZ05,Shrubland
+USA,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,AllForestLandAEZ05,UnmanagedForestAEZ05,0,0,0,0,0,0,0,UnmanagedForest,AEZ05,Forest
+Canada,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,AllForestLandAEZ05,UnmanagedForestAEZ05,0,0,0,0,0,0,0,UnmanagedForest,AEZ05,Forest
+Western Europe,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,AllForestLandAEZ05,UnmanagedForestAEZ05,0,0,0,0,0,0,0,UnmanagedForest,AEZ05,Forest
+Japan,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,AllForestLandAEZ05,UnmanagedForestAEZ05,0,0,0,0,0,0,0,UnmanagedForest,AEZ05,Forest
+Australia_NZ,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,AllForestLandAEZ05,UnmanagedForestAEZ05,20,9.8,20,9.8,40,0,0,UnmanagedForest,AEZ05,Forest
+Former Soviet Union,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,AllForestLandAEZ05,UnmanagedForestAEZ05,0,0,0,0,0,0,0,UnmanagedForest,AEZ05,Forest
+China,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,AllForestLandAEZ05,UnmanagedForestAEZ05,16.4,10,16.4,10,40,0,0,UnmanagedForest,AEZ05,Forest
+Middle East,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,AllForestLandAEZ05,UnmanagedForestAEZ05,0,0,0,0,0,0,0,UnmanagedForest,AEZ05,Forest
+Africa,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,AllForestLandAEZ05,UnmanagedForestAEZ05,17.6,9.8,17.6,9.8,38,0,0,UnmanagedForest,AEZ05,Forest
+Latin America,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,AllForestLandAEZ05,UnmanagedForestAEZ05,18.5,9.8,18.5,9.8,39,0,0,UnmanagedForest,AEZ05,Forest
+Southeast Asia,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,AllForestLandAEZ05,UnmanagedForestAEZ05,17.2,10,17.2,10,40,0,0,UnmanagedForest,AEZ05,Forest
+Eastern Europe,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,AllForestLandAEZ05,UnmanagedForestAEZ05,0,0,0,0,0,0,0,UnmanagedForest,AEZ05,Forest
+Korea,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,AllForestLandAEZ05,UnmanagedForestAEZ05,0,0,0,0,0,0,0,UnmanagedForest,AEZ05,Forest
+India,root,AgroForestLandAEZ05,AgroForest_NonPastureAEZ05,AllForestLandAEZ05,UnmanagedForestAEZ05,18.2,9.9,18.2,9.9,39,0,0,UnmanagedForest,AEZ05,Forest
+USA,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,GrassShrubLandAEZ06,GrasslandAEZ06,0,0,0,0,0,0,0,Grassland,AEZ06,Grassland
+Canada,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,GrassShrubLandAEZ06,GrasslandAEZ06,0,0,0,0,0,0,0,Grassland,AEZ06,Grassland
+Western Europe,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,GrassShrubLandAEZ06,GrasslandAEZ06,0,0,0,0,0,0,0,Grassland,AEZ06,Grassland
+Japan,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,GrassShrubLandAEZ06,GrasslandAEZ06,0,0,0,0,0,0,0,Grassland,AEZ06,Grassland
+Australia_NZ,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,GrassShrubLandAEZ06,GrasslandAEZ06,2.3,10.2,2.3,10.2,26,0,0,Grassland,AEZ06,Grassland
+Former Soviet Union,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,GrassShrubLandAEZ06,GrasslandAEZ06,0,0,0,0,0,0,0,Grassland,AEZ06,Grassland
+China,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,GrassShrubLandAEZ06,GrasslandAEZ06,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ06,Grassland
+Middle East,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,GrassShrubLandAEZ06,GrasslandAEZ06,0,0,0,0,0,0,0,Grassland,AEZ06,Grassland
+Africa,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,GrassShrubLandAEZ06,GrasslandAEZ06,2.5,9.6,2.5,9.6,29,0,0,Grassland,AEZ06,Grassland
+Latin America,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,GrassShrubLandAEZ06,GrasslandAEZ06,2.1,10.6,2.1,10.6,24,0,0,Grassland,AEZ06,Grassland
+Southeast Asia,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,GrassShrubLandAEZ06,GrasslandAEZ06,1.9,11.2,1.9,11.2,21,0,0,Grassland,AEZ06,Grassland
+Eastern Europe,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,GrassShrubLandAEZ06,GrasslandAEZ06,0,0,0,0,0,0,0,Grassland,AEZ06,Grassland
+Korea,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,GrassShrubLandAEZ06,GrasslandAEZ06,0,0,0,0,0,0,0,Grassland,AEZ06,Grassland
+India,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,GrassShrubLandAEZ06,GrasslandAEZ06,1,13.5,1,13.5,10,0,0,Grassland,AEZ06,Grassland
+USA,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,CropLandAEZ06,OtherArableLandAEZ06,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ06,Cropland
+Canada,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,CropLandAEZ06,OtherArableLandAEZ06,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ06,Cropland
+Western Europe,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,CropLandAEZ06,OtherArableLandAEZ06,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ06,Cropland
+Japan,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,CropLandAEZ06,OtherArableLandAEZ06,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ06,Cropland
+Australia_NZ,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,CropLandAEZ06,OtherArableLandAEZ06,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ06,Cropland
+Former Soviet Union,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,CropLandAEZ06,OtherArableLandAEZ06,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ06,Cropland
+China,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,CropLandAEZ06,OtherArableLandAEZ06,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ06,Cropland
+Middle East,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,CropLandAEZ06,OtherArableLandAEZ06,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ06,Cropland
+Africa,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,CropLandAEZ06,OtherArableLandAEZ06,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ06,Cropland
+Latin America,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,CropLandAEZ06,OtherArableLandAEZ06,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ06,Cropland
+Southeast Asia,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,CropLandAEZ06,OtherArableLandAEZ06,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ06,Cropland
+Eastern Europe,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,CropLandAEZ06,OtherArableLandAEZ06,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ06,Cropland
+Korea,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,CropLandAEZ06,OtherArableLandAEZ06,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ06,Cropland
+India,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,CropLandAEZ06,OtherArableLandAEZ06,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ06,Cropland
+USA,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,GrassShrubLandAEZ06,ShrublandAEZ06,0,0,0,0,0,0,0,Shrubland,AEZ06,Shrubland
+Canada,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,GrassShrubLandAEZ06,ShrublandAEZ06,0,0,0,0,0,0,0,Shrubland,AEZ06,Shrubland
+Western Europe,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,GrassShrubLandAEZ06,ShrublandAEZ06,0,0,0,0,0,0,0,Shrubland,AEZ06,Shrubland
+Japan,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,GrassShrubLandAEZ06,ShrublandAEZ06,0,0,0,0,0,0,0,Shrubland,AEZ06,Shrubland
+Australia_NZ,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,GrassShrubLandAEZ06,ShrublandAEZ06,5.5,6.9,5.5,6.9,18,0,0,Shrubland,AEZ06,Shrubland
+Former Soviet Union,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,GrassShrubLandAEZ06,ShrublandAEZ06,0,0,0,0,0,0,0,Shrubland,AEZ06,Shrubland
+China,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,GrassShrubLandAEZ06,ShrublandAEZ06,5.2,6.9,5.2,6.9,21,0,0,Shrubland,AEZ06,Shrubland
+Middle East,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,GrassShrubLandAEZ06,ShrublandAEZ06,0,0,0,0,0,0,0,Shrubland,AEZ06,Shrubland
+Africa,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,GrassShrubLandAEZ06,ShrublandAEZ06,4.9,6.9,4.9,6.9,25,0,0,Shrubland,AEZ06,Shrubland
+Latin America,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,GrassShrubLandAEZ06,ShrublandAEZ06,4.5,6.9,4.5,6.9,29,0,0,Shrubland,AEZ06,Shrubland
+Southeast Asia,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,GrassShrubLandAEZ06,ShrublandAEZ06,5.3,6.9,5.3,6.9,21,0,0,Shrubland,AEZ06,Shrubland
+Eastern Europe,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,GrassShrubLandAEZ06,ShrublandAEZ06,0,0,0,0,0,0,0,Shrubland,AEZ06,Shrubland
+Korea,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,GrassShrubLandAEZ06,ShrublandAEZ06,0,0,0,0,0,0,0,Shrubland,AEZ06,Shrubland
+India,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,GrassShrubLandAEZ06,ShrublandAEZ06,2.7,6.9,2.7,6.9,50,0,0,Shrubland,AEZ06,Shrubland
+USA,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,AllForestLandAEZ06,UnmanagedForestAEZ06,0,0,0,0,0,0,0,UnmanagedForest,AEZ06,Forest
+Canada,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,AllForestLandAEZ06,UnmanagedForestAEZ06,0,0,0,0,0,0,0,UnmanagedForest,AEZ06,Forest
+Western Europe,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,AllForestLandAEZ06,UnmanagedForestAEZ06,0,0,0,0,0,0,0,UnmanagedForest,AEZ06,Forest
+Japan,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,AllForestLandAEZ06,UnmanagedForestAEZ06,0,0,0,0,0,0,0,UnmanagedForest,AEZ06,Forest
+Australia_NZ,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,AllForestLandAEZ06,UnmanagedForestAEZ06,19.3,9.4,19.3,9.4,42,0,0,UnmanagedForest,AEZ06,Forest
+Former Soviet Union,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,AllForestLandAEZ06,UnmanagedForestAEZ06,0,0,0,0,0,0,0,UnmanagedForest,AEZ06,Forest
+China,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,AllForestLandAEZ06,UnmanagedForestAEZ06,17.1,10.1,17.1,10.1,41,0,0,UnmanagedForest,AEZ06,Forest
+Middle East,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,AllForestLandAEZ06,UnmanagedForestAEZ06,0,0,0,0,0,0,0,UnmanagedForest,AEZ06,Forest
+Africa,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,AllForestLandAEZ06,UnmanagedForestAEZ06,19.8,9.8,19.8,9.8,40,0,0,UnmanagedForest,AEZ06,Forest
+Latin America,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,AllForestLandAEZ06,UnmanagedForestAEZ06,19.7,9.8,19.7,9.8,40,0,0,UnmanagedForest,AEZ06,Forest
+Southeast Asia,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,AllForestLandAEZ06,UnmanagedForestAEZ06,19.8,9.8,19.8,9.8,40,0,0,UnmanagedForest,AEZ06,Forest
+Eastern Europe,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,AllForestLandAEZ06,UnmanagedForestAEZ06,0,0,0,0,0,0,0,UnmanagedForest,AEZ06,Forest
+Korea,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,AllForestLandAEZ06,UnmanagedForestAEZ06,0,0,0,0,0,0,0,UnmanagedForest,AEZ06,Forest
+India,root,AgroForestLandAEZ06,AgroForest_NonPastureAEZ06,AllForestLandAEZ06,UnmanagedForestAEZ06,17,10.1,17,10.1,41,0,0,UnmanagedForest,AEZ06,Forest
+USA,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,GrassShrubLandAEZ07,GrasslandAEZ07,0.7,8.6,0.7,8.6,11,0,0,Grassland,AEZ07,Grassland
+Canada,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,GrassShrubLandAEZ07,GrasslandAEZ07,0.7,8.5,0.7,8.5,11,0,0,Grassland,AEZ07,Grassland
+Western Europe,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,GrassShrubLandAEZ07,GrasslandAEZ07,0.6,8.5,0.6,8.5,10,0,0,Grassland,AEZ07,Grassland
+Japan,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,GrassShrubLandAEZ07,GrasslandAEZ07,0,0,0,0,0,0,0,Grassland,AEZ07,Grassland
+Australia_NZ,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,GrassShrubLandAEZ07,GrasslandAEZ07,2.3,9.4,2.3,9.4,27,0,0,Grassland,AEZ07,Grassland
+Former Soviet Union,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,GrassShrubLandAEZ07,GrasslandAEZ07,0.7,8.6,0.7,8.6,11,0,0,Grassland,AEZ07,Grassland
+China,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,GrassShrubLandAEZ07,GrasslandAEZ07,0.6,8.5,0.6,8.5,10,0,0,Grassland,AEZ07,Grassland
+Middle East,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,GrassShrubLandAEZ07,GrasslandAEZ07,1.2,8.8,1.2,8.8,16,0,0,Grassland,AEZ07,Grassland
+Africa,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,GrassShrubLandAEZ07,GrasslandAEZ07,1.3,8.9,1.3,8.9,17,0,0,Grassland,AEZ07,Grassland
+Latin America,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,GrassShrubLandAEZ07,GrasslandAEZ07,0.6,8.5,0.6,8.5,10,0,0,Grassland,AEZ07,Grassland
+Southeast Asia,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,GrassShrubLandAEZ07,GrasslandAEZ07,0.9,8.7,0.9,8.7,13,0,0,Grassland,AEZ07,Grassland
+Eastern Europe,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,GrassShrubLandAEZ07,GrasslandAEZ07,0,0,0,0,0,0,0,Grassland,AEZ07,Grassland
+Korea,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,GrassShrubLandAEZ07,GrasslandAEZ07,0,0,0,0,0,0,0,Grassland,AEZ07,Grassland
+India,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,GrassShrubLandAEZ07,GrasslandAEZ07,0,0,0,0,0,0,0,Grassland,AEZ07,Grassland
+USA,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,CropLandAEZ07,OtherArableLandAEZ07,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ07,Cropland
+Canada,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,CropLandAEZ07,OtherArableLandAEZ07,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ07,Cropland
+Western Europe,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,CropLandAEZ07,OtherArableLandAEZ07,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ07,Cropland
+Japan,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,CropLandAEZ07,OtherArableLandAEZ07,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ07,Cropland
+Australia_NZ,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,CropLandAEZ07,OtherArableLandAEZ07,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ07,Cropland
+Former Soviet Union,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,CropLandAEZ07,OtherArableLandAEZ07,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ07,Cropland
+China,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,CropLandAEZ07,OtherArableLandAEZ07,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ07,Cropland
+Middle East,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,CropLandAEZ07,OtherArableLandAEZ07,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ07,Cropland
+Africa,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,CropLandAEZ07,OtherArableLandAEZ07,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ07,Cropland
+Latin America,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,CropLandAEZ07,OtherArableLandAEZ07,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ07,Cropland
+Southeast Asia,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,CropLandAEZ07,OtherArableLandAEZ07,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ07,Cropland
+Eastern Europe,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,CropLandAEZ07,OtherArableLandAEZ07,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ07,Cropland
+Korea,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,CropLandAEZ07,OtherArableLandAEZ07,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ07,Cropland
+India,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,CropLandAEZ07,OtherArableLandAEZ07,0.3,6,0.3,6,1,0,0,OtherArableLand,AEZ07,Cropland
+USA,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,GrassShrubLandAEZ07,ShrublandAEZ07,3,6.9,3,6.9,47,0,0,Shrubland,AEZ07,Shrubland
+Canada,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,GrassShrubLandAEZ07,ShrublandAEZ07,2.7,6.9,2.7,6.9,50,0,0,Shrubland,AEZ07,Shrubland
+Western Europe,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,GrassShrubLandAEZ07,ShrublandAEZ07,2.7,6.9,2.7,6.9,50,0,0,Shrubland,AEZ07,Shrubland
+Japan,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,GrassShrubLandAEZ07,ShrublandAEZ07,0,0,0,0,0,0,0,Shrubland,AEZ07,Shrubland
+Australia_NZ,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,GrassShrubLandAEZ07,ShrublandAEZ07,3.7,6.9,3.7,6.9,38,0,0,Shrubland,AEZ07,Shrubland
+Former Soviet Union,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,GrassShrubLandAEZ07,ShrublandAEZ07,2.7,6.9,2.7,6.9,50,0,0,Shrubland,AEZ07,Shrubland
+China,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,GrassShrubLandAEZ07,ShrublandAEZ07,2.7,6.9,2.7,6.9,50,0,0,Shrubland,AEZ07,Shrubland
+Middle East,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,GrassShrubLandAEZ07,ShrublandAEZ07,2.7,6.9,2.7,6.9,50,0,0,Shrubland,AEZ07,Shrubland
+Africa,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,GrassShrubLandAEZ07,ShrublandAEZ07,2.7,6.9,2.7,6.9,50,0,0,Shrubland,AEZ07,Shrubland
+Latin America,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,GrassShrubLandAEZ07,ShrublandAEZ07,3.5,6.9,3.5,6.9,40,0,0,Shrubland,AEZ07,Shrubland
+Southeast Asia,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,GrassShrubLandAEZ07,ShrublandAEZ07,3.1,6.9,3.1,6.9,46,0,0,Shrubland,AEZ07,Shrubland
+Eastern Europe,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,GrassShrubLandAEZ07,ShrublandAEZ07,0,0,0,0,0,0,0,Shrubland,AEZ07,Shrubland
+Korea,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,GrassShrubLandAEZ07,ShrublandAEZ07,0,0,0,0,0,0,0,Shrubland,AEZ07,Shrubland
+India,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,GrassShrubLandAEZ07,ShrublandAEZ07,2.9,6.9,2.9,6.9,48,0,0,Shrubland,AEZ07,Shrubland
+USA,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,AllForestLandAEZ07,UnmanagedForestAEZ07,15,13.8,15,13.8,50,0,0,UnmanagedForest,AEZ07,Forest
+Canada,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,AllForestLandAEZ07,UnmanagedForestAEZ07,12.5,12.7,12.5,12.7,50,0,0,UnmanagedForest,AEZ07,Forest
+Western Europe,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,AllForestLandAEZ07,UnmanagedForestAEZ07,0,0,0,0,0,0,0,UnmanagedForest,AEZ07,Forest
+Japan,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,AllForestLandAEZ07,UnmanagedForestAEZ07,0,0,0,0,0,0,0,UnmanagedForest,AEZ07,Forest
+Australia_NZ,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,AllForestLandAEZ07,UnmanagedForestAEZ07,16,7.5,16,7.5,49,0,0,UnmanagedForest,AEZ07,Forest
+Former Soviet Union,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,AllForestLandAEZ07,UnmanagedForestAEZ07,10.9,11.1,10.9,11.1,49,0,0,UnmanagedForest,AEZ07,Forest
+China,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,AllForestLandAEZ07,UnmanagedForestAEZ07,10.7,11.5,10.7,11.5,50,0,0,UnmanagedForest,AEZ07,Forest
+Middle East,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,AllForestLandAEZ07,UnmanagedForestAEZ07,12.6,12.7,12.6,12.7,50,0,0,UnmanagedForest,AEZ07,Forest
+Africa,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,AllForestLandAEZ07,UnmanagedForestAEZ07,19,9.8,19,9.8,39,0,0,UnmanagedForest,AEZ07,Forest
+Latin America,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,AllForestLandAEZ07,UnmanagedForestAEZ07,13.1,10.8,13.1,10.8,43,0,0,UnmanagedForest,AEZ07,Forest
+Southeast Asia,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,AllForestLandAEZ07,UnmanagedForestAEZ07,0,0,0,0,0,0,0,UnmanagedForest,AEZ07,Forest
+Eastern Europe,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,AllForestLandAEZ07,UnmanagedForestAEZ07,0,0,0,0,0,0,0,UnmanagedForest,AEZ07,Forest
+Korea,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,AllForestLandAEZ07,UnmanagedForestAEZ07,0,0,0,0,0,0,0,UnmanagedForest,AEZ07,Forest
+India,root,AgroForestLandAEZ07,AgroForest_NonPastureAEZ07,AllForestLandAEZ07,UnmanagedForestAEZ07,0,0,0,0,0,0,0,UnmanagedForest,AEZ07,Forest
+USA,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,GrassShrubLandAEZ08,GrasslandAEZ08,0.8,10,0.8,10,11,0,0,Grassland,AEZ08,Grassland
+Canada,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,GrassShrubLandAEZ08,GrasslandAEZ08,1.3,9.8,1.3,9.8,16,0,0,Grassland,AEZ08,Grassland
+Western Europe,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,GrassShrubLandAEZ08,GrasslandAEZ08,1.4,9.8,1.4,9.8,18,0,0,Grassland,AEZ08,Grassland
+Japan,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,GrassShrubLandAEZ08,GrasslandAEZ08,0,0,0,0,0,0,0,Grassland,AEZ08,Grassland
+Australia_NZ,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,GrassShrubLandAEZ08,GrasslandAEZ08,2.4,9.5,2.4,9.5,28,0,0,Grassland,AEZ08,Grassland
+Former Soviet Union,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,GrassShrubLandAEZ08,GrasslandAEZ08,1,9.9,1,9.9,14,0,0,Grassland,AEZ08,Grassland
+China,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,GrassShrubLandAEZ08,GrasslandAEZ08,1.1,9.9,1.1,9.9,14,0,0,Grassland,AEZ08,Grassland
+Middle East,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,GrassShrubLandAEZ08,GrasslandAEZ08,1.1,9.9,1.1,9.9,15,0,0,Grassland,AEZ08,Grassland
+Africa,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,GrassShrubLandAEZ08,GrasslandAEZ08,1.9,9.7,1.9,9.7,22,0,0,Grassland,AEZ08,Grassland
+Latin America,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,GrassShrubLandAEZ08,GrasslandAEZ08,0.8,10,0.8,10,11,0,0,Grassland,AEZ08,Grassland
+Southeast Asia,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,GrassShrubLandAEZ08,GrasslandAEZ08,1.2,9.9,1.2,9.9,15,0,0,Grassland,AEZ08,Grassland
+Eastern Europe,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,GrassShrubLandAEZ08,GrasslandAEZ08,1.6,9.8,1.6,9.8,19,0,0,Grassland,AEZ08,Grassland
+Korea,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,GrassShrubLandAEZ08,GrasslandAEZ08,0,0,0,0,0,0,0,Grassland,AEZ08,Grassland
+India,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,GrassShrubLandAEZ08,GrasslandAEZ08,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ08,Grassland
+USA,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,CropLandAEZ08,OtherArableLandAEZ08,0.3,7,0.3,7,1,0,0,OtherArableLand,AEZ08,Cropland
+Canada,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,CropLandAEZ08,OtherArableLandAEZ08,0.3,7,0.3,7,1,0,0,OtherArableLand,AEZ08,Cropland
+Western Europe,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,CropLandAEZ08,OtherArableLandAEZ08,0.3,7,0.3,7,1,0,0,OtherArableLand,AEZ08,Cropland
+Japan,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,CropLandAEZ08,OtherArableLandAEZ08,0.3,7,0.3,7,1,0,0,OtherArableLand,AEZ08,Cropland
+Australia_NZ,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,CropLandAEZ08,OtherArableLandAEZ08,0.3,7,0.3,7,1,0,0,OtherArableLand,AEZ08,Cropland
+Former Soviet Union,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,CropLandAEZ08,OtherArableLandAEZ08,0.3,7,0.3,7,1,0,0,OtherArableLand,AEZ08,Cropland
+China,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,CropLandAEZ08,OtherArableLandAEZ08,0.3,7,0.3,7,1,0,0,OtherArableLand,AEZ08,Cropland
+Middle East,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,CropLandAEZ08,OtherArableLandAEZ08,0.3,7,0.3,7,1,0,0,OtherArableLand,AEZ08,Cropland
+Africa,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,CropLandAEZ08,OtherArableLandAEZ08,0.3,7,0.3,7,1,0,0,OtherArableLand,AEZ08,Cropland
+Latin America,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,CropLandAEZ08,OtherArableLandAEZ08,0.3,7,0.3,7,1,0,0,OtherArableLand,AEZ08,Cropland
+Southeast Asia,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,CropLandAEZ08,OtherArableLandAEZ08,0.3,7,0.3,7,1,0,0,OtherArableLand,AEZ08,Cropland
+Eastern Europe,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,CropLandAEZ08,OtherArableLandAEZ08,0.3,7,0.3,7,1,0,0,OtherArableLand,AEZ08,Cropland
+Korea,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,CropLandAEZ08,OtherArableLandAEZ08,0.3,7,0.3,7,1,0,0,OtherArableLand,AEZ08,Cropland
+India,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,CropLandAEZ08,OtherArableLandAEZ08,0.3,7,0.3,7,1,0,0,OtherArableLand,AEZ08,Cropland
+USA,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,GrassShrubLandAEZ08,ShrublandAEZ08,3.1,6.9,3.1,6.9,46,0,0,Shrubland,AEZ08,Shrubland
+Canada,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,GrassShrubLandAEZ08,ShrublandAEZ08,0,0,0,0,0,0,0,Shrubland,AEZ08,Shrubland
+Western Europe,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,GrassShrubLandAEZ08,ShrublandAEZ08,4,6.9,4,6.9,35,0,0,Shrubland,AEZ08,Shrubland
+Japan,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,GrassShrubLandAEZ08,ShrublandAEZ08,0,0,0,0,0,0,0,Shrubland,AEZ08,Shrubland
+Australia_NZ,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,GrassShrubLandAEZ08,ShrublandAEZ08,4.6,6.9,4.6,6.9,28,0,0,Shrubland,AEZ08,Shrubland
+Former Soviet Union,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,GrassShrubLandAEZ08,ShrublandAEZ08,4.1,6.9,4.1,6.9,34,0,0,Shrubland,AEZ08,Shrubland
+China,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,GrassShrubLandAEZ08,ShrublandAEZ08,3.5,6.9,3.5,6.9,41,0,0,Shrubland,AEZ08,Shrubland
+Middle East,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,GrassShrubLandAEZ08,ShrublandAEZ08,2.8,6.9,2.8,6.9,49,0,0,Shrubland,AEZ08,Shrubland
+Africa,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,GrassShrubLandAEZ08,ShrublandAEZ08,3.2,6.9,3.2,6.9,44,0,0,Shrubland,AEZ08,Shrubland
+Latin America,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,GrassShrubLandAEZ08,ShrublandAEZ08,4.9,6.9,4.9,6.9,24,0,0,Shrubland,AEZ08,Shrubland
+Southeast Asia,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,GrassShrubLandAEZ08,ShrublandAEZ08,2.9,6.9,2.9,6.9,48,0,0,Shrubland,AEZ08,Shrubland
+Eastern Europe,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,GrassShrubLandAEZ08,ShrublandAEZ08,2.7,6.9,2.7,6.9,50,0,0,Shrubland,AEZ08,Shrubland
+Korea,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,GrassShrubLandAEZ08,ShrublandAEZ08,0,0,0,0,0,0,0,Shrubland,AEZ08,Shrubland
+India,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,GrassShrubLandAEZ08,ShrublandAEZ08,3.2,6.9,3.2,6.9,44,0,0,Shrubland,AEZ08,Shrubland
+USA,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,AllForestLandAEZ08,UnmanagedForestAEZ08,15.3,13.7,15.3,13.7,50,0,0,UnmanagedForest,AEZ08,Forest
+Canada,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,AllForestLandAEZ08,UnmanagedForestAEZ08,13,14.1,13,14.1,50,0,0,UnmanagedForest,AEZ08,Forest
+Western Europe,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,AllForestLandAEZ08,UnmanagedForestAEZ08,13.9,11.9,13.9,11.9,50,0,0,UnmanagedForest,AEZ08,Forest
+Japan,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,AllForestLandAEZ08,UnmanagedForestAEZ08,0,0,0,0,0,0,0,UnmanagedForest,AEZ08,Forest
+Australia_NZ,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,AllForestLandAEZ08,UnmanagedForestAEZ08,15.7,7.5,15.7,7.5,49,0,0,UnmanagedForest,AEZ08,Forest
+Former Soviet Union,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,AllForestLandAEZ08,UnmanagedForestAEZ08,12.7,12.4,12.7,12.4,50,0,0,UnmanagedForest,AEZ08,Forest
+China,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,AllForestLandAEZ08,UnmanagedForestAEZ08,11.9,12.3,11.9,12.3,50,0,0,UnmanagedForest,AEZ08,Forest
+Middle East,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,AllForestLandAEZ08,UnmanagedForestAEZ08,13.4,11.1,13.4,11.1,50,0,0,UnmanagedForest,AEZ08,Forest
+Africa,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,AllForestLandAEZ08,UnmanagedForestAEZ08,14.9,9.7,14.9,9.7,36,0,0,UnmanagedForest,AEZ08,Forest
+Latin America,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,AllForestLandAEZ08,UnmanagedForestAEZ08,14.4,10.7,14.4,10.7,42,0,0,UnmanagedForest,AEZ08,Forest
+Southeast Asia,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,AllForestLandAEZ08,UnmanagedForestAEZ08,15.6,13.2,15.6,13.2,50,0,0,UnmanagedForest,AEZ08,Forest
+Eastern Europe,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,AllForestLandAEZ08,UnmanagedForestAEZ08,13.5,13.4,13.5,13.4,50,0,0,UnmanagedForest,AEZ08,Forest
+Korea,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,AllForestLandAEZ08,UnmanagedForestAEZ08,0,0,0,0,0,0,0,UnmanagedForest,AEZ08,Forest
+India,root,AgroForestLandAEZ08,AgroForest_NonPastureAEZ08,AllForestLandAEZ08,UnmanagedForestAEZ08,14,9.8,14,9.8,35,0,0,UnmanagedForest,AEZ08,Forest
+USA,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,GrassShrubLandAEZ09,GrasslandAEZ09,1.1,11,1.1,11,14,0,0,Grassland,AEZ09,Grassland
+Canada,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,GrassShrubLandAEZ09,GrasslandAEZ09,2,10,2,10,24,0,0,Grassland,AEZ09,Grassland
+Western Europe,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,GrassShrubLandAEZ09,GrasslandAEZ09,2,10.1,2,10.1,24,0,0,Grassland,AEZ09,Grassland
+Japan,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,GrassShrubLandAEZ09,GrasslandAEZ09,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ09,Grassland
+Australia_NZ,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,GrassShrubLandAEZ09,GrasslandAEZ09,2.4,9.6,2.4,9.6,28,0,0,Grassland,AEZ09,Grassland
+Former Soviet Union,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,GrassShrubLandAEZ09,GrasslandAEZ09,1.7,10.4,1.7,10.4,21,0,0,Grassland,AEZ09,Grassland
+China,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,GrassShrubLandAEZ09,GrasslandAEZ09,1.7,10.3,1.7,10.3,21,0,0,Grassland,AEZ09,Grassland
+Middle East,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,GrassShrubLandAEZ09,GrasslandAEZ09,2.2,9.8,2.2,9.8,26,0,0,Grassland,AEZ09,Grassland
+Africa,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,GrassShrubLandAEZ09,GrasslandAEZ09,2.3,9.7,2.3,9.7,27,0,0,Grassland,AEZ09,Grassland
+Latin America,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,GrassShrubLandAEZ09,GrasslandAEZ09,0.9,11.3,0.9,11.3,12,0,0,Grassland,AEZ09,Grassland
+Southeast Asia,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,GrassShrubLandAEZ09,GrasslandAEZ09,0.8,11.4,0.8,11.4,11,0,0,Grassland,AEZ09,Grassland
+Eastern Europe,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,GrassShrubLandAEZ09,GrasslandAEZ09,2.2,9.9,2.2,9.9,25,0,0,Grassland,AEZ09,Grassland
+Korea,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,GrassShrubLandAEZ09,GrasslandAEZ09,0,0,0,0,0,0,0,Grassland,AEZ09,Grassland
+India,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,GrassShrubLandAEZ09,GrasslandAEZ09,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ09,Grassland
+USA,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,CropLandAEZ09,OtherArableLandAEZ09,0.3,8,0.3,8,1,0,0,OtherArableLand,AEZ09,Cropland
+Canada,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,CropLandAEZ09,OtherArableLandAEZ09,0.3,8,0.3,8,1,0,0,OtherArableLand,AEZ09,Cropland
+Western Europe,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,CropLandAEZ09,OtherArableLandAEZ09,0.3,8,0.3,8,1,0,0,OtherArableLand,AEZ09,Cropland
+Japan,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,CropLandAEZ09,OtherArableLandAEZ09,0.3,8,0.3,8,1,0,0,OtherArableLand,AEZ09,Cropland
+Australia_NZ,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,CropLandAEZ09,OtherArableLandAEZ09,0.3,8,0.3,8,1,0,0,OtherArableLand,AEZ09,Cropland
+Former Soviet Union,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,CropLandAEZ09,OtherArableLandAEZ09,0.3,8,0.3,8,1,0,0,OtherArableLand,AEZ09,Cropland
+China,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,CropLandAEZ09,OtherArableLandAEZ09,0.3,8,0.3,8,1,0,0,OtherArableLand,AEZ09,Cropland
+Middle East,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,CropLandAEZ09,OtherArableLandAEZ09,0.3,8,0.3,8,1,0,0,OtherArableLand,AEZ09,Cropland
+Africa,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,CropLandAEZ09,OtherArableLandAEZ09,0.3,8,0.3,8,1,0,0,OtherArableLand,AEZ09,Cropland
+Latin America,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,CropLandAEZ09,OtherArableLandAEZ09,0.3,8,0.3,8,1,0,0,OtherArableLand,AEZ09,Cropland
+Southeast Asia,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,CropLandAEZ09,OtherArableLandAEZ09,0.3,8,0.3,8,1,0,0,OtherArableLand,AEZ09,Cropland
+Eastern Europe,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,CropLandAEZ09,OtherArableLandAEZ09,0.3,8,0.3,8,1,0,0,OtherArableLand,AEZ09,Cropland
+Korea,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,CropLandAEZ09,OtherArableLandAEZ09,0.3,8,0.3,8,1,0,0,OtherArableLand,AEZ09,Cropland
+India,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,CropLandAEZ09,OtherArableLandAEZ09,0.3,8,0.3,8,1,0,0,OtherArableLand,AEZ09,Cropland
+USA,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,GrassShrubLandAEZ09,ShrublandAEZ09,4,6.9,4,6.9,36,0,0,Shrubland,AEZ09,Shrubland
+Canada,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,GrassShrubLandAEZ09,ShrublandAEZ09,0,0,0,0,0,0,0,Shrubland,AEZ09,Shrubland
+Western Europe,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,GrassShrubLandAEZ09,ShrublandAEZ09,4.8,6.9,4.8,6.9,26,0,0,Shrubland,AEZ09,Shrubland
+Japan,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,GrassShrubLandAEZ09,ShrublandAEZ09,0,0,0,0,0,0,0,Shrubland,AEZ09,Shrubland
+Australia_NZ,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,GrassShrubLandAEZ09,ShrublandAEZ09,5.1,6.9,5.1,6.9,23,0,0,Shrubland,AEZ09,Shrubland
+Former Soviet Union,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,GrassShrubLandAEZ09,ShrublandAEZ09,3.2,6.9,3.2,6.9,45,0,0,Shrubland,AEZ09,Shrubland
+China,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,GrassShrubLandAEZ09,ShrublandAEZ09,4.3,6.9,4.3,6.9,32,0,0,Shrubland,AEZ09,Shrubland
+Middle East,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,GrassShrubLandAEZ09,ShrublandAEZ09,3.2,6.9,3.2,6.9,45,0,0,Shrubland,AEZ09,Shrubland
+Africa,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,GrassShrubLandAEZ09,ShrublandAEZ09,4.4,6.9,4.4,6.9,30,0,0,Shrubland,AEZ09,Shrubland
+Latin America,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,GrassShrubLandAEZ09,ShrublandAEZ09,5.2,6.9,5.2,6.9,21,0,0,Shrubland,AEZ09,Shrubland
+Southeast Asia,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,GrassShrubLandAEZ09,ShrublandAEZ09,2.7,6.9,2.7,6.9,50,0,0,Shrubland,AEZ09,Shrubland
+Eastern Europe,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,GrassShrubLandAEZ09,ShrublandAEZ09,4.2,6.9,4.2,6.9,33,0,0,Shrubland,AEZ09,Shrubland
+Korea,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,GrassShrubLandAEZ09,ShrublandAEZ09,0,0,0,0,0,0,0,Shrubland,AEZ09,Shrubland
+India,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,GrassShrubLandAEZ09,ShrublandAEZ09,4.7,6.9,4.7,6.9,28,0,0,Shrubland,AEZ09,Shrubland
+USA,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,AllForestLandAEZ09,UnmanagedForestAEZ09,13.6,12.8,13.6,12.8,50,0,0,UnmanagedForest,AEZ09,Forest
+Canada,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,AllForestLandAEZ09,UnmanagedForestAEZ09,11.8,11.9,11.8,11.9,50,0,0,UnmanagedForest,AEZ09,Forest
+Western Europe,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,AllForestLandAEZ09,UnmanagedForestAEZ09,13.9,11.6,13.9,11.6,49,0,0,UnmanagedForest,AEZ09,Forest
+Japan,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,AllForestLandAEZ09,UnmanagedForestAEZ09,13.1,13.1,13.1,13.1,50,0,0,UnmanagedForest,AEZ09,Forest
+Australia_NZ,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,AllForestLandAEZ09,UnmanagedForestAEZ09,15.8,7.6,15.8,7.6,49,0,0,UnmanagedForest,AEZ09,Forest
+Former Soviet Union,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,AllForestLandAEZ09,UnmanagedForestAEZ09,14.1,13,14.1,13,50,0,0,UnmanagedForest,AEZ09,Forest
+China,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,AllForestLandAEZ09,UnmanagedForestAEZ09,11.5,12,11.5,12,50,0,0,UnmanagedForest,AEZ09,Forest
+Middle East,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,AllForestLandAEZ09,UnmanagedForestAEZ09,14.8,7.9,14.8,7.9,50,0,0,UnmanagedForest,AEZ09,Forest
+Africa,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,AllForestLandAEZ09,UnmanagedForestAEZ09,14.4,9.6,14.4,9.6,37,0,0,UnmanagedForest,AEZ09,Forest
+Latin America,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,AllForestLandAEZ09,UnmanagedForestAEZ09,15.1,10.7,15.1,10.7,41,0,0,UnmanagedForest,AEZ09,Forest
+Southeast Asia,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,AllForestLandAEZ09,UnmanagedForestAEZ09,12.5,10.3,12.5,10.3,41,0,0,UnmanagedForest,AEZ09,Forest
+Eastern Europe,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,AllForestLandAEZ09,UnmanagedForestAEZ09,12.7,12.7,12.7,12.7,50,0,0,UnmanagedForest,AEZ09,Forest
+Korea,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,AllForestLandAEZ09,UnmanagedForestAEZ09,0,0,0,0,0,0,0,UnmanagedForest,AEZ09,Forest
+India,root,AgroForestLandAEZ09,AgroForest_NonPastureAEZ09,AllForestLandAEZ09,UnmanagedForestAEZ09,13.9,9.8,13.9,9.8,36,0,0,UnmanagedForest,AEZ09,Forest
+USA,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,GrassShrubLandAEZ10,GrasslandAEZ10,1.9,10.7,1.9,10.7,23,0,0,Grassland,AEZ10,Grassland
+Canada,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,GrassShrubLandAEZ10,GrasslandAEZ10,2.4,9.7,2.4,9.7,28,0,0,Grassland,AEZ10,Grassland
+Western Europe,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,GrassShrubLandAEZ10,GrasslandAEZ10,2.5,9.6,2.5,9.6,28,0,0,Grassland,AEZ10,Grassland
+Japan,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,GrassShrubLandAEZ10,GrasslandAEZ10,2.2,10.1,2.2,10.1,26,0,0,Grassland,AEZ10,Grassland
+Australia_NZ,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,GrassShrubLandAEZ10,GrasslandAEZ10,2.4,9.7,2.4,9.7,28,0,0,Grassland,AEZ10,Grassland
+Former Soviet Union,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,GrassShrubLandAEZ10,GrasslandAEZ10,2.2,10.1,2.2,10.1,26,0,0,Grassland,AEZ10,Grassland
+China,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,GrassShrubLandAEZ10,GrasslandAEZ10,1.1,12.2,1.1,12.2,15,0,0,Grassland,AEZ10,Grassland
+Middle East,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,GrassShrubLandAEZ10,GrasslandAEZ10,2.2,10.1,2.2,10.1,26,0,0,Grassland,AEZ10,Grassland
+Africa,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,GrassShrubLandAEZ10,GrasslandAEZ10,2.2,10.1,2.2,10.1,26,0,0,Grassland,AEZ10,Grassland
+Latin America,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,GrassShrubLandAEZ10,GrasslandAEZ10,1.2,12,1.2,12,16,0,0,Grassland,AEZ10,Grassland
+Southeast Asia,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,GrassShrubLandAEZ10,GrasslandAEZ10,2.1,10.2,2.1,10.2,25,0,0,Grassland,AEZ10,Grassland
+Eastern Europe,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,GrassShrubLandAEZ10,GrasslandAEZ10,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ10,Grassland
+Korea,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,GrassShrubLandAEZ10,GrasslandAEZ10,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ10,Grassland
+India,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,GrassShrubLandAEZ10,GrasslandAEZ10,0.9,12.6,0.9,12.6,12,0,0,Grassland,AEZ10,Grassland
+USA,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,CropLandAEZ10,OtherArableLandAEZ10,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ10,Cropland
+Canada,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,CropLandAEZ10,OtherArableLandAEZ10,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ10,Cropland
+Western Europe,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,CropLandAEZ10,OtherArableLandAEZ10,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ10,Cropland
+Japan,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,CropLandAEZ10,OtherArableLandAEZ10,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ10,Cropland
+Australia_NZ,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,CropLandAEZ10,OtherArableLandAEZ10,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ10,Cropland
+Former Soviet Union,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,CropLandAEZ10,OtherArableLandAEZ10,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ10,Cropland
+China,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,CropLandAEZ10,OtherArableLandAEZ10,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ10,Cropland
+Middle East,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,CropLandAEZ10,OtherArableLandAEZ10,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ10,Cropland
+Africa,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,CropLandAEZ10,OtherArableLandAEZ10,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ10,Cropland
+Latin America,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,CropLandAEZ10,OtherArableLandAEZ10,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ10,Cropland
+Southeast Asia,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,CropLandAEZ10,OtherArableLandAEZ10,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ10,Cropland
+Eastern Europe,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,CropLandAEZ10,OtherArableLandAEZ10,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ10,Cropland
+Korea,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,CropLandAEZ10,OtherArableLandAEZ10,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ10,Cropland
+India,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,CropLandAEZ10,OtherArableLandAEZ10,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ10,Cropland
+USA,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,GrassShrubLandAEZ10,ShrublandAEZ10,4.6,6.9,4.6,6.9,28,0,0,Shrubland,AEZ10,Shrubland
+Canada,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,GrassShrubLandAEZ10,ShrublandAEZ10,0,0,0,0,0,0,0,Shrubland,AEZ10,Shrubland
+Western Europe,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,GrassShrubLandAEZ10,ShrublandAEZ10,5.4,6.9,5.4,6.9,19,0,0,Shrubland,AEZ10,Shrubland
+Japan,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,GrassShrubLandAEZ10,ShrublandAEZ10,5.5,6.9,5.5,6.9,18,0,0,Shrubland,AEZ10,Shrubland
+Australia_NZ,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,GrassShrubLandAEZ10,ShrublandAEZ10,5.4,6.9,5.4,6.9,19,0,0,Shrubland,AEZ10,Shrubland
+Former Soviet Union,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,GrassShrubLandAEZ10,ShrublandAEZ10,0,0,0,0,0,0,0,Shrubland,AEZ10,Shrubland
+China,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,GrassShrubLandAEZ10,ShrublandAEZ10,5.4,6.9,5.4,6.9,19,0,0,Shrubland,AEZ10,Shrubland
+Middle East,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,GrassShrubLandAEZ10,ShrublandAEZ10,3.1,6.9,3.1,6.9,45,0,0,Shrubland,AEZ10,Shrubland
+Africa,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,GrassShrubLandAEZ10,ShrublandAEZ10,5.1,6.9,5.1,6.9,23,0,0,Shrubland,AEZ10,Shrubland
+Latin America,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,GrassShrubLandAEZ10,ShrublandAEZ10,5.4,6.9,5.4,6.9,19,0,0,Shrubland,AEZ10,Shrubland
+Southeast Asia,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,GrassShrubLandAEZ10,ShrublandAEZ10,2.9,6.9,2.9,6.9,48,0,0,Shrubland,AEZ10,Shrubland
+Eastern Europe,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,GrassShrubLandAEZ10,ShrublandAEZ10,0,0,0,0,0,0,0,Shrubland,AEZ10,Shrubland
+Korea,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,GrassShrubLandAEZ10,ShrublandAEZ10,0,0,0,0,0,0,0,Shrubland,AEZ10,Shrubland
+India,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,GrassShrubLandAEZ10,ShrublandAEZ10,3.7,6.9,3.7,6.9,38,0,0,Shrubland,AEZ10,Shrubland
+USA,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,AllForestLandAEZ10,UnmanagedForestAEZ10,12.8,12.5,12.8,12.5,50,0,0,UnmanagedForest,AEZ10,Forest
+Canada,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,AllForestLandAEZ10,UnmanagedForestAEZ10,12.5,12.4,12.5,12.4,50,0,0,UnmanagedForest,AEZ10,Forest
+Western Europe,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,AllForestLandAEZ10,UnmanagedForestAEZ10,13.5,12.8,13.5,12.8,50,0,0,UnmanagedForest,AEZ10,Forest
+Japan,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,AllForestLandAEZ10,UnmanagedForestAEZ10,12.8,12.7,12.8,12.7,50,0,0,UnmanagedForest,AEZ10,Forest
+Australia_NZ,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,AllForestLandAEZ10,UnmanagedForestAEZ10,16.2,8.5,16.2,8.5,47,0,0,UnmanagedForest,AEZ10,Forest
+Former Soviet Union,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,AllForestLandAEZ10,UnmanagedForestAEZ10,13.7,12.7,13.7,12.7,50,0,0,UnmanagedForest,AEZ10,Forest
+China,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,AllForestLandAEZ10,UnmanagedForestAEZ10,11.3,11.7,11.3,11.7,50,0,0,UnmanagedForest,AEZ10,Forest
+Middle East,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,AllForestLandAEZ10,UnmanagedForestAEZ10,11.9,12.3,11.9,12.3,50,0,0,UnmanagedForest,AEZ10,Forest
+Africa,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,AllForestLandAEZ10,UnmanagedForestAEZ10,15.6,9.7,15.6,9.7,37,0,0,UnmanagedForest,AEZ10,Forest
+Latin America,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,AllForestLandAEZ10,UnmanagedForestAEZ10,15.2,10.6,15.2,10.6,43,0,0,UnmanagedForest,AEZ10,Forest
+Southeast Asia,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,AllForestLandAEZ10,UnmanagedForestAEZ10,13.3,10.3,13.3,10.3,41,0,0,UnmanagedForest,AEZ10,Forest
+Eastern Europe,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,AllForestLandAEZ10,UnmanagedForestAEZ10,13.5,13.2,13.5,13.2,50,0,0,UnmanagedForest,AEZ10,Forest
+Korea,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,AllForestLandAEZ10,UnmanagedForestAEZ10,11.4,11.7,11.4,11.7,50,0,0,UnmanagedForest,AEZ10,Forest
+India,root,AgroForestLandAEZ10,AgroForest_NonPastureAEZ10,AllForestLandAEZ10,UnmanagedForestAEZ10,14.8,11,14.8,11,48,0,0,UnmanagedForest,AEZ10,Forest
+USA,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,GrassShrubLandAEZ11,GrasslandAEZ11,2.2,10.3,2.2,10.3,26,0,0,Grassland,AEZ11,Grassland
+Canada,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,GrassShrubLandAEZ11,GrasslandAEZ11,0,0,0,0,0,0,0,Grassland,AEZ11,Grassland
+Western Europe,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,GrassShrubLandAEZ11,GrasslandAEZ11,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ11,Grassland
+Japan,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,GrassShrubLandAEZ11,GrasslandAEZ11,1.8,11.6,1.8,11.6,21,0,0,Grassland,AEZ11,Grassland
+Australia_NZ,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,GrassShrubLandAEZ11,GrasslandAEZ11,2,11,2,11,23,0,0,Grassland,AEZ11,Grassland
+Former Soviet Union,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,GrassShrubLandAEZ11,GrasslandAEZ11,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ11,Grassland
+China,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,GrassShrubLandAEZ11,GrasslandAEZ11,1.5,12.7,1.5,12.7,17,0,0,Grassland,AEZ11,Grassland
+Middle East,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,GrassShrubLandAEZ11,GrasslandAEZ11,0,0,0,0,0,0,0,Grassland,AEZ11,Grassland
+Africa,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,GrassShrubLandAEZ11,GrasslandAEZ11,2.2,10.5,2.2,10.5,25,0,0,Grassland,AEZ11,Grassland
+Latin America,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,GrassShrubLandAEZ11,GrasslandAEZ11,1.4,12.9,1.4,12.9,16,0,0,Grassland,AEZ11,Grassland
+Southeast Asia,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,GrassShrubLandAEZ11,GrasslandAEZ11,1.8,11.7,1.8,11.7,20,0,0,Grassland,AEZ11,Grassland
+Eastern Europe,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,GrassShrubLandAEZ11,GrasslandAEZ11,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ11,Grassland
+Korea,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,GrassShrubLandAEZ11,GrasslandAEZ11,0,0,0,0,0,0,0,Grassland,AEZ11,Grassland
+India,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,GrassShrubLandAEZ11,GrasslandAEZ11,1.3,13.2,1.3,13.2,15,0,0,Grassland,AEZ11,Grassland
+USA,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,CropLandAEZ11,OtherArableLandAEZ11,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ11,Cropland
+Canada,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,CropLandAEZ11,OtherArableLandAEZ11,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ11,Cropland
+Western Europe,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,CropLandAEZ11,OtherArableLandAEZ11,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ11,Cropland
+Japan,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,CropLandAEZ11,OtherArableLandAEZ11,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ11,Cropland
+Australia_NZ,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,CropLandAEZ11,OtherArableLandAEZ11,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ11,Cropland
+Former Soviet Union,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,CropLandAEZ11,OtherArableLandAEZ11,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ11,Cropland
+China,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,CropLandAEZ11,OtherArableLandAEZ11,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ11,Cropland
+Middle East,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,CropLandAEZ11,OtherArableLandAEZ11,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ11,Cropland
+Africa,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,CropLandAEZ11,OtherArableLandAEZ11,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ11,Cropland
+Latin America,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,CropLandAEZ11,OtherArableLandAEZ11,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ11,Cropland
+Southeast Asia,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,CropLandAEZ11,OtherArableLandAEZ11,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ11,Cropland
+Eastern Europe,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,CropLandAEZ11,OtherArableLandAEZ11,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ11,Cropland
+Korea,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,CropLandAEZ11,OtherArableLandAEZ11,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ11,Cropland
+India,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,CropLandAEZ11,OtherArableLandAEZ11,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ11,Cropland
+USA,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,GrassShrubLandAEZ11,ShrublandAEZ11,2.7,6.9,2.7,6.9,50,0,0,Shrubland,AEZ11,Shrubland
+Canada,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,GrassShrubLandAEZ11,ShrublandAEZ11,0,0,0,0,0,0,0,Shrubland,AEZ11,Shrubland
+Western Europe,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,GrassShrubLandAEZ11,ShrublandAEZ11,5.5,6.9,5.5,6.9,18,0,0,Shrubland,AEZ11,Shrubland
+Japan,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,GrassShrubLandAEZ11,ShrublandAEZ11,5.5,6.9,5.5,6.9,19,0,0,Shrubland,AEZ11,Shrubland
+Australia_NZ,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,GrassShrubLandAEZ11,ShrublandAEZ11,5.5,6.9,5.5,6.9,18,0,0,Shrubland,AEZ11,Shrubland
+Former Soviet Union,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,GrassShrubLandAEZ11,ShrublandAEZ11,0,0,0,0,0,0,0,Shrubland,AEZ11,Shrubland
+China,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,GrassShrubLandAEZ11,ShrublandAEZ11,5.4,6.9,5.4,6.9,19,0,0,Shrubland,AEZ11,Shrubland
+Middle East,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,GrassShrubLandAEZ11,ShrublandAEZ11,0,0,0,0,0,0,0,Shrubland,AEZ11,Shrubland
+Africa,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,GrassShrubLandAEZ11,ShrublandAEZ11,4.6,6.9,4.6,6.9,29,0,0,Shrubland,AEZ11,Shrubland
+Latin America,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,GrassShrubLandAEZ11,ShrublandAEZ11,5.4,6.9,5.4,6.9,19,0,0,Shrubland,AEZ11,Shrubland
+Southeast Asia,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,GrassShrubLandAEZ11,ShrublandAEZ11,4,6.9,4,6.9,35,0,0,Shrubland,AEZ11,Shrubland
+Eastern Europe,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,GrassShrubLandAEZ11,ShrublandAEZ11,5.4,6.9,5.4,6.9,19,0,0,Shrubland,AEZ11,Shrubland
+Korea,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,GrassShrubLandAEZ11,ShrublandAEZ11,0,0,0,0,0,0,0,Shrubland,AEZ11,Shrubland
+India,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,GrassShrubLandAEZ11,ShrublandAEZ11,4.8,6.9,4.8,6.9,27,0,0,Shrubland,AEZ11,Shrubland
+USA,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,AllForestLandAEZ11,UnmanagedForestAEZ11,13.1,13,13.1,13,50,0,0,UnmanagedForest,AEZ11,Forest
+Canada,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,AllForestLandAEZ11,UnmanagedForestAEZ11,14.4,14.9,14.4,14.9,50,0,0,UnmanagedForest,AEZ11,Forest
+Western Europe,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,AllForestLandAEZ11,UnmanagedForestAEZ11,12.7,12.7,12.7,12.7,50,0,0,UnmanagedForest,AEZ11,Forest
+Japan,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,AllForestLandAEZ11,UnmanagedForestAEZ11,11.6,11.3,11.6,11.3,50,0,0,UnmanagedForest,AEZ11,Forest
+Australia_NZ,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,AllForestLandAEZ11,UnmanagedForestAEZ11,15.1,7.9,15.1,7.9,49,0,0,UnmanagedForest,AEZ11,Forest
+Former Soviet Union,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,AllForestLandAEZ11,UnmanagedForestAEZ11,13.2,13.2,13.2,13.2,50,0,0,UnmanagedForest,AEZ11,Forest
+China,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,AllForestLandAEZ11,UnmanagedForestAEZ11,13,11.5,13,11.5,49,0,0,UnmanagedForest,AEZ11,Forest
+Middle East,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,AllForestLandAEZ11,UnmanagedForestAEZ11,0,0,0,0,0,0,0,UnmanagedForest,AEZ11,Forest
+Africa,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,AllForestLandAEZ11,UnmanagedForestAEZ11,17.8,8.9,17.8,8.9,43,0,0,UnmanagedForest,AEZ11,Forest
+Latin America,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,AllForestLandAEZ11,UnmanagedForestAEZ11,16.7,10.2,16.7,10.2,43,0,0,UnmanagedForest,AEZ11,Forest
+Southeast Asia,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,AllForestLandAEZ11,UnmanagedForestAEZ11,15.8,10.3,15.8,10.3,42,0,0,UnmanagedForest,AEZ11,Forest
+Eastern Europe,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,AllForestLandAEZ11,UnmanagedForestAEZ11,13.1,13.1,13.1,13.1,50,0,0,UnmanagedForest,AEZ11,Forest
+Korea,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,AllForestLandAEZ11,UnmanagedForestAEZ11,11,11.5,11,11.5,50,0,0,UnmanagedForest,AEZ11,Forest
+India,root,AgroForestLandAEZ11,AgroForest_NonPastureAEZ11,AllForestLandAEZ11,UnmanagedForestAEZ11,14.3,10.8,14.3,10.8,46,0,0,UnmanagedForest,AEZ11,Forest
+USA,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,GrassShrubLandAEZ12,GrasslandAEZ12,1.6,13.5,1.6,13.5,17,0,0,Grassland,AEZ12,Grassland
+Canada,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,GrassShrubLandAEZ12,GrasslandAEZ12,0,0,0,0,0,0,0,Grassland,AEZ12,Grassland
+Western Europe,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,GrassShrubLandAEZ12,GrasslandAEZ12,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ12,Grassland
+Japan,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,GrassShrubLandAEZ12,GrasslandAEZ12,0,0,0,0,0,0,0,Grassland,AEZ12,Grassland
+Australia_NZ,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,GrassShrubLandAEZ12,GrasslandAEZ12,2,11.5,2,11.5,23,0,0,Grassland,AEZ12,Grassland
+Former Soviet Union,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,GrassShrubLandAEZ12,GrasslandAEZ12,0,0,0,0,0,0,0,Grassland,AEZ12,Grassland
+China,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,GrassShrubLandAEZ12,GrasslandAEZ12,2.4,10.1,2.4,10.1,27,0,0,Grassland,AEZ12,Grassland
+Middle East,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,GrassShrubLandAEZ12,GrasslandAEZ12,0,0,0,0,0,0,0,Grassland,AEZ12,Grassland
+Africa,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,GrassShrubLandAEZ12,GrasslandAEZ12,2.4,10.1,2.4,10.1,27,0,0,Grassland,AEZ12,Grassland
+Latin America,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,GrassShrubLandAEZ12,GrasslandAEZ12,1.5,14,1.5,14,16,0,0,Grassland,AEZ12,Grassland
+Southeast Asia,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,GrassShrubLandAEZ12,GrasslandAEZ12,1.9,12.3,1.9,12.3,21,0,0,Grassland,AEZ12,Grassland
+Eastern Europe,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,GrassShrubLandAEZ12,GrasslandAEZ12,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ12,Grassland
+Korea,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,GrassShrubLandAEZ12,GrasslandAEZ12,0,0,0,0,0,0,0,Grassland,AEZ12,Grassland
+India,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,GrassShrubLandAEZ12,GrasslandAEZ12,1.4,14.4,1.4,14.4,15,0,0,Grassland,AEZ12,Grassland
+USA,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,CropLandAEZ12,OtherArableLandAEZ12,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ12,Cropland
+Canada,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,CropLandAEZ12,OtherArableLandAEZ12,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ12,Cropland
+Western Europe,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,CropLandAEZ12,OtherArableLandAEZ12,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ12,Cropland
+Japan,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,CropLandAEZ12,OtherArableLandAEZ12,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ12,Cropland
+Australia_NZ,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,CropLandAEZ12,OtherArableLandAEZ12,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ12,Cropland
+Former Soviet Union,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,CropLandAEZ12,OtherArableLandAEZ12,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ12,Cropland
+China,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,CropLandAEZ12,OtherArableLandAEZ12,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ12,Cropland
+Middle East,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,CropLandAEZ12,OtherArableLandAEZ12,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ12,Cropland
+Africa,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,CropLandAEZ12,OtherArableLandAEZ12,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ12,Cropland
+Latin America,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,CropLandAEZ12,OtherArableLandAEZ12,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ12,Cropland
+Southeast Asia,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,CropLandAEZ12,OtherArableLandAEZ12,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ12,Cropland
+Eastern Europe,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,CropLandAEZ12,OtherArableLandAEZ12,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ12,Cropland
+Korea,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,CropLandAEZ12,OtherArableLandAEZ12,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ12,Cropland
+India,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,CropLandAEZ12,OtherArableLandAEZ12,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ12,Cropland
+USA,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,GrassShrubLandAEZ12,ShrublandAEZ12,0,0,0,0,0,0,0,Shrubland,AEZ12,Shrubland
+Canada,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,GrassShrubLandAEZ12,ShrublandAEZ12,0,0,0,0,0,0,0,Shrubland,AEZ12,Shrubland
+Western Europe,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,GrassShrubLandAEZ12,ShrublandAEZ12,5.5,6.9,5.5,6.9,18,0,0,Shrubland,AEZ12,Shrubland
+Japan,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,GrassShrubLandAEZ12,ShrublandAEZ12,5.4,6.9,5.4,6.9,19,0,0,Shrubland,AEZ12,Shrubland
+Australia_NZ,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,GrassShrubLandAEZ12,ShrublandAEZ12,5.5,6.9,5.5,6.9,18,0,0,Shrubland,AEZ12,Shrubland
+Former Soviet Union,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,GrassShrubLandAEZ12,ShrublandAEZ12,0,0,0,0,0,0,0,Shrubland,AEZ12,Shrubland
+China,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,GrassShrubLandAEZ12,ShrublandAEZ12,4.9,6.9,4.9,6.9,24,0,0,Shrubland,AEZ12,Shrubland
+Middle East,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,GrassShrubLandAEZ12,ShrublandAEZ12,0,0,0,0,0,0,0,Shrubland,AEZ12,Shrubland
+Africa,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,GrassShrubLandAEZ12,ShrublandAEZ12,3.9,6.9,3.9,6.9,36,0,0,Shrubland,AEZ12,Shrubland
+Latin America,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,GrassShrubLandAEZ12,ShrublandAEZ12,4.9,6.9,4.9,6.9,24,0,0,Shrubland,AEZ12,Shrubland
+Southeast Asia,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,GrassShrubLandAEZ12,ShrublandAEZ12,4.1,6.9,4.1,6.9,34,0,0,Shrubland,AEZ12,Shrubland
+Eastern Europe,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,GrassShrubLandAEZ12,ShrublandAEZ12,0,0,0,0,0,0,0,Shrubland,AEZ12,Shrubland
+Korea,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,GrassShrubLandAEZ12,ShrublandAEZ12,0,0,0,0,0,0,0,Shrubland,AEZ12,Shrubland
+India,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,GrassShrubLandAEZ12,ShrublandAEZ12,5.3,6.9,5.3,6.9,20,0,0,Shrubland,AEZ12,Shrubland
+USA,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,AllForestLandAEZ12,UnmanagedForestAEZ12,15.1,13.2,15.1,13.2,50,0,0,UnmanagedForest,AEZ12,Forest
+Canada,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,AllForestLandAEZ12,UnmanagedForestAEZ12,0,0,0,0,0,0,0,UnmanagedForest,AEZ12,Forest
+Western Europe,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,AllForestLandAEZ12,UnmanagedForestAEZ12,13.1,12.7,13.1,12.7,50,0,0,UnmanagedForest,AEZ12,Forest
+Japan,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,AllForestLandAEZ12,UnmanagedForestAEZ12,10.9,11,10.9,11,50,0,0,UnmanagedForest,AEZ12,Forest
+Australia_NZ,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,AllForestLandAEZ12,UnmanagedForestAEZ12,14.9,7.5,14.9,7.5,50,0,0,UnmanagedForest,AEZ12,Forest
+Former Soviet Union,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,AllForestLandAEZ12,UnmanagedForestAEZ12,12.8,12.9,12.8,12.9,50,0,0,UnmanagedForest,AEZ12,Forest
+China,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,AllForestLandAEZ12,UnmanagedForestAEZ12,14.5,10.3,14.5,10.3,49,0,0,UnmanagedForest,AEZ12,Forest
+Middle East,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,AllForestLandAEZ12,UnmanagedForestAEZ12,0,0,0,0,0,0,0,UnmanagedForest,AEZ12,Forest
+Africa,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,AllForestLandAEZ12,UnmanagedForestAEZ12,16.8,9.8,16.8,9.8,37,0,0,UnmanagedForest,AEZ12,Forest
+Latin America,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,AllForestLandAEZ12,UnmanagedForestAEZ12,17.9,9.8,17.9,9.8,41,0,0,UnmanagedForest,AEZ12,Forest
+Southeast Asia,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,AllForestLandAEZ12,UnmanagedForestAEZ12,15.3,10.1,15.3,10.1,40,0,0,UnmanagedForest,AEZ12,Forest
+Eastern Europe,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,AllForestLandAEZ12,UnmanagedForestAEZ12,11.7,12,11.7,12,50,0,0,UnmanagedForest,AEZ12,Forest
+Korea,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,AllForestLandAEZ12,UnmanagedForestAEZ12,0,0,0,0,0,0,0,UnmanagedForest,AEZ12,Forest
+India,root,AgroForestLandAEZ12,AgroForest_NonPastureAEZ12,AllForestLandAEZ12,UnmanagedForestAEZ12,15.2,10.1,15.2,10.1,40,0,0,UnmanagedForest,AEZ12,Forest
+USA,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,GrassShrubLandAEZ13,GrasslandAEZ13,0.6,11,0.6,11,10,0,0,Grassland,AEZ13,Grassland
+Canada,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,GrassShrubLandAEZ13,GrasslandAEZ13,0.9,10.8,0.9,10.8,13,0,0,Grassland,AEZ13,Grassland
+Western Europe,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,GrassShrubLandAEZ13,GrasslandAEZ13,0,0,0,0,0,0,0,Grassland,AEZ13,Grassland
+Japan,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,GrassShrubLandAEZ13,GrasslandAEZ13,0,0,0,0,0,0,0,Grassland,AEZ13,Grassland
+Australia_NZ,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,GrassShrubLandAEZ13,GrasslandAEZ13,0,0,0,0,0,0,0,Grassland,AEZ13,Grassland
+Former Soviet Union,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,GrassShrubLandAEZ13,GrasslandAEZ13,0.7,10.9,0.7,10.9,11,0,0,Grassland,AEZ13,Grassland
+China,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,GrassShrubLandAEZ13,GrasslandAEZ13,0.6,11,0.6,11,10,0,0,Grassland,AEZ13,Grassland
+Middle East,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,GrassShrubLandAEZ13,GrasslandAEZ13,0,0,0,0,0,0,0,Grassland,AEZ13,Grassland
+Africa,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,GrassShrubLandAEZ13,GrasslandAEZ13,0,0,0,0,0,0,0,Grassland,AEZ13,Grassland
+Latin America,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,GrassShrubLandAEZ13,GrasslandAEZ13,0.6,11,0.6,11,10,0,0,Grassland,AEZ13,Grassland
+Southeast Asia,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,GrassShrubLandAEZ13,GrasslandAEZ13,0.6,11,0.6,11,10,0,0,Grassland,AEZ13,Grassland
+Eastern Europe,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,GrassShrubLandAEZ13,GrasslandAEZ13,0,0,0,0,0,0,0,Grassland,AEZ13,Grassland
+Korea,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,GrassShrubLandAEZ13,GrasslandAEZ13,0,0,0,0,0,0,0,Grassland,AEZ13,Grassland
+India,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,GrassShrubLandAEZ13,GrasslandAEZ13,0.6,11,0.6,11,10,0,0,Grassland,AEZ13,Grassland
+USA,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,CropLandAEZ13,OtherArableLandAEZ13,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ13,Cropland
+Canada,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,CropLandAEZ13,OtherArableLandAEZ13,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ13,Cropland
+Western Europe,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,CropLandAEZ13,OtherArableLandAEZ13,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ13,Cropland
+Japan,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,CropLandAEZ13,OtherArableLandAEZ13,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ13,Cropland
+Australia_NZ,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,CropLandAEZ13,OtherArableLandAEZ13,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ13,Cropland
+Former Soviet Union,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,CropLandAEZ13,OtherArableLandAEZ13,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ13,Cropland
+China,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,CropLandAEZ13,OtherArableLandAEZ13,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ13,Cropland
+Middle East,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,CropLandAEZ13,OtherArableLandAEZ13,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ13,Cropland
+Africa,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,CropLandAEZ13,OtherArableLandAEZ13,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ13,Cropland
+Latin America,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,CropLandAEZ13,OtherArableLandAEZ13,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ13,Cropland
+Southeast Asia,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,CropLandAEZ13,OtherArableLandAEZ13,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ13,Cropland
+Eastern Europe,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,CropLandAEZ13,OtherArableLandAEZ13,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ13,Cropland
+Korea,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,CropLandAEZ13,OtherArableLandAEZ13,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ13,Cropland
+India,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,CropLandAEZ13,OtherArableLandAEZ13,0.3,9,0.3,9,1,0,0,OtherArableLand,AEZ13,Cropland
+USA,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,GrassShrubLandAEZ13,ShrublandAEZ13,3.3,6.9,3.3,6.9,43,0,0,Shrubland,AEZ13,Shrubland
+Canada,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,GrassShrubLandAEZ13,ShrublandAEZ13,2.7,6.9,2.7,6.9,50,0,0,Shrubland,AEZ13,Shrubland
+Western Europe,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,GrassShrubLandAEZ13,ShrublandAEZ13,0,0,0,0,0,0,0,Shrubland,AEZ13,Shrubland
+Japan,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,GrassShrubLandAEZ13,ShrublandAEZ13,0,0,0,0,0,0,0,Shrubland,AEZ13,Shrubland
+Australia_NZ,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,GrassShrubLandAEZ13,ShrublandAEZ13,0,0,0,0,0,0,0,Shrubland,AEZ13,Shrubland
+Former Soviet Union,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,GrassShrubLandAEZ13,ShrublandAEZ13,2.8,6.9,2.8,6.9,49,0,0,Shrubland,AEZ13,Shrubland
+China,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,GrassShrubLandAEZ13,ShrublandAEZ13,2.7,6.9,2.7,6.9,50,0,0,Shrubland,AEZ13,Shrubland
+Middle East,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,GrassShrubLandAEZ13,ShrublandAEZ13,0,0,0,0,0,0,0,Shrubland,AEZ13,Shrubland
+Africa,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,GrassShrubLandAEZ13,ShrublandAEZ13,0,0,0,0,0,0,0,Shrubland,AEZ13,Shrubland
+Latin America,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,GrassShrubLandAEZ13,ShrublandAEZ13,3.3,6.9,3.3,6.9,43,0,0,Shrubland,AEZ13,Shrubland
+Southeast Asia,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,GrassShrubLandAEZ13,ShrublandAEZ13,2.7,6.9,2.7,6.9,50,0,0,Shrubland,AEZ13,Shrubland
+Eastern Europe,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,GrassShrubLandAEZ13,ShrublandAEZ13,0,0,0,0,0,0,0,Shrubland,AEZ13,Shrubland
+Korea,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,GrassShrubLandAEZ13,ShrublandAEZ13,0,0,0,0,0,0,0,Shrubland,AEZ13,Shrubland
+India,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,GrassShrubLandAEZ13,ShrublandAEZ13,2.7,6.9,2.7,6.9,50,0,0,Shrubland,AEZ13,Shrubland
+USA,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,AllForestLandAEZ13,UnmanagedForestAEZ13,8.1,20.1,8.1,20.1,50,0,0,UnmanagedForest,AEZ13,Forest
+Canada,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,AllForestLandAEZ13,UnmanagedForestAEZ13,7.2,20.6,7.2,20.6,50,0,0,UnmanagedForest,AEZ13,Forest
+Western Europe,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,AllForestLandAEZ13,UnmanagedForestAEZ13,8.1,20.6,8.1,20.6,50,0,0,UnmanagedForest,AEZ13,Forest
+Japan,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,AllForestLandAEZ13,UnmanagedForestAEZ13,0,0,0,0,0,0,0,UnmanagedForest,AEZ13,Forest
+Australia_NZ,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,AllForestLandAEZ13,UnmanagedForestAEZ13,0,0,0,0,0,0,0,UnmanagedForest,AEZ13,Forest
+Former Soviet Union,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,AllForestLandAEZ13,UnmanagedForestAEZ13,5.2,20.6,5.2,20.6,50,0,0,UnmanagedForest,AEZ13,Forest
+China,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,AllForestLandAEZ13,UnmanagedForestAEZ13,5.8,20.5,5.8,20.5,50,0,0,UnmanagedForest,AEZ13,Forest
+Middle East,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,AllForestLandAEZ13,UnmanagedForestAEZ13,0,0,0,0,0,0,0,UnmanagedForest,AEZ13,Forest
+Africa,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,AllForestLandAEZ13,UnmanagedForestAEZ13,0,0,0,0,0,0,0,UnmanagedForest,AEZ13,Forest
+Latin America,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,AllForestLandAEZ13,UnmanagedForestAEZ13,10.5,14,10.5,14,41,0,0,UnmanagedForest,AEZ13,Forest
+Southeast Asia,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,AllForestLandAEZ13,UnmanagedForestAEZ13,9,20.6,9,20.6,50,0,0,UnmanagedForest,AEZ13,Forest
+Eastern Europe,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,AllForestLandAEZ13,UnmanagedForestAEZ13,0,0,0,0,0,0,0,UnmanagedForest,AEZ13,Forest
+Korea,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,AllForestLandAEZ13,UnmanagedForestAEZ13,0,0,0,0,0,0,0,UnmanagedForest,AEZ13,Forest
+India,root,AgroForestLandAEZ13,AgroForest_NonPastureAEZ13,AllForestLandAEZ13,UnmanagedForestAEZ13,14,9.8,14,9.8,35,0,0,UnmanagedForest,AEZ13,Forest
+USA,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,GrassShrubLandAEZ14,GrasslandAEZ14,0.7,12.5,0.7,12.5,10,0,0,Grassland,AEZ14,Grassland
+Canada,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,GrassShrubLandAEZ14,GrasslandAEZ14,1.9,10.5,1.9,10.5,23,0,0,Grassland,AEZ14,Grassland
+Western Europe,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,GrassShrubLandAEZ14,GrasslandAEZ14,0.9,12.2,0.9,12.2,12,0,0,Grassland,AEZ14,Grassland
+Japan,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,GrassShrubLandAEZ14,GrasslandAEZ14,0,0,0,0,0,0,0,Grassland,AEZ14,Grassland
+Australia_NZ,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,GrassShrubLandAEZ14,GrasslandAEZ14,0,0,0,0,0,0,0,Grassland,AEZ14,Grassland
+Former Soviet Union,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,GrassShrubLandAEZ14,GrasslandAEZ14,1.6,11.1,1.6,11.1,19,0,0,Grassland,AEZ14,Grassland
+China,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,GrassShrubLandAEZ14,GrasslandAEZ14,0.9,12.2,0.9,12.2,12,0,0,Grassland,AEZ14,Grassland
+Middle East,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,GrassShrubLandAEZ14,GrasslandAEZ14,0,0,0,0,0,0,0,Grassland,AEZ14,Grassland
+Africa,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,GrassShrubLandAEZ14,GrasslandAEZ14,0,0,0,0,0,0,0,Grassland,AEZ14,Grassland
+Latin America,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,GrassShrubLandAEZ14,GrasslandAEZ14,0.7,12.5,0.7,12.5,10,0,0,Grassland,AEZ14,Grassland
+Southeast Asia,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,GrassShrubLandAEZ14,GrasslandAEZ14,0.7,12.5,0.7,12.5,10,0,0,Grassland,AEZ14,Grassland
+Eastern Europe,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,GrassShrubLandAEZ14,GrasslandAEZ14,0,0,0,0,0,0,0,Grassland,AEZ14,Grassland
+Korea,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,GrassShrubLandAEZ14,GrasslandAEZ14,0,0,0,0,0,0,0,Grassland,AEZ14,Grassland
+India,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,GrassShrubLandAEZ14,GrasslandAEZ14,0.7,12.5,0.7,12.5,10,0,0,Grassland,AEZ14,Grassland
+USA,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,CropLandAEZ14,OtherArableLandAEZ14,0.3,10,0.3,10,1,0,0,OtherArableLand,AEZ14,Cropland
+Canada,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,CropLandAEZ14,OtherArableLandAEZ14,0.3,10,0.3,10,1,0,0,OtherArableLand,AEZ14,Cropland
+Western Europe,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,CropLandAEZ14,OtherArableLandAEZ14,0.3,10,0.3,10,1,0,0,OtherArableLand,AEZ14,Cropland
+Japan,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,CropLandAEZ14,OtherArableLandAEZ14,0.3,10,0.3,10,1,0,0,OtherArableLand,AEZ14,Cropland
+Australia_NZ,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,CropLandAEZ14,OtherArableLandAEZ14,0.3,10,0.3,10,1,0,0,OtherArableLand,AEZ14,Cropland
+Former Soviet Union,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,CropLandAEZ14,OtherArableLandAEZ14,0.3,10,0.3,10,1,0,0,OtherArableLand,AEZ14,Cropland
+China,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,CropLandAEZ14,OtherArableLandAEZ14,0.3,10,0.3,10,1,0,0,OtherArableLand,AEZ14,Cropland
+Middle East,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,CropLandAEZ14,OtherArableLandAEZ14,0.3,10,0.3,10,1,0,0,OtherArableLand,AEZ14,Cropland
+Africa,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,CropLandAEZ14,OtherArableLandAEZ14,0.3,10,0.3,10,1,0,0,OtherArableLand,AEZ14,Cropland
+Latin America,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,CropLandAEZ14,OtherArableLandAEZ14,0.3,10,0.3,10,1,0,0,OtherArableLand,AEZ14,Cropland
+Southeast Asia,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,CropLandAEZ14,OtherArableLandAEZ14,0.3,10,0.3,10,1,0,0,OtherArableLand,AEZ14,Cropland
+Eastern Europe,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,CropLandAEZ14,OtherArableLandAEZ14,0.3,10,0.3,10,1,0,0,OtherArableLand,AEZ14,Cropland
+Korea,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,CropLandAEZ14,OtherArableLandAEZ14,0.3,10,0.3,10,1,0,0,OtherArableLand,AEZ14,Cropland
+India,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,CropLandAEZ14,OtherArableLandAEZ14,0.3,10,0.3,10,1,0,0,OtherArableLand,AEZ14,Cropland
+USA,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,GrassShrubLandAEZ14,ShrublandAEZ14,4.1,6.9,4.1,6.9,34,0,0,Shrubland,AEZ14,Shrubland
+Canada,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,GrassShrubLandAEZ14,ShrublandAEZ14,3.6,6.9,3.6,6.9,40,0,0,Shrubland,AEZ14,Shrubland
+Western Europe,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,GrassShrubLandAEZ14,ShrublandAEZ14,2.7,6.9,2.7,6.9,50,0,0,Shrubland,AEZ14,Shrubland
+Japan,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,GrassShrubLandAEZ14,ShrublandAEZ14,0,0,0,0,0,0,0,Shrubland,AEZ14,Shrubland
+Australia_NZ,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,GrassShrubLandAEZ14,ShrublandAEZ14,0,0,0,0,0,0,0,Shrubland,AEZ14,Shrubland
+Former Soviet Union,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,GrassShrubLandAEZ14,ShrublandAEZ14,3.4,6.9,3.4,6.9,42,0,0,Shrubland,AEZ14,Shrubland
+China,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,GrassShrubLandAEZ14,ShrublandAEZ14,2.7,6.9,2.7,6.9,50,0,0,Shrubland,AEZ14,Shrubland
+Middle East,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,GrassShrubLandAEZ14,ShrublandAEZ14,0,0,0,0,0,0,0,Shrubland,AEZ14,Shrubland
+Africa,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,GrassShrubLandAEZ14,ShrublandAEZ14,0,0,0,0,0,0,0,Shrubland,AEZ14,Shrubland
+Latin America,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,GrassShrubLandAEZ14,ShrublandAEZ14,2.8,6.9,2.8,6.9,49,0,0,Shrubland,AEZ14,Shrubland
+Southeast Asia,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,GrassShrubLandAEZ14,ShrublandAEZ14,2.7,6.9,2.7,6.9,50,0,0,Shrubland,AEZ14,Shrubland
+Eastern Europe,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,GrassShrubLandAEZ14,ShrublandAEZ14,0,0,0,0,0,0,0,Shrubland,AEZ14,Shrubland
+Korea,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,GrassShrubLandAEZ14,ShrublandAEZ14,0,0,0,0,0,0,0,Shrubland,AEZ14,Shrubland
+India,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,GrassShrubLandAEZ14,ShrublandAEZ14,2.7,6.9,2.7,6.9,50,0,0,Shrubland,AEZ14,Shrubland
+USA,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,AllForestLandAEZ14,UnmanagedForestAEZ14,7,20.3,7,20.3,50,0,0,UnmanagedForest,AEZ14,Forest
+Canada,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,AllForestLandAEZ14,UnmanagedForestAEZ14,6.4,20.6,6.4,20.6,50,0,0,UnmanagedForest,AEZ14,Forest
+Western Europe,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,AllForestLandAEZ14,UnmanagedForestAEZ14,6.3,20.5,6.3,20.5,50,0,0,UnmanagedForest,AEZ14,Forest
+Japan,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,AllForestLandAEZ14,UnmanagedForestAEZ14,0,0,0,0,0,0,0,UnmanagedForest,AEZ14,Forest
+Australia_NZ,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,AllForestLandAEZ14,UnmanagedForestAEZ14,0,0,0,0,0,0,0,UnmanagedForest,AEZ14,Forest
+Former Soviet Union,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,AllForestLandAEZ14,UnmanagedForestAEZ14,6,20.6,6,20.6,50,0,0,UnmanagedForest,AEZ14,Forest
+China,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,AllForestLandAEZ14,UnmanagedForestAEZ14,5.8,20.3,5.8,20.3,50,0,0,UnmanagedForest,AEZ14,Forest
+Middle East,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,AllForestLandAEZ14,UnmanagedForestAEZ14,0,0,0,0,0,0,0,UnmanagedForest,AEZ14,Forest
+Africa,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,AllForestLandAEZ14,UnmanagedForestAEZ14,0,0,0,0,0,0,0,UnmanagedForest,AEZ14,Forest
+Latin America,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,AllForestLandAEZ14,UnmanagedForestAEZ14,9.1,15.7,9.1,15.7,43,0,0,UnmanagedForest,AEZ14,Forest
+Southeast Asia,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,AllForestLandAEZ14,UnmanagedForestAEZ14,10,18.4,10,18.4,50,0,0,UnmanagedForest,AEZ14,Forest
+Eastern Europe,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,AllForestLandAEZ14,UnmanagedForestAEZ14,0,0,0,0,0,0,0,UnmanagedForest,AEZ14,Forest
+Korea,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,AllForestLandAEZ14,UnmanagedForestAEZ14,0,0,0,0,0,0,0,UnmanagedForest,AEZ14,Forest
+India,root,AgroForestLandAEZ14,AgroForest_NonPastureAEZ14,AllForestLandAEZ14,UnmanagedForestAEZ14,9,20.6,9,20.6,50,0,0,UnmanagedForest,AEZ14,Forest
+USA,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,GrassShrubLandAEZ15,GrasslandAEZ15,0.7,14,0.7,14,10,0,0,Grassland,AEZ15,Grassland
+Canada,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,GrassShrubLandAEZ15,GrasslandAEZ15,2.3,9.9,2.3,9.9,27,0,0,Grassland,AEZ15,Grassland
+Western Europe,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,GrassShrubLandAEZ15,GrasslandAEZ15,0.8,13.6,0.8,13.6,12,0,0,Grassland,AEZ15,Grassland
+Japan,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,GrassShrubLandAEZ15,GrasslandAEZ15,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ15,Grassland
+Australia_NZ,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,GrassShrubLandAEZ15,GrasslandAEZ15,0.7,14,0.7,14,10,0,0,Grassland,AEZ15,Grassland
+Former Soviet Union,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,GrassShrubLandAEZ15,GrasslandAEZ15,2,10.8,2,10.8,24,0,0,Grassland,AEZ15,Grassland
+China,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,GrassShrubLandAEZ15,GrasslandAEZ15,1.3,12.6,1.3,12.6,16,0,0,Grassland,AEZ15,Grassland
+Middle East,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,GrassShrubLandAEZ15,GrasslandAEZ15,0,0,0,0,0,0,0,Grassland,AEZ15,Grassland
+Africa,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,GrassShrubLandAEZ15,GrasslandAEZ15,0,0,0,0,0,0,0,Grassland,AEZ15,Grassland
+Latin America,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,GrassShrubLandAEZ15,GrasslandAEZ15,0.8,13.9,0.8,13.9,11,0,0,Grassland,AEZ15,Grassland
+Southeast Asia,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,GrassShrubLandAEZ15,GrasslandAEZ15,0.7,14,0.7,14,10,0,0,Grassland,AEZ15,Grassland
+Eastern Europe,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,GrassShrubLandAEZ15,GrasslandAEZ15,0.7,14,0.7,14,10,0,0,Grassland,AEZ15,Grassland
+Korea,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,GrassShrubLandAEZ15,GrasslandAEZ15,0,0,0,0,0,0,0,Grassland,AEZ15,Grassland
+India,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,GrassShrubLandAEZ15,GrasslandAEZ15,0.7,14,0.7,14,10,0,0,Grassland,AEZ15,Grassland
+USA,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,CropLandAEZ15,OtherArableLandAEZ15,0.3,11,0.3,11,1,0,0,OtherArableLand,AEZ15,Cropland
+Canada,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,CropLandAEZ15,OtherArableLandAEZ15,0.3,11,0.3,11,1,0,0,OtherArableLand,AEZ15,Cropland
+Western Europe,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,CropLandAEZ15,OtherArableLandAEZ15,0.3,11,0.3,11,1,0,0,OtherArableLand,AEZ15,Cropland
+Japan,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,CropLandAEZ15,OtherArableLandAEZ15,0.3,11,0.3,11,1,0,0,OtherArableLand,AEZ15,Cropland
+Australia_NZ,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,CropLandAEZ15,OtherArableLandAEZ15,0.3,11,0.3,11,1,0,0,OtherArableLand,AEZ15,Cropland
+Former Soviet Union,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,CropLandAEZ15,OtherArableLandAEZ15,0.3,11,0.3,11,1,0,0,OtherArableLand,AEZ15,Cropland
+China,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,CropLandAEZ15,OtherArableLandAEZ15,0.3,11,0.3,11,1,0,0,OtherArableLand,AEZ15,Cropland
+Middle East,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,CropLandAEZ15,OtherArableLandAEZ15,0.3,11,0.3,11,1,0,0,OtherArableLand,AEZ15,Cropland
+Africa,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,CropLandAEZ15,OtherArableLandAEZ15,0.3,11,0.3,11,1,0,0,OtherArableLand,AEZ15,Cropland
+Latin America,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,CropLandAEZ15,OtherArableLandAEZ15,0.3,11,0.3,11,1,0,0,OtherArableLand,AEZ15,Cropland
+Southeast Asia,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,CropLandAEZ15,OtherArableLandAEZ15,0.3,11,0.3,11,1,0,0,OtherArableLand,AEZ15,Cropland
+Eastern Europe,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,CropLandAEZ15,OtherArableLandAEZ15,0.3,11,0.3,11,1,0,0,OtherArableLand,AEZ15,Cropland
+Korea,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,CropLandAEZ15,OtherArableLandAEZ15,0.3,11,0.3,11,1,0,0,OtherArableLand,AEZ15,Cropland
+India,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,CropLandAEZ15,OtherArableLandAEZ15,0.3,11,0.3,11,1,0,0,OtherArableLand,AEZ15,Cropland
+USA,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,GrassShrubLandAEZ15,ShrublandAEZ15,2.7,6.9,2.7,6.9,50,0,0,Shrubland,AEZ15,Shrubland
+Canada,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,GrassShrubLandAEZ15,ShrublandAEZ15,3.8,6.9,3.8,6.9,37,0,0,Shrubland,AEZ15,Shrubland
+Western Europe,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,GrassShrubLandAEZ15,ShrublandAEZ15,2.7,6.9,2.7,6.9,50,0,0,Shrubland,AEZ15,Shrubland
+Japan,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,GrassShrubLandAEZ15,ShrublandAEZ15,0,0,0,0,0,0,0,Shrubland,AEZ15,Shrubland
+Australia_NZ,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,GrassShrubLandAEZ15,ShrublandAEZ15,0,0,0,0,0,0,0,Shrubland,AEZ15,Shrubland
+Former Soviet Union,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,GrassShrubLandAEZ15,ShrublandAEZ15,2.7,6.9,2.7,6.9,50,0,0,Shrubland,AEZ15,Shrubland
+China,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,GrassShrubLandAEZ15,ShrublandAEZ15,3.1,6.9,3.1,6.9,46,0,0,Shrubland,AEZ15,Shrubland
+Middle East,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,GrassShrubLandAEZ15,ShrublandAEZ15,0,0,0,0,0,0,0,Shrubland,AEZ15,Shrubland
+Africa,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,GrassShrubLandAEZ15,ShrublandAEZ15,0,0,0,0,0,0,0,Shrubland,AEZ15,Shrubland
+Latin America,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,GrassShrubLandAEZ15,ShrublandAEZ15,2.7,6.9,2.7,6.9,50,0,0,Shrubland,AEZ15,Shrubland
+Southeast Asia,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,GrassShrubLandAEZ15,ShrublandAEZ15,2.9,6.9,2.9,6.9,48,0,0,Shrubland,AEZ15,Shrubland
+Eastern Europe,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,GrassShrubLandAEZ15,ShrublandAEZ15,0,0,0,0,0,0,0,Shrubland,AEZ15,Shrubland
+Korea,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,GrassShrubLandAEZ15,ShrublandAEZ15,0,0,0,0,0,0,0,Shrubland,AEZ15,Shrubland
+India,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,GrassShrubLandAEZ15,ShrublandAEZ15,2.8,6.9,2.8,6.9,49,0,0,Shrubland,AEZ15,Shrubland
+USA,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,AllForestLandAEZ15,UnmanagedForestAEZ15,7.1,20.5,7.1,20.5,50,0,0,UnmanagedForest,AEZ15,Forest
+Canada,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,AllForestLandAEZ15,UnmanagedForestAEZ15,7.8,20.5,7.8,20.5,50,0,0,UnmanagedForest,AEZ15,Forest
+Western Europe,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,AllForestLandAEZ15,UnmanagedForestAEZ15,8.6,20.5,8.6,20.5,50,0,0,UnmanagedForest,AEZ15,Forest
+Japan,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,AllForestLandAEZ15,UnmanagedForestAEZ15,10.2,18.3,10.2,18.3,50,0,0,UnmanagedForest,AEZ15,Forest
+Australia_NZ,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,AllForestLandAEZ15,UnmanagedForestAEZ15,9.4,19.8,9.4,19.8,50,0,0,UnmanagedForest,AEZ15,Forest
+Former Soviet Union,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,AllForestLandAEZ15,UnmanagedForestAEZ15,7,20.6,7,20.6,50,0,0,UnmanagedForest,AEZ15,Forest
+China,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,AllForestLandAEZ15,UnmanagedForestAEZ15,5.8,20.4,5.8,20.4,50,0,0,UnmanagedForest,AEZ15,Forest
+Middle East,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,AllForestLandAEZ15,UnmanagedForestAEZ15,0,0,0,0,0,0,0,UnmanagedForest,AEZ15,Forest
+Africa,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,AllForestLandAEZ15,UnmanagedForestAEZ15,0,0,0,0,0,0,0,UnmanagedForest,AEZ15,Forest
+Latin America,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,AllForestLandAEZ15,UnmanagedForestAEZ15,5.9,19.7,5.9,19.7,49,0,0,UnmanagedForest,AEZ15,Forest
+Southeast Asia,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,AllForestLandAEZ15,UnmanagedForestAEZ15,11.9,14.4,11.9,14.4,44,0,0,UnmanagedForest,AEZ15,Forest
+Eastern Europe,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,AllForestLandAEZ15,UnmanagedForestAEZ15,8.9,18.6,8.9,18.6,50,0,0,UnmanagedForest,AEZ15,Forest
+Korea,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,AllForestLandAEZ15,UnmanagedForestAEZ15,0,0,0,0,0,0,0,UnmanagedForest,AEZ15,Forest
+India,root,AgroForestLandAEZ15,AgroForest_NonPastureAEZ15,AllForestLandAEZ15,UnmanagedForestAEZ15,14.4,12.5,14.4,12.5,43,0,0,UnmanagedForest,AEZ15,Forest
+USA,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,GrassShrubLandAEZ16,GrasslandAEZ16,0,0,0,0,0,0,0,Grassland,AEZ16,Grassland
+Canada,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,GrassShrubLandAEZ16,GrasslandAEZ16,2.5,9.5,2.5,9.5,29,0,0,Grassland,AEZ16,Grassland
+Western Europe,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,GrassShrubLandAEZ16,GrasslandAEZ16,0.8,15.1,0.8,15.1,11,0,0,Grassland,AEZ16,Grassland
+Japan,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,GrassShrubLandAEZ16,GrasslandAEZ16,0,0,0,0,0,0,0,Grassland,AEZ16,Grassland
+Australia_NZ,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,GrassShrubLandAEZ16,GrasslandAEZ16,0.7,15.5,0.7,15.5,10,0,0,Grassland,AEZ16,Grassland
+Former Soviet Union,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,GrassShrubLandAEZ16,GrasslandAEZ16,1.4,13.1,1.4,13.1,18,0,0,Grassland,AEZ16,Grassland
+China,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,GrassShrubLandAEZ16,GrasslandAEZ16,0.7,15.5,0.7,15.5,10,0,0,Grassland,AEZ16,Grassland
+Middle East,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,GrassShrubLandAEZ16,GrasslandAEZ16,0,0,0,0,0,0,0,Grassland,AEZ16,Grassland
+Africa,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,GrassShrubLandAEZ16,GrasslandAEZ16,0,0,0,0,0,0,0,Grassland,AEZ16,Grassland
+Latin America,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,GrassShrubLandAEZ16,GrasslandAEZ16,0.7,15.4,0.7,15.4,10,0,0,Grassland,AEZ16,Grassland
+Southeast Asia,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,GrassShrubLandAEZ16,GrasslandAEZ16,0.7,15.5,0.7,15.5,10,0,0,Grassland,AEZ16,Grassland
+Eastern Europe,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,GrassShrubLandAEZ16,GrasslandAEZ16,0,0,0,0,0,0,0,Grassland,AEZ16,Grassland
+Korea,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,GrassShrubLandAEZ16,GrasslandAEZ16,0,0,0,0,0,0,0,Grassland,AEZ16,Grassland
+India,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,GrassShrubLandAEZ16,GrasslandAEZ16,0.7,15.5,0.7,15.5,10,0,0,Grassland,AEZ16,Grassland
+USA,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,CropLandAEZ16,OtherArableLandAEZ16,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ16,Cropland
+Canada,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,CropLandAEZ16,OtherArableLandAEZ16,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ16,Cropland
+Western Europe,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,CropLandAEZ16,OtherArableLandAEZ16,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ16,Cropland
+Japan,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,CropLandAEZ16,OtherArableLandAEZ16,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ16,Cropland
+Australia_NZ,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,CropLandAEZ16,OtherArableLandAEZ16,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ16,Cropland
+Former Soviet Union,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,CropLandAEZ16,OtherArableLandAEZ16,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ16,Cropland
+China,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,CropLandAEZ16,OtherArableLandAEZ16,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ16,Cropland
+Middle East,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,CropLandAEZ16,OtherArableLandAEZ16,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ16,Cropland
+Africa,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,CropLandAEZ16,OtherArableLandAEZ16,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ16,Cropland
+Latin America,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,CropLandAEZ16,OtherArableLandAEZ16,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ16,Cropland
+Southeast Asia,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,CropLandAEZ16,OtherArableLandAEZ16,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ16,Cropland
+Eastern Europe,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,CropLandAEZ16,OtherArableLandAEZ16,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ16,Cropland
+Korea,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,CropLandAEZ16,OtherArableLandAEZ16,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ16,Cropland
+India,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,CropLandAEZ16,OtherArableLandAEZ16,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ16,Cropland
+USA,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,GrassShrubLandAEZ16,ShrublandAEZ16,0,0,0,0,0,0,0,Shrubland,AEZ16,Shrubland
+Canada,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,GrassShrubLandAEZ16,ShrublandAEZ16,0,0,0,0,0,0,0,Shrubland,AEZ16,Shrubland
+Western Europe,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,GrassShrubLandAEZ16,ShrublandAEZ16,2.7,6.9,2.7,6.9,50,0,0,Shrubland,AEZ16,Shrubland
+Japan,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,GrassShrubLandAEZ16,ShrublandAEZ16,0,0,0,0,0,0,0,Shrubland,AEZ16,Shrubland
+Australia_NZ,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,GrassShrubLandAEZ16,ShrublandAEZ16,0,0,0,0,0,0,0,Shrubland,AEZ16,Shrubland
+Former Soviet Union,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,GrassShrubLandAEZ16,ShrublandAEZ16,0,0,0,0,0,0,0,Shrubland,AEZ16,Shrubland
+China,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,GrassShrubLandAEZ16,ShrublandAEZ16,4.7,6.9,4.7,6.9,27,0,0,Shrubland,AEZ16,Shrubland
+Middle East,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,GrassShrubLandAEZ16,ShrublandAEZ16,0,0,0,0,0,0,0,Shrubland,AEZ16,Shrubland
+Africa,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,GrassShrubLandAEZ16,ShrublandAEZ16,0,0,0,0,0,0,0,Shrubland,AEZ16,Shrubland
+Latin America,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,GrassShrubLandAEZ16,ShrublandAEZ16,2.7,6.9,2.7,6.9,50,0,0,Shrubland,AEZ16,Shrubland
+Southeast Asia,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,GrassShrubLandAEZ16,ShrublandAEZ16,3.8,6.9,3.8,6.9,37,0,0,Shrubland,AEZ16,Shrubland
+Eastern Europe,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,GrassShrubLandAEZ16,ShrublandAEZ16,0,0,0,0,0,0,0,Shrubland,AEZ16,Shrubland
+Korea,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,GrassShrubLandAEZ16,ShrublandAEZ16,0,0,0,0,0,0,0,Shrubland,AEZ16,Shrubland
+India,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,GrassShrubLandAEZ16,ShrublandAEZ16,3,6.9,3,6.9,47,0,0,Shrubland,AEZ16,Shrubland
+USA,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,AllForestLandAEZ16,UnmanagedForestAEZ16,9.7,19.9,9.7,19.9,50,0,0,UnmanagedForest,AEZ16,Forest
+Canada,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,AllForestLandAEZ16,UnmanagedForestAEZ16,8.7,20.4,8.7,20.4,50,0,0,UnmanagedForest,AEZ16,Forest
+Western Europe,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,AllForestLandAEZ16,UnmanagedForestAEZ16,8.2,19.8,8.2,19.8,50,0,0,UnmanagedForest,AEZ16,Forest
+Japan,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,AllForestLandAEZ16,UnmanagedForestAEZ16,0,0,0,0,0,0,0,UnmanagedForest,AEZ16,Forest
+Australia_NZ,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,AllForestLandAEZ16,UnmanagedForestAEZ16,10.7,16.9,10.7,16.9,50,0,0,UnmanagedForest,AEZ16,Forest
+Former Soviet Union,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,AllForestLandAEZ16,UnmanagedForestAEZ16,7.7,19.1,7.7,19.1,50,0,0,UnmanagedForest,AEZ16,Forest
+China,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,AllForestLandAEZ16,UnmanagedForestAEZ16,13.3,14,13.3,14,44,0,0,UnmanagedForest,AEZ16,Forest
+Middle East,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,AllForestLandAEZ16,UnmanagedForestAEZ16,0,0,0,0,0,0,0,UnmanagedForest,AEZ16,Forest
+Africa,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,AllForestLandAEZ16,UnmanagedForestAEZ16,0,0,0,0,0,0,0,UnmanagedForest,AEZ16,Forest
+Latin America,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,AllForestLandAEZ16,UnmanagedForestAEZ16,6.3,19.6,6.3,19.6,49,0,0,UnmanagedForest,AEZ16,Forest
+Southeast Asia,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,AllForestLandAEZ16,UnmanagedForestAEZ16,13.4,12.3,13.4,12.3,40,0,0,UnmanagedForest,AEZ16,Forest
+Eastern Europe,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,AllForestLandAEZ16,UnmanagedForestAEZ16,9,17.8,9,17.8,50,0,0,UnmanagedForest,AEZ16,Forest
+Korea,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,AllForestLandAEZ16,UnmanagedForestAEZ16,0,0,0,0,0,0,0,UnmanagedForest,AEZ16,Forest
+India,root,AgroForestLandAEZ16,AgroForest_NonPastureAEZ16,AllForestLandAEZ16,UnmanagedForestAEZ16,14.2,12.3,14.2,12.3,43,0,0,UnmanagedForest,AEZ16,Forest
+USA,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,GrassShrubLandAEZ17,GrasslandAEZ17,0,0,0,0,0,0,0,Grassland,AEZ17,Grassland
+Canada,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,GrassShrubLandAEZ17,GrasslandAEZ17,0,0,0,0,0,0,0,Grassland,AEZ17,Grassland
+Western Europe,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,GrassShrubLandAEZ17,GrasslandAEZ17,0,0,0,0,0,0,0,Grassland,AEZ17,Grassland
+Japan,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,GrassShrubLandAEZ17,GrasslandAEZ17,0,0,0,0,0,0,0,Grassland,AEZ17,Grassland
+Australia_NZ,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,GrassShrubLandAEZ17,GrasslandAEZ17,1.8,12.5,1.8,12.5,21,0,0,Grassland,AEZ17,Grassland
+Former Soviet Union,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,GrassShrubLandAEZ17,GrasslandAEZ17,0,0,0,0,0,0,0,Grassland,AEZ17,Grassland
+China,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,GrassShrubLandAEZ17,GrasslandAEZ17,0.8,17,0.8,17,10,0,0,Grassland,AEZ17,Grassland
+Middle East,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,GrassShrubLandAEZ17,GrasslandAEZ17,0,0,0,0,0,0,0,Grassland,AEZ17,Grassland
+Africa,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,GrassShrubLandAEZ17,GrasslandAEZ17,0,0,0,0,0,0,0,Grassland,AEZ17,Grassland
+Latin America,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,GrassShrubLandAEZ17,GrasslandAEZ17,0.8,17,0.8,17,10,0,0,Grassland,AEZ17,Grassland
+Southeast Asia,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,GrassShrubLandAEZ17,GrasslandAEZ17,0,0,0,0,0,0,0,Grassland,AEZ17,Grassland
+Eastern Europe,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,GrassShrubLandAEZ17,GrasslandAEZ17,0,0,0,0,0,0,0,Grassland,AEZ17,Grassland
+Korea,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,GrassShrubLandAEZ17,GrasslandAEZ17,0,0,0,0,0,0,0,Grassland,AEZ17,Grassland
+India,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,GrassShrubLandAEZ17,GrasslandAEZ17,0,0,0,0,0,0,0,Grassland,AEZ17,Grassland
+USA,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,CropLandAEZ17,OtherArableLandAEZ17,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ17,Cropland
+Canada,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,CropLandAEZ17,OtherArableLandAEZ17,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ17,Cropland
+Western Europe,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,CropLandAEZ17,OtherArableLandAEZ17,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ17,Cropland
+Japan,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,CropLandAEZ17,OtherArableLandAEZ17,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ17,Cropland
+Australia_NZ,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,CropLandAEZ17,OtherArableLandAEZ17,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ17,Cropland
+Former Soviet Union,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,CropLandAEZ17,OtherArableLandAEZ17,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ17,Cropland
+China,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,CropLandAEZ17,OtherArableLandAEZ17,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ17,Cropland
+Middle East,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,CropLandAEZ17,OtherArableLandAEZ17,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ17,Cropland
+Africa,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,CropLandAEZ17,OtherArableLandAEZ17,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ17,Cropland
+Latin America,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,CropLandAEZ17,OtherArableLandAEZ17,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ17,Cropland
+Southeast Asia,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,CropLandAEZ17,OtherArableLandAEZ17,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ17,Cropland
+Eastern Europe,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,CropLandAEZ17,OtherArableLandAEZ17,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ17,Cropland
+Korea,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,CropLandAEZ17,OtherArableLandAEZ17,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ17,Cropland
+India,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,CropLandAEZ17,OtherArableLandAEZ17,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ17,Cropland
+USA,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,GrassShrubLandAEZ17,ShrublandAEZ17,0,0,0,0,0,0,0,Shrubland,AEZ17,Shrubland
+Canada,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,GrassShrubLandAEZ17,ShrublandAEZ17,0,0,0,0,0,0,0,Shrubland,AEZ17,Shrubland
+Western Europe,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,GrassShrubLandAEZ17,ShrublandAEZ17,0,0,0,0,0,0,0,Shrubland,AEZ17,Shrubland
+Japan,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,GrassShrubLandAEZ17,ShrublandAEZ17,0,0,0,0,0,0,0,Shrubland,AEZ17,Shrubland
+Australia_NZ,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,GrassShrubLandAEZ17,ShrublandAEZ17,5.5,6.9,5.5,6.9,18,0,0,Shrubland,AEZ17,Shrubland
+Former Soviet Union,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,GrassShrubLandAEZ17,ShrublandAEZ17,0,0,0,0,0,0,0,Shrubland,AEZ17,Shrubland
+China,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,GrassShrubLandAEZ17,ShrublandAEZ17,5.5,6.9,5.5,6.9,18,0,0,Shrubland,AEZ17,Shrubland
+Middle East,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,GrassShrubLandAEZ17,ShrublandAEZ17,0,0,0,0,0,0,0,Shrubland,AEZ17,Shrubland
+Africa,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,GrassShrubLandAEZ17,ShrublandAEZ17,0,0,0,0,0,0,0,Shrubland,AEZ17,Shrubland
+Latin America,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,GrassShrubLandAEZ17,ShrublandAEZ17,0,0,0,0,0,0,0,Shrubland,AEZ17,Shrubland
+Southeast Asia,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,GrassShrubLandAEZ17,ShrublandAEZ17,0,0,0,0,0,0,0,Shrubland,AEZ17,Shrubland
+Eastern Europe,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,GrassShrubLandAEZ17,ShrublandAEZ17,0,0,0,0,0,0,0,Shrubland,AEZ17,Shrubland
+Korea,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,GrassShrubLandAEZ17,ShrublandAEZ17,0,0,0,0,0,0,0,Shrubland,AEZ17,Shrubland
+India,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,GrassShrubLandAEZ17,ShrublandAEZ17,0,0,0,0,0,0,0,Shrubland,AEZ17,Shrubland
+USA,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,AllForestLandAEZ17,UnmanagedForestAEZ17,0,0,0,0,0,0,0,UnmanagedForest,AEZ17,Forest
+Canada,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,AllForestLandAEZ17,UnmanagedForestAEZ17,0,0,0,0,0,0,0,UnmanagedForest,AEZ17,Forest
+Western Europe,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,AllForestLandAEZ17,UnmanagedForestAEZ17,0,0,0,0,0,0,0,UnmanagedForest,AEZ17,Forest
+Japan,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,AllForestLandAEZ17,UnmanagedForestAEZ17,0,0,0,0,0,0,0,UnmanagedForest,AEZ17,Forest
+Australia_NZ,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,AllForestLandAEZ17,UnmanagedForestAEZ17,11.6,12.9,11.6,12.9,50,0,0,UnmanagedForest,AEZ17,Forest
+Former Soviet Union,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,AllForestLandAEZ17,UnmanagedForestAEZ17,0,0,0,0,0,0,0,UnmanagedForest,AEZ17,Forest
+China,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,AllForestLandAEZ17,UnmanagedForestAEZ17,18.3,11.2,18.3,11.2,41,0,0,UnmanagedForest,AEZ17,Forest
+Middle East,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,AllForestLandAEZ17,UnmanagedForestAEZ17,0,0,0,0,0,0,0,UnmanagedForest,AEZ17,Forest
+Africa,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,AllForestLandAEZ17,UnmanagedForestAEZ17,0,0,0,0,0,0,0,UnmanagedForest,AEZ17,Forest
+Latin America,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,AllForestLandAEZ17,UnmanagedForestAEZ17,5,20.6,5,20.6,50,0,0,UnmanagedForest,AEZ17,Forest
+Southeast Asia,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,AllForestLandAEZ17,UnmanagedForestAEZ17,0,0,0,0,0,0,0,UnmanagedForest,AEZ17,Forest
+Eastern Europe,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,AllForestLandAEZ17,UnmanagedForestAEZ17,0,0,0,0,0,0,0,UnmanagedForest,AEZ17,Forest
+Korea,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,AllForestLandAEZ17,UnmanagedForestAEZ17,0,0,0,0,0,0,0,UnmanagedForest,AEZ17,Forest
+India,root,AgroForestLandAEZ17,AgroForest_NonPastureAEZ17,AllForestLandAEZ17,UnmanagedForestAEZ17,0,0,0,0,0,0,0,UnmanagedForest,AEZ17,Forest
+USA,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,GrassShrubLandAEZ18,GrasslandAEZ18,0,0,0,0,0,0,0,Grassland,AEZ18,Grassland
+Canada,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,GrassShrubLandAEZ18,GrasslandAEZ18,0,0,0,0,0,0,0,Grassland,AEZ18,Grassland
+Western Europe,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,GrassShrubLandAEZ18,GrasslandAEZ18,0,0,0,0,0,0,0,Grassland,AEZ18,Grassland
+Japan,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,GrassShrubLandAEZ18,GrasslandAEZ18,0,0,0,0,0,0,0,Grassland,AEZ18,Grassland
+Australia_NZ,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,GrassShrubLandAEZ18,GrasslandAEZ18,0,0,0,0,0,0,0,Grassland,AEZ18,Grassland
+Former Soviet Union,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,GrassShrubLandAEZ18,GrasslandAEZ18,0,0,0,0,0,0,0,Grassland,AEZ18,Grassland
+China,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,GrassShrubLandAEZ18,GrasslandAEZ18,0,0,0,0,0,0,0,Grassland,AEZ18,Grassland
+Middle East,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,GrassShrubLandAEZ18,GrasslandAEZ18,0,0,0,0,0,0,0,Grassland,AEZ18,Grassland
+Africa,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,GrassShrubLandAEZ18,GrasslandAEZ18,0,0,0,0,0,0,0,Grassland,AEZ18,Grassland
+Latin America,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,GrassShrubLandAEZ18,GrasslandAEZ18,1,18.5,1,18.5,10,0,0,Grassland,AEZ18,Grassland
+Southeast Asia,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,GrassShrubLandAEZ18,GrasslandAEZ18,0,0,0,0,0,0,0,Grassland,AEZ18,Grassland
+Eastern Europe,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,GrassShrubLandAEZ18,GrasslandAEZ18,0,0,0,0,0,0,0,Grassland,AEZ18,Grassland
+Korea,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,GrassShrubLandAEZ18,GrasslandAEZ18,0,0,0,0,0,0,0,Grassland,AEZ18,Grassland
+India,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,GrassShrubLandAEZ18,GrasslandAEZ18,0,0,0,0,0,0,0,Grassland,AEZ18,Grassland
+USA,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,CropLandAEZ18,OtherArableLandAEZ18,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ18,Cropland
+Canada,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,CropLandAEZ18,OtherArableLandAEZ18,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ18,Cropland
+Western Europe,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,CropLandAEZ18,OtherArableLandAEZ18,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ18,Cropland
+Japan,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,CropLandAEZ18,OtherArableLandAEZ18,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ18,Cropland
+Australia_NZ,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,CropLandAEZ18,OtherArableLandAEZ18,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ18,Cropland
+Former Soviet Union,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,CropLandAEZ18,OtherArableLandAEZ18,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ18,Cropland
+China,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,CropLandAEZ18,OtherArableLandAEZ18,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ18,Cropland
+Middle East,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,CropLandAEZ18,OtherArableLandAEZ18,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ18,Cropland
+Africa,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,CropLandAEZ18,OtherArableLandAEZ18,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ18,Cropland
+Latin America,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,CropLandAEZ18,OtherArableLandAEZ18,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ18,Cropland
+Southeast Asia,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,CropLandAEZ18,OtherArableLandAEZ18,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ18,Cropland
+Eastern Europe,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,CropLandAEZ18,OtherArableLandAEZ18,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ18,Cropland
+Korea,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,CropLandAEZ18,OtherArableLandAEZ18,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ18,Cropland
+India,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,CropLandAEZ18,OtherArableLandAEZ18,0.3,12,0.3,12,1,0,0,OtherArableLand,AEZ18,Cropland
+USA,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,GrassShrubLandAEZ18,ShrublandAEZ18,0,0,0,0,0,0,0,Shrubland,AEZ18,Shrubland
+Canada,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,GrassShrubLandAEZ18,ShrublandAEZ18,0,0,0,0,0,0,0,Shrubland,AEZ18,Shrubland
+Western Europe,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,GrassShrubLandAEZ18,ShrublandAEZ18,0,0,0,0,0,0,0,Shrubland,AEZ18,Shrubland
+Japan,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,GrassShrubLandAEZ18,ShrublandAEZ18,0,0,0,0,0,0,0,Shrubland,AEZ18,Shrubland
+Australia_NZ,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,GrassShrubLandAEZ18,ShrublandAEZ18,0,0,0,0,0,0,0,Shrubland,AEZ18,Shrubland
+Former Soviet Union,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,GrassShrubLandAEZ18,ShrublandAEZ18,0,0,0,0,0,0,0,Shrubland,AEZ18,Shrubland
+China,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,GrassShrubLandAEZ18,ShrublandAEZ18,0,0,0,0,0,0,0,Shrubland,AEZ18,Shrubland
+Middle East,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,GrassShrubLandAEZ18,ShrublandAEZ18,0,0,0,0,0,0,0,Shrubland,AEZ18,Shrubland
+Africa,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,GrassShrubLandAEZ18,ShrublandAEZ18,0,0,0,0,0,0,0,Shrubland,AEZ18,Shrubland
+Latin America,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,GrassShrubLandAEZ18,ShrublandAEZ18,0,0,0,0,0,0,0,Shrubland,AEZ18,Shrubland
+Southeast Asia,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,GrassShrubLandAEZ18,ShrublandAEZ18,0,0,0,0,0,0,0,Shrubland,AEZ18,Shrubland
+Eastern Europe,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,GrassShrubLandAEZ18,ShrublandAEZ18,0,0,0,0,0,0,0,Shrubland,AEZ18,Shrubland
+Korea,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,GrassShrubLandAEZ18,ShrublandAEZ18,0,0,0,0,0,0,0,Shrubland,AEZ18,Shrubland
+India,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,GrassShrubLandAEZ18,ShrublandAEZ18,0,0,0,0,0,0,0,Shrubland,AEZ18,Shrubland
+USA,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,AllForestLandAEZ18,UnmanagedForestAEZ18,0,0,0,0,0,0,0,UnmanagedForest,AEZ18,Forest
+Canada,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,AllForestLandAEZ18,UnmanagedForestAEZ18,0,0,0,0,0,0,0,UnmanagedForest,AEZ18,Forest
+Western Europe,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,AllForestLandAEZ18,UnmanagedForestAEZ18,0,0,0,0,0,0,0,UnmanagedForest,AEZ18,Forest
+Japan,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,AllForestLandAEZ18,UnmanagedForestAEZ18,0,0,0,0,0,0,0,UnmanagedForest,AEZ18,Forest
+Australia_NZ,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,AllForestLandAEZ18,UnmanagedForestAEZ18,0,0,0,0,0,0,0,UnmanagedForest,AEZ18,Forest
+Former Soviet Union,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,AllForestLandAEZ18,UnmanagedForestAEZ18,0,0,0,0,0,0,0,UnmanagedForest,AEZ18,Forest
+China,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,AllForestLandAEZ18,UnmanagedForestAEZ18,0,0,0,0,0,0,0,UnmanagedForest,AEZ18,Forest
+Middle East,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,AllForestLandAEZ18,UnmanagedForestAEZ18,0,0,0,0,0,0,0,UnmanagedForest,AEZ18,Forest
+Africa,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,AllForestLandAEZ18,UnmanagedForestAEZ18,0,0,0,0,0,0,0,UnmanagedForest,AEZ18,Forest
+Latin America,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,AllForestLandAEZ18,UnmanagedForestAEZ18,5,20.6,5,20.6,50,0,0,UnmanagedForest,AEZ18,Forest
+Southeast Asia,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,AllForestLandAEZ18,UnmanagedForestAEZ18,0,0,0,0,0,0,0,UnmanagedForest,AEZ18,Forest
+Eastern Europe,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,AllForestLandAEZ18,UnmanagedForestAEZ18,0,0,0,0,0,0,0,UnmanagedForest,AEZ18,Forest
+Korea,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,AllForestLandAEZ18,UnmanagedForestAEZ18,0,0,0,0,0,0,0,UnmanagedForest,AEZ18,Forest
+India,root,AgroForestLandAEZ18,AgroForest_NonPastureAEZ18,AllForestLandAEZ18,UnmanagedForestAEZ18,0,0,0,0,0,0,0,UnmanagedForest,AEZ18,Forest

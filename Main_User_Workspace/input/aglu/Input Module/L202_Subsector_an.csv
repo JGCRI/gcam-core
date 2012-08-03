@@ -1,0 +1,117 @@
+INPUT_TABLE
+Variable ID
+Subsector
+
+region,supplysector,subsector,logit.exponent,share.weight.year,share.weight,apply.to,from.year,to.year,interpolation.function
+Africa,Beef,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Africa,Beef,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Africa,Dairy,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Africa,Dairy,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Africa,Pork,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Africa,Poultry,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Africa,SheepGoat,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Africa,SheepGoat,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,Beef,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,Beef,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,Dairy,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,Dairy,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,Pork,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,Poultry,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,SheepGoat,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Australia_NZ,SheepGoat,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Canada,Beef,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Canada,Beef,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Canada,Dairy,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Canada,Dairy,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Canada,Pork,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Canada,Poultry,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Canada,SheepGoat,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Canada,SheepGoat,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+China,Beef,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+China,Beef,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+China,Dairy,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+China,Dairy,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+China,Pork,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+China,Poultry,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+China,SheepGoat,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+China,SheepGoat,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,Beef,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,Beef,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,Dairy,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,Dairy,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,Pork,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,Poultry,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,SheepGoat,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Eastern Europe,SheepGoat,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,Beef,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,Beef,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,Dairy,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,Dairy,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,Pork,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,Poultry,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,SheepGoat,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Former Soviet Union,SheepGoat,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+India,Beef,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+India,Beef,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+India,Dairy,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+India,Dairy,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+India,Pork,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+India,Poultry,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+India,SheepGoat,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+India,SheepGoat,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Japan,Beef,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Japan,Beef,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Japan,Dairy,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Japan,Dairy,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Japan,Pork,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Japan,Poultry,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Japan,SheepGoat,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Japan,SheepGoat,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Korea,Beef,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Korea,Beef,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Korea,Dairy,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Korea,Dairy,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Korea,Pork,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Korea,Poultry,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Korea,SheepGoat,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Korea,SheepGoat,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Latin America,Beef,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Latin America,Beef,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Latin America,Dairy,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Latin America,Dairy,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Latin America,Pork,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Latin America,Poultry,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Latin America,SheepGoat,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Latin America,SheepGoat,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Middle East,Beef,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Middle East,Beef,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Middle East,Dairy,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Middle East,Dairy,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Middle East,Pork,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Middle East,Poultry,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Middle East,SheepGoat,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Middle East,SheepGoat,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,Beef,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,Beef,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,Dairy,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,Dairy,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,Pork,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,Poultry,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,SheepGoat,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Southeast Asia,SheepGoat,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+USA,Beef,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+USA,Beef,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+USA,Dairy,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+USA,Dairy,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+USA,Pork,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+USA,Poultry,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+USA,SheepGoat,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+USA,SheepGoat,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Western Europe,Beef,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Western Europe,Beef,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Western Europe,Dairy,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Western Europe,Dairy,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed
+Western Europe,Pork,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Western Europe,Poultry,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Western Europe,SheepGoat,Mixed,-1.5,1975,1,share-weight,2005,9999,fixed
+Western Europe,SheepGoat,Pastoral,-1.5,1975,1,share-weight,2005,9999,fixed

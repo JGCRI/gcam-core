@@ -1,0 +1,33 @@
+INPUT_TABLE
+Variable ID
+CarbonCapture
+
+region,supplysector,subsector,technology,storage.market,remove.fraction
+Africa,N fertilizer,coal,coal CCS,carbon-storage,0.9
+Africa,N fertilizer,gas,gas CCS,carbon-storage,0.9
+Australia_NZ,N fertilizer,coal,coal CCS,carbon-storage,0.9
+Australia_NZ,N fertilizer,gas,gas CCS,carbon-storage,0.9
+Canada,N fertilizer,coal,coal CCS,carbon-storage,0.9
+Canada,N fertilizer,gas,gas CCS,carbon-storage,0.9
+China,N fertilizer,coal,coal CCS,carbon-storage,0.9
+China,N fertilizer,gas,gas CCS,carbon-storage,0.9
+Eastern Europe,N fertilizer,coal,coal CCS,carbon-storage,0.9
+Eastern Europe,N fertilizer,gas,gas CCS,carbon-storage,0.9
+Former Soviet Union,N fertilizer,coal,coal CCS,carbon-storage,0.9
+Former Soviet Union,N fertilizer,gas,gas CCS,carbon-storage,0.9
+India,N fertilizer,coal,coal CCS,carbon-storage,0.9
+India,N fertilizer,gas,gas CCS,carbon-storage,0.9
+Japan,N fertilizer,coal,coal CCS,carbon-storage,0.9
+Japan,N fertilizer,gas,gas CCS,carbon-storage,0.9
+Korea,N fertilizer,coal,coal CCS,carbon-storage,0.9
+Korea,N fertilizer,gas,gas CCS,carbon-storage,0.9
+Latin America,N fertilizer,coal,coal CCS,carbon-storage,0.9
+Latin America,N fertilizer,gas,gas CCS,carbon-storage,0.9
+Middle East,N fertilizer,coal,coal CCS,carbon-storage,0.9
+Middle East,N fertilizer,gas,gas CCS,carbon-storage,0.9
+Southeast Asia,N fertilizer,coal,coal CCS,carbon-storage,0.9
+Southeast Asia,N fertilizer,gas,gas CCS,carbon-storage,0.9
+USA,N fertilizer,coal,coal CCS,carbon-storage,0.9
+USA,N fertilizer,gas,gas CCS,carbon-storage,0.9
+Western Europe,N fertilizer,coal,coal CCS,carbon-storage,0.9
+Western Europe,N fertilizer,gas,gas CCS,carbon-storage,0.9

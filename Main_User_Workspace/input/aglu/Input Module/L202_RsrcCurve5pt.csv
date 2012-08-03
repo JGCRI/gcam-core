@@ -1,0 +1,19 @@
+INPUT_TABLE
+Variable ID
+RsrcCurve5pt
+
+region,renewresource,sub.renewable.resource,maxSubResource,grade.1.cost,grade.2.available,grade.2.cost,grade.3.available,grade.3.cost,grade.4.available,grade.4.cost,grade.5.available,grade.5.cost
+USA,OtherMeat_Fish,OtherMeat_Fish,13.428856,0,0.99,0.99,1,1,1.5,1.01,10,1.02
+Canada,OtherMeat_Fish,OtherMeat_Fish,2.280788,0,0.99,0.99,1,1,1.5,1.01,10,1.02
+Western Europe,OtherMeat_Fish,OtherMeat_Fish,20.04896,0,0.99,0.99,1,1,1.5,1.01,10,1.02
+Japan,OtherMeat_Fish,OtherMeat_Fish,11.63124,0,0.99,0.99,1,1,1.5,1.01,10,1.02
+Australia_NZ,OtherMeat_Fish,OtherMeat_Fish,2.972183,0,0.99,0.99,1,1,1.5,1.01,10,1.02
+Former Soviet Union,OtherMeat_Fish,OtherMeat_Fish,13.881202,0,0.99,0.99,1,1,1.5,1.01,10,1.02
+China,OtherMeat_Fish,OtherMeat_Fish,57.340857,0,0.99,0.99,1,1,1.5,1.01,10,1.02
+Middle East,OtherMeat_Fish,OtherMeat_Fish,1.604275,0,0.99,0.99,1,1,1.5,1.01,10,1.02
+Africa,OtherMeat_Fish,OtherMeat_Fish,11.011998,0,0.99,0.99,1,1,1.5,1.01,10,1.02
+Latin America,OtherMeat_Fish,OtherMeat_Fish,24.553445,0,0.99,0.99,1,1,1.5,1.01,10,1.02
+Southeast Asia,OtherMeat_Fish,OtherMeat_Fish,21.906772,0,0.99,0.99,1,1,1.5,1.01,10,1.02
+Eastern Europe,OtherMeat_Fish,OtherMeat_Fish,3.137031,0,0.99,0.99,1,1,1.5,1.01,10,1.02
+Korea,OtherMeat_Fish,OtherMeat_Fish,2.905736,0,0.99,0.99,1,1,1.5,1.01,10,1.02
+India,OtherMeat_Fish,OtherMeat_Fish,7.368071,0,0.99,0.99,1,1,1.5,1.01,10,1.02

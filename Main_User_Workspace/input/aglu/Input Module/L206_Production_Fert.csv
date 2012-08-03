@@ -1,0 +1,89 @@
+INPUT_TABLE
+Variable ID
+Production
+
+region,supplysector,subsector,technology,year,calOutputValue,share.weight.year,subs.share.weight,tech.share.weight
+Africa,N fertilizer,coal,coal,1990,0,1990,0,0
+Africa,N fertilizer,gas,gas,1990,2.129304,1990,1,1
+Africa,N fertilizer,refined liquids,refined liquids,1990,0,1990,0,0
+Australia_NZ,N fertilizer,coal,coal,1990,0,1990,0,0
+Australia_NZ,N fertilizer,gas,gas,1990,0.265302,1990,1,1
+Australia_NZ,N fertilizer,refined liquids,refined liquids,1990,0,1990,0,0
+Canada,N fertilizer,coal,coal,1990,0,1990,0,0
+Canada,N fertilizer,gas,gas,1990,2.679313,1990,1,1
+Canada,N fertilizer,refined liquids,refined liquids,1990,0,1990,0,0
+China,N fertilizer,coal,coal,1990,10.153854,1990,1,1
+China,N fertilizer,gas,gas,1990,2.901101,1990,1,1
+China,N fertilizer,refined liquids,refined liquids,1990,1.450551,1990,1,1
+Eastern Europe,N fertilizer,coal,coal,1990,0,1990,0,0
+Eastern Europe,N fertilizer,gas,gas,1990,4.518636,1990,1,1
+Eastern Europe,N fertilizer,refined liquids,refined liquids,1990,0.237823,1990,1,1
+Former Soviet Union,N fertilizer,coal,coal,1990,0,1990,0,0
+Former Soviet Union,N fertilizer,gas,gas,1990,12.174128,1990,1,1
+Former Soviet Union,N fertilizer,refined liquids,refined liquids,1990,0,1990,0,0
+India,N fertilizer,coal,coal,1990,0,1990,0,0
+India,N fertilizer,gas,gas,1990,3.268614,1990,1,1
+India,N fertilizer,refined liquids,refined liquids,1990,3.268614,1990,1,1
+Japan,N fertilizer,coal,coal,1990,0,1990,0,0
+Japan,N fertilizer,gas,gas,1990,0.8763,1990,1,1
+Japan,N fertilizer,refined liquids,refined liquids,1990,0,1990,0,0
+Korea,N fertilizer,coal,coal,1990,0,1990,0,0
+Korea,N fertilizer,gas,gas,1990,0,1990,0,0
+Korea,N fertilizer,refined liquids,refined liquids,1990,0.578422,1990,1,1
+Latin America,N fertilizer,coal,coal,1990,0,1990,0,0
+Latin America,N fertilizer,gas,gas,1990,2.941356,1990,1,1
+Latin America,N fertilizer,refined liquids,refined liquids,1990,0,1990,0,0
+Middle East,N fertilizer,coal,coal,1990,0,1990,0,0
+Middle East,N fertilizer,gas,gas,1990,2.097805,1990,1,1
+Middle East,N fertilizer,refined liquids,refined liquids,1990,0,1990,0,0
+Southeast Asia,N fertilizer,coal,coal,1990,0,1990,0,0
+Southeast Asia,N fertilizer,gas,gas,1990,4.412116,1990,1,1
+Southeast Asia,N fertilizer,refined liquids,refined liquids,1990,0,1990,0,0
+USA,N fertilizer,coal,coal,1990,0,1990,0,0
+USA,N fertilizer,gas,gas,1990,12.257265,1990,1,1
+USA,N fertilizer,refined liquids,refined liquids,1990,0,1990,0,0
+Western Europe,N fertilizer,coal,coal,1990,0,1990,0,0
+Western Europe,N fertilizer,gas,gas,1990,9.686795,1990,1,1
+Western Europe,N fertilizer,refined liquids,refined liquids,1990,1.076311,1990,1,1
+Africa,N fertilizer,coal,coal,2005,0,2005,0,0
+Africa,N fertilizer,gas,gas,2005,2.993063,2005,1,1
+Africa,N fertilizer,refined liquids,refined liquids,2005,0,2005,0,0
+Australia_NZ,N fertilizer,coal,coal,2005,0,2005,0,0
+Australia_NZ,N fertilizer,gas,gas,2005,0.462647,2005,1,1
+Australia_NZ,N fertilizer,refined liquids,refined liquids,2005,0,2005,0,0
+Canada,N fertilizer,coal,coal,2005,0,2005,0,0
+Canada,N fertilizer,gas,gas,2005,3.026619,2005,1,1
+Canada,N fertilizer,refined liquids,refined liquids,2005,0,2005,0,0
+China,N fertilizer,coal,coal,2005,20.728881,2005,1,1
+China,N fertilizer,gas,gas,2005,5.922537,2005,1,1
+China,N fertilizer,refined liquids,refined liquids,2005,2.961269,2005,1,1
+Eastern Europe,N fertilizer,coal,coal,2005,0,2005,0,0
+Eastern Europe,N fertilizer,gas,gas,2005,3.773486,2005,1,1
+Eastern Europe,N fertilizer,refined liquids,refined liquids,2005,0.198605,2005,1,1
+Former Soviet Union,N fertilizer,coal,coal,2005,0,2005,0,0
+Former Soviet Union,N fertilizer,gas,gas,2005,10.510019,2005,1,1
+Former Soviet Union,N fertilizer,refined liquids,refined liquids,2005,0,2005,0,0
+India,N fertilizer,coal,coal,2005,0,2005,0,0
+India,N fertilizer,gas,gas,2005,5.243794,2005,1,1
+India,N fertilizer,refined liquids,refined liquids,2005,5.243794,2005,1,1
+Japan,N fertilizer,coal,coal,2005,0,2005,0,0
+Japan,N fertilizer,gas,gas,2005,0.750161,2005,1,1
+Japan,N fertilizer,refined liquids,refined liquids,2005,0,2005,0,0
+Korea,N fertilizer,coal,coal,2005,0,2005,0,0
+Korea,N fertilizer,gas,gas,2005,0.340297,2005,1,1
+Korea,N fertilizer,refined liquids,refined liquids,2005,0,2005,0,0
+Latin America,N fertilizer,coal,coal,2005,0,2005,0,0
+Latin America,N fertilizer,gas,gas,2005,3.096828,2005,1,1
+Latin America,N fertilizer,refined liquids,refined liquids,2005,0,2005,0,0
+Middle East,N fertilizer,coal,coal,2005,0,2005,0,0
+Middle East,N fertilizer,gas,gas,2005,4.979074,2005,1,1
+Middle East,N fertilizer,refined liquids,refined liquids,2005,0,2005,0,0
+Southeast Asia,N fertilizer,coal,coal,2005,0,2005,0,0
+Southeast Asia,N fertilizer,gas,gas,2005,6.493154,2005,1,1
+Southeast Asia,N fertilizer,refined liquids,refined liquids,2005,0,2005,0,0
+USA,N fertilizer,coal,coal,2005,0,2005,0,0
+USA,N fertilizer,gas,gas,2005,8.237809,2005,1,1
+USA,N fertilizer,refined liquids,refined liquids,2005,0,2005,0,0
+Western Europe,N fertilizer,coal,coal,2005,0,2005,0,0
+Western Europe,N fertilizer,gas,gas,2005,7.445204,2005,1,1
+Western Europe,N fertilizer,refined liquids,refined liquids,2005,0.827245,2005,1,1

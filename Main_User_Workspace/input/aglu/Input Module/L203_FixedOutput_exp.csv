@@ -1,0 +1,565 @@
+INPUT_TABLE
+Variable ID
+FixedOutput
+
+region,supplysector,subsector,technology,year,fixedOutput
+Africa,Exports_Meat,Beef,Beef,1990,0
+Africa,Exports_Meat,Dairy,Dairy,1990,0
+Africa,Exports_Meat,Pork,Pork,1990,0
+Africa,Exports_Meat,Poultry,Poultry,1990,0
+Africa,Exports_Meat,SheepGoat,SheepGoat,1990,0
+Australia_NZ,Exports_Meat,Beef,Beef,1990,1.195275
+Australia_NZ,Exports_Meat,Dairy,Dairy,1990,7.938681
+Australia_NZ,Exports_Meat,Pork,Pork,1990,0.002168
+Australia_NZ,Exports_Meat,Poultry,Poultry,1990,0.005884
+Australia_NZ,Exports_Meat,SheepGoat,SheepGoat,1990,0.538354
+Canada,Exports_Meat,Beef,Beef,1990,0
+Canada,Exports_Meat,Dairy,Dairy,1990,0.500936
+Canada,Exports_Meat,Pork,Pork,1990,0.246221
+Canada,Exports_Meat,Poultry,Poultry,1990,0
+Canada,Exports_Meat,SheepGoat,SheepGoat,1990,0
+China,Exports_Meat,Beef,Beef,1990,0.069568
+China,Exports_Meat,Dairy,Dairy,1990,0
+China,Exports_Meat,Pork,Pork,1990,0.261483
+China,Exports_Meat,Poultry,Poultry,1990,0
+China,Exports_Meat,SheepGoat,SheepGoat,1990,0
+Eastern Europe,Exports_Meat,Beef,Beef,1990,0.03616
+Eastern Europe,Exports_Meat,Dairy,Dairy,1990,2.72144
+Eastern Europe,Exports_Meat,Pork,Pork,1990,0.234829
+Eastern Europe,Exports_Meat,Poultry,Poultry,1990,0.202399
+Eastern Europe,Exports_Meat,SheepGoat,SheepGoat,1990,0.012953
+Former Soviet Union,Exports_Meat,Beef,Beef,1990,0
+Former Soviet Union,Exports_Meat,Dairy,Dairy,1990,0
+Former Soviet Union,Exports_Meat,Pork,Pork,1990,0
+Former Soviet Union,Exports_Meat,Poultry,Poultry,1990,0
+Former Soviet Union,Exports_Meat,SheepGoat,SheepGoat,1990,0
+India,Exports_Meat,Beef,Beef,1990,0.06147
+India,Exports_Meat,Dairy,Dairy,1990,0
+India,Exports_Meat,Pork,Pork,1990,3e-06
+India,Exports_Meat,Poultry,Poultry,1990,0.003272
+India,Exports_Meat,SheepGoat,SheepGoat,1990,0.006907
+Japan,Exports_Meat,Beef,Beef,1990,0
+Japan,Exports_Meat,Dairy,Dairy,1990,0
+Japan,Exports_Meat,Pork,Pork,1990,0
+Japan,Exports_Meat,Poultry,Poultry,1990,0
+Japan,Exports_Meat,SheepGoat,SheepGoat,1990,0
+Korea,Exports_Meat,Beef,Beef,1990,0
+Korea,Exports_Meat,Dairy,Dairy,1990,0
+Korea,Exports_Meat,Pork,Pork,1990,0
+Korea,Exports_Meat,Poultry,Poultry,1990,0
+Korea,Exports_Meat,SheepGoat,SheepGoat,1990,0
+Latin America,Exports_Meat,Beef,Beef,1990,0.715194
+Latin America,Exports_Meat,Dairy,Dairy,1990,0
+Latin America,Exports_Meat,Pork,Pork,1990,0
+Latin America,Exports_Meat,Poultry,Poultry,1990,0.081782
+Latin America,Exports_Meat,SheepGoat,SheepGoat,1990,0
+Middle East,Exports_Meat,Beef,Beef,1990,0
+Middle East,Exports_Meat,Dairy,Dairy,1990,0
+Middle East,Exports_Meat,Pork,Pork,1990,0
+Middle East,Exports_Meat,Poultry,Poultry,1990,0
+Middle East,Exports_Meat,SheepGoat,SheepGoat,1990,0
+Southeast Asia,Exports_Meat,Beef,Beef,1990,0
+Southeast Asia,Exports_Meat,Dairy,Dairy,1990,0
+Southeast Asia,Exports_Meat,Pork,Pork,1990,0
+Southeast Asia,Exports_Meat,Poultry,Poultry,1990,0.135218
+Southeast Asia,Exports_Meat,SheepGoat,SheepGoat,1990,0
+USA,Exports_Meat,Beef,Beef,1990,0
+USA,Exports_Meat,Dairy,Dairy,1990,0
+USA,Exports_Meat,Pork,Pork,1990,0
+USA,Exports_Meat,Poultry,Poultry,1990,0.609445
+USA,Exports_Meat,SheepGoat,SheepGoat,1990,0
+Western Europe,Exports_Meat,Beef,Beef,1990,0.315898
+Western Europe,Exports_Meat,Dairy,Dairy,1990,14.056243
+Western Europe,Exports_Meat,Pork,Pork,1990,0.366568
+Western Europe,Exports_Meat,Poultry,Poultry,1990,0.166661
+Western Europe,Exports_Meat,SheepGoat,SheepGoat,1990,0
+Africa,Exports_Meat,Beef,Beef,2005,0
+Africa,Exports_Meat,Dairy,Dairy,2005,0
+Africa,Exports_Meat,Pork,Pork,2005,0
+Africa,Exports_Meat,Poultry,Poultry,2005,0
+Africa,Exports_Meat,SheepGoat,SheepGoat,2005,0
+Australia_NZ,Exports_Meat,Beef,Beef,2005,1.623415
+Australia_NZ,Exports_Meat,Dairy,Dairy,2005,16.62755
+Australia_NZ,Exports_Meat,Pork,Pork,2005,0
+Australia_NZ,Exports_Meat,Poultry,Poultry,2005,0.024239
+Australia_NZ,Exports_Meat,SheepGoat,SheepGoat,2005,0.614976
+Canada,Exports_Meat,Beef,Beef,2005,0.233392
+Canada,Exports_Meat,Dairy,Dairy,2005,0
+Canada,Exports_Meat,Pork,Pork,2005,0.86928
+Canada,Exports_Meat,Poultry,Poultry,2005,0
+Canada,Exports_Meat,SheepGoat,SheepGoat,2005,0
+China,Exports_Meat,Beef,Beef,2005,0
+China,Exports_Meat,Dairy,Dairy,2005,0
+China,Exports_Meat,Pork,Pork,2005,0.065007
+China,Exports_Meat,Poultry,Poultry,2005,0
+China,Exports_Meat,SheepGoat,SheepGoat,2005,0
+Eastern Europe,Exports_Meat,Beef,Beef,2005,0
+Eastern Europe,Exports_Meat,Dairy,Dairy,2005,2.600229
+Eastern Europe,Exports_Meat,Pork,Pork,2005,0
+Eastern Europe,Exports_Meat,Poultry,Poultry,2005,0
+Eastern Europe,Exports_Meat,SheepGoat,SheepGoat,2005,0.007332
+Former Soviet Union,Exports_Meat,Beef,Beef,2005,0
+Former Soviet Union,Exports_Meat,Dairy,Dairy,2005,2.119883
+Former Soviet Union,Exports_Meat,Pork,Pork,2005,0
+Former Soviet Union,Exports_Meat,Poultry,Poultry,2005,0
+Former Soviet Union,Exports_Meat,SheepGoat,SheepGoat,2005,0
+India,Exports_Meat,Beef,Beef,2005,0.373237
+India,Exports_Meat,Dairy,Dairy,2005,0.635967
+India,Exports_Meat,Pork,Pork,2005,0.000678
+India,Exports_Meat,Poultry,Poultry,2005,0.081192
+India,Exports_Meat,SheepGoat,SheepGoat,2005,0.008521
+Japan,Exports_Meat,Beef,Beef,2005,0
+Japan,Exports_Meat,Dairy,Dairy,2005,0
+Japan,Exports_Meat,Pork,Pork,2005,0
+Japan,Exports_Meat,Poultry,Poultry,2005,0
+Japan,Exports_Meat,SheepGoat,SheepGoat,2005,0
+Korea,Exports_Meat,Beef,Beef,2005,0
+Korea,Exports_Meat,Dairy,Dairy,2005,0
+Korea,Exports_Meat,Pork,Pork,2005,0
+Korea,Exports_Meat,Poultry,Poultry,2005,0
+Korea,Exports_Meat,SheepGoat,SheepGoat,2005,0
+Latin America,Exports_Meat,Beef,Beef,2005,2.141819
+Latin America,Exports_Meat,Dairy,Dairy,2005,0
+Latin America,Exports_Meat,Pork,Pork,2005,0.369588
+Latin America,Exports_Meat,Poultry,Poultry,2005,1.729441
+Latin America,Exports_Meat,SheepGoat,SheepGoat,2005,0
+Middle East,Exports_Meat,Beef,Beef,2005,0
+Middle East,Exports_Meat,Dairy,Dairy,2005,0
+Middle East,Exports_Meat,Pork,Pork,2005,0
+Middle East,Exports_Meat,Poultry,Poultry,2005,0
+Middle East,Exports_Meat,SheepGoat,SheepGoat,2005,0
+Southeast Asia,Exports_Meat,Beef,Beef,2005,0
+Southeast Asia,Exports_Meat,Dairy,Dairy,2005,0
+Southeast Asia,Exports_Meat,Pork,Pork,2005,0
+Southeast Asia,Exports_Meat,Poultry,Poultry,2005,0.268804
+Southeast Asia,Exports_Meat,SheepGoat,SheepGoat,2005,0
+USA,Exports_Meat,Beef,Beef,2005,0
+USA,Exports_Meat,Dairy,Dairy,2005,1.859533
+USA,Exports_Meat,Pork,Pork,2005,0.488229
+USA,Exports_Meat,Poultry,Poultry,2005,2.729939
+USA,Exports_Meat,SheepGoat,SheepGoat,2005,0
+Western Europe,Exports_Meat,Beef,Beef,2005,0
+Western Europe,Exports_Meat,Dairy,Dairy,2005,8.563485
+Western Europe,Exports_Meat,Pork,Pork,2005,1.19326
+Western Europe,Exports_Meat,Poultry,Poultry,2005,0
+Western Europe,Exports_Meat,SheepGoat,SheepGoat,2005,0
+Africa,Exports_Meat,Beef,Beef,2020,0
+Africa,Exports_Meat,Dairy,Dairy,2020,0
+Africa,Exports_Meat,Pork,Pork,2020,0
+Africa,Exports_Meat,Poultry,Poultry,2020,0
+Africa,Exports_Meat,SheepGoat,SheepGoat,2020,0
+Australia_NZ,Exports_Meat,Beef,Beef,2020,1.623415
+Australia_NZ,Exports_Meat,Dairy,Dairy,2020,16.62755
+Australia_NZ,Exports_Meat,Pork,Pork,2020,0
+Australia_NZ,Exports_Meat,Poultry,Poultry,2020,0.024239
+Australia_NZ,Exports_Meat,SheepGoat,SheepGoat,2020,0.614976
+Canada,Exports_Meat,Beef,Beef,2020,0.233392
+Canada,Exports_Meat,Dairy,Dairy,2020,0
+Canada,Exports_Meat,Pork,Pork,2020,0.86928
+Canada,Exports_Meat,Poultry,Poultry,2020,0
+Canada,Exports_Meat,SheepGoat,SheepGoat,2020,0
+China,Exports_Meat,Beef,Beef,2020,0
+China,Exports_Meat,Dairy,Dairy,2020,0
+China,Exports_Meat,Pork,Pork,2020,0.065007
+China,Exports_Meat,Poultry,Poultry,2020,0
+China,Exports_Meat,SheepGoat,SheepGoat,2020,0
+Eastern Europe,Exports_Meat,Beef,Beef,2020,0
+Eastern Europe,Exports_Meat,Dairy,Dairy,2020,2.600229
+Eastern Europe,Exports_Meat,Pork,Pork,2020,0
+Eastern Europe,Exports_Meat,Poultry,Poultry,2020,0
+Eastern Europe,Exports_Meat,SheepGoat,SheepGoat,2020,0.007332
+Former Soviet Union,Exports_Meat,Beef,Beef,2020,0
+Former Soviet Union,Exports_Meat,Dairy,Dairy,2020,2.119883
+Former Soviet Union,Exports_Meat,Pork,Pork,2020,0
+Former Soviet Union,Exports_Meat,Poultry,Poultry,2020,0
+Former Soviet Union,Exports_Meat,SheepGoat,SheepGoat,2020,0
+India,Exports_Meat,Beef,Beef,2020,0.373237
+India,Exports_Meat,Dairy,Dairy,2020,0.635967
+India,Exports_Meat,Pork,Pork,2020,0.000678
+India,Exports_Meat,Poultry,Poultry,2020,0.081192
+India,Exports_Meat,SheepGoat,SheepGoat,2020,0.008521
+Japan,Exports_Meat,Beef,Beef,2020,0
+Japan,Exports_Meat,Dairy,Dairy,2020,0
+Japan,Exports_Meat,Pork,Pork,2020,0
+Japan,Exports_Meat,Poultry,Poultry,2020,0
+Japan,Exports_Meat,SheepGoat,SheepGoat,2020,0
+Korea,Exports_Meat,Beef,Beef,2020,0
+Korea,Exports_Meat,Dairy,Dairy,2020,0
+Korea,Exports_Meat,Pork,Pork,2020,0
+Korea,Exports_Meat,Poultry,Poultry,2020,0
+Korea,Exports_Meat,SheepGoat,SheepGoat,2020,0
+Latin America,Exports_Meat,Beef,Beef,2020,2.141819
+Latin America,Exports_Meat,Dairy,Dairy,2020,0
+Latin America,Exports_Meat,Pork,Pork,2020,0.369588
+Latin America,Exports_Meat,Poultry,Poultry,2020,1.729441
+Latin America,Exports_Meat,SheepGoat,SheepGoat,2020,0
+Middle East,Exports_Meat,Beef,Beef,2020,0
+Middle East,Exports_Meat,Dairy,Dairy,2020,0
+Middle East,Exports_Meat,Pork,Pork,2020,0
+Middle East,Exports_Meat,Poultry,Poultry,2020,0
+Middle East,Exports_Meat,SheepGoat,SheepGoat,2020,0
+Southeast Asia,Exports_Meat,Beef,Beef,2020,0
+Southeast Asia,Exports_Meat,Dairy,Dairy,2020,0
+Southeast Asia,Exports_Meat,Pork,Pork,2020,0
+Southeast Asia,Exports_Meat,Poultry,Poultry,2020,0.268804
+Southeast Asia,Exports_Meat,SheepGoat,SheepGoat,2020,0
+USA,Exports_Meat,Beef,Beef,2020,0
+USA,Exports_Meat,Dairy,Dairy,2020,1.859533
+USA,Exports_Meat,Pork,Pork,2020,0.488229
+USA,Exports_Meat,Poultry,Poultry,2020,2.729939
+USA,Exports_Meat,SheepGoat,SheepGoat,2020,0
+Western Europe,Exports_Meat,Beef,Beef,2020,0
+Western Europe,Exports_Meat,Dairy,Dairy,2020,8.563485
+Western Europe,Exports_Meat,Pork,Pork,2020,1.19326
+Western Europe,Exports_Meat,Poultry,Poultry,2020,0
+Western Europe,Exports_Meat,SheepGoat,SheepGoat,2020,0
+Africa,Exports_Meat,Beef,Beef,2035,0
+Africa,Exports_Meat,Dairy,Dairy,2035,0
+Africa,Exports_Meat,Pork,Pork,2035,0
+Africa,Exports_Meat,Poultry,Poultry,2035,0
+Africa,Exports_Meat,SheepGoat,SheepGoat,2035,0
+Australia_NZ,Exports_Meat,Beef,Beef,2035,1.623415
+Australia_NZ,Exports_Meat,Dairy,Dairy,2035,16.62755
+Australia_NZ,Exports_Meat,Pork,Pork,2035,0
+Australia_NZ,Exports_Meat,Poultry,Poultry,2035,0.024239
+Australia_NZ,Exports_Meat,SheepGoat,SheepGoat,2035,0.614976
+Canada,Exports_Meat,Beef,Beef,2035,0.233392
+Canada,Exports_Meat,Dairy,Dairy,2035,0
+Canada,Exports_Meat,Pork,Pork,2035,0.86928
+Canada,Exports_Meat,Poultry,Poultry,2035,0
+Canada,Exports_Meat,SheepGoat,SheepGoat,2035,0
+China,Exports_Meat,Beef,Beef,2035,0
+China,Exports_Meat,Dairy,Dairy,2035,0
+China,Exports_Meat,Pork,Pork,2035,0.065007
+China,Exports_Meat,Poultry,Poultry,2035,0
+China,Exports_Meat,SheepGoat,SheepGoat,2035,0
+Eastern Europe,Exports_Meat,Beef,Beef,2035,0
+Eastern Europe,Exports_Meat,Dairy,Dairy,2035,2.600229
+Eastern Europe,Exports_Meat,Pork,Pork,2035,0
+Eastern Europe,Exports_Meat,Poultry,Poultry,2035,0
+Eastern Europe,Exports_Meat,SheepGoat,SheepGoat,2035,0.007332
+Former Soviet Union,Exports_Meat,Beef,Beef,2035,0
+Former Soviet Union,Exports_Meat,Dairy,Dairy,2035,2.119883
+Former Soviet Union,Exports_Meat,Pork,Pork,2035,0
+Former Soviet Union,Exports_Meat,Poultry,Poultry,2035,0
+Former Soviet Union,Exports_Meat,SheepGoat,SheepGoat,2035,0
+India,Exports_Meat,Beef,Beef,2035,0.373237
+India,Exports_Meat,Dairy,Dairy,2035,0.635967
+India,Exports_Meat,Pork,Pork,2035,0.000678
+India,Exports_Meat,Poultry,Poultry,2035,0.081192
+India,Exports_Meat,SheepGoat,SheepGoat,2035,0.008521
+Japan,Exports_Meat,Beef,Beef,2035,0
+Japan,Exports_Meat,Dairy,Dairy,2035,0
+Japan,Exports_Meat,Pork,Pork,2035,0
+Japan,Exports_Meat,Poultry,Poultry,2035,0
+Japan,Exports_Meat,SheepGoat,SheepGoat,2035,0
+Korea,Exports_Meat,Beef,Beef,2035,0
+Korea,Exports_Meat,Dairy,Dairy,2035,0
+Korea,Exports_Meat,Pork,Pork,2035,0
+Korea,Exports_Meat,Poultry,Poultry,2035,0
+Korea,Exports_Meat,SheepGoat,SheepGoat,2035,0
+Latin America,Exports_Meat,Beef,Beef,2035,2.141819
+Latin America,Exports_Meat,Dairy,Dairy,2035,0
+Latin America,Exports_Meat,Pork,Pork,2035,0.369588
+Latin America,Exports_Meat,Poultry,Poultry,2035,1.729441
+Latin America,Exports_Meat,SheepGoat,SheepGoat,2035,0
+Middle East,Exports_Meat,Beef,Beef,2035,0
+Middle East,Exports_Meat,Dairy,Dairy,2035,0
+Middle East,Exports_Meat,Pork,Pork,2035,0
+Middle East,Exports_Meat,Poultry,Poultry,2035,0
+Middle East,Exports_Meat,SheepGoat,SheepGoat,2035,0
+Southeast Asia,Exports_Meat,Beef,Beef,2035,0
+Southeast Asia,Exports_Meat,Dairy,Dairy,2035,0
+Southeast Asia,Exports_Meat,Pork,Pork,2035,0
+Southeast Asia,Exports_Meat,Poultry,Poultry,2035,0.268804
+Southeast Asia,Exports_Meat,SheepGoat,SheepGoat,2035,0
+USA,Exports_Meat,Beef,Beef,2035,0
+USA,Exports_Meat,Dairy,Dairy,2035,1.859533
+USA,Exports_Meat,Pork,Pork,2035,0.488229
+USA,Exports_Meat,Poultry,Poultry,2035,2.729939
+USA,Exports_Meat,SheepGoat,SheepGoat,2035,0
+Western Europe,Exports_Meat,Beef,Beef,2035,0
+Western Europe,Exports_Meat,Dairy,Dairy,2035,8.563485
+Western Europe,Exports_Meat,Pork,Pork,2035,1.19326
+Western Europe,Exports_Meat,Poultry,Poultry,2035,0
+Western Europe,Exports_Meat,SheepGoat,SheepGoat,2035,0
+Africa,Exports_Meat,Beef,Beef,2050,0
+Africa,Exports_Meat,Dairy,Dairy,2050,0
+Africa,Exports_Meat,Pork,Pork,2050,0
+Africa,Exports_Meat,Poultry,Poultry,2050,0
+Africa,Exports_Meat,SheepGoat,SheepGoat,2050,0
+Australia_NZ,Exports_Meat,Beef,Beef,2050,1.623415
+Australia_NZ,Exports_Meat,Dairy,Dairy,2050,16.62755
+Australia_NZ,Exports_Meat,Pork,Pork,2050,0
+Australia_NZ,Exports_Meat,Poultry,Poultry,2050,0.024239
+Australia_NZ,Exports_Meat,SheepGoat,SheepGoat,2050,0.614976
+Canada,Exports_Meat,Beef,Beef,2050,0.233392
+Canada,Exports_Meat,Dairy,Dairy,2050,0
+Canada,Exports_Meat,Pork,Pork,2050,0.86928
+Canada,Exports_Meat,Poultry,Poultry,2050,0
+Canada,Exports_Meat,SheepGoat,SheepGoat,2050,0
+China,Exports_Meat,Beef,Beef,2050,0
+China,Exports_Meat,Dairy,Dairy,2050,0
+China,Exports_Meat,Pork,Pork,2050,0.065007
+China,Exports_Meat,Poultry,Poultry,2050,0
+China,Exports_Meat,SheepGoat,SheepGoat,2050,0
+Eastern Europe,Exports_Meat,Beef,Beef,2050,0
+Eastern Europe,Exports_Meat,Dairy,Dairy,2050,2.600229
+Eastern Europe,Exports_Meat,Pork,Pork,2050,0
+Eastern Europe,Exports_Meat,Poultry,Poultry,2050,0
+Eastern Europe,Exports_Meat,SheepGoat,SheepGoat,2050,0.007332
+Former Soviet Union,Exports_Meat,Beef,Beef,2050,0
+Former Soviet Union,Exports_Meat,Dairy,Dairy,2050,2.119883
+Former Soviet Union,Exports_Meat,Pork,Pork,2050,0
+Former Soviet Union,Exports_Meat,Poultry,Poultry,2050,0
+Former Soviet Union,Exports_Meat,SheepGoat,SheepGoat,2050,0
+India,Exports_Meat,Beef,Beef,2050,0.373237
+India,Exports_Meat,Dairy,Dairy,2050,0.635967
+India,Exports_Meat,Pork,Pork,2050,0.000678
+India,Exports_Meat,Poultry,Poultry,2050,0.081192
+India,Exports_Meat,SheepGoat,SheepGoat,2050,0.008521
+Japan,Exports_Meat,Beef,Beef,2050,0
+Japan,Exports_Meat,Dairy,Dairy,2050,0
+Japan,Exports_Meat,Pork,Pork,2050,0
+Japan,Exports_Meat,Poultry,Poultry,2050,0
+Japan,Exports_Meat,SheepGoat,SheepGoat,2050,0
+Korea,Exports_Meat,Beef,Beef,2050,0
+Korea,Exports_Meat,Dairy,Dairy,2050,0
+Korea,Exports_Meat,Pork,Pork,2050,0
+Korea,Exports_Meat,Poultry,Poultry,2050,0
+Korea,Exports_Meat,SheepGoat,SheepGoat,2050,0
+Latin America,Exports_Meat,Beef,Beef,2050,2.141819
+Latin America,Exports_Meat,Dairy,Dairy,2050,0
+Latin America,Exports_Meat,Pork,Pork,2050,0.369588
+Latin America,Exports_Meat,Poultry,Poultry,2050,1.729441
+Latin America,Exports_Meat,SheepGoat,SheepGoat,2050,0
+Middle East,Exports_Meat,Beef,Beef,2050,0
+Middle East,Exports_Meat,Dairy,Dairy,2050,0
+Middle East,Exports_Meat,Pork,Pork,2050,0
+Middle East,Exports_Meat,Poultry,Poultry,2050,0
+Middle East,Exports_Meat,SheepGoat,SheepGoat,2050,0
+Southeast Asia,Exports_Meat,Beef,Beef,2050,0
+Southeast Asia,Exports_Meat,Dairy,Dairy,2050,0
+Southeast Asia,Exports_Meat,Pork,Pork,2050,0
+Southeast Asia,Exports_Meat,Poultry,Poultry,2050,0.268804
+Southeast Asia,Exports_Meat,SheepGoat,SheepGoat,2050,0
+USA,Exports_Meat,Beef,Beef,2050,0
+USA,Exports_Meat,Dairy,Dairy,2050,1.859533
+USA,Exports_Meat,Pork,Pork,2050,0.488229
+USA,Exports_Meat,Poultry,Poultry,2050,2.729939
+USA,Exports_Meat,SheepGoat,SheepGoat,2050,0
+Western Europe,Exports_Meat,Beef,Beef,2050,0
+Western Europe,Exports_Meat,Dairy,Dairy,2050,8.563485
+Western Europe,Exports_Meat,Pork,Pork,2050,1.19326
+Western Europe,Exports_Meat,Poultry,Poultry,2050,0
+Western Europe,Exports_Meat,SheepGoat,SheepGoat,2050,0
+Africa,Exports_Meat,Beef,Beef,2065,0
+Africa,Exports_Meat,Dairy,Dairy,2065,0
+Africa,Exports_Meat,Pork,Pork,2065,0
+Africa,Exports_Meat,Poultry,Poultry,2065,0
+Africa,Exports_Meat,SheepGoat,SheepGoat,2065,0
+Australia_NZ,Exports_Meat,Beef,Beef,2065,1.623415
+Australia_NZ,Exports_Meat,Dairy,Dairy,2065,16.62755
+Australia_NZ,Exports_Meat,Pork,Pork,2065,0
+Australia_NZ,Exports_Meat,Poultry,Poultry,2065,0.024239
+Australia_NZ,Exports_Meat,SheepGoat,SheepGoat,2065,0.614976
+Canada,Exports_Meat,Beef,Beef,2065,0.233392
+Canada,Exports_Meat,Dairy,Dairy,2065,0
+Canada,Exports_Meat,Pork,Pork,2065,0.86928
+Canada,Exports_Meat,Poultry,Poultry,2065,0
+Canada,Exports_Meat,SheepGoat,SheepGoat,2065,0
+China,Exports_Meat,Beef,Beef,2065,0
+China,Exports_Meat,Dairy,Dairy,2065,0
+China,Exports_Meat,Pork,Pork,2065,0.065007
+China,Exports_Meat,Poultry,Poultry,2065,0
+China,Exports_Meat,SheepGoat,SheepGoat,2065,0
+Eastern Europe,Exports_Meat,Beef,Beef,2065,0
+Eastern Europe,Exports_Meat,Dairy,Dairy,2065,2.600229
+Eastern Europe,Exports_Meat,Pork,Pork,2065,0
+Eastern Europe,Exports_Meat,Poultry,Poultry,2065,0
+Eastern Europe,Exports_Meat,SheepGoat,SheepGoat,2065,0.007332
+Former Soviet Union,Exports_Meat,Beef,Beef,2065,0
+Former Soviet Union,Exports_Meat,Dairy,Dairy,2065,2.119883
+Former Soviet Union,Exports_Meat,Pork,Pork,2065,0
+Former Soviet Union,Exports_Meat,Poultry,Poultry,2065,0
+Former Soviet Union,Exports_Meat,SheepGoat,SheepGoat,2065,0
+India,Exports_Meat,Beef,Beef,2065,0.373237
+India,Exports_Meat,Dairy,Dairy,2065,0.635967
+India,Exports_Meat,Pork,Pork,2065,0.000678
+India,Exports_Meat,Poultry,Poultry,2065,0.081192
+India,Exports_Meat,SheepGoat,SheepGoat,2065,0.008521
+Japan,Exports_Meat,Beef,Beef,2065,0
+Japan,Exports_Meat,Dairy,Dairy,2065,0
+Japan,Exports_Meat,Pork,Pork,2065,0
+Japan,Exports_Meat,Poultry,Poultry,2065,0
+Japan,Exports_Meat,SheepGoat,SheepGoat,2065,0
+Korea,Exports_Meat,Beef,Beef,2065,0
+Korea,Exports_Meat,Dairy,Dairy,2065,0
+Korea,Exports_Meat,Pork,Pork,2065,0
+Korea,Exports_Meat,Poultry,Poultry,2065,0
+Korea,Exports_Meat,SheepGoat,SheepGoat,2065,0
+Latin America,Exports_Meat,Beef,Beef,2065,2.141819
+Latin America,Exports_Meat,Dairy,Dairy,2065,0
+Latin America,Exports_Meat,Pork,Pork,2065,0.369588
+Latin America,Exports_Meat,Poultry,Poultry,2065,1.729441
+Latin America,Exports_Meat,SheepGoat,SheepGoat,2065,0
+Middle East,Exports_Meat,Beef,Beef,2065,0
+Middle East,Exports_Meat,Dairy,Dairy,2065,0
+Middle East,Exports_Meat,Pork,Pork,2065,0
+Middle East,Exports_Meat,Poultry,Poultry,2065,0
+Middle East,Exports_Meat,SheepGoat,SheepGoat,2065,0
+Southeast Asia,Exports_Meat,Beef,Beef,2065,0
+Southeast Asia,Exports_Meat,Dairy,Dairy,2065,0
+Southeast Asia,Exports_Meat,Pork,Pork,2065,0
+Southeast Asia,Exports_Meat,Poultry,Poultry,2065,0.268804
+Southeast Asia,Exports_Meat,SheepGoat,SheepGoat,2065,0
+USA,Exports_Meat,Beef,Beef,2065,0
+USA,Exports_Meat,Dairy,Dairy,2065,1.859533
+USA,Exports_Meat,Pork,Pork,2065,0.488229
+USA,Exports_Meat,Poultry,Poultry,2065,2.729939
+USA,Exports_Meat,SheepGoat,SheepGoat,2065,0
+Western Europe,Exports_Meat,Beef,Beef,2065,0
+Western Europe,Exports_Meat,Dairy,Dairy,2065,8.563485
+Western Europe,Exports_Meat,Pork,Pork,2065,1.19326
+Western Europe,Exports_Meat,Poultry,Poultry,2065,0
+Western Europe,Exports_Meat,SheepGoat,SheepGoat,2065,0
+Africa,Exports_Meat,Beef,Beef,2080,0
+Africa,Exports_Meat,Dairy,Dairy,2080,0
+Africa,Exports_Meat,Pork,Pork,2080,0
+Africa,Exports_Meat,Poultry,Poultry,2080,0
+Africa,Exports_Meat,SheepGoat,SheepGoat,2080,0
+Australia_NZ,Exports_Meat,Beef,Beef,2080,1.623415
+Australia_NZ,Exports_Meat,Dairy,Dairy,2080,16.62755
+Australia_NZ,Exports_Meat,Pork,Pork,2080,0
+Australia_NZ,Exports_Meat,Poultry,Poultry,2080,0.024239
+Australia_NZ,Exports_Meat,SheepGoat,SheepGoat,2080,0.614976
+Canada,Exports_Meat,Beef,Beef,2080,0.233392
+Canada,Exports_Meat,Dairy,Dairy,2080,0
+Canada,Exports_Meat,Pork,Pork,2080,0.86928
+Canada,Exports_Meat,Poultry,Poultry,2080,0
+Canada,Exports_Meat,SheepGoat,SheepGoat,2080,0
+China,Exports_Meat,Beef,Beef,2080,0
+China,Exports_Meat,Dairy,Dairy,2080,0
+China,Exports_Meat,Pork,Pork,2080,0.065007
+China,Exports_Meat,Poultry,Poultry,2080,0
+China,Exports_Meat,SheepGoat,SheepGoat,2080,0
+Eastern Europe,Exports_Meat,Beef,Beef,2080,0
+Eastern Europe,Exports_Meat,Dairy,Dairy,2080,2.600229
+Eastern Europe,Exports_Meat,Pork,Pork,2080,0
+Eastern Europe,Exports_Meat,Poultry,Poultry,2080,0
+Eastern Europe,Exports_Meat,SheepGoat,SheepGoat,2080,0.007332
+Former Soviet Union,Exports_Meat,Beef,Beef,2080,0
+Former Soviet Union,Exports_Meat,Dairy,Dairy,2080,2.119883
+Former Soviet Union,Exports_Meat,Pork,Pork,2080,0
+Former Soviet Union,Exports_Meat,Poultry,Poultry,2080,0
+Former Soviet Union,Exports_Meat,SheepGoat,SheepGoat,2080,0
+India,Exports_Meat,Beef,Beef,2080,0.373237
+India,Exports_Meat,Dairy,Dairy,2080,0.635967
+India,Exports_Meat,Pork,Pork,2080,0.000678
+India,Exports_Meat,Poultry,Poultry,2080,0.081192
+India,Exports_Meat,SheepGoat,SheepGoat,2080,0.008521
+Japan,Exports_Meat,Beef,Beef,2080,0
+Japan,Exports_Meat,Dairy,Dairy,2080,0
+Japan,Exports_Meat,Pork,Pork,2080,0
+Japan,Exports_Meat,Poultry,Poultry,2080,0
+Japan,Exports_Meat,SheepGoat,SheepGoat,2080,0
+Korea,Exports_Meat,Beef,Beef,2080,0
+Korea,Exports_Meat,Dairy,Dairy,2080,0
+Korea,Exports_Meat,Pork,Pork,2080,0
+Korea,Exports_Meat,Poultry,Poultry,2080,0
+Korea,Exports_Meat,SheepGoat,SheepGoat,2080,0
+Latin America,Exports_Meat,Beef,Beef,2080,2.141819
+Latin America,Exports_Meat,Dairy,Dairy,2080,0
+Latin America,Exports_Meat,Pork,Pork,2080,0.369588
+Latin America,Exports_Meat,Poultry,Poultry,2080,1.729441
+Latin America,Exports_Meat,SheepGoat,SheepGoat,2080,0
+Middle East,Exports_Meat,Beef,Beef,2080,0
+Middle East,Exports_Meat,Dairy,Dairy,2080,0
+Middle East,Exports_Meat,Pork,Pork,2080,0
+Middle East,Exports_Meat,Poultry,Poultry,2080,0
+Middle East,Exports_Meat,SheepGoat,SheepGoat,2080,0
+Southeast Asia,Exports_Meat,Beef,Beef,2080,0
+Southeast Asia,Exports_Meat,Dairy,Dairy,2080,0
+Southeast Asia,Exports_Meat,Pork,Pork,2080,0
+Southeast Asia,Exports_Meat,Poultry,Poultry,2080,0.268804
+Southeast Asia,Exports_Meat,SheepGoat,SheepGoat,2080,0
+USA,Exports_Meat,Beef,Beef,2080,0
+USA,Exports_Meat,Dairy,Dairy,2080,1.859533
+USA,Exports_Meat,Pork,Pork,2080,0.488229
+USA,Exports_Meat,Poultry,Poultry,2080,2.729939
+USA,Exports_Meat,SheepGoat,SheepGoat,2080,0
+Western Europe,Exports_Meat,Beef,Beef,2080,0
+Western Europe,Exports_Meat,Dairy,Dairy,2080,8.563485
+Western Europe,Exports_Meat,Pork,Pork,2080,1.19326
+Western Europe,Exports_Meat,Poultry,Poultry,2080,0
+Western Europe,Exports_Meat,SheepGoat,SheepGoat,2080,0
+Africa,Exports_Meat,Beef,Beef,2095,0
+Africa,Exports_Meat,Dairy,Dairy,2095,0
+Africa,Exports_Meat,Pork,Pork,2095,0
+Africa,Exports_Meat,Poultry,Poultry,2095,0
+Africa,Exports_Meat,SheepGoat,SheepGoat,2095,0
+Australia_NZ,Exports_Meat,Beef,Beef,2095,1.623415
+Australia_NZ,Exports_Meat,Dairy,Dairy,2095,16.62755
+Australia_NZ,Exports_Meat,Pork,Pork,2095,0
+Australia_NZ,Exports_Meat,Poultry,Poultry,2095,0.024239
+Australia_NZ,Exports_Meat,SheepGoat,SheepGoat,2095,0.614976
+Canada,Exports_Meat,Beef,Beef,2095,0.233392
+Canada,Exports_Meat,Dairy,Dairy,2095,0
+Canada,Exports_Meat,Pork,Pork,2095,0.86928
+Canada,Exports_Meat,Poultry,Poultry,2095,0
+Canada,Exports_Meat,SheepGoat,SheepGoat,2095,0
+China,Exports_Meat,Beef,Beef,2095,0
+China,Exports_Meat,Dairy,Dairy,2095,0
+China,Exports_Meat,Pork,Pork,2095,0.065007
+China,Exports_Meat,Poultry,Poultry,2095,0
+China,Exports_Meat,SheepGoat,SheepGoat,2095,0
+Eastern Europe,Exports_Meat,Beef,Beef,2095,0
+Eastern Europe,Exports_Meat,Dairy,Dairy,2095,2.600229
+Eastern Europe,Exports_Meat,Pork,Pork,2095,0
+Eastern Europe,Exports_Meat,Poultry,Poultry,2095,0
+Eastern Europe,Exports_Meat,SheepGoat,SheepGoat,2095,0.007332
+Former Soviet Union,Exports_Meat,Beef,Beef,2095,0
+Former Soviet Union,Exports_Meat,Dairy,Dairy,2095,2.119883
+Former Soviet Union,Exports_Meat,Pork,Pork,2095,0
+Former Soviet Union,Exports_Meat,Poultry,Poultry,2095,0
+Former Soviet Union,Exports_Meat,SheepGoat,SheepGoat,2095,0
+India,Exports_Meat,Beef,Beef,2095,0.373237
+India,Exports_Meat,Dairy,Dairy,2095,0.635967
+India,Exports_Meat,Pork,Pork,2095,0.000678
+India,Exports_Meat,Poultry,Poultry,2095,0.081192
+India,Exports_Meat,SheepGoat,SheepGoat,2095,0.008521
+Japan,Exports_Meat,Beef,Beef,2095,0
+Japan,Exports_Meat,Dairy,Dairy,2095,0
+Japan,Exports_Meat,Pork,Pork,2095,0
+Japan,Exports_Meat,Poultry,Poultry,2095,0
+Japan,Exports_Meat,SheepGoat,SheepGoat,2095,0
+Korea,Exports_Meat,Beef,Beef,2095,0
+Korea,Exports_Meat,Dairy,Dairy,2095,0
+Korea,Exports_Meat,Pork,Pork,2095,0
+Korea,Exports_Meat,Poultry,Poultry,2095,0
+Korea,Exports_Meat,SheepGoat,SheepGoat,2095,0
+Latin America,Exports_Meat,Beef,Beef,2095,2.141819
+Latin America,Exports_Meat,Dairy,Dairy,2095,0
+Latin America,Exports_Meat,Pork,Pork,2095,0.369588
+Latin America,Exports_Meat,Poultry,Poultry,2095,1.729441
+Latin America,Exports_Meat,SheepGoat,SheepGoat,2095,0
+Middle East,Exports_Meat,Beef,Beef,2095,0
+Middle East,Exports_Meat,Dairy,Dairy,2095,0
+Middle East,Exports_Meat,Pork,Pork,2095,0
+Middle East,Exports_Meat,Poultry,Poultry,2095,0
+Middle East,Exports_Meat,SheepGoat,SheepGoat,2095,0
+Southeast Asia,Exports_Meat,Beef,Beef,2095,0
+Southeast Asia,Exports_Meat,Dairy,Dairy,2095,0
+Southeast Asia,Exports_Meat,Pork,Pork,2095,0
+Southeast Asia,Exports_Meat,Poultry,Poultry,2095,0.268804
+Southeast Asia,Exports_Meat,SheepGoat,SheepGoat,2095,0
+USA,Exports_Meat,Beef,Beef,2095,0
+USA,Exports_Meat,Dairy,Dairy,2095,1.859533
+USA,Exports_Meat,Pork,Pork,2095,0.488229
+USA,Exports_Meat,Poultry,Poultry,2095,2.729939
+USA,Exports_Meat,SheepGoat,SheepGoat,2095,0
+Western Europe,Exports_Meat,Beef,Beef,2095,0
+Western Europe,Exports_Meat,Dairy,Dairy,2095,8.563485
+Western Europe,Exports_Meat,Pork,Pork,2095,1.19326
+Western Europe,Exports_Meat,Poultry,Poultry,2095,0
+Western Europe,Exports_Meat,SheepGoat,SheepGoat,2095,0

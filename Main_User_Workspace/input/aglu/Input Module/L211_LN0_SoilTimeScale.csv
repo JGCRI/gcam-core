@@ -1,0 +1,19 @@
+INPUT_TABLE
+Variable ID
+LN0_SoilTimeScale
+
+region,LandAllocatorRoot,soilTimeScale
+USA,root,50
+Canada,root,75
+Western Europe,root,50
+Japan,root,50
+Australia_NZ,root,50
+Former Soviet Union,root,75
+China,root,50
+Middle East,root,50
+Africa,root,25
+Latin America,root,25
+Southeast Asia,root,25
+Eastern Europe,root,50
+Korea,root,50
+India,root,25

@@ -1,0 +1,2021 @@
+INPUT_TABLE
+Variable ID
+AgResBio
+
+region,AgSupplySector,AgSupplySubsector,AgProductionTechnology,year,residue.biomass.production,mass.conversion,harvest.index,eros.ctrl,mass.to.energy,water.content
+USA,Forest,ForestAEZ01,ForestAEZ01,1990,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ01,ForestAEZ01,1990,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ01,ForestAEZ01,1990,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ01,ForestAEZ01,1990,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ01,ForestAEZ01,1990,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ01,ForestAEZ01,1990,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ01,ForestAEZ01,1990,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ01,ForestAEZ01,1990,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ01,ForestAEZ01,1990,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ01,ForestAEZ01,1990,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ01,ForestAEZ01,1990,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ01,ForestAEZ01,1990,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ01,ForestAEZ01,1990,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ01,ForestAEZ01,1990,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ02,ForestAEZ02,1990,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ02,ForestAEZ02,1990,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ02,ForestAEZ02,1990,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ02,ForestAEZ02,1990,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ02,ForestAEZ02,1990,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ02,ForestAEZ02,1990,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ02,ForestAEZ02,1990,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ02,ForestAEZ02,1990,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ02,ForestAEZ02,1990,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ02,ForestAEZ02,1990,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ02,ForestAEZ02,1990,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ02,ForestAEZ02,1990,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ02,ForestAEZ02,1990,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ02,ForestAEZ02,1990,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ03,ForestAEZ03,1990,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ03,ForestAEZ03,1990,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ03,ForestAEZ03,1990,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ03,ForestAEZ03,1990,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ03,ForestAEZ03,1990,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ03,ForestAEZ03,1990,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ03,ForestAEZ03,1990,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ03,ForestAEZ03,1990,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ03,ForestAEZ03,1990,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ03,ForestAEZ03,1990,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ03,ForestAEZ03,1990,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ03,ForestAEZ03,1990,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ03,ForestAEZ03,1990,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ03,ForestAEZ03,1990,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ04,ForestAEZ04,1990,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ04,ForestAEZ04,1990,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ04,ForestAEZ04,1990,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ04,ForestAEZ04,1990,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ04,ForestAEZ04,1990,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ04,ForestAEZ04,1990,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ04,ForestAEZ04,1990,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ04,ForestAEZ04,1990,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ04,ForestAEZ04,1990,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ04,ForestAEZ04,1990,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ04,ForestAEZ04,1990,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ04,ForestAEZ04,1990,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ04,ForestAEZ04,1990,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ04,ForestAEZ04,1990,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ05,ForestAEZ05,1990,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ05,ForestAEZ05,1990,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ05,ForestAEZ05,1990,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ05,ForestAEZ05,1990,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ05,ForestAEZ05,1990,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ05,ForestAEZ05,1990,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ05,ForestAEZ05,1990,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ05,ForestAEZ05,1990,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ05,ForestAEZ05,1990,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ05,ForestAEZ05,1990,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ05,ForestAEZ05,1990,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ05,ForestAEZ05,1990,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ05,ForestAEZ05,1990,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ05,ForestAEZ05,1990,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ06,ForestAEZ06,1990,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ06,ForestAEZ06,1990,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ06,ForestAEZ06,1990,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ06,ForestAEZ06,1990,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ06,ForestAEZ06,1990,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ06,ForestAEZ06,1990,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ06,ForestAEZ06,1990,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ06,ForestAEZ06,1990,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ06,ForestAEZ06,1990,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ06,ForestAEZ06,1990,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ06,ForestAEZ06,1990,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ06,ForestAEZ06,1990,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ06,ForestAEZ06,1990,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ06,ForestAEZ06,1990,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ07,ForestAEZ07,1990,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ07,ForestAEZ07,1990,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ07,ForestAEZ07,1990,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ07,ForestAEZ07,1990,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ07,ForestAEZ07,1990,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ07,ForestAEZ07,1990,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ07,ForestAEZ07,1990,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ07,ForestAEZ07,1990,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ07,ForestAEZ07,1990,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ07,ForestAEZ07,1990,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ07,ForestAEZ07,1990,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ07,ForestAEZ07,1990,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ07,ForestAEZ07,1990,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ07,ForestAEZ07,1990,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ08,ForestAEZ08,1990,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ08,ForestAEZ08,1990,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ08,ForestAEZ08,1990,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ08,ForestAEZ08,1990,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ08,ForestAEZ08,1990,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ08,ForestAEZ08,1990,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ08,ForestAEZ08,1990,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ08,ForestAEZ08,1990,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ08,ForestAEZ08,1990,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ08,ForestAEZ08,1990,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ08,ForestAEZ08,1990,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ08,ForestAEZ08,1990,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ08,ForestAEZ08,1990,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ08,ForestAEZ08,1990,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ09,ForestAEZ09,1990,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ09,ForestAEZ09,1990,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ09,ForestAEZ09,1990,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ09,ForestAEZ09,1990,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ09,ForestAEZ09,1990,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ09,ForestAEZ09,1990,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ09,ForestAEZ09,1990,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ09,ForestAEZ09,1990,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ09,ForestAEZ09,1990,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ09,ForestAEZ09,1990,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ09,ForestAEZ09,1990,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ09,ForestAEZ09,1990,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ09,ForestAEZ09,1990,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ09,ForestAEZ09,1990,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ10,ForestAEZ10,1990,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ10,ForestAEZ10,1990,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ10,ForestAEZ10,1990,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ10,ForestAEZ10,1990,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ10,ForestAEZ10,1990,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ10,ForestAEZ10,1990,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ10,ForestAEZ10,1990,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ10,ForestAEZ10,1990,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ10,ForestAEZ10,1990,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ10,ForestAEZ10,1990,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ10,ForestAEZ10,1990,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ10,ForestAEZ10,1990,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ10,ForestAEZ10,1990,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ10,ForestAEZ10,1990,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ11,ForestAEZ11,1990,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ11,ForestAEZ11,1990,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ11,ForestAEZ11,1990,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ11,ForestAEZ11,1990,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ11,ForestAEZ11,1990,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ11,ForestAEZ11,1990,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ11,ForestAEZ11,1990,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ11,ForestAEZ11,1990,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ11,ForestAEZ11,1990,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ11,ForestAEZ11,1990,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ11,ForestAEZ11,1990,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ11,ForestAEZ11,1990,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ11,ForestAEZ11,1990,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ11,ForestAEZ11,1990,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ12,ForestAEZ12,1990,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ12,ForestAEZ12,1990,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ12,ForestAEZ12,1990,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ12,ForestAEZ12,1990,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ12,ForestAEZ12,1990,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ12,ForestAEZ12,1990,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ12,ForestAEZ12,1990,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ12,ForestAEZ12,1990,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ12,ForestAEZ12,1990,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ12,ForestAEZ12,1990,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ12,ForestAEZ12,1990,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ12,ForestAEZ12,1990,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ12,ForestAEZ12,1990,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ12,ForestAEZ12,1990,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ13,ForestAEZ13,1990,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ13,ForestAEZ13,1990,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ13,ForestAEZ13,1990,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ13,ForestAEZ13,1990,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ13,ForestAEZ13,1990,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ13,ForestAEZ13,1990,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ13,ForestAEZ13,1990,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ13,ForestAEZ13,1990,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ13,ForestAEZ13,1990,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ13,ForestAEZ13,1990,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ13,ForestAEZ13,1990,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ13,ForestAEZ13,1990,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ13,ForestAEZ13,1990,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ13,ForestAEZ13,1990,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ14,ForestAEZ14,1990,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ14,ForestAEZ14,1990,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ14,ForestAEZ14,1990,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ14,ForestAEZ14,1990,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ14,ForestAEZ14,1990,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ14,ForestAEZ14,1990,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ14,ForestAEZ14,1990,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ14,ForestAEZ14,1990,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ14,ForestAEZ14,1990,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ14,ForestAEZ14,1990,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ14,ForestAEZ14,1990,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ14,ForestAEZ14,1990,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ14,ForestAEZ14,1990,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ14,ForestAEZ14,1990,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ15,ForestAEZ15,1990,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ15,ForestAEZ15,1990,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ15,ForestAEZ15,1990,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ15,ForestAEZ15,1990,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ15,ForestAEZ15,1990,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ15,ForestAEZ15,1990,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ15,ForestAEZ15,1990,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ15,ForestAEZ15,1990,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ15,ForestAEZ15,1990,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ15,ForestAEZ15,1990,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ15,ForestAEZ15,1990,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ15,ForestAEZ15,1990,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ15,ForestAEZ15,1990,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ15,ForestAEZ15,1990,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ16,ForestAEZ16,1990,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ16,ForestAEZ16,1990,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ16,ForestAEZ16,1990,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ16,ForestAEZ16,1990,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ16,ForestAEZ16,1990,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ16,ForestAEZ16,1990,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ16,ForestAEZ16,1990,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ16,ForestAEZ16,1990,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ16,ForestAEZ16,1990,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ16,ForestAEZ16,1990,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ16,ForestAEZ16,1990,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ16,ForestAEZ16,1990,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ16,ForestAEZ16,1990,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ16,ForestAEZ16,1990,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ17,ForestAEZ17,1990,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ17,ForestAEZ17,1990,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ17,ForestAEZ17,1990,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ17,ForestAEZ17,1990,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ17,ForestAEZ17,1990,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ17,ForestAEZ17,1990,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ17,ForestAEZ17,1990,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ17,ForestAEZ17,1990,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ17,ForestAEZ17,1990,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ17,ForestAEZ17,1990,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ17,ForestAEZ17,1990,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ17,ForestAEZ17,1990,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ17,ForestAEZ17,1990,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ17,ForestAEZ17,1990,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ18,ForestAEZ18,1990,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ18,ForestAEZ18,1990,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ18,ForestAEZ18,1990,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ18,ForestAEZ18,1990,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ18,ForestAEZ18,1990,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ18,ForestAEZ18,1990,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ18,ForestAEZ18,1990,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ18,ForestAEZ18,1990,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ18,ForestAEZ18,1990,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ18,ForestAEZ18,1990,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ18,ForestAEZ18,1990,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ18,ForestAEZ18,1990,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ18,ForestAEZ18,1990,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ18,ForestAEZ18,1990,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ01,ForestAEZ01,2005,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ01,ForestAEZ01,2005,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ01,ForestAEZ01,2005,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ01,ForestAEZ01,2005,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ01,ForestAEZ01,2005,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ01,ForestAEZ01,2005,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ01,ForestAEZ01,2005,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ01,ForestAEZ01,2005,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ01,ForestAEZ01,2005,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ01,ForestAEZ01,2005,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ01,ForestAEZ01,2005,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ01,ForestAEZ01,2005,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ01,ForestAEZ01,2005,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ01,ForestAEZ01,2005,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ02,ForestAEZ02,2005,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ02,ForestAEZ02,2005,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ02,ForestAEZ02,2005,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ02,ForestAEZ02,2005,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ02,ForestAEZ02,2005,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ02,ForestAEZ02,2005,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ02,ForestAEZ02,2005,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ02,ForestAEZ02,2005,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ02,ForestAEZ02,2005,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ02,ForestAEZ02,2005,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ02,ForestAEZ02,2005,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ02,ForestAEZ02,2005,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ02,ForestAEZ02,2005,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ02,ForestAEZ02,2005,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ03,ForestAEZ03,2005,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ03,ForestAEZ03,2005,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ03,ForestAEZ03,2005,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ03,ForestAEZ03,2005,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ03,ForestAEZ03,2005,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ03,ForestAEZ03,2005,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ03,ForestAEZ03,2005,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ03,ForestAEZ03,2005,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ03,ForestAEZ03,2005,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ03,ForestAEZ03,2005,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ03,ForestAEZ03,2005,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ03,ForestAEZ03,2005,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ03,ForestAEZ03,2005,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ03,ForestAEZ03,2005,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ04,ForestAEZ04,2005,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ04,ForestAEZ04,2005,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ04,ForestAEZ04,2005,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ04,ForestAEZ04,2005,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ04,ForestAEZ04,2005,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ04,ForestAEZ04,2005,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ04,ForestAEZ04,2005,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ04,ForestAEZ04,2005,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ04,ForestAEZ04,2005,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ04,ForestAEZ04,2005,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ04,ForestAEZ04,2005,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ04,ForestAEZ04,2005,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ04,ForestAEZ04,2005,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ04,ForestAEZ04,2005,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ05,ForestAEZ05,2005,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ05,ForestAEZ05,2005,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ05,ForestAEZ05,2005,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ05,ForestAEZ05,2005,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ05,ForestAEZ05,2005,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ05,ForestAEZ05,2005,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ05,ForestAEZ05,2005,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ05,ForestAEZ05,2005,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ05,ForestAEZ05,2005,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ05,ForestAEZ05,2005,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ05,ForestAEZ05,2005,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ05,ForestAEZ05,2005,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ05,ForestAEZ05,2005,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ05,ForestAEZ05,2005,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ06,ForestAEZ06,2005,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ06,ForestAEZ06,2005,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ06,ForestAEZ06,2005,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ06,ForestAEZ06,2005,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ06,ForestAEZ06,2005,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ06,ForestAEZ06,2005,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ06,ForestAEZ06,2005,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ06,ForestAEZ06,2005,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ06,ForestAEZ06,2005,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ06,ForestAEZ06,2005,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ06,ForestAEZ06,2005,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ06,ForestAEZ06,2005,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ06,ForestAEZ06,2005,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ06,ForestAEZ06,2005,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ07,ForestAEZ07,2005,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ07,ForestAEZ07,2005,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ07,ForestAEZ07,2005,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ07,ForestAEZ07,2005,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ07,ForestAEZ07,2005,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ07,ForestAEZ07,2005,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ07,ForestAEZ07,2005,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ07,ForestAEZ07,2005,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ07,ForestAEZ07,2005,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ07,ForestAEZ07,2005,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ07,ForestAEZ07,2005,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ07,ForestAEZ07,2005,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ07,ForestAEZ07,2005,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ07,ForestAEZ07,2005,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ08,ForestAEZ08,2005,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ08,ForestAEZ08,2005,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ08,ForestAEZ08,2005,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ08,ForestAEZ08,2005,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ08,ForestAEZ08,2005,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ08,ForestAEZ08,2005,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ08,ForestAEZ08,2005,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ08,ForestAEZ08,2005,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ08,ForestAEZ08,2005,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ08,ForestAEZ08,2005,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ08,ForestAEZ08,2005,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ08,ForestAEZ08,2005,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ08,ForestAEZ08,2005,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ08,ForestAEZ08,2005,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ09,ForestAEZ09,2005,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ09,ForestAEZ09,2005,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ09,ForestAEZ09,2005,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ09,ForestAEZ09,2005,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ09,ForestAEZ09,2005,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ09,ForestAEZ09,2005,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ09,ForestAEZ09,2005,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ09,ForestAEZ09,2005,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ09,ForestAEZ09,2005,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ09,ForestAEZ09,2005,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ09,ForestAEZ09,2005,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ09,ForestAEZ09,2005,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ09,ForestAEZ09,2005,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ09,ForestAEZ09,2005,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ10,ForestAEZ10,2005,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ10,ForestAEZ10,2005,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ10,ForestAEZ10,2005,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ10,ForestAEZ10,2005,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ10,ForestAEZ10,2005,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ10,ForestAEZ10,2005,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ10,ForestAEZ10,2005,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ10,ForestAEZ10,2005,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ10,ForestAEZ10,2005,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ10,ForestAEZ10,2005,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ10,ForestAEZ10,2005,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ10,ForestAEZ10,2005,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ10,ForestAEZ10,2005,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ10,ForestAEZ10,2005,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ11,ForestAEZ11,2005,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ11,ForestAEZ11,2005,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ11,ForestAEZ11,2005,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ11,ForestAEZ11,2005,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ11,ForestAEZ11,2005,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ11,ForestAEZ11,2005,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ11,ForestAEZ11,2005,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ11,ForestAEZ11,2005,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ11,ForestAEZ11,2005,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ11,ForestAEZ11,2005,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ11,ForestAEZ11,2005,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ11,ForestAEZ11,2005,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ11,ForestAEZ11,2005,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ11,ForestAEZ11,2005,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ12,ForestAEZ12,2005,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ12,ForestAEZ12,2005,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ12,ForestAEZ12,2005,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ12,ForestAEZ12,2005,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ12,ForestAEZ12,2005,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ12,ForestAEZ12,2005,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ12,ForestAEZ12,2005,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ12,ForestAEZ12,2005,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ12,ForestAEZ12,2005,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ12,ForestAEZ12,2005,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ12,ForestAEZ12,2005,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ12,ForestAEZ12,2005,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ12,ForestAEZ12,2005,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ12,ForestAEZ12,2005,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ13,ForestAEZ13,2005,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ13,ForestAEZ13,2005,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ13,ForestAEZ13,2005,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ13,ForestAEZ13,2005,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ13,ForestAEZ13,2005,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ13,ForestAEZ13,2005,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ13,ForestAEZ13,2005,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ13,ForestAEZ13,2005,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ13,ForestAEZ13,2005,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ13,ForestAEZ13,2005,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ13,ForestAEZ13,2005,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ13,ForestAEZ13,2005,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ13,ForestAEZ13,2005,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ13,ForestAEZ13,2005,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ14,ForestAEZ14,2005,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ14,ForestAEZ14,2005,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ14,ForestAEZ14,2005,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ14,ForestAEZ14,2005,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ14,ForestAEZ14,2005,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ14,ForestAEZ14,2005,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ14,ForestAEZ14,2005,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ14,ForestAEZ14,2005,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ14,ForestAEZ14,2005,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ14,ForestAEZ14,2005,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ14,ForestAEZ14,2005,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ14,ForestAEZ14,2005,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ14,ForestAEZ14,2005,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ14,ForestAEZ14,2005,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ15,ForestAEZ15,2005,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ15,ForestAEZ15,2005,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ15,ForestAEZ15,2005,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ15,ForestAEZ15,2005,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ15,ForestAEZ15,2005,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ15,ForestAEZ15,2005,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ15,ForestAEZ15,2005,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ15,ForestAEZ15,2005,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ15,ForestAEZ15,2005,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ15,ForestAEZ15,2005,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ15,ForestAEZ15,2005,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ15,ForestAEZ15,2005,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ15,ForestAEZ15,2005,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ15,ForestAEZ15,2005,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ16,ForestAEZ16,2005,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ16,ForestAEZ16,2005,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ16,ForestAEZ16,2005,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ16,ForestAEZ16,2005,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ16,ForestAEZ16,2005,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ16,ForestAEZ16,2005,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ16,ForestAEZ16,2005,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ16,ForestAEZ16,2005,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ16,ForestAEZ16,2005,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ16,ForestAEZ16,2005,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ16,ForestAEZ16,2005,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ16,ForestAEZ16,2005,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ16,ForestAEZ16,2005,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ16,ForestAEZ16,2005,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ17,ForestAEZ17,2005,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ17,ForestAEZ17,2005,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ17,ForestAEZ17,2005,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ17,ForestAEZ17,2005,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ17,ForestAEZ17,2005,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ17,ForestAEZ17,2005,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ17,ForestAEZ17,2005,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ17,ForestAEZ17,2005,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ17,ForestAEZ17,2005,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ17,ForestAEZ17,2005,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ17,ForestAEZ17,2005,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ17,ForestAEZ17,2005,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ17,ForestAEZ17,2005,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ17,ForestAEZ17,2005,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ18,ForestAEZ18,2005,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ18,ForestAEZ18,2005,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ18,ForestAEZ18,2005,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ18,ForestAEZ18,2005,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ18,ForestAEZ18,2005,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ18,ForestAEZ18,2005,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ18,ForestAEZ18,2005,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ18,ForestAEZ18,2005,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ18,ForestAEZ18,2005,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ18,ForestAEZ18,2005,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ18,ForestAEZ18,2005,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ18,ForestAEZ18,2005,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ18,ForestAEZ18,2005,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ18,ForestAEZ18,2005,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ01,ForestAEZ01,2020,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ01,ForestAEZ01,2020,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ01,ForestAEZ01,2020,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ01,ForestAEZ01,2020,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ01,ForestAEZ01,2020,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ01,ForestAEZ01,2020,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ01,ForestAEZ01,2020,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ01,ForestAEZ01,2020,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ01,ForestAEZ01,2020,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ01,ForestAEZ01,2020,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ01,ForestAEZ01,2020,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ01,ForestAEZ01,2020,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ01,ForestAEZ01,2020,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ01,ForestAEZ01,2020,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ02,ForestAEZ02,2020,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ02,ForestAEZ02,2020,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ02,ForestAEZ02,2020,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ02,ForestAEZ02,2020,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ02,ForestAEZ02,2020,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ02,ForestAEZ02,2020,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ02,ForestAEZ02,2020,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ02,ForestAEZ02,2020,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ02,ForestAEZ02,2020,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ02,ForestAEZ02,2020,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ02,ForestAEZ02,2020,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ02,ForestAEZ02,2020,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ02,ForestAEZ02,2020,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ02,ForestAEZ02,2020,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ03,ForestAEZ03,2020,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ03,ForestAEZ03,2020,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ03,ForestAEZ03,2020,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ03,ForestAEZ03,2020,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ03,ForestAEZ03,2020,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ03,ForestAEZ03,2020,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ03,ForestAEZ03,2020,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ03,ForestAEZ03,2020,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ03,ForestAEZ03,2020,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ03,ForestAEZ03,2020,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ03,ForestAEZ03,2020,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ03,ForestAEZ03,2020,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ03,ForestAEZ03,2020,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ03,ForestAEZ03,2020,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ04,ForestAEZ04,2020,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ04,ForestAEZ04,2020,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ04,ForestAEZ04,2020,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ04,ForestAEZ04,2020,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ04,ForestAEZ04,2020,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ04,ForestAEZ04,2020,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ04,ForestAEZ04,2020,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ04,ForestAEZ04,2020,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ04,ForestAEZ04,2020,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ04,ForestAEZ04,2020,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ04,ForestAEZ04,2020,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ04,ForestAEZ04,2020,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ04,ForestAEZ04,2020,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ04,ForestAEZ04,2020,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ05,ForestAEZ05,2020,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ05,ForestAEZ05,2020,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ05,ForestAEZ05,2020,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ05,ForestAEZ05,2020,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ05,ForestAEZ05,2020,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ05,ForestAEZ05,2020,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ05,ForestAEZ05,2020,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ05,ForestAEZ05,2020,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ05,ForestAEZ05,2020,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ05,ForestAEZ05,2020,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ05,ForestAEZ05,2020,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ05,ForestAEZ05,2020,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ05,ForestAEZ05,2020,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ05,ForestAEZ05,2020,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ06,ForestAEZ06,2020,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ06,ForestAEZ06,2020,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ06,ForestAEZ06,2020,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ06,ForestAEZ06,2020,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ06,ForestAEZ06,2020,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ06,ForestAEZ06,2020,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ06,ForestAEZ06,2020,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ06,ForestAEZ06,2020,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ06,ForestAEZ06,2020,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ06,ForestAEZ06,2020,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ06,ForestAEZ06,2020,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ06,ForestAEZ06,2020,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ06,ForestAEZ06,2020,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ06,ForestAEZ06,2020,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ07,ForestAEZ07,2020,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ07,ForestAEZ07,2020,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ07,ForestAEZ07,2020,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ07,ForestAEZ07,2020,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ07,ForestAEZ07,2020,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ07,ForestAEZ07,2020,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ07,ForestAEZ07,2020,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ07,ForestAEZ07,2020,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ07,ForestAEZ07,2020,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ07,ForestAEZ07,2020,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ07,ForestAEZ07,2020,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ07,ForestAEZ07,2020,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ07,ForestAEZ07,2020,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ07,ForestAEZ07,2020,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ08,ForestAEZ08,2020,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ08,ForestAEZ08,2020,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ08,ForestAEZ08,2020,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ08,ForestAEZ08,2020,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ08,ForestAEZ08,2020,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ08,ForestAEZ08,2020,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ08,ForestAEZ08,2020,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ08,ForestAEZ08,2020,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ08,ForestAEZ08,2020,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ08,ForestAEZ08,2020,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ08,ForestAEZ08,2020,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ08,ForestAEZ08,2020,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ08,ForestAEZ08,2020,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ08,ForestAEZ08,2020,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ09,ForestAEZ09,2020,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ09,ForestAEZ09,2020,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ09,ForestAEZ09,2020,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ09,ForestAEZ09,2020,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ09,ForestAEZ09,2020,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ09,ForestAEZ09,2020,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ09,ForestAEZ09,2020,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ09,ForestAEZ09,2020,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ09,ForestAEZ09,2020,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ09,ForestAEZ09,2020,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ09,ForestAEZ09,2020,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ09,ForestAEZ09,2020,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ09,ForestAEZ09,2020,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ09,ForestAEZ09,2020,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ10,ForestAEZ10,2020,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ10,ForestAEZ10,2020,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ10,ForestAEZ10,2020,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ10,ForestAEZ10,2020,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ10,ForestAEZ10,2020,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ10,ForestAEZ10,2020,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ10,ForestAEZ10,2020,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ10,ForestAEZ10,2020,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ10,ForestAEZ10,2020,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ10,ForestAEZ10,2020,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ10,ForestAEZ10,2020,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ10,ForestAEZ10,2020,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ10,ForestAEZ10,2020,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ10,ForestAEZ10,2020,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ11,ForestAEZ11,2020,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ11,ForestAEZ11,2020,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ11,ForestAEZ11,2020,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ11,ForestAEZ11,2020,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ11,ForestAEZ11,2020,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ11,ForestAEZ11,2020,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ11,ForestAEZ11,2020,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ11,ForestAEZ11,2020,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ11,ForestAEZ11,2020,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ11,ForestAEZ11,2020,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ11,ForestAEZ11,2020,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ11,ForestAEZ11,2020,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ11,ForestAEZ11,2020,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ11,ForestAEZ11,2020,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ12,ForestAEZ12,2020,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ12,ForestAEZ12,2020,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ12,ForestAEZ12,2020,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ12,ForestAEZ12,2020,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ12,ForestAEZ12,2020,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ12,ForestAEZ12,2020,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ12,ForestAEZ12,2020,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ12,ForestAEZ12,2020,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ12,ForestAEZ12,2020,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ12,ForestAEZ12,2020,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ12,ForestAEZ12,2020,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ12,ForestAEZ12,2020,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ12,ForestAEZ12,2020,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ12,ForestAEZ12,2020,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ13,ForestAEZ13,2020,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ13,ForestAEZ13,2020,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ13,ForestAEZ13,2020,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ13,ForestAEZ13,2020,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ13,ForestAEZ13,2020,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ13,ForestAEZ13,2020,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ13,ForestAEZ13,2020,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ13,ForestAEZ13,2020,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ13,ForestAEZ13,2020,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ13,ForestAEZ13,2020,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ13,ForestAEZ13,2020,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ13,ForestAEZ13,2020,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ13,ForestAEZ13,2020,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ13,ForestAEZ13,2020,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ14,ForestAEZ14,2020,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ14,ForestAEZ14,2020,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ14,ForestAEZ14,2020,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ14,ForestAEZ14,2020,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ14,ForestAEZ14,2020,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ14,ForestAEZ14,2020,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ14,ForestAEZ14,2020,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ14,ForestAEZ14,2020,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ14,ForestAEZ14,2020,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ14,ForestAEZ14,2020,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ14,ForestAEZ14,2020,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ14,ForestAEZ14,2020,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ14,ForestAEZ14,2020,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ14,ForestAEZ14,2020,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ15,ForestAEZ15,2020,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ15,ForestAEZ15,2020,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ15,ForestAEZ15,2020,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ15,ForestAEZ15,2020,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ15,ForestAEZ15,2020,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ15,ForestAEZ15,2020,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ15,ForestAEZ15,2020,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ15,ForestAEZ15,2020,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ15,ForestAEZ15,2020,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ15,ForestAEZ15,2020,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ15,ForestAEZ15,2020,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ15,ForestAEZ15,2020,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ15,ForestAEZ15,2020,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ15,ForestAEZ15,2020,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ16,ForestAEZ16,2020,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ16,ForestAEZ16,2020,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ16,ForestAEZ16,2020,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ16,ForestAEZ16,2020,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ16,ForestAEZ16,2020,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ16,ForestAEZ16,2020,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ16,ForestAEZ16,2020,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ16,ForestAEZ16,2020,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ16,ForestAEZ16,2020,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ16,ForestAEZ16,2020,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ16,ForestAEZ16,2020,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ16,ForestAEZ16,2020,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ16,ForestAEZ16,2020,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ16,ForestAEZ16,2020,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ17,ForestAEZ17,2020,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ17,ForestAEZ17,2020,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ17,ForestAEZ17,2020,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ17,ForestAEZ17,2020,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ17,ForestAEZ17,2020,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ17,ForestAEZ17,2020,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ17,ForestAEZ17,2020,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ17,ForestAEZ17,2020,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ17,ForestAEZ17,2020,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ17,ForestAEZ17,2020,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ17,ForestAEZ17,2020,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ17,ForestAEZ17,2020,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ17,ForestAEZ17,2020,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ17,ForestAEZ17,2020,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ18,ForestAEZ18,2020,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ18,ForestAEZ18,2020,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ18,ForestAEZ18,2020,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ18,ForestAEZ18,2020,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ18,ForestAEZ18,2020,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ18,ForestAEZ18,2020,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ18,ForestAEZ18,2020,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ18,ForestAEZ18,2020,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ18,ForestAEZ18,2020,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ18,ForestAEZ18,2020,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ18,ForestAEZ18,2020,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ18,ForestAEZ18,2020,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ18,ForestAEZ18,2020,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ18,ForestAEZ18,2020,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ01,ForestAEZ01,2035,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ01,ForestAEZ01,2035,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ01,ForestAEZ01,2035,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ01,ForestAEZ01,2035,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ01,ForestAEZ01,2035,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ01,ForestAEZ01,2035,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ01,ForestAEZ01,2035,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ01,ForestAEZ01,2035,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ01,ForestAEZ01,2035,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ01,ForestAEZ01,2035,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ01,ForestAEZ01,2035,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ01,ForestAEZ01,2035,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ01,ForestAEZ01,2035,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ01,ForestAEZ01,2035,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ02,ForestAEZ02,2035,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ02,ForestAEZ02,2035,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ02,ForestAEZ02,2035,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ02,ForestAEZ02,2035,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ02,ForestAEZ02,2035,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ02,ForestAEZ02,2035,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ02,ForestAEZ02,2035,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ02,ForestAEZ02,2035,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ02,ForestAEZ02,2035,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ02,ForestAEZ02,2035,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ02,ForestAEZ02,2035,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ02,ForestAEZ02,2035,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ02,ForestAEZ02,2035,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ02,ForestAEZ02,2035,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ03,ForestAEZ03,2035,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ03,ForestAEZ03,2035,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ03,ForestAEZ03,2035,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ03,ForestAEZ03,2035,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ03,ForestAEZ03,2035,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ03,ForestAEZ03,2035,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ03,ForestAEZ03,2035,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ03,ForestAEZ03,2035,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ03,ForestAEZ03,2035,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ03,ForestAEZ03,2035,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ03,ForestAEZ03,2035,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ03,ForestAEZ03,2035,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ03,ForestAEZ03,2035,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ03,ForestAEZ03,2035,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ04,ForestAEZ04,2035,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ04,ForestAEZ04,2035,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ04,ForestAEZ04,2035,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ04,ForestAEZ04,2035,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ04,ForestAEZ04,2035,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ04,ForestAEZ04,2035,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ04,ForestAEZ04,2035,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ04,ForestAEZ04,2035,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ04,ForestAEZ04,2035,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ04,ForestAEZ04,2035,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ04,ForestAEZ04,2035,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ04,ForestAEZ04,2035,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ04,ForestAEZ04,2035,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ04,ForestAEZ04,2035,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ05,ForestAEZ05,2035,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ05,ForestAEZ05,2035,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ05,ForestAEZ05,2035,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ05,ForestAEZ05,2035,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ05,ForestAEZ05,2035,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ05,ForestAEZ05,2035,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ05,ForestAEZ05,2035,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ05,ForestAEZ05,2035,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ05,ForestAEZ05,2035,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ05,ForestAEZ05,2035,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ05,ForestAEZ05,2035,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ05,ForestAEZ05,2035,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ05,ForestAEZ05,2035,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ05,ForestAEZ05,2035,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ06,ForestAEZ06,2035,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ06,ForestAEZ06,2035,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ06,ForestAEZ06,2035,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ06,ForestAEZ06,2035,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ06,ForestAEZ06,2035,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ06,ForestAEZ06,2035,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ06,ForestAEZ06,2035,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ06,ForestAEZ06,2035,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ06,ForestAEZ06,2035,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ06,ForestAEZ06,2035,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ06,ForestAEZ06,2035,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ06,ForestAEZ06,2035,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ06,ForestAEZ06,2035,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ06,ForestAEZ06,2035,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ07,ForestAEZ07,2035,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ07,ForestAEZ07,2035,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ07,ForestAEZ07,2035,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ07,ForestAEZ07,2035,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ07,ForestAEZ07,2035,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ07,ForestAEZ07,2035,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ07,ForestAEZ07,2035,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ07,ForestAEZ07,2035,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ07,ForestAEZ07,2035,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ07,ForestAEZ07,2035,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ07,ForestAEZ07,2035,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ07,ForestAEZ07,2035,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ07,ForestAEZ07,2035,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ07,ForestAEZ07,2035,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ08,ForestAEZ08,2035,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ08,ForestAEZ08,2035,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ08,ForestAEZ08,2035,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ08,ForestAEZ08,2035,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ08,ForestAEZ08,2035,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ08,ForestAEZ08,2035,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ08,ForestAEZ08,2035,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ08,ForestAEZ08,2035,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ08,ForestAEZ08,2035,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ08,ForestAEZ08,2035,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ08,ForestAEZ08,2035,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ08,ForestAEZ08,2035,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ08,ForestAEZ08,2035,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ08,ForestAEZ08,2035,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ09,ForestAEZ09,2035,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ09,ForestAEZ09,2035,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ09,ForestAEZ09,2035,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ09,ForestAEZ09,2035,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ09,ForestAEZ09,2035,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ09,ForestAEZ09,2035,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ09,ForestAEZ09,2035,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ09,ForestAEZ09,2035,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ09,ForestAEZ09,2035,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ09,ForestAEZ09,2035,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ09,ForestAEZ09,2035,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ09,ForestAEZ09,2035,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ09,ForestAEZ09,2035,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ09,ForestAEZ09,2035,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ10,ForestAEZ10,2035,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ10,ForestAEZ10,2035,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ10,ForestAEZ10,2035,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ10,ForestAEZ10,2035,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ10,ForestAEZ10,2035,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ10,ForestAEZ10,2035,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ10,ForestAEZ10,2035,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ10,ForestAEZ10,2035,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ10,ForestAEZ10,2035,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ10,ForestAEZ10,2035,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ10,ForestAEZ10,2035,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ10,ForestAEZ10,2035,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ10,ForestAEZ10,2035,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ10,ForestAEZ10,2035,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ11,ForestAEZ11,2035,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ11,ForestAEZ11,2035,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ11,ForestAEZ11,2035,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ11,ForestAEZ11,2035,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ11,ForestAEZ11,2035,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ11,ForestAEZ11,2035,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ11,ForestAEZ11,2035,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ11,ForestAEZ11,2035,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ11,ForestAEZ11,2035,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ11,ForestAEZ11,2035,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ11,ForestAEZ11,2035,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ11,ForestAEZ11,2035,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ11,ForestAEZ11,2035,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ11,ForestAEZ11,2035,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ12,ForestAEZ12,2035,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ12,ForestAEZ12,2035,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ12,ForestAEZ12,2035,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ12,ForestAEZ12,2035,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ12,ForestAEZ12,2035,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ12,ForestAEZ12,2035,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ12,ForestAEZ12,2035,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ12,ForestAEZ12,2035,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ12,ForestAEZ12,2035,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ12,ForestAEZ12,2035,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ12,ForestAEZ12,2035,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ12,ForestAEZ12,2035,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ12,ForestAEZ12,2035,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ12,ForestAEZ12,2035,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ13,ForestAEZ13,2035,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ13,ForestAEZ13,2035,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ13,ForestAEZ13,2035,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ13,ForestAEZ13,2035,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ13,ForestAEZ13,2035,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ13,ForestAEZ13,2035,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ13,ForestAEZ13,2035,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ13,ForestAEZ13,2035,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ13,ForestAEZ13,2035,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ13,ForestAEZ13,2035,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ13,ForestAEZ13,2035,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ13,ForestAEZ13,2035,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ13,ForestAEZ13,2035,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ13,ForestAEZ13,2035,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ14,ForestAEZ14,2035,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ14,ForestAEZ14,2035,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ14,ForestAEZ14,2035,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ14,ForestAEZ14,2035,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ14,ForestAEZ14,2035,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ14,ForestAEZ14,2035,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ14,ForestAEZ14,2035,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ14,ForestAEZ14,2035,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ14,ForestAEZ14,2035,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ14,ForestAEZ14,2035,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ14,ForestAEZ14,2035,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ14,ForestAEZ14,2035,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ14,ForestAEZ14,2035,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ14,ForestAEZ14,2035,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ15,ForestAEZ15,2035,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ15,ForestAEZ15,2035,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ15,ForestAEZ15,2035,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ15,ForestAEZ15,2035,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ15,ForestAEZ15,2035,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ15,ForestAEZ15,2035,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ15,ForestAEZ15,2035,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ15,ForestAEZ15,2035,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ15,ForestAEZ15,2035,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ15,ForestAEZ15,2035,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ15,ForestAEZ15,2035,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ15,ForestAEZ15,2035,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ15,ForestAEZ15,2035,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ15,ForestAEZ15,2035,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ16,ForestAEZ16,2035,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ16,ForestAEZ16,2035,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ16,ForestAEZ16,2035,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ16,ForestAEZ16,2035,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ16,ForestAEZ16,2035,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ16,ForestAEZ16,2035,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ16,ForestAEZ16,2035,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ16,ForestAEZ16,2035,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ16,ForestAEZ16,2035,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ16,ForestAEZ16,2035,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ16,ForestAEZ16,2035,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ16,ForestAEZ16,2035,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ16,ForestAEZ16,2035,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ16,ForestAEZ16,2035,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ17,ForestAEZ17,2035,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ17,ForestAEZ17,2035,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ17,ForestAEZ17,2035,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ17,ForestAEZ17,2035,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ17,ForestAEZ17,2035,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ17,ForestAEZ17,2035,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ17,ForestAEZ17,2035,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ17,ForestAEZ17,2035,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ17,ForestAEZ17,2035,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ17,ForestAEZ17,2035,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ17,ForestAEZ17,2035,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ17,ForestAEZ17,2035,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ17,ForestAEZ17,2035,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ17,ForestAEZ17,2035,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ18,ForestAEZ18,2035,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ18,ForestAEZ18,2035,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ18,ForestAEZ18,2035,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ18,ForestAEZ18,2035,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ18,ForestAEZ18,2035,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ18,ForestAEZ18,2035,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ18,ForestAEZ18,2035,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ18,ForestAEZ18,2035,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ18,ForestAEZ18,2035,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ18,ForestAEZ18,2035,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ18,ForestAEZ18,2035,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ18,ForestAEZ18,2035,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ18,ForestAEZ18,2035,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ18,ForestAEZ18,2035,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ01,ForestAEZ01,2050,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ01,ForestAEZ01,2050,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ01,ForestAEZ01,2050,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ01,ForestAEZ01,2050,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ01,ForestAEZ01,2050,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ01,ForestAEZ01,2050,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ01,ForestAEZ01,2050,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ01,ForestAEZ01,2050,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ01,ForestAEZ01,2050,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ01,ForestAEZ01,2050,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ01,ForestAEZ01,2050,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ01,ForestAEZ01,2050,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ01,ForestAEZ01,2050,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ01,ForestAEZ01,2050,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ02,ForestAEZ02,2050,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ02,ForestAEZ02,2050,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ02,ForestAEZ02,2050,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ02,ForestAEZ02,2050,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ02,ForestAEZ02,2050,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ02,ForestAEZ02,2050,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ02,ForestAEZ02,2050,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ02,ForestAEZ02,2050,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ02,ForestAEZ02,2050,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ02,ForestAEZ02,2050,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ02,ForestAEZ02,2050,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ02,ForestAEZ02,2050,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ02,ForestAEZ02,2050,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ02,ForestAEZ02,2050,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ03,ForestAEZ03,2050,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ03,ForestAEZ03,2050,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ03,ForestAEZ03,2050,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ03,ForestAEZ03,2050,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ03,ForestAEZ03,2050,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ03,ForestAEZ03,2050,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ03,ForestAEZ03,2050,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ03,ForestAEZ03,2050,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ03,ForestAEZ03,2050,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ03,ForestAEZ03,2050,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ03,ForestAEZ03,2050,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ03,ForestAEZ03,2050,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ03,ForestAEZ03,2050,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ03,ForestAEZ03,2050,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ04,ForestAEZ04,2050,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ04,ForestAEZ04,2050,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ04,ForestAEZ04,2050,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ04,ForestAEZ04,2050,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ04,ForestAEZ04,2050,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ04,ForestAEZ04,2050,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ04,ForestAEZ04,2050,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ04,ForestAEZ04,2050,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ04,ForestAEZ04,2050,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ04,ForestAEZ04,2050,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ04,ForestAEZ04,2050,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ04,ForestAEZ04,2050,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ04,ForestAEZ04,2050,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ04,ForestAEZ04,2050,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ05,ForestAEZ05,2050,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ05,ForestAEZ05,2050,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ05,ForestAEZ05,2050,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ05,ForestAEZ05,2050,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ05,ForestAEZ05,2050,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ05,ForestAEZ05,2050,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ05,ForestAEZ05,2050,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ05,ForestAEZ05,2050,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ05,ForestAEZ05,2050,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ05,ForestAEZ05,2050,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ05,ForestAEZ05,2050,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ05,ForestAEZ05,2050,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ05,ForestAEZ05,2050,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ05,ForestAEZ05,2050,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ06,ForestAEZ06,2050,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ06,ForestAEZ06,2050,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ06,ForestAEZ06,2050,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ06,ForestAEZ06,2050,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ06,ForestAEZ06,2050,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ06,ForestAEZ06,2050,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ06,ForestAEZ06,2050,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ06,ForestAEZ06,2050,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ06,ForestAEZ06,2050,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ06,ForestAEZ06,2050,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ06,ForestAEZ06,2050,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ06,ForestAEZ06,2050,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ06,ForestAEZ06,2050,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ06,ForestAEZ06,2050,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ07,ForestAEZ07,2050,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ07,ForestAEZ07,2050,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ07,ForestAEZ07,2050,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ07,ForestAEZ07,2050,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ07,ForestAEZ07,2050,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ07,ForestAEZ07,2050,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ07,ForestAEZ07,2050,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ07,ForestAEZ07,2050,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ07,ForestAEZ07,2050,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ07,ForestAEZ07,2050,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ07,ForestAEZ07,2050,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ07,ForestAEZ07,2050,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ07,ForestAEZ07,2050,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ07,ForestAEZ07,2050,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ08,ForestAEZ08,2050,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ08,ForestAEZ08,2050,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ08,ForestAEZ08,2050,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ08,ForestAEZ08,2050,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ08,ForestAEZ08,2050,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ08,ForestAEZ08,2050,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ08,ForestAEZ08,2050,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ08,ForestAEZ08,2050,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ08,ForestAEZ08,2050,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ08,ForestAEZ08,2050,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ08,ForestAEZ08,2050,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ08,ForestAEZ08,2050,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ08,ForestAEZ08,2050,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ08,ForestAEZ08,2050,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ09,ForestAEZ09,2050,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ09,ForestAEZ09,2050,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ09,ForestAEZ09,2050,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ09,ForestAEZ09,2050,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ09,ForestAEZ09,2050,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ09,ForestAEZ09,2050,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ09,ForestAEZ09,2050,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ09,ForestAEZ09,2050,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ09,ForestAEZ09,2050,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ09,ForestAEZ09,2050,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ09,ForestAEZ09,2050,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ09,ForestAEZ09,2050,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ09,ForestAEZ09,2050,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ09,ForestAEZ09,2050,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ10,ForestAEZ10,2050,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ10,ForestAEZ10,2050,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ10,ForestAEZ10,2050,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ10,ForestAEZ10,2050,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ10,ForestAEZ10,2050,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ10,ForestAEZ10,2050,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ10,ForestAEZ10,2050,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ10,ForestAEZ10,2050,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ10,ForestAEZ10,2050,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ10,ForestAEZ10,2050,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ10,ForestAEZ10,2050,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ10,ForestAEZ10,2050,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ10,ForestAEZ10,2050,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ10,ForestAEZ10,2050,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ11,ForestAEZ11,2050,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ11,ForestAEZ11,2050,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ11,ForestAEZ11,2050,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ11,ForestAEZ11,2050,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ11,ForestAEZ11,2050,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ11,ForestAEZ11,2050,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ11,ForestAEZ11,2050,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ11,ForestAEZ11,2050,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ11,ForestAEZ11,2050,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ11,ForestAEZ11,2050,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ11,ForestAEZ11,2050,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ11,ForestAEZ11,2050,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ11,ForestAEZ11,2050,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ11,ForestAEZ11,2050,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ12,ForestAEZ12,2050,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ12,ForestAEZ12,2050,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ12,ForestAEZ12,2050,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ12,ForestAEZ12,2050,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ12,ForestAEZ12,2050,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ12,ForestAEZ12,2050,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ12,ForestAEZ12,2050,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ12,ForestAEZ12,2050,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ12,ForestAEZ12,2050,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ12,ForestAEZ12,2050,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ12,ForestAEZ12,2050,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ12,ForestAEZ12,2050,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ12,ForestAEZ12,2050,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ12,ForestAEZ12,2050,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ13,ForestAEZ13,2050,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ13,ForestAEZ13,2050,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ13,ForestAEZ13,2050,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ13,ForestAEZ13,2050,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ13,ForestAEZ13,2050,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ13,ForestAEZ13,2050,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ13,ForestAEZ13,2050,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ13,ForestAEZ13,2050,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ13,ForestAEZ13,2050,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ13,ForestAEZ13,2050,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ13,ForestAEZ13,2050,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ13,ForestAEZ13,2050,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ13,ForestAEZ13,2050,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ13,ForestAEZ13,2050,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ14,ForestAEZ14,2050,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ14,ForestAEZ14,2050,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ14,ForestAEZ14,2050,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ14,ForestAEZ14,2050,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ14,ForestAEZ14,2050,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ14,ForestAEZ14,2050,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ14,ForestAEZ14,2050,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ14,ForestAEZ14,2050,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ14,ForestAEZ14,2050,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ14,ForestAEZ14,2050,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ14,ForestAEZ14,2050,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ14,ForestAEZ14,2050,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ14,ForestAEZ14,2050,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ14,ForestAEZ14,2050,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ15,ForestAEZ15,2050,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ15,ForestAEZ15,2050,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ15,ForestAEZ15,2050,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ15,ForestAEZ15,2050,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ15,ForestAEZ15,2050,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ15,ForestAEZ15,2050,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ15,ForestAEZ15,2050,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ15,ForestAEZ15,2050,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ15,ForestAEZ15,2050,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ15,ForestAEZ15,2050,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ15,ForestAEZ15,2050,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ15,ForestAEZ15,2050,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ15,ForestAEZ15,2050,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ15,ForestAEZ15,2050,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ16,ForestAEZ16,2050,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ16,ForestAEZ16,2050,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ16,ForestAEZ16,2050,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ16,ForestAEZ16,2050,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ16,ForestAEZ16,2050,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ16,ForestAEZ16,2050,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ16,ForestAEZ16,2050,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ16,ForestAEZ16,2050,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ16,ForestAEZ16,2050,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ16,ForestAEZ16,2050,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ16,ForestAEZ16,2050,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ16,ForestAEZ16,2050,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ16,ForestAEZ16,2050,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ16,ForestAEZ16,2050,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ17,ForestAEZ17,2050,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ17,ForestAEZ17,2050,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ17,ForestAEZ17,2050,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ17,ForestAEZ17,2050,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ17,ForestAEZ17,2050,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ17,ForestAEZ17,2050,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ17,ForestAEZ17,2050,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ17,ForestAEZ17,2050,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ17,ForestAEZ17,2050,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ17,ForestAEZ17,2050,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ17,ForestAEZ17,2050,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ17,ForestAEZ17,2050,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ17,ForestAEZ17,2050,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ17,ForestAEZ17,2050,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ18,ForestAEZ18,2050,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ18,ForestAEZ18,2050,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ18,ForestAEZ18,2050,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ18,ForestAEZ18,2050,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ18,ForestAEZ18,2050,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ18,ForestAEZ18,2050,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ18,ForestAEZ18,2050,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ18,ForestAEZ18,2050,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ18,ForestAEZ18,2050,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ18,ForestAEZ18,2050,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ18,ForestAEZ18,2050,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ18,ForestAEZ18,2050,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ18,ForestAEZ18,2050,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ18,ForestAEZ18,2050,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ01,ForestAEZ01,2065,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ01,ForestAEZ01,2065,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ01,ForestAEZ01,2065,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ01,ForestAEZ01,2065,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ01,ForestAEZ01,2065,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ01,ForestAEZ01,2065,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ01,ForestAEZ01,2065,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ01,ForestAEZ01,2065,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ01,ForestAEZ01,2065,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ01,ForestAEZ01,2065,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ01,ForestAEZ01,2065,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ01,ForestAEZ01,2065,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ01,ForestAEZ01,2065,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ01,ForestAEZ01,2065,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ02,ForestAEZ02,2065,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ02,ForestAEZ02,2065,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ02,ForestAEZ02,2065,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ02,ForestAEZ02,2065,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ02,ForestAEZ02,2065,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ02,ForestAEZ02,2065,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ02,ForestAEZ02,2065,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ02,ForestAEZ02,2065,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ02,ForestAEZ02,2065,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ02,ForestAEZ02,2065,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ02,ForestAEZ02,2065,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ02,ForestAEZ02,2065,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ02,ForestAEZ02,2065,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ02,ForestAEZ02,2065,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ03,ForestAEZ03,2065,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ03,ForestAEZ03,2065,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ03,ForestAEZ03,2065,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ03,ForestAEZ03,2065,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ03,ForestAEZ03,2065,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ03,ForestAEZ03,2065,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ03,ForestAEZ03,2065,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ03,ForestAEZ03,2065,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ03,ForestAEZ03,2065,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ03,ForestAEZ03,2065,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ03,ForestAEZ03,2065,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ03,ForestAEZ03,2065,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ03,ForestAEZ03,2065,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ03,ForestAEZ03,2065,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ04,ForestAEZ04,2065,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ04,ForestAEZ04,2065,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ04,ForestAEZ04,2065,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ04,ForestAEZ04,2065,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ04,ForestAEZ04,2065,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ04,ForestAEZ04,2065,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ04,ForestAEZ04,2065,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ04,ForestAEZ04,2065,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ04,ForestAEZ04,2065,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ04,ForestAEZ04,2065,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ04,ForestAEZ04,2065,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ04,ForestAEZ04,2065,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ04,ForestAEZ04,2065,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ04,ForestAEZ04,2065,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ05,ForestAEZ05,2065,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ05,ForestAEZ05,2065,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ05,ForestAEZ05,2065,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ05,ForestAEZ05,2065,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ05,ForestAEZ05,2065,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ05,ForestAEZ05,2065,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ05,ForestAEZ05,2065,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ05,ForestAEZ05,2065,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ05,ForestAEZ05,2065,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ05,ForestAEZ05,2065,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ05,ForestAEZ05,2065,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ05,ForestAEZ05,2065,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ05,ForestAEZ05,2065,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ05,ForestAEZ05,2065,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ06,ForestAEZ06,2065,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ06,ForestAEZ06,2065,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ06,ForestAEZ06,2065,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ06,ForestAEZ06,2065,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ06,ForestAEZ06,2065,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ06,ForestAEZ06,2065,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ06,ForestAEZ06,2065,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ06,ForestAEZ06,2065,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ06,ForestAEZ06,2065,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ06,ForestAEZ06,2065,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ06,ForestAEZ06,2065,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ06,ForestAEZ06,2065,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ06,ForestAEZ06,2065,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ06,ForestAEZ06,2065,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ07,ForestAEZ07,2065,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ07,ForestAEZ07,2065,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ07,ForestAEZ07,2065,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ07,ForestAEZ07,2065,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ07,ForestAEZ07,2065,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ07,ForestAEZ07,2065,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ07,ForestAEZ07,2065,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ07,ForestAEZ07,2065,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ07,ForestAEZ07,2065,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ07,ForestAEZ07,2065,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ07,ForestAEZ07,2065,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ07,ForestAEZ07,2065,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ07,ForestAEZ07,2065,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ07,ForestAEZ07,2065,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ08,ForestAEZ08,2065,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ08,ForestAEZ08,2065,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ08,ForestAEZ08,2065,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ08,ForestAEZ08,2065,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ08,ForestAEZ08,2065,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ08,ForestAEZ08,2065,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ08,ForestAEZ08,2065,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ08,ForestAEZ08,2065,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ08,ForestAEZ08,2065,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ08,ForestAEZ08,2065,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ08,ForestAEZ08,2065,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ08,ForestAEZ08,2065,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ08,ForestAEZ08,2065,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ08,ForestAEZ08,2065,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ09,ForestAEZ09,2065,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ09,ForestAEZ09,2065,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ09,ForestAEZ09,2065,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ09,ForestAEZ09,2065,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ09,ForestAEZ09,2065,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ09,ForestAEZ09,2065,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ09,ForestAEZ09,2065,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ09,ForestAEZ09,2065,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ09,ForestAEZ09,2065,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ09,ForestAEZ09,2065,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ09,ForestAEZ09,2065,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ09,ForestAEZ09,2065,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ09,ForestAEZ09,2065,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ09,ForestAEZ09,2065,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ10,ForestAEZ10,2065,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ10,ForestAEZ10,2065,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ10,ForestAEZ10,2065,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ10,ForestAEZ10,2065,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ10,ForestAEZ10,2065,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ10,ForestAEZ10,2065,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ10,ForestAEZ10,2065,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ10,ForestAEZ10,2065,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ10,ForestAEZ10,2065,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ10,ForestAEZ10,2065,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ10,ForestAEZ10,2065,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ10,ForestAEZ10,2065,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ10,ForestAEZ10,2065,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ10,ForestAEZ10,2065,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ11,ForestAEZ11,2065,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ11,ForestAEZ11,2065,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ11,ForestAEZ11,2065,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ11,ForestAEZ11,2065,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ11,ForestAEZ11,2065,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ11,ForestAEZ11,2065,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ11,ForestAEZ11,2065,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ11,ForestAEZ11,2065,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ11,ForestAEZ11,2065,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ11,ForestAEZ11,2065,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ11,ForestAEZ11,2065,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ11,ForestAEZ11,2065,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ11,ForestAEZ11,2065,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ11,ForestAEZ11,2065,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ12,ForestAEZ12,2065,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ12,ForestAEZ12,2065,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ12,ForestAEZ12,2065,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ12,ForestAEZ12,2065,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ12,ForestAEZ12,2065,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ12,ForestAEZ12,2065,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ12,ForestAEZ12,2065,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ12,ForestAEZ12,2065,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ12,ForestAEZ12,2065,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ12,ForestAEZ12,2065,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ12,ForestAEZ12,2065,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ12,ForestAEZ12,2065,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ12,ForestAEZ12,2065,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ12,ForestAEZ12,2065,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ13,ForestAEZ13,2065,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ13,ForestAEZ13,2065,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ13,ForestAEZ13,2065,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ13,ForestAEZ13,2065,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ13,ForestAEZ13,2065,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ13,ForestAEZ13,2065,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ13,ForestAEZ13,2065,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ13,ForestAEZ13,2065,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ13,ForestAEZ13,2065,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ13,ForestAEZ13,2065,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ13,ForestAEZ13,2065,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ13,ForestAEZ13,2065,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ13,ForestAEZ13,2065,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ13,ForestAEZ13,2065,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ14,ForestAEZ14,2065,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ14,ForestAEZ14,2065,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ14,ForestAEZ14,2065,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ14,ForestAEZ14,2065,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ14,ForestAEZ14,2065,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ14,ForestAEZ14,2065,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ14,ForestAEZ14,2065,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ14,ForestAEZ14,2065,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ14,ForestAEZ14,2065,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ14,ForestAEZ14,2065,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ14,ForestAEZ14,2065,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ14,ForestAEZ14,2065,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ14,ForestAEZ14,2065,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ14,ForestAEZ14,2065,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ15,ForestAEZ15,2065,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ15,ForestAEZ15,2065,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ15,ForestAEZ15,2065,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ15,ForestAEZ15,2065,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ15,ForestAEZ15,2065,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ15,ForestAEZ15,2065,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ15,ForestAEZ15,2065,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ15,ForestAEZ15,2065,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ15,ForestAEZ15,2065,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ15,ForestAEZ15,2065,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ15,ForestAEZ15,2065,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ15,ForestAEZ15,2065,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ15,ForestAEZ15,2065,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ15,ForestAEZ15,2065,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ16,ForestAEZ16,2065,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ16,ForestAEZ16,2065,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ16,ForestAEZ16,2065,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ16,ForestAEZ16,2065,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ16,ForestAEZ16,2065,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ16,ForestAEZ16,2065,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ16,ForestAEZ16,2065,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ16,ForestAEZ16,2065,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ16,ForestAEZ16,2065,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ16,ForestAEZ16,2065,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ16,ForestAEZ16,2065,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ16,ForestAEZ16,2065,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ16,ForestAEZ16,2065,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ16,ForestAEZ16,2065,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ17,ForestAEZ17,2065,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ17,ForestAEZ17,2065,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ17,ForestAEZ17,2065,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ17,ForestAEZ17,2065,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ17,ForestAEZ17,2065,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ17,ForestAEZ17,2065,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ17,ForestAEZ17,2065,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ17,ForestAEZ17,2065,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ17,ForestAEZ17,2065,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ17,ForestAEZ17,2065,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ17,ForestAEZ17,2065,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ17,ForestAEZ17,2065,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ17,ForestAEZ17,2065,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ17,ForestAEZ17,2065,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ18,ForestAEZ18,2065,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ18,ForestAEZ18,2065,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ18,ForestAEZ18,2065,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ18,ForestAEZ18,2065,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ18,ForestAEZ18,2065,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ18,ForestAEZ18,2065,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ18,ForestAEZ18,2065,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ18,ForestAEZ18,2065,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ18,ForestAEZ18,2065,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ18,ForestAEZ18,2065,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ18,ForestAEZ18,2065,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ18,ForestAEZ18,2065,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ18,ForestAEZ18,2065,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ18,ForestAEZ18,2065,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ01,ForestAEZ01,2080,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ01,ForestAEZ01,2080,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ01,ForestAEZ01,2080,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ01,ForestAEZ01,2080,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ01,ForestAEZ01,2080,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ01,ForestAEZ01,2080,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ01,ForestAEZ01,2080,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ01,ForestAEZ01,2080,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ01,ForestAEZ01,2080,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ01,ForestAEZ01,2080,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ01,ForestAEZ01,2080,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ01,ForestAEZ01,2080,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ01,ForestAEZ01,2080,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ01,ForestAEZ01,2080,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ02,ForestAEZ02,2080,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ02,ForestAEZ02,2080,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ02,ForestAEZ02,2080,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ02,ForestAEZ02,2080,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ02,ForestAEZ02,2080,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ02,ForestAEZ02,2080,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ02,ForestAEZ02,2080,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ02,ForestAEZ02,2080,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ02,ForestAEZ02,2080,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ02,ForestAEZ02,2080,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ02,ForestAEZ02,2080,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ02,ForestAEZ02,2080,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ02,ForestAEZ02,2080,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ02,ForestAEZ02,2080,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ03,ForestAEZ03,2080,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ03,ForestAEZ03,2080,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ03,ForestAEZ03,2080,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ03,ForestAEZ03,2080,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ03,ForestAEZ03,2080,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ03,ForestAEZ03,2080,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ03,ForestAEZ03,2080,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ03,ForestAEZ03,2080,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ03,ForestAEZ03,2080,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ03,ForestAEZ03,2080,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ03,ForestAEZ03,2080,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ03,ForestAEZ03,2080,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ03,ForestAEZ03,2080,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ03,ForestAEZ03,2080,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ04,ForestAEZ04,2080,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ04,ForestAEZ04,2080,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ04,ForestAEZ04,2080,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ04,ForestAEZ04,2080,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ04,ForestAEZ04,2080,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ04,ForestAEZ04,2080,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ04,ForestAEZ04,2080,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ04,ForestAEZ04,2080,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ04,ForestAEZ04,2080,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ04,ForestAEZ04,2080,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ04,ForestAEZ04,2080,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ04,ForestAEZ04,2080,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ04,ForestAEZ04,2080,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ04,ForestAEZ04,2080,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ05,ForestAEZ05,2080,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ05,ForestAEZ05,2080,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ05,ForestAEZ05,2080,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ05,ForestAEZ05,2080,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ05,ForestAEZ05,2080,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ05,ForestAEZ05,2080,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ05,ForestAEZ05,2080,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ05,ForestAEZ05,2080,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ05,ForestAEZ05,2080,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ05,ForestAEZ05,2080,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ05,ForestAEZ05,2080,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ05,ForestAEZ05,2080,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ05,ForestAEZ05,2080,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ05,ForestAEZ05,2080,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ06,ForestAEZ06,2080,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ06,ForestAEZ06,2080,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ06,ForestAEZ06,2080,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ06,ForestAEZ06,2080,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ06,ForestAEZ06,2080,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ06,ForestAEZ06,2080,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ06,ForestAEZ06,2080,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ06,ForestAEZ06,2080,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ06,ForestAEZ06,2080,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ06,ForestAEZ06,2080,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ06,ForestAEZ06,2080,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ06,ForestAEZ06,2080,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ06,ForestAEZ06,2080,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ06,ForestAEZ06,2080,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ07,ForestAEZ07,2080,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ07,ForestAEZ07,2080,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ07,ForestAEZ07,2080,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ07,ForestAEZ07,2080,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ07,ForestAEZ07,2080,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ07,ForestAEZ07,2080,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ07,ForestAEZ07,2080,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ07,ForestAEZ07,2080,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ07,ForestAEZ07,2080,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ07,ForestAEZ07,2080,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ07,ForestAEZ07,2080,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ07,ForestAEZ07,2080,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ07,ForestAEZ07,2080,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ07,ForestAEZ07,2080,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ08,ForestAEZ08,2080,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ08,ForestAEZ08,2080,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ08,ForestAEZ08,2080,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ08,ForestAEZ08,2080,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ08,ForestAEZ08,2080,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ08,ForestAEZ08,2080,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ08,ForestAEZ08,2080,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ08,ForestAEZ08,2080,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ08,ForestAEZ08,2080,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ08,ForestAEZ08,2080,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ08,ForestAEZ08,2080,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ08,ForestAEZ08,2080,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ08,ForestAEZ08,2080,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ08,ForestAEZ08,2080,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ09,ForestAEZ09,2080,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ09,ForestAEZ09,2080,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ09,ForestAEZ09,2080,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ09,ForestAEZ09,2080,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ09,ForestAEZ09,2080,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ09,ForestAEZ09,2080,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ09,ForestAEZ09,2080,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ09,ForestAEZ09,2080,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ09,ForestAEZ09,2080,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ09,ForestAEZ09,2080,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ09,ForestAEZ09,2080,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ09,ForestAEZ09,2080,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ09,ForestAEZ09,2080,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ09,ForestAEZ09,2080,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ10,ForestAEZ10,2080,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ10,ForestAEZ10,2080,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ10,ForestAEZ10,2080,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ10,ForestAEZ10,2080,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ10,ForestAEZ10,2080,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ10,ForestAEZ10,2080,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ10,ForestAEZ10,2080,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ10,ForestAEZ10,2080,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ10,ForestAEZ10,2080,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ10,ForestAEZ10,2080,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ10,ForestAEZ10,2080,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ10,ForestAEZ10,2080,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ10,ForestAEZ10,2080,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ10,ForestAEZ10,2080,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ11,ForestAEZ11,2080,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ11,ForestAEZ11,2080,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ11,ForestAEZ11,2080,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ11,ForestAEZ11,2080,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ11,ForestAEZ11,2080,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ11,ForestAEZ11,2080,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ11,ForestAEZ11,2080,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ11,ForestAEZ11,2080,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ11,ForestAEZ11,2080,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ11,ForestAEZ11,2080,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ11,ForestAEZ11,2080,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ11,ForestAEZ11,2080,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ11,ForestAEZ11,2080,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ11,ForestAEZ11,2080,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ12,ForestAEZ12,2080,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ12,ForestAEZ12,2080,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ12,ForestAEZ12,2080,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ12,ForestAEZ12,2080,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ12,ForestAEZ12,2080,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ12,ForestAEZ12,2080,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ12,ForestAEZ12,2080,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ12,ForestAEZ12,2080,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ12,ForestAEZ12,2080,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ12,ForestAEZ12,2080,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ12,ForestAEZ12,2080,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ12,ForestAEZ12,2080,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ12,ForestAEZ12,2080,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ12,ForestAEZ12,2080,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ13,ForestAEZ13,2080,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ13,ForestAEZ13,2080,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ13,ForestAEZ13,2080,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ13,ForestAEZ13,2080,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ13,ForestAEZ13,2080,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ13,ForestAEZ13,2080,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ13,ForestAEZ13,2080,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ13,ForestAEZ13,2080,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ13,ForestAEZ13,2080,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ13,ForestAEZ13,2080,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ13,ForestAEZ13,2080,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ13,ForestAEZ13,2080,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ13,ForestAEZ13,2080,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ13,ForestAEZ13,2080,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ14,ForestAEZ14,2080,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ14,ForestAEZ14,2080,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ14,ForestAEZ14,2080,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ14,ForestAEZ14,2080,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ14,ForestAEZ14,2080,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ14,ForestAEZ14,2080,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ14,ForestAEZ14,2080,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ14,ForestAEZ14,2080,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ14,ForestAEZ14,2080,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ14,ForestAEZ14,2080,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ14,ForestAEZ14,2080,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ14,ForestAEZ14,2080,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ14,ForestAEZ14,2080,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ14,ForestAEZ14,2080,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ15,ForestAEZ15,2080,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ15,ForestAEZ15,2080,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ15,ForestAEZ15,2080,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ15,ForestAEZ15,2080,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ15,ForestAEZ15,2080,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ15,ForestAEZ15,2080,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ15,ForestAEZ15,2080,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ15,ForestAEZ15,2080,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ15,ForestAEZ15,2080,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ15,ForestAEZ15,2080,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ15,ForestAEZ15,2080,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ15,ForestAEZ15,2080,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ15,ForestAEZ15,2080,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ15,ForestAEZ15,2080,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ16,ForestAEZ16,2080,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ16,ForestAEZ16,2080,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ16,ForestAEZ16,2080,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ16,ForestAEZ16,2080,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ16,ForestAEZ16,2080,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ16,ForestAEZ16,2080,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ16,ForestAEZ16,2080,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ16,ForestAEZ16,2080,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ16,ForestAEZ16,2080,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ16,ForestAEZ16,2080,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ16,ForestAEZ16,2080,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ16,ForestAEZ16,2080,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ16,ForestAEZ16,2080,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ16,ForestAEZ16,2080,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ17,ForestAEZ17,2080,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ17,ForestAEZ17,2080,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ17,ForestAEZ17,2080,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ17,ForestAEZ17,2080,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ17,ForestAEZ17,2080,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ17,ForestAEZ17,2080,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ17,ForestAEZ17,2080,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ17,ForestAEZ17,2080,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ17,ForestAEZ17,2080,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ17,ForestAEZ17,2080,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ17,ForestAEZ17,2080,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ17,ForestAEZ17,2080,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ17,ForestAEZ17,2080,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ17,ForestAEZ17,2080,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ18,ForestAEZ18,2080,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ18,ForestAEZ18,2080,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ18,ForestAEZ18,2080,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ18,ForestAEZ18,2080,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ18,ForestAEZ18,2080,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ18,ForestAEZ18,2080,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ18,ForestAEZ18,2080,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ18,ForestAEZ18,2080,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ18,ForestAEZ18,2080,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ18,ForestAEZ18,2080,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ18,ForestAEZ18,2080,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ18,ForestAEZ18,2080,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ18,ForestAEZ18,2080,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ18,ForestAEZ18,2080,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ01,ForestAEZ01,2095,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ01,ForestAEZ01,2095,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ01,ForestAEZ01,2095,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ01,ForestAEZ01,2095,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ01,ForestAEZ01,2095,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ01,ForestAEZ01,2095,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ01,ForestAEZ01,2095,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ01,ForestAEZ01,2095,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ01,ForestAEZ01,2095,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ01,ForestAEZ01,2095,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ01,ForestAEZ01,2095,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ01,ForestAEZ01,2095,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ01,ForestAEZ01,2095,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ01,ForestAEZ01,2095,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ02,ForestAEZ02,2095,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ02,ForestAEZ02,2095,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ02,ForestAEZ02,2095,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ02,ForestAEZ02,2095,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ02,ForestAEZ02,2095,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ02,ForestAEZ02,2095,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ02,ForestAEZ02,2095,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ02,ForestAEZ02,2095,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ02,ForestAEZ02,2095,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ02,ForestAEZ02,2095,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ02,ForestAEZ02,2095,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ02,ForestAEZ02,2095,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ02,ForestAEZ02,2095,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ02,ForestAEZ02,2095,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ03,ForestAEZ03,2095,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ03,ForestAEZ03,2095,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ03,ForestAEZ03,2095,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ03,ForestAEZ03,2095,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ03,ForestAEZ03,2095,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ03,ForestAEZ03,2095,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ03,ForestAEZ03,2095,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ03,ForestAEZ03,2095,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ03,ForestAEZ03,2095,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ03,ForestAEZ03,2095,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ03,ForestAEZ03,2095,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ03,ForestAEZ03,2095,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ03,ForestAEZ03,2095,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ03,ForestAEZ03,2095,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ04,ForestAEZ04,2095,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ04,ForestAEZ04,2095,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ04,ForestAEZ04,2095,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ04,ForestAEZ04,2095,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ04,ForestAEZ04,2095,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ04,ForestAEZ04,2095,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ04,ForestAEZ04,2095,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ04,ForestAEZ04,2095,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ04,ForestAEZ04,2095,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ04,ForestAEZ04,2095,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ04,ForestAEZ04,2095,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ04,ForestAEZ04,2095,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ04,ForestAEZ04,2095,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ04,ForestAEZ04,2095,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ05,ForestAEZ05,2095,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ05,ForestAEZ05,2095,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ05,ForestAEZ05,2095,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ05,ForestAEZ05,2095,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ05,ForestAEZ05,2095,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ05,ForestAEZ05,2095,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ05,ForestAEZ05,2095,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ05,ForestAEZ05,2095,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ05,ForestAEZ05,2095,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ05,ForestAEZ05,2095,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ05,ForestAEZ05,2095,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ05,ForestAEZ05,2095,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ05,ForestAEZ05,2095,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ05,ForestAEZ05,2095,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ06,ForestAEZ06,2095,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ06,ForestAEZ06,2095,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ06,ForestAEZ06,2095,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ06,ForestAEZ06,2095,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ06,ForestAEZ06,2095,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ06,ForestAEZ06,2095,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ06,ForestAEZ06,2095,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ06,ForestAEZ06,2095,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ06,ForestAEZ06,2095,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ06,ForestAEZ06,2095,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ06,ForestAEZ06,2095,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ06,ForestAEZ06,2095,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ06,ForestAEZ06,2095,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ06,ForestAEZ06,2095,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ07,ForestAEZ07,2095,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ07,ForestAEZ07,2095,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ07,ForestAEZ07,2095,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ07,ForestAEZ07,2095,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ07,ForestAEZ07,2095,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ07,ForestAEZ07,2095,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ07,ForestAEZ07,2095,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ07,ForestAEZ07,2095,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ07,ForestAEZ07,2095,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ07,ForestAEZ07,2095,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ07,ForestAEZ07,2095,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ07,ForestAEZ07,2095,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ07,ForestAEZ07,2095,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ07,ForestAEZ07,2095,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ08,ForestAEZ08,2095,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ08,ForestAEZ08,2095,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ08,ForestAEZ08,2095,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ08,ForestAEZ08,2095,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ08,ForestAEZ08,2095,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ08,ForestAEZ08,2095,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ08,ForestAEZ08,2095,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ08,ForestAEZ08,2095,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ08,ForestAEZ08,2095,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ08,ForestAEZ08,2095,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ08,ForestAEZ08,2095,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ08,ForestAEZ08,2095,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ08,ForestAEZ08,2095,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ08,ForestAEZ08,2095,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ09,ForestAEZ09,2095,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ09,ForestAEZ09,2095,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ09,ForestAEZ09,2095,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ09,ForestAEZ09,2095,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ09,ForestAEZ09,2095,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ09,ForestAEZ09,2095,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ09,ForestAEZ09,2095,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ09,ForestAEZ09,2095,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ09,ForestAEZ09,2095,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ09,ForestAEZ09,2095,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ09,ForestAEZ09,2095,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ09,ForestAEZ09,2095,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ09,ForestAEZ09,2095,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ09,ForestAEZ09,2095,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ10,ForestAEZ10,2095,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ10,ForestAEZ10,2095,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ10,ForestAEZ10,2095,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ10,ForestAEZ10,2095,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ10,ForestAEZ10,2095,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ10,ForestAEZ10,2095,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ10,ForestAEZ10,2095,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ10,ForestAEZ10,2095,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ10,ForestAEZ10,2095,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ10,ForestAEZ10,2095,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ10,ForestAEZ10,2095,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ10,ForestAEZ10,2095,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ10,ForestAEZ10,2095,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ10,ForestAEZ10,2095,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ11,ForestAEZ11,2095,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ11,ForestAEZ11,2095,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ11,ForestAEZ11,2095,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ11,ForestAEZ11,2095,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ11,ForestAEZ11,2095,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ11,ForestAEZ11,2095,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ11,ForestAEZ11,2095,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ11,ForestAEZ11,2095,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ11,ForestAEZ11,2095,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ11,ForestAEZ11,2095,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ11,ForestAEZ11,2095,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ11,ForestAEZ11,2095,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ11,ForestAEZ11,2095,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ11,ForestAEZ11,2095,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ12,ForestAEZ12,2095,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ12,ForestAEZ12,2095,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ12,ForestAEZ12,2095,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ12,ForestAEZ12,2095,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ12,ForestAEZ12,2095,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ12,ForestAEZ12,2095,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ12,ForestAEZ12,2095,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ12,ForestAEZ12,2095,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ12,ForestAEZ12,2095,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ12,ForestAEZ12,2095,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ12,ForestAEZ12,2095,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ12,ForestAEZ12,2095,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ12,ForestAEZ12,2095,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ12,ForestAEZ12,2095,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ13,ForestAEZ13,2095,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ13,ForestAEZ13,2095,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ13,ForestAEZ13,2095,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ13,ForestAEZ13,2095,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ13,ForestAEZ13,2095,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ13,ForestAEZ13,2095,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ13,ForestAEZ13,2095,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ13,ForestAEZ13,2095,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ13,ForestAEZ13,2095,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ13,ForestAEZ13,2095,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ13,ForestAEZ13,2095,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ13,ForestAEZ13,2095,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ13,ForestAEZ13,2095,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ13,ForestAEZ13,2095,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ14,ForestAEZ14,2095,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ14,ForestAEZ14,2095,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ14,ForestAEZ14,2095,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ14,ForestAEZ14,2095,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ14,ForestAEZ14,2095,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ14,ForestAEZ14,2095,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ14,ForestAEZ14,2095,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ14,ForestAEZ14,2095,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ14,ForestAEZ14,2095,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ14,ForestAEZ14,2095,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ14,ForestAEZ14,2095,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ14,ForestAEZ14,2095,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ14,ForestAEZ14,2095,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ14,ForestAEZ14,2095,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ15,ForestAEZ15,2095,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ15,ForestAEZ15,2095,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ15,ForestAEZ15,2095,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ15,ForestAEZ15,2095,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ15,ForestAEZ15,2095,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ15,ForestAEZ15,2095,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ15,ForestAEZ15,2095,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ15,ForestAEZ15,2095,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ15,ForestAEZ15,2095,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ15,ForestAEZ15,2095,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ15,ForestAEZ15,2095,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ15,ForestAEZ15,2095,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ15,ForestAEZ15,2095,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ15,ForestAEZ15,2095,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ16,ForestAEZ16,2095,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ16,ForestAEZ16,2095,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ16,ForestAEZ16,2095,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ16,ForestAEZ16,2095,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ16,ForestAEZ16,2095,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ16,ForestAEZ16,2095,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ16,ForestAEZ16,2095,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ16,ForestAEZ16,2095,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ16,ForestAEZ16,2095,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ16,ForestAEZ16,2095,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ16,ForestAEZ16,2095,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ16,ForestAEZ16,2095,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ16,ForestAEZ16,2095,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ16,ForestAEZ16,2095,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ17,ForestAEZ17,2095,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ17,ForestAEZ17,2095,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ17,ForestAEZ17,2095,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ17,ForestAEZ17,2095,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ17,ForestAEZ17,2095,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ17,ForestAEZ17,2095,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ17,ForestAEZ17,2095,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ17,ForestAEZ17,2095,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ17,ForestAEZ17,2095,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ17,ForestAEZ17,2095,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ17,ForestAEZ17,2095,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ17,ForestAEZ17,2095,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ17,ForestAEZ17,2095,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ17,ForestAEZ17,2095,biomass,500,0.8,0.2,0.0189,0.065
+USA,Forest,ForestAEZ18,ForestAEZ18,2095,biomass,500,0.8,0.2,0.0189,0.065
+Canada,Forest,ForestAEZ18,ForestAEZ18,2095,biomass,500,0.8,0.2,0.0189,0.065
+Western Europe,Forest,ForestAEZ18,ForestAEZ18,2095,biomass,500,0.8,0.2,0.0189,0.065
+Japan,Forest,ForestAEZ18,ForestAEZ18,2095,biomass,500,0.8,0.2,0.0189,0.065
+Australia_NZ,Forest,ForestAEZ18,ForestAEZ18,2095,biomass,500,0.8,0.2,0.0189,0.065
+Former Soviet Union,Forest,ForestAEZ18,ForestAEZ18,2095,biomass,500,0.8,0.2,0.0189,0.065
+China,Forest,ForestAEZ18,ForestAEZ18,2095,biomass,500,0.8,0.2,0.0189,0.065
+Middle East,Forest,ForestAEZ18,ForestAEZ18,2095,biomass,500,0.8,0.2,0.0189,0.065
+Africa,Forest,ForestAEZ18,ForestAEZ18,2095,biomass,500,0.8,0.2,0.0189,0.065
+Latin America,Forest,ForestAEZ18,ForestAEZ18,2095,biomass,500,0.8,0.2,0.0189,0.065
+Southeast Asia,Forest,ForestAEZ18,ForestAEZ18,2095,biomass,500,0.8,0.2,0.0189,0.065
+Eastern Europe,Forest,ForestAEZ18,ForestAEZ18,2095,biomass,500,0.8,0.2,0.0189,0.065
+Korea,Forest,ForestAEZ18,ForestAEZ18,2095,biomass,500,0.8,0.2,0.0189,0.065
+India,Forest,ForestAEZ18,ForestAEZ18,2095,biomass,500,0.8,0.2,0.0189,0.065
