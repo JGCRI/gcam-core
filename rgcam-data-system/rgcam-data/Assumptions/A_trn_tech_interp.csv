@@ -1,0 +1,7 @@
+# This table contains technology level interpolation rules,,,,,
+# Source: Tables_Trn_Data.xlsx,,,,,
+supplysector,subsector,technology,from_year,to_year,interpolation_function
+trn_passenger,rail,rail ICE,2005,2095,fixed
+trn_passenger,rail,rail electric,2005,2095,fixed
+trn_pass_road,bus,bus ICE,2005,2095,fixed
+trn_pass_road,bus,bus gas,2005,2095,fixed

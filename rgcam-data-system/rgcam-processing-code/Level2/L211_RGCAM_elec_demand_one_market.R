@@ -123,8 +123,8 @@ L211_TechInterpRule <- rbind( L211_TechInterpRule, L211_USATemp )
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 
-write_mi_data( L211_ElecDelete, "ElecDelete", "L211_ElecDelete", "batch_rgcam_elec_demand_single_market.xml" ) 
-write_mi_data( L211_ElecSector, "ElecSector", "L211_ElecSector", "batch_rgcam_elec_demand_single_market.xml" ) 
+write_mi_data( L211_ElecDelete, "SectorDelete", "L211_ElecDelete", "batch_rgcam_elec_demand_single_market.xml" ) 
+write_mi_data( L211_ElecSector, "Sector", "L211_ElecSector", "batch_rgcam_elec_demand_single_market.xml" ) 
 write_mi_data( L211_ElecSubsector, "ElecSubsector_Logit", "L211_ElecSubsector", "batch_rgcam_elec_demand_single_market.xml" ) 
 write_mi_data( L211_ElecSubsInterpRule, "ElecSubsInterpRule", "L211_ElecSubsInterpRule", "batch_rgcam_elec_demand_single_market.xml" ) 
 write_mi_data( L211_GlobalDBTechInputDemand, "GlobalDBTechInputDemand", "L211_GlobalDBTechInputDemand", "batch_rgcam_elec_demand_single_market.xml" ) 

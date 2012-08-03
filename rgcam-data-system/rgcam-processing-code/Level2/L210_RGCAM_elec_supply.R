@@ -251,8 +251,8 @@ L210_TechStubs <- data.frame( region=states, L210_TechStubs )
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file
 
-write_mi_data( L210_ElecDelete, "ElecDelete", "L210_ElecDelete", "batch_rgcam_elec_supply_input_base.xml" ) 
-write_mi_data( L210_ElecSector, "ElecSector", "L210_ElecSector", "batch_rgcam_elec_supply_input_base.xml" ) 
+write_mi_data( L210_ElecDelete, "SectorDelete", "L210_ElecDelete", "batch_rgcam_elec_supply_input_base.xml" ) 
+write_mi_data( L210_ElecSector, "Sector", "L210_ElecSector", "batch_rgcam_elec_supply_input_base.xml" ) 
 write_mi_data( L210_SectorMetaInfo, "SectorMetaInfo", "L210_SectorMetaInfo", "batch_rgcam_elec_supply_input_base.xml" ) 
 write_mi_data( L210_ElecSubsector, "ElecSubsector", "L210_ElecSubsector", "batch_rgcam_elec_supply_input_base.xml" ) 
 write_mi_data( L210_ElecSubsInterpRule, "ElecSubsInterpRule", "L210_ElecSubsInterpRule", "batch_rgcam_elec_supply_input_base.xml" ) 

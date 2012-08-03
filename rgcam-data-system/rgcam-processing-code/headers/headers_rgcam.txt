@@ -55,9 +55,13 @@ GlobalTechFutureShareweight,global-technology-database/+{sector-name}location-in
 
 MarketName,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}stub-technology,period/+{name}minicam-energy-input,minicam-energy-input/+market-name,stub-technology/{year=1975}period,stub-technology/{year=1990}period,stub-technology/{year=2005}period,stub-technology/{year=2020}period,stub-technology/{year=2035}period,stub-technology/{year=2050}period,stub-technology/{year=2065}period,stub-technology/{year=2080}period,stub-technology/{year=2095}period,scenario/world,scenario
 
-ElecDelete,world/+{name}region,region/+{name;delete=1}supplysector,scenario/world,scenario
+SectorDelete,world/+{name}region,region/+{name;delete=1}supplysector,scenario/world,scenario
 
-ElecSector,world/+{name}region,region/+{name}supplysector,supplysector/+output-unit,supplysector/+input-unit,supplysector/+price-unit,supplysector/+{year=1975;fillout=1}logit-exponent,scenario/world,scenario
+FinalDemandDelete,world/+{name}region,region/+{name;delete=1}energy-final-demand,scenario/world,scenario
+
+Sector,world/+{name}region,region/+{name}supplysector,supplysector/+output-unit,supplysector/+input-unit,supplysector/+price-unit,supplysector/+{year=1975;fillout=1}logit-exponent,scenario/world,scenario
+
+SectorKeyword,world/+{name}region,region/+{name}supplysector,supplysector/+output-unit,supplysector/+input-unit,supplysector/+price-unit,supplysector/+{year=1975;fillout=1}logit-exponent,supplysector/+{final-energy}keyword,scenario/world,scenario
 
 SectorMetaInfo,world/+{name}region,region/+{name}supplysector,supplysector/+{name}object-meta-info,object-meta-info/+value,scenario/world,scenario
 
@@ -94,4 +98,24 @@ GlobalDBTechInputDemand,global-technology-database/+{sector-name}location-info,g
 ElecSubgregionalCal,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,technology/+{year}period,period/+share-weight,period/+{name}minicam-energy-input,minicam-energy-input/+calibrated-value,minicam-energy-input/+efficiency,minicam-energy-input/+market-name,scenario,scenario/world,period/{name=CO2}CO2
 
 TechInterpRule,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,technology/+{from-year}interpolation-rule,technology/+{to-year}interpolation-rule,interpolation-rule/+{name}interpolation-function,technology/+{apply-to}interpolation-rule,scenario/world,scenario
+
+TrnSubsector,world/+{name}region,region/+{name}supplysector,supplysector/+{name}tranSubsector,tranSubsector/+{year=1975;fillout=1}logit-exponent,tranSubsector/+addTimeValue,tranSubsector/+{year=1975;fillout=1}speed,tranSubsector/+{year=2020}share-weight,tranSubsector/+{year=2035}share-weight,tranSubsector/+{year=2050}share-weight,tranSubsector/+{year=2065}share-weight,tranSubsector/+{year=2080}share-weight,tranSubsector/+{year=2095}share-weight,scenario/world,scenario
+
+TrnSubsInterpRule,world/+{name}region,region/+{name}supplysector,supplysector/+{name}tranSubsector,tranSubsector/+{year=1975}share-weight,tranSubsector/+{year=1990}share-weight,tranSubsector/+{year=2005}share-weight,tranSubsector/+{from-year}interpolation-rule,tranSubsector/+{to-year}interpolation-rule,interpolation-rule/+{name}interpolation-function,tranSubsector/+{apply-to}interpolation-rule,scenario/world,scenario
+
+TrnGlobalDBTechInput,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}tranTechnology,tranTechnology/+{year}period,period/+share-weight,minicam-energy-input/+coefficient,minicam-non-energy-input/+input-cost,period/+loadFactor,period/+{name}minicam-energy-input,minicam-energy-input/+market-name,scenario,scenario/world,world/global-technology-database,period/{name=CO2}CO2,period/{name=non-energy}minicam-non-energy-input
+
+TrnGlobalDBTechInterpRule,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}tranTechnology,tranTechnology/+{from-year}interpolation-rule,technology/+{to-year}interpolation-rule,interpolation-rule/+{name}interpolation-function,technology/+{apply-to}interpolation-rule,scenario/world,scenario
+
+TrnTechStubs,world/+{name}region,region/+{name}supplysector,supplysector/+{name}tranSubsector,tranSubsector/+{name}stub-technology,scenario,scenario/world
+
+TrnTechInput,world/+{name}region,region/+{name}supplysector,supplysector/+{name}tranSubsector,tranSubsector/+{name}technology,period/+{name}minicam-energy-input,technology/+{year}period,period/+share-weight,minicam-energy-input/+calibrated-value,minicam-energy-input/+coefficient,scenario,scenario/world,period/{name=CO2}CO2
+
+TrnTechCal,world/+{name}region,region/+{name}supplysector,supplysector/+{name}tranSubsector,tranSubsector/+{name}stub-technology,period/+{name}minicam-energy-input,stub-technology/+{year}period,minicam-energy-input/+calibrated-value,period/+share-weight,scenario,scenario/world
+
+FDBaseSerivce,world/+{name}region,region/+{name}energy-final-demand,energy-final-demand/+{year}base-service,energy-final-demand/+base-service,scenario,scenario/world
+
+FDPercapitaBased,world/+{name}region,region/+{name}energy-final-demand,energy-final-demand/+perCapitaBased,scenario,scenario/world
+
+FDElasticities,world/+{name}region,region/+{name}energy-final-demand,energy-final-demand/+{year}price-elasticity,energy-final-demand/+price-elasticity,energy-final-demand/+{year}income-elasticity,energy-final-demand/+income-elasticity,scenario,scenario/world
 

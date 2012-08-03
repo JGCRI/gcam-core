@@ -1,0 +1,7 @@
+# This table contains sector level assumptions,,,,
+# Source: Tables_Trn_Data.xlsx,,,,
+supplysector,output_unit,input_unit,price_unit,logit
+trn_freight,million ton-km,EJ,1990$/ton-km,-2
+trn_passenger,million pass-km,EJ,1990$/pass-km,-2
+trn_shipping_intl,million ton-km,EJ,1990$/ton-km,-2
+trn_pass_road,million pass-km,EJ,1990$/pass-km,-2
