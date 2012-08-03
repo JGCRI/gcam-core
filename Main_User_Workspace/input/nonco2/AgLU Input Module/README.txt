@@ -1,0 +1,1 @@
+The non-CO2 files for the AgLU component are built by the AgLU data system. The input module workbook in this folder is used as an input to that system, but files built from the workbook can not be run in the model.
