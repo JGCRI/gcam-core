@@ -63,34 +63,26 @@
 
 		<Value name="aglu">../input/aglu/SmoothWasteBio.xml</Value>
 		<Value name="aglu">../input/aglu/Add_On_bioadder_0.xml</Value>
+		<Value name="aglu">../input/aglu/ag_For_Past_bio_base.xml</Value>
 		<Value name="aglu">../input/aglu/an_input.xml</Value>
-		<Value name="aglu">../input/aglu/For_Past_bio_input.xml</Value>
-		<Value name="aglu">../input/aglu/ag_input.xml</Value>
-		<Value name="aglu">../input/aglu/land_input_A.xml</Value>
-		<Value name="aglu">../input/aglu/land_input_B.xml</Value>
-		<Value name="aglu">../input/aglu/land_input_C1.xml</Value>
-		<Value name="aglu">../input/aglu/land_input_C2.xml</Value>
-		<Value name="aglu">../input/aglu/land_input_C3.xml</Value>
-		<Value name="aglu">../input/aglu/ag_res_input.xml</Value>
-		<Value name="aglu">../input/aglu/For_res_input.xml</Value>
 		<Value name="aglu">../input/aglu/demand_input.xml</Value>
-		<Value name="aglu">../input/aglu/prodchange_cost_core.xml</Value>
+		<Value name="aglu">../input/aglu/land_input_1.xml</Value>
+		<Value name="aglu">../input/aglu/land_input_2.xml</Value>
+		<Value name="aglu">../input/aglu/land_input_3.xml</Value>
+		<Value name="aglu">../input/aglu/resbio_input.xml</Value>
+		<Value name="aglu">../input/aglu/bio_hi.xml</Value>
+		<Value name="aglu">../input/aglu/ag_cost.xml</Value>
+		<Value name="aglu">../input/aglu/ag_prodchange_core.xml</Value>
 
-		<Value name="ag_nonco2">../input/nonco2/all_ag.xml</Value>
-		<Value name="livestock_nonco2">../input/nonco2/all_livestock.xml</Value>
-		<Value name="unmanaged_nonco2">../input/nonco2/all_unmanaged.xml</Value>
-		<Value name="aglu">../input/aglu/delete_ag_For_bio_AEZs.xml</Value>
-		<Value name="aglu">../input/aglu/delete_land_AEZs.xml</Value>
-		<Value name="unmanaged_nonco2">../input/nonco2/delete_unmanaged_AEZs.xml</Value>
-
-		<Value name="aglu">../input/aglu/demand_ethanol.xml</Value>		
-		<Value name="aglu">../input/aglu/energy_crop_land.xml</Value>
-		<Value name="aglu">../input/aglu/energy_crop_input.xml</Value>	
+		<Value name="ag_nonco2">../input/aglu/nonco2_ag.xml</Value>
+		<Value name="livestock_nonco2">../input/aglu/nonco2_an.xml</Value>
+		<Value name="unmanaged_nonco2">../input/aglu/nonco2_unmgd.xml</Value>
+		<Value name="aglu">../input/aglu/delete_AEZs.xml</Value>
 
 	</ScenarioComponents>
 	<Strings>
 		<Value name="scenarioName">Reference</Value>
-		<Value name="debug-region">Australia_NZ</Value>
+		<Value name="debug-region">USA</Value>
 	</Strings>
 	<Bools>
 		<Value name="CalibrationActive">1</Value>
