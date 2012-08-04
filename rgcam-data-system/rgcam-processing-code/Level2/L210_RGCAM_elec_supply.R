@@ -257,7 +257,7 @@ write_mi_data( L210_SectorMetaInfo, "SectorMetaInfo", "L210_SectorMetaInfo", "ba
 write_mi_data( L210_ElecSubsector, "ElecSubsector", "L210_ElecSubsector", "batch_rgcam_elec_supply_input_base.xml" ) 
 write_mi_data( L210_ElecSubsInterpRule, "ElecSubsInterpRule", "L210_ElecSubsInterpRule", "batch_rgcam_elec_supply_input_base.xml" ) 
 write_mi_data( L210_GlobalDBTechAvail, "GlobalDBTechAvail", "L210_GlobalDBTechAvail", "batch_rgcam_elec_supply_input_base.xml" ) 
-write_mi_data( L210_GlobalDBTechInput, "GlobalDBTechInput", "L210_GlobalDBTechInput", "batch_rgcam_elec_supply_input_base.xml" ) 
+write_mi_data( L210_GlobalDBTechInput, "ElecGlobalDBTechInput", "L210_GlobalDBTechInput", "batch_rgcam_elec_supply_input_base.xml" ) 
 write_mi_data( L210_GeothermalInput, "GeothermalInput", "L210_GeothermalInput", "batch_rgcam_elec_supply_input_base.xml" ) 
 write_mi_data( L210_GlobalDBTechShutdown, "GlobalDBTechShutdown", "L210_GlobalDBTechShutdown", "batch_rgcam_elec_supply_input_base.xml" ) 
 write_mi_data( L210_GlobalDBTechCCS, "GlobalDBTechCCS", "L210_GlobalDBTechCCS", "batch_rgcam_elec_supply_input_base.xml" ) 
