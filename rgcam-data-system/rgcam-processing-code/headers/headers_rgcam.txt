@@ -131,3 +131,11 @@ GlobalDBTechSeq,global-technology-database/+{sector-name}location-info,global-te
 
 IndustrySector,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,period/+{name}minicam-energy-input,technology/+{year}period,minicam-energy-input/+coefficient,period/+share-weight,scenario,scenario/world,period/{name=CO2}CO2
 
+GlobalDBTechInputRefLiq,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,period/+share-weight,minicam-energy-input/+coefficient,minicam-non-energy-input/+input-cost,period/+lifetime,phased-shutdown-decider/+shutdown-rate,period/+{name}minicam-energy-input,minicam-energy-input/+market-name,scenario,scenario/world,world/global-technology-database,period/{name=CO2}CO2,period/{name=non-energy}minicam-non-energy-input,period/phased-shutdown-decider,period/profit-shutdown-decider
+
+GlobalDBTechInputSecInput,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,minicam-energy-input/+coefficient,period/+{name}minicam-energy-input,minicam-energy-input/+market-name,scenario,scenario/world,world/global-technology-database
+
+CalOutput,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}stub-technology,stub-technology/+{year}period,CalDataOutput/+calOutputValue,period/+share-weight,scenario,scenario/world,period/CalDataOutput
+
+RefLiqTechInput,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,period/+{name}minicam-energy-input,technology/+{year}period,period/+share-weight,minicam-energy-input/+calibrated-value,minicam-energy-input/+coefficient,minicam-non-energy-input/+input-cost,minicam-energy-input/+market-name,scenario,scenario/world,period/{name=CO2}CO2,period/{name=non-energy}minicam-non-energy-input
+
