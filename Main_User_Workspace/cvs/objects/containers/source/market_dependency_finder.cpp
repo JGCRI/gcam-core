@@ -96,13 +96,17 @@ MarketDependencyFinder::CalcVertex::~CalcVertex() {
  * \param aDependencyName The name of the item which must be calculated before
  *                       aDependentName.
  * \param aDependencyRegion The region name in which aDependencyName is contained.
+ * \param aCanBeBroken True if when trial markets are created for aDependencyName
+ *                     this dependency can be removed, false otherwise.  Note true
+ *                     is the default value since it is almost always the case.
  * \return Wether a new entry was created to by adding this dependency, in other
  *         words it wasn't duplicative.
  */
 bool MarketDependencyFinder::addDependency( const string& aDependentName,
                                             const string& aDependentRegion,
                                             const string& aDependencyName,
-                                            const string& aDependencyRegion )
+                                            const string& aDependencyRegion,
+                                            const bool aCanBeBroken )
 {
     // Find/create a DependencyItem entry for the dependent item
     auto_ptr<DependencyItem> item( new DependencyItem( aDependentName, aDependentRegion ) );
@@ -117,6 +121,7 @@ bool MarketDependencyFinder::addDependency( const string& aDependentName,
     if( dependencyIter == mDependencyItems.end() ) {
         dependencyIter = mDependencyItems.insert( item.release() ).first;
     }
+    (*dependencyIter)->mCanBreakCycle &= aCanBeBroken;
     
     // These are kept track of by adding to the list of dependents for the
     // dependency item.
@@ -155,10 +160,10 @@ void MarketDependencyFinder::resolveActivityToDependency( const string& aRegionN
         return;
     }
     
-    (*itemIter)->mDemandVertices.push_back( new CalcVertex( aDemandActivity ) );
+    (*itemIter)->mDemandVertices.push_back( new CalcVertex( aDemandActivity, *itemIter ) );
     // The price activity may not be necessary.
     if( aPriceActivity ) {
-        (*itemIter)->mPriceVertices.push_back( new CalcVertex( aPriceActivity ) );
+        (*itemIter)->mPriceVertices.push_back( new CalcVertex( aPriceActivity, *itemIter ) );
     }
 }
 
@@ -463,18 +468,21 @@ void MarketDependencyFinder::createOrdering() {
                 list<CalcVertex*> hasVisited;
                 markCycles( (*it).first, hasVisited, totalVisits );
             }
+            // We will choose the vertex with the most visits to break a cycle unless
+            // it has a depenency which can not be broken when creating trial markets.
             int max = 0;
             CalcVertex* maxVertex = 0;
             for( NumDepIterator it = totalVisits.begin(); it != totalVisits.end(); ++it ) {            
-                if( (*it).second > max ) {
+                if( (*it).first->mDepItem->mCanBreakCycle && (*it).second > max ) {
                     maxVertex = (*it).first;
                     max = (*it).second;
                 }
             }
-            /*!
-             * \invariant At least one cycle must have be found by markCycles.
-             */
-            assert( maxVertex );
+            if( !maxVertex ) {
+                depLog.setLevel( ILogger::SEVERE );
+                depLog << "Could not find an unbreakable item to break the cycle." << endl;
+                exit( 1 );
+            }
             
             depLog << "The following activity has been chosen to break the cycle: "
                    << maxVertex->mCalcItem->getDescription() << endl;

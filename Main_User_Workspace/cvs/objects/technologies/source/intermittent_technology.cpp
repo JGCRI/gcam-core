@@ -277,7 +277,9 @@ void IntermittentTechnology::completeInit( const string& aRegionName,
                                   SectorUtils::getTrialMarketName( mTrialMarketName ),
                                   aRegionName );
         if( aSectorName != mElectricSectorName ) {
-            depFinder->addDependency( mElectricSectorName, aRegionName, aSectorName, aRegionName );
+            // This dependency can not be removed since it is inherently different
+            // than sector dependencies.
+            depFinder->addDependency( mElectricSectorName, aRegionName, aSectorName, aRegionName, false );
         }
     }
 

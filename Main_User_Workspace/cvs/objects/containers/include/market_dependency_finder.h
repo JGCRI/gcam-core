@@ -88,7 +88,8 @@ public:
     bool addDependency( const std::string& aDependentName,
                         const std::string& aDependentRegion,
                         const std::string& aDependencyName,
-                        const std::string& aDependencyRegion );
+                        const std::string& aDependencyRegion,
+                        const bool aCanBeBroken = true );
 
     const std::vector<IActivity*> getOrdering( const int aMarketNumber = -1 ) const;
 
@@ -100,13 +101,15 @@ public:
     void createOrdering();
 private:
     // CalcVertex and related declarations
+    struct DependencyItem;
     /*!
      * \brief The data structure which represents the final dependency graph.
      * \details  A vertex could represent either price or demand calculations.
      *           The out edges represent dependencies.
      */
     struct CalcVertex {
-        CalcVertex( IActivity* aCalcItem ):mCalcItem( aCalcItem ) {}
+        CalcVertex( IActivity* aCalcItem, DependencyItem* aDepItem )
+        :mCalcItem( aCalcItem ), mDepItem( aDepItem ) {}
         ~CalcVertex();
         
         //! The object which does the calculations for this vertex.
@@ -114,6 +117,10 @@ private:
         
         //! The dependents of this vertex.
         std::vector<CalcVertex*> mOutEdges;
+        
+        //! Pointer back to the DependencyItem which contains this vertex for
+        //! convenience.
+        DependencyItem* mDepItem;
     };
     // Some typedefs to make the syntax of using vectors of calc vertices cleaner.
     typedef std::vector<CalcVertex*> VertexList;
@@ -121,7 +128,6 @@ private:
     typedef VertexList::const_iterator CVertexIterator;
     
     // DependencyItem and related declarations
-    struct DependencyItem;
     
     /*!
      * \brief A comparison functor to allow unique identification and sorting of
@@ -153,7 +159,7 @@ private:
     struct DependencyItem {
         DependencyItem( const std::string& aName, const std::string& aLocatedInRegion )
         :mName( aName ), mLocatedInRegion( aLocatedInRegion ), mIsSolved( false ),
-        mLinkedMarket( -1 ) {}
+        mLinkedMarket( -1 ), mCanBreakCycle( true ) {}
         ~DependencyItem();
         
         //! A name of a dependency which will correspond to a sector or resource, etc.
@@ -180,6 +186,9 @@ private:
         //! do not directly link to a Market* since they are created by model period
         //! and this graph will be static through all model periods.
         int mLinkedMarket;
+        
+        //! Whether this item can be used to break a cycle.
+        bool mCanBreakCycle;
         
         /*!
          * \brief Helper function to clean up syntax in accessing the first price
