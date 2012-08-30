@@ -81,6 +81,8 @@ GlobalDBTechIntermit,global-technology-database/+{sector-name}location-info,glob
 
 GlobalDBTechIntermitBackup,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}intermittent-technology,intermittent-technology/+{year}period,period/+{name}minicam-energy-input,minicam-energy-input/+efficiency,minicam-energy-input/+market-name,scenario,scenario/world,world/global-technology-database
 
+GlobalDBTechIntermitSingle,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}intermittent-technology,intermittent-technology/+{year}period,period/+share-weight,minicam-energy-input/+efficiency,minicam-non-energy-input/+input-cost,period/+{name}minicam-energy-input,capacity-limit-backup-calculator/+capacity-limit,period/+trial-market-name,period/+electric-sector-name,period/+electric-sector-market,period/+backup-capital-cost,period/+backup-capacity-factor,scenario,scenario/world,world/global-technology-database,period/{name=non-energy}minicam-non-energy-input,period/capacity-limit-backup-calculator,period/profit-shutdown-decider,period/{name=CO2}CO2
+
 GlobalDBTechShutdown,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,s-curve-shutdown-decider/+half-life,s-curve-shutdown-decider/+steepness,technology/+{year}period,scenario,scenario/world,world/global-technology-database,period/s-curve-shutdown-decider
 
 GlobalDBTechCCS,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,standard-capture-component/+remove-fraction,standard-capture-component/+non-energy-penalty,standard-capture-component/+storage-market,scenario,scenario/world,world/global-technology-database,period/standard-capture-component
@@ -138,4 +140,24 @@ GlobalDBTechInputSecInput,global-technology-database/+{sector-name}location-info
 CalOutput,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}stub-technology,stub-technology/+{year}period,CalDataOutput/+calOutputValue,period/+share-weight,scenario,scenario/world,period/CalDataOutput
 
 RefLiqTechInput,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,period/+{name}minicam-energy-input,technology/+{year}period,period/+share-weight,minicam-energy-input/+calibrated-value,minicam-energy-input/+coefficient,minicam-non-energy-input/+input-cost,minicam-energy-input/+market-name,scenario,scenario/world,period/{name=CO2}CO2,period/{name=non-energy}minicam-non-energy-input
+
+ElecCapacityFactor,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}stub-technology,stub-technology/+{year}period,input-capital/+capacity-factor,input-OM-fixed/+capacity-factor,period/{name=capital}input-capital,period/{name=OM-fixed}input-OM-fixed,scenario,scenario/world
+
+DeleteTech,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name;delete=1}stub-technology,scenario,scenario/world
+
+DeleteResource,world/+{name}region,region/+{name;delete=1}depresource,scenario,scenario/world
+
+RenewResource,world/+{name}region,region/+{name}renewresource,renewresource/+output-unit,renewresource/+price-unit,renewresource/+{year=1975}price,renewresource/+market,region/+{name}PrimaryFuelCO2Coef,region/+PrimaryFuelCO2Coef,scenario,scenario/world
+
+RenewResTechChange,world/+{name}region,region/+{name}renewresource,renewresource/+{name}sub-renewable-resource,sub-renewable-resource/+{year}techChange,sub-renewable-resource/+techChange,scenario,scenario/world
+
+SmoothRenewResTechChange,world/+{name}region,region/+{name}renewresource,renewresource/+{name}smooth-renewable-subresource,smooth-renewable-subresource/+{year}techChange,smooth-renewable-subresource/+techChange,scenario,scenario/world
+
+RenewSubResGrades,world/+{name}region,region/+{name}renewresource,renewresource/+{name}sub-renewable-resource,sub-renewable-resource/+{name}grade,grade/+extractioncost,grade/+available,scenario,scenario/world
+
+SmoothRenewRes,world/+{name}region,region/+{name}renewresource,renewresource/+{name}smooth-renewable-subresource,smooth-renewable-subresource/+gdpSupplyElast,smooth-renewable-subresource/+subResourceCapacityFactor,smooth-renewable-subresource/+maxSubResource,smooth-renewable-subresource/+mid-price,smooth-renewable-subresource/+curve-exponent,scenario/world,scenario
+
+MaxSubResource,world/+{name}region,region/+{name}renewresource,renewresource/+{name}sub-renewable-resource,sub-renewable-resource/+maxSubResource,scenario,scenario/world
+
+ChangeInputMarket,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name;}technology,technology/+{year}period,period/+{name}minicam-energy-input,minicam-energy-input/+market-name,scenario,scenario/world
 

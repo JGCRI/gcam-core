@@ -1,0 +1,6 @@
+# Resources and sectors to delete,,
+# Source: Tables_Res_Data.xlsx,,
+region,name,type
+USA,geothermal,resource
+USA,distributed_solar,resource
+USA,elect_td_bld,sector

@@ -62,6 +62,7 @@ intgains_digits <- 3
 retirement_fn_digits <- 3
 BEND_efficiency_digits <- 4
 BEND_kbtu_digits <- 0
+capacity_factor_digits <- 2
 
 P_elas_flsp <- -1         #price elasticity of floorspace
 

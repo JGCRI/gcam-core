@@ -1,0 +1,4 @@
+# Other resource parameters,,,
+# Source: Tables_Res_Data.xlsx,,,
+resource,subresource,gdpSupplyElast,subResourceCapacityFactor
+distributed_solar,distributed_solar,0.1,0.2

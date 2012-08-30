@@ -243,10 +243,13 @@ L210_TechCal <- L210_TechCal[ L210_TechCal$subsector != "nuclear", ]
 # calibration tables
 printlog( "L210_TechStubs: TECH STUBS" )
 L210_TechStubs <- A_elecS_tech_avail[ A_elecS_tech_avail$initial_available_year > GCAM_base_years[2], c( "supplysector", "subsector", "technology" ) ]
+# Allow geothermal in all regions, they will be take out by the resource
+# processing if a state has no geothermal potential
+L210_TechStubs <- rbind( L210_TechStubs, unique( L210_GeothermalInput[,
+    c( "supplysector", "subsector", "technology" ) ] ) )
 # TODO: some consideration for excluding some technologies in some regions?
 L210_TechStubs <- L210_TechStubs[ rep( 1:nrow( L210_TechStubs ), times = length( states ) ), ]
 L210_TechStubs <- data.frame( region=states, L210_TechStubs )
-# should I put geo in regions that do not have it?
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file

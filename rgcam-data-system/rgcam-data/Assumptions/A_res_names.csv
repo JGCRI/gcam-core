@@ -1,0 +1,5 @@
+# Resource level names and labels,,,
+# Source: Tables_Res_Data.xlsx,,,
+resource,output_unit,price_unit,price
+geothermal,EJ,1975$/GJ,0.45
+distributed_solar,EJ,1975$/GJ,10
