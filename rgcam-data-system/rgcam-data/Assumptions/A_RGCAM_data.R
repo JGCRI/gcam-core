@@ -41,6 +41,26 @@ conv_kbtu_EJ <- 1.0551e-12        #thousand btu to EJ
 
 conv_TWh_EJ <- 0.0036
 
+# Dollar year conversions
+conv_1996_1975_USD <- 0.4049
+conv_1997_1975_USD <- 0.3983
+conv_1998_1975_USD <- 0.3939
+conv_1999_1975_USD <- 0.3883
+conv_2000_1975_USD <- 0.380
+conv_2001_1975_USD <- 0.3711
+conv_2002_1975_USD <- 0.3647
+conv_2003_1975_USD <- 0.3571
+conv_2004_1975_USD <- 0.3472
+conv_2005_1975_USD <- 0.3362
+conv_2006_1975_USD <- 0.3257
+conv_2007_1975_USD <- 0.317
+conv_2008_1975_USD <- 0.3104
+conv_2009_1975_USD <- 0.3104
+
+
+conv_2004_1990_USD <- 0.7454
+conv_2005_1990_USD <- 0.7218
+
 #Shorthand names for residential buildings services in the RECS databases
 RECS_services_elec <- c( "sph", "col", "wth", "lgt", "apl", "othapl", "oth" )
 RECS_services_gas <- c( "sph", "wth", "apl", "oth" )
