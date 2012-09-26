@@ -1,7 +1,6 @@
 
 $REGION_ALL_STATES,world/{name=AK}region,world/{name=AL}region,world/{name=AR}region,world/{name=AZ}region,world/{name=CA}region,world/{name=CO}region,world/{name=CT}region,world/{name=DC}region,world/{name=DE}region,world/{name=FL}region,world/{name=GA}region,world/{name=HI}region,world/{name=IA}region,world/{name=ID}region,world/{name=IL}region,world/{name=IN}region,world/{name=KS}region,world/{name=KY}region,world/{name=LA}region,world/{name=MA}region,world/{name=MD}region,world/{name=ME}region,world/{name=MI}region,world/{name=MN}region,world/{name=MO}region,world/{name=MS}region,world/{name=MT}region,world/{name=NC}region,world/{name=ND}region,world/{name=NE}region,world/{name=NH}region,world/{name=NJ}region,world/{name=NM}region,world/{name=NV}region,world/{name=NY}region,world/{name=OH}region,world/{name=OK}region,world/{name=OR}region,world/{name=PA}region,world/{name=RI}region,world/{name=SC}region,world/{name=SD}region,world/{name=TN}region,world/{name=TX}region,world/{name=UT}region,world/{name=VA}region,world/{name=VT}region,world/{name=WA}region,world/{name=WI}region,world/{name=WV}region,world/{name=WY}region
 
-
 BldDelete,world/+{name}region,region/+{name;delete=1}gcam-consumer,region/+{name;delete=1}gcam-consumer,region/+{name;delete=1}supplysector,region/+{name;delete=1}supplysector,region/+{name;delete=1}supplysector,region/+{name;delete=1}supplysector,region/+{name;delete=1}supplysector,region/+{name;delete=1}supplysector,region/+{name;delete=1}renewresource,scenario/world,scenario
 
 PopShare,region/+{name}gcam-consumer,gcam-consumer/+{year=1975}subregional-population-share,gcam-consumer/+{year=1990}subregional-population-share,gcam-consumer/+{year=2005}subregional-population-share,gcam-consumer/+{year=2020}subregional-population-share,gcam-consumer/+{year=2035}subregional-population-share,gcam-consumer/+{year=2050}subregional-population-share,gcam-consumer/+{year=2065}subregional-population-share,gcam-consumer/+{year=2080}subregional-population-share,gcam-consumer/+{year=2095}subregional-population-share,$REGION_ALL_STATES,scenario/world,scenario 
@@ -57,6 +56,8 @@ MarketName,world/+{name}region,region/+{name}supplysector,supplysector/+{name}su
 
 SectorDelete,world/+{name}region,region/+{name;delete=1}supplysector,scenario/world,scenario
 
+SubsectorDelete,world/+{name}region,region/+{name}supplysector,supplysector/+{name;delete=1}subsector,scenario/world,scenario
+
 FinalDemandDelete,world/+{name}region,region/+{name;delete=1}energy-final-demand,scenario/world,scenario
 
 Sector,world/+{name}region,region/+{name}supplysector,supplysector/+output-unit,supplysector/+input-unit,supplysector/+price-unit,supplysector/+{year=1975;fillout=1}logit-exponent,scenario/world,scenario
@@ -77,7 +78,7 @@ GeothermalInput,global-technology-database/+{sector-name}location-info,global-te
 
 ElecGlobalDBTechInput,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,period/+share-weight,input-capital/+capital-overnight,period/+lifetime,input-OM-fixed/+OM-fixed,input-OM-var/+OM-var,input-capital/+fixed-charge-rate,input-capital/+capacity-factor,input-OM-fixed/+capacity-factor,minicam-energy-input/+efficiency,period/+{name}minicam-energy-input,minicam-energy-input/+market-name,scenario,scenario/world,world/global-technology-database,period/{name=capital}input-capital,period/{name=OM-fixed}input-OM-fixed,period/{name=OM-var}input-OM-var,period/profit-shutdown-decider,period/{name=CO2}CO2
 
-GlobalDBTechIntermit,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}intermittent-technology,intermittent-technology/+{year}period,period/+share-weight,input-capital/+capital-overnight,period/+lifetime,input-OM-fixed/+OM-fixed,input-OM-var/+OM-var,input-capital/+fixed-charge-rate,input-capital/+capacity-factor,input-OM-fixed/+capacity-factor,minicam-energy-input/+efficiency,period/+{name}minicam-energy-input,capacity-limit-backup-calculator/+capacity-limit,period/+trial-market-name,period/+electric-sector-name,period/+backup-capital-cost,period/+backup-capacity-factor,intermittent-technology/+initial-available-year,intermittent-technology/+final-available-year,scenario,scenario/world,world/global-technology-database,period/{name=capital}input-capital,period/{name=OM-fixed}input-OM-fixed,period/{name=OM-var}input-OM-var,period/capacity-limit-backup-calculator,period/profit-shutdown-decider,period/{name=CO2}CO2
+GlobalDBTechIntermit,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}intermittent-technology,intermittent-technology/+{year}period,period/+share-weight,input-capital/+capital-overnight,period/+lifetime,input-OM-fixed/+OM-fixed,input-OM-var/+OM-var,input-capital/+fixed-charge-rate,input-capital/+capacity-factor,input-OM-fixed/+capacity-factor,minicam-energy-input/+efficiency,period/+{name}minicam-energy-input,capacity-limit-backup-calculator/+capacity-limit,period/+trial-market-name,period/+electric-sector-name,period/+electric-sector-market,period/+backup-capital-cost,period/+backup-capacity-factor,intermittent-technology/+initial-available-year,intermittent-technology/+final-available-year,scenario,scenario/world,world/global-technology-database,period/{name=capital}input-capital,period/{name=OM-fixed}input-OM-fixed,period/{name=OM-var}input-OM-var,period/capacity-limit-backup-calculator,period/profit-shutdown-decider,period/{name=CO2}CO2
 
 GlobalDBTechIntermitBackup,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}intermittent-technology,intermittent-technology/+{year}period,period/+{name}minicam-energy-input,minicam-energy-input/+efficiency,minicam-energy-input/+market-name,scenario,scenario/world,world/global-technology-database
 
@@ -159,5 +160,11 @@ SmoothRenewRes,world/+{name}region,region/+{name}renewresource,renewresource/+{n
 
 MaxSubResource,world/+{name}region,region/+{name}renewresource,renewresource/+{name}sub-renewable-resource,sub-renewable-resource/+maxSubResource,scenario,scenario/world
 
-ChangeInputMarket,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name;}technology,technology/+{year}period,period/+{name}minicam-energy-input,minicam-energy-input/+market-name,scenario,scenario/world
+ChangeInputMarket,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name;nocreate=1}technology,technology/+{year}period,period/+{name}minicam-energy-input,minicam-energy-input/+market-name,scenario,scenario/world
+
+ChangeSecOutputMarket,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name;nocreate=1}stub-technology,stub-technology/+{year}period,period/+{name}secondary-output,secondary-output/+market-name,scenario,scenario/world
+
+ChangeIntermitElecMarket,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name;nocreate=1}stub-technology,stub-technology/+{year}period,period/+electric-sector-market,scenario,scenario/world
+
+ChangeInputMarketGlobalDB,global-technology-database/+{sector-name}location-info,global-technology-database/+{subsector-name}location-info,location-info/+{name}technology,technology/+{year}period,period/+{name}minicam-energy-input,minicam-energy-input/market-name,scenario,scenario/world,world/global-technology-database
 

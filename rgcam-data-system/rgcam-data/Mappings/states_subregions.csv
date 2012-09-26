@@ -1,1 +1,53 @@
-state,state_id,subregion12,subregion9,subregion_FERCAK,1,Pacific,Pacific,NWPAL,2,Central-SE,Central-SE,STVAR,3,Central-SW,Central-SW,SPPAZ,4,Mountain,Mountain,RACA,5,California,Pacific,CNVCO,6,Mountain,Mountain,RACT,7,New England,New England,NEDC,8,Atlantic-S,Atlantic-S,MAACDE,9,Atlantic-S,Atlantic-S,MAACFL,10,Florida,Atlantic-S,FL_SRGA,11,Atlantic-S,Atlantic-S,STVHI,12,Pacific,Pacific,NWPIA,13,Central-NW,Central-NW,MAPPID,14,Mountain,Mountain,NWPIL,15,Central-NE,Central-NE,MAININ,16,Central-NE,Central-NE,ECARKS,17,Central-NW,Central-NW,SPPKY,18,Central-SE,Central-SE,ECARLA,19,Central-SW,Central-SW,SPPMA,20,New England,New England,NEMD,21,Atlantic-S,Atlantic-S,MAACME,22,New England,New England,NEMI,23,Central-NE,Central-NE,ECARMN,24,Central-NW,Central-NW,MAPPMO,25,Central-NW,Central-NW,MAINMS,26,Central-SE,Central-SE,STVMT,27,Mountain,Mountain,NWPNC,28,Atlantic-S,Atlantic-S,STVND,29,Central-NW,Central-NW,MAPPNE,30,Central-NW,Central-NW,MAPPNH,31,New England,New England,NENJ,32,Atlantic-N,Atlantic-N,MAACNM,33,Mountain,Mountain,RANV,34,Mountain,Mountain,NWPNY,35,Atlantic-N,Atlantic-N,NY_SROH,36,Central-NE,Central-NE,ECAROK,37,Central-SW,Central-SW,SPPOR,38,Pacific,Pacific,NWPPA,39,Atlantic-N,Atlantic-N,MAACRI,40,New England,New England,NESC,41,Atlantic-S,Atlantic-S,STVSD,42,Central-NW,Central-NW,MAPPTN,43,Central-SE,Central-SE,STVTX,44,Texas,Central-SW,ERCOTUS,na,na,na,naUT,45,Mountain,Mountain,NWPVA,46,Atlantic-S,Atlantic-S,STVVT,47,New England,New England,NEWA,48,Pacific,Pacific,NWPWI,49,Central-NE,Central-NE,MAINWV,50,Atlantic-S,Atlantic-S,ECARWY,51,Mountain,Mountain,RA
+state,state_id,subregion12,subregion9,subregion_FERC
+AK,1,Pacific,Pacific,NWP
+AL,2,Central-SE,Central-SE,STV
+AR,3,Central-SW,Central-SW,SPP
+AZ,4,Mountain,Mountain,RA
+CA,5,California,Pacific,CNV
+CO,6,Mountain,Mountain,RA
+CT,7,New England,New England,NE_SR
+DC,8,Atlantic-S,Atlantic-S,MAAC
+DE,9,Atlantic-S,Atlantic-S,MAAC
+FL,10,Florida,Atlantic-S,FL_SR
+GA,11,Atlantic-S,Atlantic-S,STV
+HI,12,Pacific,Pacific,NWP
+IA,13,Central-NW,Central-NW,MAPP
+ID,14,Mountain,Mountain,NWP
+IL,15,Central-NE,Central-NE,MAIN
+IN,16,Central-NE,Central-NE,ECAR
+KS,17,Central-NW,Central-NW,SPP
+KY,18,Central-SE,Central-SE,ECAR
+LA,19,Central-SW,Central-SW,SPP
+MA,20,New England,New England,NE_SR
+MD,21,Atlantic-S,Atlantic-S,MAAC
+ME,22,New England,New England,NE_SR
+MI,23,Central-NE,Central-NE,ECAR
+MN,24,Central-NW,Central-NW,MAPP
+MO,25,Central-NW,Central-NW,MAIN
+MS,26,Central-SE,Central-SE,STV
+MT,27,Mountain,Mountain,NWP
+NC,28,Atlantic-S,Atlantic-S,STV
+ND,29,Central-NW,Central-NW,MAPP
+NE,30,Central-NW,Central-NW,MAPP
+NH,31,New England,New England,NE_SR
+NJ,32,Atlantic-N,Atlantic-N,MAAC
+NM,33,Mountain,Mountain,RA
+NV,34,Mountain,Mountain,NWP
+NY,35,Atlantic-N,Atlantic-N,NY_SR
+OH,36,Central-NE,Central-NE,ECAR
+OK,37,Central-SW,Central-SW,SPP
+OR,38,Pacific,Pacific,NWP
+PA,39,Atlantic-N,Atlantic-N,MAAC
+RI,40,New England,New England,NE_SR
+SC,41,Atlantic-S,Atlantic-S,STV
+SD,42,Central-NW,Central-NW,MAPP
+TN,43,Central-SE,Central-SE,STV
+TX,44,Texas,Central-SW,ERCOT
+US,na,na,na,na
+UT,45,Mountain,Mountain,NWP
+VA,46,Atlantic-S,Atlantic-S,STV
+VT,47,New England,New England,NE_SR
+WA,48,Pacific,Pacific,NWP
+WI,49,Central-NE,Central-NE,MAIN
+WV,50,Atlantic-S,Atlantic-S,ECAR
+WY,51,Mountain,Mountain,RA

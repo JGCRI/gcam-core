@@ -105,8 +105,8 @@ L210_GlobalDBTechIntermit <- data.frame( L210_GlobalDBTechIntermit[ order( L210_
                                                                      A_elecS_tech_backup$technology,
                                                                      A_elecS_tech_backup$period ), c(
                                                                      "capacity_limit", "trial_market_name",
-                                                                     "electricity_sector", "backup_capital_cost",
-                                                                     "backup_capacity_factor" ) ] )
+                                                                     "electricity_sector", "electricity_sector_market",
+                                                                     "backup_capital_cost", "backup_capacity_factor" ) ] )
 L210_GlobalDBTechIntermit <- L210_GlobalDBTechIntermit[ , names( L210_GlobalDBTechIntermit ) %!in% c( "market" ) ]
 L210_GlobalDBTechInput <- L210_GlobalDBTechInput[ !L210_int_techs, ]
 
@@ -129,8 +129,8 @@ L210_GlobalDBTechAvail <- L210_GlobalDBTechAvail[ !L210_int_techs, ]
 printlog( "L210_GlobalDBTechIntermitBackup: TECH BACKUP ENERGY" )
 L210_GlobalDBTechIntermitBackup <- A_elecS_tech_backup[ , names( A_elecS_tech_backup ) %!in% c(
                                                                      "capacity_limit", "trial_market_name",
-                                                                     "electricity_sector", "backup_capital_cost",
-                                                                     "backup_capacity_factor" ) ]
+                                                                     "electricity_sector", "electricity_sector_market",
+                                                                     "backup_capital_cost", "backup_capacity_factor" ) ]
 
 
 # Create a table for technology shutdown parameters
