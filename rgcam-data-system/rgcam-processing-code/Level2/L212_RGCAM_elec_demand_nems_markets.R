@@ -62,15 +62,15 @@ L212_sR_out_td <- melt( L212_sR_out_td, id="region", variable_name="year" )
 L212_sR_out_td$year <- as.integer( substring( L212_sR_out_td$year, 2 ) )
 names( L212_sR_out_td )[ 3 ] <- "production"
 
-L212_sR_eff_td <- merge( L212_sR_out_td, L212_sR_in_td )
-L212_sR_eff_td$efficiency <- L212_sR_eff_td$production / L212_sR_eff_td$consumption
-
 L212_sR_in_td <- merge( states_subregions[, c( "state", "subregion_FERC" ) ], L106_in_EJ_state_td_elec )
 names( L212_sR_in_td )[ names( L212_sR_in_td ) %in% c( "subregion_FERC" ) ] <- "region"
 L212_sR_in_td <- aggregate( cbind( X1990, X2005 ) ~ region, data=L212_sR_in_td, FUN=sum )
 L212_sR_in_td <- melt( L212_sR_in_td, id="region", variable_name="year" )
 L212_sR_in_td$year <- as.integer( substring( L212_sR_in_td$year, 2 ) )
 names( L212_sR_in_td )[ 3 ] <- "consumption"
+
+L212_sR_eff_td <- merge( L212_sR_out_td, L212_sR_in_td )
+L212_sR_eff_td$efficiency <- L212_sR_eff_td$production / L212_sR_eff_td$consumption
 
 L212_sR_trade <- merge( L212_sR_out_ownuse, L212_sR_in_td )
 L212_sR_trade$net_import <- L212_sR_trade$consumption - L212_sR_trade$production
