@@ -39,6 +39,7 @@
 
 
 #include "climate/include/ObjECTS_MAGICC.h"
+#include "util/logger/include/ilogger.h"
 
 
 using namespace std;
@@ -2839,7 +2840,15 @@ void deltaq( Limits_block* Limits, OZ_block* OZ, CLIM_block* CLIM, CONCS_block* 
         //F4849 !   TOTAL GREENHOUSE FORCING
         //F4850 !
         //F4851       QCO2(J)=QXX*ALOG(CO2(J)/CO2(1))
-        FORCE->QCO2[ J ] = CLIM->QXX * log( float( CARB->CO2[ J ] / CARB->CO2[ 1 ] ) );
+        if ( CARB->CO2[ J ] >= 0 ) {
+            FORCE->QCO2[ J ] = CLIM->QXX * log( float( CARB->CO2[ J ] / CARB->CO2[ 1 ] ) );
+        }
+        else { // Catch pathological case of negative CO2 conc
+            FORCE->QCO2[ J ] = CLIM->QXX * log( float( 1.0 / CARB->CO2[ 1 ] ) );
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::WARNING );
+            mainLog << "MAGICC+ encountered a CO2 conc < 0 at year " << J + 1764 << ".  CO2 forcing reset. " << endl;            
+        }
         //        if(J>235) cout << "QCO2 " << J << " " << FORCE->QCO2[J] << " " << CLIM->QXX << " " << CARB->CO2[J] << " " << CARB->CO2[1] << endl; //debug
         //F4852       QGH(J)=QCO2(J)+QM(J)+QN(J)+QCFC(J)
         TANDSL->QGH[ J ] = FORCE->QCO2[ J ] + FORCE->QM[ J ] + FORCE->QN[ J ] + FORCE->QCFC[ J ];
