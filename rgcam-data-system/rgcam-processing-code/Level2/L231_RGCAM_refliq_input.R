@@ -13,6 +13,7 @@ printlog( "RGCAM refined liquids input file" )
 
 A_refliq_Delete <- readdata( "A_refliq_Delete" )
 A_refliq_sector <- readdata( "A_refliq_sector" )
+A_refliq_co2_coef <- readdata( "A_refliq_co2_coef" )
 A_refliq_subs <- readdata( "A_refliq_subs" )
 A_refliq_subs_interp <- readdata( "A_refliq_subs_interp" )
 
@@ -53,6 +54,14 @@ L231_Sector <- L231_Sector[ sort( rep( 1:nrow( L231_Sector ), times = length( L2
 L231_Sector <- data.frame( region=L231_subregions, L231_Sector )
 L231_Sector <- rbind( L231_Sector, data.frame( region="USA", A_refliq_sector[ !A_refliq_sector$by_state,
     names( A_refliq_sector ) %!in% c( "by_state" ) ] ) )
+
+# Specify CO2 coefficients for the new sectors we are creating
+printlog( "L231_CO2Coefs: CO2 COEFS FOR NEW SECTORS" )
+L231_CO2Coefs <- A_refliq_co2_coef[ A_refliq_co2_coef$by_state, names( A_refliq_co2_coef ) %!in% c( "by_state" ) ]
+L231_CO2Coefs <- L231_CO2Coefs[ sort( rep( 1:nrow( L231_CO2Coefs ), times = length( L231_subregions ) ) ), ]
+L231_CO2Coefs <- data.frame( region=L231_subregions, L231_CO2Coefs )
+L231_CO2Coefs <- rbind( L231_CO2Coefs, data.frame( region="USA", A_refliq_co2_coef[ !A_refliq_co2_coef$by_state,
+    names( A_refliq_co2_coef ) %!in% c( "by_state" ) ] ) )
 
 # Create a table for subsector nest share-weights and logits
 printlog( "L231_Subsector: SUBSECTOR LEVEL PARAMS" )
@@ -124,6 +133,10 @@ L231_agg_temp <- L231_Sector[ L231_Sector$region == L231_subregions[1], ]
 L231_agg_temp$region <- "USA"
 L231_Sector <- rbind( L231_Sector, L231_agg_temp )
 
+L231_agg_temp <- L231_CO2Coefs[ L231_CO2Coefs$region == L231_subregions[1], ]
+L231_agg_temp$region <- "USA"
+L231_CO2Coefs <- rbind( L231_CO2Coefs, L231_agg_temp )
+
 L231_agg_temp <- L231_Subsector[ L231_Subsector$region == L231_subregions[1], ]
 L231_agg_temp$region <- "USA"
 # TODO: how to do assumptions for these
@@ -175,6 +188,7 @@ L231_TechInput <- rbind( L231_TechInput, L231_agg_temp )
 
 write_mi_data( L231_DeleteSector, "SectorDelete", "L231_DeleteSector", "batch_rgcam_refined_liquids_input.xml" )
 write_mi_data( L231_Sector, "Sector", "L231_Sector", "batch_rgcam_refined_liquids_input.xml" )
+write_mi_data( L231_CO2Coefs, "CO2Coefs", "L231_CO2Coefs", "batch_rgcam_refined_liquids_input.xml" )
 write_mi_data( L231_Subsector, "ElecSubsector", "L231_Subsector", "batch_rgcam_refined_liquids_input.xml" )
 write_mi_data( L231_SubsInterpRule, "ElecSubsInterpRule", "L231_SubsInterpRule", "batch_rgcam_refined_liquids_input.xml" )
 write_mi_data( L231_GlobalDBTechAvail, "GlobalDBTechAvail", "L231_GlobalDBTechAvail", "batch_rgcam_refined_liquids_input.xml" )

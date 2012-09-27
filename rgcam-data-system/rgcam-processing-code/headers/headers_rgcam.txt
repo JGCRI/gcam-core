@@ -170,3 +170,5 @@ ChangeInputMarketGlobalDB,global-technology-database/+{sector-name}location-info
 
 ChangeInputMarketAddCost,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name;nocreate=1}stub-technology,stub-technology/+{year}period,period/+{name}minicam-energy-input,minicam-energy-input/+market-name,minicam-non-energy-input/+input-cost,scenario,scenario/world,period/{name=base-cost-adj}minicam-non-energy-input
 
+CO2Coefs,world/+{name}region,region/+{name}PrimaryFuelCO2Coef,region/+PrimaryFuelCO2Coef,scenario,scenario/world
+
