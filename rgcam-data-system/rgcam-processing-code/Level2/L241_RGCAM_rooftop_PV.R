@@ -129,7 +129,7 @@ L241_renew_func_params <- merge( L241_renew_func_params, L241_max_gen )
 
 # Create a table for smooth renewable subresource parameters
 printlog( "L241_SmoothRenewSubRes: SMOOTH RENEW SUBRESOURCE" )
-L241_SmoothRenewSubRes <- A_res_other
+L241_SmoothRenewSubRes <- subset( A_res_other, resource == "distributed_solar" )
 L241_SmoothRenewSubRes <- L241_SmoothRenewSubRes[ rep( 1:nrow( L241_SmoothRenewSubRes ),
     times = nrow( L241_renew_func_params ) ), ]
 L241_SmoothRenewSubRes <- data.frame( region=L241_renew_func_params$state, L241_SmoothRenewSubRes,

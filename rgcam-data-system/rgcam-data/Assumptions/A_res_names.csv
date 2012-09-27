@@ -3,3 +3,4 @@
 resource,output_unit,price_unit,price
 geothermal,EJ,1975$/GJ,0.45
 distributed_solar,EJ,1975$/GJ,10
+large onshore windresource,EJ,1975$/GJ,1

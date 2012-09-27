@@ -192,6 +192,7 @@ NREL_us_re_capacity_factors,rgcam-data/Level0/
 NREL_us_re_technical_potential,rgcam-data/Level0/
 NREL_Com_PV_supply_curve,rgcam-data/Level0/
 NREL_Res_PV_supply_curve,rgcam-data/Level0/
+us_state_wind,rgcam-data/Level0/
 #,
 # Level 1 script outputs,
 #,
@@ -401,6 +402,9 @@ L240_GeoTechChange,rgcam-data/Level2/
 L240_GeoRenewSubResGrades,rgcam-data/Level2/
 L240_GeoMaxSubResource,rgcam-data/Level2/
 L240_ChangeMarket,rgcam-data/Level2/
+L240_WindResource,rgcam-data/Level2/
+L240_SmoothRenewSubRes,rgcam-data/Level2/
+L240_ChangeMarketAddCost,rgcam-data/Level2/
 L241_DeleteResource,rgcam-data/Level2/
 L241_PVResource,rgcam-data/Level2/
 L241_PVTechChange,rgcam-data/Level2/
