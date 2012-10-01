@@ -57,7 +57,7 @@
                      <degree-days year="2095">4307</degree-days>
                      <internal-gains-scalar>-100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.2325</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">3.51457</base-service>
                      <base-service year="2005">3.84574</base-service>
@@ -85,14 +85,14 @@
                      <degree-days year="2095">1498</degree-days>
                      <internal-gains-scalar>100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.1232</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">1.48079</base-service>
                      <base-service year="2005">2.33035</base-service>
                   </thermal-building-service-input>
                   <building-service-input name="resid others">
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.2636</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">3.14466</base-service>
                      <base-service year="2005">4.49740</base-service>
@@ -173,7 +173,7 @@
                      <degree-days year="2095">4307</degree-days>
                      <internal-gains-scalar>-100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.2585</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">1.44616</base-service>
                      <base-service year="2005">1.60175</base-service>
@@ -201,14 +201,14 @@
                      <degree-days year="2095">1498</degree-days>
                      <internal-gains-scalar>100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.2377</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">1.05666</base-service>
                      <base-service year="2005">1.65527</base-service>
                   </thermal-building-service-input>
                   <building-service-input name="comm others">
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.8508</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">3.82932</base-service>
                      <base-service year="2005">5.29632</base-service>
@@ -5055,7 +5055,7 @@
                      <degree-days year="2095">8022</degree-days>
                      <internal-gains-scalar>-100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.4446</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.49137</base-service>
                      <base-service year="2005">0.61695</base-service>
@@ -5083,14 +5083,14 @@
                      <degree-days year="2095">432</degree-days>
                      <internal-gains-scalar>100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.0365</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.02731</base-service>
                      <base-service year="2005">0.03412</base-service>
                   </thermal-building-service-input>
                   <building-service-input name="resid others">
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.3348</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.34289</base-service>
                      <base-service year="2005">0.42840</base-service>
@@ -5171,7 +5171,7 @@
                      <degree-days year="2095">8022</degree-days>
                      <internal-gains-scalar>-100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.9135</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.43170</base-service>
                      <base-service year="2005">0.54160</base-service>
@@ -5199,7 +5199,7 @@
                      <degree-days year="2095">432</degree-days>
                      <internal-gains-scalar>100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.1531</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.07237</base-service>
                      <base-service year="2005">0.09048</base-service>
@@ -10053,7 +10053,7 @@
                      <degree-days year="2095">4418</degree-days>
                      <internal-gains-scalar>-100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.2523</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">3.81329</base-service>
                      <base-service year="2005">4.74805</base-service>
@@ -10081,7 +10081,7 @@
                      <degree-days year="2095">586</degree-days>
                      <internal-gains-scalar>100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.0515</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.50734</base-service>
                      <base-service year="2005">0.73383</base-service>
@@ -10169,7 +10169,7 @@
                      <degree-days year="2095">4418</degree-days>
                      <internal-gains-scalar>-100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.2805</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">1.07490</base-service>
                      <base-service year="2005">1.32362</base-service>
@@ -10197,7 +10197,7 @@
                      <degree-days year="2095">586</degree-days>
                      <internal-gains-scalar>100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.0993</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.47944</base-service>
                      <base-service year="2005">0.69347</base-service>
@@ -15051,7 +15051,7 @@
                      <degree-days year="2095">3882</degree-days>
                      <internal-gains-scalar>-100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.2083</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.38245</base-service>
                      <base-service year="2005">0.48301</base-service>
@@ -15079,7 +15079,7 @@
                      <degree-days year="2095">1159</degree-days>
                      <internal-gains-scalar>100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.0955</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.11500</base-service>
                      <base-service year="2005">0.18031</base-service>
@@ -15167,7 +15167,7 @@
                      <degree-days year="2095">3882</degree-days>
                      <internal-gains-scalar>-100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.2317</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.30598</base-service>
                      <base-service year="2005">0.36970</base-service>
@@ -15195,7 +15195,7 @@
                      <degree-days year="2095">1159</degree-days>
                      <internal-gains-scalar>100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.1843</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.17884</base-service>
                      <base-service year="2005">0.28039</base-service>
@@ -20049,7 +20049,7 @@
                      <degree-days year="2095">2022</degree-days>
                      <internal-gains-scalar>-100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.1179</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.08057</base-service>
                      <base-service year="2005">0.10195</base-service>
@@ -20077,7 +20077,7 @@
                      <degree-days year="2095">992</degree-days>
                      <internal-gains-scalar>100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.0868</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.03026</base-service>
                      <base-service year="2005">0.04840</base-service>
@@ -20165,7 +20165,7 @@
                      <degree-days year="2095">2022</degree-days>
                      <internal-gains-scalar>-100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.1312</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.01846</base-service>
                      <base-service year="2005">0.02743</base-service>
@@ -20193,7 +20193,7 @@
                      <degree-days year="2095">992</degree-days>
                      <internal-gains-scalar>100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.1674</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.03805</base-service>
                      <base-service year="2005">0.06086</base-service>
@@ -25047,7 +25047,7 @@
                      <degree-days year="2095">7224</degree-days>
                      <internal-gains-scalar>-100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.5942</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">4.18776</base-service>
                      <base-service year="2005">2.63725</base-service>
@@ -25075,7 +25075,7 @@
                      <degree-days year="2095">765</degree-days>
                      <internal-gains-scalar>100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.0860</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.01028</base-service>
                      <base-service year="2005">0.01409</base-service>
@@ -25163,7 +25163,7 @@
                      <degree-days year="2095">7224</degree-days>
                      <internal-gains-scalar>-100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.8518</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">1.84673</base-service>
                      <base-service year="2005">1.25131</base-service>
@@ -25191,7 +25191,7 @@
                      <degree-days year="2095">765</degree-days>
                      <internal-gains-scalar>100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.1659</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.00517</base-service>
                      <base-service year="2005">0.00709</base-service>
@@ -30041,7 +30041,7 @@
                      <degree-days year="2095">3934</degree-days>
                      <internal-gains-scalar>-100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.2935</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">1.31823</base-service>
                      <base-service year="2005">1.67677</base-service>
@@ -30069,7 +30069,7 @@
                      <degree-days year="2095">1964</degree-days>
                      <internal-gains-scalar>100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.2279</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.09174</base-service>
                      <base-service year="2005">0.50226</base-service>
@@ -30157,7 +30157,7 @@
                      <degree-days year="2095">3934</degree-days>
                      <internal-gains-scalar>-100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.3264</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.36841</base-service>
                      <base-service year="2005">0.71383</base-service>
@@ -30185,7 +30185,7 @@
                      <degree-days year="2095">1964</degree-days>
                      <internal-gains-scalar>100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.4395</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.13872</base-service>
                      <base-service year="2005">0.75946</base-service>
@@ -35035,7 +35035,7 @@
                      <degree-days year="2095">2103</degree-days>
                      <internal-gains-scalar>-100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.1392</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.07411</base-service>
                      <base-service year="2005">0.18565</base-service>
@@ -35063,7 +35063,7 @@
                      <degree-days year="2095">3165</degree-days>
                      <internal-gains-scalar>100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.3323</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.42825</base-service>
                      <base-service year="2005">1.17770</base-service>
@@ -35151,7 +35151,7 @@
                      <degree-days year="2095">2103</degree-days>
                      <internal-gains-scalar>-100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.1548</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.00888</base-service>
                      <base-service year="2005">0.02195</base-service>
@@ -35179,7 +35179,7 @@
                      <degree-days year="2095">3165</degree-days>
                      <internal-gains-scalar>100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.6410</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.30865</base-service>
                      <base-service year="2005">0.81966</base-service>
@@ -40033,7 +40033,7 @@
                      <degree-days year="2095">391</degree-days>
                      <internal-gains-scalar>-100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.0315</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.05398</base-service>
                      <base-service year="2005">0.05533</base-service>
@@ -40061,7 +40061,7 @@
                      <degree-days year="2095">3870</degree-days>
                      <internal-gains-scalar>100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.4981</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.17184</base-service>
                      <base-service year="2005">0.38804</base-service>
@@ -40149,7 +40149,7 @@
                      <degree-days year="2095">391</degree-days>
                      <internal-gains-scalar>-100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.0350</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.01546</base-service>
                      <base-service year="2005">0.02487</base-service>
@@ -40177,7 +40177,7 @@
                      <degree-days year="2095">3870</degree-days>
                      <internal-gains-scalar>100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.9607</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.04215</base-service>
                      <base-service year="2005">0.09518</base-service>
@@ -45031,7 +45031,7 @@
                      <degree-days year="2095">970</degree-days>
                      <internal-gains-scalar>-100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.0671</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.35542</base-service>
                      <base-service year="2005">0.41680</base-service>
@@ -45059,7 +45059,7 @@
                      <degree-days year="2095">2367</degree-days>
                      <internal-gains-scalar>100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.2501</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.21469</base-service>
                      <base-service year="2005">0.39631</base-service>
@@ -45147,7 +45147,7 @@
                      <degree-days year="2095">970</degree-days>
                      <internal-gains-scalar>-100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.0746</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.10383</base-service>
                      <base-service year="2005">0.14141</base-service>
@@ -45175,7 +45175,7 @@
                      <degree-days year="2095">2367</degree-days>
                      <internal-gains-scalar>100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.4824</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.24483</base-service>
                      <base-service year="2005">0.45119</base-service>
@@ -50029,7 +50029,7 @@
                      <degree-days year="2095">398</degree-days>
                      <internal-gains-scalar>-100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.0324</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.07998</base-service>
                      <base-service year="2005">0.14378</base-service>
@@ -50057,7 +50057,7 @@
                      <degree-days year="2095">4862</degree-days>
                      <internal-gains-scalar>100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.5691</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.29655</base-service>
                      <base-service year="2005">0.90752</base-service>
@@ -50145,7 +50145,7 @@
                      <degree-days year="2095">398</degree-days>
                      <internal-gains-scalar>-100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.0360</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.02424</base-service>
                      <base-service year="2005">0.03898</base-service>
@@ -50173,7 +50173,7 @@
                      <degree-days year="2095">4862</degree-days>
                      <internal-gains-scalar>100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>1.0976</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.12841</base-service>
                      <base-service year="2005">0.39295</base-service>
@@ -55027,7 +55027,7 @@
                      <degree-days year="2095">5377</degree-days>
                      <internal-gains-scalar>-100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.3584</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.91216</base-service>
                      <base-service year="2005">0.75489</base-service>
@@ -55055,7 +55055,7 @@
                      <degree-days year="2095">642</degree-days>
                      <internal-gains-scalar>100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.0656</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.05877</base-service>
                      <base-service year="2005">0.09604</base-service>
@@ -55143,7 +55143,7 @@
                      <degree-days year="2095">5377</degree-days>
                      <internal-gains-scalar>-100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.3986</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.28546</base-service>
                      <base-service year="2005">0.25133</base-service>
@@ -55171,7 +55171,7 @@
                      <degree-days year="2095">642</degree-days>
                      <internal-gains-scalar>100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.1265</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.03848</base-service>
                      <base-service year="2005">0.06288</base-service>
@@ -60021,7 +60021,7 @@
                      <degree-days year="2095">4761</degree-days>
                      <internal-gains-scalar>-100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.2836</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.13490</base-service>
                      <base-service year="2005">0.26390</base-service>
@@ -60049,7 +60049,7 @@
                      <degree-days year="2095">997</degree-days>
                      <internal-gains-scalar>100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.0907</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.00723</base-service>
                      <base-service year="2005">0.03474</base-service>
@@ -60137,7 +60137,7 @@
                      <degree-days year="2095">4761</degree-days>
                      <internal-gains-scalar>-100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.3153</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.11326</base-service>
                      <base-service year="2005">0.18803</base-service>
@@ -60165,7 +60165,7 @@
                      <degree-days year="2095">997</degree-days>
                      <internal-gains-scalar>100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.1749</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.01787</base-service>
                      <base-service year="2005">0.09128</base-service>
@@ -65019,7 +65019,7 @@
                      <degree-days year="2095">253</degree-days>
                      <internal-gains-scalar>-100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.0225</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.00219</base-service>
                      <base-service year="2005">0.00518</base-service>
@@ -65047,7 +65047,7 @@
                      <degree-days year="2095">5418</degree-days>
                      <internal-gains-scalar>100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.7149</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.02369</base-service>
                      <base-service year="2005">0.07432</base-service>
@@ -65135,7 +65135,7 @@
                      <degree-days year="2095">253</degree-days>
                      <internal-gains-scalar>-100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>0.0250</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.00031</base-service>
                      <base-service year="2005">0.00097</base-service>
@@ -65163,7 +65163,7 @@
                      <degree-days year="2095">5418</degree-days>
                      <internal-gains-scalar>100</internal-gains-scalar>
                      <satiation-demand-function>
-                        <satiation-level>#REF!</satiation-level>
+                        <satiation-level>1.3788</satiation-level>
                      </satiation-demand-function>
                      <base-service year="1990">0.00930</base-service>
                      <base-service year="2005">0.02918</base-service>
