@@ -74,7 +74,7 @@ public:
     virtual void open( const char[] = 0 ) = 0;
     virtual int receiveCharFromUnderStream( int ch ) = 0;
     virtual void close() = 0;
-    virtual void setLevel( const WarningLevel newLevel ) = 0;
+    virtual WarningLevel setLevel( const WarningLevel newLevel ) = 0;
     static ILogger& getLogger( const std::string& aLoggerName );
 };
 

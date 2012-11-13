@@ -45,8 +45,8 @@
 using namespace std;
 
 ///! Constructor
-MarketRES::MarketRES( const string& goodNameIn, const string& regionNameIn, const int periodIn ) :
-Market( goodNameIn, regionNameIn, periodIn ) {
+MarketRES::MarketRES( const string& goodNameIn, const string& regionNameIn, int periodIn ) :
+  Market( goodNameIn, regionNameIn, periodIn ) {
 }
 
 void MarketRES::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {
@@ -163,7 +163,7 @@ double MarketRES::getSolverSupply() const {
     const double threshold = 0.001;
     if( price <= threshold ) {
         const double slope = 1.0 / threshold;
-        return slope * price * supply;
+        return slope * price * getRawSupply();
     }
     else {
         return Market::getSolverSupply();
@@ -189,11 +189,11 @@ bool MarketRES::shouldSolve() const {
     // Note: secondary markets are not solved in miniCAM
     if ( solveMarket) {
         // if constraint does exist then solve
-        if( supply > util::getSmallNumber() ) { 
-		    doSolveMarket = true;
+        if( getRawSupply() > util::getSmallNumber() ) { 
+            doSolveMarket = true;
             // if constraint exists but not binding with null price
             // don't solve
-            if( (price <= 0.001) && (demand <= supply)){
+            if( (price <= 0.001) && (getRawDemand() <= getRawSupply())){
                 doSolveMarket = false;
             }
         }
@@ -214,11 +214,11 @@ bool MarketRES::shouldSolveNR() const {
     // Note: secondary markets are not solved in miniCAM
     if ( solveMarket) {
         // if constraint does exist then solve
-        if( supply > util::getSmallNumber() ) {
+        if( getRawSupply() > util::getSmallNumber() ) {
             doSolveMarket = true;
             // if constraint exists but not binding with null price
             // don't solve
-            if( (price <= 0.001) && (demand <= supply)){
+            if( (price <= 0.001) && (getRawDemand() <= getRawSupply())){
                 doSolveMarket = false;
             }
         }
@@ -242,7 +242,7 @@ bool MarketRES::meetsSpecialSolutionCriteria() const {
 
     // If price is zero, demand cannot be driven any higher.
     // The constraint is not binding (greater than the demand), so this market is solved.
-    if( ( price <= 0.001 ) && ( supply >= demand ) ){
+    if( ( price <= 0.001 ) && ( getRawSupply() >= getRawDemand() ) ){
 		return true;
     }
     return false;

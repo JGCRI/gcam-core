@@ -56,6 +56,10 @@
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/configuration.h"
 
+#if GCAM_PARALLEL_ENABLED
+#include <tbb/queuing_rw_mutex.h>
+#endif
+
 class Tabs;
 
 /*!
@@ -149,6 +153,11 @@ private:
 
     //! Internal storage mapping item names to item values.
     std::auto_ptr<InfoMap> mInfoMap;
+#if GCAM_PARALLEL_ENABLED
+    // actions that modify mInfoMap MUST obtain a write lock on the info map.
+    // Those that merely read it MUST obtain a read lock
+    mutable tbb::queuing_rw_mutex mInfoMapMutex;
+#endif
 
     //! A pointer to the parent of this Info object which can be null.
     const IInfo* mParentInfo;
@@ -174,6 +183,12 @@ template<class T> bool Info::setItemValueLocal( const std::string& aStringKey,
     // the parent to see if this new item will shadow a variable in the parent.
     const static bool debugChecking = Configuration::getInstance()->getBool( "debugChecking" );
     if( debugChecking ){
+#if GCAM_PARALLEL_ENABLED
+        // obtain read lock
+        // XXX FIXME:  We should arrange to release this lock BEFORE we recurse into
+        // the mParentInfo->hasValue calls
+        tbb::queuing_rw_mutex::scoped_lock readlock(mInfoMapMutex,false);
+#endif
         InfoMap::const_iterator curr = mInfoMap->find( aStringKey );
         if( curr != mInfoMap->end() ){
             // Check that the types match.
@@ -190,6 +205,10 @@ template<class T> bool Info::setItemValueLocal( const std::string& aStringKey,
         }
     }
 
+#if GCAM_PARALLEL_ENABLED
+    // acquire a write lock for updating the infomap
+    tbb::queuing_rw_mutex::scoped_lock writelock(mInfoMapMutex, true);
+#endif
     // Add the value regardless of whether a warning was printed.
     mInfoMap->insert( std::make_pair( aStringKey, std::make_pair( aType, boost::any( aValue ) ) ) );
     return true;
@@ -202,7 +221,14 @@ template<class T> bool Info::setItemValueLocal( const std::string& aStringKey,
 * \param aMustExist Whether it is an error for the item to be missing.
 * \param aExists Return parameter to update with whether the item existed.
 * \return The value associated with the key if it exists, the default value
-*         otherwise.
+*         otherwise. 
+* \warning This function returns a reference to an item stored in a map.  If
+*          the map entry is deleted or overwritten, we will wind up with a
+*          dangling reference.  We could return by value, but for string values
+*          that involves making several string temporaries (as this function is
+*          normally called indirectly through getString), which can be very
+*          painful in multithreaded code because of the synchronization buried
+*          in the string object's malloc call.
 */
 template<class T>
 const T& Info::getItemValueLocal( const std::string& aStringKey,
@@ -211,6 +237,10 @@ const T& Info::getItemValueLocal( const std::string& aStringKey,
     /*! \pre A valid key was passed. */
     assert( !aStringKey.empty() );
 
+#if GCAM_PARALLEL_ENABLED
+    // read lock for reading the map
+    tbb::queuing_rw_mutex::scoped_lock readlock(mInfoMapMutex, false);
+#endif
     // Check for the value.
     InfoMap::const_iterator curr = mInfoMap->find( aStringKey );
     if( curr != mInfoMap->end() ){
@@ -218,9 +248,23 @@ const T& Info::getItemValueLocal( const std::string& aStringKey,
         // Attempt to set the return value to the found value. This requires
         // converting the data from the actual type to the requested type.
         try {
-            return *boost::any_cast<T>( &curr->second.second );
+            // NB: By my reading of the boost docs, the pointer version of
+            // any_cast() used below will never throw an exception, so this
+            // try block is useless.  The docs don't say what WILL happen if
+            // the cast fails in the pointer version, but I'm assuming it
+            // returns a null pointer.  Thus, I've added a test that replicates
+            // the exception behavior in the event of a null pointer return.
+            // I've also left the try-catch in place, in case there are some
+            // versions of the boost libs that actually do throw an exception
+            // for the pointer version of the cast.
+            const T *valp = boost::any_cast<T>( &curr->second.second );
+            if(valp)
+                return *valp;
+            else
+                printBadCastWarning(aStringKey, false);
         }
         // Catch bad data conversions and print an error.
+        // See note within the try-block
         catch( boost::bad_any_cast ){
             printBadCastWarning( aStringKey, false );
         }

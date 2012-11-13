@@ -153,6 +153,12 @@
     <Filter Include="Header Files\containers">
       <UniqueIdentifier>{faa4b2da-4e16-41a9-ac39-838da9a72319}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\parallel">
+      <UniqueIdentifier>{9fa177e1-95f5-473b-bdb9-b4d2441a4620}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\parallel">
+      <UniqueIdentifier>{cedec6da-9927-4422-a273-00598d0a342f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\containers\source\batch_runner.cpp">
@@ -1030,6 +1036,18 @@
     </ClCompile>
     <ClCompile Include="..\..\functions\source\thermal_building_service_input.cpp">
       <Filter>Source Files\functions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\parallel\source\gcam_parallel.cpp">
+      <Filter>Source Files\parallel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\solution\solvers\source\logbroyden.cpp">
+      <Filter>Source Files\solution\solvers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\solution\util\source\jacobian-precondition.cpp">
+      <Filter>Source Files\solution\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\solution\util\source\svd_invert_solve.cpp">
+      <Filter>Source Files\solution\util</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2062,31 +2080,62 @@
     <ClInclude Include="..\..\functions\include\thermal_building_service_input.h">
       <Filter>Header Files\functions</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\solution\solvers\include\lognrbt.hh">
+    <ClInclude Include="..\..\parallel\include\util.hpp">
+      <Filter>Header Files\parallel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\parallel\include\bitvector.hpp">
+      <Filter>Header Files\parallel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\parallel\include\bmatrix.hpp">
+      <Filter>Header Files\parallel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\parallel\include\clanid.hpp">
+      <Filter>Header Files\parallel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\parallel\include\digraph.hpp">
+      <Filter>Header Files\parallel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\parallel\include\gcam_parallel.hpp">
+      <Filter>Header Files\parallel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\parallel\include\grain-collect.hpp">
+      <Filter>Header Files\parallel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\parallel\include\graph-parse.hpp">
+      <Filter>Header Files\parallel</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\solution\solvers\include\lognrbt.hpp">
       <Filter>Header Files\solution\solvers</Filter>
-    </None>
-    <None Include="..\..\solution\util\include\edfun.hh">
+    </ClInclude>
+    <ClInclude Include="..\..\solution\solvers\include\logbroyden.hpp">
+      <Filter>Header Files\solution\solvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\solution\util\include\ublas-helpers.hpp">
       <Filter>Header Files\solution\util</Filter>
-    </None>
-    <None Include="..\..\solution\util\include\fdjac.hh">
+    </ClInclude>
+    <ClInclude Include="..\..\solution\util\include\edfun.hpp">
       <Filter>Header Files\solution\util</Filter>
-    </None>
-    <None Include="..\..\solution\util\include\functor.hh">
+    </ClInclude>
+    <ClInclude Include="..\..\solution\util\include\fdjac.hpp">
       <Filter>Header Files\solution\util</Filter>
-    </None>
-    <None Include="..\..\solution\util\include\functor-subs.hh">
+    </ClInclude>
+    <ClInclude Include="..\..\solution\util\include\functor.hpp">
       <Filter>Header Files\solution\util</Filter>
-    </None>
-    <None Include="..\..\solution\util\include\linesearch.hh">
+    </ClInclude>
+    <ClInclude Include="..\..\solution\util\include\functor-subs.hpp">
       <Filter>Header Files\solution\util</Filter>
-    </None>
-    <None Include="..\..\solution\util\include\nrsolver.hh">
+    </ClInclude>
+    <ClInclude Include="..\..\solution\util\include\jacobian-precondition.hpp">
       <Filter>Header Files\solution\util</Filter>
-    </None>
-    <None Include="..\..\solution\util\include\ublas-helpers.hh">
+    </ClInclude>
+    <ClInclude Include="..\..\solution\util\include\linesearch.hpp">
       <Filter>Header Files\solution\util</Filter>
-    </None>
+    </ClInclude>
+    <ClInclude Include="..\..\solution\util\include\svd_invert_solve.hpp">
+      <Filter>Header Files\solution\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\util\base\include\fltcmp.hpp">
+      <Filter>Header Files\util\base</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

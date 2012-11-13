@@ -55,28 +55,17 @@
 
 class CalibrationMarket: public Market {
 public:
-    CalibrationMarket( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
+    CalibrationMarket( const std::string& goodNameIn, const std::string& regionNameIn, int periodIn );
     ~CalibrationMarket();
     virtual IMarketType::Type getType() const;
 
-    virtual void initPrice();
-    virtual void setPrice( const double priceIn );
     virtual void set_price_to_last_if_default( const double lastPriceIn );
     virtual void set_price_to_last( const double lastPrice );
-    virtual double getPrice() const;
 
-    virtual void addToDemand( const double demandIn );
-    virtual double getDemand() const;
-
-    virtual void nullSupply();
     virtual void nullDemand();
-    virtual double getSupply() const;
-    virtual void addToSupply( const double supplyIn );
-    virtual bool meetsSpecialSolutionCriteria() const;
-    virtual void removeFromRawDemand( const double demandIn );
 
-    virtual bool shouldSolve() const;
-    virtual bool shouldSolveNR() const;
+    virtual bool meetsSpecialSolutionCriteria() const;
+
 protected:
     virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const;
 };

@@ -24,6 +24,8 @@ OBJS       = calc_counter.o \
              solver_library.o \
              price_greater_than_solution_info_filter.o \
              price_less_than_solution_info_filter.o \
+	     jacobian-precondition.o \
+	     svd_invert_solve.o \
              edfun.o 
 
 solution_util_dir: ${OBJS}

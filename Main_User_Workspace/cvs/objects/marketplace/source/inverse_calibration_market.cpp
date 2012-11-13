@@ -46,8 +46,8 @@
 using namespace std;
 
 //! Constructor
-InverseCalibrationMarket::InverseCalibrationMarket( const string& goodNameIn, const string& regionNameIn, const int periodIn ) :
-Market( goodNameIn, regionNameIn, periodIn ) {
+InverseCalibrationMarket::InverseCalibrationMarket( const string& goodNameIn, const string& regionNameIn, int periodIn ) :
+  Market( goodNameIn, regionNameIn, periodIn ) {
 }
 
 //! Destructor
@@ -124,5 +124,5 @@ bool InverseCalibrationMarket::meetsSpecialSolutionCriteria() const {
     // Check if the market was set to solve without a constraint. Differs from
     // the CalibrationMarket because the supply variable is checked instead of
     // the demand variable because it is the constraint.
-    return ( supply < util::getSmallNumber() );
+    return ( getRawSupply() < util::getSmallNumber() );
 }

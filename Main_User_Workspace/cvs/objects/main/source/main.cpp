@@ -182,8 +182,8 @@ int main( int argc, char *argv[] ) {
     }
 
     // Run the scenario and print debugging information.
-    // TODO: Pref here?
-    success = runner->runScenarios( Scenario::RUN_ALL_PERIODS, true, timer );
+    const bool printDebug = conf->getBool( "print-debug-file", true );
+    success = runner->runScenarios( Scenario::RUN_ALL_PERIODS, printDebug, timer );
 
     // Print the output.
     runner->printOutput( timer );

@@ -52,6 +52,10 @@
 #include <xercesc/dom/DOMNode.hpp>
 #include "util/logger/include/ilogger.h"
 
+#if GCAM_PARALLEL_ENABLED
+#include <tbb/spin_mutex.h>
+#endif
+
 // Forward definition of the Logger class.
 class Logger; 
 class Tabs;
@@ -109,7 +113,7 @@ public:
     virtual void open( const char[] = 0 ) = 0; //!< Pure virtual function called to begin logging.
     int receiveCharFromUnderStream( int ch ); //!< Pure virtual function called to complete the log and clean up.
     virtual void close() = 0;
-    void setLevel( const ILogger::WarningLevel newLevel );
+    ILogger::WarningLevel setLevel( const ILogger::WarningLevel newLevel );
     void toDebugXML( std::ostream& out, Tabs* tabs ) const;
 protected:
 	//! Logger name
@@ -146,6 +150,9 @@ protected:
 private:
 	 //! Buffer which contains characters waiting to be printed.
     std::stringstream mBuf;
+#if GCAM_PARALLEL_ENABLED
+    tbb::spin_mutex mMutex;  //<! mutex protecting mBuf
+#endif
 
 	 //! Underlying ofstream
     PassToParentStreamBuf mUnderStream;

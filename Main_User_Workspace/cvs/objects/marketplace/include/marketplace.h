@@ -50,6 +50,12 @@
 #include <memory>
 #include "marketplace/include/imarket_type.h"
 #include "util/base/include/ivisitable.h"
+#include "util/base/include/fltcmp.hpp"
+
+#if GCAM_PARALLEL_ENABLED
+#include "tbb/parallel_for.h"
+#include "tbb/blocked_range.h"
+#endif 
 
 class Tabs;
 class Market;
@@ -196,6 +202,27 @@ private:
     std::auto_ptr<MarketDependencyFinder> mDependencyFinder;
     //! Flag indicating whether the next call to world->calc() will be part of a partial derivative calculation 
     bool mIsDerivativeCalc;
+
+#if GCAM_PARALLEL_ENABLED
+    //! helper class for tbb parallel_for over null supplies and demands
+    struct NullSDHelper {
+        const std::vector< std::vector<Market*> >& mMarkets;
+        const int mPeriod;
+        NullSDHelper( const std::vector< std::vector<Market*> >& aMarkets, const int aPeriod )
+            : mMarkets( aMarkets ), mPeriod( aPeriod ) {}
+        void operator()( const tbb::blocked_range<int>& aRange ) const;
+    };
+
+    //! helper class for tbb parallel_for over restore info
+    struct RestoreHelper {
+        const std::vector< std::vector<Market*> >& mMarkets;
+        const int mPeriod;
+        RestoreHelper( const std::vector< std::vector<Market*> >& aMarkets, const int aPeriod )
+            : mMarkets( aMarkets ), mPeriod( aPeriod ) {}
+        void operator()( const tbb::blocked_range<int>& aRange ) const;
+    };
+    
+#endif
 };
 
 #endif

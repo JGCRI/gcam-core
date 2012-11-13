@@ -3,7 +3,9 @@
 
 ### gcc compiler settings (testing with v4.1.2) ###
 CXX             = g++
-CXXOPTIM        = -O
+CC		= gcc
+CFLAGS		= -O2
+CXXOPTIM        = -O2
 CXXDEBUG        = -ggdb -DNDEBUG
 CXXBASEOPTS     = $(CXXDEBUG)
 
@@ -12,8 +14,47 @@ FCOPTIM         = -O3
 FCDEBUG         = -ffpe-trap=invalid,zero,overflow #-g -fbounds-check
 FCBASEOPTS      = -fno-underscoring $(FCDEBUG) #-fno-align-commons
 
-ARCH_FLAGS      = -DFORTRAN_LOWER
-ENVLIBS         = -lgfortran
+ARCH_FLAGS      = 
+ENVLIBS         = 
+
+## set this to a nonzero value to enable parallel execution (TBB required)
+GCAM_PARALLEL_ENABLED = 0
+## set this to a nonzero value to enable lapack, which switches to an SVD
+## solver for the N-R and Broyden solvers
+USE_LAPACK = 0
+
+## some optimization testing options
+NOCLEARNULL = 0
+NOCLEARRESTORE = 0
+
+
+
+### TBB setup:  On Evergreen, using tap intel-tbb-gnu (or variants for other compilers) will set
+### the TBB_INCDIR and TBB_LIBDIR environment variables.  These lines will create the necessary 
+### options on the compile command lines.  If TBB is in a standard place (like /usr/local), you 
+### can leave the environment variables unset, and the compiler will do the right thing (hopefully).
+ifneq ($(strip $(TBB_INCDIR)),)
+TBB_INCLUDE     = -I$(TBB_INCDIR)
+endif
+#
+ifneq ($(strip $(TBB_LIBDIR)),)
+TBB_LIBRARY     = -L$(TBB_LIBDIR)
+TBB_RPATH	= -Wl,-rpath,$(TBB_LIBDIR)
+endif
+#
+# Set the environment var TBB_LINK_DEBUG to get debugging versions of libraries
+ifneq ($(strip $(TBB_LINK_DEBUG)),1)
+LIBTBB          = tbb
+LIBTBBMALLOC    = tbbmalloc
+else
+LIBTBB          = tbb_debug
+LIBTBBMALLOC    = tbbmalloc_debug
+endif
+#
+ifneq ($(GCAM_PARALLEL_ENABLED),0) 
+TBB_LIB		= -l$(LIBTBB) -l$(LIBTBBMALLOC)
+endif
+
 
 ### locations of library include files
 # BOOST_INCLUDE should be set in the user environment on Evergreen by running 'tap boost'.
@@ -21,9 +62,29 @@ BOOSTINC	      = $(BOOST_INCLUDE)
 # Eventually we should be able to get DBXML installed and available by a tap command, 
 # but until then it will have to be set manually
 DBXMLINC	      = $(DBXML_INCLUDE)
+# Same for the Boost Lapack bindings
+ifneq ($(USE_LAPACK),0)
+ifneq ($(strip $(LAPACKLIB)),)
+BOOST_NUMERIC_BINDINGS = $(HOME)/src/boost-numeric-bindings
+endif
+BOOSTBIND      = -I$(BOOST_NUMERIC_BINDINGS)
+# On evergreen, these variables are set by running 'tap lapack'.  On other systems, set 
+# manually or using shell scripts
+ifeq ($(strip $(LAPACKINC)),)
+LAPACKINC  = $(HOME)/include 
+endif
+ifeq ($(strip $(LAPACKLIB)),)
+LAPACKLIB  = $(HOME)/lib
+endif
 
+LAPACKLD = -L$(LAPACKLIB)
+LAPACKCF = -I$(LAPACKINC)
+LAPACK_RPATH	= -Wl,-rpath,$(LAPACKLIB)
+LAPACKLINK = -llapack -lblas
+endif
+#
 ### locations of libraries
-LIBDIR		= -L/usr/local/lib -L$(DBXML_LIB) -L$(BUILDPATH)
+LIBDIR		= -L/usr/local/lib -L$(DBXML_LIB) -L$(BUILDPATH) $(TBB_LIBRARY) -L$(HOME)/lib $(LAPACKLD)
 
 ### Portland compiler settings (tested with v7.1-6) ###
 #FC              = pgf90
@@ -33,18 +94,20 @@ LIBDIR		= -L/usr/local/lib -L$(DBXML_LIB) -L$(BUILDPATH)
 
 ### The rest should be mostly compiler independent
 ## Note $(PROF) will be set as needed if we are building the gcam-prof target
-CPPFLAGS	= $(INCLUDE) $(ARCH_FLAGS)
+CPPFLAGS	= $(INCLUDE) $(ARCH_FLAGS) -DGCAM_PARALLEL_ENABLED=$(GCAM_PARALLEL_ENABLED) -DUSE_LAPACK=$(USE_LAPACK) -DNOCLEARNULL=$(NOCLEARNULL) -DNOCLEARRESTORE=$(NOCLEARRESTORE)
 CXXFLAGS        = $(CXXOPTIM) $(CXXBASEOPTS) $(PROF) -MMD
 FCFLAGS         = $(FCOPTIM) $(FCBASEOPTS) $(PROF)
 LD              = $(CXX) $(PROF)
-LDFLAGS         = $(CXXFLAGS) -Wl,-rpath=$(DBXML_LIB)
+LDFLAGS         = $(CXXFLAGS) -Wl,-rpath,$(DBXML_LIB) $(TBB_RPATH) $(LAPACK_RPATH) -Wl,-rpath,$(HOME)/lib
 AR              = ar ru
 #MAKE            = make -i -r
 RANLIB          = ranlib
-LIB             = ${ENVLIBS} $(LIBDIR) -lxerces-c -ldb -ldb_cxx -ldbxml -lxqilla
-INCLUDE         = -I$(BOOSTINC) \
+LIB             = ${ENVLIBS} $(LIBDIR) -lxerces-c -ldb -ldb_cxx -ldbxml -lxqilla $(TBB_LIB) $(LAPACKLINK)
+INCLUDE         = -I$(BOOSTINC) $(TBB_INCLUDE) $(BOOSTBIND) \
                   -I$(DBXMLINC) \
-                  -I${PATHOFFSET}
+                  -I${PATHOFFSET} \
+		  -I${HOME}/include \
+		  $(LAPACKCF)
 
 ### rule for building the dependency information
 # %.d: %.cpp

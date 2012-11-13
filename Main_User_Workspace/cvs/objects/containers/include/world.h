@@ -62,6 +62,10 @@ class IClimateModel;
 class GHGPolicy;
 class IActivity;
 
+#if GCAM_PARALLEL_ENABLED
+class GcamFlowGraph;
+#endif
+
 /*! 
 * \ingroup Objects
 * \brief A class which contains all the model's regions.  These regions may be MiniCAM (partial
@@ -107,6 +111,23 @@ public:
 	void accept( IVisitor* aVisitor, const int aPeriod ) const;
     void csvSGMOutputFile( std::ostream& aFile, const int period ) const;
     void csvSGMGenFile( std::ostream& aFile ) const;
+
+#if GCAM_PARALLEL_ENABLED
+  private:
+    //! TBB flow graph for a complete model evaluation
+    GcamFlowGraph* mTBBGraphGlobal;
+  public:
+    void calc( const int aPeriod, GcamFlowGraph *aWorkGraph, const std::vector<IActivity*>* aCalcList = 0 );
+    /*!
+     * \brief Return a pointer to the global flow graph
+     * \details The flow graph structure is opaque to everything but World and GcamParallel, so
+     *         it is safe to return as a non-const reference
+     * \warning It appears not to be safe to copy a TBB flow graph structure (the TBB documentation
+     *         is a little sparse, so it's hard to be sure).  To be on the safe side, all instances
+     *         of GcamFlowGraph should be passed around as pointers or references.
+     */
+    GcamFlowGraph *getGlobalFlowGraph() {return mTBBGraphGlobal;}
+#endif
 private:
     //! The type of an iterator over the Region vector.
     typedef std::vector<Region*>::iterator RegionIterator;
@@ -122,12 +143,15 @@ private:
     //! calc() has been called.
     std::auto_ptr<CalcCounter> mCalcCounter;
     
-    //! The global ordering of activities in which can be used to calculate the model.
+    //! The global ordering of activities which can be used to calculate the model.
     std::vector<IActivity*> mGlobalOrdering;
 
     void clear();
 
-    void csvGlobalDataFile() const; 
+    void csvGlobalDataFile() const;
+ public:
+    //! Number of activities in the global activity list
+    int global_size(void) {return mGlobalOrdering.size();}
 };
 
 #endif // _WORLD_H_

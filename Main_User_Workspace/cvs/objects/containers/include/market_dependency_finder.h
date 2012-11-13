@@ -51,6 +51,9 @@
 
 class Marketplace;
 class IActivity;
+#if GCAM_PARALLEL_ENABLED
+class GcamFlowGraph;
+#endif
 
 /*! 
  * \ingroup Objects
@@ -93,13 +96,17 @@ public:
 
     const std::vector<IActivity*> getOrdering( const int aMarketNumber = -1 ) const;
 
+#if GCAM_PARALLEL_ENABLED
+    GcamFlowGraph* getFlowGraph( const int aMarketNumber = -1 );
+#endif
+
     void resolveActivityToDependency( const std::string& aRegionName, 
                                       const std::string& aActivityName,
                                       IActivity* aDemandActivity,
                                       IActivity* aPriceActivity = 0 );
     
     void createOrdering();
-private:
+
     // CalcVertex and related declarations
     struct DependencyItem;
     /*!
@@ -226,7 +233,10 @@ private:
             return *mDemandVertices.begin();
         }
     };
+
+    const DependencyItemSet & getDependencyItems(void) const {return mDependencyItems;}
     
+  private:    
     //! The set of all traced dependencies in the model.
     DependencyItemSet mDependencyItems;
     
@@ -236,7 +246,11 @@ private:
      *        which would need to recalculate if the solver changed it's price.
      */
     struct MarketToDependencyItem {
-        MarketToDependencyItem( const int aMarketNumber ):mMarket( aMarketNumber ) {}
+        MarketToDependencyItem( const int aMarketNumber ):mMarket( aMarketNumber )
+#if GCAM_PARALLEL_ENABLED
+                                                          ,mFlowGraph( 0 )
+#endif
+        {}
         
         //! The market number which this struct represents.  Note that we do not
         //! directly link to a Market* since they are created by model period
@@ -246,6 +260,19 @@ private:
         //! A unique set of vertices to re-calculate should this market change
         //! it's price.
         std::set<CalcVertex*> mImpliedVertices;
+
+        //! A complete list of vertices to re-calculate should this market change
+        //! it's price.  Note that this is essentially a cache and only computed
+        //! the first time it is needed.
+        std::vector<IActivity*> mCalcList;
+
+#if GCAM_PARALLEL_ENABLED
+        //! A flow graph of vertices to re-calculate in parallel should this market
+        //! change it's price.  Note that this is essentially a cache and only computed
+        //! the first time it is needed.  This memory is owned my MarketDependencyFinder
+        //! and will be released explictly by it.
+        GcamFlowGraph* mFlowGraph;
+#endif
     };
     
     /*!
@@ -271,6 +298,11 @@ private:
     
     //! The final global ordering
     std::vector<IActivity*> mGlobalOrdering;
+
+#if GCAM_PARALLEL_ENABLED
+    //! The global flow graph to calculate the full model in parallel
+    GcamFlowGraph* mTBBGraphGlobal;
+#endif
     
     void findVerticesToCalculate( CalcVertex* aVertex, std::set<IActivity*>& aVisited ) const;
     int markCycles( CalcVertex* aCurrVertex, std::list<CalcVertex*>& aHasVisited, std::map<CalcVertex*, int>& aTotalVisists ) const;

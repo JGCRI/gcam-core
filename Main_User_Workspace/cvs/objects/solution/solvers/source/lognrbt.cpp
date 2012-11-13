@@ -46,7 +46,7 @@
 #include <xercesc/dom/DOMNodeList.hpp>
 
 #include "solution/solvers/include/solver_component.h"
-#include "solution/solvers/include/lognrbt.hh"
+#include "solution/solvers/include/lognrbt.hpp"
 #include "solution/util/include/calc_counter.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/world.h"
@@ -59,23 +59,37 @@
 #include "solution/util/include/solution_info_filter_factory.h"
 #include "solution/util/include/solvable_nr_solution_info_filter.h"
 
+#include "solution/util/include/functor-subs.hpp"
+#include "solution/util/include/linesearch.hpp"
+#include "solution/util/include/fdjac.hpp" 
+#include "solution/util/include/edfun.hpp"
+#include "solution/util/include/ublas-helpers.hpp"
+#include "solution/util/include/jacobian-precondition.hpp" 
+#include "util/base/include/fltcmp.hpp"
+
+#if USE_LAPACK
+#include <boost/numeric/bindings/traits/ublas_vector.hpp>
+#include <boost/numeric/bindings/traits/ublas_matrix.hpp>
+#include <boost/numeric/ublas/operation.hpp>
+#include <boost/numeric/bindings/lapack/gesvd.hpp>
+#include "solution/util/include/svd_invert_solve.hpp"
+#else
+#include <boost/numeric/ublas/operation.hpp>
 #include <boost/numeric/ublas/lu.hpp>
-#include "solution/util/include/functor-subs.hh"
-#include "solution/util/include/linesearch.hh"
-#include "solution/util/include/fdjac.hh" 
-#include "solution/util/include/edfun.hh"
-#include "solution/util/include/ublas-helpers.hh"
-#include "util/base/include/fltcmp.hh"
+#endif
 
-#include "util/base/include/fltcmp.hh"
-
+#include "util/base/include/timer.h"
 
 using namespace std;
 using namespace xercesc;
 
 std::string LogNRbt::SOLVER_NAME = "log-newton-raphson-backtracking-solver-component";
 
+#if USE_LAPACK
+#define UBMATRIX boost::numeric::ublas::matrix<double,boost::numeric::ublas::column_major>
+#else
 #define UBMATRIX boost::numeric::ublas::matrix<double>
+#endif
 #define UBVECTOR boost::numeric::ublas::vector<double>
 
 namespace {
@@ -124,7 +138,7 @@ bool LogNRbt::XMLParse( const DOMNode* aNode ) {
     return true;
 }
 
-/*! \brief Newton-Raphson solver in log-log space with backgracking
+/*! \brief Newton-Raphson solver in log-log space with backtracking
   
  * \details Attempts to solve the selected markets using a
  *          Newton-Raphson solution with backtracking (see Numerical
@@ -174,9 +188,13 @@ SolverComponent::ReturnCode LogNRbt::solve( SolutionInfoSet& solnset, int period
     for(size_t i=0; i<solvables.size(); ++i) {
       solverLog << i << "\t" << solvables[i].getPrice()
                 << "\t" << solvables[i].getSupply()
-                << "\t" << solvables[i].getDemand() << "\n";
+                << "\t" << solvables[i].getDemand()
+                << "\t\t" << solvables[i].getName() << "\n";
     } 
 
+    Timer& solverTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::SOLVER );
+    solverTimer.start();
+    
     UBVECTOR x(nsolv), fx(nsolv);
     int neval = 0;
 
@@ -190,11 +208,28 @@ SolverComponent::ReturnCode LogNRbt::solve( SolutionInfoSet& solnset, int period
     // Call F(x), store the result in fx
     F(x,fx);
 
-    solverLog.setLevel(ILogger::DEBUG);
     solverLog << "Initial guess:\n" << x << "\nInitial F(x):\n" << fx << "\n";
+
+    // Precondition the x values to avoid singular columns in the Jacobian
+    solverLog.setLevel(ILogger::DEBUG);
+    UBMATRIX J(F.narg(),F.nrtn());
+    fdjac(F, x, fx, J, true);
+    int pcfail = jacobian_precondition(x,fx,J,F,&solverLog);
+
+    if(pcfail) {
+      solverLog.setLevel(ILogger::ERROR);
+      solverLog << "Unable to find nonsingular initial guess for one or more markets.  nrsolve() will probably fail.\n";
+      solverLog.setLevel(ILogger::DEBUG);
+    }
+    else {
+      solverLog << "Revised guess:\n" << x << "\nInitial F(x):\n" << fx << "\n";
+    }
     
     // call the solver
-    int nrstatus = nrsolve(F, x, fx, neval);
+    int nrstatus = nrsolve(F, x, fx, J, neval);
+
+
+    solverTimer.stop();
 
     solverLog.setLevel(ILogger::NOTICE);
     solverLog << "Newton-Raphson solver:  neval= " << neval << "\nResult:  ";
@@ -212,7 +247,7 @@ SolverComponent::ReturnCode LogNRbt::solve( SolutionInfoSet& solnset, int period
     }
     else if(nrstatus > 0) {
         code = FAILURE_SINGULAR_MATRIX;
-        solverLog << "NR solution failed:  Encountered singular matrix (row " << nrstatus << ").\n";
+        solverLog << "NR solution failed:  Encountered singular matrix (# singular components = " << nrstatus << ").\n";
     }
     else {
         code = FAILURE_UNKNOWN;
@@ -228,31 +263,40 @@ SolverComponent::ReturnCode LogNRbt::solve( SolutionInfoSet& solnset, int period
 }
 
 
-int LogNRbt::nrsolve(VecFVec<double,double> &F, UBVECTOR &x,
-                     UBVECTOR &fx, int &neval)
+int LogNRbt::nrsolve(VecFVec<double,double> &F, UBVECTOR &x, UBVECTOR &fx, UBMATRIX &J,
+                     int &neval)
 {
+#if !USE_LAPACK
   using boost::numeric::ublas::permutation_matrix;
   using boost::numeric::ublas::lu_factorize;
   using boost::numeric::ublas::lu_substitute;
+#endif
   using boost::numeric::ublas::axpy_prod;
   using boost::numeric::ublas::inner_prod;
-  UBMATRIX J(F.narg(),F.nrtn());
+  int nrow = J.size1(), ncol = J.size2();
+  // svd decomposition elements (note nrow == ncol)
+#if USE_LAPACK
+  UBMATRIX Usv(nrow,ncol),VTsv(ncol,ncol);
+  UBVECTOR Ssv(ncol);
+  int singcount = 0;
+  const int scmax = nrow/2;
+#else
+  permutation_matrix<int> p(F.narg()); // permutation vector for pivoting in L-U decomposition
+#endif
+  UBMATRIX Jtmp(nrow, ncol);
+  
 
   ILogger &solverLog = ILogger::getLogger("solver_log");
-  
+
+  // Note that we no longer need to do a jacobian calculation here
+  // because we do one in the preconditioner
   F(x,fx);
-  fdjac(F,x,fx,J);            // calculate finite difference Jacobian
 
   solverLog.setLevel(ILogger::DEBUG);
   
   neval += 1 + x.size();        // initial function evaluation + jacobian calculations
 
   const double FTINY = mFTOL*mFTOL;
-  UBMATRIX Jsav(J); // stash a copy of J before we run L-U
-  permutation_matrix<int> p(F.narg()); // permutation vector for pivoting in L-U
-                             // decomposition (note that a
-                             // "permutation matrix" is actually a
-                             // vector).
   UBVECTOR dx(F.narg());
   UBVECTOR xnew(F.narg());
   UBVECTOR gx(F.narg());
@@ -270,10 +314,11 @@ int LogNRbt::nrsolve(VecFVec<double,double> &F, UBVECTOR &x,
     return 0;
   
   for(int iter=0; iter<mMaxIter; ++iter) {
+    solverLog << "NR iter= " << iter << "\tneval= " << neval << "\n";
     axpy_prod(fx,J,gx);         // compute the gradient of F*F (= fx^T * J == J^T * fx)
-                                // axpy_prod clears gx on entry, so we don't have to do it.
-                                // NB: the order of fx and J in that last call is significant!
-
+    // axpy_prod clears gx on entry, so we don't have to do it.
+    // NB: the order of fx and J in that last call is significant!
+    
     // Check for zero gradient.  This indicates a local minimum in f,
     // from which we are unlikely to escape.  We will need to try
     // again with a different initial guess.  (This should be very
@@ -282,31 +327,98 @@ int LogNRbt::nrsolve(VecFVec<double,double> &F, UBVECTOR &x,
       return -3;
     }
 
-    for(size_t i=0; i<p.size(); ++i) p[i] = i;
-    Jsav = J;
-    int sing = lu_factorize(J,p);
-    if(sing>0) {
-      solverLog.setLevel(ILogger::WARNING);
-      solverLog << "Singular Jacobian:\n" << Jsav << "\n";
-      return sing;
-    }
+    Jtmp = J;                   // save the Jacobian, since gesvd destroys it.
 
-    // At this point, J contains the L-U decomposition of the original J
+#if USE_LAPACK
+    int ierr =
+      boost::numeric::bindings::lapack::gesvd('O','A','A', // control parameters
+                                              J,           // input matrix
+                                              Ssv,Usv,VTsv); // output matrices
+    if(ierr != 0) {
+      // svd failed.  It's not even clear under what circumstances
+      // this can happen
+      solverLog.setLevel(ILogger::SEVERE);
+      solverLog << "****************SVD failed.  This shouldn't happen.  It can't mean anything good.\n";
+      return ierr;
+    } 
+    
+    // At this point, U, S, and VT contain the SVD of the original Jacobian
+    solverLog.setLevel(ILogger::DEBUG);
     dx = -1.0*fx; 
-    try {
-      lu_substitute(J,p,dx);      // solve dx = J^-1 F
-    }
-    catch(const boost::numeric::ublas::internal_logic &err) {
-      // This seems to happen when the Jacobian is ill-conditioned.
-      // We'll let it go (possibly with some logging), since there
-      // isn't much we can do about it.  Either the solver will muddle
-      // through, or it will eventually bomb out with a genuinely
-      // singular matrix or with a failure in linesearch.
-      //std::cout << "\tFailure in L-U Substitute.\n\tx: " << x << "\tdx: " << dx << "\n";
-    }
-
+    int nsing = svdInvertSolve(Usv,Ssv,VTsv,dx, solverLog);
+    
+    solverLog.setLevel(ILogger::DEBUG);
     solverLog << "\n****************Iteration " << iter << "\nf0= " << f0
+              << "\tnsing= " << nsing
               << "\nx: " << x << "\nF(x): " << fx << "\ndx: " << dx << "\n";
+
+
+    if(nsing > 0) {
+      singcount += nsing;
+      if(singcount < scmax) {
+        // Try to reset the x value using the preconditioner
+        solverLog << "Resetting singular matrix, singcount = " << singcount << "\n";
+        J = Jtmp;
+        int fail = jacobian_precondition(x, fx, J, F, &solverLog);
+        if(fail)
+          return nsing;
+
+        // re-evaluate f0 and gx at the new guess
+        double f0 = inner_prod(fx,fx);
+        axpy_prod(fx,J,gx);         // compute the gradient of F*F (= fx^T * J == J^T * fx)
+        
+        // re-solve for dx using the new Jacobian
+        ierr = boost::numeric::bindings::lapack::gesvd('O','A','A', // control parameters
+                                                       J,           // input matrix
+                                                       Ssv,Usv,VTsv); // output matrices
+        if(ierr)
+          return nsing;
+        dx = -1.0*fx;
+        svdInvertSolve(Usv, Ssv, VTsv, dx, solverLog);
+      }
+      else {
+        return nsing;
+      }
+    }
+    else
+      singcount = 0;
+#else  /* No USE_LAPACK.  Use L-U decomposition to do the solution. */
+    int itrial = 0;
+    /* If the L-U decomposition fails the first time around, we will
+       invoke the jacobian preconditioner and try again.  If it fails
+       a second time, we bail out */
+    do {
+      for(size_t i=0; i<p.size(); ++i) p[i] = i;
+      int sing = lu_factorize(J,p);
+      if(sing>0) {
+        int fail=1;
+        if(itrial == 0)
+          fail = jacobian_precondition(x, fx, J, F, &solverLog);
+        
+        if(fail) {
+          solverLog.setLevel(ILogger::WARNING);
+          solverLog << "Singular Jacobian:\n" << Jtmp << "\n";
+          return sing;
+        }
+      }
+      else {
+        // L-U decomp was successful.  Continue with the next phase of the algorithm.
+        break;
+      }
+    } while(++itrial < 2);
+    
+    // J now holds the L-U decomposition of the Jacobian.  Attempt backsubstitution
+    dx = -1.0*fx;
+    try {
+      lu_substitute(J,p,dx);    // solve dx = J^-1 F
+    }
+    catch (const boost::numeric::ublas::internal_logic &err) {
+      // This error seems to be thrown when the Jacobian is
+      // ill-conditioned.  We let it go because often the solver will
+      // muddle through to a solution.  If not, then it will
+      // eventually stop with a genuinely singular matrix.
+    }
+#endif /* USE_LAPACK */
     
     // dx now holds the newton step.  Execute the line search along
     // that direction.

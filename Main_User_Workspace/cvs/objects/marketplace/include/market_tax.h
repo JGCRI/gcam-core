@@ -55,7 +55,7 @@
 
 class MarketTax: public MarketRES {
 public:
-    MarketTax( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
+    MarketTax( const std::string& goodNameIn, const std::string& regionNameIn, int periodIn );
     virtual IMarketType::Type getType() const;
 
     virtual void nullSupply();

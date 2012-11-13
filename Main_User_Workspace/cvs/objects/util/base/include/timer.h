@@ -47,7 +47,7 @@
 
 #include <iosfwd>
 #include <string>
-#include <ctime>
+#include <boost/date_time/posix_time/posix_time_types.hpp>
 /*!
 * \ingroup Objects
 * \brief A very basic class which times and prints events.
@@ -59,10 +59,70 @@ public:
     void start();
     void stop();
     double getTimeDifference() const;
+    double getTotalTimeDifference() const;
     void print( std::ostream& aOut, const std::string& aTitle = "Time: " ) const;
 private:
-    clock_t mStartTime; //!< Time the timer started
-    clock_t mStopTime; //!< Time the timer stopped
+    //! Time the timer started
+    boost::posix_time::ptime mStartTime;
+    
+    //! Time the timer stopped
+    boost::posix_time::ptime mStopTime;
+    
+    //! The total time measured by this timer between all starts and stops.
+    double mTotalTime;
+};
+
+/*!
+ * \brief A central timer repository which will keep track of named timers.
+ * \details Registered timers will exist for the duration of the model and can be
+ *          started and stopped multiple times while keeping a running total of
+ *          the total time spent.  This can be very useful for debugging or profiling
+ *          therefore it provides two interfaces.  One where timers are named by
+ *          predefined enumerations where performance is critical and another they
+ *          are named by string which is more convenient.
+ * \warning Timers are not thread safe.
+ * \author Pralit Patel and Robert Link
+ */
+class TimerRegistry {
+public:
+    //! Enumeration which describes predefined timers, to be used when performance
+    //! is critical.
+    enum PredefinedTimers {
+        FULLSCENARIO,
+        BISECT,
+        SOLVER,
+        JACOBIAN,
+        EVAL_PART,
+        EVAL_FULL,
+        JAC_PRE,
+        JAC_PRE_JAC,
+        EDFUN_MISC,
+        EDFUN_PRE,
+        EDFUN_POST,
+        EDFUN_AN_RESET,
+        END
+    };
+    
+    static TimerRegistry& getInstance();
+    
+    Timer& getTimer( const std::string& aTimerName );
+    
+    Timer& getTimer( const PredefinedTimers aTimerName );
+    
+    void printAllTimers( std::ostream& aOut ) const;
+private:
+    //! Private constructor to prevent multiple registries
+    TimerRegistry();
+    //! Private undefined copy constructor to prevent copying
+    TimerRegistry( const TimerRegistry& aTimerRegistry );
+    //! Private undefined assignment operator to prevent copying
+    TimerRegistry& operator=( const TimerRegistry& aTimerRegistry );
+    
+    //! A vector sized for the predefined timers for fast lookup.
+    std::vector<Timer> mPredefinedTimers;
+    
+    //! A map for named timers.
+    std::map<std::string, Timer> mNamedTimers;
 };
 
 #endif // _TIMER_H_

@@ -18,7 +18,8 @@ OBJS       = bisect_all.o \
              user_configurable_solver.o \
              solver_component_factory.o \
              solver_component.o \
-             lognrbt.o
+             lognrbt.o \
+	     logbroyden.o
 
 solution_solvers_dir: ${OBJS}
 

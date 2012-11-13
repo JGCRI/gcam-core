@@ -1,5 +1,5 @@
-#ifndef EDFUN_HH_
-#define EDFUN_HH_
+#ifndef EDFUN_HPP_
+#define EDFUN_HPP_
 
 
 /*
@@ -36,7 +36,7 @@
 
 
 /*!
- * @file functor-subs.hh
+ * @file functor-subs.hpp
  * @ingroup Solution
  * @brief Some specific functor subclasses for use in GCAM
  */
@@ -47,13 +47,18 @@
 #include "marketplace/include/marketplace.h"
 #include "containers/include/world.h"
 #include "solution/util/include/solution_info_set.h"
-#include "solution/util/include/functor.hh"
+#include "solution/util/include/functor.hpp"
 #include "util/base/include/atom.h"
+
+#if GCAM_PARALLEL_ENABLED
+#include "tbb/parallel_for.h"
+#include "tbb/blocked_range.h"
+#endif 
 
 #define UBVECTOR boost::numeric::ublas::vector
 
 /*!
- * \class LogEDFun "solution/util/include/edfun.hh"
+ * \class LogEDFun "solution/util/include/edfun.hpp"
  * \brief Functor for computing the GCAM excess demand in log space
  *
  * An instance of this class computes a vector of log relative excess
@@ -77,7 +82,7 @@ class LogEDFun : public VecFVec<double,double>
   //!
   //! Solution info objects for markets being manipulated.
   
-  //! @details This need not (and generally will not) include all of
+  //! \details This need not (and generally will not) include all of
   //! the markets in the model.  Markets not included in the list will
   //! have their prices held constant.
   std::vector<SolutionInfo> mkts;
@@ -107,7 +112,13 @@ public:
   
   // basic vector function interface
   virtual void operator()(const UBVECTOR<double> &x, UBVECTOR<double> &fx);
-  virtual void partial(int ip) {partj = ip;}
+  virtual void partial(int ip);
+  virtual double partialSize(int ip) const;
+
+  // Constants to protect against overflow: 
+  static const double PMAX;            //!< Greatest allowable price
+  static const double ARGMAX;          //!< log of greatest allowable price
+
 };  
 
 

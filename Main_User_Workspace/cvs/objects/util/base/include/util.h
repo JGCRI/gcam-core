@@ -58,6 +58,7 @@
 #include <boost/static_assert.hpp>
 #include <boost/utility/enable_if.hpp>
 #include <boost/type_traits/is_convertible.hpp>
+#include <boost/lexical_cast.hpp>
 #include <limits>
 #include <fstream>
 #include <iostream>
@@ -585,16 +586,18 @@ namespace objects {
         return difference;
     }
 
-    /*! \brief Convert a value to a string using the built in stringstream.
-    * \todo Remove this function and use the boost equivalent.
+    /*! \brief Convert a value to a string using boost lexical cast
     */
     template<class T> std::string toString( const T& value ){
-        static std::stringstream converter;
-        converter << value;
-        std::string output;
-        converter >> output;
-        converter.clear();
-        return output;
+      using boost::lexical_cast;
+      using boost::bad_lexical_cast;
+      try {
+        return lexical_cast<std::string>( value );
+      }
+      catch( bad_lexical_cast &exception ) {
+        // TODO:  Should we log this error
+        return "[[ unknown object ]]";
+      }
     }
 
    long createMinicamRunID( const time_t& aTime );

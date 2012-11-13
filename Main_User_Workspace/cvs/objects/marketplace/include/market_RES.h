@@ -58,7 +58,7 @@
 
 class MarketRES: public Market {
 public:
-    MarketRES( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
+    MarketRES( const std::string& goodNameIn, const std::string& regionNameIn, int periodIn );
     virtual IMarketType::Type getType() const;
 
     virtual void initPrice();

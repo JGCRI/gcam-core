@@ -1,5 +1,5 @@
-#ifndef LINESEARCH_HH_
-#define LINESEARCH_HH_
+#ifndef LINESEARCH_HPP_
+#define LINESEARCH_HPP_
 
 /*
 * LEGAL NOTICE
@@ -35,7 +35,7 @@
 
 
 /*!
- * \file linesearch.hh
+ * \file linesearch.hpp
  * \ingroup Solution
  * \brief Line search helper function for multidimensional root finders
  * \remark Because this function is defined as a template, we have to put the entire body in
@@ -43,9 +43,11 @@
  *         and nonportable to boot.
  */
 
-#include "functor.hh"
+#include "util/base/include/util.h"
+#include "functor.hpp"
 #include <boost/numeric/ublas/vector.hpp>
 #include <algorithm>
+#include <iostream>
 
 #define UBLAS boost::numeric::ublas
 
@@ -71,7 +73,7 @@ template <class FTYPE>
 int linesearch(SclFVec<FTYPE,FTYPE> &f, const UBLAS::vector<FTYPE> &x0,
                FTYPE f0, const UBLAS::vector<FTYPE> &g0,
                const UBLAS::vector<FTYPE> &dx, UBLAS::vector<FTYPE> &x,
-               FTYPE &fx, int &neval)
+               FTYPE &fx, int &neval, std::ostream *solverlog = 0)
 {
   const FTYPE lseps = 1.0e-7;   // part of the definition of "sufficient" decrease
   const FTYPE TOLX = 1.0e-14;    // tolerance for x values
@@ -84,21 +86,27 @@ int linesearch(SclFVec<FTYPE,FTYPE> &f, const UBLAS::vector<FTYPE> &x0,
   int n = x0.size();
   FTYPE g0dx=inner_prod(g0,dx); // initial rate of decrease, df/dlambda
   FTYPE lambda = 1.0;           // start with full step
-  FTYPE mval = 0.0;
+  FTYPE maxval = 0.0;
 
   // set lmin (minimum admissable value for lambda)
   for(int i=0; i<n; ++i) {
     FTYPE tmp = fabs(dx[i] / (x0[i] + TOLX)); // fractional change in ith component of x over a unit step
-    mval = std::max(tmp,mval);          // pick the largest
+    maxval = std::max(tmp,maxval);          // pick the largest
   }
-  FTYPE lmin = TOLX / mval;     // when lambda gets this small, even
+  FTYPE lmin = TOLX / maxval;     // when lambda gets this small, even
                                 // the fastest changing x is changing
                                 // by less than TOLX
+
+  if(solverlog)
+    (*solverlog) << "Beginning linesearch: lmin = " << lmin << "  f0 = " << f0 << "\n";
   
   while(lambda > lmin) {
     x  = x0 + lambda*dx;
     fx = f(x);
     neval++;
+
+    if(solverlog)
+      (*solverlog) << "\tlambda = " << lambda << "  fx = " << fx << "\n";
 
     // check for exit condition.  The term after the + is negative, so
     // it specifies a minimum rate of decrease.  lseps is set fairly

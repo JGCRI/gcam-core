@@ -94,8 +94,21 @@ void SolutionInfoSet::init( const unsigned int aPeriod, const double aDefaultSol
 
     // Create and initialize a SolutionInfo object for each market.
     typedef vector<Market*>::const_iterator ConstMarketIterator;
+    MarketDependencyFinder* depFinder = marketplace->getDependencyFinder();
     for( ConstMarketIterator iter = marketsToSolve.begin(); iter != marketsToSolve.end(); ++iter ){
-        SolutionInfo currInfo( *iter, (*iter)->isSolvable() ? marketplace->getDependencyFinder()->getOrdering( iter - marketsToSolve.begin() ) : vector<IActivity*>() );
+        const bool isSolvable = (*iter)->isSolvable();
+        const int marketNumber = iter - marketsToSolve.begin();
+        const vector<IActivity*> partialList = isSolvable ? depFinder->getOrdering( marketNumber ) : vector<IActivity*>();
+#if GCAM_PARALLEL_ENABLED
+        // TODO: As it turns out the extra time generating these graphs does not typically
+        // get paid back in terms of time saved while calculating partial derivatives.  At
+        // least in a single scenario run.  We need to come up with some methodology to figure
+        // out when it is beneficial to do this or not until then we are not generating any.
+        SolutionInfo currInfo( *iter, partialList, 
+               /*isSolvable ? depFinder->getFlowGraph( marketNumber ) :*/ 0 );
+#else
+        SolutionInfo currInfo( *iter, partialList );
+#endif
         currInfo.init( aDefaultSolutionTolerance, aDefaultSolutionFloor,
                        aSolutionInfoParamParser->getSolutionInfoValuesForMarket( (*iter)->getGoodName(), (*iter)->getRegionName(),
                                                                                  currInfo.getTypeName(), period ) );

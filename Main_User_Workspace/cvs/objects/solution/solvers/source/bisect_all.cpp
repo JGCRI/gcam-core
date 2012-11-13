@@ -58,6 +58,8 @@
 // TODO: this filter is hard coded here since it is the default, is this ok?
 #include "solution/util/include/solvable_solution_info_filter.h"
 
+#include "util/base/include/timer.h"
+
 using namespace std;
 using namespace xercesc;
 
@@ -162,6 +164,9 @@ SolverComponent::ReturnCode BisectAll::solve( SolutionInfoSet& aSolutionSet, con
     solverLog.setLevel( ILogger::NOTICE );
     ILogger& worstMarketLog = ILogger::getLogger( "worst_market_log" );
     worstMarketLog.setLevel( ILogger::NOTICE );
+
+    Timer& bisectTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::BISECT );
+    bisectTimer.start();
     
     // need to do bracketing first, does this need to be before or after startMethod?
     aSolutionSet.resetBrackets();
@@ -217,7 +222,11 @@ SolverComponent::ReturnCode BisectAll::solve( SolutionInfoSet& aSolutionSet, con
         }
 
         marketplace->nullSuppliesAndDemands( aPeriod );
+#if GCAM_PARALLEL_ENABLED
+        world->calc( aPeriod, world->getGlobalFlowGraph() );
+#else
         world->calc( aPeriod );
+#endif
         aSolutionSet.updateSolvable( mSolutionInfoFilter.get() );
 
         // Print solution set information to solver log.
@@ -251,6 +260,8 @@ SolverComponent::ReturnCode BisectAll::solve( SolutionInfoSet& aSolutionSet, con
 
     // Set the return code. 
     code = ( aSolutionSet.isAllSolved() ? SUCCESS : FAILURE_ITER_MAX_REACHED ); // report success, or failure
+
+    bisectTimer.stop();
     
     // Report exit conditions.
     solverLog.setLevel( ILogger::NOTICE );

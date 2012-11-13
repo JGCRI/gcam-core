@@ -46,8 +46,8 @@
 using namespace std;
 
 //! Constructor
-NormalMarket::NormalMarket( const string& goodNameIn, const string& regionNameIn, const int periodIn ) :
-Market( goodNameIn, regionNameIn, periodIn ) {
+NormalMarket::NormalMarket( const string& goodNameIn, const string& regionNameIn, int periodIn ) :
+  Market( goodNameIn, regionNameIn, periodIn ) {
 }
 
 void NormalMarket::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {

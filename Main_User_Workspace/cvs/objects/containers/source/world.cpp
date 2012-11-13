@@ -75,6 +75,17 @@
 #include "containers/include/market_dependency_finder.h"
 #include "containers/include/iactivity.h"
 
+#if GCAM_PARALLEL_ENABLED
+#include "parallel/include/gcam_parallel.hpp"
+#endif
+
+// Uncommenting the following two lines will turn on floating-point exceptions within World::calc(),
+// which will cause any invalid operation to crash the code and leave a core dump.  It's useful for
+// tracking down errant NaN values; however, it only works on Linux, so we include it only when we're
+// actively trying to track down a problem.
+// #define GNU_SOURCE
+// #include <fenv.h>
+
 using namespace std;
 using namespace xercesc;
 
@@ -162,6 +173,9 @@ void World::completeInit() {
     MarketDependencyFinder* depFinder = scenario->getMarketplace()->getDependencyFinder();
     depFinder->createOrdering();
     mGlobalOrdering = depFinder->getOrdering();
+#if GCAM_PARALLEL_ENABLED
+    mTBBGraphGlobal = depFinder->getFlowGraph();
+#endif
 }
 
 //! Write out datamembers to XML output stream.
@@ -296,6 +310,10 @@ void World::calc( const int aPeriod, const std::vector<IActivity*>& aItemsToCalc
      */
     assert( aItemsToCalc.size() <= mGlobalOrdering.size() );
 
+#ifdef GNU_SOURCE
+    int except = feenableexcept(FE_DIVBYZERO | FE_INVALID);
+#endif
+    
     // Increment the world.calc count based on the number of items to solve. 
     mCalcCounter->incrementCount( static_cast<double>( aItemsToCalc.size() ) / static_cast<double>( mGlobalOrdering.size() ) );
     
@@ -303,7 +321,55 @@ void World::calc( const int aPeriod, const std::vector<IActivity*>& aItemsToCalc
     for( vector<IActivity*>::const_iterator it = aItemsToCalc.begin(); it != aItemsToCalc.end(); ++it ) {
         (*it)->calc( aPeriod );
     }
+#ifdef GNU_SOURCE
+    feenableexcept(except);
+#endif
 }
+
+#if GCAM_PARALLEL_ENABLED
+/*! Calculate supply, demand, and emissions for a single time period
+ * \details This version of calc uses the TBB Flow Graph to do the calculation in
+ *          parallel.  Correct ordering of the calculations is ensured by the graph.
+ * \param aPeriod Time period to calculate
+ * \param aWorkGraph Structure containing the TBB flow graph.  It can be the graph
+ *          for the whole model, or for a desired subset.  If null is provided the
+ *          flow graph for the full model will be used.
+ * \param aCalcList This can be used when only a partial model calculation is needed
+ *                  and a flow graph has not been created for it.  In that case the
+ *                  full model flow graph will be used while skipping calculations
+ *                  not contained in aCalcList.
+ */
+void World::calc( const int aPeriod, GcamFlowGraph *aWorkGraph, const vector<IActivity*>* aCalcList )
+{
+#ifdef GNU_SOURCE
+    int except = feenableexcept(FE_DIVBYZERO | FE_INVALID);
+#endif
+
+    // increment the evaulation count by the fraction of the whole model that we're solving
+    mCalcCounter->incrementCount( aCalcList ? (double)(aCalcList->size()) / (double) mGlobalOrdering.size() : 1.0 );
+
+    if( !aWorkGraph ) {
+        // If a work graph was not provided just use the global flow graph and set the
+        // calc list which is used to skip uncessary activities that are not contained in
+        // the given calc list.
+        aWorkGraph = mTBBGraphGlobal;
+        aWorkGraph->mCalcList = aCalcList;
+    }
+    else {
+        // When a work graph is provided we assume all items in that graph should be
+        // calculated.
+        aWorkGraph->mCalcList = 0;
+    }
+    aWorkGraph->mPeriod = aPeriod;
+    // do the model calculation
+    aWorkGraph->mHead.try_put( tbb::flow::continue_msg() );
+    aWorkGraph->mTBBFlowGraph.wait_for_all();
+
+#ifdef GNU_SOURCE
+    feenableexcept(except);
+#endif
+}
+#endif
 
 //! Update all summary information for reporting
 // Orginally in world.calc, removed to call only once after solved

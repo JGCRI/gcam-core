@@ -53,7 +53,11 @@
 using namespace std;
 
 //! Constructor
+#if GCAM_PARALLEL_ENABLED
+SolutionInfo::SolutionInfo( Market* aLinkedMarket, const vector<IActivity*>& aDependencies, GcamFlowGraph* aFlowGraph )
+#else
 SolutionInfo::SolutionInfo( Market* aLinkedMarket, const vector<IActivity*>& aDependencies )
+#endif
 :linkedMarket( aLinkedMarket ),
 XL( 0 ),
 XR( 0 ),
@@ -66,6 +70,9 @@ mSolutionFloor( 0 ),
 mBracketInterval( 0 ),
 mMaxNRPriceJump( 0 ),
 mDependencies( const_cast<vector<IActivity*>&>( aDependencies ) )
+#if GCAM_PARALLEL_ENABLED
+,mFlowGraph( aFlowGraph )
+#endif
 {
     assert( aLinkedMarket );
 }
@@ -571,3 +578,15 @@ void SolutionInfo::printDerivatives( ostream& aOut ) const {
 const vector<IActivity*>& SolutionInfo::getDependencies() const {
     return mDependencies;
 }
+
+#if GCAM_PARALLEL_ENABLED
+/*
+ * \brief Get a flow graph with the items which are affected by changing the price
+ *        of this solution info.
+ * \return A flow graph to recalculate when this solution info's price changes.
+ */
+GcamFlowGraph* SolutionInfo::getFlowGraph() const {
+    return mFlowGraph;
+}
+#endif
+

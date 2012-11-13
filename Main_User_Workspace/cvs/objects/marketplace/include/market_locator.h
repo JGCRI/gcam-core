@@ -52,6 +52,10 @@ template <class T, class U> class HashMap;
 
 #include <boost/functional/hash/hash.hpp>
 
+#if GCAM_PARALLEL_ENABLED
+#include <tbb/enumerable_thread_specific.h>
+#endif
+
 /*!
 * \ingroup Objects
 * \brief This class is responsible for rapidly looking up the location of a
@@ -129,7 +133,11 @@ private:
     typedef HashMap<std::string, boost::shared_ptr<RegionOrMarketNode> > RegionMarketList;
 
     //! A pointer to the last region looked up.
+#if GCAM_PARALLEL_ENABLED
+    mutable tbb::enumerable_thread_specific<const RegionOrMarketNode*> mLastRegionLookup;
+#else
     mutable const RegionOrMarketNode* mLastRegionLookup;
+#endif
 
     //! A list of market areas each containing a list of sectors contained by
     //! the market.

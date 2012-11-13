@@ -59,7 +59,7 @@
 		<Value name="elec_nonco2">../input/energy/electric sector/renewable_shareweights.xml</Value>
 		<Value name="co2_storage">../input/energy/ccs/ccs_supply_curves_ref.xml</Value>
 		<Value name="keywords">../input/keywords/keywords_agg.xml</Value>
-		<Value name="solver_config">../input/solution/cal_solver_config.xml</Value>
+		<Value name="solver_config">../input/solution/cal_broyden_config.xml</Value>
 
 		<Value name="aglu">../input/aglu/SmoothWasteBio.xml</Value>
 		<Value name="aglu">../input/aglu/Add_On_bioadder_0.xml</Value>
@@ -93,6 +93,7 @@
 		<Value name="addLUCtoMarket">0</Value>
 		<Value name="write-xml-db">1</Value>
 		<Value name="write-access-db">0</Value>
+		<Value name="print-debug-file">1</Value>
 		<Value name="debugChecking">0</Value>
 		<Value name="debugFindSD">0</Value>
 		<Value name="simulActive">1</Value>
@@ -107,6 +108,7 @@
 		<Value name="numPointsForCO2CostCurve">5</Value>
 		<Value name="carbon-output-start-year">1705</Value>
 		<Value name="climateOutputInterval">5</Value>
+		<Value name="parallel-grain-size">15</Value>
 	</Ints>
 	<Doubles>
 	</Doubles>

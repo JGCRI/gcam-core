@@ -213,9 +213,18 @@ const string& Info::getStringHelper( const string& aStringKey, bool& aFound ) co
 }
 
 bool Info::hasValue( const string& aStringKey ) const {
-    // Check the local store.
+#if GCAM_PARALLEL_ENABLED
+    // get a read lock on the info map
+    tbb::queuing_rw_mutex::scoped_lock readlock(mInfoMapMutex,false);
+#endif
+    // Check the local store. 
     bool currHasValue = ( mInfoMap->find( aStringKey ) != mInfoMap->end() );
 
+#if GCAM_PARALLEL_ENABLED
+    // the lock on our local map is no longer needed.  Release before
+    // recursing into parent structures
+    readlock.release();
+#endif
     // If the value was not found, check the parent.
     if( !currHasValue && mParentInfo ){
         currHasValue = mParentInfo->hasValue( aStringKey );
@@ -224,6 +233,10 @@ bool Info::hasValue( const string& aStringKey ) const {
 }
 
 void Info::toDebugXML( const int aperiod, Tabs* aTabs, ostream& aOut ) const {
+#if GCAM_PARALLEL_ENABLED
+    // get read lock for the info map
+    tbb::queuing_rw_mutex::scoped_lock readlock(mInfoMapMutex, false);
+#endif
     XMLWriteOpeningTag( "Info", aOut, aTabs );
     for( InfoMap::const_iterator item = mInfoMap->begin(); item != mInfoMap->end(); ++item ){
         XMLWriteOpeningTag( "Pair", aOut, aTabs );

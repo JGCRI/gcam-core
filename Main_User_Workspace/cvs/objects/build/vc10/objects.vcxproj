@@ -13,6 +13,30 @@
       <Configuration>Debug</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Release - LAPACK|Itanium">
+      <Configuration>Release - LAPACK</Configuration>
+      <Platform>Itanium</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release - LAPACK|Win32">
+      <Configuration>Release - LAPACK</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release - LAPACK|x64">
+      <Configuration>Release - LAPACK</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release - TBB|Itanium">
+      <Configuration>Release - TBB</Configuration>
+      <Platform>Itanium</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release - TBB|Win32">
+      <Configuration>Release - TBB</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release - TBB|x64">
+      <Configuration>Release - TBB</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="Release|Itanium">
       <Configuration>Release</Configuration>
       <Platform>Itanium</Platform>
@@ -36,12 +60,40 @@
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - TBB|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>Windows7.1SDK</PlatformToolset>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>Windows7.1SDK</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - TBB|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>Windows7.1SDK</PlatformToolset>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Itanium'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>Windows7.1SDK</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|Itanium'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>Windows7.1SDK</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - TBB|Itanium'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>Windows7.1SDK</PlatformToolset>
@@ -64,10 +116,28 @@
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release - TBB|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release - TBB|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Itanium'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|Itanium'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release - TBB|Itanium'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
@@ -92,16 +162,38 @@
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|Itanium'">true</LinkIncremental>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../../../exe/Release\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|Win32'">../../../../exe/Release\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release - TBB|Win32'">../../../../exe/Release\</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../../../exe/</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|x64'">../../../../exe/</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release - TBB|x64'">../../../../exe/</OutDir>
     <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Itanium'">../../../../exe/</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|Itanium'">../../../../exe/</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release - TBB|Itanium'">../../../../exe/</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">../../../../exe/Release\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|Win32'">../../../../exe/Release\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release - TBB|Win32'">../../../../exe/Release\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">../../../../exe/Release\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|x64'">../../../../exe/Release\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release - TBB|x64'">../../../../exe/Release\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Itanium'">../../../../exe/Release\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|Itanium'">../../../../exe/Release\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release - TBB|Itanium'">../../../../exe/Release\</IntDir>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|Win32'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release - TBB|Win32'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|x64'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release - TBB|x64'">false</LinkIncremental>
     <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Itanium'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|Itanium'">false</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release - TBB|Itanium'">false</LinkIncremental>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Objects-Main</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|x64'">Objects-Main</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release - TBB|x64'">Objects-Main</TargetName>
     <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|Itanium'">Objects-Main</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|Itanium'">Objects-Main</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release - TBB|Itanium'">Objects-Main</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -136,7 +228,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <AdditionalIncludeDirectories>C:\PNNL\ObjECTS\Libs\xerces-c-src_2_7_0\lib;C:\PNNL\ObjECTS\Libs\dbxml2.5.16\include;..\..\..\..\..\libs\boost-lib\;..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_AFXDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;_DEBUG;_WINDOWS;_AFXDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
@@ -210,7 +302,148 @@
       <TargetMachine>MachineX86</TargetMachine>
     </Link>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/WL %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>..\..\..\..\..\libs\dbxml2.5.16\include;..\..\..\..\..\libs\boost-lib\;..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_AFXDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <MinimalRebuild>true</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libdb48.lib;libdbxml25.lib;ddao36.lib;xerces-c_3.lib;magicc.lib;aglu.lib;xqilla22.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)../Objects-Main.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\..\..\..\..\libs\access;..\..\..\..\..\libs\dbxml2.5.16\lib;..\..\..\..\..\libs\AgLib\lib;..\..\..\..\..\libs\magicclib\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release - TBB|Win32'">
+    <ClCompile>
+      <AdditionalOptions>/WL %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>..\..\..\..\..\libs\dbxml2.5.16\include;..\..\..\..\..\libs\boost-lib\;..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_AFXDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <MinimalRebuild>true</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>libdb48.lib;libdbxml25.lib;ddao36.lib;xerces-c_3.lib;magicc.lib;aglu.lib;xqilla22.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>$(OutDir)../Objects-Main.exe</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\..\..\..\..\libs\access;..\..\..\..\..\libs\dbxml2.5.16\lib;..\..\..\..\..\libs\AgLib\lib;..\..\..\..\..\libs\magicclib\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalOptions>/WL /MP %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>..\..\..\..\libs\dbxml\include;..\..\..\..\libs\boost-lib;..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;NDEBUG;_WINDOWS;_AFXDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\..\..\..\libs\dbxml\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <AdditionalDependencies>libdb48.lib;libdbxml25.lib;xerces-c_3.lib;xqilla22.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|x64'">
+    <ClCompile>
+      <AdditionalOptions>/WL /MP %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>..\..\..\..\libs\dbxml\include;..\..\..\..\libs\boost-lib;..\..\..\..\libs\boost-numeric-bindings;..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;NDEBUG;_WINDOWS;_AFXDLL;USE_LAPACK;BOOST_NUMERIC_BINDINGS_USE_CLAPACK;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\..\..\..\libs\dbxml\lib;..\..\..\..\libs\CLAPACK\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <AdditionalDependencies>libdb48.lib;libdbxml25.lib;xerces-c_3.lib;xqilla22.lib;lapack.lib;blas.lib;libf2c.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release - TBB|x64'">
+    <ClCompile>
+      <AdditionalOptions>/WL /MP %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>..\..\..\..\libs\dbxml\include;..\..\..\..\libs\boost-lib;..\..\..\..\libs\boost-numeric-bindings;..\..\..\..\libs\tbb\include;..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;NDEBUG;_WINDOWS;_AFXDLL;USE_LAPACK;BOOST_NUMERIC_BINDINGS_USE_CLAPACK;GCAM_PARALLEL_ENABLED;NOGDI;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\..\..\..\libs\dbxml\lib;..\..\..\..\libs\CLAPACK\lib;..\..\..\..\libs\tbb\lib\intel64\vc10;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <AdditionalDependencies>libdb48.lib;libdbxml25.lib;xerces-c_3.lib;xqilla22.lib;lapack.lib;blas.lib;libf2c.lib;tbb.lib;tbbmalloc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Itanium'">
     <ClCompile>
       <AdditionalOptions>/WL /MP %(AdditionalOptions)</AdditionalOptions>
       <Optimization>MaxSpeed</Optimization>
@@ -237,7 +470,34 @@
       <AdditionalDependencies>libdb48.lib;libdbxml25.lib;xerces-c_3.lib;xqilla22.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Itanium'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|Itanium'">
+    <ClCompile>
+      <AdditionalOptions>/WL /MP %(AdditionalOptions)</AdditionalOptions>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <OmitFramePointers>true</OmitFramePointers>
+      <AdditionalIncludeDirectories>..\..\..\..\libs\dbxml\include;..\..\..\..\libs\boost-lib;..\..;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_AFXDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <RuntimeTypeInfo>false</RuntimeTypeInfo>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <AdditionalLibraryDirectories>..\..\..\..\libs\dbxml\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <AdditionalDependencies>libdb48.lib;libdbxml25.lib;xerces-c_3.lib;xqilla22.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release - TBB|Itanium'">
     <ClCompile>
       <AdditionalOptions>/WL /MP %(AdditionalOptions)</AdditionalOptions>
       <Optimization>MaxSpeed</Optimization>
@@ -345,6 +605,7 @@
     <ClCompile Include="..\..\marketplace\source\normal_market.cpp" />
     <ClCompile Include="..\..\marketplace\source\price_market.cpp" />
     <ClCompile Include="..\..\marketplace\source\trial_value_market.cpp" />
+    <ClCompile Include="..\..\parallel\source\gcam_parallel.cpp" />
     <ClCompile Include="..\..\resources\source\accumulated_grade.cpp" />
     <ClCompile Include="..\..\resources\source\accumulated_post_grade.cpp" />
     <ClCompile Include="..\..\resources\source\depleting_fixed_resource.cpp" />
@@ -379,6 +640,7 @@
     <ClCompile Include="..\..\solution\solvers\source\bisect_policy.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\bisect_policy_nr_solver.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\bisection_nr_solver.cpp" />
+    <ClCompile Include="..\..\solution\solvers\source\logbroyden.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\lognrbt.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\log_newton_raphson.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\log_newton_raphson_sd.cpp" />
@@ -390,6 +652,7 @@
     <ClCompile Include="..\..\solution\util\source\and_solution_info_filter.cpp" />
     <ClCompile Include="..\..\solution\util\source\calc_counter.cpp" />
     <ClCompile Include="..\..\solution\util\source\edfun.cpp" />
+    <ClCompile Include="..\..\solution\util\source\jacobian-precondition.cpp" />
     <ClCompile Include="..\..\solution\util\source\market_name_solution_info_filter.cpp" />
     <ClCompile Include="..\..\solution\util\source\market_type_solution_info_filter.cpp" />
     <ClCompile Include="..\..\solution\util\source\not_solution_info_filter.cpp" />
@@ -403,6 +666,7 @@
     <ClCompile Include="..\..\solution\util\source\solvable_nr_solution_info_filter.cpp" />
     <ClCompile Include="..\..\solution\util\source\solvable_solution_info_filter.cpp" />
     <ClCompile Include="..\..\solution\util\source\solver_library.cpp" />
+    <ClCompile Include="..\..\solution\util\source\svd_invert_solve.cpp" />
     <ClCompile Include="..\..\solution\util\source\unsolved_solution_info_filter.cpp" />
     <ClCompile Include="..\..\target_finder\source\kyoto_forcing_target.cpp" />
     <ClCompile Include="..\..\target_finder\source\secanter.cpp" />
@@ -647,6 +911,14 @@
     <ClInclude Include="..\..\marketplace\include\normal_market.h" />
     <ClInclude Include="..\..\marketplace\include\price_market.h" />
     <ClInclude Include="..\..\marketplace\include\trial_value_market.h" />
+    <ClInclude Include="..\..\parallel\include\bitvector.hpp" />
+    <ClInclude Include="..\..\parallel\include\bmatrix.hpp" />
+    <ClInclude Include="..\..\parallel\include\clanid.hpp" />
+    <ClInclude Include="..\..\parallel\include\digraph.hpp" />
+    <ClInclude Include="..\..\parallel\include\gcam_parallel.hpp" />
+    <ClInclude Include="..\..\parallel\include\grain-collect.hpp" />
+    <ClInclude Include="..\..\parallel\include\graph-parse.hpp" />
+    <ClInclude Include="..\..\parallel\include\util.hpp" />
     <ClInclude Include="..\..\resources\include\accumulated_grade.h" />
     <ClInclude Include="..\..\resources\include\accumulated_post_grade.h" />
     <ClInclude Include="..\..\resources\include\aresource.h" />
@@ -684,6 +956,8 @@
     <ClInclude Include="..\..\solution\solvers\include\bisect_policy.h" />
     <ClInclude Include="..\..\solution\solvers\include\bisect_policy_nr_solver.h" />
     <ClInclude Include="..\..\solution\solvers\include\bisection_nr_solver.h" />
+    <ClInclude Include="..\..\solution\solvers\include\logbroyden.hpp" />
+    <ClInclude Include="..\..\solution\solvers\include\lognrbt.hpp" />
     <ClInclude Include="..\..\solution\solvers\include\log_newton_raphson.h" />
     <ClInclude Include="..\..\solution\solvers\include\log_newton_raphson_sd.h" />
     <ClInclude Include="..\..\solution\solvers\include\solver.h" />
@@ -694,7 +968,13 @@
     <ClInclude Include="..\..\solution\util\include\all_solution_info_filter.h" />
     <ClInclude Include="..\..\solution\util\include\and_solution_info_filter.h" />
     <ClInclude Include="..\..\solution\util\include\calc_counter.h" />
+    <ClInclude Include="..\..\solution\util\include\edfun.hpp" />
+    <ClInclude Include="..\..\solution\util\include\fdjac.hpp" />
+    <ClInclude Include="..\..\solution\util\include\functor-subs.hpp" />
+    <ClInclude Include="..\..\solution\util\include\functor.hpp" />
     <ClInclude Include="..\..\solution\util\include\isolution_info_filter.h" />
+    <ClInclude Include="..\..\solution\util\include\jacobian-precondition.hpp" />
+    <ClInclude Include="..\..\solution\util\include\linesearch.hpp" />
     <ClInclude Include="..\..\solution\util\include\market_name_solution_info_filter.h" />
     <ClInclude Include="..\..\solution\util\include\market_type_solution_info_filter.h" />
     <ClInclude Include="..\..\solution\util\include\not_solution_info_filter.h" />
@@ -708,6 +988,8 @@
     <ClInclude Include="..\..\solution\util\include\solvable_nr_solution_info_filter.h" />
     <ClInclude Include="..\..\solution\util\include\solvable_solution_info_filter.h" />
     <ClInclude Include="..\..\solution\util\include\solver_library.h" />
+    <ClInclude Include="..\..\solution\util\include\svd_invert_solve.hpp" />
+    <ClInclude Include="..\..\solution\util\include\ublas-helpers.hpp" />
     <ClInclude Include="..\..\solution\util\include\unsolved_solution_info_filter.h" />
     <ClInclude Include="..\..\solution\util\include\unsolved_solver_info_filter.h" />
     <ClInclude Include="..\..\target_finder\include\emissions_stabalization_target.h" />
@@ -776,6 +1058,7 @@
     <ClInclude Include="..\..\util\base\include\default_visitor.h" />
     <ClInclude Include="..\..\util\base\include\definitions.h" />
     <ClInclude Include="..\..\util\base\include\fixed_interpolation_function.h" />
+    <ClInclude Include="..\..\util\base\include\fltcmp.hpp" />
     <ClInclude Include="..\..\util\base\include\hash_map.h" />
     <ClInclude Include="..\..\util\base\include\iinterpolation_function.h" />
     <ClInclude Include="..\..\util\base\include\inamed.h" />
@@ -902,16 +1185,6 @@
     <ClInclude Include="..\..\investment\include\simple_expected_profit_calculator.h" />
     <ClInclude Include="..\..\policy\include\policy_ghg.h" />
     <ClInclude Include="..\..\policy\include\policy_portfolio_standard.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\solution\solvers\include\lognrbt.hh" />
-    <None Include="..\..\solution\util\include\edfun.hh" />
-    <None Include="..\..\solution\util\include\fdjac.hh" />
-    <None Include="..\..\solution\util\include\functor-subs.hh" />
-    <None Include="..\..\solution\util\include\functor.hh" />
-    <None Include="..\..\solution\util\include\linesearch.hh" />
-    <None Include="..\..\solution\util\include\nrsolver.hh" />
-    <None Include="..\..\solution\util\include\ublas-helpers.hh" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

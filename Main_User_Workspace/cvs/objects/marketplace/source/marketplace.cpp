@@ -56,8 +56,7 @@
 #include "containers/include/iinfo.h"
 #include "marketplace/include/cached_market.h"
 #include "containers/include/market_dependency_finder.h"
-#include "util/base/include/fltcmp.hh"
-#include "solution/util/include/ublas-helpers.hh"
+#include "solution/util/include/ublas-helpers.hpp"
 
 using namespace std;
 
@@ -368,6 +367,16 @@ void Marketplace::unsetMarketToSolve ( const string& goodName, const string& reg
     }
 }
 
+#if GCAM_PARALLEL_ENABLED
+void Marketplace::NullSDHelper::operator()( const tbb::blocked_range<int>& aRange) const
+{
+    for( int marketIndex = aRange.begin(); marketIndex != aRange.end(); ++marketIndex ) {
+        mMarkets[ marketIndex ][ mPeriod ]->nullDemand();
+        mMarkets[ marketIndex ][ mPeriod ]->nullSupply();
+    }
+}
+#endif
+
 /*! \brief Clear all market supplies and demands for the given period.
 * 
 * This function iterates through the markets and nulls the supply and demand 
@@ -376,10 +385,15 @@ void Marketplace::unsetMarketToSolve ( const string& goodName, const string& reg
 * \param period Period in which to null the supplies and demands. 
 */
 void Marketplace::nullSuppliesAndDemands( const int period ) {
+#if GCAM_PARALLEL_ENABLED
+    NullSDHelper nsd( markets, period );
+    tbb::parallel_for( tbb::blocked_range<int>( 0, markets.size() ), nsd );
+#else
     for ( unsigned int i = 0; i < markets.size(); i++ ) {
         markets[ i ][ period ]->nullDemand();
         markets[ i ][ period ]->nullSupply();
     }
+#endif
 }
 
 /*! \brief Set the market price.
@@ -681,6 +695,15 @@ void Marketplace::storeinfo( const int period ) {
     }
 }
 
+#if GCAM_PARALLEL_ENABLED
+void Marketplace::RestoreHelper::operator()( const tbb::blocked_range<int>& aRange ) const
+{
+    for( int marketIndex = aRange.begin(); marketIndex != aRange.end(); ++marketIndex ) {
+        mMarkets[ marketIndex ][ mPeriod ]->restoreInfo();
+    }
+}
+#endif
+
 /*! \brief Restore the stored demand, supply and price for each market. 
 *
 * This function called the Market::restoreInfo function on each market in the marketplace,
@@ -690,9 +713,14 @@ void Marketplace::storeinfo( const int period ) {
 * \param period Period for which to restore demands, supplies, and prices.
 */
 void Marketplace::restoreinfo( const int period) {
+#if GCAM_PARALLEL_ENABLED
+    RestoreHelper restore( markets, period );
+    tbb::parallel_for( tbb::blocked_range<int>( 0, markets.size() ), restore ); 
+#else
     for ( unsigned int i = 0; i < markets.size(); i++ ) {
-        markets[ i ][ period ]->restoreInfo();
+        markets[ i ][ period ]->restoreInfo(); 
     }
+#endif
 }
 
 /*! \brief Store market prices for policy cost caluclation.

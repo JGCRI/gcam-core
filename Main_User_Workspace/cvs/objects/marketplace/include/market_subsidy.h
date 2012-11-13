@@ -55,7 +55,7 @@
 
 class MarketSubsidy: public MarketRES {
 public:
-    MarketSubsidy( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
+    MarketSubsidy( const std::string& goodNameIn, const std::string& regionNameIn, int periodIn );
     virtual IMarketType::Type getType() const;
 
     virtual void nullDemand();

@@ -1,3 +1,7 @@
+#ifndef FUNCTOR_SUBS_HPP_
+#define FUNCTOR_SUBS_HPP_
+
+
 /*
 * LEGAL NOTICE
 * This computer software was prepared by Battelle Memorial Institute,
@@ -30,40 +34,38 @@
 *
 */
 
-#ifndef UBLAS_HELPERS_HH_
-#define UBLAS_HELPERS_HH_
 
-#include <iostream>
-#include <boost/numeric/ublas/vector.hpp>
-#include <boost/numeric/ublas/matrix.hpp>
+/*!
+ * @file functor-subs.hpp
+ * @ingroup Solution
+ * @brief Some specific functor subclasses for use in GCAM
+ */
+
+#include "functor.hpp"
 
 #define UBLAS boost::numeric::ublas
 
-template <class FTYPE>
-std::ostream & operator<<(std::ostream &ostrm, const UBLAS::vector<FTYPE> &v) {
-  ostrm << "(";
-  for(size_t i=0; i<v.size(); ++i) {
-    if(i>0) ostrm << ", ";
-    ostrm << v[i];
+/*!
+ * Template for a scalar function formed by taking the magnitude of a vector function.  This
+ * class evaluates the vector function F, computes and returns the dot product, and also stores
+ * the original vector function value.
+ * @author Robert Link
+ * @tparam Tr: return type
+ * @tparam Ta: argument type
+ */
+template <class Tr, class Ta>
+class FdotF : public SclFVec<Tr,Ta> {
+protected:
+  VecFVec<Tr,Ta> &F;
+  UBLAS::vector<Tr> lstF;
+public:
+  FdotF(VecFVec<Tr,Ta> &Fin) : F(Fin), lstF(Fin.nrtn()) {this->na = Fin.narg();}
+  void lastF(UBLAS::vector<Tr> &v) {v = lstF;}
+  virtual Tr operator()(const UBLAS::vector<Ta> &x) {
+    F(x,lstF);
+    return inner_prod(lstF,lstF);
   }
-  ostrm << ")";
-  return ostrm;
-}
-
-template <class FTYPE>
-std::ostream & operator<<(std::ostream &ostrm, const UBLAS::matrix<FTYPE> &M) {
-  int m = M.size1();
-  int n = M.size2();
-  
-  for(int i=0;i<m;++i) {
-    for(int j=0;j<n;++j)
-      ostrm << M(i,j) << "  ";
-    ostrm << "\n";
-  }
-  
-  return ostrm;
-}
-
+};
 
 #undef UBLAS
 

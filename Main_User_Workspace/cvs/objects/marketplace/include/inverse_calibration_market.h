@@ -67,7 +67,7 @@
 
 class InverseCalibrationMarket: public Market {
 public:
-    InverseCalibrationMarket( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
+    InverseCalibrationMarket( const std::string& goodNameIn, const std::string& regionNameIn, int periodIn );
     ~InverseCalibrationMarket();
     virtual IMarketType::Type getType() const;
 

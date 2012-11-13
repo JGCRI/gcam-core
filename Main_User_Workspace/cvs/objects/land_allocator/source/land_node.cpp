@@ -428,14 +428,14 @@ double LandNode::calcLandShares( const string& aRegionName,
     // containing or parant node.  This will be used to determine this nodes share within its 
     // parent node.
     if( aLogitExpAbove > 0 ){ // unnormalized share will be ignored if logitexpo = 0
-       unnormalizedShare = pow( mProfitScaler[ aPeriod ] * mProfitRate[ aPeriod ] * mAdjustForNewTech[ aPeriod ],
-                                                                                                aLogitExpAbove );
-     }
-     else {
+        unnormalizedShare = pow( mProfitScaler[ aPeriod ] * mProfitRate[ aPeriod ] * mAdjustForNewTech[ aPeriod ],
+                                 aLogitExpAbove );
+    }
+    else {
         // Can't calculate share, so return zero.
         unnormalizedShare = 0.0;
-     }
-
+    }
+    
     return unnormalizedShare; // the unnormalized share of this node.
 }
 
@@ -495,16 +495,21 @@ void LandNode::calculateProfitScalers( const string& aRegionName,
         // Note: we are interpreting the defaultShare as relating to managed land leafs
         // in this node. So, we have to multiply it by the % of managed land in the node
         // to get the correct share of the whole node.
-        if ( totalManagedShare > 0.0 ) {
-            newTechCalibrationProfitRate = mCalibrationProfitRate[ aPeriod ]
-            * pow ( totalManagedShare * mGhostShareNumerator[ per ],
-                   1.0 / mLogitExponent[ aPeriod ] ); 
+        if (mLogitExponent[aPeriod] < util::getTinyNumber()) {
+            newTechCalibrationProfitRate = 0;
         }
-        
         else {
-        newTechCalibrationProfitRate = mCalibrationProfitRate[ aPeriod ]
-                                        * pow ( mGhostShareNumerator[ per ],
-                                            1.0 / mLogitExponent[ aPeriod ] ); 
+            if ( totalManagedShare > 0.0 ) {
+                newTechCalibrationProfitRate = mCalibrationProfitRate[ aPeriod ]
+                    * pow ( totalManagedShare * mGhostShareNumerator[ per ],
+                            1.0 / mLogitExponent[ aPeriod ] ); 
+            }
+            
+            else {
+                newTechCalibrationProfitRate = mCalibrationProfitRate[ aPeriod ]
+                    * pow ( mGhostShareNumerator[ per ],
+                            1.0 / mLogitExponent[ aPeriod ] ); 
+            }
         }
 
         // Finally, compute the scaler
@@ -642,6 +647,11 @@ void LandNode::calculateCalibrationProfitRate( const string& aRegionName,
     if ( ( getParent() ? getParent()->getLogitExponent( 1 ) == 0 : true )
                                             && mUnManagedLandValue > 0.0 ) {
         avgProfitRate = mUnManagedLandValue;
+    }
+    else if(aLogitExponentAbove < util::getTinyNumber()) {
+        // avoid floating point exception
+        // 0 < share < 1 => pow(share, infinity) = 0
+        avgProfitRate = 0;
     }
     else { 
         avgProfitRate *= pow( mShare[ aPeriod ],  1.0 / aLogitExponentAbove ); 

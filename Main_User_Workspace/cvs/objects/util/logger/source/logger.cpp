@@ -98,14 +98,22 @@ Logger::~Logger() {
 }
 
 //! Set the current warning level.
-void Logger::setLevel( const ILogger::WarningLevel aLevel ){
-	mCurrentWarningLevel = aLevel;
+ILogger::WarningLevel Logger::setLevel( const ILogger::WarningLevel aLevel ){
+    // Haven't bothered to protect this with a mutex, since doing so
+    // doesn't actually solve the race condition.
+    ILogger::WarningLevel oldLevel = mCurrentWarningLevel;
+    mCurrentWarningLevel = aLevel;
+    return oldLevel;
 }
 
 //! Receive a single character from the underlying stream and buffer it, printing the buffer it is a newline.
 int Logger::receiveCharFromUnderStream( int ch ) {
     // Only receive the character or print to the screen if it needed.
     if( mCurrentWarningLevel >= mMinLogWarningLevel || mCurrentWarningLevel >= mMinToScreenWarningLevel ){
+        // only really need to lock the mutex if we're going to do something.
+#if GCAM_PARALLEL_ENABLED
+        tbb::spin_mutex::scoped_lock lck(mMutex);
+#endif
         if( ch == '\n' ){
             char tempBuf[ MAX_LINE_SIZE ];
             mBuf.get( tempBuf, MAX_LINE_SIZE );

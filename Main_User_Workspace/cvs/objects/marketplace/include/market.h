@@ -50,6 +50,10 @@
 #include "marketplace/include/imarket_type.h"
 #include "util/base/include/ivisitable.h"
 
+#if GCAM_PARALLEL_ENABLED
+#include <tbb/combinable.h>
+#endif
+
 class IInfo;
 class Tabs;
 class IVisitor;
@@ -94,36 +98,36 @@ class Market: public IVisitable
     friend class XMLDBOutputter;
     friend class PriceMarket;
 public:
-    Market( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
+    Market( const std::string& goodNameIn, const std::string& regionNameIn, int periodIn );
     virtual ~Market();
     static std::auto_ptr<Market> createMarket( const IMarketType::Type aMarketType,
-        const std::string& aGoodName, const std::string& aRegionName, const int aPeriod );
+                                               const std::string& aGoodName, const std::string& aRegionName, int aPeriod );
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
     void addRegion( const std::string& aRegion );
     const std::vector<const objects::Atom*>& getContainedRegions() const;
 
-    virtual void initPrice() = 0;
-    virtual void setPrice( const double priceIn ) = 0;
+    virtual void initPrice();
+    virtual void setPrice( const double priceIn );
     void setRawPrice( const double priceIn );
-    virtual void set_price_to_last_if_default( const double lastPrice ) = 0;
-    virtual void set_price_to_last( const double lastPrice ) = 0;
-    virtual double getPrice() const = 0;
+    virtual void set_price_to_last_if_default( const double lastPrice );
+    virtual void set_price_to_last( const double lastPrice );
+    virtual double getPrice() const;
     double getRawPrice() const;
     double getStoredRawPrice() const;
 
     virtual void nullDemand();
-    virtual void addToDemand( const double demandIn ) = 0;
+    virtual void addToDemand( const double demandIn );
     virtual double getSolverDemand() const;
     double getRawDemand() const;
     double getStoredRawDemand() const;
-    virtual double getDemand() const = 0;
+    virtual double getDemand() const;
 
-    virtual void nullSupply() = 0;
+    virtual void nullSupply();
     virtual double getSolverSupply() const;
     double getRawSupply() const;
     double getStoredRawSupply() const;
-    virtual double getSupply() const = 0;
+    virtual double getSupply() const;
     virtual void addToSupply( const double supplyIn );
     
     const std::string& getName() const;
@@ -138,8 +142,8 @@ public:
 
     void setSolveMarket( const bool doSolve );
     virtual bool meetsSpecialSolutionCriteria() const = 0;
-    virtual bool shouldSolve() const = 0;
-    virtual bool shouldSolveNR() const = 0;
+    virtual bool shouldSolve() const;
+    virtual bool shouldSolveNR() const;
     bool isSolvable() const;
 
     /*!
@@ -179,13 +183,23 @@ protected:
     double original_price;
     
     //! The market demand.
+#if GCAM_PARALLEL_ENABLED
+    // have to make this mutable because tbb::combinable::combine is not const
+    mutable tbb::combinable<double> demand;
+#else
     double demand;
+#endif
     
     //! The stored demand.
     double storedDemand;
     
     //! The market supply.
+#if GCAM_PARALLEL_ENABLED
+    // have to make this mutable because tbb::combinable::combine is not const
+    mutable tbb::combinable<double> supply;
+#else
     double supply;
+#endif
     
     //! The stored supply.
     double storedSupply;

@@ -60,7 +60,7 @@
 #include "solution/util/include/solution_info_set.h"
 #include "solution/util/include/calc_counter.h"
 #include "util/logger/include/ilogger.h"
-#include "solution/util/include/ublas-helpers.hh"
+#include "solution/util/include/ublas-helpers.hpp"
 #include "containers/include/iactivity.h"
 
 using namespace std;
@@ -326,7 +326,11 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
 
     // Make sure the markets are up to date before starting.
     aMarketplace->nullSuppliesAndDemands( aPeriod );
+#if GCAM_PARALLEL_ENABLED
+    aWorld->calc( aPeriod, aWorld->getGlobalFlowGraph() );
+#else
     aWorld->calc( aPeriod );
+#endif
     aSolutionSet.updateSolvable( aSolutionInfoFilter );
     // Return with code true if all markets are bracketed.
     if( aSolutionSet.isAllBracketed() ){
@@ -440,7 +444,11 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
         } // end for loop
 
         aMarketplace->nullSuppliesAndDemands( aPeriod );
+#if GCAM_PARALLEL_ENABLED
+        aWorld->calc( aPeriod, aWorld->getGlobalFlowGraph() );
+#else
         aWorld->calc( aPeriod );
+#endif
         solverLog.setLevel( ILogger::NOTICE );
         solverLog << "Completed an iteration of bracket: " << iterationCount << endl;
         solverLog << aSolutionSet << endl;

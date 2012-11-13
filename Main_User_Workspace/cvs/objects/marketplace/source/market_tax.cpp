@@ -44,8 +44,8 @@
 using namespace std;
 
 ///! Constructor
-MarketTax::MarketTax( const string& goodNameIn, const string& regionNameIn, const int periodIn ) :
-MarketRES( goodNameIn, regionNameIn, periodIn ) {
+MarketTax::MarketTax( const string& goodNameIn, const string& regionNameIn, int periodIn ) :
+  MarketRES( goodNameIn, regionNameIn, periodIn ) {
 }
 
 void MarketTax::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {

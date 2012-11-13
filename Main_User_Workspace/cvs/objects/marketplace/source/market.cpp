@@ -41,6 +41,7 @@
 #include "util/base/include/definitions.h"
 #include <vector>
 #include <algorithm>
+#include <functional>
 #include <cmath>
 #include <cassert>
 
@@ -81,19 +82,21 @@ extern Scenario* scenario;
 *        several model regions.
 * \param periodIn The period the market exists in.
 */
-Market::Market( const string& goodNameIn, const string& regionNameIn, const int periodIn )
+Market::Market( const string& goodNameIn, const string& regionNameIn, int periodIn )
 : good( goodNameIn ), 
 region( regionNameIn ),
 solveMarket( false ),
 period( periodIn ),
 price( 0 ),
 storedPrice( 0 ),
-demand( 0 ),
 storedDemand( 0 ),
-supply( 0 ),
 storedSupply( 0 ),
 mMarketInfo( InfoFactory::constructInfo( 0, regionNameIn+goodNameIn ) )
 {
+#if !GCAM_PARALLEL_ENABLED
+    supply = 0.0;
+    demand = 0.0;
+#endif
     // Store the market name so that it can be returned without any allocations.
     mName = region + good;
 }
@@ -138,7 +141,7 @@ mMarketInfo( InfoFactory::constructInfo( 0,aMarket.mName ) ){
 auto_ptr<Market> Market::createMarket( const IMarketType::Type aType,
                                        const string& aGoodName,
                                        const string& aRegionName,
-                                       const int aPeriod )
+                                       int aPeriod )
 {
     assert( aType < IMarketType::END );
     auto_ptr<Market> rNewMarket;
@@ -196,9 +199,9 @@ void Market::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( region, "MarketRegion", out, tabs );
     XMLWriteElement( price, "price", out, tabs );
     XMLWriteElement( storedPrice, "storedPrice", out, tabs );
-    XMLWriteElement( demand, "demand", out, tabs );
+    XMLWriteElement( getRawDemand(), "demand", out, tabs );
     XMLWriteElement( storedDemand, "storedDemand", out, tabs );
-    XMLWriteElement( supply, "supply", out, tabs );
+    XMLWriteElement( getRawSupply(), "supply", out, tabs );
     XMLWriteElement( storedSupply, "storedSupply", out, tabs );
 
     for( vector<const Atom*>::const_iterator i = mContainedRegions.begin(); i != mContainedRegions.end(); ++i ) {
@@ -398,8 +401,17 @@ double Market::getStoredRawPrice() const {
 * This function stores the demand and resets demand to zero. 
 */
 void Market::nullDemand() {
+#if GCAM_PARALLEL_ENABLED
+#if NOCLEARNULL
+    storedDemand = demand.combine(std::plus<double>());
+    demand.local() -= storedDemand;
+#else
+    demand.clear();
+#endif
+#else
     storedDemand = demand;
     demand = 0;
+#endif
 }
 
 /*! \brief Add to the the Market an amount of demand in a method based on the
@@ -409,7 +421,11 @@ void Market::nullDemand() {
 * \sa setRawDemand
 */
 void Market::addToDemand( const double demandIn ) {
+#if GCAM_PARALLEL_ENABLED  
+    demand.local() += demandIn;
+#else
     demand += demandIn;
+#endif
 }
 
 /*! \brief Get the raw demand.
@@ -420,7 +436,11 @@ void Market::addToDemand( const double demandIn ) {
 * \sa getDemand
 */
 double Market::getRawDemand() const {
+#if GCAM_PARALLEL_ENABLED
+    return demand.combine(std::plus<double>());
+#else
     return demand;
+#endif
 }
 
 /*! \brief Get the demand used in the solver.
@@ -431,7 +451,11 @@ double Market::getRawDemand() const {
  * \sa getRawDemand
  */
 double Market::getSolverDemand() const {
+#if GCAM_PARALLEL_ENABLED
+    return demand.combine(std::plus<double>());
+#else
     return demand;
+#endif
 }
 
 /*! \brief Get the stored demand.
@@ -452,15 +476,30 @@ double Market::getStoredRawDemand() const {
 * \return Market demand.
 */
 double Market::getDemand() const {
+#if GCAM_PARALLEL_ENABLED
+    return demand.combine(std::plus<double>());
+#else
     return demand;
+#endif
 }
 
 /*! \brief Null the supply.
 * \details This function stores the supply and resets supply to zero. 
 */
 void Market::nullSupply() {
+#if GCAM_PARALLEL_ENABLED
+    // reset supply to zero.  Calling supply.clear() is expensive, so
+    // do it by fixing the local value.
+#if NOCLEARNULL
+    storedSupply = supply.combine(std::plus<double>());
+    supply.local() -= storedSupply;
+#else
+    supply.clear();
+#endif
+#else
     storedSupply = supply;
     supply = 0;
+#endif
 }
 
 /*! \brief Get the raw supply.
@@ -471,7 +510,11 @@ void Market::nullSupply() {
 * \sa getSupply
 */
 double Market::getRawSupply() const {
+#if GCAM_PARALLEL_ENABLED
+    return supply.combine(std::plus<double>());
+#else
     return supply;
+#endif
 }
 
 /*! \brief Get the supply value to be used in the solver
@@ -483,7 +526,11 @@ double Market::getRawSupply() const {
 * \sa getRawSupply
 */
 double Market::getSolverSupply() const {
+#if GCAM_PARALLEL_ENABLED
+    return supply.combine(std::plus<double>());
+#else
     return supply;
+#endif
 }
 
 /*! \brief Get the storedSupply.
@@ -504,17 +551,25 @@ double Market::getStoredRawSupply() const {
 * \return Market supply
 */
 double Market::getSupply() const {
+#if GCAM_PARALLEL_ENABLED
+    return supply.combine(std::plus<double>());
+#else
     return supply;
+#endif
 }
 
 /*! \brief Add to the the Market an amount of supply in a method based on the
 *          Market's type.
 * \details This method is used throughout the model to add supply to a market. 
-* \param supplyIn The new demand to add to the current demand.
+* \param supplyIn The new supply to add to the current supply.
 * \sa setRawSupply
 */
 void Market::addToSupply( const double supplyIn ) {
+#if GCAM_PARALLEL_ENABLED
+    supply.local() += supplyIn;
+#else
     supply += supplyIn;
+#endif
 }
 
 /*! \brief Return the market name.
@@ -582,8 +637,13 @@ IInfo* Market::getMarketInfo() {
 *          into their respective stored variables. 
 */
 void Market::storeInfo() {
+#if GCAM_PARALLEL_ENABLED
+    storedDemand = demand.combine(std::plus<double>());
+    storedSupply = supply.combine(std::plus<double>());
+#else
     storedDemand = demand;
     storedSupply = supply;
+#endif
     storedPrice = price;
 }
 
@@ -592,8 +652,26 @@ void Market::storeInfo() {
 *          stored values of those variables. 
 */
 void Market::restoreInfo() {
+#if GCAM_PARALLEL_ENABLED
+    // reset the demand to the stored demand.  demand.clear() is
+    // expensive, so do it by adjusting the local value
+#if NOCLEARRESTORE
+    double dtmp = demand.combine(std::plus<double>());
+    demand.local() += storedDemand - dtmp;
+
+    double stmp = supply.combine(std::plus<double>());
+    supply.local() += storedSupply - stmp;
+#else
+    demand.clear();
+    demand.local() = storedDemand;
+
+    supply.clear();
+    supply.local() = storedSupply;
+#endif
+#else
     demand = storedDemand;
     supply = storedSupply;
+#endif
     price = storedPrice;
 }
 
@@ -642,9 +720,9 @@ bool Market::shouldSolve() const {
 * \return Whether or not to solve the market for Newton-Rhaphson.
 */
 bool Market::shouldSolveNR() const {
-   // Solves all solvable markets with the following conditions
-   // including those with null demand.
-   return ( solveMarket && price > util::getTinyNumber() && supply > util::getTinyNumber() );
+    // Solves all solvable markets with the following conditions
+    // including those with null demand.
+    return ( solveMarket && price > util::getTinyNumber() && getRawSupply() > util::getTinyNumber());
 }
 
 /*! \brief Return whether a market is solved according to market type specific

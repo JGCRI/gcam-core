@@ -36,8 +36,15 @@
 		<minToScreenWarningLevel>3</minToScreenWarningLevel>
 		<headerMessage>{date}:{time}</headerMessage>
 	</Logger>
-	<Logger name="sector_dependencies" type="PlainTextLogger">
-		<FileName>logs/sector_dependencies.csv</FileName>
+	<Logger name="dependency_finder_log" type="PlainTextLogger">
+		<FileName>logs/dependency_finder_log.txt</FileName>
+		<printLogWarningLevel>0</printLogWarningLevel>
+		<minLogWarningLevel>0</minLogWarningLevel>
+		<minToScreenWarningLevel>3</minToScreenWarningLevel>
+		<headerMessage>{date}:{time}</headerMessage>
+	</Logger>
+	<Logger name="parallel-grain-log" type="PlainTextLogger">
+		<FileName>logs/parallel-grain-log.txt</FileName>
 		<printLogWarningLevel>0</printLogWarningLevel>
 		<minLogWarningLevel>0</minLogWarningLevel>
 		<minToScreenWarningLevel>3</minToScreenWarningLevel>

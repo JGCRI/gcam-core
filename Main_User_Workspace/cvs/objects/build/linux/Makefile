@@ -9,7 +9,7 @@ OBJDIR = ./objs
 all: gcam
 
 gcam-prof: export PROF = -pg
-gcam-prof: clean libgcam.a main_dir
+gcam-prof: libgcam.a main_dir
 
 gcam: libgcam.a
 	rm -f ../../main/source/gcam.exe
@@ -19,7 +19,7 @@ gcam: libgcam.a
 libgcam.a: dirs
 	$(AR) libgcam.a $(OBJDIR)/*.o
 
-dirs : containers_dir demographics_dir emissions_dir marketplace_dir resources_dir sectors_dir solution_solvers_dir solution_util_dir technologies_dir util_base_dir util_logger_dir util_database_dir util_curves_dir consumers_dir investment_dir reporting_dir climate_dir functions_dir target_finder_dir land_allocator_dir ccarbon_model_dir policy_dir #main_dir agLU_dir magicc_dir 
+dirs : containers_dir demographics_dir emissions_dir marketplace_dir resources_dir sectors_dir solution_solvers_dir solution_util_dir technologies_dir util_base_dir util_logger_dir util_database_dir util_curves_dir consumers_dir investment_dir reporting_dir climate_dir functions_dir target_finder_dir land_allocator_dir ccarbon_model_dir policy_dir parallel_dir
 
 ## special case patterns first
 # util has subdirs
@@ -50,6 +50,23 @@ agLU_dir :
 	$(MAKE) -C ../../agLU/fortran_source agLU_dir
 	ln -sf $(PWD)/../../agLU/fortran_source/*.o $(OBJDIR)
 
+# target for debugging configure.gcam 
+varchk:
+	@echo INCLUDE: $(INCLUDE)
+	@echo BOOSTINC: $(BOOSTINC)
+	@echo TBB_INCLUDE: $(TBB_INCLUDE)
+	@echo BOOSTBIND: $(BOOSTBIND)
+	@echo DBXMLINC: $(DBXMLINC)
+	@echo PATHOFFSET: $(PATHOFFSET)
+	@echo HOME:  $(HOME)
+	@echo LAPACKCF: $(LAPACKCF)
+	@echo
+	@echo LAPACKINC: $(LAPACKINC)
+	@echo LIBDIR: $(LIBDIR)
+	@echo LAPACKLD: $(LAPACKLD)
+	@echo LDFLAGS: $(LDFLAGS)
+	@echo LIB: $(LIB)
+
 clean :
 	-$(RM) libgcamlib.a
 	-$(RM) objs/*.o
@@ -77,4 +94,5 @@ clean :
 	-$(MAKE) -C ../../land_allocator/source  clean 
 	-$(MAKE) -C ../../ccarbon_model/source  clean 
 	-$(MAKE) -C ../../policy/source  clean 
+	-$(MAKE) -C ../../parallel/source  clean 
 	-$(MAKE) -C ../../main/source  clean 

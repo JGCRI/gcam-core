@@ -60,8 +60,9 @@ using namespace std;
 
 
 /*! \brief Constructor */
-MarketLocator::MarketLocator(){
-    mLastRegionLookup = 0;
+MarketLocator::MarketLocator()
+:mLastRegionLookup( static_cast<const RegionOrMarketNode*>( 0 ) )
+{
     const unsigned int MARKET_REGION_LIST_SIZE = 71;
     mRegionList.reset( new RegionMarketList( MARKET_REGION_LIST_SIZE ) );
     mMarketList.reset( new RegionMarketList( MARKET_REGION_LIST_SIZE ) );
@@ -168,18 +169,28 @@ int MarketLocator::getMarketNumberInternal( const string& aRegion,
 {
     // First check if the cached market number matched the region.
     const RegionOrMarketNode* region;
-    if( mLastRegionLookup && mLastRegionLookup->getName() == aRegion ){
+#if GCAM_PARALLEL_ENABLED
+    const RegionOrMarketNode*& localCache = mLastRegionLookup.local();
+    if( localCache && localCache->getName() == aRegion ){
+        region = localCache;
+    }
+#else
+    if( mLastRegionLookup && mLastRegionLookup->getName() == aRegion ) {
         region = mLastRegionLookup;
     }
+#endif
     else {
         RegionMarketList::const_iterator iter = mRegionList->find( aRegion );
         // Check if the region was found.
         if( iter != mRegionList->end() ){
             /*! \invariant If the key is in the list the node must be non-null. */
             assert( iter->second.get() );
-
-            // Cache the region found.
-            mLastRegionLookup = region = iter->second.get();
+            region = iter->second.get();
+#if GCAM_PARALLEL_ENABLED
+            localCache = region;
+#else
+            mLastRegionLookup = region;
+#endif
         }
         // Search failed.
         else {

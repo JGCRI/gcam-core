@@ -35,24 +35,43 @@
 #include <assert.h>
 #include <set>
 #include <vector>
-#include "solution/util/include/edfun.hh"
-#include "util/base/include/fltcmp.hh"
+#include "solution/util/include/edfun.hpp"
+#include "util/base/include/fltcmp.hpp"
 #include "containers/include/iactivity.h"
 #include "util/base/include/util.h"
 
+#include "util/base/include/timer.h"
 
 #define UBVECTOR boost::numeric::ublas::vector 
 
+const double LogEDFun::PMAX = 1.0e24;
+const double LogEDFun::ARGMAX = 55.262042; // log(PMAX)
+
+
+void LogEDFun::partial(int ip)
+{
+    partj = ip;
+}
+
+
+double LogEDFun::partialSize(int ip) const
+{
+  return double(mkts[ip].getDependencies().size()) / double(world->global_size());
+}
+
 void LogEDFun::operator()(const UBVECTOR<double> &x, UBVECTOR<double> &fx)
 {
-  // Protect against overflow:
-  const double PMAX = 1.0e24;
-  const double ARGMAX = log(PMAX);
   assert(x.size() == mkts.size());
   assert(fx.size() == mkts.size());
 
+  Timer& edfunMiscTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::EDFUN_MISC );
+  Timer& edfunPreTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::EDFUN_PRE );
+  edfunMiscTimer.start();
+  edfunPreTimer.start();
+  
   if(partj < 0) {               // not a partial derivative calculation
     mktplc->nullSuppliesAndDemands(period);
+
     for(size_t i=0; i<x.size(); ++i) {
       // It would be better to have a list of markets and operate on
       // them directly; however, that's not easy to get, starting from
@@ -62,8 +81,17 @@ void LogEDFun::operator()(const UBVECTOR<double> &x, UBVECTOR<double> &fx)
         mkts[i].setPrice(PMAX);
       else
         mkts[i].setPrice(exp(x[i])); // input vector = log(price)
-    } 
+    }
+    edfunMiscTimer.stop();
+    edfunPreTimer.stop();
+    Timer& evalFullTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::EVAL_FULL );
+    evalFullTimer.start();
+#if GCAM_PARALLEL_ENABLED
+    world->calc(period, world->getGlobalFlowGraph());
+#else
     world->calc(period);
+#endif
+    evalFullTimer.stop();
   }
   else {                        // partial derivative calculation
     mktplc->mIsDerivativeCalc = true;
@@ -78,10 +106,22 @@ void LogEDFun::operator()(const UBVECTOR<double> &x, UBVECTOR<double> &fx)
 
     const std::vector<IActivity*>& affectedNodes = mkts[partj].getDependencies();
     /* \invariant At least one node is affected */
-    assert(!affectedNodes.empty()); 
+    assert(!affectedNodes.empty());
+    edfunMiscTimer.stop();
+    edfunPreTimer.stop();
+    Timer& evalPartTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::EVAL_PART );
+    evalPartTimer.start();
+#if GCAM_PARALLEL_ENABLED
+    world->calc(period, mkts[partj].getFlowGraph(), &affectedNodes);
+#else
     world->calc(period, affectedNodes);
+#endif
+    evalPartTimer.stop();
   }
-  
+
+  edfunMiscTimer.start();
+  Timer& edfunPostTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::EDFUN_POST );
+  edfunPostTimer.start();
   // at this point we've recalculated all the supplies and demands.
   // Retrieve them, calculate log relative excesses, and store them in fx
   for(size_t i=0; i<mkts.size(); ++i) {
@@ -90,7 +130,11 @@ void LogEDFun::operator()(const UBVECTOR<double> &x, UBVECTOR<double> &fx)
     double s = std::max(mkts[i].getSupply(), TINY);
     fx[i] = log(d/s);
   }
+  edfunPostTimer.stop();
 
+  Timer& edfunAnResetTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::EDFUN_AN_RESET );
+  edfunAnResetTimer.start();
+  
   if(partj >= 0) {
     // reset flags
       const std::vector<IActivity*>& affectedNodes = mkts[partj].getDependencies();
@@ -101,4 +145,6 @@ void LogEDFun::operator()(const UBVECTOR<double> &x, UBVECTOR<double> &fx)
     mktplc->mIsDerivativeCalc = false;
     solnset.restoreValues();    // reset all markets to values stored above
   }
+  edfunAnResetTimer.stop();
+  edfunMiscTimer.stop();
 }

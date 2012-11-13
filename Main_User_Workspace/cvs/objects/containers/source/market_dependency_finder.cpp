@@ -47,6 +47,10 @@
 #include "marketplace/include/market.h"
 #include "containers/include/iactivity.h"
 
+#if GCAM_PARALLEL_ENABLED
+#include "parallel/include/gcam_parallel.hpp"
+#endif
+
 using namespace std;
 
 /*!
@@ -55,6 +59,9 @@ using namespace std;
  */
 MarketDependencyFinder::MarketDependencyFinder( Marketplace* aMarketplace ):
 mMarketplace( aMarketplace )
+#if GCAM_PARALLEL_ENABLED
+,mTBBGraphGlobal( 0 )
+#endif
 {
 }
 
@@ -67,6 +74,12 @@ MarketDependencyFinder::~MarketDependencyFinder() {
     for( ItemIterator it = mDependencyItems.begin(); it != mDependencyItems.end(); ++it ) {
         delete *it;
     }
+#if GCAM_PARALLEL_ENABLED
+    delete mTBBGraphGlobal;
+    for( CMarketToDepIterator it = mMarketsToDep.begin(); it != mMarketsToDep.end(); ++it ) {
+        delete (*it)->mFlowGraph;
+    }
+#endif
 }
 
 //! DependencyItem destructor
@@ -186,13 +199,6 @@ const vector<IActivity*> MarketDependencyFinder::getOrdering( const int aMarketN
         return mGlobalOrdering;
     }
     else {
-        // We must generate the full list of nodes to calculate.  The createOrdering
-        // method has created a link from markets to "entry points" into the graph.
-        // We must then do a search on the graph from those entry points to come up
-        // with a full set of items which must be recalculated.
-        // To ensure the set of items are in order we can utilize the already created
-        // global ordering.
-        
         // Find the entry points into the graph for the given market.
         auto_ptr<MarketToDependencyItem> marketToDep( new MarketToDependencyItem( aMarketNumber ) );
         CMarketToDepIterator mrktIter = mMarketsToDep.find( marketToDep.get() );
@@ -204,6 +210,19 @@ const vector<IActivity*> MarketDependencyFinder::getOrdering( const int aMarketN
                     << " to get an ordering for." << endl;
             exit( 1 );
         }
+
+        // First check the MarketToDependencyItem and see if we have this cached.
+        if( !(*mrktIter)->mCalcList.empty() ) {
+            return (*mrktIter)->mCalcList;
+        }
+
+        // We must generate the full list of nodes to calculate.  The createOrdering
+        // method has created a link from markets to "entry points" into the graph.
+        // We must then do a search on the graph from those entry points to come up
+        // with a full set of items which must be recalculated.
+        // To ensure the set of items are in order we can utilize the already created
+        // global ordering.
+        
         
         // Do a search from all of the entry points to get a set of unique items
         // to calculate.
@@ -223,9 +242,93 @@ const vector<IActivity*> MarketDependencyFinder::getOrdering( const int aMarketN
                 dependenentCalcs.erase( dependIter );
             }
         }
+        // Go ahead and cache this list so we do not need to calculate it again.
+        (*mrktIter)->mCalcList = orderedListForMarket;
         return orderedListForMarket;
     }
 }
+
+#if GCAM_PARALLEL_ENABLED
+/*!
+ * \brief Get flow graph which can be used to calculate the model in parallel.
+ * \details If called with a market number of -1 (the default value) then the global
+ *          graph which will calculate all objects in the model is returned.
+ *          When a valid market number is given the flow graph of activities which
+ *          would be affected by that market changing it's price would be generated
+ *          and returned.
+ * \param aMarketNumber The market number to get a flow graph of items which
+ *                      are required to be calculated if that market changes prices,
+ *                      or if -1 the full global list.
+ * \return The appropriate list of activities to calculate for the given market.
+ *         Note the caller is not responsible for the returned memory.
+ */
+GcamFlowGraph* MarketDependencyFinder::getFlowGraph( const int aMarketNumber ) {
+    if( aMarketNumber == -1 ) {
+        if( !mTBBGraphGlobal ) {
+            // reads parameters from the global configuration
+            GcamParallel config;
+            GcamParallel::FlowGraph gcamFlowGraph;
+            GcamParallel::FlowGraph grainGraph;
+
+            // convert dependency table to flow graph 
+            config.makeGCAMFlowGraph( *this, gcamFlowGraph );
+            // parse flow graph
+            config.graphParseGrainCollect( gcamFlowGraph, grainGraph ); 
+            if( !gcamFlowGraph.topology_valid() ) {
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::ERROR );
+                mainLog << "Topological indices not computed." << endl;
+                abort();
+            }
+            // build the tbb graph structure
+            mTBBGraphGlobal = new GcamFlowGraph();
+            config.makeTBBFlowGraph( grainGraph, gcamFlowGraph, *mTBBGraphGlobal ); 
+        }
+        return mTBBGraphGlobal;
+    }
+    else {
+        // Find the entry points into the graph for the given market.
+        auto_ptr<MarketToDependencyItem> marketToDep( new MarketToDependencyItem( aMarketNumber ) );
+        CMarketToDepIterator mrktIter = mMarketsToDep.find( marketToDep.get() );
+        if( mrktIter == mMarketsToDep.end() ) {
+            // Somehow this market was not linked to any entry points into the graph.
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "Could not find market: " << mMarketplace->markets[ aMarketNumber ][ 0 ]->getName()
+                    << " to get an ordering for." << endl;
+            exit( 1 );
+        }
+
+        // First check the MarketToDependencyItem and see if we have this cached.
+        if( (*mrktIter)->mFlowGraph ) {
+            return (*mrktIter)->mFlowGraph;
+        }
+
+        // We must generate the flow graph following the same procedure as the global graph.
+        // It may be a good idea to make some of these tempararies members to avoid recalculating
+        // them over and over.
+        GcamParallel config;
+        GcamParallel::FlowGraph gcamFlowGraph;
+        GcamParallel::FlowGraph grainGraph;
+        
+        // convert dependency table to flow graph
+        config.makeGCAMFlowGraph( *this, gcamFlowGraph );
+        // Parse flow graph subsetting for only the activities effected.  Use getOrdering
+        // to get this list incase it has not yet been calculated.
+        config.graphParseGrainCollect( gcamFlowGraph, grainGraph, getOrdering( aMarketNumber ) );
+        if( !gcamFlowGraph.topology_valid() ) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "Topological indices not computed." << endl;
+            abort();
+        }
+        // build the tbb graph structure
+        (*mrktIter)->mFlowGraph = new GcamFlowGraph();
+        config.makeTBBFlowGraph( grainGraph, gcamFlowGraph, *(*mrktIter)->mFlowGraph );
+        return (*mrktIter)->mFlowGraph;
+    }
+}
+#endif
 
 /*!
  * \brief A depth first search collecting a unique set of the vertices visited.
@@ -566,14 +669,14 @@ void MarketDependencyFinder::createOrdering() {
 /*!
  * \brief A helper method to perform a depth first search and count the total
  *        number of times each vertex has been visited in a cycle.
- * \details Since this graph can have a cycle so the stop point for searching is 
+ * \details Since this graph can have a cycle the stop point for searching is 
  *          when the current search path has returned to a vertex that is already
  *          in the search path.  Note an arbitrary threshold is placed on the number
  *          of times a vertex can be found to be in a cycle to avoid excessive searching
  *          when a good vertex to break a cycle has already been found.
  * \param aCurrVertex The current vertex being visited.
  * \param aHasVisited The list of vertices which make up the current search path.
- * \param aTotalVisists The map of vertices to the total number of this that node
+ * \param aTotalVisists The map of vertices to the total number of times that node
  *                      has been visited.
  * \return The maximum number of cycle-visits so far.
  */
@@ -600,7 +703,8 @@ int MarketDependencyFinder::markCycles( CalcVertex* aCurrVertex, list<CalcVertex
         const int MAX_CYCLE_VISITS = 1000;
         int cycleVisits = 0;
         for( VertexIterator it = aCurrVertex->mOutEdges.begin(); it != aCurrVertex->mOutEdges.end() && cycleVisits < MAX_CYCLE_VISITS; ++it ) {
-            cycleVisits = max( cycleVisits, markCycles( *it, aHasVisited, aTotalVisists ) );
+            int currCycleVisits = markCycles( *it, aHasVisited, aTotalVisists );
+            cycleVisits = max( cycleVisits, currCycleVisits );
         }
         aHasVisited.pop_back();
         

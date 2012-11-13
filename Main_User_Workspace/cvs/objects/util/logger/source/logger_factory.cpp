@@ -109,7 +109,7 @@ Logger& LoggerFactory::getLogger( const string& aLoggerName ) {
 		return *logIter->second;
 	}
 	else {
-		cout << "Creating an uninitialized logger." << endl;
+		cout << "Creating an uninitialized logger " << aLoggerName << endl;
 		Logger* newLogger = new PlainTextLogger( aLoggerName );
 		newLogger->open();
         mLoggers[ aLoggerName ] = newLogger;

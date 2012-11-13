@@ -1199,8 +1199,8 @@ void XMLDBOutputter::startVisitMarket( const Market* aMarket,
     }
 
     writeItem( "price", mCurrentPriceUnit, aMarket->price, -1 );
-    writeItem( "demand", mCurrentOutputUnit, aMarket->demand, -1 );
-    writeItem( "supply", mCurrentOutputUnit, aMarket->supply, -1 );
+    writeItem( "demand", mCurrentOutputUnit, aMarket->getRawDemand(), -1 );
+    writeItem( "supply", mCurrentOutputUnit, aMarket->getRawSupply(), -1 );
 
     for( vector<const objects::Atom*>::const_iterator i = aMarket->getContainedRegions().begin();
         i != aMarket->getContainedRegions().end(); i++ )

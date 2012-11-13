@@ -55,7 +55,7 @@
 
 class DemandMarket: public Market {
 public:
-    DemandMarket( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
+    DemandMarket( const std::string& goodNameIn, const std::string& regionNameIn, int periodIn );
     virtual IMarketType::Type getType() const;
 
     virtual void initPrice();

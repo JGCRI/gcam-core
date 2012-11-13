@@ -43,6 +43,7 @@
 #include <fstream>
 #include <cassert>
 #include <ctime>
+#include <iomanip>
 #include <xercesc/dom/DOMNode.hpp>
 #include <xercesc/dom/DOMNodeList.hpp>
 
@@ -56,15 +57,19 @@
 #include "util/curves/include/curve.h"
 #include "solution/solvers/include/solver.h"
 #include "util/base/include/auto_file.h"
+#include "util/base/include/timer.h"
 #include "reporting/include/graph_printer.h"
 #include "reporting/include/land_allocator_printer.h"
 #include "reporting/include/xml_db_outputter.h"
 #include "containers/include/output_meta_data.h"
-#include "util/base/include/auto_file.h"
 #include "solution/solvers/include/solver_factory.h"
 #include "solution/solvers/include/bisection_nr_solver.h"
 #include "solution/util/include/solution_info_param_parser.h" 
 
+#if GCAM_PARALLEL_ENABLED && PARALLEL_DEBUG
+#include <stdlib.h>
+#include <tbb/tick_count.h>
+#endif
 
 using namespace std;
 using namespace xercesc;
@@ -321,6 +326,9 @@ bool Scenario::run( const int aSinglePeriod,
     if( aPrintDebugging ){
         openDebuggingFiles( XMLDebugFile, SGMDebugFile, &tabs, aFilenameEnding );
     }
+
+    Timer& fullScenarioTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::FULLSCENARIO );
+    fullScenarioTimer.start();
     
     // Log that a run is beginning.
     logRunBeginning();
@@ -377,6 +385,10 @@ bool Scenario::run( const int aSinglePeriod,
         mainLog << endl;
     }
 
+    mainLog.setLevel( ILogger::DEBUG );
+    fullScenarioTimer.stop();
+    TimerRegistry::getInstance().printAllTimers( mainLog );
+
     // Run the climate model.
     world->runClimateModel();
 
@@ -422,7 +434,63 @@ bool Scenario::calculatePeriod( const int aPeriod,
         marketplace->nullSuppliesAndDemands( aPeriod );
     }
 
-    world->calc( aPeriod ); // call to calculate initial supply and demand 
+#if GCAM_PARALLEL_ENABLED && PARALLEL_DEBUG
+    world->calc(aPeriod);       // get rid of transient bad data
+    marketplace->nullSuppliesAndDemands( aPeriod );
+
+    ILogger &mainlog = ILogger::getLogger("main_log"); 
+    
+    ILogger &pdebug = ILogger::getLogger( "parallel_debug_log" );
+    pdebug.setLevel(ILogger::DEBUG);
+    pdebug << "**************** Starting serial World::calc (period " << aPeriod << ") ****************\n";
+
+    tbb::tick_count t0 = tbb::tick_count::now();
+#endif
+    
+    world->calc( aPeriod ); // call to calculate initial supply and demand
+
+#if GCAM_PARALLEL_ENABLED && PARALLEL_DEBUG
+    tbb::tick_count t1 = tbb::tick_count::now();
+    
+    pdebug << "****************Ending serial World::calc****************\n";
+    std::vector<double> serialrslt = marketplace->fullstate(aPeriod);
+
+    pdebug << "%%%%%%%%%%%%%%%% Starting parallel World::calc (period " << aPeriod << ") %%%%%%%%%%%%%%%%\n";
+    tbb::tick_count t2;
+    tbb::tick_count t3;
+    marketplace->nullSuppliesAndDemands(aPeriod);
+
+    t2 = tbb::tick_count::now();
+    world->calc(aPeriod, world->getGlobalFlowGraph());
+    t3 = tbb::tick_count::now();
+      
+    pdebug << "%%%%%%%%%%%%%%%% Ending parallel World::calc %%%%%%%%%%%%%%%%\n";
+
+    // check for consistency between serial and parallel versions
+
+    ILogger::WarningLevel old_main_log_level = mainlog.setLevel(ILogger::ERROR);
+    if(aPeriod > 0) {
+        if( !marketplace->checkstate(aPeriod, serialrslt, &mainlog, DBL_CMP_LOOSE) ) {
+            std::cerr << "ERROR: parallel calc failed to reproduce serial results in period " << aPeriod
+                      << ".\n";
+            mainlog << "ERROR: parallel calc failed to reproduce serial results in period " << aPeriod
+                    << ".\n"; 
+        } 
+        else {
+            mainlog.setLevel(ILogger::NOTICE);
+            std::cerr << "Period " << aPeriod << " parallel calc successful.\n";
+        }
+    }
+
+    mainlog.setLevel(ILogger::WARNING);
+    double sertime = (t1-t0).seconds();
+    double partime = (t3-t2).seconds();
+    double ratio   = sertime/partime;
+    mainlog << "===Period: " << aPeriod << ":\tserial time: " << sertime
+            << "\tparallel time:  " << partime << "\tspeedup:  " << ratio << "\n";
+    mainlog.setLevel(old_main_log_level);
+#endif
+    
     
     bool success = solve( aPeriod ); // solution uses Bisect and NR routine to clear markets
 
@@ -438,7 +506,7 @@ bool Scenario::calculatePeriod( const int aPeriod,
     // Mark that the period is now valid.
     mIsValidPeriod[ aPeriod ] = true;
     logPeriodEnding( aPeriod );
-
+    
     // Write out the results for debugging.
     if( aPrintDebugging ){
         writeDebuggingFiles( aXMLDebugFile, aSGMDebugFile, aTabs, aPeriod );

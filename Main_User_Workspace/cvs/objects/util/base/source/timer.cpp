@@ -40,23 +40,21 @@
 
 #include "util/base/include/definitions.h"
 #include <iostream>
-#include <ctime>
-#include <string>
 #include "util/base/include/timer.h"
 
 using namespace std;
+using namespace boost::posix_time;
 
 //! Constructor
-Timer::Timer(){
-    mStartTime = 0;
-    mStopTime = 0;
+Timer::Timer():mTotalTime( 0 )
+{
 }
         
 /*! \brief Start the timer. 
 * \details This function starts the timer. All times will be relative to this time.
 */     
 void Timer::start(){
-    mStartTime = clock();
+    mStartTime = microsec_clock::universal_time();
 }
 
 /*! \brief Stop the timer.
@@ -64,15 +62,26 @@ void Timer::start(){
 * may be fetched or printed.
 */
 void Timer::stop(){
-    mStopTime = clock();
+    mStopTime = microsec_clock::universal_time();
+    mTotalTime += getTimeDifference();
 }
 
 /*! \brief Get the differential between the start time and stop time.
 * \return The difference between the stop and start time.
 */
 double Timer::getTimeDifference() const {
-    return (double)( mStopTime - mStartTime ) / CLOCKS_PER_SEC;
+    time_duration diff = mStopTime - mStartTime;
+    return diff.total_seconds() + pow( 10.0, -time_duration::num_fractional_digits() ) * diff.fractional_seconds();
 }
+
+/*!
+ * \brief Get the total time measured by this timer between all start and stops.
+ * \return The total time in seconds.
+ */
+double Timer::getTotalTimeDifference() const {
+    return mTotalTime;
+}
+
 /*! \brief Print the stored time.
 * \details This function prints the time between the last call to stop() and the time
 * start() was called.
@@ -80,5 +89,104 @@ double Timer::getTimeDifference() const {
 * \param aTitle The label to print in front of the time. Defaults to 'Time: '
 */
 void Timer::print( std::ostream& aOut, const string& aLabel ) const {
-    aOut << aLabel << " " << getTimeDifference() << " seconds. " << endl; 
+    if( mTotalTime > 0 ) {
+        aOut << aLabel << " " << mTotalTime << " seconds. " << endl;
+    }
+}
+
+//! Constructor
+TimerRegistry::TimerRegistry():mPredefinedTimers( END )
+{
+}
+
+/*!
+ * \brief Get the singleton instance of the TimerRegistry.
+ * \return The TimerRegistry.
+ */
+TimerRegistry& TimerRegistry::getInstance() {
+    static TimerRegistry TIMER_REGISTRY;
+    return TIMER_REGISTRY;
+}
+
+/*!
+ * \brief Get the underlying timer for the given identifier.
+ * \details This version looks up the timer by enumeration and should be used when
+ *          performance is critical.
+ * \param aTimerName The identifier to use to lookup the timer.
+ * \return The appropriate Timer to use.
+ */
+Timer& TimerRegistry::getTimer( const PredefinedTimers aTimerName ) {
+    /*!
+     * \pre aTimerName is a valid PredefinedTimers.
+     */
+    assert( aTimerName < END );
+    
+    return mPredefinedTimers[ aTimerName ];
+}
+
+/*!
+ * \brief Get the underlying timer for the given identifier.
+ * \details This version looks up the timer by name and is more convenient to use
+ *          when debugging.
+ * \param aTimerName The identifier to use to lookup the timer.
+ * \return The appropriate Timer to use, note if a timer for the given name does
+ *         not already exist it will be created
+ */
+Timer& TimerRegistry::getTimer( const string& aTimerName ) {
+    return mNamedTimers[ aTimerName ];
+}
+
+/*!
+ * \brief Have all registered timers print their current times using their names
+ *        as a label.
+ */
+void TimerRegistry::printAllTimers( ostream& aOut ) const {
+    for( int timer = 0; timer < END; ++timer ) {
+        string timerName;
+        switch( timer ) {
+            case FULLSCENARIO:
+                timerName = "Full Scenario";
+                break;
+            case BISECT:
+                timerName = "Bisection solver";
+                break;
+            case SOLVER:
+                timerName = "Broyden Solver";
+                break;
+            case JACOBIAN:
+                timerName = "Jacobian calcs";
+                break;
+            case EVAL_PART:
+                timerName = "Partial function evaluations";
+                break;
+            case EVAL_FULL:
+                timerName = "Full function evaluations";
+                break;
+            case JAC_PRE:
+                timerName = "Jacobian Preconditioner (overlaps with Jacobian)";
+                break;
+            case JAC_PRE_JAC:
+                timerName = "Jacobian Preconditioner Jacobian overlap";
+                break;
+            case EDFUN_MISC:
+                timerName = "EDFUN miscellaneous";
+                break;
+            case EDFUN_PRE:
+                timerName = "EDFUN before world->calc";
+                break;
+            case EDFUN_POST:
+                timerName = "EDFUN after world->calc";
+                break;
+            case EDFUN_AN_RESET:
+                timerName = "EDFUN affected nodes reset";
+                break;
+                
+            default: timerName = "Predefined timer";
+        }
+        mPredefinedTimers[ timer ].print( aOut, timerName );
+    }
+    
+    for( map<string, Timer>::const_iterator it = mNamedTimers.begin(); it != mNamedTimers.end(); ++it ) {
+        (*it).second.print( aOut, (*it).first );
+    }
 }

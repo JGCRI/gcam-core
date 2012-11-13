@@ -46,9 +46,9 @@
 using namespace std;
 
 //! Constructor
-DemandMarket::DemandMarket( const string& goodNameIn, const string& regionNameIn, const int periodIn ) :
-Market( goodNameIn, regionNameIn, periodIn ) {
-   demMktSupply = 0;
+DemandMarket::DemandMarket( const string& goodNameIn, const string& regionNameIn, int periodIn ) :
+  Market( goodNameIn, regionNameIn, periodIn ) {
+  demMktSupply = 0;
 }
 
 void DemandMarket::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {
@@ -84,12 +84,16 @@ void DemandMarket::addToDemand( const double demandIn ) {
 }
 
 double DemandMarket::getDemand() const {
-   return price;
+    return price;
 }
 
 void DemandMarket::nullSupply() {
-   supply = 0;
-   demMktSupply = 0;
+#if GCAM_PARALLEL_ENABLED
+    supply.clear();
+#else
+    supply = 0;
+#endif
+    demMktSupply = 0; 
 }
 
 double DemandMarket::getSupply() const {
@@ -97,8 +101,12 @@ double DemandMarket::getSupply() const {
 }
 
 void DemandMarket::addToSupply( const double supplyIn ) {
-   supply = price; 
-   demMktSupply += supplyIn; // Store Raw supply value to check later
+#if GCAM_PARALLEL_ENABLED
+    supply.clear();
+    supply.local() = price;
+#else
+    supply = price;
+#endif
 }
 
 bool DemandMarket::meetsSpecialSolutionCriteria() const {

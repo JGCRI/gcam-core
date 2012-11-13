@@ -1,5 +1,5 @@
-#ifndef FUNCTOR_HH_
-#define FUNCTOR_HH_
+#ifndef FUNCTOR_HPP_
+#define FUNCTOR_HPP_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -39,7 +39,7 @@
 
 
 /*!
- * @file functor.hh
+ * @file functor.hpp
  * @ingroup Solution
  * @brief Base class definitions for function-like objects
  */
@@ -98,6 +98,16 @@ public:
    * \param ip: The index of the element of the input vector that has changed.
    */
   virtual void partial(int ip) {}
+  /*!
+   * Returns an implementation-defined estimate of the amount of work required to compute a partial derivative
+   *
+   * The value returned should be expressed as a fraction of the
+   * amount of work required for a full evaluation.  This can be used
+   * in algorithms that can accept an approximate Jacobian as a
+   * heuristic to determine whether to evaluate or guess at a partial
+   * derivative.
+   */
+  virtual double partialSize(int ip) const {return 1.0;}
 };
 
 

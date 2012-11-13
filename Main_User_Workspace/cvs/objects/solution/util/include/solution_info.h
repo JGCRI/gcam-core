@@ -61,6 +61,10 @@ namespace objects {
     class Atom;
 }
 
+#if GCAM_PARALLEL_ENABLED
+class GcamFlowGraph;
+#endif
+
 /*!
 * \ingroup Solution
 * \brief A class which contains the solution information for a single market.
@@ -72,7 +76,11 @@ class SolutionInfo {
         return os;
     }
 public:
+#if GCAM_PARALLEL_ENABLED
+    SolutionInfo( Market* linkedMarket, const std::vector<IActivity*>& aDependenicies, GcamFlowGraph* aFlowGraph );
+#else
     SolutionInfo( Market* linkedMarket, const std::vector<IActivity*>& aDependenicies );
+#endif
     bool operator==( const SolutionInfo& rhs ) const;
     bool operator!=( const SolutionInfo& rhs ) const;
     const std::string& getName() const;
@@ -120,6 +128,9 @@ public:
     bool hasBisected() const;
     const std::vector<const objects::Atom*>& getContainedRegions() const;
     const std::vector<IActivity*>& getDependencies() const;
+#if GCAM_PARALLEL_ENABLED
+    GcamFlowGraph* getFlowGraph() const;
+#endif
     SupplyDemandCurve createSDCurve();
     void printDerivatives( std::ostream& aOut ) const;
     /*!
@@ -150,6 +161,12 @@ private:
     //! This activities which need to recalculate if this solution info adjust
     //! prices
     std::vector<IActivity*> mDependencies;
+
+#if GCAM_PARALLEL_ENABLED
+    //! A pointer weak pointer to a flow graph which can be used recalculate if this
+    // solution info adjusts it's price.
+    GcamFlowGraph* mFlowGraph;
+#endif
     
     //! Market specific solution tolerance
     double mSolutionTolerance;

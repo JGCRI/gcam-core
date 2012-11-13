@@ -1,6 +1,5 @@
-#ifndef FUNCTOR_SUBS_HH_
-#define FUNCTOR_SUBS_HH_
-
+#ifndef JACOBIAN_PRECONDITION_HPP_
+#define JACOBIAN_PRECONDITION_HPP_
 
 /*
 * LEGAL NOTICE
@@ -34,39 +33,24 @@
 *
 */
 
+#include <boost/numeric/ublas/lu.hpp>
+#include "solution/util/include/functor-subs.hpp"
 
-/*!
- * @file functor-subs.hh
- * @ingroup Solution
- * @brief Some specific functor subclasses for use in GCAM
- */
+#if USE_LAPACK
+#define UBMATRIX boost::numeric::ublas::matrix<double,boost::numeric::ublas::column_major>
+#else
+#define UBMATRIX boost::numeric::ublas::matrix<double>
+#endif
+#define UBVECTOR boost::numeric::ublas::vector<double>
 
-#include "functor.hh"
 
-#define UBLAS boost::numeric::ublas
+int jacobian_precondition(UBVECTOR &x, UBVECTOR &fx, UBMATRIX &J, VecFVec<double,double> &F,
+                          std::ostream *diagnostic=0, double FTOL=1.0e-4);
 
-/*!
- * Template for a scalar function formed by taking the magnitude of a vector function.  This
- * class evaluates the vector function F, computes and returns the dot product, and also stores
- * the original vector function value.
- * @author Robert Link
- * @tparam Tr: return type
- * @tparam Ta: argument type
- */
-template <class Tr, class Ta>
-class FdotF : public SclFVec<Tr,Ta> {
-protected:
-  VecFVec<Tr,Ta> &F;
-  UBLAS::vector<Tr> lstF;
-public:
-  FdotF(VecFVec<Tr,Ta> &Fin) : F(Fin), lstF(Fin.nrtn()) {this->na = Fin.narg();}
-  void lastF(UBLAS::vector<Tr> &v) {v = lstF;}
-  virtual Tr operator()(const UBLAS::vector<Ta> &x) {
-    F(x,lstF);
-    return inner_prod(lstF,lstF);
-  }
-};
+void broyden_singular_B_reset(UBVECTOR &x, UBVECTOR &fx, UBMATRIX &B, VecFVec<double,double> &F,
+                             std::ostream *diagnostic, double FTOL=1.0e-4);
 
-#undef UBLAS
+#undef UBMATRIX
+#undef UBVECTOR
 
 #endif

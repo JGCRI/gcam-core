@@ -46,8 +46,8 @@
 using namespace std;
 
 //! Constructor
-TrialValueMarket::TrialValueMarket( const string& goodNameIn, const string& regionNameIn, const int periodIn ) :
-Market( goodNameIn, regionNameIn, periodIn )
+TrialValueMarket::TrialValueMarket( const string& goodNameIn, const string& regionNameIn, int periodIn ) :
+  Market( goodNameIn, regionNameIn, periodIn )
 {   
     // Initialize to 0.001. Use of previous getSmallNumber() is too small and 
     // takes longer to solve.
@@ -104,7 +104,12 @@ double TrialValueMarket::getPrice() const {
 */
 void TrialValueMarket::addToDemand( const double demandIn ) {
     Market::addToDemand( demandIn );
+#if GCAM_PARALLEL_ENABLED
+    supply.clear();
+    supply.local() = price;
+#else
     supply = price;
+#endif
 }
 
 double TrialValueMarket::getDemand() const {

@@ -1,5 +1,5 @@
-#ifndef LOGNRBT_HH_
-#define LOGNRBT_HH_
+#ifndef LOGNRBT_HPP_
+#define LOGNRBT_HPP_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -39,7 +39,7 @@
 
 
 /*! 
-* \file lognrbt.hh
+* \file lognrbt.hpp
 * \ingroup objects
 * \brief Header file for the log Newton-Raphson with backtracking solver component
 *
@@ -48,9 +48,14 @@
 #include <string>
 #include <boost/numeric/ublas/matrix.hpp>
 #include "solution/util/include/solvable_nr_solution_info_filter.h"
-#include "solution/util/include/edfun.hh"
+#include "solution/util/include/edfun.hpp"
 
 #define UBLAS boost::numeric::ublas
+#if USE_LAPACK
+#define UBMATRIX UBLAS::matrix<double,boost::numeric::ublas::column_major>
+#else
+#define UBMATRIX UBLAS::matrix<double>
+#endif
 
 class CalcCounter; 
 class Marketplace;
@@ -94,7 +99,7 @@ public:
   
 protected:
     int nrsolve(VecFVec<double,double> &F, UBLAS::vector<double> &x,
-                UBLAS::vector<double> &fx, int &neval);
+                UBLAS::vector<double> &fx, UBMATRIX &J, int &neval);
     //! Max iterations for the Newton-Raphson algorithm 
     unsigned int mMaxIter;
   
@@ -127,5 +132,6 @@ private:
 };
 
 #undef UBLAS
+#undef UBMATRIX
 
-#endif // LOGNRBT_HH_
+#endif // LOGNRBT_HPP_

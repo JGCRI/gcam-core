@@ -48,8 +48,8 @@
 using namespace std;
 
 //! Constructor
-PriceMarket::PriceMarket( const string& goodNameIn, const string& regionNameIn, const int periodIn, Market* demandMarketIn ) :
-Market( goodNameIn, regionNameIn, periodIn ),
+PriceMarket::PriceMarket( const string& goodNameIn, const string& regionNameIn, int periodIn, Market* demandMarketIn ) :
+  Market( goodNameIn, regionNameIn, periodIn ),
 mIsPriceNegative( false )
 {
     assert( demandMarketIn );
@@ -100,15 +100,25 @@ void PriceMarket::initPrice() {
 void PriceMarket::setPrice( const double priceIn ) {
     // If the model thinks the price should be negative store that information
     // and hide the fact from the solver.
+    double demandtmp;
     if( priceIn < 0 ) {
         mIsPriceNegative = true;
-        demand = abs( priceIn );
+        demandtmp = abs( priceIn );
     }
     else {
         mIsPriceNegative = false;
-        demand = priceIn;
+        demandtmp = priceIn;
     }
+#if GCAM_PARALLEL_ENABLED
+    demand.clear();
+    demand.local() = demandtmp;
+    
+    supply.clear();
+    supply.local() = price;
+#else
+    demand = demandtmp;
     supply = price;
+#endif
 }
 
 void PriceMarket::set_price_to_last_if_default( const double lastPrice ) {

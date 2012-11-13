@@ -1,5 +1,5 @@
-#ifndef FDJAC_HH_
-#define FDJAC_HH_
+#ifndef FDJAC_HPP_
+#define FDJAC_HPP_
 
 /*
 * LEGAL NOTICE
@@ -35,7 +35,7 @@
 
 
 /*!
- * \file fdjac.hh
+ * \file fdjac.hpp
  * \ingroup Solution
  * \brief Finite-difference Jacobian helper functions for multidimensional root finders
  * \remark Because this function is actually a template, the entire definition goes in the header file.
@@ -48,11 +48,62 @@
 
 #include <boost/numeric/ublas/vector.hpp>
 #include <boost/numeric/ublas/matrix.hpp>
-#include "functor.hh"
+#include "functor.hpp"
 #include <iostream>
-#include "solution/util/include/ublas-helpers.hh"
+#include "solution/util/include/ublas-helpers.hpp"
 
 #define UBLAS boost::numeric::ublas
+
+#include "util/base/include/timer.h"
+
+/*!
+ * Compute a single column in a Jacobian matrix.  We have broken this
+ * out from the fdjac subroutine so that we can easily test a single
+ * column for nonsingularity without duplicating any code.
+ */
+template<class FTYPE,class MTRAIT>
+inline void jacol(VecFVec<FTYPE,FTYPE> &F, const UBLAS::vector<FTYPE> &x,
+                  const UBLAS::vector<FTYPE> &fx, int j, 
+                  UBLAS::matrix<FTYPE,MTRAIT> &J,
+                  bool usepartial=true, double cthresh=0.0, std::ostream *diagnostic=NULL) {
+  const FTYPE heps = 1.0e-6;
+  const FTYPE TINY = 1.0e-6;
+  UBLAS::vector<FTYPE> xx = x; // temporary, so we can respect the const on x
+  UBLAS::vector<FTYPE> fxx(fx.size());        // hold the values of F(xx)
+  FTYPE t = xx[j];            // store the old value
+  FTYPE h = heps * (fabs(t)+TINY);
+  
+  xx[j] = t+h;
+  h     = xx[j]-t; // reduce roundoff error, since (t+h)-t is not
+                   // necessarily identical to the original h
+  if(diagnostic) {
+    (*diagnostic) << "j= " << j << "\th= " << h << "\nxx:\n" << xx << "\n\tcthresh= " << cthresh
+                  << "partialsize = " << F.partialSize(j) << "\n";
+  }
+  double psize = F.partialSize(j);
+  if(psize < cthresh) {
+    /* For small markets (i.e., ones that aren't likely to generate many off-diagonal terms), just estimate
+       and move on */
+    for(size_t i=0; i<fxx.size(); ++i)
+      J(i,j) = 0.0;
+    J(j,j) = -1.0;
+    return;
+  }
+  if(usepartial) {F.partial(j);}    // hint to the function that this is a partial derivative calculation
+  F(xx,fxx);       // eval the function
+  xx[j] = t;       // restore the old value
+  
+  if(diagnostic) {
+    (*diagnostic) << "fxx:\n" << fxx << "\n";
+  }
+  
+  // compute the finite difference derivatives
+  FTYPE hinv = 1.0/h;
+  for(size_t i=0; i<fxx.size(); ++i) {
+    J(i,j) = (fxx[i] - fx[i]) * hinv;
+  }
+}
+
 
 /*!
  * Compute the Jacobian of a vector function F at point x.
@@ -66,14 +117,14 @@
  *          therefore, any function making use of either of these functions should take care
  *          that the right convention is being used.
  */
-template <class FTYPE>
+template <class FTYPE, class MTRAIT>
 void fdjac(VecFVec<FTYPE,FTYPE> &F, const UBLAS::vector<FTYPE> &x,
-           UBLAS::matrix<FTYPE> &J, bool usepartial=true)
+           UBLAS::matrix<FTYPE,MTRAIT> &J, bool usepartial=true, double cthresh=0.0)
 {
   UBLAS::vector<FTYPE> fx(F.nrtn());
 
   F(x,fx);                      // fx = F(x)
-  fdjac(F,x,fx,J,usepartial);
+  fdjac(F,x,fx,J,usepartial, cthresh);
 }
 
 /*!
@@ -83,47 +134,30 @@ void fdjac(VecFVec<FTYPE,FTYPE> &F, const UBLAS::vector<FTYPE> &x,
  * \param[in] x: The point at which to calculate the Jacobian
  * \param[in] fx: F(x)
  * \param[out] J: The Jacobian of F
+ * \param[in] usepartial: (optional) use partial model evaluation for partial derivatives
+ * \param[in] diagnostic: (optional) ostream pointer to which to send additional diagnostics
+ *
  */
-template<class FTYPE>
+template<class FTYPE, class MTRAIT>
 void fdjac(VecFVec<FTYPE,FTYPE> &F, const UBLAS::vector<FTYPE> &x,
-           const UBLAS::vector<FTYPE> &fx, UBLAS::matrix<FTYPE> &J, bool usepartial=true,
-           std::ostream *diagnostic=NULL)
+           const UBLAS::vector<FTYPE> &fx, UBLAS::matrix<FTYPE,MTRAIT> &J, bool usepartial=true,
+           double cthresh=0.0, std::ostream *diagnostic=NULL)
 {
-  const FTYPE heps = 1.0e-6;
-  const FTYPE TINY = 1.0e-6;
-  UBLAS::vector<FTYPE> xx = x; // temporary, so we can respect the const on x
-  UBLAS::vector<FTYPE> fxx(fx.size());        // hold the values of F(xx)
-
   if(diagnostic) {
     (*diagnostic) << "fdjac: usepartial = " << usepartial << "\nInitial x:\n" << x
         << "\nInitial fx:\n" << fx << "\n";
   }
-    
-  
-  for(size_t j=0; j<xx.size(); ++j) {
-    FTYPE t = xx[j];            // store the old value
-    FTYPE h = heps * (fabs(t)+TINY);
-    xx[j] = t+h;
-    h     = xx[j]-t; // reduce roundoff error, since (t+h)-t is not
-                     // necessarily identical to the original h
-    if(diagnostic) {
-      (*diagnostic) << "j= " << j << "\th= " << h << "\nxx:\n" << xx << "\n";
-    }
-    if(usepartial) {F.partial(j);}    // hint to the function that this is a partial derivative calculation
-    F(xx,fxx);       // eval the function
-    xx[j] = t;       // restore the old value
 
-    if(diagnostic) {
-      (*diagnostic) << "fxx:\n" << fxx << "\n";
-    }
-    
-    // compute the finite difference derivatives
-    FTYPE hinv = 1.0/h;
-    for(size_t i=0; i<fxx.size(); ++i) {
-      J(i,j) = (fxx[i] - fx[i]) * hinv;
-    }
+  Timer& jacTimer = TimerRegistry::getInstance().getTimer( TimerRegistry::JACOBIAN );
+  jacTimer.start();
+  
+  for(size_t j=0; j<x.size(); ++j) {
+    jacol(F, x, fx, j, J, usepartial, cthresh, diagnostic);
   }
+
+  jacTimer.stop();
 }
+
 
 #undef UBLAS
 

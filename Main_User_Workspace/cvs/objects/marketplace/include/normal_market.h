@@ -55,7 +55,7 @@
 
 class NormalMarket: public Market {
 public:
-    NormalMarket( const std::string& goodNameIn, const std::string& regionNameIn, const int periodIn );
+    NormalMarket( const std::string& goodNameIn, const std::string& regionNameIn, int periodIn );
     virtual IMarketType::Type getType() const;
 
     virtual void initPrice();
