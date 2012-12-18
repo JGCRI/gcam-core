@@ -108,13 +108,13 @@
          <comments/>
          <labelRewriteList append-values="false">
             <level name="input">
-               <rewrite from="geothermal-elect" to="i geothermal"/>
                <rewrite from="traditional biomass" to="j traditional biomass"/>
-               <rewrite from="nuclear-H2" to="e nuclear"/>
+               <rewrite from="geothermal-elect" to="i geothermal"/>
                <rewrite from="biomass" to="d biomass"/>
+               <rewrite from="nuclear-H2" to="e nuclear"/>
                <rewrite from="natural gas" to="b natural gas"/>
-               <rewrite from="exotic-elect" to="j breakthrough"/>
                <rewrite from="wind-elect" to="g wind"/>
+               <rewrite from="exotic-elect" to="j breakthrough"/>
                <rewrite from="elect_td_ind" to=""/>
                <rewrite from="solar-elect" to="h solar"/>
                <rewrite from="solar-H2" to="h solar"/>
@@ -123,8 +123,8 @@
                <rewrite from="crude oil" to="a oil"/>
                <rewrite from="hydro-elect" to="f hydro"/>
                <rewrite from="nuclear-elect" to="e nuclear"/>
-               <rewrite from="wind-H2" to="g wind"/>
                <rewrite from="traded unconventional oil" to="a oil"/>
+               <rewrite from="wind-H2" to="g wind"/>
             </level>
          </labelRewriteList>
       </supplyDemandQuery>
@@ -188,24 +188,24 @@
          <comments/>
          <labelRewriteList append-values="false">
             <level name="input">
-               <rewrite from="geothermal-elect" to="i geothermal"/>
                <rewrite from="traditional biomass" to="j traditional biomass"/>
-               <rewrite from="nuclear-H2" to="e nuclear"/>
+               <rewrite from="geothermal-elect" to="i geothermal"/>
                <rewrite from="biomass" to="d biomass"/>
+               <rewrite from="nuclear-H2" to="e nuclear"/>
                <rewrite from="natural gas" to="b natural gas"/>
-               <rewrite from="exotic-elect" to="j breakthrough"/>
                <rewrite from="wind-elect" to="g wind"/>
+               <rewrite from="exotic-elect" to="j breakthrough"/>
                <rewrite from="elect_td_ind" to=""/>
-               <rewrite from="solar-elect" to="h solar"/>
                <rewrite from="k new" to="k new"/>
+               <rewrite from="solar-elect" to="h solar"/>
                <rewrite from="solar-H2" to="h solar"/>
                <rewrite from="regional natural gas" to=""/>
                <rewrite from="coal" to="c coal"/>
                <rewrite from="crude oil" to="a oil"/>
                <rewrite from="hydro-elect" to="f hydro"/>
                <rewrite from="nuclear-elect" to="e nuclear"/>
-               <rewrite from="wind-H2" to="g wind"/>
                <rewrite from="traded unconventional oil" to="a oil"/>
+               <rewrite from="wind-H2" to="g wind"/>
             </level>
          </labelRewriteList>
       </supplyDemandQuery>
@@ -244,31 +244,31 @@
             <level name="technology">
                <rewrite from="nuc_base_gen3" to="i Nuclear"/>
                <rewrite from="nuc_base_gen2" to="i Nuclear"/>
-               <rewrite from="Oil (existing)" to="e Oil"/>
                <rewrite from="coal_int_IGCC" to="a Coal"/>
+               <rewrite from="Oil (existing)" to="e Oil"/>
                <rewrite from="hydrogen cogen" to="n CHP"/>
                <rewrite from="Oil (peak load conv)" to="e Oil"/>
                <rewrite from="csp_base_storage" to="m Solar"/>
                <rewrite from="Oil (base load conv)" to="e Oil"/>
-               <rewrite from="gas cogen" to="n CHP"/>
                <rewrite from="oil_int_IGCC" to="e Oil"/>
-               <rewrite from="Gas (base load conv)" to="c Gas"/>
+               <rewrite from="gas cogen" to="n CHP"/>
                <rewrite from="Biomass (IGCC)" to="g Biomass"/>
+               <rewrite from="Gas (base load conv)" to="c Gas"/>
                <rewrite from="coal_int_exist" to="a Coal"/>
                <rewrite from="oil_peak_turbine" to="e Oil"/>
-               <rewrite from="geothermal" to="j Geothermal"/>
                <rewrite from="pv_base_storage" to="m Solar"/>
+               <rewrite from="geothermal" to="j Geothermal"/>
                <rewrite from="Coal (conv pul)" to="a Coal"/>
                <rewrite from="oil_int_IGCC_CCS" to="f Oil w/CCS"/>
-               <rewrite from="PV_storage" to="m Solar"/>
                <rewrite from="gas_base_CC" to="c Gas"/>
+               <rewrite from="PV_storage" to="m Solar"/>
                <rewrite from="CSP_storage" to="m Solar"/>
-               <rewrite from="Oil (IGCC)_CCS" to="f Oil w/CCS"/>
                <rewrite from="refined liquids cogen" to="n CHP"/>
+               <rewrite from="Oil (IGCC)_CCS" to="f Oil w/CCS"/>
                <rewrite from="coal_base_IGCC_CCS" to="b Coal w/CCS"/>
-               <rewrite from="biomass cogen" to="n CHP"/>
-               <rewrite from="bio_base_IGCC_CCS" to="h Biomass w/CCS"/>
                <rewrite from="gas_subpeak_CC" to="c Gas"/>
+               <rewrite from="bio_base_IGCC_CCS" to="h Biomass w/CCS"/>
+               <rewrite from="biomass cogen" to="n CHP"/>
                <rewrite from="wind" to="l Wind"/>
                <rewrite from="gas_base_CC_CCS" to="d Gas w/CCS"/>
                <rewrite from="oil_peak_exist" to="e Oil"/>
@@ -277,43 +277,43 @@
                <rewrite from="coal_base_conv" to="a Coal"/>
                <rewrite from="geo_base" to="j Geothermal"/>
                <rewrite from="Coal (IGCC)_CCS" to="b Coal w/CCS"/>
-               <rewrite from="Biomass (IGCC)_CCS" to="h Biomass w/CCS"/>
-               <rewrite from="Gas (CC)" to="c Gas"/>
-               <rewrite from="Gas (peak load conv)" to="c Gas"/>
                <rewrite from="oil_subpeak_IGCC" to="e Oil"/>
-               <rewrite from="oil_subpeak_IGCC_CCS" to="f Oil w/CCS"/>
+               <rewrite from="Gas (peak load conv)" to="c Gas"/>
+               <rewrite from="Gas (CC)" to="c Gas"/>
+               <rewrite from="Biomass (IGCC)_CCS" to="h Biomass w/CCS"/>
                <rewrite from="gas_subpeak_CC_CCS" to="d Gas w/CCS"/>
-               <rewrite from="Coal (IGCC)" to="a Coal"/>
-               <rewrite from="csp_subpeak" to="m Solar"/>
+               <rewrite from="oil_subpeak_IGCC_CCS" to="f Oil w/CCS"/>
                <rewrite from="gas_int_CC_CCS" to="d Gas w/CCS"/>
-               <rewrite from="PV" to="m Solar"/>
+               <rewrite from="csp_subpeak" to="m Solar"/>
+               <rewrite from="Coal (IGCC)" to="a Coal"/>
                <rewrite from="oil_peak_IGCC_CCS" to="f Oil w/CCS"/>
-               <rewrite from="Gas (existing)" to="c Gas"/>
-               <rewrite from="wind_base" to="l Wind"/>
+               <rewrite from="PV" to="m Solar"/>
                <rewrite from="coal_base_exist" to="a Coal"/>
+               <rewrite from="wind_base" to="l Wind"/>
+               <rewrite from="Gas (existing)" to="c Gas"/>
                <rewrite from="gas_int_exist" to="c Gas"/>
-               <rewrite from="bio_base_conv" to="g Biomass"/>
                <rewrite from="gas_peak_CC_CCS" to="d Gas w/CCS"/>
+               <rewrite from="bio_base_conv" to="g Biomass"/>
                <rewrite from="oil_int_exist" to="e Oil"/>
                <rewrite from="bio_int_IGCC_CCS" to="h Biomass w/CCS"/>
                <rewrite from="oil_base_exist" to="e Oil"/>
                <rewrite from="coal_int_conv" to="a Coal"/>
                <rewrite from="csp_int" to="m Solar"/>
                <rewrite from="gas_peak_CC" to="c Gas"/>
-               <rewrite from="bio_base_exist" to="g Biomass"/>
                <rewrite from="oil_peak_IGCC" to="e Oil"/>
-               <rewrite from="Gen_II_LWR" to="i Nuclear"/>
-               <rewrite from="hydro" to="k Hydro"/>
+               <rewrite from="bio_base_exist" to="g Biomass"/>
                <rewrite from="exotic" to="d Breakthrough Technology"/>
-               <rewrite from="coal cogen" to="n CHP"/>
+               <rewrite from="hydro" to="k Hydro"/>
+               <rewrite from="Gen_II_LWR" to="i Nuclear"/>
                <rewrite from="hydro_subpeak" to="k Hydro"/>
+               <rewrite from="coal cogen" to="n CHP"/>
                <rewrite from="gas_base_exist" to="c Gas"/>
-               <rewrite from="oil_subpeak_exist" to="e Oil"/>
-               <rewrite from="battery" to="o Battery"/>
                <rewrite from="hydro_peak" to="k Hydro"/>
+               <rewrite from="battery" to="o Battery"/>
+               <rewrite from="oil_subpeak_exist" to="e Oil"/>
                <rewrite from="gas_int_CC" to="c Gas"/>
-               <rewrite from="wind_storage" to="l Wind"/>
                <rewrite from="hydro_int" to="k Hydro"/>
+               <rewrite from="wind_storage" to="l Wind"/>
                <rewrite from="Biomass (conv)" to="g Biomass"/>
                <rewrite from="Coal (existing)" to="a Coal"/>
                <rewrite from="gas_subpeak_exist" to="c Gas"/>
@@ -322,17 +322,17 @@
                <rewrite from="hydro_base" to="k Hydro"/>
                <rewrite from="Gas (CC)_CCS" to="d Gas w/CCS"/>
                <rewrite from="Biomass (existing)" to="g Biomass"/>
-               <rewrite from="gas_peak_exist" to="c Gas"/>
                <rewrite from="bio_int_IGCC" to="g Biomass"/>
-               <rewrite from="oil_base_IGCC_CCS" to="f Oil w/CCS"/>
+               <rewrite from="gas_peak_exist" to="c Gas"/>
                <rewrite from="pv_subpeak" to="m Solar"/>
+               <rewrite from="oil_base_IGCC_CCS" to="f Oil w/CCS"/>
                <rewrite from="Oil (IGCC)" to="e Oil"/>
                <rewrite from="coal_base_IGCC" to="a Coal"/>
-               <rewrite from="wind_base_storage" to="l Wind"/>
                <rewrite from="coal_int_IGCC_CCS" to="b Coal w/CCS"/>
+               <rewrite from="wind_base_storage" to="l Wind"/>
                <rewrite from="bio_int_conv" to="g Biomass"/>
-               <rewrite from="oil_base_IGCC" to="e Oil"/>
                <rewrite from="gas_peak_turbine" to="c Gas"/>
+               <rewrite from="oil_base_IGCC" to="e Oil"/>
             </level>
          </labelRewriteList>
       </supplyDemandQuery>
@@ -391,15 +391,15 @@
                <rewrite from="gas_subpeak_exist" to="Gas (existing)"/>
                <rewrite from="bio_base_IGCC" to="Biomass (IGCC)"/>
                <rewrite from="hydro_base" to="hydro"/>
-               <rewrite from="gas_peak_exist" to="Gas (existing)"/>
                <rewrite from="bio_int_IGCC" to="Biomass (IGCC)"/>
+               <rewrite from="gas_peak_exist" to="Gas (existing)"/>
                <rewrite from="pv_subpeak" to="PV"/>
                <rewrite from="coal_base_IGCC" to="Coal (IGCC)"/>
-               <rewrite from="wind_base_storage" to="wind_storage"/>
                <rewrite from="coal_int_IGCC_CCS" to="Coal (IGCC)_CCS"/>
+               <rewrite from="wind_base_storage" to="wind_storage"/>
                <rewrite from="bio_int_conv" to="Biomass (conv)"/>
-               <rewrite from="oil_base_IGCC" to="Oil (IGCC)"/>
                <rewrite from="gas_peak_turbine" to="Gas (conv)"/>
+               <rewrite from="oil_base_IGCC" to="Oil (IGCC)"/>
             </level>
          </labelRewriteList>
       </supplyDemandQuery>
@@ -663,46 +663,46 @@
          <comments/>
          <labelRewriteList append-values="false">
             <level name="sector">
-               <rewrite from="agriculture energy use" to="industry"/>
                <rewrite from="boilers general" to="industry"/>
-               <rewrite from="resid lighting" to="building"/>
+               <rewrite from="agriculture energy use" to="industry"/>
                <rewrite from="trn_freight" to="transportation"/>
                <rewrite from="machine drive" to="industry"/>
-               <rewrite from="resid hot water" to="building"/>
-               <rewrite from="comm office" to="building"/>
-               <rewrite from="comm ventilation" to="building"/>
-               <rewrite from="resid other" to="building"/>
-               <rewrite from="process heat primary metals" to="industry"/>
-               <rewrite from="industrial energy use" to="industry"/>
-               <rewrite from="resid heating" to="building"/>
-               <rewrite from="feedstocks construction" to="industry"/>
-               <rewrite from="trn_shipping_intl" to="transportation"/>
-               <rewrite from="resid appliances" to="building"/>
                <rewrite from="comm cooling" to="building"/>
+               <rewrite from="industrial energy use" to="industry"/>
+               <rewrite from="process heat primary metals" to="industry"/>
+               <rewrite from="feedstocks construction" to="industry"/>
+               <rewrite from="comm other" to="building"/>
+               <rewrite from="trn_shipping_intl" to="transportation"/>
+               <rewrite from="resid other appliances" to="building"/>
                <rewrite from="feedstocks chemicals" to="industry"/>
                <rewrite from="process heat cement" to="industry"/>
                <rewrite from="cement" to="industry"/>
-               <rewrite from="comm other" to="building"/>
-               <rewrite from="comm refrigeration" to="building"/>
                <rewrite from="electrochemical" to="industry"/>
-               <rewrite from="resid other appliances" to="building"/>
+               <rewrite from="comm lighting" to="building"/>
                <rewrite from="feedstocks primary metals" to="industry"/>
                <rewrite from="other end uses" to="industry"/>
+               <rewrite from="comm office" to="building"/>
                <rewrite from="trn_passenger" to="transportation"/>
-               <rewrite from="comm lighting" to="building"/>
-               <rewrite from="resid cooling" to="building"/>
                <rewrite from="construction energy use" to="industry"/>
                <rewrite from="comm cooking" to="building"/>
-               <rewrite from="comm hot water" to="building"/>
-               <rewrite from="industrial feedstocks" to="industry"/>
+               <rewrite from="resid appliances" to="building"/>
+               <rewrite from="resid hot water" to="building"/>
                <rewrite from="comm heating" to="building"/>
+               <rewrite from="industrial feedstocks" to="industry"/>
+               <rewrite from="resid heating" to="building"/>
                <rewrite from="boilers pulp paper and wood" to="industry"/>
+               <rewrite from="comm ventilation" to="building"/>
                <rewrite from="process heat general" to="industry"/>
-               <rewrite from="mining energy use" to="industry"/>
-               <rewrite from="limestone feedstocks" to=""/>
-               <rewrite from="trn_pass_road" to="transportation"/>
                <rewrite from="comm others" to="building"/>
+               <rewrite from="limestone feedstocks" to=""/>
+               <rewrite from="mining energy use" to="industry"/>
+               <rewrite from="comm hot water" to="building"/>
+               <rewrite from="resid cooling" to="building"/>
+               <rewrite from="resid lighting" to="building"/>
                <rewrite from="resid others" to="building"/>
+               <rewrite from="trn_pass_road" to="transportation"/>
+               <rewrite from="comm refrigeration" to="building"/>
+               <rewrite from="resid other" to="building"/>
             </level>
          </labelRewriteList>
       </supplyDemandQuery>
@@ -719,17 +719,17 @@
          <comments/>
          <labelRewriteList append-values="false">
             <level name="input">
-               <rewrite from="traditional biomass" to="7 trad biomass"/>
-               <rewrite from="H2 Enduse" to="6 hydrogen"/>
                <rewrite from="delivered biomass" to="4 biomass"/>
-               <rewrite from="refined liquids enduse" to="1 liquids"/>
+               <rewrite from="H2 Enduse" to="6 hydrogen"/>
+               <rewrite from="traditional biomass" to="7 trad biomass"/>
                <rewrite from="elect_td_bld" to="5 electricity"/>
-               <rewrite from="elect_td_trn" to="5 electricity"/>
+               <rewrite from="refined liquids enduse" to="1 liquids"/>
                <rewrite from="delivered coal" to="3 coal"/>
+               <rewrite from="elect_td_trn" to="5 electricity"/>
                <rewrite from="elect_td_ind" to="5 electricity"/>
-               <rewrite from="wholesale gas" to="2 gas"/>
-               <rewrite from="refined liquids industrial" to="1 liquids"/>
                <rewrite from="delivered gas" to="2 gas"/>
+               <rewrite from="refined liquids industrial" to="1 liquids"/>
+               <rewrite from="wholesale gas" to="2 gas"/>
             </level>
          </labelRewriteList>
       </supplyDemandQuery>
@@ -740,59 +740,59 @@
          <comments/>
          <labelRewriteList append-values="false">
             <level name="sector">
-               <rewrite from="agriculture energy use" to="industry"/>
                <rewrite from="boilers general" to="industry"/>
-               <rewrite from="resid lighting" to="building"/>
+               <rewrite from="agriculture energy use" to="industry"/>
                <rewrite from="trn_freight" to="transportation"/>
                <rewrite from="machine drive" to="industry"/>
-               <rewrite from="resid hot water" to="building"/>
-               <rewrite from="comm office" to="building"/>
-               <rewrite from="comm ventilation" to="building"/>
-               <rewrite from="resid other" to="building"/>
-               <rewrite from="industrial energy use" to="industry"/>
-               <rewrite from="process heat primary metals" to="industry"/>
-               <rewrite from="resid heating" to="building"/>
-               <rewrite from="feedstocks construction" to="industry"/>
-               <rewrite from="trn_shipping_intl" to="transportation"/>
-               <rewrite from="resid appliances" to="building"/>
                <rewrite from="comm cooling" to="building"/>
+               <rewrite from="process heat primary metals" to="industry"/>
+               <rewrite from="industrial energy use" to="industry"/>
+               <rewrite from="feedstocks construction" to="industry"/>
+               <rewrite from="comm other" to="building"/>
+               <rewrite from="trn_shipping_intl" to="transportation"/>
+               <rewrite from="resid other appliances" to="building"/>
                <rewrite from="feedstocks chemicals" to="industry"/>
                <rewrite from="process heat cement" to="industry"/>
                <rewrite from="cement" to="industry"/>
-               <rewrite from="comm other" to="building"/>
-               <rewrite from="comm refrigeration" to="building"/>
                <rewrite from="electrochemical" to="industry"/>
-               <rewrite from="resid other appliances" to="building"/>
+               <rewrite from="comm lighting" to="building"/>
                <rewrite from="feedstocks primary metals" to="industry"/>
                <rewrite from="other end uses" to="industry"/>
+               <rewrite from="comm office" to="building"/>
                <rewrite from="trn_passenger" to="transportation"/>
-               <rewrite from="comm lighting" to="building"/>
-               <rewrite from="resid cooling" to="building"/>
                <rewrite from="construction energy use" to="industry"/>
                <rewrite from="comm cooking" to="building"/>
-               <rewrite from="comm hot water" to="building"/>
-               <rewrite from="industrial feedstocks" to="industry"/>
+               <rewrite from="resid appliances" to="building"/>
+               <rewrite from="resid hot water" to="building"/>
                <rewrite from="comm heating" to="building"/>
+               <rewrite from="industrial feedstocks" to="industry"/>
+               <rewrite from="resid heating" to="building"/>
                <rewrite from="boilers pulp paper and wood" to="industry"/>
+               <rewrite from="comm ventilation" to="building"/>
                <rewrite from="process heat general" to="industry"/>
-               <rewrite from="mining energy use" to="industry"/>
-               <rewrite from="limestone feedstocks" to=""/>
-               <rewrite from="trn_pass_road" to="transportation"/>
                <rewrite from="comm others" to="building"/>
+               <rewrite from="limestone feedstocks" to=""/>
+               <rewrite from="mining energy use" to="industry"/>
+               <rewrite from="comm hot water" to="building"/>
+               <rewrite from="resid cooling" to="building"/>
+               <rewrite from="resid lighting" to="building"/>
                <rewrite from="resid others" to="building"/>
+               <rewrite from="trn_pass_road" to="transportation"/>
+               <rewrite from="comm refrigeration" to="building"/>
+               <rewrite from="resid other" to="building"/>
             </level>
             <level name="input">
-               <rewrite from="traditional biomass" to="7 trad biomass"/>
-               <rewrite from="H2 Enduse" to="6 hydrogen"/>
                <rewrite from="delivered biomass" to="4 biomass"/>
-               <rewrite from="refined liquids enduse" to="1 liquids"/>
+               <rewrite from="H2 Enduse" to="6 hydrogen"/>
+               <rewrite from="traditional biomass" to="7 trad biomass"/>
                <rewrite from="elect_td_bld" to="5 electricity"/>
-               <rewrite from="elect_td_trn" to="5 electricity"/>
+               <rewrite from="refined liquids enduse" to="1 liquids"/>
                <rewrite from="delivered coal" to="3 coal"/>
+               <rewrite from="elect_td_trn" to="5 electricity"/>
                <rewrite from="elect_td_ind" to="5 electricity"/>
-               <rewrite from="wholesale gas" to="2 gas"/>
-               <rewrite from="refined liquids industrial" to="1 liquids"/>
                <rewrite from="delivered gas" to="2 gas"/>
+               <rewrite from="refined liquids industrial" to="1 liquids"/>
+               <rewrite from="wholesale gas" to="2 gas"/>
             </level>
          </labelRewriteList>
       </supplyDemandQuery>
@@ -1626,14 +1626,14 @@
                <rewrite from="PalmFruitAEZ14" to="crops"/>
                <rewrite from="PalmFruitAEZ11" to="crops"/>
                <rewrite from="PalmFruitAEZ12" to="crops"/>
-               <rewrite from="PalmFruitAEZ17" to="crops"/>
                <rewrite from="SugarCropAEZ13" to="crops"/>
-               <rewrite from="PalmFruitAEZ18" to="crops"/>
+               <rewrite from="PalmFruitAEZ17" to="crops"/>
                <rewrite from="SugarCropAEZ14" to="crops"/>
-               <rewrite from="PalmFruitAEZ15" to="crops"/>
+               <rewrite from="PalmFruitAEZ18" to="crops"/>
                <rewrite from="SugarCropAEZ11" to="crops"/>
-               <rewrite from="PalmFruitAEZ16" to="crops"/>
+               <rewrite from="PalmFruitAEZ15" to="crops"/>
                <rewrite from="SugarCropAEZ12" to="crops"/>
+               <rewrite from="PalmFruitAEZ16" to="crops"/>
                <rewrite from="SugarCropAEZ17" to="crops"/>
                <rewrite from="SugarCropAEZ18" to="crops"/>
                <rewrite from="SugarCropAEZ15" to="crops"/>
@@ -1669,8 +1669,8 @@
                <rewrite from="miscanthusAEZ15" to="biomass"/>
                <rewrite from="willowAEZ10" to="biomass"/>
                <rewrite from="willowAEZ12" to="biomass"/>
-               <rewrite from="willowAEZ11" to="biomass"/>
                <rewrite from="UrbanLand" to="urban"/>
+               <rewrite from="willowAEZ11" to="biomass"/>
                <rewrite from="willowAEZ14" to="biomass"/>
                <rewrite from="willowAEZ13" to="biomass"/>
                <rewrite from="eucalyptusAEZ14" to="biomass"/>
@@ -1770,6 +1770,62 @@
          <xPath buildList="true" dataName="yield" group="false" sumAll="false">*[@type='sector' and (exists(child::keyword/@supplysector) or local-name() = 'AgSupplySector')]/cost/text()</xPath>
          <comments/>
       </supplyDemandQuery>
+   </queryGroup>
+   <queryGroup name="Fertilizer Queries">
+      <supplyDemandQuery title="Fertilizer Production by Region">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and (@name='N fertilizer')]/*[@type = 'subsector' (:collapse:) and not (@name='Imports')]//*[@type='output']/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Fertilizer Production by Technology">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">physical-output[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='N fertilizer')]//*[@type = 'technology' and not (@name='Imports')]/*[@type='output']/physical-output/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Inputs to Fertilizer Production by Technology">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type = 'sector' and (@name='N fertilizer')]//*[@type = 'technology' and not (@name = 'Imports')]/*[@type='input']/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Fertilizer Demands by Region">
+         <axis1 name="region">region</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' (:collapse:) and not (@name='Exports_N fertilizer')]//*[@type='input' and (@name='N fertilizer')]/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Fertilizer Demands by Crop Type">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' and not (@name='Exports_N fertilizer')]//*[@type='input' and (@name='N fertilizer')]/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Fertilizer Demands by Crop Type and AEZ">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">demand-physical[@vintage]</axis2>
+         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type = 'sector' and not (@name='Exports_fertilizer')]/*[@type = 'subsector']//*[@type='input' and (@name='N fertilizer')]/demand-physical/node()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Fertilizer price">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector' and (@name='N fertilizer')]/cost/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <supplyDemandQuery title="Fertilizer cost by technology">
+         <axis1 name="technology">technology</axis1>
+         <axis2 name="Year">cost</axis2>
+         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type = 'sector' and (@name='N fertilizer')]//*[@type = 'technology' and not (@name='Imports')]/cost/text()</xPath>
+         <comments/>
+      </supplyDemandQuery>
+      <emissionsQueryBuilder title="CO2 emissions from fertilizer production">
+         <axis1 name="sector">sector</axis1>
+         <axis2 name="Year">emissions</axis2>
+         <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector' and (@name='N fertilizer')]//CO2/emissions/node()</xPath>
+         <comments/>
+      </emissionsQueryBuilder>
    </queryGroup>
    <queryGroup name="Animals">
       <supplyDemandQuery title="Meat Output By Technology">
@@ -2489,61 +2545,61 @@
          <labelRewriteList append-values="false">
             <level name="sector">
                <rewrite from="gas pipeline" to="gas systems"/>
-               <rewrite from="backup_electricity" to="electricity"/>
-               <rewrite from="agriculture energy use" to="industry"/>
                <rewrite from="boilers general" to="industry"/>
-               <rewrite from="resid lighting" to="building"/>
+               <rewrite from="refined liquids enduse" to="liquid systems"/>
                <rewrite from="H2 Central Production" to="hydrogen"/>
                <rewrite from="trn_freight" to="transportation"/>
+               <rewrite from="intermediate generation" to="electricity"/>
                <rewrite from="machine drive" to="industry"/>
                <rewrite from="gas processing" to="gas systems"/>
-               <rewrite from="resid hot water" to="building"/>
-               <rewrite from="comm office" to="building"/>
-               <rewrite from="comm ventilation" to="building"/>
-               <rewrite from="resid other" to="building"/>
-               <rewrite from="process heat primary metals" to="industry"/>
+               <rewrite from="regional biomass" to="biomass systems"/>
                <rewrite from="industrial energy use" to="industry"/>
-               <rewrite from="csp_backup" to="electricity"/>
-               <rewrite from="resid heating" to="building"/>
-               <rewrite from="feedstocks construction" to="industry"/>
-               <rewrite from="trn_shipping_intl" to="transportation"/>
-               <rewrite from="resid appliances" to="building"/>
                <rewrite from="comm cooling" to="building"/>
                <rewrite from="feedstocks chemicals" to="industry"/>
-               <rewrite from="H2 Forecourt Production" to="hydrogen"/>
-               <rewrite from="process heat cement" to="industry"/>
                <rewrite from="cement" to="industry"/>
-               <rewrite from="comm other" to="building"/>
-               <rewrite from="comm refrigeration" to="building"/>
+               <rewrite from="base load generation" to="electricity"/>
+               <rewrite from="unconventional oil production" to="liquid systems"/>
                <rewrite from="electrochemical" to="industry"/>
-               <rewrite from="resid other appliances" to="building"/>
-               <rewrite from="feedstocks primary metals" to="industry"/>
-               <rewrite from="other end uses" to="industry"/>
-               <rewrite from="trn_passenger" to="transportation"/>
                <rewrite from="comm lighting" to="building"/>
-               <rewrite from="resid cooling" to="building"/>
+               <rewrite from="comm office" to="building"/>
                <rewrite from="construction energy use" to="industry"/>
                <rewrite from="comm cooking" to="building"/>
+               <rewrite from="resid hot water" to="building"/>
+               <rewrite from="resid heating" to="building"/>
+               <rewrite from="regional biomassOil" to="biomass systems"/>
+               <rewrite from="boilers pulp paper and wood" to="industry"/>
+               <rewrite from="comm ventilation" to="building"/>
                <rewrite from="comm hot water" to="building"/>
+               <rewrite from="mining energy use" to="industry"/>
+               <rewrite from="refined liquids industrial" to="liquid systems"/>
+               <rewrite from="resid lighting" to="building"/>
+               <rewrite from="resid others" to="building"/>
+               <rewrite from="resid other" to="building"/>
+               <rewrite from="trn_pass_road" to="transportation"/>
+               <rewrite from="backup_electricity" to="electricity"/>
+               <rewrite from="agriculture energy use" to="industry"/>
+               <rewrite from="subpeak generation" to="electricity"/>
+               <rewrite from="process heat primary metals" to="industry"/>
+               <rewrite from="csp_backup" to="electricity"/>
+               <rewrite from="feedstocks construction" to="industry"/>
+               <rewrite from="trn_shipping_intl" to="transportation"/>
+               <rewrite from="comm other" to="building"/>
+               <rewrite from="resid other appliances" to="building"/>
+               <rewrite from="H2 Forecourt Production" to="hydrogen"/>
+               <rewrite from="process heat cement" to="industry"/>
+               <rewrite from="feedstocks primary metals" to="industry"/>
+               <rewrite from="other end uses" to="industry"/>
+               <rewrite from="peak generation" to="electricity"/>
+               <rewrite from="trn_passenger" to="transportation"/>
+               <rewrite from="resid appliances" to="building"/>
+               <rewrite from="regional corn for ethanol" to="biomass systems"/>
                <rewrite from="industrial feedstocks" to="industry"/>
                <rewrite from="comm heating" to="building"/>
-               <rewrite from="boilers pulp paper and wood" to="industry"/>
                <rewrite from="process heat general" to="industry"/>
-               <rewrite from="mining energy use" to="industry"/>
                <rewrite from="limestone feedstocks" to=""/>
-               <rewrite from="trn_pass_road" to="transportation"/>
                <rewrite from="comm others" to="building"/>
-               <rewrite from="resid others" to="building"/>
-               <rewrite from="base load generation" to="electricity"/>
-               <rewrite from="intermediate generation" to="electricity"/>
-               <rewrite from="subpeak generation" to="electricity"/>
-               <rewrite from="peak generation" to="electricity"/>
-               <rewrite from="regional biomass" to="biomass systems"/>
-               <rewrite from="regional biomassOil" to="biomass systems"/>
-               <rewrite from="regional corn for ethanol" to="biomass systems"/>
-               <rewrite from="refined liquids enduse" to="liquid systems"/>
-               <rewrite from="refined liquids industrial" to="liquid systems"/>
-               <rewrite from="unconventional oil production" to="liquid systems"/>
+               <rewrite from="resid cooling" to="building"/>
+               <rewrite from="comm refrigeration" to="building"/>
             </level>
          </labelRewriteList>
       </emissionsQueryBuilder>

@@ -52,7 +52,7 @@
         <log-newton-raphson-backtracking-solver-component>
             <max-iterations>50</max-iterations>
             <ftol>1.0e-3</ftol>
-            <solution-info-filter>solvable-nr &amp;&amp; !(market-name="globalcrude oil" || market-name="globalnatural gas" || market-name="globalcoal")</solution-info-filter>
+            <solution-info-filter>unsolved &amp;&amp; solvable-nr &amp;&amp; !(market-name="globalcrude oil" || market-name="globalnatural gas" || market-name="globalcoal")</solution-info-filter>
         </log-newton-raphson-backtracking-solver-component>
     </user-configurable-solver>
     <user-configurable-solver year="2005">
@@ -72,7 +72,7 @@
 		         tolerance.  We will rerun with a tighter ftol below -->
 	        <ftol>5.0e-2</ftol>
             <!-- include the tax market in the newton-raphson -->
-            <solution-info-filter>solvable-nr &amp;&amp; !(market-name="globalcrude oil" || market-name="globalnatural gas" || market-name="globalcoal" || market-name="USAtraded unconventional oil")</solution-info-filter>
+            <solution-info-filter>unsolved &amp;&amp; solvable-nr &amp;&amp; !(market-name="globalcrude oil" || market-name="globalnatural gas" || market-name="globalcoal" || market-name="USAtraded unconventional oil")</solution-info-filter>
         </log-newton-raphson-backtracking-solver-component>
         <bisect-all-solver-component>
             <bracket-interval>10.0</bracket-interval>
@@ -90,7 +90,7 @@
             <max-iterations>15</max-iterations>
             <ftol>1.0e-3</ftol>
             <!-- include the tax market in the newton-raphson -->
-            <solution-info-filter>solvable-nr &amp;&amp; !(market-name="globalcrude oil" || market-name="globalnatural gas" || market-name="globalcoal")</solution-info-filter>
+            <solution-info-filter>unsolved &amp;&amp; solvable-nr &amp;&amp; !(market-name="globalcrude oil" || market-name="globalnatural gas" || market-name="globalcoal")</solution-info-filter>
         </log-newton-raphson-backtracking-solver-component>
     </user-configurable-solver>
     <!-- For all other periods, newton-raphson is called before the bisection after bisection on the

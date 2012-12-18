@@ -73,6 +73,7 @@
 		<Value name="aglu">../input/aglu/bio_hi.xml</Value>
 		<Value name="aglu">../input/aglu/ag_cost.xml</Value>
 		<Value name="aglu">../input/aglu/ag_prodchange_core.xml</Value>
+		<Value name="aglu">../input/aglu/Fert_input.xml</Value>
 
 		<Value name="ag_nonco2">../input/aglu/nonco2_ag.xml</Value>
 		<Value name="livestock_nonco2">../input/aglu/nonco2_an.xml</Value>

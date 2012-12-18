@@ -700,7 +700,7 @@ int MarketDependencyFinder::markCycles( CalcVertex* aCurrVertex, list<CalcVertex
         // Have not yet created a cycle so add this vertex to the search path and
         // keep searching.
         aHasVisited.push_back( aCurrVertex );
-        const int MAX_CYCLE_VISITS = 1000;
+        const int MAX_CYCLE_VISITS = 100000;
         int cycleVisits = 0;
         for( VertexIterator it = aCurrVertex->mOutEdges.begin(); it != aCurrVertex->mOutEdges.end() && cycleVisits < MAX_CYCLE_VISITS; ++it ) {
             int currCycleVisits = markCycles( *it, aHasVisited, aTotalVisists );

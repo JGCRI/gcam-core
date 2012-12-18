@@ -381,6 +381,12 @@ void LandAllocator::calcLUCEmissions( const string& aRegionName, const int aPeri
 
 void LandAllocator::calcFinalLandAllocation( const string& aRegionName,
                                                  const int aPeriod ){
+
+    // In calibration periods, check land area and set calibration values
+    if ( aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() ) {
+        calibrateLandAllocator( aRegionName, aPeriod );
+    } 
+	
     // Calculate land shares
     calcLandShares( aRegionName,
                     0, // No logit exponent above the root.

@@ -52,7 +52,7 @@
             <max-iterations>50</max-iterations>
 	    <ftol>1.0e-3</ftol>
 	    <shortcut-reset>0</shortcut-reset>
-            <solution-info-filter>solvable-nr &amp;&amp; !(market-name="globalcrude oil" || market-name="globalnatural gas" || market-name="globalcoal")</solution-info-filter>
+            <solution-info-filter>unsolved &amp;&amp; solvable-nr &amp;&amp; !(market-name="globalcrude oil" || market-name="globalnatural gas" || market-name="globalcoal")</solution-info-filter>
         </broyden-solver-component>
     </user-configurable-solver>
 
@@ -66,7 +66,7 @@
 	    <ftol>1.0e-3</ftol>
 	    <shortcut-reset>0</shortcut-reset>
             <!-- include the tax market in the newton-raphson -->
-            <solution-info-filter>solvable-nr &amp;&amp; !(market-name="globalcrude oil" || market-name="globalnatural gas" || market-name="globalcoal")</solution-info-filter>
+            <solution-info-filter>unsolved &amp;&amp; solvable-nr &amp;&amp; !(market-name="globalcrude oil" || market-name="globalnatural gas" || market-name="globalcoal")</solution-info-filter>
         </broyden-solver-component>
         <bisect-all-solver-component>
             <bracket-interval>1.0</bracket-interval>
