@@ -1,0 +1,4 @@
+# Subsector level interpolation functions,,,,,,,
+# Source: Tables_CCS_Data.xlsx,,,,,,,
+supplysector,subsector,sw_1975,sw_1990,sw_2005,from_year,to_year,interpolation_function
+carbon-storage,carbon-storage regional,1,1,1,2005,9999,fixed

@@ -148,6 +148,10 @@ DeleteTech,world/+{name}region,region/+{name}supplysector,supplysector/+{name}su
 
 DeleteResource,world/+{name}region,region/+{name;delete=1}depresource,scenario,scenario/world
 
+DepResource,world/+{name}region,region/+{name}depresource,depresource/+output-unit,depresource/+price-unit,depresource/+{year=1975}price,depresource/+market,scenario,scenario/world
+
+DepResourceGrades,world/+{name}region,region/+{name}depresource,depresource/+{name}subresource,subresource/+{name}grade,grade/+extractioncost,grade/+available,scenario,scenario/world
+
 RenewResource,world/+{name}region,region/+{name}renewresource,renewresource/+output-unit,renewresource/+price-unit,renewresource/+{year=1975}price,renewresource/+market,region/+{name}PrimaryFuelCO2Coef,region/+PrimaryFuelCO2Coef,scenario,scenario/world
 
 RenewResTechChange,world/+{name}region,region/+{name}renewresource,renewresource/+{name}sub-renewable-resource,sub-renewable-resource/+{year}techChange,sub-renewable-resource/+techChange,scenario,scenario/world

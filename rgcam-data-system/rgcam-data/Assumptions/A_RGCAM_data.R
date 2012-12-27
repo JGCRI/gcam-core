@@ -41,6 +41,8 @@ conv_kbtu_EJ <- 1.0551e-12        #thousand btu to EJ
 
 conv_TWh_EJ <- 0.0036
 
+conv_CO2_C <- 12/44
+
 # Dollar year conversions
 conv_1996_1975_USD <- 0.4049
 conv_1997_1975_USD <- 0.3983

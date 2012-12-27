@@ -1,0 +1,4 @@
+# Resource level names and labels,,,
+# Source: Tables_CCS_Data.xlsx,,,
+resource,output_unit,price_unit,price
+carbon-storage resource,MTC,1990$/tC,1
