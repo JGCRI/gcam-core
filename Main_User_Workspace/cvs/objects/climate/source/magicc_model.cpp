@@ -300,6 +300,8 @@ void MagiccModel::XMLParse( const DOMNode* node ){
 void MagiccModel::toInputXML( ostream& out, Tabs* tabs ) const {
     XMLWriteOpeningTag( getXMLNameStatic(), out, tabs );
 
+    XMLWriteElementCheckDefault( mGHGInputFileName, "ghgInputFileName", out, tabs, string( "" ) );
+    
     // Write out mLastHistoricalYear
     XMLWriteElementCheckDefault( mLastHistoricalYear, "last-historical-year", out, tabs, 0 );
 
