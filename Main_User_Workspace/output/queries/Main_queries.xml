@@ -1230,7 +1230,7 @@
       <query title="Land Allocation in AEZ 9">
          <axis1 name="land-allocation">LandLeaf</axis1>
          <axis2 name="Year">land-allocation[@year]</axis2>
-         <xPath buildList="true" dataName="land-allocation" group="false" sumAll="false">/LandNode[@name='root' or @type='LandNode' (: collapse :)]//LandLeaf[ends-with(@name, 'AEZ9')]/land-allocation/text()</xPath>
+         <xPath buildList="true" dataName="land-allocation" group="false" sumAll="false">/LandNode[@name='root' or @type='LandNode' (: collapse :)]//LandLeaf[ends-with(@name, 'AEZ09')]/land-allocation/text()</xPath>
          <comments/>
       </query>
       <query title="Aggregated Land Allocation">
@@ -1249,66 +1249,66 @@
                <rewrite from="UnmanagedForestAEZ12" to="forest (unmanaged)"/>
                <rewrite from="UnmanagedForestAEZ11" to="forest (unmanaged)"/>
                <rewrite from="UnmanagedForestAEZ10" to="forest (unmanaged)"/>
-               <rewrite from="UnmanagedPastureAEZ8" to="pasture (other)"/>
-               <rewrite from="UnmanagedPastureAEZ9" to="pasture (other)"/>
-               <rewrite from="UnmanagedPastureAEZ6" to="pasture (other)"/>
-               <rewrite from="UnmanagedPastureAEZ7" to="pasture (other)"/>
+               <rewrite from="UnmanagedPastureAEZ08" to="pasture (other)"/>
+               <rewrite from="UnmanagedPastureAEZ09" to="pasture (other)"/>
+               <rewrite from="UnmanagedPastureAEZ06" to="pasture (other)"/>
+               <rewrite from="UnmanagedPastureAEZ07" to="pasture (other)"/>
                <rewrite from="RockIceDesert" to="rock and desert"/>
                <rewrite from="OtherGrainAEZ17" to="crops"/>
                <rewrite from="OtherGrainAEZ16" to="crops"/>
                <rewrite from="OtherGrainAEZ18" to="crops"/>
-               <rewrite from="WheatAEZ5" to="crops"/>
+               <rewrite from="WheatAEZ05" to="crops"/>
                <rewrite from="OtherGrainAEZ12" to="crops"/>
-               <rewrite from="WheatAEZ6" to="crops"/>
+               <rewrite from="WheatAEZ06" to="crops"/>
                <rewrite from="OtherGrainAEZ13" to="crops"/>
-               <rewrite from="WheatAEZ3" to="crops"/>
+               <rewrite from="WheatAEZ03" to="crops"/>
                <rewrite from="OtherGrainAEZ14" to="crops"/>
-               <rewrite from="WheatAEZ4" to="crops"/>
+               <rewrite from="WheatAEZ04" to="crops"/>
                <rewrite from="OtherGrainAEZ15" to="crops"/>
-               <rewrite from="WheatAEZ1" to="crops"/>
-               <rewrite from="WheatAEZ2" to="crops"/>
+               <rewrite from="WheatAEZ01" to="crops"/>
+               <rewrite from="WheatAEZ02" to="crops"/>
                <rewrite from="OtherGrainAEZ10" to="crops"/>
                <rewrite from="OtherGrainAEZ11" to="crops"/>
-               <rewrite from="UnmanagedPastureAEZ1" to="pasture (other)"/>
-               <rewrite from="UnmanagedPastureAEZ5" to="pasture (other)"/>
-               <rewrite from="WheatAEZ9" to="crops"/>
-               <rewrite from="UnmanagedPastureAEZ4" to="pasture (other)"/>
-               <rewrite from="UnmanagedPastureAEZ3" to="pasture (other)"/>
-               <rewrite from="WheatAEZ7" to="crops"/>
-               <rewrite from="UnmanagedPastureAEZ2" to="pasture (other)"/>
-               <rewrite from="WheatAEZ8" to="crops"/>
-               <rewrite from="MiscCropAEZ2" to="crops"/>
-               <rewrite from="MiscCropAEZ3" to="crops"/>
-               <rewrite from="MiscCropAEZ4" to="crops"/>
-               <rewrite from="MiscCropAEZ5" to="crops"/>
-               <rewrite from="RockIceDesertAEZ1" to="desert"/>
-               <rewrite from="MiscCropAEZ6" to="crops"/>
-               <rewrite from="RockIceDesertAEZ2" to="desert"/>
-               <rewrite from="MiscCropAEZ7" to="crops"/>
-               <rewrite from="MiscCropAEZ8" to="crops"/>
-               <rewrite from="MiscCropAEZ9" to="crops"/>
-               <rewrite from="RockIceDesertAEZ5" to="desert"/>
-               <rewrite from="Root_TuberAEZ5" to="crops"/>
-               <rewrite from="RockIceDesertAEZ6" to="desert"/>
-               <rewrite from="Root_TuberAEZ6" to="crops"/>
-               <rewrite from="RockIceDesertAEZ3" to="desert"/>
-               <rewrite from="Root_TuberAEZ7" to="crops"/>
-               <rewrite from="RockIceDesertAEZ4" to="desert"/>
-               <rewrite from="Root_TuberAEZ8" to="crops"/>
-               <rewrite from="RockIceDesertAEZ9" to="desert"/>
-               <rewrite from="Root_TuberAEZ9" to="crops"/>
+               <rewrite from="UnmanagedPastureAEZ01" to="pasture (other)"/>
+               <rewrite from="UnmanagedPastureAEZ05" to="pasture (other)"/>
+               <rewrite from="WheatAEZ09" to="crops"/>
+               <rewrite from="UnmanagedPastureAEZ04" to="pasture (other)"/>
+               <rewrite from="UnmanagedPastureAEZ03" to="pasture (other)"/>
+               <rewrite from="WheatAEZ07" to="crops"/>
+               <rewrite from="UnmanagedPastureAEZ02" to="pasture (other)"/>
+               <rewrite from="WheatAEZ08" to="crops"/>
+               <rewrite from="MiscCropAEZ02" to="crops"/>
+               <rewrite from="MiscCropAEZ03" to="crops"/>
+               <rewrite from="MiscCropAEZ04" to="crops"/>
+               <rewrite from="MiscCropAEZ05" to="crops"/>
+               <rewrite from="RockIceDesertAEZ01" to="desert"/>
+               <rewrite from="MiscCropAEZ06" to="crops"/>
+               <rewrite from="RockIceDesertAEZ02" to="desert"/>
+               <rewrite from="MiscCropAEZ07" to="crops"/>
+               <rewrite from="MiscCropAEZ08" to="crops"/>
+               <rewrite from="MiscCropAEZ09" to="crops"/>
+               <rewrite from="RockIceDesertAEZ05" to="desert"/>
+               <rewrite from="Root_TuberAEZ05" to="crops"/>
+               <rewrite from="RockIceDesertAEZ06" to="desert"/>
+               <rewrite from="Root_TuberAEZ06" to="crops"/>
+               <rewrite from="RockIceDesertAEZ03" to="desert"/>
+               <rewrite from="Root_TuberAEZ07" to="crops"/>
+               <rewrite from="RockIceDesertAEZ04" to="desert"/>
+               <rewrite from="Root_TuberAEZ08" to="crops"/>
+               <rewrite from="RockIceDesertAEZ09" to="desert"/>
+               <rewrite from="Root_TuberAEZ09" to="crops"/>
                <rewrite from="RiceAEZ11" to="crops"/>
                <rewrite from="RiceAEZ10" to="crops"/>
-               <rewrite from="RockIceDesertAEZ7" to="desert"/>
+               <rewrite from="RockIceDesertAEZ07" to="desert"/>
                <rewrite from="RiceAEZ13" to="crops"/>
-               <rewrite from="RockIceDesertAEZ8" to="desert"/>
-               <rewrite from="MiscCropAEZ1" to="crops"/>
+               <rewrite from="RockIceDesertAEZ08" to="desert"/>
+               <rewrite from="MiscCropAEZ01" to="crops"/>
                <rewrite from="RiceAEZ12" to="crops"/>
-               <rewrite from="eucalyptusAEZ9" to="biomass"/>
-               <rewrite from="Root_TuberAEZ2" to="crops"/>
-               <rewrite from="Root_TuberAEZ1" to="crops"/>
-               <rewrite from="Root_TuberAEZ4" to="crops"/>
-               <rewrite from="Root_TuberAEZ3" to="crops"/>
+               <rewrite from="eucalyptusAEZ09" to="biomass"/>
+               <rewrite from="Root_TuberAEZ02" to="crops"/>
+               <rewrite from="Root_TuberAEZ01" to="crops"/>
+               <rewrite from="Root_TuberAEZ04" to="crops"/>
+               <rewrite from="Root_TuberAEZ03" to="crops"/>
                <rewrite from="UrbanLandAEZ11" to="urban"/>
                <rewrite from="UrbanLandAEZ10" to="urban"/>
                <rewrite from="UrbanLandAEZ13" to="urban"/>
@@ -1320,25 +1320,25 @@
                <rewrite from="FodderHerbAEZ18" to="crops"/>
                <rewrite from="FodderHerbAEZ16" to="crops"/>
                <rewrite from="FodderHerbAEZ17" to="crops"/>
-               <rewrite from="TundraAEZ9" to="tundra"/>
-               <rewrite from="TundraAEZ8" to="tundra"/>
-               <rewrite from="TundraAEZ7" to="tundra"/>
+               <rewrite from="TundraAEZ09" to="tundra"/>
+               <rewrite from="TundraAEZ08" to="tundra"/>
+               <rewrite from="TundraAEZ07" to="tundra"/>
                <rewrite from="RockIceDesertAEZ15" to="desert"/>
                <rewrite from="FodderHerbAEZ10" to="crops"/>
-               <rewrite from="TundraAEZ6" to="tundra"/>
+               <rewrite from="TundraAEZ06" to="tundra"/>
                <rewrite from="RockIceDesertAEZ14" to="desert"/>
                <rewrite from="FodderHerbAEZ11" to="crops"/>
-               <rewrite from="TundraAEZ5" to="tundra"/>
+               <rewrite from="TundraAEZ05" to="tundra"/>
                <rewrite from="RockIceDesertAEZ13" to="desert"/>
-               <rewrite from="TundraAEZ4" to="tundra"/>
+               <rewrite from="TundraAEZ04" to="tundra"/>
                <rewrite from="RockIceDesertAEZ12" to="desert"/>
-               <rewrite from="TundraAEZ3" to="tundra"/>
+               <rewrite from="TundraAEZ03" to="tundra"/>
                <rewrite from="RockIceDesertAEZ11" to="desert"/>
                <rewrite from="FodderHerbAEZ14" to="crops"/>
-               <rewrite from="TundraAEZ2" to="tundra"/>
+               <rewrite from="TundraAEZ02" to="tundra"/>
                <rewrite from="RockIceDesertAEZ10" to="desert"/>
                <rewrite from="FodderHerbAEZ15" to="crops"/>
-               <rewrite from="TundraAEZ1" to="tundra"/>
+               <rewrite from="TundraAEZ01" to="tundra"/>
                <rewrite from="FodderHerbAEZ12" to="crops"/>
                <rewrite from="FodderHerbAEZ13" to="crops"/>
                <rewrite from="ShrublandAEZ18" to="shrubs"/>
@@ -1350,10 +1350,10 @@
                <rewrite from="ShrublandAEZ16" to="shrubs"/>
                <rewrite from="ShrublandAEZ15" to="shrubs"/>
                <rewrite from="ShrublandAEZ14" to="shrubs"/>
-               <rewrite from="FodderGrassAEZ8" to="crops"/>
-               <rewrite from="FodderGrassAEZ9" to="crops"/>
-               <rewrite from="FodderGrassAEZ6" to="crops"/>
-               <rewrite from="FodderGrassAEZ7" to="crops"/>
+               <rewrite from="FodderGrassAEZ08" to="crops"/>
+               <rewrite from="FodderGrassAEZ09" to="crops"/>
+               <rewrite from="FodderGrassAEZ06" to="crops"/>
+               <rewrite from="FodderGrassAEZ07" to="crops"/>
                <rewrite from="RockIceDesertAEZ16" to="desert"/>
                <rewrite from="RockIceDesertAEZ17" to="desert"/>
                <rewrite from="RockIceDesertAEZ18" to="desert"/>
@@ -1365,45 +1365,45 @@
                <rewrite from="biomassAEZ12" to="biomass"/>
                <rewrite from="biomassAEZ11" to="biomass"/>
                <rewrite from="CornAEZ11" to="crops"/>
-               <rewrite from="CornAEZ4" to="crops"/>
+               <rewrite from="CornAEZ04" to="crops"/>
                <rewrite from="CornAEZ12" to="crops"/>
-               <rewrite from="CornAEZ5" to="crops"/>
-               <rewrite from="CornAEZ2" to="crops"/>
+               <rewrite from="CornAEZ05" to="crops"/>
+               <rewrite from="CornAEZ02" to="crops"/>
                <rewrite from="CornAEZ10" to="crops"/>
-               <rewrite from="CornAEZ3" to="crops"/>
-               <rewrite from="CornAEZ1" to="crops"/>
+               <rewrite from="CornAEZ03" to="crops"/>
+               <rewrite from="CornAEZ01" to="crops"/>
                <rewrite from="biomassAEZ17" to="biomass"/>
                <rewrite from="biomassAEZ18" to="biomass"/>
-               <rewrite from="CornAEZ8" to="crops"/>
-               <rewrite from="CornAEZ9" to="crops"/>
-               <rewrite from="CornAEZ6" to="crops"/>
-               <rewrite from="CornAEZ7" to="crops"/>
-               <rewrite from="RiceAEZ4" to="crops"/>
-               <rewrite from="RiceAEZ3" to="crops"/>
+               <rewrite from="CornAEZ08" to="crops"/>
+               <rewrite from="CornAEZ09" to="crops"/>
+               <rewrite from="CornAEZ06" to="crops"/>
+               <rewrite from="CornAEZ07" to="crops"/>
+               <rewrite from="RiceAEZ04" to="crops"/>
+               <rewrite from="RiceAEZ03" to="crops"/>
                <rewrite from="UrbanLandAEZ18" to="urban"/>
-               <rewrite from="RiceAEZ2" to="crops"/>
-               <rewrite from="RiceAEZ1" to="crops"/>
-               <rewrite from="RiceAEZ8" to="crops"/>
-               <rewrite from="RiceAEZ7" to="crops"/>
+               <rewrite from="RiceAEZ02" to="crops"/>
+               <rewrite from="RiceAEZ01" to="crops"/>
+               <rewrite from="RiceAEZ08" to="crops"/>
+               <rewrite from="RiceAEZ07" to="crops"/>
                <rewrite from="CornAEZ18" to="crops"/>
-               <rewrite from="RiceAEZ6" to="crops"/>
+               <rewrite from="RiceAEZ06" to="crops"/>
                <rewrite from="CornAEZ17" to="crops"/>
-               <rewrite from="RiceAEZ5" to="crops"/>
+               <rewrite from="RiceAEZ05" to="crops"/>
                <rewrite from="CornAEZ16" to="crops"/>
                <rewrite from="CornAEZ15" to="crops"/>
                <rewrite from="CornAEZ14" to="crops"/>
                <rewrite from="CornAEZ13" to="crops"/>
-               <rewrite from="RiceAEZ9" to="crops"/>
+               <rewrite from="RiceAEZ09" to="crops"/>
                <rewrite from="PastureAEZ10" to="pasture (grazed)"/>
-               <rewrite from="SugarCropAEZ9" to="crops"/>
-               <rewrite from="SugarCropAEZ8" to="crops"/>
-               <rewrite from="SugarCropAEZ5" to="crops"/>
-               <rewrite from="SugarCropAEZ4" to="crops"/>
-               <rewrite from="SugarCropAEZ7" to="crops"/>
-               <rewrite from="SugarCropAEZ6" to="crops"/>
-               <rewrite from="SugarCropAEZ1" to="crops"/>
-               <rewrite from="SugarCropAEZ3" to="crops"/>
-               <rewrite from="SugarCropAEZ2" to="crops"/>
+               <rewrite from="SugarCropAEZ09" to="crops"/>
+               <rewrite from="SugarCropAEZ08" to="crops"/>
+               <rewrite from="SugarCropAEZ05" to="crops"/>
+               <rewrite from="SugarCropAEZ04" to="crops"/>
+               <rewrite from="SugarCropAEZ07" to="crops"/>
+               <rewrite from="SugarCropAEZ06" to="crops"/>
+               <rewrite from="SugarCropAEZ01" to="crops"/>
+               <rewrite from="SugarCropAEZ03" to="crops"/>
+               <rewrite from="SugarCropAEZ02" to="crops"/>
                <rewrite from="PastureAEZ13" to="pasture (grazed)"/>
                <rewrite from="PastureAEZ14" to="pasture (grazed)"/>
                <rewrite from="PastureAEZ11" to="pasture (grazed)"/>
@@ -1412,96 +1412,96 @@
                <rewrite from="PastureAEZ18" to="pasture (grazed)"/>
                <rewrite from="PastureAEZ15" to="pasture (grazed)"/>
                <rewrite from="PastureAEZ16" to="pasture (grazed)"/>
-               <rewrite from="willowAEZ7" to="biomass"/>
-               <rewrite from="willowAEZ9" to="biomass"/>
-               <rewrite from="willowAEZ8" to="biomass"/>
-               <rewrite from="PastureAEZ9" to="pasture (grazed)"/>
-               <rewrite from="PastureAEZ8" to="pasture (grazed)"/>
-               <rewrite from="PastureAEZ7" to="pasture (grazed)"/>
-               <rewrite from="PastureAEZ6" to="pasture (grazed)"/>
-               <rewrite from="PastureAEZ5" to="pasture (grazed)"/>
-               <rewrite from="PastureAEZ4" to="pasture (grazed)"/>
-               <rewrite from="PastureAEZ3" to="pasture (grazed)"/>
-               <rewrite from="PastureAEZ2" to="pasture (grazed)"/>
-               <rewrite from="PastureAEZ1" to="pasture (grazed)"/>
-               <rewrite from="eucalyptusAEZ1" to="biomass"/>
+               <rewrite from="willowAEZ07" to="biomass"/>
+               <rewrite from="willowAEZ09" to="biomass"/>
+               <rewrite from="willowAEZ08" to="biomass"/>
+               <rewrite from="PastureAEZ09" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ08" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ07" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ06" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ05" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ04" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ03" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ02" to="pasture (grazed)"/>
+               <rewrite from="PastureAEZ01" to="pasture (grazed)"/>
+               <rewrite from="eucalyptusAEZ01" to="biomass"/>
                <rewrite from="Root_TuberAEZ12" to="crops"/>
-               <rewrite from="eucalyptusAEZ2" to="biomass"/>
+               <rewrite from="eucalyptusAEZ02" to="biomass"/>
                <rewrite from="Root_TuberAEZ13" to="crops"/>
-               <rewrite from="eucalyptusAEZ3" to="biomass"/>
+               <rewrite from="eucalyptusAEZ03" to="biomass"/>
                <rewrite from="Root_TuberAEZ10" to="crops"/>
-               <rewrite from="eucalyptusAEZ4" to="biomass"/>
+               <rewrite from="eucalyptusAEZ04" to="biomass"/>
                <rewrite from="Root_TuberAEZ11" to="crops"/>
-               <rewrite from="eucalyptusAEZ5" to="biomass"/>
-               <rewrite from="eucalyptusAEZ6" to="biomass"/>
-               <rewrite from="eucalyptusAEZ7" to="biomass"/>
-               <rewrite from="eucalyptusAEZ8" to="biomass"/>
+               <rewrite from="eucalyptusAEZ05" to="biomass"/>
+               <rewrite from="eucalyptusAEZ06" to="biomass"/>
+               <rewrite from="eucalyptusAEZ07" to="biomass"/>
+               <rewrite from="eucalyptusAEZ08" to="biomass"/>
                <rewrite from="Root_TuberAEZ18" to="crops"/>
                <rewrite from="Root_TuberAEZ16" to="crops"/>
                <rewrite from="Root_TuberAEZ17" to="crops"/>
                <rewrite from="Root_TuberAEZ14" to="crops"/>
                <rewrite from="Root_TuberAEZ15" to="crops"/>
-               <rewrite from="ForestAEZ7" to="forest (managed)"/>
-               <rewrite from="ForestAEZ8" to="forest (managed)"/>
-               <rewrite from="ForestAEZ5" to="forest (managed)"/>
-               <rewrite from="ForestAEZ6" to="forest (managed)"/>
-               <rewrite from="ForestAEZ3" to="forest (managed)"/>
-               <rewrite from="ForestAEZ4" to="forest (managed)"/>
-               <rewrite from="ForestAEZ1" to="forest (managed)"/>
-               <rewrite from="ForestAEZ2" to="forest (managed)"/>
-               <rewrite from="FiberCropAEZ1" to="crops"/>
-               <rewrite from="biomassAEZ5" to="biomass"/>
-               <rewrite from="miscanthusAEZ5" to="biomass"/>
-               <rewrite from="biomassAEZ4" to="biomass"/>
-               <rewrite from="miscanthusAEZ6" to="biomass"/>
-               <rewrite from="biomassAEZ3" to="biomass"/>
-               <rewrite from="miscanthusAEZ3" to="biomass"/>
-               <rewrite from="biomassAEZ2" to="biomass"/>
-               <rewrite from="miscanthusAEZ4" to="biomass"/>
-               <rewrite from="biomassAEZ9" to="biomass"/>
-               <rewrite from="miscanthusAEZ9" to="biomass"/>
-               <rewrite from="biomassAEZ8" to="biomass"/>
-               <rewrite from="biomassAEZ7" to="biomass"/>
-               <rewrite from="miscanthusAEZ7" to="biomass"/>
-               <rewrite from="biomassAEZ6" to="biomass"/>
-               <rewrite from="miscanthusAEZ8" to="biomass"/>
-               <rewrite from="FiberCropAEZ9" to="crops"/>
-               <rewrite from="FiberCropAEZ8" to="crops"/>
-               <rewrite from="FiberCropAEZ7" to="crops"/>
-               <rewrite from="FiberCropAEZ6" to="crops"/>
-               <rewrite from="GrasslandAEZ2" to="grass"/>
-               <rewrite from="FiberCropAEZ5" to="crops"/>
-               <rewrite from="biomassAEZ1" to="biomass"/>
-               <rewrite from="miscanthusAEZ1" to="biomass"/>
-               <rewrite from="GrasslandAEZ1" to="grass"/>
-               <rewrite from="FiberCropAEZ4" to="crops"/>
-               <rewrite from="miscanthusAEZ2" to="biomass"/>
-               <rewrite from="GrasslandAEZ4" to="grass"/>
-               <rewrite from="FiberCropAEZ3" to="crops"/>
-               <rewrite from="GrasslandAEZ3" to="grass"/>
-               <rewrite from="FiberCropAEZ2" to="crops"/>
+               <rewrite from="ForestAEZ07" to="forest (managed)"/>
+               <rewrite from="ForestAEZ08" to="forest (managed)"/>
+               <rewrite from="ForestAEZ05" to="forest (managed)"/>
+               <rewrite from="ForestAEZ06" to="forest (managed)"/>
+               <rewrite from="ForestAEZ03" to="forest (managed)"/>
+               <rewrite from="ForestAEZ04" to="forest (managed)"/>
+               <rewrite from="ForestAEZ01" to="forest (managed)"/>
+               <rewrite from="ForestAEZ02" to="forest (managed)"/>
+               <rewrite from="FiberCropAEZ01" to="crops"/>
+               <rewrite from="biomassAEZ05" to="biomass"/>
+               <rewrite from="miscanthusAEZ05" to="biomass"/>
+               <rewrite from="biomassAEZ04" to="biomass"/>
+               <rewrite from="miscanthusAEZ06" to="biomass"/>
+               <rewrite from="biomassAEZ03" to="biomass"/>
+               <rewrite from="miscanthusAEZ03" to="biomass"/>
+               <rewrite from="biomassAEZ02" to="biomass"/>
+               <rewrite from="miscanthusAEZ04" to="biomass"/>
+               <rewrite from="biomassAEZ09" to="biomass"/>
+               <rewrite from="miscanthusAEZ09" to="biomass"/>
+               <rewrite from="biomassAEZ08" to="biomass"/>
+               <rewrite from="biomassAEZ07" to="biomass"/>
+               <rewrite from="miscanthusAEZ07" to="biomass"/>
+               <rewrite from="biomassAEZ06" to="biomass"/>
+               <rewrite from="miscanthusAEZ08" to="biomass"/>
+               <rewrite from="FiberCropAEZ09" to="crops"/>
+               <rewrite from="FiberCropAEZ08" to="crops"/>
+               <rewrite from="FiberCropAEZ07" to="crops"/>
+               <rewrite from="FiberCropAEZ06" to="crops"/>
+               <rewrite from="GrasslandAEZ02" to="grass"/>
+               <rewrite from="FiberCropAEZ05" to="crops"/>
+               <rewrite from="biomassAEZ01" to="biomass"/>
+               <rewrite from="miscanthusAEZ01" to="biomass"/>
+               <rewrite from="GrasslandAEZ01" to="grass"/>
+               <rewrite from="FiberCropAEZ04" to="crops"/>
+               <rewrite from="miscanthusAEZ02" to="biomass"/>
+               <rewrite from="GrasslandAEZ04" to="grass"/>
+               <rewrite from="FiberCropAEZ03" to="crops"/>
+               <rewrite from="GrasslandAEZ03" to="grass"/>
+               <rewrite from="FiberCropAEZ02" to="crops"/>
                <rewrite from="OtherArableLandAEZ14" to="otherarable"/>
-               <rewrite from="OtherArableLandAEZ1" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ01" to="otherarable"/>
                <rewrite from="OtherArableLandAEZ13" to="otherarable"/>
-               <rewrite from="GrasslandAEZ9" to="grass"/>
+               <rewrite from="GrasslandAEZ09" to="grass"/>
                <rewrite from="OtherArableLandAEZ12" to="otherarable"/>
-               <rewrite from="OtherArableLandAEZ3" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ03" to="otherarable"/>
                <rewrite from="OtherArableLandAEZ11" to="otherarable"/>
-               <rewrite from="OtherArableLandAEZ2" to="otherarable"/>
-               <rewrite from="GrasslandAEZ7" to="grass"/>
+               <rewrite from="OtherArableLandAEZ02" to="otherarable"/>
+               <rewrite from="GrasslandAEZ07" to="grass"/>
                <rewrite from="OtherArableLandAEZ18" to="otherarable"/>
-               <rewrite from="OtherArableLandAEZ5" to="otherarable"/>
-               <rewrite from="GrasslandAEZ8" to="grass"/>
+               <rewrite from="OtherArableLandAEZ05" to="otherarable"/>
+               <rewrite from="GrasslandAEZ08" to="grass"/>
                <rewrite from="OtherArableLandAEZ17" to="otherarable"/>
-               <rewrite from="OtherArableLandAEZ4" to="otherarable"/>
-               <rewrite from="GrasslandAEZ5" to="grass"/>
+               <rewrite from="OtherArableLandAEZ04" to="otherarable"/>
+               <rewrite from="GrasslandAEZ05" to="grass"/>
                <rewrite from="OtherArableLandAEZ16" to="otherarable"/>
-               <rewrite from="OtherArableLandAEZ7" to="otherarable"/>
-               <rewrite from="GrasslandAEZ6" to="grass"/>
+               <rewrite from="OtherArableLandAEZ07" to="otherarable"/>
+               <rewrite from="GrasslandAEZ06" to="grass"/>
                <rewrite from="OtherArableLandAEZ15" to="otherarable"/>
-               <rewrite from="OtherArableLandAEZ6" to="otherarable"/>
-               <rewrite from="OtherArableLandAEZ9" to="otherarable"/>
-               <rewrite from="OtherArableLandAEZ8" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ06" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ09" to="otherarable"/>
+               <rewrite from="OtherArableLandAEZ08" to="otherarable"/>
                <rewrite from="OtherArableLandAEZ10" to="otherarable"/>
                <rewrite from="WheatAEZ17" to="crops"/>
                <rewrite from="WheatAEZ16" to="crops"/>
@@ -1510,18 +1510,18 @@
                <rewrite from="WheatAEZ12" to="crops"/>
                <rewrite from="WheatAEZ15" to="crops"/>
                <rewrite from="WheatAEZ14" to="crops"/>
-               <rewrite from="OilCropAEZ8" to="crops"/>
+               <rewrite from="OilCropAEZ08" to="crops"/>
                <rewrite from="WheatAEZ10" to="crops"/>
-               <rewrite from="OilCropAEZ9" to="crops"/>
+               <rewrite from="OilCropAEZ09" to="crops"/>
                <rewrite from="WheatAEZ11" to="crops"/>
-               <rewrite from="OilCropAEZ6" to="crops"/>
-               <rewrite from="OilCropAEZ7" to="crops"/>
-               <rewrite from="OilCropAEZ4" to="crops"/>
-               <rewrite from="OilCropAEZ5" to="crops"/>
-               <rewrite from="ForestAEZ9" to="forest (managed)"/>
-               <rewrite from="OilCropAEZ1" to="crops"/>
-               <rewrite from="OilCropAEZ3" to="crops"/>
-               <rewrite from="OilCropAEZ2" to="crops"/>
+               <rewrite from="OilCropAEZ06" to="crops"/>
+               <rewrite from="OilCropAEZ07" to="crops"/>
+               <rewrite from="OilCropAEZ04" to="crops"/>
+               <rewrite from="OilCropAEZ05" to="crops"/>
+               <rewrite from="ForestAEZ09" to="forest (managed)"/>
+               <rewrite from="OilCropAEZ01" to="crops"/>
+               <rewrite from="OilCropAEZ03" to="crops"/>
+               <rewrite from="OilCropAEZ02" to="crops"/>
                <rewrite from="UnmanagedPastureAEZ14" to="pasture (other)"/>
                <rewrite from="GrasslandAEZ18" to="grass"/>
                <rewrite from="UnmanagedPastureAEZ13" to="pasture (other)"/>
@@ -1548,22 +1548,22 @@
                <rewrite from="TundraAEZ13" to="tundra"/>
                <rewrite from="TundraAEZ12" to="tundra"/>
                <rewrite from="TundraAEZ11" to="tundra"/>
-               <rewrite from="OtherGrainAEZ9" to="crops"/>
-               <rewrite from="OtherGrainAEZ7" to="crops"/>
-               <rewrite from="OtherGrainAEZ8" to="crops"/>
-               <rewrite from="OtherGrainAEZ5" to="crops"/>
-               <rewrite from="OtherGrainAEZ6" to="crops"/>
-               <rewrite from="OtherGrainAEZ3" to="crops"/>
-               <rewrite from="OtherGrainAEZ4" to="crops"/>
-               <rewrite from="OtherGrainAEZ1" to="crops"/>
+               <rewrite from="OtherGrainAEZ09" to="crops"/>
+               <rewrite from="OtherGrainAEZ07" to="crops"/>
+               <rewrite from="OtherGrainAEZ08" to="crops"/>
+               <rewrite from="OtherGrainAEZ05" to="crops"/>
+               <rewrite from="OtherGrainAEZ06" to="crops"/>
+               <rewrite from="OtherGrainAEZ03" to="crops"/>
+               <rewrite from="OtherGrainAEZ04" to="crops"/>
+               <rewrite from="OtherGrainAEZ01" to="crops"/>
                <rewrite from="TundraAEZ10" to="tundra"/>
-               <rewrite from="OtherGrainAEZ2" to="crops"/>
-               <rewrite from="PalmFruitAEZ8" to="crops"/>
-               <rewrite from="PalmFruitAEZ9" to="crops"/>
-               <rewrite from="PalmFruitAEZ6" to="crops"/>
-               <rewrite from="PalmFruitAEZ7" to="crops"/>
-               <rewrite from="PalmFruitAEZ4" to="crops"/>
-               <rewrite from="PalmFruitAEZ5" to="crops"/>
+               <rewrite from="OtherGrainAEZ02" to="crops"/>
+               <rewrite from="PalmFruitAEZ08" to="crops"/>
+               <rewrite from="PalmFruitAEZ09" to="crops"/>
+               <rewrite from="PalmFruitAEZ06" to="crops"/>
+               <rewrite from="PalmFruitAEZ07" to="crops"/>
+               <rewrite from="PalmFruitAEZ04" to="crops"/>
+               <rewrite from="PalmFruitAEZ05" to="crops"/>
                <rewrite from="ForestAEZ12" to="forest (managed)"/>
                <rewrite from="ForestAEZ13" to="forest (managed)"/>
                <rewrite from="ForestAEZ10" to="forest (managed)"/>
@@ -1573,52 +1573,52 @@
                <rewrite from="Tundra" to="tundra"/>
                <rewrite from="ForestAEZ14" to="forest (managed)"/>
                <rewrite from="ForestAEZ15" to="forest (managed)"/>
-               <rewrite from="PalmFruitAEZ1" to="crops"/>
-               <rewrite from="PalmFruitAEZ3" to="crops"/>
-               <rewrite from="PalmFruitAEZ2" to="crops"/>
-               <rewrite from="ShrublandAEZ4" to="shrubs"/>
+               <rewrite from="PalmFruitAEZ01" to="crops"/>
+               <rewrite from="PalmFruitAEZ03" to="crops"/>
+               <rewrite from="PalmFruitAEZ02" to="crops"/>
+               <rewrite from="ShrublandAEZ04" to="shrubs"/>
                <rewrite from="FiberCropAEZ12" to="crops"/>
-               <rewrite from="ShrublandAEZ3" to="shrubs"/>
+               <rewrite from="ShrublandAEZ03" to="shrubs"/>
                <rewrite from="FiberCropAEZ11" to="crops"/>
                <rewrite from="FiberCropAEZ10" to="crops"/>
-               <rewrite from="ShrublandAEZ2" to="shrubs"/>
-               <rewrite from="ShrublandAEZ1" to="shrubs"/>
-               <rewrite from="ShrublandAEZ8" to="shrubs"/>
+               <rewrite from="ShrublandAEZ02" to="shrubs"/>
+               <rewrite from="ShrublandAEZ01" to="shrubs"/>
+               <rewrite from="ShrublandAEZ08" to="shrubs"/>
                <rewrite from="FiberCropAEZ16" to="crops"/>
                <rewrite from="OilCropAEZ16" to="crops"/>
-               <rewrite from="ShrublandAEZ7" to="shrubs"/>
+               <rewrite from="ShrublandAEZ07" to="shrubs"/>
                <rewrite from="FiberCropAEZ15" to="crops"/>
                <rewrite from="OilCropAEZ15" to="crops"/>
-               <rewrite from="ShrublandAEZ6" to="shrubs"/>
+               <rewrite from="ShrublandAEZ06" to="shrubs"/>
                <rewrite from="FiberCropAEZ14" to="crops"/>
                <rewrite from="OilCropAEZ18" to="crops"/>
-               <rewrite from="ShrublandAEZ5" to="shrubs"/>
+               <rewrite from="ShrublandAEZ05" to="shrubs"/>
                <rewrite from="FiberCropAEZ13" to="crops"/>
                <rewrite from="OilCropAEZ17" to="crops"/>
                <rewrite from="OilCropAEZ12" to="crops"/>
                <rewrite from="OilCropAEZ11" to="crops"/>
                <rewrite from="OilCropAEZ14" to="crops"/>
-               <rewrite from="ShrublandAEZ9" to="shrubs"/>
+               <rewrite from="ShrublandAEZ09" to="shrubs"/>
                <rewrite from="OilCropAEZ13" to="crops"/>
                <rewrite from="OilCropAEZ10" to="crops"/>
-               <rewrite from="FodderHerbAEZ9" to="crops"/>
-               <rewrite from="FodderHerbAEZ8" to="crops"/>
-               <rewrite from="FodderHerbAEZ7" to="crops"/>
-               <rewrite from="FodderHerbAEZ6" to="crops"/>
-               <rewrite from="FodderHerbAEZ5" to="crops"/>
-               <rewrite from="FodderHerbAEZ4" to="crops"/>
-               <rewrite from="FodderHerbAEZ3" to="crops"/>
-               <rewrite from="FodderHerbAEZ1" to="crops"/>
-               <rewrite from="FodderHerbAEZ2" to="crops"/>
+               <rewrite from="FodderHerbAEZ09" to="crops"/>
+               <rewrite from="FodderHerbAEZ08" to="crops"/>
+               <rewrite from="FodderHerbAEZ07" to="crops"/>
+               <rewrite from="FodderHerbAEZ06" to="crops"/>
+               <rewrite from="FodderHerbAEZ05" to="crops"/>
+               <rewrite from="FodderHerbAEZ04" to="crops"/>
+               <rewrite from="FodderHerbAEZ03" to="crops"/>
+               <rewrite from="FodderHerbAEZ01" to="crops"/>
+               <rewrite from="FodderHerbAEZ02" to="crops"/>
                <rewrite from="ForestAEZ18" to="forest (managed)"/>
-               <rewrite from="UrbanLandAEZ5" to="urban"/>
-               <rewrite from="UrbanLandAEZ6" to="urban"/>
-               <rewrite from="UrbanLandAEZ7" to="urban"/>
-               <rewrite from="UrbanLandAEZ8" to="urban"/>
-               <rewrite from="UrbanLandAEZ1" to="urban"/>
-               <rewrite from="UrbanLandAEZ2" to="urban"/>
-               <rewrite from="UrbanLandAEZ3" to="urban"/>
-               <rewrite from="UrbanLandAEZ4" to="urban"/>
+               <rewrite from="UrbanLandAEZ05" to="urban"/>
+               <rewrite from="UrbanLandAEZ06" to="urban"/>
+               <rewrite from="UrbanLandAEZ07" to="urban"/>
+               <rewrite from="UrbanLandAEZ08" to="urban"/>
+               <rewrite from="UrbanLandAEZ01" to="urban"/>
+               <rewrite from="UrbanLandAEZ02" to="urban"/>
+               <rewrite from="UrbanLandAEZ03" to="urban"/>
+               <rewrite from="UrbanLandAEZ04" to="urban"/>
                <rewrite from="FiberCropAEZ17" to="crops"/>
                <rewrite from="FiberCropAEZ18" to="crops"/>
                <rewrite from="PalmFruitAEZ10" to="crops"/>
@@ -1638,7 +1638,7 @@
                <rewrite from="SugarCropAEZ18" to="crops"/>
                <rewrite from="SugarCropAEZ15" to="crops"/>
                <rewrite from="SugarCropAEZ16" to="crops"/>
-               <rewrite from="UrbanLandAEZ9" to="urban"/>
+               <rewrite from="UrbanLandAEZ09" to="urban"/>
                <rewrite from="SugarCropAEZ10" to="crops"/>
                <rewrite from="FodderGrassAEZ10" to="crops"/>
                <rewrite from="FodderGrassAEZ11" to="crops"/>
@@ -1652,11 +1652,11 @@
                <rewrite from="miscanthusAEZ17" to="biomass"/>
                <rewrite from="miscanthusAEZ16" to="biomass"/>
                <rewrite from="miscanthusAEZ18" to="biomass"/>
-               <rewrite from="FodderGrassAEZ1" to="crops"/>
-               <rewrite from="FodderGrassAEZ4" to="crops"/>
-               <rewrite from="FodderGrassAEZ5" to="crops"/>
-               <rewrite from="FodderGrassAEZ2" to="crops"/>
-               <rewrite from="FodderGrassAEZ3" to="crops"/>
+               <rewrite from="FodderGrassAEZ01" to="crops"/>
+               <rewrite from="FodderGrassAEZ04" to="crops"/>
+               <rewrite from="FodderGrassAEZ05" to="crops"/>
+               <rewrite from="FodderGrassAEZ02" to="crops"/>
+               <rewrite from="FodderGrassAEZ03" to="crops"/>
                <rewrite from="willowAEZ17" to="biomass"/>
                <rewrite from="willowAEZ18" to="biomass"/>
                <rewrite from="willowAEZ15" to="biomass"/>
@@ -1690,27 +1690,27 @@
                <rewrite from="MiscCropAEZ13" to="crops"/>
                <rewrite from="MiscCropAEZ17" to="crops"/>
                <rewrite from="MiscCropAEZ18" to="crops"/>
-               <rewrite from="UnmanagedForestAEZ9" to="forest (unmanaged)"/>
-               <rewrite from="UnmanagedForestAEZ8" to="forest (unmanaged)"/>
-               <rewrite from="UnmanagedForestAEZ7" to="forest (unmanaged)"/>
-               <rewrite from="UnmanagedForestAEZ6" to="forest (unmanaged)"/>
-               <rewrite from="UnmanagedForestAEZ5" to="forest (unmanaged)"/>
-               <rewrite from="UnmanagedForestAEZ4" to="forest (unmanaged)"/>
-               <rewrite from="UnmanagedForestAEZ3" to="forest (unmanaged)"/>
-               <rewrite from="UnmanagedForestAEZ1" to="forest (unmanaged)"/>
-               <rewrite from="UnmanagedForestAEZ2" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ09" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ08" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ07" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ06" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ05" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ04" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ03" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ01" to="forest (unmanaged)"/>
+               <rewrite from="UnmanagedForestAEZ02" to="forest (unmanaged)"/>
                <rewrite from="RiceAEZ15" to="crops"/>
                <rewrite from="RiceAEZ14" to="crops"/>
                <rewrite from="RiceAEZ17" to="crops"/>
                <rewrite from="RiceAEZ16" to="crops"/>
                <rewrite from="RiceAEZ18" to="crops"/>
                <rewrite from="eucalyptusAEZ18" to="biomass"/>
-               <rewrite from="JatrophaAEZ2" to="biomass"/>
-               <rewrite from="JatrophaAEZ1" to="biomass"/>
-               <rewrite from="JatrophaAEZ4" to="biomass"/>
-               <rewrite from="JatrophaAEZ3" to="biomass"/>
-               <rewrite from="JatrophaAEZ6" to="biomass"/>
-               <rewrite from="JatrophaAEZ5" to="biomass"/>
+               <rewrite from="JatrophaAEZ02" to="biomass"/>
+               <rewrite from="JatrophaAEZ01" to="biomass"/>
+               <rewrite from="JatrophaAEZ04" to="biomass"/>
+               <rewrite from="JatrophaAEZ03" to="biomass"/>
+               <rewrite from="JatrophaAEZ06" to="biomass"/>
+               <rewrite from="JatrophaAEZ05" to="biomass"/>
             </level>
          </labelRewriteList>
       </query>
