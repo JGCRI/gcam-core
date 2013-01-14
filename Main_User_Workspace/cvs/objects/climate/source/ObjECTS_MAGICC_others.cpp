@@ -2530,7 +2530,7 @@ void deltaq( Limits_block* Limits, OZ_block* OZ, CLIM_block* CLIM, CONCS_block* 
             //F4630 	QCF4_ar(J) = QCF4
             HALOF->QCF4_ar[ J ] = QCF4;
             //F4631 	QC2F6_ar(J) = QC2F6
-            HALOF->qSF6_ar[ J ] = QC2F6;
+            HALOF->QC2F6_ar[ J ] = QC2F6;
             //F4632 	qSF6_ar(J) = QSF6
             HALOF->qSF6_ar[ J ] = QSF6;
             //F4633 	Q125_ar(J) = Q125
