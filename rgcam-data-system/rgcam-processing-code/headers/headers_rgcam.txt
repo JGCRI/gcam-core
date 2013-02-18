@@ -100,6 +100,8 @@ GlobalDBTechInputDemand,global-technology-database/+{sector-name}location-info,g
 
 ElecSubgregionalCal,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,technology/+{year}period,period/+share-weight,period/+{name}minicam-energy-input,minicam-energy-input/+calibrated-value,minicam-energy-input/+efficiency,minicam-energy-input/+market-name,scenario,scenario/world,period/{name=CO2}CO2
 
+ElecSubgregionalFixed,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,technology/+{year}period,period/+share-weight,period/+{name}minicam-energy-input,minicam-energy-input/+calibrated-value,minicam-energy-input/+efficiency,minicam-energy-input/+market-name,period/+fixedOutput,scenario,scenario/world,period/{name=CO2}CO2
+
 TechInterpRule,world/+{name}region,region/+{name}supplysector,supplysector/+{name}subsector,subsector/+{name}technology,technology/+{from-year}interpolation-rule,technology/+{to-year}interpolation-rule,interpolation-rule/+{name}interpolation-function,technology/+{apply-to}interpolation-rule,scenario/world,scenario
 
 TrnSubsector,world/+{name}region,region/+{name}supplysector,supplysector/+{name}tranSubsector,tranSubsector/+{year=1975;fillout=1}logit-exponent,tranSubsector/+addTimeValue,tranSubsector/+{year=1975;fillout=1}speed,tranSubsector/+{year=2020}share-weight,tranSubsector/+{year=2035}share-weight,tranSubsector/+{year=2050}share-weight,tranSubsector/+{year=2065}share-weight,tranSubsector/+{year=2080}share-weight,tranSubsector/+{year=2095}share-weight,scenario/world,scenario

@@ -56,7 +56,7 @@ L210_ElecSubsector <- data.frame( region=states, L210_ElecSubsector )
 # with no production will get a zero share-weight for that year
 printlog( "L210_ElecSubsInterpRule: SUBSECTOR LEVEL INTERP RULES" )
 L210_ElecSubsInterpRule <- data.frame( A_elecS_subs_interp, apply_to="share-weight" )
-L210_ElecSubsInterpRule <- L210_ElecSubsInterpRule[ rep( 1:nrow( L210_ElecSubsInterpRule ), times = length( states ) ), ]
+L210_ElecSubsInterpRule <- L210_ElecSubsInterpRule[ sort( rep( 1:nrow( L210_ElecSubsInterpRule ), times = length( states ) ) ), ]
 L210_ElecSubsInterpRule <- data.frame( region=states, L210_ElecSubsInterpRule )
 
 # Create a table for technology availability years
@@ -250,6 +250,11 @@ L210_TechStubs <- rbind( L210_TechStubs, unique( L210_GeothermalInput[,
 # TODO: some consideration for excluding some technologies in some regions?
 L210_TechStubs <- L210_TechStubs[ rep( 1:nrow( L210_TechStubs ), times = length( states ) ), ]
 L210_TechStubs <- data.frame( region=states, L210_TechStubs )
+# Add stubs for regions that did not have wind in the base year so that they may in the future
+L210_BaseWind <- unique( subset( L210_TechCal, subsector == "wind", select=
+    c("state", "supplysector", "subsector", "technology" ) ) )
+L210_TechStubs <- rbind( L210_TechStubs, data.frame( region = states[ states %!in% L210_BaseWind$state ],
+    L210_BaseWind[ 1, c("supplysector", "subsector", "technology" ) ] ) )
 
 # -----------------------------------------------------------------------------
 # 3. Write all csvs as tables, and paste csv filenames into a single batch XML file

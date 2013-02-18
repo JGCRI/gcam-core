@@ -20,6 +20,7 @@ us_state_wind <- readdata( "us_state_wind" )
 
 A_res_delete <- readdata( "A_res_delete" )
 A_res_names <- readdata( "A_res_names" )
+A_res_other <- readdata( "A_res_other" )
 A_res_techChange <- readdata( "A_res_techChange" )
 A_res_renew_costs <- readdata( "A_res_renew_costs" )
 

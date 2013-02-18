@@ -225,6 +225,11 @@ L212_ImpTemp <- data.frame( region=L212_sR_trade$region, supplysector="electrici
 L212_ImpTemp$share_weight <- ifelse( L212_ImpTemp$calibrated_value > 0, 1, 0 )
 L212_ImpTemp$calibrated_value <- ifelse( L212_ImpTemp$calibrated_value > 0, L212_ImpTemp$calibrated_value, -1 )
 L212_ElecSubregionalCal <- rbind( L212_ElecSubregionalCal, L212_ImpTemp )
+# Create a table where the output is fixed instead of calibrated, this can be used
+# as an add on file to create a fixed trade scenario.
+L212_ElecFixedOutput <- L212_ImpTemp
+L212_ElecFixedOutput$fixedOutput <- L212_ImpTemp$calibrated_value
+L212_ElecFixedOutput$calibrated_value <- -1
 L212_ImpTemp <- L212_ImpTemp[ L212_ImpTemp$year == GCAM_base_years[1], ]
 L212_ImpTemp$year <- GCAM_model_period0
 L212_ImpTemp$calibrated_value <- -1
@@ -241,6 +246,12 @@ L212_ImpTemp <- data.frame( region="USA", supplysector="elect_inter_market_trade
 L212_ImpTemp$share_weight <- ifelse( L212_ImpTemp$calibrated_value > 0, 1, 0 )
 L212_ImpTemp$calibrated_value <- ifelse( L212_ImpTemp$calibrated_value > 0, L212_ImpTemp$calibrated_value, -1 )
 L212_ElecSubregionalCal <- rbind( L212_ElecSubregionalCal, L212_ImpTemp )
+# Create a table where the output is fixed instead of calibrated, this can be used
+# as an add on file to create a fixed trade scenario.
+L212_ElecFixedOutputTemp <- L212_ImpTemp
+L212_ElecFixedOutputTemp$fixedOutput <- L212_ImpTemp$calibrated_value
+L212_ElecFixedOutputTemp$calibrated_value <- -1
+L212_ElecFixedOutput <- rbind( L212_ElecFixedOutput, L212_ElecFixedOutputTemp )
 L212_ImpTemp <- L212_ImpTemp[ L212_ImpTemp$year == GCAM_base_years[1], ]
 L212_ImpTemp$year <- GCAM_model_period0
 L212_ImpTemp$calibrated_value <- -1
@@ -395,5 +406,9 @@ write_mi_data( L212_ChangeIntermitElecMarket, "ChangeIntermitElecMarket", "L212_
 
 
 insert_file_into_batchxml( "batch_rgcam_elec_demand_nems_market.xml", "rgcam_elec_demand_nems_market.xml", "", xml_tag="outFile" )
+
+# Create add-on to fix trade between NEMS regions
+write_mi_data( L212_ElecFixedOutput, "ElecSubgregionalFixed", "L212_ElecFixedOutput", "batch_rgcam_elec_demand_nems_fixed_trade.xml" ) 
+insert_file_into_batchxml( "batch_rgcam_elec_demand_nems_fixed_trade.xml", "rgcam_elec_demand_nems_fixed_trade.xml", "", xml_tag="outFile" )
 
 logstop()

@@ -63,6 +63,9 @@ printlog( "L230_Subsector: SUBSECTOR LEVEL PARAMS" )
 L230_Subsector <- A_ind_subs
 L230_Subsector <- L230_Subsector[ sort( rep( 1:nrow( L230_Subsector ), times = length( L230_subregions ) ) ), ]
 L230_Subsector <- data.frame( region=L230_subregions, L230_Subsector )
+# The header expects the logit to be the last column
+L230_Subsector$logit_exp <- L230_Subsector$logit
+L230_Subsector$logit <- NULL
 
 # Create a table for subsector interpolation rules
 printlog( "L230_SubsInterpRule: SUBSECTOR LEVEL INTERP RULES" )

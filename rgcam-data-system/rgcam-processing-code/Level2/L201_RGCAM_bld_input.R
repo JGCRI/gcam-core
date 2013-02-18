@@ -113,15 +113,23 @@ L201_heating_services_repstate <- L201_heating_services_repstate[ order( L201_he
 L201_cooling_services_repstate <- L201_cooling_services[ rep( 1:nrow( L201_cooling_services ), times = length( states ) ), ]
 L201_cooling_services_repstate <- L201_cooling_services_repstate[ order( L201_cooling_services_repstate$gcam_consumer ), ]
 
+#Note the base assumption for heating and cooling degree days is to fix them 
+#to the final base year value for all years.
+#Changing degree days in the future come from a scenario which should thus
+#be matched to the scenario being run, i.e. A2 or B2.
+L201_HDD_Fixed <- HDD_His_Fut
+L201_HDD_Fixed[, c( X_GCAM_model_period0, X_GCAM_years ) ] <- HDD_His_Fut[, X_GCAM_base_years[2] ]
 L201_HDD <- data.frame(
-      region = rep( HDD_His_Fut$state, length.out = nrow( L201_heating_services_repstate ) ),
+      region = rep( L201_HDD_Fixed$state, length.out = nrow( L201_heating_services_repstate ) ),
       L201_heating_services_repstate,
-      HDD_His_Fut[ c( X_GCAM_model_period0, X_GCAM_years ) ] )
+      L201_HDD_Fixed[ c( X_GCAM_model_period0, X_GCAM_years ) ] )
       
+L201_CDD_Fixed <- CDD_His_Fut
+L201_CDD_Fixed[, c( X_GCAM_model_period0, X_GCAM_years ) ] <- CDD_His_Fut[, X_GCAM_base_years[2] ]
 L201_CDD <- data.frame(
-      region = rep( CDD_His_Fut$state, length.out = nrow( L201_cooling_services_repstate ) ),
+      region = rep( L201_CDD_Fixed$state, length.out = nrow( L201_cooling_services_repstate ) ),
       L201_cooling_services_repstate,
-      CDD_His_Fut[ c( X_GCAM_model_period0, X_GCAM_years ) ] )
+      L201_CDD_Fixed[ c( X_GCAM_model_period0, X_GCAM_years ) ] )
 
 L201_DegreeDays <- rbind( L201_HDD, L201_CDD )
 L201_DegreeDays[ c( X_GCAM_model_period0, X_GCAM_years ) ] <- 
