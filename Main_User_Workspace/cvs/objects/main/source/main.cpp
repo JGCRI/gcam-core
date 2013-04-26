@@ -181,9 +181,12 @@ int main( int argc, char *argv[] ) {
         return 1;
     }
 
-    // Run the scenario and print debugging information.
+    // Run the scenario and print debugging information as controlled by the following
+    // configuration options with the defaults being to run all periods and print debug
+    // information.
+    const int stopPeriod = conf->getInt( "stop-period", Scenario::RUN_ALL_PERIODS );
     const bool printDebug = conf->getBool( "print-debug-file", true );
-    success = runner->runScenarios( Scenario::RUN_ALL_PERIODS, printDebug, timer );
+    success = runner->runScenarios( stopPeriod, printDebug, timer );
 
     // Print the output.
     runner->printOutput( timer );

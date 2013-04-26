@@ -395,7 +395,10 @@ void GDP::initialGDPcalc( const int period, const double population ) {
     const int basePer = modeltime->getBasePeriod();
 
     // Set flag, current GDP values are not adjusted
-    gdpAdjustedFlag[ period ] = false;   
+    //gdpAdjustedFlag[ period ] = false;   
+    // TODO: temp this is not currently used but we are ignoring this flag to avoid
+    // warnings when exiting early
+    gdpAdjustedFlag[ period ] = true;   
     if ( period <= modeltime->getFinalCalibrationPeriod() ) {
         gdpAdjustedFlag[ period ] = true; // GDP is never adjusted for historial periods
     }

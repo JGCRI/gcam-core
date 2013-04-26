@@ -113,6 +113,7 @@
 		<Value name="carbon-output-start-year">1705</Value>
 		<Value name="climateOutputInterval">5</Value>
 		<Value name="parallel-grain-size">15</Value>
+		<Value name="stop-period">-1</Value>
 	</Ints>
 	<Doubles>
 	</Doubles>

@@ -806,7 +806,7 @@ void XMLDBOutputter::startVisitTechnology( const Technology* aTechnology, const 
         // for new investments only.
         // TODO: Inconsistent use of year attribute.  WriteItemToBuffer writes
         // "year" attribute in addition to the technology "year" attribute.
-        if( mCurrentTechnology->mProductionState[ curr ]->isNewInvestment() ){
+        if( mCurrentTechnology->mProductionState[ curr ] && mCurrentTechnology->mProductionState[ curr ]->isNewInvestment() ){
             double currValue = aTechnology->getCost( curr );
             if( !objects::isEqual<double>( currValue, 0.0 ) ) {
                 writeItemToBuffer( aTechnology->getCost( curr ), "cost", 
@@ -1985,7 +1985,7 @@ void XMLDBOutputter::writeItemUsingYear( const string& aName,
 bool XMLDBOutputter::isTechnologyOperating( const int aPeriod ){
     bool isOperating = false;
     // If operating and has output greater than zero.
-    if( mCurrentTechnology->mProductionState[ aPeriod ]->isOperating() ){
+    if( mCurrentTechnology->mProductionState[ aPeriod ] && mCurrentTechnology->mProductionState[ aPeriod ]->isOperating() ){
         //if( mCurrentTechnology->getOutput( aPeriod ) > 0 ){
             isOperating = true;
         //}

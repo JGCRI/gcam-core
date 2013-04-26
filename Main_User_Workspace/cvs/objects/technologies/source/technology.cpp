@@ -834,7 +834,7 @@ double Technology::calcShare( const string& aRegionName,
 {
     const double mininf = -numeric_limits<double>::infinity();
     // A Technology which is not operating does not have a share.
-    if( !mProductionState[ aPeriod ]->isOperating() ){
+    if( !mProductionState[ aPeriod ] || !mProductionState[ aPeriod ]->isOperating() ){
         return mininf;
     }
 
@@ -1141,7 +1141,7 @@ bool Technology::isOutputFixed( const bool aHasRequiredInput,
 
     // The technology has fixed output if it is an existing vintage, has
     // exogenously specified output, or a zero share weight.
-    if( !mProductionState[ aPeriod ]->isNewInvestment() || mFixedOutput != -1 || mShareWeight == 0 ) {
+    if( !mProductionState[ aPeriod ] || !mProductionState[ aPeriod ]->isNewInvestment() || mFixedOutput != -1 || mShareWeight == 0 ) {
         return true;
     }
 
