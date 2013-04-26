@@ -254,7 +254,7 @@ auto_ptr<XMLDBOutputter::DBContainer> XMLDBOutputter::createContainer() {
 
     // Get the location to open the environment.
     const Configuration* conf = Configuration::getInstance();
-    const string xmldbContainerName = conf->getFile( "xmldb-location", "database.dbxml" );
+    string xmldbContainerName = conf->getFile( "xmldb-location", "database.dbxml" );
     string environmentLocation;
 
     // The path separator could go either way.
@@ -262,7 +262,7 @@ auto_ptr<XMLDBOutputter::DBContainer> XMLDBOutputter::createContainer() {
     // string::npos means that it was not found.
     if( indexOfDir == string::npos ) {
         // was not a UNIX path separator, try Windows
-        indexOfDir = xmldbContainerName.find_last_of( '\\' );    
+        indexOfDir = xmldbContainerName.find_last_of( '\\' );
         if( indexOfDir == string::npos ) {
             // No path separators mean current directory.
             environmentLocation = ".";
@@ -274,6 +274,9 @@ auto_ptr<XMLDBOutputter::DBContainer> XMLDBOutputter::createContainer() {
     if( indexOfDir != string::npos ) {
         environmentLocation = xmldbContainerName.substr( 0, 
             indexOfDir );
+        // The container name is just the file name without the path
+        // information since it is relative to the environment path.
+        xmldbContainerName = xmldbContainerName.substr( indexOfDir + 1 );
     }
 
     try {
