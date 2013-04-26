@@ -379,6 +379,9 @@ void TechnologyContainer::completeInit( const string& aRegionName,
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
                 mainLog.setLevel( ILogger::ERROR );
                 mainLog << "Missing a necessary technology in the base year." << endl;
+                mainLog << "Region: " << aRegionName << ", Sector: " << aSectorName
+                        << ", Subsector: " << aSubsectorName << ", Technology: "
+                        << mName << endl;
                 exit( 1 );
             }
             
