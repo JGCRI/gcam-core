@@ -376,11 +376,11 @@ void split( const float QGLOBE, const float A, const float BN, const float BS, f
 void setGlobals( CARB_block* CARB, TANDSL_block* TANDSL, CONCS_block* CONCS, NEWCONCS_block* NEWCONCS, 
                 STOREDVALS_block* STOREDVALS, NEWPARAMS_block* NEWPARAMS, BCOC_block* BCOC, 
                 METH1_block* METH1, CAR_block* CAR, FORCE_block* FORCE, JSTART_block* JSTART,
-                QADD_block* QADD, HALOF_block* HALOF );
+                QADD_block* QADD, HALOF_block* HALOF, std::string& GAS_EMK_DATA );
 void setLocals( CARB_block* CARB, TANDSL_block* TANDSL, CONCS_block* CONCS, NEWCONCS_block* NEWCONCS, 
                 STOREDVALS_block* STOREDVALS, NEWPARAMS_block* NEWPARAMS, BCOC_block* BCOC, 
                 METH1_block* METH1, CAR_block* CAR, FORCE_block* FORCE, JSTART_block* JSTART,
-                QADD_block* QADD, HALOF_block* HALOF );
+                QADD_block* QADD, HALOF_block* HALOF, std::string& GAS_EMK_DATA );
 
 // Externally called methods
 
@@ -391,13 +391,14 @@ float GETGMTEMP(int);
 float GETCARBONRESULTS(int, int);
 void SETPARAMETERVALUES(int, float);
 void overrideParameters( NEWPARAMS_block* NEWPARAMS, CAR_block* CAR, METH1_block* METH1, BCOC_block* BCOC );
+void SET_GAS_EMK( const std::string& GAS_EMK_DATA );
 
 // Internal helper methods
 
 void openfile_read( std::ifstream* infile, const std::string& f, bool echo );
-void skipline( std::ifstream* infile, bool echo );
-float read_csv_value( std::ifstream* infile, bool echo );
-float read_and_discard( std::ifstream* infile, bool echo );
+void skipline( std::istream* infile, bool echo );
+float read_csv_value( std::istream* infile, bool echo );
+float read_and_discard( std::istream* infile, bool echo );
 void openfile_write( std::ofstream* outfile, const std::string& f, bool echo );
 
 

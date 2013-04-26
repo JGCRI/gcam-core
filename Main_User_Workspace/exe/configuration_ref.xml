@@ -84,6 +84,8 @@
 	<Strings>
 		<Value name="scenarioName">Reference</Value>
 		<Value name="debug-region">USA</Value>
+		<Value name="MAGICC-input-dir">../cvs/objects/magicc/inputs</Value>
+		<Value name="MAGICC-output-dir">../output</Value>
 	</Strings>
 	<Bools>
 		<Value name="CalibrationActive">1</Value>
@@ -95,6 +97,7 @@
 		<Value name="write-xml-db">1</Value>
 		<Value name="write-access-db">0</Value>
 		<Value name="print-debug-file">1</Value>
+		<Value name="write-gas-emk">1</Value>
 		<Value name="debugChecking">0</Value>
 		<Value name="debugFindSD">0</Value>
 		<Value name="simulActive">1</Value>

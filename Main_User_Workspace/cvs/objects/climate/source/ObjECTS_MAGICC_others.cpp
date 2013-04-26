@@ -4768,6 +4768,7 @@ QADD_block* G_QADD = new QADD_block;
 HALOF_block* G_HALOF = new HALOF_block;
 NEWPARAMS_block* G_NEWPARAMS = new NEWPARAMS_block;
 BCOC_block* G_BCOC = new BCOC_block;
+string G_GAS_EMK_DATA;
 
 
 
@@ -4775,7 +4776,7 @@ BCOC_block* G_BCOC = new BCOC_block;
 void setLocals( CARB_block* CARB, TANDSL_block* TANDSL, CONCS_block* CONCS, NEWCONCS_block* NEWCONCS, 
                 STOREDVALS_block* STOREDVALS, NEWPARAMS_block* NEWPARAMS, BCOC_block* BCOC, 
                 METH1_block* METH1, CAR_block* CAR, FORCE_block* FORCE, JSTART_block* JSTART,
-                QADD_block* QADD, HALOF_block* HALOF )
+                QADD_block* QADD, HALOF_block* HALOF, string& GAS_EMK_DATA )
 {
     f_enter( __func__ );
 /*    G_CARB = CARB;
@@ -4791,13 +4792,14 @@ void setLocals( CARB_block* CARB, TANDSL_block* TANDSL, CONCS_block* CONCS, NEWC
     G_JSTART = JSTART;
     G_QADD = QADD;
     G_HALOF = HALOF; */
+    GAS_EMK_DATA = G_GAS_EMK_DATA;
     f_exit( __func__ );
 }
 
 void setGlobals( CARB_block* CARB, TANDSL_block* TANDSL, CONCS_block* CONCS, NEWCONCS_block* NEWCONCS, 
                STOREDVALS_block* STOREDVALS, NEWPARAMS_block* NEWPARAMS, BCOC_block* BCOC, 
                METH1_block* METH1, CAR_block* CAR, FORCE_block* FORCE, JSTART_block* JSTART,
-               QADD_block* QADD, HALOF_block* HALOF )
+               QADD_block* QADD, HALOF_block* HALOF, string& GAS_EMK_DATA )
 {
     f_enter( __func__ );
     *G_CARB = *CARB;
@@ -4813,6 +4815,7 @@ void setGlobals( CARB_block* CARB, TANDSL_block* TANDSL, CONCS_block* CONCS, NEW
      *G_JSTART = *JSTART;
      *G_QADD = *QADD;
      *G_HALOF = *HALOF;
+     G_GAS_EMK_DATA = GAS_EMK_DATA;
     f_exit( __func__ );
 }
 
@@ -5479,4 +5482,9 @@ float GETCARBONRESULTS( int iResultNumber, int inYear )
     f_exit( __func__ );
 }
 //F6543 
+
+// A method to set the gas.emk data from GCAM.
+void SET_GAS_EMK( const string& GAS_EMK_DATA ) {
+    G_GAS_EMK_DATA = GAS_EMK_DATA;
+}
 

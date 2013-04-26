@@ -665,35 +665,45 @@ void MagiccModel::writeMAGICCEmissionsFile(){
         }
     }
     
-    // Open the gas file to write emissions into so that MAGICC can get them by
-    // reading this file.
-    ofstream gasFile;
-    gasFile.open( Configuration::getInstance()->getFile( "climatFileName" ).c_str(), ios::out );
+    // Open the gas stream to write emissions into so that MAGICC can get them by
+    // reading this stream.
+    ostringstream gasStream;
     
-    // Write out file header information
-    gasFile << numberOfDataPoints << endl;
+    // Write out header information
+    gasStream << numberOfDataPoints << endl;
 	
     // line 2: Name of the scenario
-    gasFile << " Scenario " << mScenarioName << endl;
-    // line 3: Blank line*/
-    gasFile << endl;
+    gasStream << " Scenario " << mScenarioName << endl;
+    // line 3: Blank line
+    gasStream << endl;
     // line 4: Gas names includes one extra space for commas
-    gasFile << setw(5) << " ,"; // Year
+    gasStream << setw(5) << " ,"; // Year
     for( unsigned int gasNumber = 0; gasNumber < getNumInputGases(); ++gasNumber ) {
-        gasFile << setw(9) << sInputGasNames[ gasNumber ] << ',';
+        gasStream << setw(9) << sInputGasNames[ gasNumber ] << ',';
     }
-    gasFile << endl;
+    gasStream << endl;
     // line 5: Gas units
-    gasFile << setw(5) << "Year,";
+    gasStream << setw(5) << "Year,";
     for( unsigned int gasNumber = 0; gasNumber < getNumInputGases(); ++gasNumber ) {
-        gasFile << setw(9) << sInputGasUnits[ gasNumber ] << ',';
+        gasStream << setw(9) << sInputGasUnits[ gasNumber ] << ',';
     }
-    gasFile << endl;
+    gasStream << endl;
     
-    // Transfer bulk of data to output file.
-    gasFile << gasFileData.str(); 
+    // Transfer bulk of data to output stream.
+    gasStream << gasFileData.str(); 
     
-    gasFile.close();
+    // Set the gas data into MAGICC.
+    SET_GAS_EMK( gasStream.str() );
+    
+    // Check if the users still wants the gas data saved as a file which may be
+    // useful for debugging or to use as input for a stand alone MAGICC run.
+    const Configuration* config = Configuration::getInstance();
+    if( config->getBool( "write-gas-emk", true ) ) {
+        ofstream gasFile;
+        gasFile.open( config->getFile( "climatFileName" ).c_str(), ios::out );
+        gasFile << gasStream.str();
+        gasFile.close();
+    }
 }
 
 /*! \brief Write comma.

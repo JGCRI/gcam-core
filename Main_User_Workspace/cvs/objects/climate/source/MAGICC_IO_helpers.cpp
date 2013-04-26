@@ -57,7 +57,7 @@ void openfile_read( ifstream* infile, const string& f, bool echo )
     if ( echo ) cout << "Opened file " << f << " for read OK\n";
 }
 
-void skipline( ifstream* infile, bool echo )
+void skipline( istream* infile, bool echo )
 {
     string line;
     getline( *infile, line );
@@ -65,7 +65,7 @@ void skipline( ifstream* infile, bool echo )
     if( echo ) cout << "Skipping line: " << line << endl;
 }
 
-float read_csv_value( ifstream* infile, bool echo )
+float read_csv_value( istream* infile, bool echo )
 {
     float f;
     char comma;
@@ -75,7 +75,7 @@ float read_csv_value( ifstream* infile, bool echo )
     return f;
 }
 
-float read_and_discard( ifstream* infile, bool echo )
+float read_and_discard( istream* infile, bool echo )
 {
     float f;
     string line;

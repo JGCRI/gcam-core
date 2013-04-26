@@ -33,6 +33,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <sstream>
 #include <math.h>
 #include <time.h>
 #include <stdlib.h>
@@ -40,6 +41,7 @@
 
 #include "climate/include/ObjECTS_MAGICC.h"
 #include "util/logger/include/ilogger.h"
+#include "util/base/include/configuration.h"
 
 #define DEBUG_IO false
 
@@ -50,8 +52,13 @@ using namespace std;
 // we're not going to allow any globals in the C++ code
 void CLIMAT()
 {
+    // Get input and output file directories from the configuration.  Opening files
+    // will be done relative to these paths.
+    const Configuration* conf = Configuration::getInstance();
+    const string BASE_OUTPUT_DIR = conf->getString( "MAGICC-output-dir", "../output" );
+    const string BASE_INPUT_DIR = conf->getString( "MAGICC-input-dir", "../cvs/objects/magicc/inputs" );
     ofstream outfile8; // need to do this here; see line F395 and F658
-    openfile_write( &outfile8, "../output/mag_c.csv", DEBUG_IO );
+    openfile_write( &outfile8, BASE_OUTPUT_DIR + "/mag_c.csv", DEBUG_IO );
     
     //F   1 ! MAGTAR.FOR
     //F   2 !
@@ -378,11 +385,14 @@ void CLIMAT()
     int NCOLS, IQFIRST, IQLAST;
     float EQUIVCO2, TORREF;
 
+    // Input gas data will be read out of this string rather than through an actual file.
+    string GAS_EMK_DATA;
+
     // The MAGICC routines need access to these data structures, so set some global references
     setLocals( &CARB, &TANDSL, &CONCS, &NEWCONCS, 
                 &STOREDVALS, &NEWPARAMS, &BCOC, 
                 &METH1, &CAR, &FORCE, &JSTART,
-                &QADD, &HALOF );
+                &QADD, &HALOF, GAS_EMK_DATA );
     
     // Code to mimic the climat() data statements (lines F3038-F3055)
     //F3038       DATA FL(1)/0.420/,FL(2)/0.210
@@ -468,7 +478,7 @@ void CLIMAT()
     //F 255       lun = 42   ! spare logical unit no.
     //F 256       open(unit=lun,file='./magicc_files/CO2HIST.IN',status='OLD')
     ifstream infile;
-    openfile_read( &infile, "../cvs/objects/magicc/inputs/co2hist_c.in", DEBUG_IO );
+    openfile_read( &infile, BASE_INPUT_DIR + "/co2hist_c.in", DEBUG_IO );
     //F 257       DO ICO2=0,JSTART
     for( int ICO2=0; ICO2<=JSTART.JSTART; ICO2++ ) {
         //F 258       READ(LUN,4445)IIII,COBS(ICO2),FOSSHIST(ICO2)
@@ -482,7 +492,7 @@ void CLIMAT()
     //F 263 !
     //F 264       lun = 42   ! spare logical unit no.
     //F 265       open(unit=lun,file='./magicc_files/MAGUSER.CFG',status='OLD')
-    openfile_read( &infile, "../cvs/objects/magicc/inputs/maguser_c.cfg", DEBUG_IO );
+    openfile_read( &infile, BASE_INPUT_DIR + "/maguser_c.cfg", DEBUG_IO );
     //F 266 !
     //F 267         READ(LUN,4240) LEVCO2
     CO2READ.LEVCO2 = read_and_discard( &infile, false );
@@ -525,7 +535,7 @@ void CLIMAT()
     //F 289 !
     //F 290       lun = 42   ! spare logical unit no.
     //F 291       open(unit=lun,file='./magicc_files/MAGICE.CFG',status='OLD')
-    openfile_read( &infile, "../cvs/objects/magicc/inputs/magice_c.cfg", DEBUG_IO );
+    openfile_read( &infile, BASE_INPUT_DIR + "/magice_c.cfg", DEBUG_IO );
     //F 292 !
     //F 293         READ(LUN,4240) NEWGSIC  ! SET = 1 TO USE NEW ALGORITHM
     ICE.NEWGSIC = read_and_discard( &infile, false );
@@ -548,7 +558,7 @@ void CLIMAT()
     //F 305 !
     //F 306       lun = 42   ! spare logical unit no.
     //F 307       open(unit=lun,file='./magicc_files/MAGGAS.CFG',status='OLD')
-    openfile_read( &infile, "../cvs/objects/magicc/inputs/maggas_c.cfg", DEBUG_IO );
+    openfile_read( &infile, BASE_INPUT_DIR + "/maggas_c.cfg", DEBUG_IO );
     //F 308 !
     //F 309         READ(LUN,4240) OVRWRITE
     OVRWRITE = read_and_discard( &infile, false );
@@ -721,7 +731,7 @@ void CLIMAT()
     //F 403 !
     //F 404       lun = 42   ! spare logical unit no.
     //F 405       open(unit=lun,file='./magicc_files/MAGMOD.CFG',status='OLD')
-    openfile_read( &infile, "../cvs/objects/magicc/inputs/magmod_c.cfg", DEBUG_IO );
+    openfile_read( &infile, BASE_INPUT_DIR + "/magmod_c.cfg", DEBUG_IO );
     //F 406 !
     //F 407         READ(LUN,4241) ADJUST
     DSENS.ADJUST = read_and_discard( &infile, false );
@@ -1058,7 +1068,7 @@ void CLIMAT()
     //F 589 !
     //F 590       lun = 42   ! spare logical unit no.
     //F 591       open(unit=lun,file='./magicc_files/MAGRUN.CFG',status='OLD')
-    openfile_read( &infile, "../cvs/objects/magicc/inputs/magrun_c.cfg", DEBUG_IO );
+    openfile_read( &infile, BASE_INPUT_DIR + "/magrun_c.cfg", DEBUG_IO );
     //F 592 !
     //F 593         READ(LUN,4240) ISCENGEN
     NSIM.ISCENGEN = read_and_discard( &infile, false );
@@ -1089,7 +1099,7 @@ void CLIMAT()
     //F 609 !
     //F 610       lun = 42   ! spare logical unit no.
     //F 611       open(unit=lun,file='./magicc_files/MAGXTRA.CFG',status='OLD')
-    openfile_read( &infile, "../cvs/objects/magicc/inputs/magxtra_c.cfg", DEBUG_IO );
+    openfile_read( &infile, BASE_INPUT_DIR + "/magxtra_c.cfg", DEBUG_IO );
     //F 612 !
     //F 613         READ(LUN,4240) IOLDTZ
     QADD.IOLDTZ = read_and_discard( &infile, false );
@@ -1173,7 +1183,7 @@ void CLIMAT()
     // Handled at beginning of climat()
     //F 660       OPEN(UNIT=88,file='./outputs/CCSM.TXT', STATUS='UNKNOWN')
     ofstream outfile88;
-    openfile_write( &outfile88, "../output/ccsm_c.txt", DEBUG_IO );
+    openfile_write( &outfile88, BASE_OUTPUT_DIR + "/ccsm_c.txt", DEBUG_IO );
     //F 661 !
     //F 662 !  INTERIM CORRECTION TO AVOID CRASH IF S90IND SET TO ZERO IN
     //F 663 !   MAGUSER.CFG
@@ -1272,7 +1282,7 @@ void CLIMAT()
     //F 722 !
     //F 723       lun = 42   ! spare logical unit no.
     //F 724       open(unit=lun,file='./magicc_files/QHALOS.IN',status='OLD')
-    openfile_read( &infile, "../cvs/objects/magicc/inputs/qhalos_c.in", DEBUG_IO );
+    openfile_read( &infile, BASE_INPUT_DIR + "/qhalos_c.in", DEBUG_IO );
     //F 725 !
     //F 726       READ(LUN,4446)IHALO1
     int IHALO1 = read_and_discard( &infile, false );
@@ -1394,7 +1404,7 @@ void CLIMAT()
     if( CO2READ.ICO2READ >= 1 && CO2READ.ICO2READ <= 4 ) {
         //F 796         lun = 42   ! spare logical unit no.
         //F 797         open(unit=lun,file='./magicc_files/Co2input.dat',status='OLD')
-        openfile_read( &infile, "../cvs/objects/magicc/inputs/Co2input_c.dat", DEBUG_IO );
+        openfile_read( &infile, BASE_INPUT_DIR + "/Co2input_c.dat", DEBUG_IO );
         //F 798 !
         //F 799 !  CO2INPUT.DAT MUST HAVE FIRST YEAR = 1990 AND MUST HAVE ANNUAL END
         //F 800 !   OF YEAR VALUES. FIRST LINE OF FILE GIVES LAST YEAR OF ARRAY.
@@ -1440,7 +1450,7 @@ void CLIMAT()
     if( QADD.IQREAD >= 1 ) {
         //F 829         lun = 42   ! spare logical unit no.
         //F 830         open(unit=lun,file='./magicc_files/qextra.in',status='OLD')
-        openfile_read( &infile, "../cvs/objects/magicc/inputs/qextra_c.in", DEBUG_IO );
+        openfile_read( &infile, BASE_INPUT_DIR + "/qextra_c.in", DEBUG_IO );
         //F 831 !
         //F 832         READ(LUN,900)NCOLS
         //F 833         READ(lun,901)IQFIRST,IQLAST
@@ -1580,7 +1590,7 @@ void CLIMAT()
         //F 911 
         //F 912         lun = 42   ! spare logical unit no.
         //F 913         open(unit=lun,file='../cvs/objects/magicc/inputs/BCOCHist.csv',status='OLD')
-        openfile_read( &infile, "../cvs/objects/magicc/inputs/BCOCHist_c.csv", DEBUG_IO );  //FIX location
+        openfile_read( &infile, BASE_INPUT_DIR + "/BCOCHist_c.csv", DEBUG_IO );  //FIX location
         //F 914 !
         //F 915         READ(LUN,*)QtempBCUnitForcing, aBCBaseEmissions
         float QtempBCUnitForcing, QtempOCUnitForcing;
@@ -1667,12 +1677,14 @@ void CLIMAT()
     //F 966       lun = 42   ! spare logical unit no.
     //F 967 !
     //F 968       open(unit=lun,file='GAS.EMK',status='OLD')
-    openfile_read( &infile, "gas.emk", DEBUG_IO );
+    // Input gas data will be read out of a string rather than a gas.emk file to
+    // facilitate in memory transfer of data from GCAM.
+    istringstream gasfile( GAS_EMK_DATA );
     //F 969 !
     //F 970 !  READ HEADER AND NUMBER OR ROWS OF EMISIONS DATA FROM GAS.EMK
     //F 971 !
     //F 972       read(lun,4243)  NVAL
-    int NVAL = read_and_discard( &infile, DEBUG_IO );
+    int NVAL = read_and_discard( &gasfile, DEBUG_IO );
     
     if ( NVAL > 400 ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -1682,13 +1694,13 @@ void CLIMAT()
     }
     
     //F 973       read(lun,'(a)') mnem
-    getline( infile, mnem );
+    getline( gasfile, mnem );
     //F 974       read(lun,*) !   skip description
-    skipline( &infile, DEBUG_IO );
+    skipline( &gasfile, DEBUG_IO );
     //F 975       read(lun,*) !   skip column headings
-    skipline( &infile, DEBUG_IO );
+    skipline( &gasfile, DEBUG_IO );
     //F 976       read(lun,*) !   skip units
-    skipline( &infile, DEBUG_IO );
+    skipline( &gasfile, DEBUG_IO );
     //F 977 !
     //F 978 !  READ INPUT EMISSIONS DATA FROM GAS.EMK
     //F 979 !  SO2 EMISSIONS (BY REGION) MUST BE INPUT AS CHANGES FROM 1990.
@@ -1703,28 +1715,28 @@ void CLIMAT()
         //F 985 	  if ( iReadNative .EQ. 1 )THEN
         if( iReadNative == 1 ) {
             //F 986         read(lun,4242) IY1(I),FOS(I),DEF(I),DCH4(I),DN2O(I), &
-            IY1[ i ] = read_csv_value( &infile, DEBUG_IO );
-            FOS[ i ] = read_csv_value( &infile, DEBUG_IO );
-            DEF[ i ] = read_csv_value( &infile, DEBUG_IO );
-            DCH4[ i ] = read_csv_value( &infile, DEBUG_IO );
-            DN2O[ i ] = read_csv_value( &infile, DEBUG_IO );
+            IY1[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            FOS[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            DEF[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            DCH4[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            DN2O[ i ] = read_csv_value( &gasfile, DEBUG_IO );
             //F 987         DNOX(I),DVOC(I),DCO(I), &
-            DNOX[ i ] = read_csv_value( &infile, DEBUG_IO );
-            DVOC[ i ] = read_csv_value( &infile, DEBUG_IO );
-            DCO[ i ] = read_csv_value( &infile, DEBUG_IO );
+            DNOX[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            DVOC[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            DCO[ i ] = read_csv_value( &gasfile, DEBUG_IO );
             //F 988         DSO21(I),DSO22(I),DSO23(I),DCF4(I),DC2F6(I),D125(I), &
-            DSO21[ i ] = read_csv_value( &infile, DEBUG_IO );
-            DSO22[ i ] = read_csv_value( &infile, DEBUG_IO );
-            DSO23[ i ] = read_csv_value( &infile, DEBUG_IO );
-            DCF4[ i ] = read_csv_value( &infile, DEBUG_IO );
-            DC2F6[ i ] = read_csv_value( &infile, DEBUG_IO );
-            D125[ i ] = read_csv_value( &infile, DEBUG_IO );
+            DSO21[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            DSO22[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            DSO23[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            DCF4[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            DC2F6[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            D125[ i ] = read_csv_value( &gasfile, DEBUG_IO );
             //F 989         D134A(I),D143A(I),D227(I),D245(I),DSF6(I)
-            D134A[ i ] = read_csv_value( &infile, DEBUG_IO );
-            D143A[ i ] = read_csv_value( &infile, DEBUG_IO );
-            D227[ i ] = read_csv_value( &infile, DEBUG_IO );
-            D245[ i ] = read_csv_value( &infile, DEBUG_IO );
-            DSF6[ i ] = read_and_discard( &infile, DEBUG_IO );
+            D134A[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            D143A[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            D227[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            D245[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            DSF6[ i ] = read_and_discard( &gasfile, DEBUG_IO );
             //F 990   	 END IF
         }
         //F 991 
@@ -1732,30 +1744,30 @@ void CLIMAT()
         //F 993 	 IF ( iReadNative .EQ. 0 )THEN
         if( iReadNative == 0 ) {
             //F 994         read(lun,*) IY1(I),FOS(I),DEF(I),DCH4(I),DN2O(I), &
-            IY1[ i ] = read_csv_value( &infile, DEBUG_IO );
-            FOS[ i ] = read_csv_value( &infile, DEBUG_IO );
-            DEF[ i ] = read_csv_value( &infile, DEBUG_IO );
-            DCH4[ i ] = read_csv_value( &infile, DEBUG_IO );
-            DN2O[ i ] = read_csv_value( &infile, DEBUG_IO );
+            IY1[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            FOS[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            DEF[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            DCH4[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            DN2O[ i ] = read_csv_value( &gasfile, DEBUG_IO );
             //F 995        DSO21(I),DSO22(I),DSO23(I),DCF4(I),DC2F6(I),D125(I), &
-            DSO21[ i ] = read_csv_value( &infile, DEBUG_IO );
-            DSO22[ i ] = read_csv_value( &infile, DEBUG_IO );
-            DSO23[ i ] = read_csv_value( &infile, DEBUG_IO );
-            DCF4[ i ] = read_csv_value( &infile, DEBUG_IO );
-            DC2F6[ i ] = read_csv_value( &infile, DEBUG_IO );
-            D125[ i ] = read_csv_value( &infile, DEBUG_IO );
+            DSO21[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            DSO22[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            DSO23[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            DCF4[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            DC2F6[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            D125[ i ] = read_csv_value( &gasfile, DEBUG_IO );
             //F 996        D134A(I),D143A(I),D227(I),D245(I),DSF6(I), &
-            D134A[ i ] = read_csv_value( &infile, DEBUG_IO );
-            D143A[ i ] = read_csv_value( &infile, DEBUG_IO );
-            D227[ i ] = read_csv_value( &infile, DEBUG_IO );
-            D245[ i ] = read_csv_value( &infile, DEBUG_IO );
-            DSF6[ i ] = read_csv_value( &infile, DEBUG_IO );
+            D134A[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            D143A[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            D227[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            D245[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            DSF6[ i ] = read_csv_value( &gasfile, DEBUG_IO );
             //F 997        DNOX(I),DVOC(I),DCO(I), DBC(I), DOC(I)  ! Change to match order of writeout -- this is different than magicc default - sjs
-            DNOX[ i ] = read_csv_value( &infile, DEBUG_IO );
-            DVOC[ i ] = read_csv_value( &infile, DEBUG_IO );
-            DCO[ i ] = read_csv_value( &infile, DEBUG_IO );
-            DBC[ i ] = read_csv_value( &infile, DEBUG_IO );
-            DOC[ i ] = read_and_discard( &infile, DEBUG_IO );
+            DNOX[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            DVOC[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            DCO[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            DBC[ i ] = read_csv_value( &gasfile, DEBUG_IO );
+            DOC[ i ] = read_and_discard( &gasfile, DEBUG_IO );
             //F 998   	 END IF
         }
         //F 999  
@@ -1813,7 +1825,7 @@ void CLIMAT()
         //F1029      END DO
     } // for
     //F1030      close(lun)
-    infile.close();
+    // No need to close a string stream.
     // Error checking if year 2000 is not present which is assumed by MAGICC
     if( !ICORR ) {
         cout << "Year 2000 missing from gas.emk." << endl;
@@ -3814,10 +3826,10 @@ void CLIMAT()
         setGlobals( &CARB, &TANDSL, &CONCS, &NEWCONCS, 
                    &STOREDVALS, &NEWPARAMS, &BCOC, 
                    &METH1, &CAR, &FORCE, &JSTART,
-                   &QADD, &HALOF );
+                   &QADD, &HALOF, GAS_EMK_DATA );
 
         ofstream outfile9;
-        openfile_write( &outfile9, "../output/magout_c.csv", DEBUG_IO ); //FIX filename
+        openfile_write( &outfile9, BASE_OUTPUT_DIR + "/magout_c.csv", DEBUG_IO ); //FIX filename
         //F2239 
         //F2240   100 FORMAT(I5,1H,,27(F15.5,1H,))
         //F2241 
@@ -3940,7 +3952,7 @@ void CLIMAT()
         if( NSIM.ISCENGEN == 9 || NSIM.NSIM == 4 ) {
             //F2314 !
             //F2315       open(unit=9,file='./outputs/concs.dis',status='UNKNOWN')
-            openfile_write( &outfile9, "../output/concs_c.dis", DEBUG_IO );
+            openfile_write( &outfile9, BASE_OUTPUT_DIR + "/concs_c.dis", DEBUG_IO );
             //F2316 !
             //F2317         WRITE (9,211)
             outfile9 << "YEAR CO2USER   CO2LO  CO2MID   CO2HI CH4USER   CH4LO  CH4MID   CH4HI     N2O MIDTAUCH4" << endl;
@@ -4066,7 +4078,7 @@ void CLIMAT()
             //F2394 !  WRITE FORCING CHANGES FROM MID-1990 TO MAG DISPLAY FILE
             //F2395 !
             //F2396       open(unit=9,file='./outputs/forcings.dis',status='UNKNOWN')
-            openfile_write( &outfile9, "../output/forcings_c.dis", DEBUG_IO );
+            openfile_write( &outfile9, BASE_OUTPUT_DIR + "/forcings_c.dis", DEBUG_IO );
             //F2397 !
             //F2398         WRITE (9,57)
             outfile9 << "YEAR,CO2,CH4tot,N2O, HALOtot,TROPOZ,SO4DIR,SO4IND,BIOAER,FOC+FBC,QAERMN,QLAND, TOTAL, YEAR,CH4-O3," << endl;
@@ -4275,22 +4287,22 @@ void CLIMAT()
         //F2524 !
         //F2525         OPEN(UNIT=10,file='./outputs/lodrive.raw' ,STATUS='UNKNOWN')
         ofstream outfile10, outfile11, outfile12, outfile13, outfile14, outfile15, outfile16, outfile17;
-        openfile_write( &outfile10, "../output/lodrive.raw", DEBUG_IO );
+        openfile_write( &outfile10, BASE_OUTPUT_DIR + "/lodrive.raw", DEBUG_IO );
         //F2526         OPEN(UNIT=11,file='./outputs/middrive.raw',STATUS='UNKNOWN')
-        openfile_write( &outfile11, "../output/middrive.raw", DEBUG_IO );
+        openfile_write( &outfile11, BASE_OUTPUT_DIR + "/middrive.raw", DEBUG_IO );
         //F2527         OPEN(UNIT=12,file='./outputs/hidrive.raw' ,STATUS='UNKNOWN')
-        openfile_write( &outfile12, "../output/hidrive.raw", DEBUG_IO );
+        openfile_write( &outfile12, BASE_OUTPUT_DIR + "/hidrive.raw", DEBUG_IO );
         //F2528         OPEN(UNIT=13,file='./outputs/usrdrive.raw',STATUS='UNKNOWN')
-        openfile_write( &outfile13, "../output/usrdrive.raw", DEBUG_IO );
+        openfile_write( &outfile13, BASE_OUTPUT_DIR + "/usrdrive.raw", DEBUG_IO );
         //F2529 !
         //F2530         OPEN(UNIT=14,file='./outputs/lodrive.out' ,STATUS='UNKNOWN')
-        openfile_write( &outfile14, "../output/lodrive.out", DEBUG_IO );
+        openfile_write( &outfile14, BASE_OUTPUT_DIR + "/lodrive.out", DEBUG_IO );
         //F2531         OPEN(UNIT=15,file='./outputs/middrive.out',STATUS='UNKNOWN')
-        openfile_write( &outfile15, "../output/middrive.out", DEBUG_IO );
+        openfile_write( &outfile15, BASE_OUTPUT_DIR + "/middrive.out", DEBUG_IO );
         //F2532         OPEN(UNIT=16,file='./outputs/hidrive.out' ,STATUS='UNKNOWN')
-        openfile_write( &outfile16, "../output/hidrive.out", DEBUG_IO );
+        openfile_write( &outfile16, BASE_OUTPUT_DIR + "/hidrive.out", DEBUG_IO );
         //F2533         OPEN(UNIT=17,file='./outputs/usrdrive.out',STATUS='UNKNOWN')
-        openfile_write( &outfile17, "../output/usrdrive.out", DEBUG_IO );
+        openfile_write( &outfile17, BASE_OUTPUT_DIR + "/usrdrive.out", DEBUG_IO );
         //F2534 !
         //F2535         DO NCLIM=1,4
         for( NSIM.NCLIM=1; NSIM.NCLIM<=4; NSIM.NCLIM++ ) {
@@ -4506,7 +4518,7 @@ void CLIMAT()
     //F2649 !
     //F2650       open(unit=9,file='./outputs/temps.dis',status='UNKNOWN')
     ofstream outfile9;
-    openfile_write( &outfile9, "../output/temps_c.dis", DEBUG_IO );
+    openfile_write( &outfile9, BASE_OUTPUT_DIR + "/temps_c.dis", DEBUG_IO );
     //F2651 !
     //F2652         WRITE (9,213)
     outfile9 << "YEAR  TEMUSER    TEMLO   TEMMID    TEMHI TEMNOSO2" << endl;
@@ -4534,7 +4546,7 @@ void CLIMAT()
     //F2668 !  WRITE SEALEVEL CHANGES TO MAG DISPLAY FILE
     //F2669 !
     //F2670       open(unit=9,file='./outputs/sealev.dis',status='UNKNOWN')
-    openfile_write( &outfile9, "../output/sealev_c.dis", DEBUG_IO );
+    openfile_write( &outfile9, BASE_OUTPUT_DIR + "/sealev_c.dis", DEBUG_IO );
     //F2671 !
     //F2672         WRITE (9,214)
     outfile9 << "YEAR  MSLUSER    MSLLO   MSLMID    MSLHI" << endl;
@@ -4562,7 +4574,7 @@ void CLIMAT()
     //F2688 !  WRITE EMISSIONS TO MAG DISPLAY FILE
     //F2689 !
     //F2690       open(unit=9,file='./outputs/emiss.dis',status='UNKNOWN')
-    openfile_write( &outfile9, "../output/emiss_c.dis", DEBUG_IO );
+    openfile_write( &outfile9, BASE_OUTPUT_DIR + "/emiss_c.dis", DEBUG_IO );
     //F2691 !
     //F2692         WRITE (9,212)
     outfile9 << "YEAR  FOSSCO2 NETDEFOR      CH4      N2O SO2-REG1 SO2-REG2 SO2-REG3   SO2-GL" << endl;
@@ -4616,7 +4628,7 @@ void CLIMAT()
     //F2725 !
     //F2726       OPEN(UNIT=888,file='./outputs/FRACLEFT.OUT',STATUS='UNKNOWN')
     ofstream outfile888;
-    openfile_write( &outfile888, "../output/fracleft_c.out", DEBUG_IO );
+    openfile_write( &outfile888, BASE_OUTPUT_DIR + "/fracleft_c.out", DEBUG_IO );
     //F2727 !
     //F2728 !  FRACTION OF CO2 REMAINING IN ATMOSPHERE
     //F2729 !
@@ -4985,5 +4997,5 @@ void CLIMAT()
     setGlobals( &CARB, &TANDSL, &CONCS, &NEWCONCS, 
               &STOREDVALS, &NEWPARAMS, &BCOC, 
               &METH1, &CAR, &FORCE, &JSTART,
-              &QADD, &HALOF );
+              &QADD, &HALOF, GAS_EMK_DATA );
 }
