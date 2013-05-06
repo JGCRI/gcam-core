@@ -45,11 +45,6 @@ main_dir :
 	cp ../../main/source/gcam.exe ../../../../exe/
 
 
-# special because it has a funny directory name
-agLU_dir :
-	$(MAKE) -C ../../agLU/fortran_source agLU_dir
-	ln -sf $(PWD)/../../agLU/fortran_source/*.o $(OBJDIR)
-
 # target for debugging configure.gcam 
 varchk:
 	@echo INCLUDE: $(INCLUDE)
@@ -70,8 +65,6 @@ varchk:
 clean :
 	-$(RM) libgcamlib.a
 	-$(RM) objs/*.o
-	-$(MAKE) -C ../../agLU/fortran_source  clean 
-	-$(MAKE) -C ../../magicc/source  clean 
 	-$(MAKE) -C ../../containers/source  clean 
 	-$(MAKE) -C ../../demographics/source  clean 
 	-$(MAKE) -C ../../emissions/source  clean 

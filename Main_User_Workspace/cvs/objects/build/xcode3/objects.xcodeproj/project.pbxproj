@@ -336,24 +336,6 @@
 		0EF7AF5C13E1EFF80034AA71 /* lognrbt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lognrbt.cpp; sourceTree = "<group>"; };
 		0EF7AF6713E1F0130034AA71 /* edfun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = edfun.cpp; sourceTree = "<group>"; };
 		CD299E9611B9C11800E6D196 /* objects */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = objects; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD48840C122873C000F5A88A /* Ag2Calibrate.f90 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.fortran.f90; path = Ag2Calibrate.f90; sourceTree = "<group>"; };
-		CD48840D122873C000F5A88A /* Ag2CH4N2O.f90 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.fortran.f90; path = Ag2CH4N2O.f90; sourceTree = "<group>"; };
-		CD48840E122873C000F5A88A /* Ag2control.f90 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.fortran.f90; path = Ag2control.f90; sourceTree = "<group>"; };
-		CD48840F122873C000F5A88A /* Ag2Demand.f90 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.fortran.f90; path = Ag2Demand.f90; sourceTree = "<group>"; };
-		CD488410122873C000F5A88A /* Ag2Emiss.f90 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.fortran.f90; path = Ag2Emiss.f90; sourceTree = "<group>"; };
-		CD488411122873C000F5A88A /* Ag2GetData.f90 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.fortran.f90; path = Ag2GetData.f90; sourceTree = "<group>"; };
-		CD488412122873C000F5A88A /* Ag2Global8.f90 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.fortran.f90; path = Ag2Global8.f90; sourceTree = "<group>"; };
-		CD488413122873C000F5A88A /* Ag2init.f90 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.fortran.f90; path = Ag2init.f90; sourceTree = "<group>"; };
-		CD488414122873C000F5A88A /* Ag2Link.f90 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.fortran.f90; path = Ag2Link.f90; sourceTree = "<group>"; };
-		CD488415122873C000F5A88A /* Ag2model.f90 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.fortran.f90; path = Ag2model.f90; sourceTree = "<group>"; };
-		CD488416122873C000F5A88A /* Ag2Output.f90 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.fortran.f90; path = Ag2Output.f90; sourceTree = "<group>"; };
-		CD488417122873C000F5A88A /* Ag2Supply.f90 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.fortran.f90; path = Ag2Supply.f90; sourceTree = "<group>"; };
-		CD488419122873C000F5A88A /* 1%Ag_Tech_Change.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "1%Ag_Tech_Change.csv"; sourceTree = "<group>"; };
-		CD48841A122873C000F5A88A /* Ag2control.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Ag2control.csv; sourceTree = "<group>"; };
-		CD48841B122873C000F5A88A /* AGIN_14.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AGIN_14.csv; sourceTree = "<group>"; };
-		CD48841C122873C000F5A88A /* Catchup_AgTechChange.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Catchup_AgTechChange.csv; sourceTree = "<group>"; };
-		CD48841D122873C000F5A88A /* LowerBeefPork.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LowerBeefPork.csv; sourceTree = "<group>"; };
-		CD48841E122873C000F5A88A /* SRES_Deforest.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = SRES_Deforest.csv; sourceTree = "<group>"; };
 		CD48842C122873C000F5A88A /* asimple_carbon_calc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = asimple_carbon_calc.h; sourceTree = "<group>"; };
 		CD48842D122873C000F5A88A /* carbon_model_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = carbon_model_utils.h; sourceTree = "<group>"; };
 		CD48842E122873C000F5A88A /* icarbon_calc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = icarbon_calc.h; sourceTree = "<group>"; };
@@ -1091,7 +1073,6 @@
 		CD488409122873C000F5A88A /* objects */ = {
 			isa = PBXGroup;
 			children = (
-				CD48840A122873C000F5A88A /* agLU */,
 				CD48842A122873C000F5A88A /* ccarbon_model */,
 				CD488434122873C000F5A88A /* climate */,
 				CD48843A122873C000F5A88A /* configuration_files */,
@@ -1121,47 +1102,6 @@
 			name = objects;
 			path = ../..;
 			sourceTree = SOURCE_ROOT;
-		};
-		CD48840A122873C000F5A88A /* agLU */ = {
-			isa = PBXGroup;
-			children = (
-				CD48840B122873C000F5A88A /* fortran_source */,
-				CD488418122873C000F5A88A /* input_files */,
-			);
-			path = agLU;
-			sourceTree = "<group>";
-		};
-		CD48840B122873C000F5A88A /* fortran_source */ = {
-			isa = PBXGroup;
-			children = (
-				CD48840C122873C000F5A88A /* Ag2Calibrate.f90 */,
-				CD48840D122873C000F5A88A /* Ag2CH4N2O.f90 */,
-				CD48840E122873C000F5A88A /* Ag2control.f90 */,
-				CD48840F122873C000F5A88A /* Ag2Demand.f90 */,
-				CD488410122873C000F5A88A /* Ag2Emiss.f90 */,
-				CD488411122873C000F5A88A /* Ag2GetData.f90 */,
-				CD488412122873C000F5A88A /* Ag2Global8.f90 */,
-				CD488413122873C000F5A88A /* Ag2init.f90 */,
-				CD488414122873C000F5A88A /* Ag2Link.f90 */,
-				CD488415122873C000F5A88A /* Ag2model.f90 */,
-				CD488416122873C000F5A88A /* Ag2Output.f90 */,
-				CD488417122873C000F5A88A /* Ag2Supply.f90 */,
-			);
-			path = fortran_source;
-			sourceTree = "<group>";
-		};
-		CD488418122873C000F5A88A /* input_files */ = {
-			isa = PBXGroup;
-			children = (
-				CD488419122873C000F5A88A /* 1%Ag_Tech_Change.csv */,
-				CD48841A122873C000F5A88A /* Ag2control.csv */,
-				CD48841B122873C000F5A88A /* AGIN_14.csv */,
-				CD48841C122873C000F5A88A /* Catchup_AgTechChange.csv */,
-				CD48841D122873C000F5A88A /* LowerBeefPork.csv */,
-				CD48841E122873C000F5A88A /* SRES_Deforest.csv */,
-			);
-			path = input_files;
-			sourceTree = "<group>";
 		};
 		CD48842A122873C000F5A88A /* ccarbon_model */ = {
 			isa = PBXGroup;
