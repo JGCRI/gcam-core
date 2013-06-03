@@ -1,67 +1,1 @@
-Set subsector shareweights to 0 so it doesn't figure in calibration,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-100,,,,,,,,,,,,
-,,,2020 fillout,,,,,,,,,
-region,supplysector,subsector,sharewt,,,,,,,,,
-ALL,electricity,nuclear,0,,,,,,,,,
-ALL,H2 Central Production,nuclear,0,,,,,,,,,
-
-Lower Gen II lifetime to 15 so that it does not carry over to 2020,,,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,,,
-Variable ID,,,,,,,,,,,,
-1020,,,,,,,,,,,,
-,,,,lifetime,,,,,,,,
-region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095
-ALL,electricity,nuclear,Gen_II_LWR,-1,-1,15,-1,-1,-1,-1,-1,-1
-
-Fix output,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,
-Variable ID,,,,,,,,,,
-1000,,,,,,,,,,
-,,,,not read,fixedOutput,,,,,
-region,supplysector,subsector,technology,2005,2020,2035,2050,2065,2080,2095
-Africa,electricity,nuclear,Gen_II_LWR,0.0406548,0.0406548,0.0406548,0.0406548,0.0406548,0.0406548,0.0406548
-Australia_NZ,electricity,nuclear,Gen_II_LWR,0,0,0,0,0,0,0
-Canada,electricity,nuclear,Gen_II_LWR,0.331344,0.331344,0.331344,0.331344,0.331344,0.331344,0.331344
-China,electricity,nuclear,Gen_II_LWR,0.1911168,0.1911168,0.1911168,0.1911168,0.1911168,0.1911168,0.1911168
-Eastern Europe,electricity,nuclear,Gen_II_LWR,0.3109716,0.3109716,0.3109716,0.3109716,0.3109716,0.3109716,0.3109716
-Former Soviet Union,electricity,nuclear,Gen_II_LWR,0.8947404,0.8947404,0.8947404,0.8947404,0.8947404,0.8947404,0.8947404
-India,electricity,nuclear,Gen_II_LWR,0.0623268,0.0623268,0.0623268,0.0623268,0.0623268,0.0623268,0.0623268
-Japan,electricity,nuclear,Gen_II_LWR,1.097118,1.097118,1.097118,1.097118,1.097118,1.097118,1.097118
-Korea,electricity,nuclear,Gen_II_LWR,0.5284044,0.5284044,0.5284044,0.5284044,0.5284044,0.5284044,0.5284044
-Latin America,electricity,nuclear,Gen_II_LWR,0.0991188,0.0991188,0.0991188,0.0991188,0.0991188,0.0991188,0.0991188
-Middle East,electricity,nuclear,Gen_II_LWR,0,0,0,0,0,0,0
-Southeast Asia,electricity,nuclear,Gen_II_LWR,0.1528416,0.1528416,0.1528416,0.1528416,0.1528416,0.1528416,0.1528416
-USA,electricity,nuclear,Gen_II_LWR,2.9186136,2.9186136,2.9186136,2.9186136,2.9186136,2.9186136,2.9186136
-Western Europe,electricity,nuclear,Gen_II_LWR,3.3275592,3.3275592,3.3275592,3.3275592,3.3275592,3.3275592,3.3275592
-
-Set future tech sharewts to 0,,,,,,,,,,
-INPUT_TABLE,,,,,,,,,,
-Variable ID,,,,,,,,,,
-1010,,,,,,,,,,
-
-region,supplysector,subsector,technology,2020,2035,2050,2065,2080,2095,
-ALL,electricity,nuclear,Gen_II_LWR,0,0,0,0,0,0,
-ALL,electricity,nuclear,Gen_III,0,0,0,0,0,0,
-
-gen II final year of availability,,,,,,,,,,
-INPUT_TABLE,,,,
-Variable ID,,,,
-1120,,,,
-
-region,supplysector,subsector,technology,final-available-year
-USA,electricity,nuclear,Gen_II_LWR,2005
-Canada,electricity,nuclear,Gen_II_LWR,2005
-Western Europe,electricity,nuclear,Gen_II_LWR,2005
-Japan,electricity,nuclear,Gen_II_LWR,2005
-Australia_NZ,electricity,nuclear,Gen_II_LWR,2005
-Former Soviet Union,electricity,nuclear,Gen_II_LWR,2005
-China,electricity,nuclear,Gen_II_LWR,2005
-Middle East,electricity,nuclear,Gen_II_LWR,2005
-Africa,electricity,nuclear,Gen_II_LWR,2005
-Latin America,electricity,nuclear,Gen_II_LWR,2005
-Southeast Asia,electricity,nuclear,Gen_II_LWR,2005
-Eastern Europe,electricity,nuclear,Gen_II_LWR,2005
-Korea,electricity,nuclear,Gen_II_LWR,2005
-India,electricity,nuclear,Gen_II_LWR,2005
+Set subsector shareweights to 0 in all future periods,,,,,,,,,,,,INPUT_TABLE,,,,,,,,,,,,Variable ID,,,,,,,,,,,,100,,,,,,,,,,,,,,,2020 fillout,,,,,,,,,region,supplysector,subsector,sharewt,,,,,,,,,ALL,electricity,nuclear,0,,,,,,,,,ALL,H2 Central Production,nuclear,0,,,,,,,,,ALL,base load generation,nuclear,0,,,,,,,,,,,,,,,,,,,,,"For Gen II, set the lifetime equal to the timestep length in all periods",,,,,,,,,,,,INPUT_TABLE,,,,,,,,,,,,Variable ID,,,,,,,,,,,,1020,,,,,,,,,,,,,,,,lifetime,,,,,,,,region,supplysector,subsector,technology,1975,1990,2005,2020,2035,2050,2065,2080,2095ALL,electricity,nuclear,Gen_II_LWR,-1,-1,-1,-1,-1,-1,-1,-1,-1ALL,base load generation,nuclear,nuc_base_gen2,-1,-1,-1,-1,-1,-1,-1,-1,-1,,,,,,,,,,,,Fix output,,,,,,,,,,,,INPUT_TABLE,,,,,,,,,,,,Variable ID,,,,,,,,,,,,1000,,,,,,,,,,,,,,,,not read,fixedOutput,,,,,,,region,supplysector,subsector,technology,2005,2020,2035,2050,2065,2080,2095,,Africa,electricity,nuclear,Gen_II_LWR,0.0406548,0.0406548,0.0406548,0.0406548,0.0406548,0.0406548,0.0406548,,Australia_NZ,electricity,nuclear,Gen_II_LWR,0,0,0,0,0,0,0,,Canada,electricity,nuclear,Gen_II_LWR,0.331344,0.331344,0.331344,0.331344,0.331344,0.331344,0.331344,,China,electricity,nuclear,Gen_II_LWR,0.1911168,0.1911168,0.1911168,0.1911168,0.1911168,0.1911168,0.1911168,,Eastern Europe,electricity,nuclear,Gen_II_LWR,0.3109716,0.3109716,0.3109716,0.3109716,0.3109716,0.3109716,0.3109716,,Former Soviet Union,electricity,nuclear,Gen_II_LWR,0.8947404,0.8947404,0.8947404,0.8947404,0.8947404,0.8947404,0.8947404,,India,electricity,nuclear,Gen_II_LWR,0.0623268,0.0623268,0.0623268,0.0623268,0.0623268,0.0623268,0.0623268,,Japan,electricity,nuclear,Gen_II_LWR,1.097118,1.097118,1.097118,1.097118,1.097118,1.097118,1.097118,,Korea,electricity,nuclear,Gen_II_LWR,0.5284044,0.5284044,0.5284044,0.5284044,0.5284044,0.5284044,0.5284044,,Latin America,electricity,nuclear,Gen_II_LWR,0.0991188,0.0991188,0.0991188,0.0991188,0.0991188,0.0991188,0.0991188,,Middle East,electricity,nuclear,Gen_II_LWR,0,0,0,0,0,0,0,,Southeast Asia,electricity,nuclear,Gen_II_LWR,0.1528416,0.1528416,0.1528416,0.1528416,0.1528416,0.1528416,0.1528416,,USA,electricity,nuclear,Gen_II_LWR,2.9186136,2.9186136,2.9186136,2.9186136,2.9186136,2.9186136,2.9186136,,Western Europe,electricity,nuclear,Gen_II_LWR,3.3275592,3.3275592,3.3275592,3.3275592,3.3275592,3.3275592,3.3275592,,USA,base load generation,nuclear,nuc_base_gen2,2.9186136,2.9186136,2.9186136,2.9186136,2.9186136,2.9186136,2.9186136,,,,,,,,,,,,,,Set future tech sharewts to 0,,,,,,,,,,,,INPUT_TABLE,,,,,,,,,,,,Variable ID,,,,,,,,,,,,1010,,,,,,,,,,,,,,,,,,,,,,,,region,supplysector,subsector,technology,2020,2035,2050,2065,2080,2095,,,ALL,electricity,nuclear,Gen_II_LWR,0,0,0,0,0,0,,,ALL,electricity,nuclear,Gen_III,0,0,0,0,0,0,,,ALL,base load generation,nuclear,nuc_base_gen2,0,0,0,0,0,0,,,ALL,base load generation,nuclear,nuc_base_gen3,0,0,0,0,0,0,,,,,,,,,,,,,,,gen II final year of availability,,,,,,,,,,,,INPUT_TABLE,,,,,,,,,,,,Variable ID,,,,,,,,,,,,1120,,,,,,,,,,,,,,,,,,,,,,,,region,supplysector,subsector,technology,final-available-year,,,,,,,,USA,electricity,nuclear,Gen_II_LWR,2095,,,,,,,,Canada,electricity,nuclear,Gen_II_LWR,2095,,,,,,,,Western Europe,electricity,nuclear,Gen_II_LWR,2095,,,,,,,,Japan,electricity,nuclear,Gen_II_LWR,2095,,,,,,,,Australia_NZ,electricity,nuclear,Gen_II_LWR,2095,,,,,,,,Former Soviet Union,electricity,nuclear,Gen_II_LWR,2095,,,,,,,,China,electricity,nuclear,Gen_II_LWR,2095,,,,,,,,Middle East,electricity,nuclear,Gen_II_LWR,2095,,,,,,,,Africa,electricity,nuclear,Gen_II_LWR,2095,,,,,,,,Latin America,electricity,nuclear,Gen_II_LWR,2095,,,,,,,,Southeast Asia,electricity,nuclear,Gen_II_LWR,2095,,,,,,,,Eastern Europe,electricity,nuclear,Gen_II_LWR,2095,,,,,,,,Korea,electricity,nuclear,Gen_II_LWR,2095,,,,,,,,India,electricity,nuclear,Gen_II_LWR,2095,,,,,,,,USA,base load generation,nuclear,nuc_base_gen2,2095,,,,,,,,
